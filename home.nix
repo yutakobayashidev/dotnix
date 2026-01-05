@@ -9,6 +9,7 @@
     ./modules/home/git.nix
     ./modules/home/neovim.nix
     ./modules/home/zsh.nix
+    ./modules/home/tmux.nix
   ];
 
   home.username = "yuta";
