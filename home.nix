@@ -41,6 +41,7 @@
    sl
    fzf
    ghq
+   tokei
   ];
 
   home.stateVersion = "25.11";
