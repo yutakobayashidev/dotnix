@@ -8,7 +8,7 @@
     ./modules/home/ghostty
     ./modules/home/git.nix
     ./modules/home/neovim.nix
-    ./modules/home/shell.nix
+    ./modules/home/zsh.nix
   ];
 
   home.username = "yuta";

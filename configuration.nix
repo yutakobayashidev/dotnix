@@ -126,6 +126,7 @@
   users.users.yuta = {
     isNormalUser = true;
     description = "yuta";
+    shell = pkgs.zsh;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
     #  thunderbird
@@ -134,6 +135,9 @@
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Enable zsh
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
