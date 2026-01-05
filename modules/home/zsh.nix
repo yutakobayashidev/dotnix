@@ -26,10 +26,11 @@
 
       # gh-q: ghq + fzf でリポジトリ選択・clone
       # https://github.com/ryoppippi/dotfiles/blob/5a0a1f1d68b66a89c2c916c9e97c0129251ca467/fish/functions/gh-q.fish
-      GH_Q_DEFAULT_USER=""
+      # 使い方: gh-q [owner]  (ownerを省略すると自分のrepo)
       function gh-q() {
-        if [[ -z "$GH_Q_DEFAULT_USER" ]]; then
-          GH_Q_DEFAULT_USER=$(gh api user -q .login)
+        local owner="$1"
+        if [[ -z "$owner" ]]; then
+          owner=$(gh api user -q .login)
         fi
 
         local query='
@@ -44,7 +45,7 @@ query ($owner: String!, $endCursor: String) {
 
         local REPO=$(gh api graphql \
           --paginate \
-          --field owner="$GH_Q_DEFAULT_USER" \
+          --field owner="$owner" \
           -f query="$query" \
           --jq '.data.repositoryOwner.repositories.nodes[].nameWithOwner' \
         | fzf)
