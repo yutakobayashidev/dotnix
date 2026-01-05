@@ -3,7 +3,9 @@
 {
   
   imports = [
-    ./vscode.nix
+    ./modules/home/vscode.nix
+    ./modules/home/hyprpanel.nix
+    ./modules/home/ghostty
   ];
 
   home.username = "yuta";
@@ -18,12 +20,28 @@
    nil
    claude-code
    _1password-gui
+   rofi
+   swww
+   spotify
+   discord
+   slack
+   obsidian
+   fastfetch
   ];
 
   programs.git = {
     enable = true;
-    userName = "yutakobayashidev";
-    userEmail = "hi@yutakobayashi.com";
+    settings.user = {
+      name = "yutakobayashidev";
+      email = "hi@yutakobayashi.com";
+    };
+  };
+
+  programs.bash = {
+    enable = true;
+    shellAliases = {
+      g = "git";
+    };
   };
 
   home.stateVersion = "25.11";

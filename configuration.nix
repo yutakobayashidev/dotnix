@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./ssh.nix
+      ./fonts.nix
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -45,16 +46,50 @@
     LC_TIME = "ja_JP.UTF-8";
   };
 
+  # Japanese Input (fcitx5 + mozc)
+  i18n.inputMethod = {
+    enable = true;
+    type = "fcitx5";
+    fcitx5 = {
+      waylandFrontend = true;
+      addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+      ];
+      settings = {
+        globalOptions = {
+          "Hotkey/TriggerKeys"."0" = "Control+space";
+        };
+        inputMethod = {
+          "Groups/0" = {
+            Name = "Default";
+            "Default Layout" = "us";
+            DefaultIM = "mozc";
+          };
+          "Groups/0/Items/0".Name = "keyboard-us";
+          "Groups/0/Items/1".Name = "mozc";
+          GroupOrder."0" = "Default";
+        };
+      };
+    };
+  };
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # Hyprland
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  # Greetd + ReGreet
+  services.greetd.enable = true;
+  programs.regreet.enable = true; 
 
   # Configure keymap in X11
   services.xserver.xkb = {
-    layout = "jp";
+    layout = "us";
     variant = "";
   };
 
@@ -76,6 +111,10 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
+
+  # Enable Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -99,6 +138,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    wofi
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
