@@ -10,7 +10,7 @@
     enable = true;
     shellAliases = {
       g = "git";
-      rebuild = "sudo nixos-rebuild switch --flake /home/yuta/nixos#nixos";
+      rebuild = "nh os switch";
       ls = "lsd";
       ll = "lsd -l";
       la = "lsd -la";
