@@ -12,7 +12,6 @@
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     shellAliases = {
-      g = "git";
       rebuild = "nh os switch";
       ls = "lsd";
       ll = "lsd -l";
@@ -23,6 +22,9 @@
     initContent = ''
       eval "$(direnv hook zsh)"
       eval "$(zoxide init zsh)"
+
+      # oh-my-zsh gitプラグインのgエイリアスを解除
+      unalias g 2>/dev/null
 
       # gh-q: ghq + fzf でリポジトリ選択・clone
       # https://github.com/ryoppippi/dotfiles/blob/5a0a1f1d68b66a89c2c916c9e97c0129251ca467/fish/functions/gh-q.fish
@@ -56,6 +58,14 @@ query ($owner: String!, $endCursor: String) {
 
         ghq get "$REPO"
         cd "$(ghq root)/github.com/$REPO"
+      }
+
+      # g: ghqリポジトリをpecoで選択してcd
+      function g () {
+        local selected_dir=$(ghq list -p | peco --prompt="repositories >" --query "$1")
+        if [ -n "$selected_dir" ]; then
+          cd "$selected_dir"
+        fi
       }
     '';
     plugins = [

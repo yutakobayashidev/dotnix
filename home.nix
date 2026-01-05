@@ -49,6 +49,7 @@
    jq
    speedtest-cli
    bandwhich
+   peco
   ];
 
   home.stateVersion = "25.11";
