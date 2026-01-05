@@ -13,6 +13,7 @@
     enableCompletion = true;
     shellAliases = {
       rebuild = "nh os switch";
+      cc = "claude";
       ls = "lsd";
       ll = "lsd -l";
       la = "lsd -la";
