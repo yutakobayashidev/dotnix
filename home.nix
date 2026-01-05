@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  
+  imports = [
+    ./vscode.nix
+  ];
+
   home.username = "yuta";
   home.homeDirectory = "/home/yuta";
 
@@ -8,7 +13,10 @@
    git
    curl
    wget
-   vim 
+   vim
+   vscode
+   nil
+   _1password-gui
   ];
 
   programs.git = {
