@@ -11,9 +11,15 @@
     shellAliases = {
       g = "git";
       rebuild = "sudo nixos-rebuild switch --flake /home/yuta/nixos#nixos";
+      ls = "lsd";
+      ll = "lsd -l";
+      la = "lsd -la";
+      lt = "lsd --tree";
+      cat = "bat";
     };
-    initExtra = ''
+    initContent = ''
       eval "$(direnv hook zsh)"
+      eval "$(zoxide init zsh)"
     '';
     oh-my-zsh = {
       enable = true;

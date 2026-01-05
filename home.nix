@@ -34,6 +34,11 @@
    google-cloud-sdk
    glow
    ripgrep
+   lsd
+   bat
+   btop
+   zoxide
+   sl
   ];
 
   home.stateVersion = "25.11";
