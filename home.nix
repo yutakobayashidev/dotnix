@@ -39,6 +39,8 @@
    btop
    zoxide
    sl
+   fzf
+   ghq
   ];
 
   home.stateVersion = "25.11";
