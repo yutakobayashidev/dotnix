@@ -16,6 +16,7 @@
    vim
    vscode
    nil
+   claude-code
    _1password-gui
   ];
 
