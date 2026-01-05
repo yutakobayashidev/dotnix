@@ -27,6 +27,7 @@
    slack
    obsidian
    fastfetch
+   gh
   ];
 
   programs.git = {
