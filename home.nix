@@ -42,6 +42,13 @@
    fzf
    ghq
    tokei
+   jnv
+   vhs
+   xh
+   aria2
+   jq
+   speedtest-cli
+   bandwhich
   ];
 
   home.stateVersion = "25.11";
