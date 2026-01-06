@@ -24,6 +24,8 @@
    claude-code
    _1password-gui
    rofi
+   cliphist
+   wl-clipboard
    swww
    spotify
    discord
@@ -50,6 +52,8 @@
    speedtest-cli
    bandwhich
    peco
+   tree
+   tea
   ];
 
   home.stateVersion = "25.11";

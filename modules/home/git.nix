@@ -9,6 +9,7 @@
         email = "hi@yutakobayashi.com";
       };
       credential."https://github.com".helper = "!gh auth git-credential";
+      push.autoSetupRemote = true;
     };
   };
 }

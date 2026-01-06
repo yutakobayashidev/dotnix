@@ -5,6 +5,7 @@
     enable = true;
     settings = {
       bar.launcher.autoDetectIcon = true;
+      bar.battery.enabled = false;
       layout = {
         "bar.layouts" = {
           "0" = {
