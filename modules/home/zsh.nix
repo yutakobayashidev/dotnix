@@ -14,6 +14,7 @@
     shellAliases = {
       rebuild = "nh os switch";
       cc = "claude";
+      p = "pnpm";
       ls = "lsd";
       ll = "lsd -l";
       la = "lsd -la";
@@ -63,11 +64,15 @@ query ($owner: String!, $endCursor: String) {
         cd "$(ghq root)/github.com/$REPO"
       }
 
-      # g: ghqリポジトリをpecoで選択してcd
+      # g: 引数なし→ghq+pecoでcd、引数あり→gitに転送
       function g () {
-        local selected_dir=$(ghq list -p | peco --prompt="repositories >" --query "$1")
-        if [ -n "$selected_dir" ]; then
-          cd "$selected_dir"
+        if [[ $# -eq 0 ]]; then
+          local selected_dir=$(ghq list -p | peco --prompt="repositories >")
+          if [ -n "$selected_dir" ]; then
+            cd "$selected_dir"
+          fi
+        else
+          git "$@"
         fi
       }
 

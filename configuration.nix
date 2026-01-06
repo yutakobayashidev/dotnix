@@ -119,6 +119,14 @@
   # Docker
   virtualisation.docker.enable = true;
 
+  # nix-ld - Run dynamically linked executables (npm binaries, etc.)
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc
+    ];
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 

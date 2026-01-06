@@ -8,6 +8,7 @@
       noto-fonts-color-emoji
       inter
       jetbrains-mono
+      nerd-fonts.jetbrains-mono
     ];
 
     fontconfig = {
