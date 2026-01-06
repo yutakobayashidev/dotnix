@@ -14,6 +14,7 @@ let
     nui-nvim
     nvim-web-devicons
     blink-cmp
+    vim-wakatime
   ];
 in
 {
