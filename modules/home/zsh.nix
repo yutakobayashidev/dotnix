@@ -19,6 +19,8 @@
       la = "lsd -la";
       lt = "lsd --tree";
       cat = "bat";
+      prw = "gh pr view --web";
+      gundo = "git reset --soft HEAD~1";
     };
     initContent = ''
       eval "$(direnv hook zsh)"
