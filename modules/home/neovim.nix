@@ -15,6 +15,8 @@ let
     nvim-web-devicons
     blink-cmp
     vim-wakatime
+    noice-nvim
+    nvim-notify
   ];
 in
 {
