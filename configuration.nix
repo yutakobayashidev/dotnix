@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -27,6 +27,9 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.nameservers = [ "192.168.0.12" ];
+  networking.useDHCP = lib.mkDefault false;
+  networking.resolvconf.enable = false;
 
   # Set your time zone.
   time.timeZone = "Asia/Tokyo";
@@ -74,9 +77,6 @@
     };
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
   # Hyprland
   programs.hyprland = {
     enable = true;
@@ -86,12 +86,6 @@
   # Greetd + ReGreet
   services.greetd.enable = true;
   programs.regreet.enable = true; 
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
