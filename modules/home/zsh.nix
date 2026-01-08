@@ -12,16 +12,17 @@
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     shellAliases = {
-      rebuild = "nh os switch";
+      rebuild = "nh os switch && source ~/.zshrc";
       cc = "claude";
       p = "pnpm";
-      ls = "lsd -1";
+      ls = "lsd -1A";
       ll = "lsd -l";
       la = "lsd -la";
       lt = "lsd --tree";
       cat = "bat";
       prw = "gh pr view --web";
       gundo = "git reset --soft HEAD~1";
+      cpd = "pwd | wl-copy";
     };
     initContent = ''
       eval "$(direnv hook zsh)"
