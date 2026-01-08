@@ -21,6 +21,7 @@ return {
         width = 30,
         mappings = {
           ["<space>"] = "none",
+          ["<cr>"] = "open_tabnew",
         },
       },
     },
