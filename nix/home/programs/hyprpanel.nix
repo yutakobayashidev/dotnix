@@ -7,9 +7,17 @@
       "bar.launcher.autoDetectIcon" = true;
       "bar.layouts" = {
         "0" = {
-          left = [ "dashboard" "workspaces" ];
+          left = [
+            "dashboard"
+            "workspaces"
+          ];
           middle = [ "media" ];
-          right = [ "volume" "clock" "systray" "notifications" ];
+          right = [
+            "volume"
+            "clock"
+            "systray"
+            "notifications"
+          ];
         };
       };
       "theme.font.name" = "Noto Sans CJK JP";

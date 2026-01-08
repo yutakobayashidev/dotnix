@@ -85,7 +85,13 @@ in
           }
         },
         dev = {
-          path = "${pkgs.vimUtils.packDir { myNeovimPackages = { start = plugins; }; }}/pack/myNeovimPackages/start",
+          path = "${
+            pkgs.vimUtils.packDir {
+              myNeovimPackages = {
+                start = plugins;
+              };
+            }
+          }/pack/myNeovimPackages/start",
           patterns = { "" },
         },
         install = {

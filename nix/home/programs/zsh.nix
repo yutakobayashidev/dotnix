@@ -25,75 +25,75 @@
       cpd = "pwd | wl-copy";
     };
     initContent = ''
-      eval "$(direnv hook zsh)"
-      eval "$(zoxide init zsh)"
+            eval "$(direnv hook zsh)"
+            eval "$(zoxide init zsh)"
 
-      # oh-my-zsh gitプラグインのgエイリアスを解除
-      unalias g 2>/dev/null
+            # oh-my-zsh gitプラグインのgエイリアスを解除
+            unalias g 2>/dev/null
 
-      # gh-q: ghq + fzf でリポジトリ選択・clone
-      # https://github.com/ryoppippi/dotfiles/blob/5a0a1f1d68b66a89c2c916c9e97c0129251ca467/fish/functions/gh-q.fish
-      # 使い方: gh-q [-o] [owner]  (ownerを省略すると自分のrepo、-oでGitHubを開く)
-      function gh-q() {
-        local open_github=false
-        if [[ "$1" == "-o" ]]; then
-          open_github=true
-          shift
-        fi
+            # gh-q: ghq + fzf でリポジトリ選択・clone
+            # https://github.com/ryoppippi/dotfiles/blob/5a0a1f1d68b66a89c2c916c9e97c0129251ca467/fish/functions/gh-q.fish
+            # 使い方: gh-q [-o] [owner]  (ownerを省略すると自分のrepo、-oでGitHubを開く)
+            function gh-q() {
+              local open_github=false
+              if [[ "$1" == "-o" ]]; then
+                open_github=true
+                shift
+              fi
 
-        local owner="$1"
-        if [[ -z "$owner" ]]; then
-          owner=$(gh api user -q .login)
-        fi
+              local owner="$1"
+              if [[ -z "$owner" ]]; then
+                owner=$(gh api user -q .login)
+              fi
 
-        local query='
-query ($owner: String!, $endCursor: String) {
-  repositoryOwner(login: $owner) {
-    repositories(first: 30, after: $endCursor) {
-      pageInfo { hasNextPage endCursor }
-      nodes { nameWithOwner }
-    }
-  }
-}'
+              local query='
+      query ($owner: String!, $endCursor: String) {
+        repositoryOwner(login: $owner) {
+          repositories(first: 30, after: $endCursor) {
+            pageInfo { hasNextPage endCursor }
+            nodes { nameWithOwner }
+          }
+        }
+      }'
 
-        local REPO=$(gh api graphql \
-          --paginate \
-          --field owner="$owner" \
-          -f query="$query" \
-          --jq '.data.repositoryOwner.repositories.nodes[].nameWithOwner' \
-        | fzf)
+              local REPO=$(gh api graphql \
+                --paginate \
+                --field owner="$owner" \
+                -f query="$query" \
+                --jq '.data.repositoryOwner.repositories.nodes[].nameWithOwner' \
+              | fzf)
 
-        if [[ -z "$REPO" ]]; then
-          return
-        fi
+              if [[ -z "$REPO" ]]; then
+                return
+              fi
 
-        if $open_github; then
-          xdg-open "https://github.com/$REPO"
-        else
-          ghq get "$REPO"
-          cd "$(ghq root)/github.com/$REPO"
-        fi
-      }
+              if $open_github; then
+                xdg-open "https://github.com/$REPO"
+              else
+                ghq get "$REPO"
+                cd "$(ghq root)/github.com/$REPO"
+              fi
+            }
 
-      # g: 引数なし→ghq+pecoでcd、引数あり→gitに転送
-      function g () {
-        if [[ $# -eq 0 ]]; then
-          local selected_dir=$(ghq list -p | peco --prompt="repositories >")
-          if [ -n "$selected_dir" ]; then
-            cd "$selected_dir"
-          fi
-        else
-          git "$@"
-        fi
-      }
+            # g: 引数なし→ghq+pecoでcd、引数あり→gitに転送
+            function g () {
+              if [[ $# -eq 0 ]]; then
+                local selected_dir=$(ghq list -p | peco --prompt="repositories >")
+                if [ -n "$selected_dir" ]; then
+                  cd "$selected_dir"
+                fi
+              else
+                git "$@"
+              fi
+            }
 
-      # Alt+Up で親ディレクトリに移動
-      function cd-up () {
-        cd ..
-        zle reset-prompt
-      }
-      zle -N cd-up
-      bindkey '^[[1;3A' cd-up
+            # Alt+Up で親ディレクトリに移動
+            function cd-up () {
+              cd ..
+              zle reset-prompt
+            }
+            zle -N cd-up
+            bindkey '^[[1;3A' cd-up
     '';
     plugins = [
       {

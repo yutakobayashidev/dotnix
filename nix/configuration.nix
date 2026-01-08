@@ -2,18 +2,26 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./ssh.nix
-      ./fonts.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./ssh.nix
+    ./fonts.nix
+  ];
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -85,7 +93,7 @@
 
   # Greetd + ReGreet
   services.greetd.enable = true;
-  programs.regreet.enable = true; 
+  programs.regreet.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -129,9 +137,13 @@
     isNormalUser = true;
     description = "yuta";
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+    ];
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -146,7 +158,7 @@
     enable = true;
     clean.enable = true;
     clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/home/yuta/nixos";
+    flake = "/home/yuta/ghq/github.com/yutakobayashidev/dotnix";
   };
 
   # Allow unfree packages

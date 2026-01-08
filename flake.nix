@@ -22,38 +22,48 @@
     ];
   };
 
-  outputs = { self, nixpkgs, ghostty, home-manager, llm-agents, gh-nippou, ... }:
-  let
-    system = "x86_64-linux";
+  outputs =
+    {
+      self,
+      nixpkgs,
+      ghostty,
+      home-manager,
+      llm-agents,
+      gh-nippou,
+      ...
+    }:
+    let
+      system = "x86_64-linux";
 
-    # Overlay to add external packages to pkgs
-    overlay = final: prev: {
-      # llm-agents packages
-      claude-code = llm-agents.packages.${system}.claude-code;
-      ccusage = llm-agents.packages.${system}.ccusage;
-      codex = llm-agents.packages.${system}.codex;
-      # ghostty
-      ghostty = ghostty.packages.${system}.default;
-      # gh-nippou
-      gh-nippou = gh-nippou.packages.${system}.default;
+      # Overlay to add external packages to pkgs
+      overlay = final: prev: {
+        # llm-agents packages
+        claude-code = llm-agents.packages.${system}.claude-code;
+        ccusage = llm-agents.packages.${system}.ccusage;
+        codex = llm-agents.packages.${system}.codex;
+        # ghostty
+        ghostty = ghostty.packages.${system}.default;
+        # gh-nippou
+        gh-nippou = gh-nippou.packages.${system}.default;
+      };
+    in
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./nix/configuration.nix
+          {
+            nixpkgs.overlays = [ overlay ];
+            nixpkgs.config.allowUnfreePredicate =
+              pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
+          }
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.yuta = import ./nix/home;
+          }
+        ];
+      };
     };
-  in
-  {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        ./nix/configuration.nix
-        {
-          nixpkgs.overlays = [ overlay ];
-          nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
-        }
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.yuta = import ./nix/home;
-        }
-      ];
-    };
-  };
 }

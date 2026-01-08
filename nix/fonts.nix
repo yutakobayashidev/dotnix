@@ -13,7 +13,10 @@
 
     fontconfig = {
       defaultFonts = {
-        sansSerif = [ "Inter" "Noto Sans CJK JP" ];
+        sansSerif = [
+          "Inter"
+          "Noto Sans CJK JP"
+        ];
         serif = [ "Noto Serif CJK JP" ];
         monospace = [ "JetBrains Mono" ];
       };

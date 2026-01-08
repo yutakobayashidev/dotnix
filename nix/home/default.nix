@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  
+
   imports = [
     ./programs/vscode.nix
     ./programs/hyprpanel.nix
@@ -18,54 +18,55 @@
   home.homeDirectory = "/home/yuta";
 
   home.packages = with pkgs; [
-   # Overlay packages
-   ghostty
-   claude-code
-   ccusage
-   codex
-   # System
-   git
-   curl
-   wget
-   vscode
-   nil
-   _1password-gui
-   rofi
-   cliphist
-   wl-clipboard
-   swww
-   spotify
-   discord
-   slack
-   obsidian
-   fastfetch
-   google-cloud-sdk
-   glow
-   ripgrep
-   lsd
-   btop
-   zoxide
-   sl
-   fzf
-   tokei
-   jnv
-   vhs
-   xh
-   aria2
-   jq
-   speedtest-cli
-   bandwhich
-   peco
-   tree
-   cava
-   grimblast
-   swappy
-   zenity
-   bun
-   arp-scan
-   nmap
-   rpi-imager
-   dnsutils
+    # Overlay packages
+    ghostty
+    claude-code
+    ccusage
+    codex
+    # System
+    git
+    curl
+    wget
+    vscode
+    nil
+    nixfmt-tree
+    _1password-gui
+    rofi
+    cliphist
+    wl-clipboard
+    swww
+    spotify
+    discord
+    slack
+    obsidian
+    fastfetch
+    google-cloud-sdk
+    glow
+    ripgrep
+    lsd
+    btop
+    zoxide
+    sl
+    fzf
+    tokei
+    jnv
+    vhs
+    xh
+    aria2
+    jq
+    speedtest-cli
+    bandwhich
+    peco
+    tree
+    cava
+    grimblast
+    swappy
+    zenity
+    bun
+    arp-scan
+    nmap
+    rpi-imager
+    dnsutils
   ];
 
   # Hyprland
