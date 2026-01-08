@@ -15,7 +15,7 @@
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./configuration.nix
+        ./nix/configuration.nix
         ({ pkgs, ... }: {
           nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude" ];
           environment.systemPackages = [
@@ -28,7 +28,7 @@
           home-manager.useUserPackages = true;
           home-manager.users.yuta = {
             imports = [
-              ./home.nix
+              ./nix/home.nix
               claude-code-overlay.homeManagerModules.default
             ];
             programs.claude-code.enable = true;

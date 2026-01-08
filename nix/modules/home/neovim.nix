@@ -97,6 +97,6 @@ in
 
   xdg.configFile."nvim/lua" = {
     recursive = true;
-    source = ./nvim/lua;
+    source = ../../../nvim/lua;
   };
 }

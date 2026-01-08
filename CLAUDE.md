@@ -23,16 +23,19 @@ NixOS flake構成 with home-manager（nixos-unstable）
 
 ```
 flake.nix              # エントリポイント（inputs: nixpkgs, home-manager, ghostty）
-├── configuration.nix  # システム設定（Hyprland, fcitx5-mozc, Docker, nh）
-├── home.nix           # ユーザーパッケージ・home-manager imports
-└── modules/home/      # home-manager モジュール
-    ├── zsh.nix        # シェル設定（エイリアス、カスタム関数）
-    ├── hyprpanel.nix  # ステータスバー
-    ├── ghostty/       # ターミナル
-    ├── neovim.nix
-    ├── tmux.nix
-    ├── git.nix
-    └── vscode.nix
+├── nix/               # NixOS設定
+│   ├── configuration.nix  # システム設定（Hyprland, fcitx5-mozc, Docker, nh）
+│   ├── home.nix           # ユーザーパッケージ・home-manager imports
+│   └── modules/home/      # home-manager モジュール
+│       ├── zsh.nix        # シェル設定（エイリアス、カスタム関数）
+│       ├── hyprpanel.nix  # ステータスバー
+│       ├── ghostty/       # ターミナル
+│       ├── neovim.nix
+│       ├── tmux.nix
+│       ├── git.nix
+│       └── vscode.nix
+└── nvim/              # Neovim設定（Lua）
+    └── lua/plugins/   # lazy.nvim プラグイン設定
 ```
 
 ## Key Aliases (zsh.nix)
