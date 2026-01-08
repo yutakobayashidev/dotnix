@@ -17,6 +17,13 @@
   home.homeDirectory = "/home/yuta";
 
   home.packages = with pkgs; [
+   # Overlay packages
+   ghostty
+   claude-code
+   ccusage
+   codex
+   gh-nippou
+   # System
    git
    curl
    wget

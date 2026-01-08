@@ -9,6 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
+    gh-nippou = {
+      url = "github:ryoppippi/gh-nippou";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -18,20 +22,31 @@
     ];
   };
 
-  outputs = { self, nixpkgs, ghostty, home-manager, llm-agents, ... }: {
+  outputs = { self, nixpkgs, ghostty, home-manager, llm-agents, gh-nippou, ... }:
+  let
+    system = "x86_64-linux";
+
+    # Overlay to add external packages to pkgs
+    overlay = final: prev: {
+      # llm-agents packages
+      claude-code = llm-agents.packages.${system}.claude-code;
+      ccusage = llm-agents.packages.${system}.ccusage;
+      codex = llm-agents.packages.${system}.codex;
+      # ghostty
+      ghostty = ghostty.packages.${system}.default;
+      # gh-nippou
+      gh-nippou = gh-nippou.packages.${system}.default;
+    };
+  in
+  {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
       modules = [
         ./nix/configuration.nix
-        ({ pkgs, ... }: {
+        {
+          nixpkgs.overlays = [ overlay ];
           nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
-          environment.systemPackages = [
-            ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
-            llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code
-            llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.ccusage
-            llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex
-          ];
-        })
+        }
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
