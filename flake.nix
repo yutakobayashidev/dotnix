@@ -51,7 +51,7 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.yuta = import ./nix/home.nix;
+          home-manager.users.yuta = import ./nix/home;
         }
       ];
     };

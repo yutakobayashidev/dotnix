@@ -3,14 +3,14 @@
 {
   
   imports = [
-    ./modules/home/vscode.nix
-    ./modules/home/hyprpanel.nix
-    ./modules/home/ghostty
-    ./modules/home/git.nix
-    ./modules/home/neovim.nix
-    ./modules/home/zsh.nix
-    ./modules/home/tmux.nix
-    ./modules/home/bat.nix
+    ./programs/vscode.nix
+    ./programs/hyprpanel.nix
+    ./programs/ghostty
+    ./programs/git.nix
+    ./programs/neovim.nix
+    ./programs/zsh.nix
+    ./programs/tmux.nix
+    ./programs/bat.nix
   ];
 
   home.username = "yuta";
@@ -73,7 +73,7 @@
 
   # Hyprland
   wayland.windowManager.hyprland.enable = true;
-  wayland.windowManager.hyprland.settings = import ./modules/home/hyprland.nix { inherit pkgs; };
+  wayland.windowManager.hyprland.settings = import ./programs/hyprland.nix { inherit pkgs; };
   wayland.windowManager.hyprland.extraConfig = ''
     windowrule {
       name = spotify-to-scratchpad

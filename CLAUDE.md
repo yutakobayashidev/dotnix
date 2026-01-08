@@ -22,18 +22,19 @@ nix flake update
 NixOS flake構成 with home-manager（nixos-unstable）
 
 ```
-flake.nix              # エントリポイント（inputs: nixpkgs, home-manager, ghostty）
+flake.nix              # エントリポイント（inputs: nixpkgs, home-manager, ghostty, llm-agents, gh-nippou）
 ├── nix/               # NixOS設定
 │   ├── configuration.nix  # システム設定（Hyprland, fcitx5-mozc, Docker, nh）
-│   ├── home.nix           # ユーザーパッケージ・home-manager imports
-│   └── modules/home/      # home-manager モジュール
-│       ├── zsh.nix        # シェル設定（エイリアス、カスタム関数）
-│       ├── hyprpanel.nix  # ステータスバー
-│       ├── ghostty/       # ターミナル
-│       ├── neovim.nix
-│       ├── tmux.nix
-│       ├── git.nix
-│       └── vscode.nix
+│   └── home/              # home-manager設定
+│       ├── default.nix    # ユーザーパッケージ・imports
+│       └── programs/      # プログラム設定
+│           ├── zsh.nix        # シェル設定（エイリアス、カスタム関数）
+│           ├── hyprpanel.nix  # ステータスバー
+│           ├── ghostty/       # ターミナル
+│           ├── neovim.nix
+│           ├── tmux.nix
+│           ├── git.nix
+│           └── vscode.nix
 └── nvim/              # Neovim設定（Lua）
     └── lua/plugins/   # lazy.nvim プラグイン設定
 ```
