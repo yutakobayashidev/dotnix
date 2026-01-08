@@ -7,6 +7,7 @@
     ./programs/hyprpanel.nix
     ./programs/ghostty
     ./programs/git.nix
+    ./programs/gh.nix
     ./programs/neovim.nix
     ./programs/zsh.nix
     ./programs/tmux.nix
@@ -22,7 +23,6 @@
    claude-code
    ccusage
    codex
-   gh-nippou
    # System
    git
    curl
@@ -39,7 +39,6 @@
    slack
    obsidian
    fastfetch
-   gh
    google-cloud-sdk
    glow
    ripgrep
@@ -48,7 +47,6 @@
    zoxide
    sl
    fzf
-   ghq
    tokei
    jnv
    vhs
@@ -59,7 +57,6 @@
    bandwhich
    peco
    tree
-   tea
    cava
    grimblast
    swappy
