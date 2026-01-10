@@ -27,6 +27,7 @@ let
     nvim-ts-autotag
     nvim-autopairs
     bufferline-nvim
+    kanagawa-nvim
     # avante.nvim and dependencies
     avante-nvim
     dressing-nvim
