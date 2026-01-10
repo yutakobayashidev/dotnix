@@ -45,6 +45,8 @@
     discord
     slack
     obsidian
+    google-chrome
+    anki
     fastfetch
     google-cloud-sdk
     glow

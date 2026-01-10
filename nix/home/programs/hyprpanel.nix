@@ -14,6 +14,7 @@
           middle = [ "media" ];
           right = [
             "volume"
+            "bluetooth"
             "clock"
             "systray"
             "notifications"
