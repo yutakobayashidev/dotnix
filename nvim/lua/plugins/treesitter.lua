@@ -11,6 +11,9 @@ return {
       end
     end,
     opts = {
+      auto_install = false, -- Grammars are provided by Nix
+      sync_install = false,
+      ensure_installed = { "nix" },
       highlight = { enable = true },
       indent = { enable = true },
     },
