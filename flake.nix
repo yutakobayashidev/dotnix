@@ -41,6 +41,7 @@
         claude-code = llm-agents.packages.${system}.claude-code;
         ccusage = llm-agents.packages.${system}.ccusage;
         codex = llm-agents.packages.${system}.codex;
+	opencode = llm-agents.packages.${system}.opencode;
         # ghostty
         ghostty = ghostty.packages.${system}.default;
         # gh-nippou

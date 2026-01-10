@@ -23,6 +23,7 @@
     claude-code
     ccusage
     codex
+    opencode
     # System
     git
     curl
