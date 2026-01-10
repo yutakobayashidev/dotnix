@@ -1,40 +1,10 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, helpers, dotfilesDir, ... }:
 
 let
-  plugins = with pkgs.vimPlugins; [
-    lazy-nvim
-    which-key-nvim
-    oil-nvim
-    mini-icons
-    copilot-vim
-    copilot-lua
-    snacks-nvim
-    telescope-nvim
-    plenary-nvim
-    neo-tree-nvim
-    nui-nvim
-    nvim-web-devicons
-    blink-cmp
-    vim-wakatime
-    noice-nvim
-    nvim-notify
-    conform-nvim
-    nvim-lint
-    gitsigns-nvim
-    lualine-nvim
-    neogit
-    diffview-nvim
-    nvim-ts-autotag
-    nvim-autopairs
-    bufferline-nvim
-    kanagawa-nvim
-    # avante.nvim and dependencies
-    avante-nvim
-    dressing-nvim
-    img-clip-nvim
-    render-markdown-nvim
-    nvim-treesitter
-  ];
+  treesitterGrammars = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+  telescopeFzfNative = pkgs.vimPlugins.telescope-fzf-native-nvim;
+  nvimDotfilesDir = "${dotfilesDir}/nvim";
+  nvimConfigDir = "${config.xdg.configHome}/nvim";
 in
 {
   programs.neovim = {
@@ -44,66 +14,36 @@ in
     defaultEditor = true;
     withNodeJs = true;
 
-    plugins = plugins;
-
     extraPackages = with pkgs; [
       prettierd
       eslint_d
+      git
+      gcc
+      gnumake
     ];
 
-    extraLuaConfig = ''
-      vim.g.mapleader = " "
-      vim.g.maplocalleader = " "
-
-      -- Transparent background
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        callback = function()
-          local groups = {
-            "Normal", "NormalNC", "NormalFloat",
-            "SignColumn", "EndOfBuffer",
-            "NeoTreeNormal", "NeoTreeNormalNC",
-          }
-          for _, group in ipairs(groups) do
-            vim.api.nvim_set_hl(0, group, { bg = "NONE", ctermbg = "NONE" })
-          end
-        end,
-      })
-      -- Apply immediately for default colorscheme
-      vim.api.nvim_set_hl(0, "Normal", { bg = "NONE", ctermbg = "NONE" })
-      vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE", ctermbg = "NONE" })
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE", ctermbg = "NONE" })
-      vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE", ctermbg = "NONE" })
-      vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "NONE", ctermbg = "NONE" })
-
-      require("lazy").setup({
-        spec = {
-          { import = "plugins" },
-        },
-        performance = {
-          reset_packpath = false,
-          rtp = {
-            reset = false,
-          }
-        },
-        dev = {
-          path = "${
-            pkgs.vimUtils.packDir {
-              myNeovimPackages = {
-                start = plugins;
-              };
-            }
-          }/pack/myNeovimPackages/start",
-          patterns = { "" },
-        },
-        install = {
-          missing = false,
-        },
-      })
-    '';
+    extraWrapperArgs = [
+      "--set" "TREESITTER_GRAMMARS" "${treesitterGrammars}"
+      "--set" "TELESCOPE_FZF_NATIVE" "${telescopeFzfNative}"
+    ];
   };
 
-  xdg.configFile."nvim/lua" = {
-    recursive = true;
-    source = ../../../nvim/lua;
-  };
+  home.activation.linkNvimConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${helpers.activation.mkLinkForce}
+    link_force "${nvimDotfilesDir}" "${nvimConfigDir}"
+  '';
+
+  home.activation.restoreNeovimPlugins = lib.hm.dag.entryAfter [ "linkNvimConfig" ] ''
+    LAZY_DIR="$HOME/.local/share/nvim/lazy"
+    LAZY_LOCK="${nvimDotfilesDir}/lazy-lock.json"
+    LAZY_LOCK_TIMESTAMP="$LAZY_DIR/.lazy-lock-timestamp"
+
+    if [[ ! -f "$LAZY_LOCK_TIMESTAMP" ]] || [[ "$LAZY_LOCK" -nt "$LAZY_LOCK_TIMESTAMP" ]]; then
+      ${pkgs.bash}/bin/bash \
+        ${./check.sh} \
+        "${nvimDotfilesDir}" \
+        "$LAZY_DIR" \
+        ${pkgs.neovim}/bin/nvim
+    fi
+  '';
 }

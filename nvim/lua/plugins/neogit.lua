@@ -1,7 +1,6 @@
 return {
   {
     "NeogitOrg/neogit",
-    dev = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
@@ -60,7 +59,6 @@ return {
   },
   {
     "sindrets/diffview.nvim",
-    dev = true,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     cmd = { "DiffviewOpen", "DiffviewFileHistory", "DiffviewClose" },
     keys = {

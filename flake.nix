@@ -35,6 +35,12 @@
     let
       system = "x86_64-linux";
 
+      # Helper functions for home-manager
+      helpers = import ./nix/modules/lib/helpers { lib = nixpkgs.lib; };
+
+      # Dotfiles directory path
+      dotfilesDir = "/home/yuta/ghq/github.com/yutakobayashidev/dotnix";
+
       # Overlay to add external packages to pkgs
       overlay = final: prev: {
         # llm-agents packages
@@ -62,6 +68,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit helpers dotfilesDir; };
             home-manager.users.yuta = import ./nix/home;
           }
         ];
