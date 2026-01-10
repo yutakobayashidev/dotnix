@@ -105,6 +105,24 @@
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
+
+  # YubiKey基本サポート
+  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.pcscd.enable = true;
+
+  # U2F PAM設定
+  security.pam.u2f = {
+    enable = true;
+    control = "sufficient";
+    settings = {
+      origin = "pam://nixos";
+      appid = "pam://nixos";
+    };
+  };
+
+  # polkitでU2F認証を有効化（1Password用）
+  security.pam.services.polkit-1.u2fAuth = true;
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -123,8 +141,10 @@
   hardware.bluetooth.powerOnBoot = true;
 
   # Disable power key handling (HHKB ESC misfire prevention)
-  services.logind.powerKey = "ignore";
-  services.logind.powerKeyLongPress = "poweroff";
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+    HandlePowerKeyLongPress = "poweroff";
+  };
 
   # Docker
   virtualisation.docker.enable = true;

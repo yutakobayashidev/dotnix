@@ -27,6 +27,11 @@
     # System
     git
     curl
+    # YubiKey
+    yubikey-manager
+    yubioath-flutter
+    pam_u2f
+    pamtester
     wget
     vscode
     nil
