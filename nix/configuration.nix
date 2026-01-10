@@ -17,10 +17,14 @@
     ./fonts.nix
   ];
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    # Trust flake's nixConfig settings
+    accept-flake-config = true;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
