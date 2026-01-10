@@ -118,6 +118,10 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
+  # Disable power key handling (HHKB ESC misfire prevention)
+  services.logind.powerKey = "ignore";
+  services.logind.powerKeyLongPress = "poweroff";
+
   # Docker
   virtualisation.docker.enable = true;
 
