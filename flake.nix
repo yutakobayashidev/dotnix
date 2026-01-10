@@ -47,11 +47,13 @@
         claude-code = llm-agents.packages.${system}.claude-code;
         ccusage = llm-agents.packages.${system}.ccusage;
         codex = llm-agents.packages.${system}.codex;
-	opencode = llm-agents.packages.${system}.opencode;
+        opencode = llm-agents.packages.${system}.opencode;
         # ghostty
         ghostty = ghostty.packages.${system}.default;
         # gh-nippou
         gh-nippou = gh-nippou.packages.${system}.default;
+        # pretty-ts-errors-markdown
+        pretty-ts-errors-markdown = prev.callPackage ./nix/packages/pretty-ts-errors-markdown.nix { };
       };
     in
     {

@@ -20,11 +20,26 @@ in
       git
       gcc
       gnumake
+      vtsls
+      pretty-ts-errors-markdown
+
+      # Node.js-based language servers
+      astro-language-server
+      emmet-language-server
+      prisma-language-server
+      stylelint
+      stylelint-lsp
+      svelte-language-server
+      tailwindcss-language-server
+      vscode-langservers-extracted
+      vue-language-server
+      yaml-language-server
     ];
 
     extraWrapperArgs = [
       "--set" "TREESITTER_GRAMMARS" "${treesitterGrammars}"
       "--set" "TELESCOPE_FZF_NATIVE" "${telescopeFzfNative}"
+      "--set" "PRETTY_TS_ERRORS_BIN" "${pkgs.pretty-ts-errors-markdown}/bin/pretty-ts-errors-markdown"
     ];
   };
 
