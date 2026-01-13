@@ -53,6 +53,7 @@
     ripgrep
     lsd
     btop
+    zellij
     zoxide
     sl
     fzf

@@ -149,6 +149,15 @@
   # Docker
   virtualisation.docker.enable = true;
 
+  # Tailscale
+  services.tailscale = {
+    enable = true;
+    extraUpFlags = [
+      "--accept-dns=false"
+      "--accept-routes"
+    ];
+  };
+
   # nix-ld - Run dynamically linked executables (npm binaries, etc.)
   programs.nix-ld = {
     enable = true;
