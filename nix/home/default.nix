@@ -12,6 +12,8 @@
     ./programs/zsh.nix
     ./programs/tmux.nix
     ./programs/bat.nix
+    ./programs/hypridle.nix
+    ./programs/hyprlock.nix
   ];
 
   home.username = "yuta";
@@ -78,6 +80,9 @@
     nmap
     rpi-imager
     dnsutils
+    # Screen locking & idle management
+    hyprlock
+    brightnessctl
   ];
 
   # Hyprland
