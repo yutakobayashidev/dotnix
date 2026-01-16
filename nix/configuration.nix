@@ -61,14 +61,13 @@
     LC_TIME = "ja_JP.UTF-8";
   };
 
-  # Japanese Input (fcitx5 + mozc)
+  # Japanese Input (fcitx5 + hazkey)
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
     fcitx5 = {
       waylandFrontend = true;
       addons = with pkgs; [
-        fcitx5-mozc
         fcitx5-gtk
       ];
       settings = {
@@ -79,15 +78,18 @@
           "Groups/0" = {
             Name = "Default";
             "Default Layout" = "us";
-            DefaultIM = "mozc";
+            DefaultIM = "hazkey";
           };
           "Groups/0/Items/0".Name = "keyboard-us";
-          "Groups/0/Items/1".Name = "mozc";
+          "Groups/0/Items/1".Name = "hazkey";
           GroupOrder."0" = "Default";
         };
       };
     };
   };
+
+  # Hazkey (fcitx5 addon for Japanese input with LLM-powered conversion)
+  services.hazkey.enable = true;
 
   # Hyprland
   programs.hyprland = {

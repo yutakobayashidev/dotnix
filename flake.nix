@@ -13,6 +13,10 @@
       url = "github:ryoppippi/gh-nippou";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-hazkey = {
+      url = "github:aster-void/nix-hazkey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -30,6 +34,7 @@
       home-manager,
       llm-agents,
       gh-nippou,
+      nix-hazkey,
       ...
     }:
     let
@@ -70,6 +75,7 @@
             nixpkgs.config.allowUnfreePredicate =
               pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
           }
+          nix-hazkey.nixosModules.hazkey
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
