@@ -7,7 +7,7 @@
     settings = {
       general = {
         disable_loading_bar = true;
-        grace = 10; # 10秒間はパスワード入力なしでロック解除可能
+        grace = 10;
         hide_cursor = true;
         no_fade_in = false;
       };
@@ -29,7 +29,7 @@
           fade_on_empty = false;
           font_color = "rgb(202, 211, 245)";
           inner_color = "rgb(91, 96, 120)";
-          outer_color = "rgb(24, 25, 38)";
+          outer_color = "rgb(245, 189, 230)";
           outline_thickness = 5;
           placeholder_text = ''<span foreground="##cad3f5">パスワードを入力...</span>'';
           shadow_passes = 2;

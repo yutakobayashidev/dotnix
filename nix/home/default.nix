@@ -14,6 +14,8 @@
     ./programs/bat.nix
     ./programs/hypridle.nix
     ./programs/hyprlock.nix
+    ./programs/fastfetch
+    ./programs/btop.nix
   ];
 
   home.username = "yuta";
