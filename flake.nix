@@ -54,6 +54,10 @@
         gh-nippou = gh-nippou.packages.${system}.default;
         # pretty-ts-errors-markdown
         pretty-ts-errors-markdown = prev.callPackage ./nix/packages/pretty-ts-errors-markdown.nix { };
+        # difit
+        difit = prev.callPackage ./nix/packages/difit.nix { };
+        # aqua
+        aqua = prev.callPackage ./nix/packages/aqua.nix { };
       };
     in
     {

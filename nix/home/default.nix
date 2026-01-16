@@ -24,6 +24,7 @@
     ccusage
     codex
     opencode
+    aqua
     # System
     git
     curl
@@ -72,6 +73,7 @@
     swappy
     zenity
     bun
+    difit
     arp-scan
     nmap
     rpi-imager
