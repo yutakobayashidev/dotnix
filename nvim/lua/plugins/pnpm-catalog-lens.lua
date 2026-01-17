@@ -1,5 +1,7 @@
 return {
-  "ryoppippi/nvim-pnpm-catalog-lens",
-  event = { "BufReadPost", "BufNewFile" },
-  opts = {},
+  "Daydreamer-riri/catalog-lens.nvim",
+  opts = {
+    enabled = true,
+    namedCatalogsColors = true,
+  },
 }
