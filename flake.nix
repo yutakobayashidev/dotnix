@@ -64,26 +64,47 @@
         # aqua
         aqua = prev.callPackage ./nix/packages/aqua.nix { };
       };
+
+      # mkSystem helper function
+      mkSystem =
+        {
+          host,
+          system,
+          profile,
+          extraModules ? [ ],
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit helpers dotfilesDir;
+          };
+          modules = [
+            ./nix/hosts/${host}
+            ./nix/profiles/${profile}.nix
+            {
+              nixpkgs.overlays = [ overlay ];
+              nixpkgs.config.allowUnfreePredicate =
+                pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
+            }
+            nix-hazkey.nixosModules.hazkey
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit helpers dotfilesDir; };
+              home-manager.users.yuta = import ./nix/modules/home;
+            }
+          ] ++ extraModules;
+        };
     in
     {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./nix/configuration.nix
-          {
-            nixpkgs.overlays = [ overlay ];
-            nixpkgs.config.allowUnfreePredicate =
-              pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
-          }
-          nix-hazkey.nixosModules.hazkey
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit helpers dotfilesDir; };
-            home-manager.users.yuta = import ./nix/home;
-          }
-        ];
+      nixosConfigurations = {
+        nixos = mkSystem {
+          host = "nixos";
+          system = "x86_64-linux";
+          profile = "gui";
+          extraModules = [ ];
+        };
       };
     };
 }
