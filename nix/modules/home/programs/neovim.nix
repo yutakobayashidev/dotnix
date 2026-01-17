@@ -22,6 +22,7 @@ in
       gnumake
       vtsls
       pretty-ts-errors-markdown
+      version-lsp
 
       # Node.js-based language servers
       astro-language-server

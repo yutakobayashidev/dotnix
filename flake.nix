@@ -17,6 +17,10 @@
       url = "github:aster-void/nix-hazkey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    version-lsp = {
+      url = "github:skanehira/version-lsp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -35,6 +39,7 @@
       llm-agents,
       gh-nippou,
       nix-hazkey,
+      version-lsp,
       ...
     }:
     let
@@ -55,6 +60,8 @@
         opencode = llm-agents.packages.${system}.opencode;
         # ghostty
         ghostty = ghostty.packages.${system}.default;
+        # version-lsp
+        version-lsp = version-lsp.packages.${system}.default;
         # gh-nippou (temporarily disabled due to hash mismatch)
         # gh-nippou = gh-nippou.packages.${system}.default;
         # pretty-ts-errors-markdown

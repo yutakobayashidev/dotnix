@@ -157,6 +157,13 @@ vim.lsp.config.yamlls = {
   root_markers = { ".git" },
 }
 
+-- version-lsp
+vim.lsp.config.version_lsp = {
+  cmd = { "version-lsp" },
+  filetypes = { "json", "toml", "yaml" },
+  root_markers = { "package.json", "Cargo.toml", "go.mod", ".git" },
+}
+
 -- Enable all LSPs
 vim.lsp.enable({
   "vtsls",
@@ -172,6 +179,7 @@ vim.lsp.enable({
   "eslint",
   "volar",
   "yamlls",
+  "version_lsp",
 })
 
 return {}
