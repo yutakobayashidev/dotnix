@@ -22,6 +22,7 @@
     nixfmt-tree
     nix-init
     google-cloud-sdk
+    nodejs_22
     bun
 
     # YubiKey

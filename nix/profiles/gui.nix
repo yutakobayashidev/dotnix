@@ -19,6 +19,5 @@
     ./../modules/home/programs/ghostty
     ./../modules/home/programs/hypridle.nix
     ./../modules/home/programs/hyprlock.nix
-    ./../modules/home/programs/vibe-kanban.nix
   ];
 }
