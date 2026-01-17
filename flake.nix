@@ -58,6 +58,7 @@
         ccusage = llm-agents.packages.${system}.ccusage;
         codex = llm-agents.packages.${system}.codex;
         opencode = llm-agents.packages.${system}.opencode;
+        vibe-kanban = llm-agents.packages.${system}.vibe-kanban;
         # ghostty
         ghostty = ghostty.packages.${system}.default;
         # version-lsp

@@ -9,6 +9,7 @@
     ccusage
     codex
     opencode
+    vibe-kanban
     aqua
 
     # Version Control
