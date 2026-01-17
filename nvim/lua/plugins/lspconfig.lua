@@ -161,7 +161,7 @@ vim.lsp.config.yamlls = {
 vim.lsp.config.version_lsp = {
   cmd = { "version-lsp" },
   filetypes = { "json", "toml", "yaml" },
-  root_markers = { "package.json", "Cargo.toml", "go.mod", ".git" },
+  root_markers = { "package.json", "pnpm-workspace.yaml", "Cargo.toml", "go.mod", ".git" },
 }
 
 -- Enable all LSPs
