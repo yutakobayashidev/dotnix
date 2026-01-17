@@ -1,8 +1,6 @@
 { ... }:
 {
   imports = [
-    ./../ssh.nix
-    ./../fonts.nix
   ];
 
   home-manager.users.yuta.imports = [
