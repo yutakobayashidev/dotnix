@@ -63,6 +63,8 @@
         difit = prev.callPackage ./nix/packages/difit.nix { };
         # aqua
         aqua = prev.callPackage ./nix/packages/aqua.nix { };
+        # jj-desc
+        jj-desc = prev.callPackage ./nix/packages/jj-desc.nix { };
       };
 
       # mkSystem helper function

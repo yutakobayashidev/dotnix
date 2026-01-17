@@ -14,10 +14,12 @@
     # Version Control
     git
     jujutsu
+    jj-desc
 
     # Development Tools
     nil
     nixfmt-tree
+    nix-init
     google-cloud-sdk
     bun
 
