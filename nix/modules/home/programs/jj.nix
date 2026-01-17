@@ -16,6 +16,7 @@
       };
       revset-aliases = {
         trunk = "main@origin";
+        "trunk()" = "main@origin";
       };
     };
   };

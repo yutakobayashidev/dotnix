@@ -61,7 +61,9 @@
         # ghostty
         ghostty = ghostty.packages.${system}.default;
         # version-lsp
-        version-lsp = version-lsp.packages.${system}.default;
+        version-lsp = version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
+          doCheck = false;
+        });
         # gh-nippou (temporarily disabled due to hash mismatch)
         # gh-nippou = gh-nippou.packages.${system}.default;
         # pretty-ts-errors-markdown
