@@ -55,8 +55,8 @@
         opencode = llm-agents.packages.${system}.opencode;
         # ghostty
         ghostty = ghostty.packages.${system}.default;
-        # gh-nippou
-        gh-nippou = gh-nippou.packages.${system}.default;
+        # gh-nippou (temporarily disabled due to hash mismatch)
+        # gh-nippou = gh-nippou.packages.${system}.default;
         # pretty-ts-errors-markdown
         pretty-ts-errors-markdown = prev.callPackage ./nix/packages/pretty-ts-errors-markdown.nix { };
         # difit
