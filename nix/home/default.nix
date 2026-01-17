@@ -31,6 +31,7 @@
     aqua
     # System
     git
+    jujutsu
     curl
     # YubiKey
     yubikey-manager
