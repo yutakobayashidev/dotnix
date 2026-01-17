@@ -55,8 +55,8 @@
         opencode = llm-agents.packages.${system}.opencode;
         # ghostty
         ghostty = ghostty.packages.${system}.default;
-        # gh-nippou
-        gh-nippou = gh-nippou.packages.${system}.default;
+        # gh-nippou (temporarily disabled due to hash mismatch)
+        # gh-nippou = gh-nippou.packages.${system}.default;
         # pretty-ts-errors-markdown
         pretty-ts-errors-markdown = prev.callPackage ./nix/packages/pretty-ts-errors-markdown.nix { };
         # difit
@@ -64,26 +64,41 @@
         # aqua
         aqua = prev.callPackage ./nix/packages/aqua.nix { };
       };
+
+      # mkSystem helper function
+      mkSystem =
+        {
+          host,
+          system,
+          profile,
+          extraModules ? [ ],
+        }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = {
+            inherit helpers dotfilesDir home-manager;
+          };
+          modules = [
+            ./nix/modules/core
+            ./nix/hosts/${host}
+            ./nix/profiles/${profile}.nix
+            {
+              nixpkgs.overlays = [ overlay ];
+              nixpkgs.config.allowUnfreePredicate =
+                pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
+            }
+            nix-hazkey.nixosModules.hazkey
+          ] ++ extraModules;
+        };
     in
     {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./nix/configuration.nix
-          {
-            nixpkgs.overlays = [ overlay ];
-            nixpkgs.config.allowUnfreePredicate =
-              pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
-          }
-          nix-hazkey.nixosModules.hazkey
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit helpers dotfilesDir; };
-            home-manager.users.yuta = import ./nix/home;
-          }
-        ];
+      nixosConfigurations = {
+        nixos = mkSystem {
+          host = "nixos";
+          system = "x86_64-linux";
+          profile = "gui";
+          extraModules = [ ];
+        };
       };
     };
 }
