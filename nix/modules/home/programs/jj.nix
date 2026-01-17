@@ -10,6 +10,9 @@
         l = ["log" "-n" "10"];
         fresh = ["new" "main"];
       };
+      revset-aliases = {
+        trunk = "main@origin";
+      };
     };
   };
 }
