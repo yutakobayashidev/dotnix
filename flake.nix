@@ -79,6 +79,7 @@
             inherit helpers dotfilesDir;
           };
           modules = [
+            ./nix/modules/core
             ./nix/hosts/${host}
             ./nix/profiles/${profile}.nix
             {

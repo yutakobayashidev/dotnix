@@ -2,7 +2,6 @@
 {
   imports = [
     ./cli-minimal.nix
-    ./../modules/core/packages.nix
     ./../modules/core/docker.nix
     # Tailscaleは含めない
   ];
