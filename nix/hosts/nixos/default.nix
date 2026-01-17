@@ -1,5 +1,5 @@
 # nixos ホスト固有の設定
-{ lib, pkgs, ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -45,18 +45,6 @@
   services.logind.settings.Login = {
     HandlePowerKey = "ignore";
     HandlePowerKeyLongPress = "poweroff";
-  };
-
-  # User
-  users.users.yuta = {
-    isNormalUser = true;
-    description = "yuta";
-    shell = pkgs.zsh;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
   };
 
   system.stateVersion = "25.11";

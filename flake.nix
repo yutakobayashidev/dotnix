@@ -76,7 +76,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit helpers dotfilesDir;
+            inherit helpers dotfilesDir home-manager;
           };
           modules = [
             ./nix/modules/core
@@ -88,13 +88,6 @@
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
             }
             nix-hazkey.nixosModules.hazkey
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit helpers dotfilesDir; };
-              home-manager.users.yuta = import ./nix/modules/home;
-            }
           ] ++ extraModules;
         };
     in
