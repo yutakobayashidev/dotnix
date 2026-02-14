@@ -44,7 +44,16 @@ vim.diagnostic.config({
     border = "rounded",
     source = true,
   },
-  virtual_text = false, -- 行末のテキストを非表示にしてフロートのみ
+  virtual_text = {
+    spacing = 4,
+    prefix = "●",
+    format = function(diagnostic)
+      return string.format("%s", diagnostic.message:match("^[^\n]*"))
+    end,
+  },
+  signs = true,
+  underline = true,
+  severity_sort = true,
 })
 
 -- カーソルホールド時に自動でフロート表示
@@ -134,13 +143,6 @@ vim.lsp.config.jsonls = {
   cmd = { "vscode-json-language-server", "--stdio" },
   filetypes = { "json", "jsonc" },
   root_markers = { ".git" },
-}
-
--- eslint (vscode-langservers-extracted)
-vim.lsp.config.eslint = {
-  cmd = { "vscode-eslint-language-server", "--stdio" },
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
-  root_markers = { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js", ".git" },
 }
 
 -- vue (volar)

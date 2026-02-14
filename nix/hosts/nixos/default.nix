@@ -22,8 +22,7 @@
   # Networking
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "192.168.0.12" ];
-  networking.useDHCP = lib.mkDefault false;
+  networking.useDHCP = lib.mkDefault true;
   networking.resolvconf.enable = false;
 
   # Locale & Time

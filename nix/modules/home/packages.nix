@@ -24,6 +24,7 @@
     google-cloud-sdk
     nodejs_22
     bun
+    ni
 
     # YubiKey
     yubikey-manager
@@ -67,6 +68,7 @@
     obsidian
     anki
     _1password-gui
+    insomnia
 
     # Media
     spotify
