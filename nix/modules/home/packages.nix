@@ -15,6 +15,7 @@
     # Version Control
     git
     git-wt
+    git-wt-clean
     jujutsu
     jj-desc
     entire
