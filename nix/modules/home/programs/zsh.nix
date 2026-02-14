@@ -14,6 +14,7 @@
     shellAliases = {
       rebuild = "nh os switch && source ~/.zshrc";
       cc = "claude";
+      yolo = "claude --dangerously-skip-permissions";
       p = "pnpm";
       ls = "lsd -1A";
       ll = "lsd -l";
