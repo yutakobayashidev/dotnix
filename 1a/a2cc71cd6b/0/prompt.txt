@@ -1,0 +1,9 @@
+yoloエイリアスに--dangerously-skip-permissions追加して
+
+---
+
+yoloエイリアスとしてclaude --dangerously-skip-permissions追加して
+
+---
+
+commitして
