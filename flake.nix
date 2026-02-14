@@ -75,6 +75,8 @@
         aqua = prev.callPackage ./nix/packages/aqua.nix { };
         # jj-desc
         jj-desc = prev.callPackage ./nix/packages/jj-desc.nix { };
+        # entire
+        entire = prev.callPackage ./nix/packages/entire.nix { };
       };
 
       # mkSystem helper function
@@ -97,7 +99,18 @@
             {
               nixpkgs.overlays = [ overlay ];
               nixpkgs.config.allowUnfreePredicate =
-                pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "claude-code" ];
+                pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+                  "claude-code"
+                  "android-studio"
+                  "vscode"
+                  "google-chrome"
+                  "discord"
+                  "slack"
+                  "obsidian"
+                  "1password"
+                  "insomnia"
+                  "spotify"
+                ];
             }
             nix-hazkey.nixosModules.hazkey
           ] ++ extraModules;

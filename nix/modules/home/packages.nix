@@ -14,8 +14,10 @@
 
     # Version Control
     git
+    git-wt
     jujutsu
     jj-desc
+    entire
 
     # Development Tools
     nil
@@ -25,6 +27,8 @@
     nodejs_22
     bun
     ni
+    android-tools
+    android-studio
 
     # YubiKey
     yubikey-manager

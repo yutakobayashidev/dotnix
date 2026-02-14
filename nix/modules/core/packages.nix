@@ -26,7 +26,4 @@
       stdenv.cc.cc
     ];
   };
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 }

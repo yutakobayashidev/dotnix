@@ -17,6 +17,9 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-jhyxSU2FiLQ/uorCVRJxx5nElp7h9nTA4tOiH0msUIw=";
 
+  # Skip tests that require API keys
+  doCheck = false;
+
   meta = with lib; {
     description = "Generate meaningful commit descriptions from diffs using LLM";
     homepage = "https://github.com/tumf/jj-desc";

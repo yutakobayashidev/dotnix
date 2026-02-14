@@ -7,6 +7,7 @@
     ./../modules/core/yubikey.nix
     ./../modules/core/audio.nix
     ./../modules/core/bluetooth.nix
+    ./../modules/core/android.nix
   ];
 
   # Enable CUPS to print documents
