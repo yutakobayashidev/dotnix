@@ -124,5 +124,6 @@
     wl-clipboard
     brightnessctl
     playerctl
+    polycat
   ];
 }

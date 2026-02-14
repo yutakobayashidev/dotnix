@@ -82,6 +82,8 @@
         jj-desc = prev.callPackage ./nix/packages/jj-desc.nix { };
         # entire
         entire = prev.callPackage ./nix/packages/entire.nix { };
+        # polycat
+        polycat = prev.callPackage ./nix/packages/polycat.nix { };
       };
 
       # mkSystem helper function

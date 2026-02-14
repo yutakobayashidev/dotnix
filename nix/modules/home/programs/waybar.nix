@@ -16,6 +16,7 @@
         ];
 
         modules-center = [
+          "custom/polycat"
           "mpris"
         ];
 
@@ -31,6 +32,13 @@
         "custom/launcher" = {
           format = " ";
           on-click = "rofi -show drun";
+          tooltip = false;
+        };
+
+        # Polycat (CPU アニメーション)
+        "custom/polycat" = {
+          exec = "polycat";
+          return-type = "";
           tooltip = false;
         };
 
