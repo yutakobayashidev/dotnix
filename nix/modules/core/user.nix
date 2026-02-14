@@ -1,4 +1,4 @@
-{ pkgs, home-manager, helpers, dotfilesDir, ... }:
+{ pkgs, home-manager, helpers, dotfilesDir, niri, ... }:
 
 {
   imports = [ home-manager.nixosModules.home-manager ];
@@ -6,7 +6,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit helpers dotfilesDir; };
+    extraSpecialArgs = { inherit helpers dotfilesDir niri; };
     users.yuta = import ./../home;
   };
 

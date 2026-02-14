@@ -1,8 +1,8 @@
-{ ... }:
+{ niri, ... }:
 {
   imports = [
     ./cli.nix
-    ./../modules/core/hyprland.nix
+    ./../modules/core/niri.nix
     ./../modules/core/input.nix
     ./../modules/core/yubikey.nix
     ./../modules/core/audio.nix
@@ -14,11 +14,12 @@
   services.printing.enable = true;
 
   home-manager.users.yuta.imports = [
-    ./../modules/home/hyprland.nix
+    niri.homeModules.niri
+    ./../modules/home/niri.nix
     ./../modules/home/programs/vscode.nix
-    ./../modules/home/programs/hyprpanel.nix
+    ./../modules/home/programs/waybar.nix
     ./../modules/home/programs/ghostty
-    ./../modules/home/programs/hypridle.nix
-    ./../modules/home/programs/hyprlock.nix
+    ./../modules/home/programs/swayidle.nix
+    ./../modules/home/programs/swaylock.nix
   ];
 }

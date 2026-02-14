@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     llm-agents.url = "github:numtide/llm-agents.nix";
     gh-nippou = {
       url = "github:ryoppippi/gh-nippou";
@@ -36,6 +40,7 @@
       nixpkgs,
       ghostty,
       home-manager,
+      niri,
       llm-agents,
       gh-nippou,
       nix-hazkey,
@@ -90,7 +95,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit helpers dotfilesDir home-manager;
+            inherit helpers dotfilesDir home-manager niri;
           };
           modules = [
             ./nix/modules/core
