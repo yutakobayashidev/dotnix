@@ -1,0 +1,1211 @@
+wmをniriに変えたい https://github.com/niri-wm/niri
+
+---
+
+[Request interrupted by user]
+
+---
+
+続けて
+
+---
+
+[Request interrupted by user]
+
+---
+
+⎿  PreToolUse:Edit hook error なぜ？
+
+---
+
+[Request interrupted by user]
+
+---
+
+続けて、勘違いだった
+
+---
+
+utakobayashidev/dotnix  ↱ main ±  nh os switch
+> Building NixOS configuration
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'seq' builtin
+         at REDACTED.nix:403:18:
+          402|         options = checked options;
+          403|         config = checked (removeAttrs config [ "_module" ]);
+             |                  ^
+          404|         _module = checked (config._module);
+
+       … while evaluating a branch condition
+         at REDACTED.nix:306:9:
+          305|       checkUnmatched =
+          306|         if config._module.check && config._module.freeformType == null && merged.unmatchedDefns != [ ] then
+             |         ^
+          307|           let
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: path 'REDACTED.nix' does not exist
+┏━ 1 Errors:
+ ⋮
+┃           404|         _module = checked (config._module);
+┃
+┃        … while evaluating a branch condition
+┃          at REDACTED.nix:306…
+┃           305|       checkUnmatched =
+┃           306|         if config._module.check && config._module.freeformType == n…
+┃              |         ^
+┃           307|           let
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: path 'REDACTED…
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:04:30 after 0s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:
+   src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/gith
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+ステージングするだけでいいはず
+
+---
+
+configuration
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+                                  … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `assertions':
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the module argument `niri' in "REDACTED.nix":
+
+                                          … noting that argument `niri` is not externally provided, so querying `_module.args` instead, requiring `config`
+
+       … if you get an infinite recursion here, you probably reference `config` in `imports`. If you are trying to achieve a conditional import behavior dependent on `config`, consider importing unconditionally, and using `mkEnableOption` and `mkIf` to control its effect.
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+         error: infinite recursion encountered
+┏━ 1 Errors:
+ ⋮
+┃
+┃        … while evaluating definitions from `/nix/store/n6qqmv6g7p6i01bwh7qda4piqdm…
+┃
+┃        … while evaluating the module argument `niri' in "/nix/store/79pcg3j4y9fyqd…
+┃
+┃        … noting that argument `niri` is not externally provided, so querying `_mod…
+┃
+┃        … if you get an infinite recursion here, you probably reference `config` in…┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)┃
+┃        error: infinite recursion encountered
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:05:23 after 0s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+Location:
+   src/commands.rs:693                                                                ✘ yuta@nixos  ~/ghq/gi
+
+---
+
+なんでniriだけこんな特殊なことシツェルの？
+
+---
+
+既にされてるでしょ、https://qiita.com/naogami/items/240b7de2851c80719eda
+
+---
+
+あalじゃウす
+
+---
+
+[Request interrupted by user]
+
+---
+
+いや、今のでいいや
+
+---
+
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+                                                     at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values                                                            |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {                                                                       1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^                                                                        1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+                                   … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/niri-config".enable':
+
+                                                                … while evaluating definitions from `REDACTED.nix':
+
+                                                            … while evaluating the option `home-manager.users.yuta.xdg.configFile.niri-config.enable':
+
+                                                                                … while evaluating definitions from `REDACTED.nix':
+
+                                                                (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `home-manager.users.yuta.programs.niri.finalConfig' in `REDACTED.nix' is already declared in `REDACTED.nix'.        ┏━ 1 Errors:                                                                          ⋮
+┃
+┃        … while evaluating the option `home-manager.users.yuta.home.file."/home/yut…
+┃
+┃        … while evaluating definitions from `/nix/store/n6qqmv6g7p6i01bwh7qda4piqdm…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.xdg.configFile.niri-…
+┃
+┃        … while evaluating definitions from `/nix/store/n6qqmv6g7p6i01bwh7qda4piqdm…
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: The option `home-manager.users.yuta.programs.niri.finalConfig' in `/…
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:09:41 after 0s
+Error:                                                                                  0: Failed to build configuration
+   1: Command exited with status Exited(1)
+Location:
+   src/commands.rs:693
+
+---
+
+github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/niri-config".enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.configFile.niri-config.enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.finalConfig':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.config':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.settings.animations.window-close':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `home-manager.users.yuta.programs.niri.settings.animations.window-close.curve' does not exist. Definition values:
+       - In `REDACTED.nix': "ease-in-quad"
+
+       Did you mean `home-manager.users.yuta.programs.niri.settings.animations.window-close.enable', `home-manager.users.yuta.programs.niri.settings.animations.window-close.kind' or `home-manager.users.yuta.programs.niri.settings.animations.window-close.custom-shader'?
+┏━ 1 Errors:
+ ⋮
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.finalC…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.config…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.settin…
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: The option `home-manager.users.yuta.programs.niri.settings.animation…
+┃        - In `REDACTED…
+┃
+┃        Did you mean `home-manager.users.yuta.programs.niri.settings.animations.win…
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:10:39 after 0s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:
+   src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/github.co
+
+---
+
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/niri-config".enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.configFile.niri-config.enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.finalConfig':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.config."[definition 1-entry 4]".children."[definition 1-entry 3]".children':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.settings.layout.focus-ring':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.active-color' does not exist. Definition values:
+       - In `REDACTED.nix': "#f5bde6"
+
+       Did you mean `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.active', `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.inactive' or `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.enable'?
+┏━ 1 Errors:
+ ⋮
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.config…
+┃
+┃        … while evaluating definitions from `/nix/store/wlj3ad9c933dls0c5fnwisx6qcj…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.settin…
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: The option `home-manager.users.yuta.programs.niri.settings.layout.fo…
+┃        - In `REDACTED…
+┃
+┃        Did you mean `home-manager.users.yuta.programs.niri.settings.layout.focus-r…
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:11:16 after 0s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:
+   src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
+
+---
+
+> Building NixOS configuration
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/niri-config".enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.configFile.niri-config.enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.finalConfig':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.config."[definition 1-entry 4]".children."[definition 1-entry 3]".children':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.settings.layout.focus-ring':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.active-color' does not exist. Definition values:
+       - In `REDACTED.nix': "#f5bde6"
+
+       Did you mean `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.active', `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.inactive' or `home-manager.users.yuta.programs.niri.settings.layout.focus-ring.enable'?
+┏━ 1 Errors:
+ ⋮
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.config…
+┃
+┃        … while evaluating definitions from `/nix/store/wlj3ad9c933dls0c5fnwisx6qcj…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.settin…
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: The option `home-manager.users.yuta.programs.niri.settings.layout.fo…
+┃        - In `REDACTED…
+┃
+┃        Did you mean `home-manager.users.yuta.programs.niri.settings.layout.focus-r…
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:11:16 after 0s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:
+   src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  rebuild
+> Building NixOS configuration
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/niri-config".enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.configFile.niri-config.enable':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.finalConfig':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.config."[definition 1-entry 5]".children':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.settings.cursor':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `home-manager.users.yuta.programs.niri.settings.cursor.xcursor-size' does not exist. Definition values:
+       - In `REDACTED.nix': 24
+
+       Did you mean `home-manager.users.yuta.programs.niri.settings.cursor.size', `home-manager.users.yuta.programs.niri.settings.cursor.theme' or `home-manager.users.yuta.programs.niri.settings.cursor.hide-on-key-press'?
+┏━ 1 Errors:
+ ⋮
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.config…
+┃
+┃        … while evaluating definitions from `/nix/store/4i0ix09qsj1q652m0284dd3cv39…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.programs.niri.settin…
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: The option `home-manager.users.yuta.programs.niri.settings.cursor.xc…
+┃        - In `REDACTED…
+┃
+┃        Did you mean `home-manager.users.yuta.programs.niri.settings.cursor.size', …
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:11:54 after 0s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:
+   src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
+
+---
+
+yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  rebuild
+> Building NixOS configuration
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+                                  … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/niri-config".enable':
+
+                                                                … while evaluating definitions from `REDACTED.nix':
+
+                                                            … while evaluating the option `home-manager.users.yuta.xdg.configFile.niri-config.enable':
+                                                                                … while evaluating definitions from `REDACTED.nix':
+
+                                                            … while evaluating the option `home-manager.users.yuta.programs.niri.finalConfig':
+                                                                                        … while evaluating the option `home-manager.users.yuta.programs.niri.config."[definition 1-entry 7]".children."[definition 1-entry 1]".children':
+
+                         … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.niri.settings.binds."Mod+1".action':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+         error: attribute 'niri' missing
+       at REDACTED.nix:45:18:
+           44|     # キーバインド
+           45|     binds = with pkgs.lib.niri.actions; {
+             |                  ^
+           46|       "Mod+Q".action.spawn = [ "ghostty" ];
+┏━ 1 Errors:
+ ⋮                                                                                   ┃        … while evaluating the option `home-manager.users.yuta.programs.niri.settin…
+┃
+┃        … while evaluating definitions from `/nix/store/nw0b3271ccx1rp7zrvbnq7611l5…
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+                                                                                    ┃        error: attribute 'niri' missing                                             ┃        at REDACTED…
+┃            44|     # キーバインド                                                  ┃            45|     binds = with pkgs.lib.niri.actions; {
+┃              |                  ^                                                  ┃            46|       "Mod+Q".action.spawn = [ "ghostty" ];
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:13:45 after 0s
+Error:
+   0: Failed to build configuration                                                     1: Command exited with status Exited(1)
+
+                                           Location:                                                                               src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
+
+---
+
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values                                                            |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {                                                                       1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^                                                                        1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+                               … while evaluating definitions from `REDACTED.nix':
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error:
+       Failed assertions:
+       - yuta profile: Conflicting managed target files: .config/swaylock/config
+
+       This may happen, for example, if you have a configuration similar to
+
+           home.file = {
+             conflict1 = { source = ./foo.nix; target = "baz"; };
+             conflict2 = { source = ./bar.nix; target = "baz"; };
+           }
+┏━ 1 Errors:
+ ⋮
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)┃
+┃        error:                                                                      ┃        Failed assertions:
+┃        - yuta profile: Conflicting managed target files: .config/swaylock/config
+┃
+┃        This may happen, for example, if you have a configuration similar to
+┃
+┃            home.file = {
+┃              conflict1 = { source = ./foo.nix; target = "baz"; };                  ┃              conflict2 = { source = ./bar.nix; target = "baz"; };
+┃            }                                                                       ┣━━━                                                                                 ┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:14:42 after 2s                     Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:
+   src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/github.com/
+
+---
+
+b.com/yutakobayashidev/dotnix  ↱ main ✚  rebuild
+        > Building NixOS configuration
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:                                                                                      … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^                                                                  1714|           else
+
+       … while evaluating the attribute 'value'                                               at REDACTED.nix:1160:7:
+         1159|     // {                                                                       1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^                                                                        1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+       … while evaluating definitions from `REDACTED.nix':
+       … while evaluating the option `warnings':
+
+       … while evaluating definitions from `REDACTED.nix':
+       … while evaluating the option `systemd.services.home-manager-yuta.serviceConfig':
+
+       … while evaluating definitions from `REDACTED':
+
+                                                                           … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/fontconfig/conf.d/10-hm-fonts.conf".source':
+
+                                         … while evaluating definitions from `REDACTED.nix':
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/fontconfig/conf.d/10-hm-fonts.conf".text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.configFile."fontconfig/conf.d/10-hm-fonts.conf".text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.fonts.fontconfig.configFile.fonts.text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.packages':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: 'rofi-wayland' has been merged into 'rofi'
+┏━ 1 Errors:
+ ⋮                                                                                   ┃
+┃        … while evaluating the option `home-manager.users.yuta.fonts.fontconfig.con…┃
+┃        … while evaluating definitions from `/nix/store/n6qqmv6g7p6i01bwh7qda4piqdm…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.home.packages':
+┃
+┃        … while evaluating definitions from `/nix/store/4qcv4530wwrx697mvynvjmg7470…
+┃                                                                                    ┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: 'rofi-wayland' has been merged into 'rofi'                           ┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:15:17 after 3s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:                                                                               src/commands.rs:693
+ ✘ yuta@nixos  ~/ghq/gith
+
+---
+
+0h784i8fma31a4g5l7m59p-crate-schemars_derive-1.0.4.tar.gz.drv'.
+       Reason: builder failed with exit code 1.
+       Output paths:
+         REDACTED.0.4.tar.gz
+       Last 13 log lines:
+       > structuredAttrs is enabled
+       >
+       > trying https://crates.io/api/v1/crates/schemars_derive/1.0.4/download
+       >   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+       >                                  Dload  Upload   Total   Spent    Left  Speed
+       >   0     0   0     0   0     0     0     0  --:--:--  0:00:09 --:--:--     0curl: (6) Could not resolve host: crates.io
+       > Warning: Problem : timeout. Will retry in 1 second. 3 retries left.
+       > curl: (6) Could not resolve host: crates.io
+       > Warning: Problem : timeout. Will retry in 2 seconds. 2 retries left.
+       > curl: (6) Could not resolve host: crates.io
+       > Warning: Problem : timeout. Will retry in 4 seconds. 1 retry left.
+       > curl: (6) Could not resolve host: crates.io
+       > error: cannot download crate-schemars_derive-1.0.4.tar.gz from any mirror
+       For full logs, run:
+         nix log REDACTED.0.4.tar.gz.drv
+error: Cannot build 'REDACTED.0.4.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.0.4
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.08.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.08-doc
+         REDACTED.08
+error: Cannot build 'REDACTED.kdl.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.kdl
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.service.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.service
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build '/nix/store/hxp4c36nf044fcjyxb6n0zmcxb6nwihb-etc.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build '/nix/store/9k966dr969kcmp3w0pvcxf6nii0cbxbi-nixos-system-nixos-26.05.20260213.a82ccc3.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.20260213.a82ccc3
+┏━ 11 Errors:
+ ⋮
+┃                      ┌─ ⏸ niri-25.08
+┃                   ┌─ ⏸ config.kdl
+┃                ┌─ ⏸ home-manager-files
+┃             ┌─ ⏸ home-manager-generation
+┃          ┌─ ⏸ unit-home-manager-yuta.service
+┃       ┌─ ⏸ system-units
+┃    ┌─ ⏸ etc
+┃ ┌─ ⏸ activate
+┃ ⏸ nixos-system-nixos-26.05.20260213.a82ccc3
+┣━━━ Builds             │ Downloads       │ Host
+┃    ⏵ 7 │ ✔ 181 │      │     │     │     │ localhost
+┃        │       │      │     │ ↓ 1 │     │ [1]: https://cache.nixos.org
+┃        │       │      │     │ ↓ 2 │     │ [2]: https://cache.numtide.com
+┗━ ∑ ⏵ 7 │ ✔ 181 │ ⏸ 17 │ ↓ 0 │ ↓ 3 │ ⏸ 0 │ ⚠ Exited with 11 errors reported by nix at 00:18:12 after 20s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+ta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: The syntax of services.swayidle.events has changed. While it
+                    previously accepted a list of events, it now accepts an attrset
+                    keyed by the event name.
+error: Cannot build 'REDACTED.08.drv'.
+       Reason: builder failed with exit code 101.
+       Output paths:
+         REDACTED.08-doc
+         REDACTED.08
+       Last 25 log lines:
+       >  152:     0x5555560e519a - __rust_begin_short_backtrace<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/sys/backtrace.rs:158:18
+       >  153:     0x5555560e6881 - {closure#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/thread/mod.rs:562:17
+       >  154:     0x5555560e6881 - call_once<(), std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>
+       >                                at /rustc-1.92.0-src/library/core/src/panic/unwind_safe.rs:274:9
+       >  155:     0x5555560e6881 - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/panicking.rs:590:40
+       >  156:     0x5555560e6881 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>>
+       >                                at /rustc-1.92.0-src/library/std/src/panicking.rs:553:19
+       >  157:     0x5555560e6881 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/panic.rs:359:14
+       >  158:     0x5555560e6881 - {closure#1}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/thread/mod.rs:560:30
+       >  159:     0x5555560e6881 - call_once<std::thread::{impl#0}::spawn_unchecked_::{closure_env#1}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>, ()>
+       >                                at /rustc-1.92.0-src/library/core/src/ops/function.rs:250:5
+       >  160:     0x5555562da627 - std::sys::thread::unix::Thread::new::thread_start::h51b5b8f8e50739ea
+       >  161:     0x7ffff749dd53 - <unknown>
+       >  162:     0x7ffff75255fc - <unknown>
+       >  163:                0x0 - <unknown>
+       > thread caused non-unwinding panic. aborting.
+       > error: test failed, to rerun pass `--lib`
+       >
+       > Caused by:
+       >   process didn't exit successfully: `REDACTED '--skip=::egl'` (signal: 6, SIGABRT: process abort signal)
+       For full logs, run:
+         nix log REDACTED.08.drv
+error: Cannot build 'REDACTED.kdl.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.kdl
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.service.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.service
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build '/nix/store/hxp4c36nf044fcjyxb6n0zmcxb6nwihb-etc.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build '/nix/store/9k966dr969kcmp3w0pvcxf6nii0cbxbi-nixos-system-nixos-26.05.20260213.a82ccc3.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.20260213.a82ccc3
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."nixos".config.system.build.toplevel' --no-link --option max-jobs 2 --option cores 2' returned non-zero exit status 1.
+ ✘ yuta@nixos  ~/ghq/github.com/yuta
+
+---
+
+yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  sudo nixos-rebuild switch --flake . --option max-jobs 2 --option cores 2
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+building the system configuration...
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: The syntax of services.swayidle.events has changed. While it
+                    previously accepted a list of events, it now accepts an attrset
+                    keyed by the event name.
+error: Cannot build 'REDACTED.08.drv'.
+       Reason: builder failed with exit code 101.
+       Output paths:
+         REDACTED.08-doc
+         REDACTED.08
+       Last 25 log lines:
+       >  152:     0x5555560e519a - __rust_begin_short_backtrace<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/sys/backtrace.rs:158:18
+       >  153:     0x5555560e6881 - {closure#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/thread/mod.rs:562:17
+       >  154:     0x5555560e6881 - call_once<(), std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>
+       >                                at /rustc-1.92.0-src/library/core/src/panic/unwind_safe.rs:274:9
+       >  155:     0x5555560e6881 - do_call<core::panic::unwind_safe::AssertUnwindSafe<std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/panicking.rs:590:40
+       >  156:     0x5555560e6881 - catch_unwind<(), core::panic::unwind_safe::AssertUnwindSafe<std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>>
+       >                                at /rustc-1.92.0-src/library/std/src/panicking.rs:553:19
+       >  157:     0x5555560e6881 - catch_unwind<core::panic::unwind_safe::AssertUnwindSafe<std::thread::{impl#0}::spawn_unchecked_::{closure#1}::{closure_env#0}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>>, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/panic.rs:359:14
+       >  158:     0x5555560e6881 - {closure#1}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>
+       >                                at /rustc-1.92.0-src/library/std/src/thread/mod.rs:560:30
+       >  159:     0x5555560e6881 - call_once<std::thread::{impl#0}::spawn_unchecked_::{closure_env#1}<rayon_core::registry::{impl#2}::spawn::{closure_env#0}, ()>, ()>
+       >                                at /rustc-1.92.0-src/library/core/src/ops/function.rs:250:5
+       >  160:     0x5555562da627 - std::sys::thread::unix::Thread::new::thread_start::h51b5b8f8e50739ea
+       >  161:     0x7ffff749dd53 - <unknown>
+       >  162:     0x7ffff75255fc - <unknown>
+       >  163:                0x0 - <unknown>
+       > thread caused non-unwinding panic. aborting.
+       > error: test failed, to rerun pass `--lib`
+       >
+       > Caused by:
+       >   process didn't exit successfully: `REDACTED '--skip=::egl'` (signal: 6, SIGABRT: process abort signal)
+       For full logs, run:
+         nix log REDACTED.08.drv
+error: Cannot build 'REDACTED.kdl.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.kdl
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.service.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.service
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build '/nix/store/hxp4c36nf044fcjyxb6n0zmcxb6nwihb-etc.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build '/nix/store/9k966dr969kcmp3w0pvcxf6nii0cbxbi-nixos-system-nixos-26.05.20260213.a82ccc3.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.20260213.a82ccc3
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."nixos".config.system.build.toplevel' --no-link --option max-jobs 2 --option cores 2' returned non-zero exit status 1.
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  sudo nixos-rebuild switch --flake . --option max-jobs 2 --option cores 2
+[sudo] yuta のパスワード:
+
+---
+
+[Request interrupted by user]
+
+---
+
+git addしたら治ったわ
+
+---
+
+いけたっぽい？でもhyprlandのままのような
+
+---
+
+これって既存の hyperlandの設定は壊したの？
+
+---
+
+[Request interrupted by user]
+
+---
+
+きた、かなりいい
+
+---
+
+今設定最小限だと思うけど、何変えたらいいの？
+
+---
+
+ォーカスリング・ボーダーの色まず設定しよか、クリップボードのホットキーは元と同じがいいな
+
+---
+
+Niriにもフローティングウィンドウあるの？
+
+---
+
+うん
+
+---
+
+タイトルバーも消したいな
+
+---
+
+cclear
+
+---
+
+いいね、コミットして
+
+---
+
+hyprlandは消したい
+
+---
+
+https://github.com/2IMT/polycat これ入れて
+
+---
+
+yっb
+
+---
+
+[Request interrupted by user]
+
+---
+
+うん
+
+---
+
+Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `warnings':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `systemd.services.home-manager-yuta.serviceConfig':
+
+       … while evaluating definitions from `REDACTED':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/fontconfig/conf.d/10-hm-fonts.conf".source':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/fontconfig/conf.d/10-hm-fonts.conf".text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.configFile."fontconfig/conf.d/10-hm-fonts.conf".text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.fonts.fontconfig.configFile.fonts.text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: attribute 'lib' missing                                                                         at REDACTED.nix:16:15:
+           15|
+           16|   meta = with stdenv.lib; {
+             |               ^
+           17|     description = "Runcat module for polybar/waybar written in C++";                    ┏━ 1 Errors:
+ ⋮
+┃        … while evaluating the attribute 'value'
+┃          at REDACTED.nix:1160:7:
+┃          1159|     // {
+┃          1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" valu…
+┃              |       ^
+┃          1161|       inherit (res.defsFinal') highestPrio;
+┃
+┃        … while evaluating the option `system.build.toplevel':
+┃
+┃        … while evaluating definitions from `/nix/store/4ggd0kb8as38xa0kr730qpnsa89df0x7-source/nixos…
+┃
+┃        … while evaluating the option `warnings':
+┃
+┃        … while evaluating definitions from `/nix/store/4ggd0kb8as38xa0kr730qpnsa89df0x7-source/nixos…
+┃
+┃        … while evaluating the option `systemd.services.home-manager-yuta.serviceConfig':
+┃
+┃        … while evaluating definitions from `REDACTED…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/fontconf…
+┃
+┃        … while evaluating definitions from `REDACTED…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/fontconf…┃
+┃        … while evaluating definitions from `REDACTED…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.xdg.configFile."fontconfig/conf.d/10-h…
+┃                                                                                                      ┃        … while evaluating definitions from `REDACTED…
+┃
+┃        … while evaluating the option `home-manager.users.yuta.fonts.fontconfig.configFile.fonts.text…
+┃
+┃        … while evaluating definitions from `REDACTED…
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)                  ┃
+┃        error: attribute 'lib' missing
+┃        at REDACTED.nix:16:15:         ┃            15|
+┃            16|   meta = with stdenv.lib; {
+┃              |               ^                                                                       ┃            17|     description = "Runcat module for polybar/waybar written in C++";
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 00:58:43 after 3s                                       Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+Location:
+   src/commands.rs:693                                                                                  ✘ yuta@nixo
+
+---
+
+yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  rebuild
+> Building NixOS configuration
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+⏱ 1s
+⏱ 2s
+
+⏱ 2s
+
+
+
+
+
+
+⏱ 2s
+⏱ 12s
+these 14 derivations will be built:
+  REDACTED.drv
+  REDACTED.drv
+  REDACTED.drv
+  REDACTED.drv
+  REDACTED.json.drv
+  REDACTED.d10hmfonts.conf.drv
+  REDACTED.drv
+  REDACTED.drv
+  REDACTED.drv
+  REDACTED.service.drv
+  REDACTED.drv
+  REDACTED.drv
+  REDACTED.drv
+  REDACTED.05.20260213.a82ccc3.drv
+source> building 'REDACTED.drv'
+waybar-config.json> building 'REDACTED.json.drv'
+source> structuredAttrs is enabled
+activation-script> building 'REDACTED.drv'
+source>
+source> trying https://github.com/2IMT/polycat/archive/c91afa6ec2c84a03d0c82ac00c5d64bc4ffedbcc.tar.gz
+source>   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+source>                                  Dload  Upload   Total   Spent    Left  Speed
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+source> curl: (22) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20)
+source> Warning: Problem (retrying all errors). Will retry in 1 second. 3 retries left.
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+source> curl: (22) The requested URL returned error: 404
+source> Warning: Problem (retrying all errors). Will retry in 2 seconds. 2 retries
+source> Warning: left.
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+source> curl: (22) The requested URL returned error: 404
+source> Warning: Problem (retrying all errors). Will retry in 4 seconds. 1 retry left.
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+source>   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0                    source> curl: (22) The requested URL returned error: 404
+source> error: cannot download source from any mirror
+error: Cannot build 'REDACTED.drv'.
+       Reason: builder failed with exit code 1.
+       Output paths:                                                                                            REDACTED
+       Last 22 log lines:
+       > structuredAttrs is enabled
+       >
+       > trying https://github.com/2IMT/polycat/archive/c91afa6ec2c84a03d0c82ac00c5d64bc4ffedbcc.tar.gz       >   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+       >                                  Dload  Upload   Total   Spent    Left  Speed
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       > curl: (22) SSL certificate OpenSSL verify result: unable to get local issuer certificate (20)
+       > Warning: Problem (retrying all errors). Will retry in 1 second. 3 retries left.
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       > curl: (22) The requested URL returned error: 404
+       > Warning: Problem (retrying all errors). Will retry in 2 seconds. 2 retries
+       > Warning: left.
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       > curl: (22) The requested URL returned error: 404
+       > Warning: Problem (retrying all errors). Will retry in 4 seconds. 1 retry left.
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+       > curl: (22) The requested URL returned error: 404
+       > error: cannot download source from any mirror
+       For full logs, run:
+         nix log REDACTED.drv
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED                       error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.                Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED                                  error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:                                                                                            REDACTED
+error: Cannot build 'REDACTED.05.20260213.a82ccc3.drv'.                                                                                                     Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.20260213.a82ccc3         ┏━ 7 Errors:
+ ⋮
+┃        Reason: builder failed with exit code 1.                                                      ┃        Output paths:
+┃          REDACTED
+┃        Last 22 log lines:                                                                            ┃        > structuredAttrs is enabled
+┃        >
+┃        > trying https://github.com/2IMT/polycat/archive/c91afa6ec2c84a03d0c82ac00c5d64bc4ffedbcc.tar…
+┃        >   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+┃        >                                  Dload  Upload   Total   Spent    Left  Speed
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        > curl: (22) SSL certificate OpenSSL verify result: unable to get local issuer certificate (2…
+┃        > Warning: Problem (retrying all errors). Will retry in 1 second. 3 retries left.
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        > curl: (22) The requested URL returned error: 404
+┃        > Warning: Problem (retrying all errors). Will retry in 2 seconds. 2 retries
+┃        > Warning: left.
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        > curl: (22) The requested URL returned error: 404
+┃        > Warning: Problem (retrying all errors). Will retry in 4 seconds. 1 retry left.
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        >   0     0   0     0   0     0     0     0  --:--:-- --:--:-- --:--:--     0
+┃        > curl: (22) The requested URL returned error: 404
+┃        > error: cannot download source from any mirror
+┃        For full logs, run:
+┃          nix log REDACTED.drv
+┣━ Dependency Graph:
+┃ ┌─ ⏸ activate waiting for 1 ⏵
+┃ │           ┌─ ✔ activation-script
+┃ │           │  ┌─ ✔ waybar-config.json
+┃ │           │  ├─ ⏸ hm_fontconfigconf.d10hmfonts.conf waiting for 1 ⏵
+┃ │           ├─ ⏸ home-manager-files
+┃ │        ┌─ ⏸ home-manager-generation
+┃ │     ┌─ ⏸ unit-home-manager-yuta.service
+┃ │  ┌─ ⏸ system-units
+┃ │  │        ┌─ ⏵ source ⏱ 9s (∅ 0s)
+┃ │  │     ┌─ ⏸ polycat-unstable-2024-12-04
+┃ │  │  ┌─ ⏸ home-manager-path
+┃ │  ├─ ⏸ user-environment
+┃ ├─ ⏸ etc
+┃ ⏸ nixos-system-nixos-26.05.20260213.a82ccc3
+┣━━━ Builds
+┗━ ∑ ⏵ 1 │ ✔ 2 │ ⏸ 11 │ ⚠ Exited with 7 errors reported by nix at 00:59:48 after 23s
+Error:
+   0: Failed to build configuration
+   1: Command exited with status Exited(1)
+
+Location:
+   src/commands.rs:693
+
+---
+
+ok、コミットしといて
