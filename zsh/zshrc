@@ -1,0 +1,40 @@
+#!/usr/bin/env zsh
+
+# ========================================
+# Main zsh configuration
+# ========================================
+
+# Enable completion
+autoload -Uz compinit && compinit
+
+# direnv
+eval "$(direnv hook zsh)"
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# git-wt
+eval "$(git wt --init zsh)"
+
+# ========================================
+# Load config files
+# ========================================
+
+# oh-my-zsh configuration (must be loaded first)
+source ~/.config/zsh/config/oh-my-zsh.zsh
+
+# zsh plugins
+source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+
+# aliases
+source ~/.config/zsh/config/aliases.zsh
+
+# ========================================
+# Load functions
+# ========================================
+
+for func in ~/.config/zsh/functions/*.zsh; do
+  source "$func"
+done
