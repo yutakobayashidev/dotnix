@@ -1,0 +1,18 @@
+{
+                "matcher": "Edit|Write|NotebookEdit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "nix run .#fmt"
+                    }
+                ]
+            }
+ これ.claude/settigns.jsonに追加して
+
+---
+
+コミットして
+
+---
+
+[Request interrupted by user]
