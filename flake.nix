@@ -25,6 +25,15 @@
       url = "github:skanehira/version-lsp";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agent-skills = {
+      url = "github:Kyure-A/agent-skills-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    anthropic-skills = {
+      url = "github:anthropics/skills";
+      flake = false;
+    };
+    nix-filter.url = "github:numtide/nix-filter";
   };
 
   nixConfig = {
@@ -45,6 +54,9 @@
       gh-nippou,
       nix-hazkey,
       version-lsp,
+      agent-skills,
+      anthropic-skills,
+      nix-filter,
       ...
     }:
     let
@@ -55,6 +67,12 @@
 
       # Dotfiles directory path
       dotfilesDir = "/home/yuta/ghq/github.com/yutakobayashidev/dotnix";
+
+      # Local agent skills (filtered from this repo)
+      local-skills = nix-filter.lib {
+        root = self;
+        include = [ "agents/skills" ];
+      };
 
       # Overlay to add external packages to pkgs
       overlay = final: prev: {
@@ -99,7 +117,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit helpers dotfilesDir home-manager niri;
+            inherit helpers dotfilesDir home-manager niri local-skills anthropic-skills;
           };
           modules = [
             ./nix/modules/core
@@ -121,6 +139,7 @@
                   "spotify"
                 ];
             }
+            agent-skills.homeManagerModules.default
             nix-hazkey.nixosModules.hazkey
           ] ++ extraModules;
         };

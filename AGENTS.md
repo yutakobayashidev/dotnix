@@ -17,12 +17,31 @@ nix search nixpkgs <package>
 nix flake update
 ```
 
+## Agent Skills
+
+このリポジトリは`agent-skills-nix`でスキルを管理しています。
+
+- **設定**: `nix/modules/home/agent-skills.nix`
+- **ローカルスキル**: `agents/skills/`
+- **Anthropic公式スキル**: `anthropics/skills`
+- **デプロイ先**: `~/.agents/skills`, `~/.config/claude/skills`
+
+主なスキル：
+- `social-digest` - Discord + Mastodon投稿をObsidianに保存（ローカル）
+- `oura-daily-watch` - Oura Ring データ + Discord行動分析（ローカル）
+- `docx`, `pdf`, `pptx`, `xlsx` - ドキュメント処理（Anthropic）
+- `frontend-design`, `skill-creator`, `webapp-testing` - 開発支援（Anthropic）
+
+詳細: `agents/README.md`
+
 ## Architecture
 
 NixOS flake構成 with home-manager（nixos-unstable）
 
 ```
 flake.nix                          # エントリポイント
+├── agents/
+│   └── skills/                    # Claude Codeスキル
 ├── nix/
 │   ├── hosts/                     # ホスト固有の設定
 │   │   └── nixos/

@@ -3,6 +3,7 @@
 {
   imports = [
     ./dotfiles.nix
+    ./agent-skills.nix
     ./programs/git.nix
     ./programs/jj.nix
     ./programs/zsh.nix
