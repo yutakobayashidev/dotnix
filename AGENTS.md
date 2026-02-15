@@ -23,7 +23,7 @@ nix flake update
 
 - **設定**: `nix/modules/home/agent-skills.nix`
 - **ローカルスキル**: `agents/skills/`
-- **Anthropic公式スキル**: `anthropics/skills`
+- **外部スキル**: `anthropics/skills`, `vercel-labs/skills`
 - **デプロイ先**: `~/.agents/skills`, `~/.config/claude/skills`
 
 主なスキル：
@@ -31,6 +31,8 @@ nix flake update
 - `oura-daily-watch` - Oura Ring データ + Discord行動分析（ローカル）
 - `docx`, `pdf`, `pptx`, `xlsx` - ドキュメント処理（Anthropic）
 - `frontend-design`, `skill-creator`, `webapp-testing` - 開発支援（Anthropic）
+- `find-skills` - スキル検索・発見支援（Vercel）
+- `ui-ux-pro-max` - UI/UXデザインシステム生成（コミュニティ）
 
 詳細: `agents/README.md`
 

@@ -40,3 +40,14 @@
 
 その他のAnthropicスキルは`nix/modules/home/agent-skills.nix`で追加可能です。
 利用可能なスキル一覧: https://github.com/anthropics/skills
+
+### Vercel公式スキル
+
+- `find-skills` - スキル検索・発見支援
+
+その他のVercelスキルは`nix/modules/home/agent-skills.nix`で追加可能です。
+利用可能なスキル一覧: https://github.com/vercel-labs/skills
+
+### コミュニティスキル
+
+- `ui-ux-pro-max` - UI/UXデザインシステム生成（nextlevelbuilder）

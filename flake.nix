@@ -33,6 +33,14 @@
       url = "github:anthropics/skills";
       flake = false;
     };
+    vercel-skills = {
+      url = "github:vercel-labs/skills";
+      flake = false;
+    };
+    ui-ux-pro-max-skill = {
+      url = "github:nextlevelbuilder/ui-ux-pro-max-skill";
+      flake = false;
+    };
     nix-filter.url = "github:numtide/nix-filter";
   };
 
@@ -56,6 +64,8 @@
       version-lsp,
       agent-skills,
       anthropic-skills,
+      vercel-skills,
+      ui-ux-pro-max-skill,
       nix-filter,
       ...
     }:
@@ -117,7 +127,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit helpers dotfilesDir home-manager niri local-skills anthropic-skills;
+            inherit helpers dotfilesDir home-manager niri local-skills anthropic-skills vercel-skills ui-ux-pro-max-skill agent-skills;
           };
           modules = [
             ./nix/modules/core
@@ -139,7 +149,6 @@
                   "spotify"
                 ];
             }
-            agent-skills.homeManagerModules.default
             nix-hazkey.nixosModules.hazkey
           ] ++ extraModules;
         };

@@ -3,7 +3,7 @@
 #
 # All skills (local and external) are managed here via agent-skills-nix.
 # Skills are deployed to ~/.agents (standard location) and ~/.config/claude/skills
-{ pkgs, local-skills, anthropic-skills, ... }:
+{ pkgs, local-skills, anthropic-skills, vercel-skills, ui-ux-pro-max-skill, ... }:
 {
   programs.agent-skills = {
     enable = true;
@@ -19,6 +19,16 @@
       anthropic = {
         path = anthropic-skills;
         subdir = "skills";
+      };
+      # Vercel: skills from vercel-labs/skills
+      vercel = {
+        path = vercel-skills;
+        subdir = "skills";
+      };
+      # nextlevelbuilder: UI/UX Pro Max skill
+      nextlevelbuilder = {
+        path = ui-ux-pro-max-skill;
+        subdir = ".claude/skills";
       };
     };
 
@@ -56,6 +66,16 @@
       webapp-testing = {
         from = "anthropic";
         path = "webapp-testing";
+      };
+      # Vercel skills
+      find-skills = {
+        from = "vercel";
+        path = "find-skills";
+      };
+      # nextlevelbuilder skills
+      ui-ux-pro-max = {
+        from = "nextlevelbuilder";
+        path = "ui-ux-pro-max";
       };
     };
 
