@@ -18,6 +18,15 @@
             "command": "entire hooks claude-code post-todo"
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "nix run .#fmt"
+          }
+        ]
       }
     ],
     "PreToolUse": [
