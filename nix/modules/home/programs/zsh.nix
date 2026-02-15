@@ -29,6 +29,7 @@
     initContent = ''
             eval "$(direnv hook zsh)"
             eval "$(zoxide init zsh)"
+            eval "$(git wt --init zsh)"
 
             # oh-my-zsh gitプラグインのエイリアスを解除
             unalias g 2>/dev/null
@@ -91,6 +92,14 @@
               local bookmark=$(jj bookmark list | fzf --prompt="jj bookmark > " | awk '{print $1}')
               if [[ -n "$bookmark" ]]; then
                 jj new "$bookmark"
+              fi
+            }
+
+            # gwt: git worktreeをfzf検索して移動
+            function gwt() {
+              local worktree=$(git wt | fzf --header-lines=1 --prompt="git worktree > " | awk '{if ($1 == "*") print $2; else print $1}')
+              if [[ -n "$worktree" ]]; then
+                cd "$worktree"
               fi
             }
 
