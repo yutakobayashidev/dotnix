@@ -1,0 +1,33 @@
+今このリポジトリ、zsh直接直接nixに書いてるけど、あんまりよくない気がしてきた、https://github.com/ryoppippi/dotfiles　このリポジトリの手法を参考にしてみて。deepwikiで
+
+---
+
+Continue from where you left off.
+
+---
+
+続けて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+参考リポジトリ、dotfilesなんかファイルないきが
+
+---
+
+適用してみた、ちゃんと反映されてる？
+
+---
+
+deepwiki見た感じ、fishをメインに使っているようで、関数が分離されているようだけど、似たようなアプローチを取れる？zshメインで 方法Aでいいと思うけど
+
+---
+
+やってみた、試し見て
+
+---
+
+コミットして

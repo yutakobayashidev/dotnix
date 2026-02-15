@@ -1,0 +1,38 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "ea99f193dbfd",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "nix/modules/home/default.nix",
+    "nix/modules/home/dotfiles.nix",
+    "nix/modules/home/programs/zsh.nix",
+    "zsh/config/aliases.zsh",
+    "zsh/config/oh-my-zsh.zsh",
+    "zsh/functions/cd-up.zsh",
+    "zsh/functions/g.zsh",
+    "zsh/functions/gb.zsh",
+    "zsh/functions/gh-q.zsh",
+    "zsh/functions/gwt.zsh",
+    "zsh/functions/jb.zsh",
+    "zsh/zshrc",
+    "zshenv"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ea/99f193dbfd/0/metadata.json",
+      "transcript": "/ea/99f193dbfd/0/full.jsonl",
+      "context": "/ea/99f193dbfd/0/context.md",
+      "content_hash": "/ea/99f193dbfd/0/content_hash.txt",
+      "prompt": "/ea/99f193dbfd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3387,
+    "cache_creation_tokens": 185085,
+    "cache_read_tokens": 3111749,
+    "output_tokens": 12621,
+    "api_call_count": 65
+  }
+}
