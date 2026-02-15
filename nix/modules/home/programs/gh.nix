@@ -3,7 +3,7 @@
 {
   home.packages = with pkgs; [
     gh
-    # gh-nippou  # temporarily disabled due to hash mismatch
+    gh-nippou
     ghq
     tea
   ];

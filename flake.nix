@@ -98,8 +98,8 @@
         version-lsp = version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
           doCheck = false;
         });
-        # gh-nippou (temporarily disabled due to hash mismatch)
-        # gh-nippou = gh-nippou.packages.${system}.default;
+        # gh-nippou
+        gh-nippou = gh-nippou.packages.${system}.default;
         # pretty-ts-errors-markdown
         pretty-ts-errors-markdown = prev.callPackage ./nix/packages/pretty-ts-errors-markdown.nix { };
         # difit
