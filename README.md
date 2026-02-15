@@ -5,11 +5,11 @@ My NixOS configuration with Flakes and Home Manager.
 ## Stack
 
 - **OS**: NixOS (unstable)
-- **WM**: Hyprland
+- **WM**: Niri（スクロール可能なタイリングWM）
 - **Terminal**: Ghostty
 - **Shell**: Zsh + Oh My Zsh
 - **Editor**: Neovim, VSCode
-- **IME**: fcitx5 + Mozc
+- **IME**: fcitx5 + hazkey（LLM変換）
 
 ## Usage
 
@@ -27,17 +27,24 @@ nix flake update
 ## Structure
 
 ```
-flake.nix              # Flake entry point
-├── configuration.nix  # System configuration
-├── home.nix           # Home Manager entry point
-└── modules/home/      # Home Manager modules
-    ├── zsh.nix
-    ├── hyprpanel.nix
-    ├── ghostty/
-    ├── neovim.nix
-    ├── tmux.nix
-    ├── git.nix
-    └── vscode.nix
+flake.nix                    # Flake entry point
+└── nix/
+    ├── hosts/nixos/         # Host-specific config (boot, network, locale)
+    ├── profiles/            # Profile definitions (cli, gui, etc.)
+    │   ├── cli-minimal.nix
+    │   ├── cli.nix
+    │   └── gui.nix
+    ├── modules/
+    │   ├── core/            # System modules (niri, docker, audio, etc.)
+    │   └── home/            # Home Manager modules
+    │       ├── packages.nix
+    │       └── programs/    # Program configurations
+    │           ├── zsh.nix
+    │           ├── ghostty/
+    │           ├── neovim.nix
+    │           ├── git.nix
+    │           └── ...
+    └── packages/            # Custom packages (polycat, git-wt-clean, etc.)
 ```
 
 ## YubiKey Setup
