@@ -1,0 +1,28 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "0055fb253356",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/packages.nix",
+    "nix/packages/keifu.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/00/55fb253356/0/metadata.json",
+      "transcript": "/00/55fb253356/0/full.jsonl",
+      "context": "/00/55fb253356/0/context.md",
+      "content_hash": "/00/55fb253356/0/content_hash.txt",
+      "prompt": "/00/55fb253356/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 373,
+    "cache_creation_tokens": 74654,
+    "cache_read_tokens": 1558265,
+    "output_tokens": 2421,
+    "api_call_count": 37
+  }
+}
