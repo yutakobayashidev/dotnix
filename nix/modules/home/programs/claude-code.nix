@@ -27,7 +27,30 @@ in
         command = "ccusage statusline";
         padding = 0;
       };
+      hooks = {
+        WorktreeCreate = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "${claudeDotfilesDir}/hooks/worktree.zsh";
+              }
+            ];
+          }
+        ];
+        WorktreeRemove = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "${claudeDotfilesDir}/hooks/worktree.zsh";
+              }
+            ];
+          }
+        ];
+      };
     };
+    "claude/hooks".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/hooks";
     "claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/CLAUDE.md";
     "claude/commands".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/commands";
     "claude/agents".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/agents";
