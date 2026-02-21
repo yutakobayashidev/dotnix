@@ -112,8 +112,8 @@
         entire = prev.callPackage ./nix/packages/entire.nix { };
         # polycat
         polycat = prev.callPackage ./nix/packages/polycat.nix { };
-        # git-wt-clean
-        git-wt-clean = prev.callPackage ./nix/packages/git-wt-clean.nix { };
+        # keifu
+        keifu = prev.callPackage ./nix/packages/keifu.nix { };
       };
 
       # mkSystem helper function

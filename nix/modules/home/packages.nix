@@ -15,7 +15,6 @@
     # Version Control
     git
     git-wt
-    git-wt-clean
     jujutsu
     jj-desc
     entire
@@ -55,6 +54,8 @@
     glow
     vhs
     zellij
+    yazi
+    keifu
 
     # Network Tools
     speedtest-cli
