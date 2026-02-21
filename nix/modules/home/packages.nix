@@ -15,6 +15,7 @@
     # Version Control
     git
     git-wt
+    lazygit
     jujutsu
     jj-desc
     entire
