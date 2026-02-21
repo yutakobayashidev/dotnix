@@ -4,7 +4,7 @@
     ./cli.nix
     ./../modules/core/niri.nix
     ./../modules/core/input.nix
-    ./../modules/core/yubikey.nix
+    ./../modules/core/pam.nix
     ./../modules/core/audio.nix
     ./../modules/core/bluetooth.nix
     ./../modules/core/android.nix

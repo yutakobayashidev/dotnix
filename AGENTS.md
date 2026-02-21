@@ -62,7 +62,7 @@ flake.nix                          # エントリポイント
 │   │   │   ├── input.nix          # fcitx5 + hazkey
 │   │   │   ├── audio.nix          # pipewire
 │   │   │   ├── bluetooth.nix
-│   │   │   ├── yubikey.nix        # YubiKey + PAM U2F
+│   │   │   ├── pam.nix            # PAM/polkit設定（YubiKey, U2F認証）
 │   │   │   ├── docker.nix
 │   │   │   ├── tailscale.nix
 │   │   │   ├── android.nix
