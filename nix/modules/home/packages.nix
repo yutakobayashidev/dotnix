@@ -95,6 +95,10 @@
     # System Tools
     rpi-imager
     difit
+    binutils
+
+    # VR
+    vrcx
 
     # Misc
     sl
