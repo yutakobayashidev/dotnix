@@ -1,0 +1,18 @@
+hmm , status=1/FAILURE)
+         IP: 19.1K in, 5.3K out
+         IO: 0B read, 0B written
+   Mem peak: 33.5M
+        CPU: 982ms
+
+ 2月 22 08:01:19 nixos hm-activate-yuta[1035060]: restoreNeovimPlugins を有効化しています
+ 2月 22 08:01:19 nixos hm-activate-yuta[1035060]: validateClaudeSettings を有効化しています
+ 2月 22 08:01:19 nixos hm-activate-yuta[1035060]: Validating Claude Code settings.json...
+ 2月 22 08:01:20 nixos hm-activate-yuta[1035414]: Schema validation errors were encountered.
+ 2月 22 08:01:20 nixos hm-activate-yuta[1035414]:   /home/yuta/.config/claude/settings.json::$.hooks: Additional properties are not allowed ('WorktreeCreate', 'WorktreeRemove' were unexpected)
+ 2月 22 08:01:20 nixos hm-activate-yuta[1035060]: Claude Code settings.json validation failed
+ 2月 22 08:01:20 nixos systemd[1]: home-manager-yuta.service: Main process exited, code=exited, status=1/FAILURE
+ 2月 22 08:01:20 nixos systemd[1]: home-manager-yuta.service: Failed with result 'exit-code'.
+ 2月 22 08:01:20 nixos systemd[1]: Failed to start Home Manager environment for yuta.
+ 2月 22 08:01:20 nixos systemd[1]: home-manager-yuta.service: Consumed 982ms CPU time, 33.5M memory peak, 19K incoming IP traffic, 5.3K outgoing IP traffic.
+Command 'systemd-run -E LOCALE_ARCHIVE -E NIXOS_INSTALL_BOOTLOADER -E NIXOS_NO_CHECK --collect --no-ask-password --pipe --quiet --service-type=exec --unit=nixos-rebuild-switch-to-configuration REDACTED.05.20260217.0182a36/bin/switch-to-configuration switch' returned non-zero exit status 4.
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
