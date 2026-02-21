@@ -1,0 +1,77 @@
+Implement the following plan:
+
+# WorktreeCreate/WorktreeRemove Hooks の追加
+
+## Context
+
+Claude Code 2.1.50 の `WorktreeCreate`/`WorktreeRemove` Hooks で `git wt` と統合する。
+スクリプトは `claude/hooks/` にzshで配置し、`mkOutOfStoreSymlink` で管理。
+
+## 変更内容
+
+### 1. 新規: `claude/hooks/worktree.zsh`
+
+```zsh
+#!/usr/bin/env zsh
+set -euo pipefail
+
+input=$(cat)
+hook_event=$(printf '%s' "$input" | jq -r '.hook_event_name')
+
+case "$hook_event" in
+WorktreeCreate)
+  wt_name=$(printf '%s' "$input" | jq -r '.name')
+  wt_abs_path=$(git wt "$wt_name" --nocd 2>/dev/null | tail -n 1 | xargs)
+  echo "$wt_abs_path"
+  ;;
+WorktreeRemove)
+  wt_path=$(printf '%s' "$input" | jq -r '.worktree_path')
+  git wt -d "$wt_path" 2>/dev/null || true
+  ;;
+esac
+```
+
+### 2. 変更: `nix/modules/home/programs/claude-code.nix`
+
+- `xdg.configFile` に `claude/hooks` symlink追加
+- settings.json に hooks セクション追加（コマンドパスは dotfilesDir 経由）
+
+```nix
+"claude/hooks".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/hooks";
+```
+
+settings.json:
+```nix
+hooks = {
+  WorktreeCreate = [{ hooks = [{ type = "command"; command = "${claudeDotfilesDir}/hooks/worktree.zsh"; }]; }];
+  WorktreeRemove = [{ hooks = [{ type = "command"; command = "${claudeDotfilesDir}/hooks/worktree.zsh"; }]; }];
+};
+```
+
+## 対象ファイル
+
+| ファイル | 操作 |
+|---------|------|
+| `claude/hooks/worktree.zsh` | 新規作成 |
+| `nix/modules/home/programs/claude-code.nix` | hooks 設定 + symlink追加 |
+
+## 検証
+
+```bash
+nh os switch
+cat ~/.config/claude/settings.json | jq '.hooks'
+claude --worktree
+```
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /home/yuta/.REDACTED.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+CLAUDE標準の機能でworktreeを扱えるようになったはずなので、CLAUDE.mdかworkteeの指示を消したい
+
+---
+
+コミットして
