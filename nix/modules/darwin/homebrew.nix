@@ -27,7 +27,6 @@
       "adobe-creative-cloud"
       "android-studio"
       "ghostty"
-      "google-cloud-sdk"
       "microsoft-auto-update"
       "qgis"
 
