@@ -46,6 +46,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     onepassword-shell-plugins.url = "github:1Password/shell-plugins";
+    brew-nix = {
+      url = "github:BatteredBunny/brew-nix";
+      inputs = {
+        brew-api.follows = "brew-api";
+        nix-darwin.follows = "nix-darwin";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+    brew-api = {
+      url = "github:BatteredBunny/brew-api";
+      flake = false;
+    };
     moonbit-overlay.url = "github:moonbit-community/moonbit-overlay";
     nix-filter.url = "github:numtide/nix-filter";
   };
@@ -74,6 +86,7 @@
       ui-ux-pro-max-skill,
       nix-darwin,
       onepassword-shell-plugins,
+      brew-nix,
       moonbit-overlay,
       nix-filter,
       ...
@@ -169,7 +182,7 @@
             ./nix/hosts/${host}
             ./nix/profiles/darwin.nix
             {
-              nixpkgs.overlays = [ (mkExternalOverlay system) moonbit-overlay.overlays.default customOverlay ];
+              nixpkgs.overlays = [ (mkExternalOverlay system) moonbit-overlay.overlays.default customOverlay brew-nix.overlays.default ];
               nixpkgs.config.allowUnfreePredicate =
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) [
                   "claude-code"

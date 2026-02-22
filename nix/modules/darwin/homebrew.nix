@@ -6,15 +6,12 @@
     onActivation = {
       autoUpdate = true;
     };
+    # /Applications へのインストールが必要な cask はここで管理
+    # brew-nix で管理可能なものは packages-darwin.nix に移動済み
     casks = [
       "ghostty"
-      "raycast"
       "google-chrome"
-      "discord"
-      "slack"
-      "obsidian"
       "1password"
-      "spotify"
       "android-studio"
     ];
   };
