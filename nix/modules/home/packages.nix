@@ -55,7 +55,6 @@
     vhs
     zellij
     yazi
-    keifu
     imagemagick
     ffmpeg
     yt-dlp

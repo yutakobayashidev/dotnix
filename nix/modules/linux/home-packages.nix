@@ -5,6 +5,7 @@
   home.packages = with pkgs; [
     # Overlay packages (Linux-only)
     ghostty
+    keifu
 
     # Android
     android-tools

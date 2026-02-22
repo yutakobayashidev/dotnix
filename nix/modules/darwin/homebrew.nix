@@ -6,6 +6,12 @@
     onActivation = {
       autoUpdate = true;
     };
+    taps = [
+      "trasta298/tap"
+    ];
+    brews = [
+      "trasta298/tap/keifu"
+    ];
     # /Applications への直接インストールやシステム統合が必要な cask
     # brew-nix で管理可能なものは packages-darwin.nix に移動済み
     casks = [
