@@ -116,6 +116,8 @@
         polycat = prev.callPackage ./nix/packages/polycat.nix { };
         # keifu
         keifu = prev.callPackage ./nix/packages/keifu.nix { };
+        # similarity-ts
+        similarity-ts = prev.callPackage ./nix/packages/similarity-ts.nix { };
       };
 
       # mkSystem helper function

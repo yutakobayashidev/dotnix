@@ -49,6 +49,7 @@
     jq
     jnv
     tokei
+    similarity-ts
     lsd
     btop
     zoxide
