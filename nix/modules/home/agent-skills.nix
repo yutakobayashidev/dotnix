@@ -109,6 +109,11 @@
         dest = ".config/claude/skills";
         structure = "link";
       };
+      # Codex CLI user config
+      codex = {
+        dest = ".codex/skills";
+        structure = "link";
+      };
     };
   };
 }

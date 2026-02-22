@@ -6,7 +6,6 @@
     # Overlay packages
     claude-code
     ccusage
-    codex
     opencode
     vibe-kanban
     aqua
