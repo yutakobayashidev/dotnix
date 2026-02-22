@@ -1,0 +1,16 @@
+name: "Update Flake Inputs (Stable)"
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    uses: ./.github/workflows/_update-flake-reusable.yaml
+    with:
+      exclude-inputs: "llm-agents"
+      minimum-release-age-days: 3
+    secrets:
+      FLAKE_UPDATER_APP_ID: ${{ secrets.FLAKE_UPDATER_APP_ID }}
+      FLAKE_UPDATER_APP_PRIVATE_KEY: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}

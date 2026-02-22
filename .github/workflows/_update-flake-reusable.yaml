@@ -1,0 +1,83 @@
+name: Update Flake Inputs (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      exclude-inputs:
+        description: Comma-separated list of inputs to exclude
+        type: string
+        default: ""
+      include-inputs:
+        description: Comma-separated list of inputs to include (if set, only these)
+        type: string
+        default: ""
+      skip-delay:
+        description: Skip random delay between updates
+        type: boolean
+        default: false
+      minimum-release-age-days:
+        description: Minimum age in days for the release commit
+        type: number
+        default: 0
+    secrets:
+      FLAKE_UPDATER_APP_ID:
+        required: true
+      FLAKE_UPDATER_APP_PRIVATE_KEY:
+        required: true
+
+jobs:
+  discover:
+    runs-on: ubuntu-24.04-arm
+    outputs:
+      matrix: ${{ steps.discover.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-nix
+      - id: discover
+        uses: ./.github/actions/discover-flake-inputs
+        with:
+          exclude-inputs: ${{ inputs.exclude-inputs }}
+          include-inputs: ${{ inputs.include-inputs }}
+          skip-delay: ${{ inputs.skip-delay }}
+
+  update:
+    needs: discover
+    if: ${{ fromJSON(needs.discover.outputs.matrix).include[0] != null }}
+    runs-on: ubuntu-24.04-arm
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: setup-bot
+        uses: ./.github/actions/setup-git-bot
+        with:
+          app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
+          app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
+          app-slug: ${{ vars.FLAKE_UPDATER_APP_SLUG }}
+
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.setup-bot.outputs.token }}
+
+      - uses: ./.github/actions/setup-nix
+
+      - uses: ./.github/actions/update-flake-input
+        with:
+          input: ${{ matrix.input }}
+          owner: ${{ matrix.owner }}
+          repo: ${{ matrix.repo }}
+          token: ${{ steps.setup-bot.outputs.token }}
+          skip-delay: ${{ matrix.skip_delay }}
+          minimum-release-age-days: ${{ inputs.minimum-release-age-days }}
+
+  summary:
+    needs: [discover, update]
+    if: always()
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - run: |
+          echo "## Update Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Discover: ${{ needs.discover.result }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Update: ${{ needs.update.result }}" >> "$GITHUB_STEP_SUMMARY"

@@ -41,6 +41,7 @@
       url = "github:nextlevelbuilder/ui-ux-pro-max-skill";
       flake = false;
     };
+    moonbit-overlay.url = "github:moonbit-community/moonbit-overlay";
     nix-filter.url = "github:numtide/nix-filter";
   };
 
@@ -66,6 +67,7 @@
       anthropic-skills,
       vercel-skills,
       ui-ux-pro-max-skill,
+      moonbit-overlay,
       nix-filter,
       ...
     }:
@@ -134,7 +136,7 @@
             ./nix/hosts/${host}
             ./nix/profiles/${profile}.nix
             {
-              nixpkgs.overlays = [ overlay ];
+              nixpkgs.overlays = [ overlay moonbit-overlay.overlays.default ];
               nixpkgs.config.allowUnfreePredicate =
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) [
                   "claude-code"

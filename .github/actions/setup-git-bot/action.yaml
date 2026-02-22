@@ -1,0 +1,41 @@
+name: Setup Git Bot
+description: Generate GitHub App token and configure git identity
+
+inputs:
+  app-id:
+    description: GitHub App ID
+    required: true
+  app-private-key:
+    description: GitHub App private key
+    required: true
+  app-slug:
+    description: GitHub App slug (URL末尾部分)
+    required: true
+
+outputs:
+  token:
+    description: GitHub App installation token
+    value: ${{ steps.token.outputs.token }}
+
+runs:
+  using: composite
+  steps:
+    - id: token
+      uses: actions/create-github-app-token@v2
+      with:
+        app-id: ${{ inputs.app-id }}
+        private-key: ${{ inputs.app-private-key }}
+
+    - id: bot-identity
+      shell: bash
+      run: |
+        BOT_USER_ID=$(gh api "/users/${{ inputs.app-slug }}%5Bbot%5D" --jq '.id')
+        echo "name=${{ inputs.app-slug }}[bot]" >> "$GITHUB_OUTPUT"
+        echo "email=${BOT_USER_ID}+${{ inputs.app-slug }}[bot]@users.noreply.github.com" >> "$GITHUB_OUTPUT"
+      env:
+        GH_TOKEN: ${{ steps.token.outputs.token }}
+
+    - shell: bash
+      run: |
+        git config user.name "${{ steps.bot-identity.outputs.name }}"
+        git config user.email "${{ steps.bot-identity.outputs.email }}"

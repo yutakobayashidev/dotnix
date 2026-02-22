@@ -1,0 +1,55 @@
+name: Discover Flake Inputs
+description: Parse flake metadata and output matrix of inputs to update
+
+inputs:
+  exclude-inputs:
+    description: Comma-separated list of inputs to exclude
+    default: ""
+  include-inputs:
+    description: Comma-separated list of inputs to include (if set, only these are included)
+    default: ""
+  skip-delay:
+    description: Skip random delay between updates
+    default: "false"
+
+outputs:
+  matrix:
+    description: JSON matrix of flake inputs
+    value: ${{ steps.discover.outputs.matrix }}
+
+runs:
+  using: composite
+  steps:
+    - id: discover
+      shell: bash
+      run: |
+        METADATA=$(nix flake metadata --json 2>/dev/null)
+
+        MATRIX=$(echo "$METADATA" | jq -c \
+          --arg include "${{ inputs.include-inputs }}" \
+          --arg exclude "${{ inputs.exclude-inputs }}" \
+          --arg skip_delay "${{ inputs.skip-delay }}" \
+          '
+          .locks.nodes as $nodes |
+          [
+            .locks.nodes.root.inputs | to_entries[] |
+            . as $entry |
+            $nodes[$entry.value] |
+            select((.locked.type == "github") or (.original.type == "github")) |
+            {
+              input: $entry.key,
+              owner: (.original.owner // .locked.owner),
+              repo: (.original.repo // .locked.repo)
+            }
+          ] |
+          if ($include | length) > 0 then
+            map(select(.input | IN($include | split(",") | map(gsub("\\s+"; ""))[])))
+          else . end |
+          if ($exclude | length) > 0 then
+            map(select(.input | IN($exclude | split(",") | map(gsub("\\s+"; ""))[]) | not))
+          else . end |
+          map(. + {skip_delay: ($skip_delay == "true")})
+          ')
+
+        echo "matrix={\"include\":${MATRIX}}" >> "$GITHUB_OUTPUT"
+        echo "Discovered inputs: $(echo "$MATRIX" | jq -r '[.[].input] | join(", ")')"

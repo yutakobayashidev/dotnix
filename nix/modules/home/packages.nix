@@ -21,6 +21,7 @@
     entire
 
     # Development Tools
+    moonbit-bin.moonbit.latest
     nil
     nixfmt-tree
     nix-init

@@ -1,0 +1,165 @@
+name: Update Flake Input
+description: Update a single flake input, create PR, and enable auto-merge
+
+inputs:
+  input:
+    description: Flake input name
+    required: true
+  owner:
+    description: GitHub repository owner
+    required: true
+  repo:
+    description: GitHub repository name
+    required: true
+  token:
+    description: GitHub token for PR operations
+    required: true
+  skip-delay:
+    description: Skip random delay
+    default: "false"
+  minimum-release-age-days:
+    description: Minimum age in days for the release commit
+    default: "0"
+
+runs:
+  using: composite
+  steps:
+    - name: Random delay
+      if: inputs.skip-delay != 'true'
+      shell: bash
+      run: |
+        DELAY=$((RANDOM % 60))
+        echo "Sleeping ${DELAY}s to avoid rate limits"
+        sleep "$DELAY"
+
+    - name: Get current revision
+      id: current
+      shell: bash
+      run: |
+        NODE=$(jq -r '.nodes.root.inputs["${{ inputs.input }}"]' flake.lock)
+        REV=$(jq -r ".nodes[\"${NODE}\"].locked.rev" flake.lock)
+        echo "node=${NODE}" >> "$GITHUB_OUTPUT"
+        echo "rev=${REV}" >> "$GITHUB_OUTPUT"
+
+    - name: Update flake input
+      shell: bash
+      run: nix flake update "${{ inputs.input }}"
+
+    - name: Get updated revision
+      id: updated
+      shell: bash
+      run: |
+        NODE="${{ steps.current.outputs.node }}"
+        REV=$(jq -r ".nodes[\"${NODE}\"].locked.rev" flake.lock)
+        echo "rev=${REV}" >> "$GITHUB_OUTPUT"
+
+    - name: Check release age
+      if: inputs.minimum-release-age-days != '0' && steps.current.outputs.rev != steps.updated.outputs.rev
+      id: age-check
+      shell: bash
+      run: |
+        COMMIT_DATE=$(gh api "repos/${{ inputs.owner }}/${{ inputs.repo }}/commits/${{ steps.updated.outputs.rev }}" --jq '.commit.committer.date')
+        COMMIT_TS=$(date -d "$COMMIT_DATE" +%s)
+        THRESHOLD_TS=$(date -d "${{ inputs.minimum-release-age-days }} days ago" +%s)
+
+        if [ "$COMMIT_TS" -gt "$THRESHOLD_TS" ]; then
+          echo "Commit ${{ steps.updated.outputs.rev }} is less than ${{ inputs.minimum-release-age-days }} days old, skipping"
+          git checkout -- flake.lock
+          echo "skip=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+        fi
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+
+    - name: Check for changes
+      id: diff
+      if: steps.age-check.outputs.skip != 'true'
+      shell: bash
+      run: |
+        if git diff --quiet flake.lock; then
+          echo "No changes for ${{ inputs.input }}"
+          echo "changed=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Get llm-agents package versions
+      if: inputs.input == 'llm-agents' && steps.diff.outputs.changed == 'true'
+      id: versions
+      shell: bash
+      run: |
+        OLD_REV="${{ steps.current.outputs.rev }}"
+        NEW_REV="${{ steps.updated.outputs.rev }}"
+        PACKAGES="claude-code ccusage codex opencode vibe-kanban"
+
+        TABLE="| Package | Old | New |"
+        TABLE="${TABLE}
+        |---|---|---|"
+
+        for pkg in $PACKAGES; do
+          OLD_VER=$(nix eval --raw "github:numtide/llm-agents.nix/${OLD_REV}#packages.x86_64-linux.${pkg}.version" 2>/dev/null || echo "N/A")
+          NEW_VER=$(nix eval --raw "github:numtide/llm-agents.nix/${NEW_REV}#packages.x86_64-linux.${pkg}.version" 2>/dev/null || echo "N/A")
+          TABLE="${TABLE}
+        | \`${pkg}\` | ${OLD_VER} | ${NEW_VER} |"
+        done
+
+        {
+          echo "table<<VERSIONS_EOF"
+          echo "$TABLE"
+          echo "VERSIONS_EOF"
+        } >> "$GITHUB_OUTPUT"
+
+    - name: Create or update PR
+      if: steps.diff.outputs.changed == 'true'
+      shell: bash
+      run: |
+        INPUT="${{ inputs.input }}"
+        BRANCH="update-flake-${INPUT}"
+        OLD_REV="${{ steps.current.outputs.rev }}"
+        NEW_REV="${{ steps.updated.outputs.rev }}"
+        SHORT_OLD="${OLD_REV:0:7}"
+        SHORT_NEW="${NEW_REV:0:7}"
+        COMPARE_URL="https://github.com/${{ inputs.owner }}/${{ inputs.repo }}/compare/${OLD_REV}...${NEW_REV}"
+
+        # Commit and push
+        git checkout -B "$BRANCH"
+        git add flake.lock
+        git commit -m "flake.lock: update ${INPUT}"
+        git push -f origin "$BRANCH"
+
+        # Build PR body
+        BODY="Update \`${INPUT}\` input.
+
+        **Diff**: [\`${SHORT_OLD}...${SHORT_NEW}\`](${COMPARE_URL})"
+
+        VERSION_TABLE="${{ steps.versions.outputs.table }}"
+        if [ -n "$VERSION_TABLE" ]; then
+          BODY="${BODY}
+
+        ## Package Versions
+
+        ${VERSION_TABLE}"
+        fi
+
+        # Create or update PR
+        EXISTING_PR=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number' 2>/dev/null || true)
+
+        if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
+          echo "Updating existing PR #${EXISTING_PR}"
+          gh pr edit "$EXISTING_PR" --body "$BODY"
+        else
+          echo "Creating new PR"
+          gh pr create \
+            --title "flake.lock: update ${INPUT}" \
+            --body "$BODY" \
+            --head "$BRANCH"
+        fi
+
+        # Enable auto-merge
+        PR_NUMBER=$(gh pr list --head "$BRANCH" --state open --json number --jq '.[0].number')
+        if [ -n "$PR_NUMBER" ] && [ "$PR_NUMBER" != "null" ]; then
+          gh pr merge "$PR_NUMBER" --auto --squash
+        fi
+      env:
+        GH_TOKEN: ${{ inputs.token }}
