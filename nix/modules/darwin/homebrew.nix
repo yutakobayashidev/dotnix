@@ -13,7 +13,6 @@
       "1password"
       "karabiner-elements"
       "bettertouchtool"
-      "cloudflare-warp"
       "elgato-stream-deck"
       "gpg-suite"
       "orbstack"
@@ -22,7 +21,6 @@
 
       # Browsers (システム統合が深い)
       "google-chrome"
-      "microsoft-edge"
 
       # Complex Installers (pkg/独自インストーラー)
       "adobe-acrobat-reader"
@@ -39,7 +37,6 @@
       "qmk-toolbox"
 
       # Other
-      "amazon-q"
       "bitcoin-core"
       "sidequest"
       "virtual-desktop-streamer"
