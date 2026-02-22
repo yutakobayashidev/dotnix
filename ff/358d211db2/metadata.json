@@ -1,0 +1,26 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "ff358d211db2",
+  "strategy": "manual-commit",
+  "branch": "feat/improve-nix-updater",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/ff/358d211db2/0/metadata.json",
+      "transcript": "/ff/358d211db2/0/full.jsonl",
+      "context": "/ff/358d211db2/0/context.md",
+      "content_hash": "/ff/358d211db2/0/content_hash.txt",
+      "prompt": "/ff/358d211db2/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 1213,
+    "cache_read_tokens": 559286,
+    "output_tokens": 51,
+    "api_call_count": 5
+  }
+}
