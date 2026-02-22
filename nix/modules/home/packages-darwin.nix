@@ -27,9 +27,11 @@
       halloy
       mattermost
       messenger
+      nani
       signal
       simplex
       slack
+      telegram
       wechat
 
       # AI / LLM
@@ -60,7 +62,9 @@
       # Utilities
       appcleaner
       raycast
+      screen-studio
       stats
+      yubico-authenticator
 
       # Gaming
       epic-games
