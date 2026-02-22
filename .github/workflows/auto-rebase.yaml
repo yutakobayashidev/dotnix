@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-24.04-arm
     if: github.event_name == 'workflow_dispatch' || github.event.head_commit.committer.name == 'GitHub'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - id: setup-bot
         uses: ./.github/actions/setup-git-bot
@@ -23,7 +23,7 @@ jobs:
           app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
           app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           token: ${{ steps.setup-bot.outputs.token }}
           fetch-depth: 0

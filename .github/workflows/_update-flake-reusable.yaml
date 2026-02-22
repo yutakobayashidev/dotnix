@@ -33,7 +33,7 @@ jobs:
     outputs:
       matrix: ${{ steps.discover.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-nix
       - id: discover
         uses: ./.github/actions/discover-flake-inputs
@@ -50,7 +50,7 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - id: setup-bot
         uses: ./.github/actions/setup-git-bot
@@ -58,7 +58,7 @@ jobs:
           app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
           app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           token: ${{ steps.setup-bot.outputs.token }}
 

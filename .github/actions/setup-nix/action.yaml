@@ -9,15 +9,15 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: cachix/install-nix-action@v31
+    - uses: cachix/install-nix-action@4e002c8ec80594ecd40e759629461e26c8abed15 # v31.9.0
       with:
         github_access_token: ${{ github.token }}
-    - uses: cachix/cachix-action@v16
+    - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
       with:
         name: numtide
         skipPush: true
     - if: inputs.cachix-auth-token != ''
-      uses: cachix/cachix-action@v16
+      uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
       with:
         name: yutakobayashidev
         authToken: ${{ inputs.cachix-auth-token }}
