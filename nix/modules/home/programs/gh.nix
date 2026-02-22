@@ -1,10 +1,15 @@
 { pkgs, ... }:
 
 {
+  programs.gh = {
+    enable = true;
+    extensions = [
+      pkgs.gh-graph
+      pkgs.gh-nippou
+    ];
+  };
+
   home.packages = with pkgs; [
-    gh
-    gh-graph
-    gh-nippou
     ghq
     tea
   ];

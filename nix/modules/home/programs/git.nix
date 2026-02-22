@@ -109,7 +109,6 @@
         name = "yutakobayashidev";
         email = "hi@yutakobayashi.com";
       };
-      credential."https://github.com".helper = "!gh auth git-credential";
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
       wt.basedir = ".wt";
