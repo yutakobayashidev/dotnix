@@ -182,15 +182,7 @@
             ./nix/profiles/darwin.nix
             {
               nixpkgs.overlays = [ (mkExternalOverlay system) moonbit-overlay.overlays.default customOverlay brew-nix.overlays.default ];
-              nixpkgs.config.allowUnfreePredicate =
-                pkg: builtins.elem (nixpkgs.lib.getName pkg) [
-                  "claude-code"
-                  "discord"
-                  "slack"
-                  "obsidian"
-                  "1password"
-                  "spotify"
-                ];
+              nixpkgs.config.allowUnfree = true;
             }
           ] ++ extraModules;
         };
