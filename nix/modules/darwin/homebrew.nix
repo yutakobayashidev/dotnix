@@ -5,6 +5,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
+      cleanup = "uninstall";
     };
     taps = [
       "trasta298/tap"
