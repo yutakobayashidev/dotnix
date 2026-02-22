@@ -24,6 +24,8 @@ on:
         required: true
       FLAKE_UPDATER_APP_PRIVATE_KEY:
         required: true
+      CACHIX_AUTH_TOKEN:
+        required: false
 
 jobs:
   discover:
@@ -31,7 +33,7 @@ jobs:
     outputs:
       matrix: ${{ steps.discover.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-nix
       - id: discover
         uses: ./.github/actions/discover-flake-inputs
@@ -48,20 +50,21 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - id: setup-bot
         uses: ./.github/actions/setup-git-bot
         with:
           app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
           app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
-          app-slug: ${{ vars.FLAKE_UPDATER_APP_SLUG }}
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           token: ${{ steps.setup-bot.outputs.token }}
 
       - uses: ./.github/actions/setup-nix
+        with:
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - uses: ./.github/actions/update-flake-input
         with:

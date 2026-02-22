@@ -1,11 +1,23 @@
 name: Setup Nix
-description: Install Nix and configure numtide cache
+description: Install Nix and configure caches
+
+inputs:
+  cachix-auth-token:
+    description: Cachix authentication token for push
+    required: false
 
 runs:
   using: composite
   steps:
-    - uses: cachix/install-nix-action@v31
-    - uses: cachix/cachix-action@v16
+    - uses: cachix/install-nix-action@2126ae7fc54c9df00dd18f7f18754393182c73cd # v31.9.1
+      with:
+        github_access_token: ${{ github.token }}
+    - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
       with:
         name: numtide
         skipPush: true
+    - if: inputs.cachix-auth-token != ''
+      uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+      with:
+        name: yuta
+        authToken: ${{ inputs.cachix-auth-token }}

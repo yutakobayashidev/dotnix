@@ -97,11 +97,25 @@ runs:
         TABLE="${TABLE}
         |---|---|---|"
 
+        PKG_DIFF=""
+
         for pkg in $PACKAGES; do
           OLD_VER=$(nix eval --raw "github:numtide/llm-agents.nix/${OLD_REV}#packages.x86_64-linux.${pkg}.version" 2>/dev/null || echo "N/A")
           NEW_VER=$(nix eval --raw "github:numtide/llm-agents.nix/${NEW_REV}#packages.x86_64-linux.${pkg}.version" 2>/dev/null || echo "N/A")
+
+          if [ "$OLD_VER" != "$NEW_VER" ] && [ "$NEW_VER" != "N/A" ]; then
+            MARKER=" :arrow_up:"
+            if [ -n "$PKG_DIFF" ]; then
+              PKG_DIFF="${PKG_DIFF}, ${pkg}=${NEW_VER}"
+            else
+              PKG_DIFF="${pkg}=${NEW_VER}"
+            fi
+          else
+            MARKER=""
+          fi
+
           TABLE="${TABLE}
-        | \`${pkg}\` | ${OLD_VER} | ${NEW_VER} |"
+        | \`${pkg}\` | ${OLD_VER} | ${NEW_VER}${MARKER} |"
         done
 
         {
@@ -109,6 +123,8 @@ runs:
           echo "$TABLE"
           echo "VERSIONS_EOF"
         } >> "$GITHUB_OUTPUT"
+
+        echo "pkg_diff=${PKG_DIFF}" >> "$GITHUB_OUTPUT"
 
     - name: Create or update PR
       if: steps.diff.outputs.changed == 'true'
@@ -122,10 +138,18 @@ runs:
         SHORT_NEW="${NEW_REV:0:7}"
         COMPARE_URL="https://github.com/${{ inputs.owner }}/${{ inputs.repo }}/compare/${OLD_REV}...${NEW_REV}"
 
+        # Build PR title with version diff for llm-agents
+        PKG_DIFF="${{ steps.versions.outputs.pkg_diff }}"
+        if [ -n "$PKG_DIFF" ]; then
+          PR_TITLE="flake.lock: update ${INPUT} (${PKG_DIFF})"
+        else
+          PR_TITLE="flake.lock: update ${INPUT}"
+        fi
+
         # Commit and push
         git checkout -B "$BRANCH"
         git add flake.lock
-        git commit -m "flake.lock: update ${INPUT}"
+        git commit -m "$PR_TITLE"
         git push -f origin "$BRANCH"
 
         # Build PR body
@@ -147,13 +171,14 @@ runs:
 
         if [ -n "$EXISTING_PR" ] && [ "$EXISTING_PR" != "null" ]; then
           echo "Updating existing PR #${EXISTING_PR}"
-          gh pr edit "$EXISTING_PR" --body "$BODY"
+          gh pr edit "$EXISTING_PR" --title "$PR_TITLE" --body "$BODY"
         else
           echo "Creating new PR"
           gh pr create \
-            --title "flake.lock: update ${INPUT}" \
+            --title "$PR_TITLE" \
             --body "$BODY" \
-            --head "$BRANCH"
+            --head "$BRANCH" \
+            --label "dependencies,automated"
         fi
 
         # Enable auto-merge
