@@ -16,6 +16,10 @@ on:
         type: boolean
         default: false
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update:
     uses: ./.github/workflows/_update-flake-reusable.yaml
