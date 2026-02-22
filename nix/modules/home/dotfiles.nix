@@ -1,4 +1,10 @@
-{ lib, config, helpers, dotfilesDir, ... }:
+{
+  lib,
+  config,
+  helpers,
+  dotfilesDir,
+  ...
+}:
 
 let
   inherit (config.home) homeDirectory;

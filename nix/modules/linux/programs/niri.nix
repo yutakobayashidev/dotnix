@@ -33,13 +33,15 @@
         { proportion = 0.5; }
         { proportion = 0.66667; }
       ];
-      default-column-width = { proportion = 0.5; };
+      default-column-width = {
+        proportion = 0.5;
+      };
 
       # フォーカスリング（アクティブウィンドウを強調）
       focus-ring = {
         width = 2;
-        active.color = "#f5bde6";    # Catppuccin ピンク
-        inactive.color = "#5b6078";  # Catppuccin グレー
+        active.color = "#f5bde6"; # Catppuccin ピンク
+        inactive.color = "#5b6078"; # Catppuccin グレー
       };
 
       # ボーダー
@@ -56,34 +58,60 @@
     # 自動起動
     spawn-at-startup = [
       { command = [ "swww-daemon" ]; }
-      { command = [ "sh" "-c" "sleep 1 && swww img ~/wallpapers/wp13990714.png --transition-type fade" ]; }
-      { command = [ "fcitx5" "-d" ]; }
+      {
+        command = [
+          "sh"
+          "-c"
+          "sleep 1 && swww img ~/wallpapers/wp13990714.png --transition-type fade"
+        ];
+      }
+      {
+        command = [
+          "fcitx5"
+          "-d"
+        ];
+      }
       { command = [ "waybar" ]; }
       { command = [ "spotify" ]; }
-      { command = [ "wl-paste" "--watch" "cliphist" "store" ]; }
+      {
+        command = [
+          "wl-paste"
+          "--watch"
+          "cliphist"
+          "store"
+        ];
+      }
     ];
 
     # キーバインド
     binds = {
       "Mod+Q".action.spawn = [ "ghostty" ];
-      "Mod+C".action.close-window = {};
-      "Mod+M".action.quit = {};
+      "Mod+C".action.close-window = { };
+      "Mod+M".action.quit = { };
       "Mod+E".action.spawn = [ "dolphin" ];
-      "Mod+V".action.spawn = [ "sh" "-c" "cliphist list | rofi -dmenu | cliphist decode | wl-copy" ];
-      "Mod+R".action.spawn = [ "rofi" "-show" "drun" ];
-      "Mod+Shift+F".action.toggle-window-floating = {};
+      "Mod+V".action.spawn = [
+        "sh"
+        "-c"
+        "cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+      ];
+      "Mod+R".action.spawn = [
+        "rofi"
+        "-show"
+        "drun"
+      ];
+      "Mod+Shift+F".action.toggle-window-floating = { };
 
       # フォーカス移動
-      "Mod+Left".action.focus-column-left = {};
-      "Mod+Right".action.focus-column-right = {};
-      "Mod+H".action.focus-column-left = {};
-      "Mod+L".action.focus-column-right = {};
+      "Mod+Left".action.focus-column-left = { };
+      "Mod+Right".action.focus-column-right = { };
+      "Mod+H".action.focus-column-left = { };
+      "Mod+L".action.focus-column-right = { };
 
       # ウィンドウ移動
-      "Mod+Shift+Left".action.move-column-left = {};
-      "Mod+Shift+Right".action.move-column-right = {};
-      "Mod+Shift+H".action.move-column-left = {};
-      "Mod+Shift+L".action.move-column-right = {};
+      "Mod+Shift+Left".action.move-column-left = { };
+      "Mod+Shift+Right".action.move-column-right = { };
+      "Mod+Shift+H".action.move-column-left = { };
+      "Mod+Shift+L".action.move-column-right = { };
 
       # ウィンドウサイズ調整
       "Mod+Ctrl+Left".action.set-column-width = "-10%";
@@ -104,14 +132,43 @@
       "Mod+Shift+5".action.move-column-to-workspace = 5;
 
       # スクリーンショット
-      "Mod+Shift+S".action.spawn = [ "grimblast" "copy" "area" ];
+      "Mod+Shift+S".action.spawn = [
+        "grimblast"
+        "copy"
+        "area"
+      ];
 
       # メディアキー
-      "XF86AudioRaiseVolume".action.spawn = [ "wpctl" "set-volume" "-l" "1" "@DEFAULT_AUDIO_SINK@" "5%+" ];
-      "XF86AudioLowerVolume".action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-" ];
-      "XF86AudioMute".action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
-      "XF86MonBrightnessUp".action.spawn = [ "brightnessctl" "set" "5%+" ];
-      "XF86MonBrightnessDown".action.spawn = [ "brightnessctl" "set" "5%-" ];
+      "XF86AudioRaiseVolume".action.spawn = [
+        "wpctl"
+        "set-volume"
+        "-l"
+        "1"
+        "@DEFAULT_AUDIO_SINK@"
+        "5%+"
+      ];
+      "XF86AudioLowerVolume".action.spawn = [
+        "wpctl"
+        "set-volume"
+        "@DEFAULT_AUDIO_SINK@"
+        "5%-"
+      ];
+      "XF86AudioMute".action.spawn = [
+        "wpctl"
+        "set-mute"
+        "@DEFAULT_AUDIO_SINK@"
+        "toggle"
+      ];
+      "XF86MonBrightnessUp".action.spawn = [
+        "brightnessctl"
+        "set"
+        "5%+"
+      ];
+      "XF86MonBrightnessDown".action.spawn = [
+        "brightnessctl"
+        "set"
+        "5%-"
+      ];
     };
   };
 

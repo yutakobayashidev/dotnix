@@ -10,7 +10,7 @@ let
     ./similarity-ts.nix
   ];
 in
-builtins.foldl'
-  (acc: overlay: final: prev: (acc final prev) // ((import overlay) final prev))
-  (_: _: { })
-  overlayFiles
+builtins.foldl' (
+  acc: overlay: final: prev:
+  (acc final prev) // ((import overlay) final prev)
+) (_: _: { }) overlayFiles

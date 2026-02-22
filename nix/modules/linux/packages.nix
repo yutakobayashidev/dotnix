@@ -8,15 +8,13 @@
   ];
 
   # プログラム設定
-  programs.firefox.enable = true;
   programs.zsh.enable = true;
 
-  # nh - Nix helper
-  programs.nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/home/yuta/ghq/github.com/yutakobayashidev/dotnix";
+  # Automatic garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 4d";
   };
 
   # nix-ld - Run dynamically linked executables

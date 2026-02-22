@@ -1,4 +1,10 @@
-{ lib, config, pkgs, dotfilesDir, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  dotfilesDir,
+  ...
+}:
 
 let
   claudeConfigDir = "${config.xdg.configHome}/claude";
@@ -54,7 +60,8 @@ in
     "claude/CLAUDE.md".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/CLAUDE.md";
     "claude/commands".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/commands";
     "claude/agents".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/agents";
-    "claude/output-styles".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/output-styles";
+    "claude/output-styles".source =
+      config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/output-styles";
     "claude/rules".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/rules";
   };
 

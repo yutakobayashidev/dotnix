@@ -1,4 +1,11 @@
-{ config, lib, pkgs, helpers, dotfilesDir, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  helpers,
+  dotfilesDir,
+  ...
+}:
 
 let
   treesitterGrammars = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
@@ -38,9 +45,15 @@ in
     ];
 
     extraWrapperArgs = [
-      "--set" "TREESITTER_GRAMMARS" "${treesitterGrammars}"
-      "--set" "TELESCOPE_FZF_NATIVE" "${telescopeFzfNative}"
-      "--set" "PRETTY_TS_ERRORS_BIN" "${pkgs.pretty-ts-errors-markdown}/bin/pretty-ts-errors-markdown"
+      "--set"
+      "TREESITTER_GRAMMARS"
+      "${treesitterGrammars}"
+      "--set"
+      "TELESCOPE_FZF_NATIVE"
+      "${telescopeFzfNative}"
+      "--set"
+      "PRETTY_TS_ERRORS_BIN"
+      "${pkgs.pretty-ts-errors-markdown}/bin/pretty-ts-errors-markdown"
     ];
   };
 
