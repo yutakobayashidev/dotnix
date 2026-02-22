@@ -1,0 +1,65 @@
+name: "Auto-rebase update PRs"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: auto-rebase
+  cancel-in-progress: false
+
+jobs:
+  rebase-prs:
+    runs-on: ubuntu-24.04-arm
+    if: github.event_name == 'workflow_dispatch' || github.event.head_commit.committer.name == 'GitHub'
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: setup-bot
+        uses: ./.github/actions/setup-git-bot
+        with:
+          app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
+          app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ steps.setup-bot.outputs.token }}
+          fetch-depth: 0
+
+      - name: Rebase open flake update PRs
+        shell: bash
+        run: |
+          BRANCHES=$(gh pr list --state open --json headRefName --jq '.[].headRefName | select(startswith("update-flake-"))')
+
+          if [ -z "$BRANCHES" ]; then
+            echo "No update-flake PRs found"
+            exit 0
+          fi
+
+          for BRANCH in $BRANCHES; do
+            echo "--- Processing $BRANCH ---"
+            git fetch origin "$BRANCH"
+
+            BEHIND=$(git rev-list --count "origin/$BRANCH..origin/main")
+            if [ "$BEHIND" -eq 0 ]; then
+              echo "$BRANCH is up to date"
+              continue
+            fi
+
+            echo "$BRANCH is $BEHIND commits behind main, rebasing..."
+            git checkout "$BRANCH"
+
+            if git rebase origin/main; then
+              git push --force-with-lease origin "$BRANCH"
+              echo "$BRANCH rebased successfully"
+            else
+              echo "$BRANCH rebase failed, aborting"
+              git rebase --abort
+            fi
+
+            git checkout main
+          done
+        env:
+          GH_TOKEN: ${{ steps.setup-bot.outputs.token }}

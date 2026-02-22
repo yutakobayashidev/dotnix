@@ -24,6 +24,8 @@ on:
         required: true
       FLAKE_UPDATER_APP_PRIVATE_KEY:
         required: true
+      CACHIX_AUTH_TOKEN:
+        required: false
 
 jobs:
   discover:
@@ -55,13 +57,14 @@ jobs:
         with:
           app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
           app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
-          app-slug: ${{ vars.FLAKE_UPDATER_APP_SLUG }}
 
       - uses: actions/checkout@v4
         with:
           token: ${{ steps.setup-bot.outputs.token }}
 
       - uses: ./.github/actions/setup-nix
+        with:
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
 
       - uses: ./.github/actions/update-flake-input
         with:
