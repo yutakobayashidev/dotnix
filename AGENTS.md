@@ -30,6 +30,8 @@ nix flake update
 主なスキル：
 - `social-digest` - Discord + Mastodon投稿をObsidianに保存（ローカル）
 - `oura-daily-watch` - Oura Ring データ + Discord行動分析（ローカル）
+- `check-similarity` - TypeScript/JavaScript重複コード検知（ローカル）
+- `dce` - Dead Code Elimination（ローカル）
 - `docx`, `pdf`, `pptx`, `xlsx` - ドキュメント処理（Anthropic）
 - `frontend-design`, `skill-creator`, `webapp-testing` - 開発支援（Anthropic）
 - `find-skills` - スキル検索・発見支援（Vercel）
@@ -94,16 +96,22 @@ flake.nix                          # エントリポイント
 │   │   │       ├── zsh.nix
 │   │   │       ├── ghostty/
 │   │   │       ├── neovim.nix
-│   │   │       ├── tmux.nix
+│   │   │       ├── tmux/
 │   │   │       ├── git.nix
-│   │   │       ├── vscode.nix
-│   │   │       └── ...
+│   │   │       ├── gh.nix
+│   │   │       ├── jj.nix
+│   │   │       ├── claude-code.nix
+│   │   │       ├── bat.nix
+│   │   │       ├── btop.nix
+│   │   │       └── fastfetch/
 │   │   └── lib/                   # ヘルパー関数
 │   │       └── helpers/
 │   └── overlays/                  # カスタムパッケージ（overlay形式）
 │       ├── default.nix            # 全overlayの集約
 │       ├── polycat.nix
 │       ├── aqua.nix
+│       ├── similarity-ts.nix
+│       ├── pretty-ts-errors-markdown.nix
 │       └── ...
 └── nvim/                          # Neovim設定（Lua）
     └── lua/plugins/               # lazy.nvim プラグイン設定
@@ -114,7 +122,7 @@ flake.nix                          # エントリポイント
 ### NixOS
 - **WM**: Niri（スクロール可能なタイリングWM）
 - **IME**: fcitx5 + hazkey（LLM変換）
-- **YubiKey**: PAM U2F認証サポート（polkit, hyprlock対応）
+- **YubiKey**: PAM U2F認証サポート（polkit, swaylock対応）
 - **Development**: Docker, Tailscale, Android開発環境
 
 ### macOS
