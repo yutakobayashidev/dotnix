@@ -3,11 +3,30 @@
   "checkpoint_id": "d2dbe92c80f3",
   "strategy": "manual-commit",
   "branch": "feat/darwin-support",
-  "checkpoints_count": 2,
+  "checkpoints_count": 6,
   "files_touched": [
+    "CLAUDE.md",
     "agents/skills/check-similarity/SKILL.md",
     "agents/skills/dce/SKILL.md",
-    "nix/modules/home/programs/claude-code.nix"
+    "flake.nix",
+    "nix/modules/home/programs/claude-code.nix",
+    "nix/overlays/aqua.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/difit.nix",
+    "nix/overlays/entire.nix",
+    "nix/overlays/jj-desc.nix",
+    "nix/overlays/keifu.nix",
+    "nix/overlays/polycat.nix",
+    "nix/overlays/pretty-ts-errors-markdown.nix",
+    "nix/overlays/similarity-ts.nix",
+    "nix/packages/aqua.nix",
+    "nix/packages/difit.nix",
+    "nix/packages/entire.nix",
+    "nix/packages/jj-desc.nix",
+    "nix/packages/keifu.nix",
+    "nix/packages/polycat.nix",
+    "nix/packages/pretty-ts-errors-markdown.nix",
+    "nix/packages/similarity-ts.nix"
   ],
   "sessions": [
     {
@@ -23,13 +42,20 @@
       "context": "/d2/dbe92c80f3/1/context.md",
       "content_hash": "/d2/dbe92c80f3/1/content_hash.txt",
       "prompt": "/d2/dbe92c80f3/1/prompt.txt"
+    },
+    {
+      "metadata": "/d2/dbe92c80f3/2/metadata.json",
+      "transcript": "/d2/dbe92c80f3/2/full.jsonl",
+      "context": "/d2/dbe92c80f3/2/context.md",
+      "content_hash": "/d2/dbe92c80f3/2/content_hash.txt",
+      "prompt": "/d2/dbe92c80f3/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 205,
-    "cache_creation_tokens": 86777,
-    "cache_read_tokens": 788604,
-    "output_tokens": 2081,
-    "api_call_count": 24
+    "input_tokens": 672,
+    "cache_creation_tokens": 204106,
+    "cache_read_tokens": 2007654,
+    "output_tokens": 8551,
+    "api_call_count": 55
   }
 }
