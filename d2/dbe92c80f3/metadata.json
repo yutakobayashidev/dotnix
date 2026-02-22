@@ -3,12 +3,26 @@
   "checkpoint_id": "d2dbe92c80f3",
   "strategy": "manual-commit",
   "branch": "feat/darwin-support",
-  "checkpoints_count": 6,
+  "checkpoints_count": 7,
   "files_touched": [
+    "AGENTS.md",
     "CLAUDE.md",
     "agents/skills/check-similarity/SKILL.md",
     "agents/skills/dce/SKILL.md",
     "flake.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/modules/core/user.nix",
+    "nix/modules/darwin/default.nix",
+    "nix/modules/darwin/fonts.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/darwin/system.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/darwin.nix",
+    "nix/modules/home/default.nix",
+    "nix/modules/home/linux.nix",
+    "nix/modules/home/packages-darwin.nix",
+    "nix/modules/home/packages-linux.nix",
+    "nix/modules/home/packages.nix",
     "nix/modules/home/programs/claude-code.nix",
     "nix/overlays/aqua.nix",
     "nix/overlays/default.nix",
@@ -26,7 +40,11 @@
     "nix/packages/keifu.nix",
     "nix/packages/polycat.nix",
     "nix/packages/pretty-ts-errors-markdown.nix",
-    "nix/packages/similarity-ts.nix"
+    "nix/packages/similarity-ts.nix",
+    "nix/profiles/cli-server.nix",
+    "nix/profiles/cli.nix",
+    "nix/profiles/darwin.nix",
+    "zsh/config/aliases.zsh"
   ],
   "sessions": [
     {
@@ -49,13 +67,20 @@
       "context": "/d2/dbe92c80f3/2/context.md",
       "content_hash": "/d2/dbe92c80f3/2/content_hash.txt",
       "prompt": "/d2/dbe92c80f3/2/prompt.txt"
+    },
+    {
+      "metadata": "/d2/dbe92c80f3/3/metadata.json",
+      "transcript": "/d2/dbe92c80f3/3/full.jsonl",
+      "context": "/d2/dbe92c80f3/3/context.md",
+      "content_hash": "/d2/dbe92c80f3/3/content_hash.txt",
+      "prompt": "/d2/dbe92c80f3/3/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 672,
-    "cache_creation_tokens": 204106,
-    "cache_read_tokens": 2007654,
-    "output_tokens": 8551,
-    "api_call_count": 55
+    "input_tokens": 10887,
+    "cache_creation_tokens": 361795,
+    "cache_read_tokens": 11495164,
+    "output_tokens": 23498,
+    "api_call_count": 140
   }
 }
