@@ -10,7 +10,9 @@
       jetbrains-mono
       nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
+      nerd-fonts.hack
       hackgen-nf-font
+      mplus-outline-fonts.githubRelease
     ];
   };
 }

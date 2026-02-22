@@ -14,6 +14,8 @@
     # Version Control
     git
     git-wt
+    git-lfs
+    git-filter-repo
     lazygit
     jujutsu
     jj-desc
@@ -28,6 +30,9 @@
     nodejs_22
     bun
     ni
+    cmake
+    typst
+    mise
 
     # CLI Utilities
     curl
@@ -40,6 +45,7 @@
     jq
     jnv
     tokei
+    cloc
     similarity-ts
     lsd
     btop
@@ -50,6 +56,10 @@
     zellij
     yazi
     keifu
+    imagemagick
+    ffmpeg
+    yt-dlp
+    starship
 
     # Network Tools
     speedtest-cli

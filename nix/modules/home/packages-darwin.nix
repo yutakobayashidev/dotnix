@@ -7,13 +7,84 @@
   home.packages =
     with pkgs;
     [
+      # macOS CLI tools
+      mas
+      terminal-notifier
+      coreutils
+      cocoapods
+      watchman
     ]
-    # brew-nix packages (Homebrew casks managed via Nix)
+    # brew-nix casks
     ++ (with pkgs.brewCasks; [
-      raycast
+      # Browsers
+      arc
+      firefox
+
+      # Communication
       discord
+      discord-canary
+      element
+      halloy
+      mattermost
+      messenger
+      signal
+      simplex
       slack
-      spotify
+      wechat
+
+      # AI / LLM
+      chatgpt
+      cursor
+      diffusionbee
+      ollama
+      superwhisper
+
+      # Productivity
+      anki
+      deepl
+      figma
+      linear-linear
+      notion
+      notion-calendar
       obsidian
+      readdle-spark
+      mimestream
+
+      # Development
+      bruno
+      ngrok
+      postman
+      proxyman
+      tableplus
+      visual-studio-code
+      webstorm
+      zed
+
+      # Media
+      obs
+      spotify
+      vlc
+      krita
+      ogdesign-eagle
+
+      # Utilities
+      appcleaner
+      raycast
+      warp
+      hyper
+      stats
+
+      # Gaming
+      epic-games
+      minecraft
+      osu
+      parsec
+      steam
+
+      # Other
+      dropbox
+      keybase
+      tor-browser
+      zoom
     ]);
 }
