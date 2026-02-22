@@ -5,13 +5,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# NixOS: システム設定を反映（rebuild）
-nh os switch
-# または
-sudo nixos-rebuild switch --flake .
+# システム設定を反映（NixOS / macOS 共通）
+nix run .#switch
 
-# macOS: システム設定を反映（rebuild）
-darwin-rebuild switch --flake .
+# ビルドのみ（適用なし）
+nix run .#build
 
 # 特定のパッケージを検索
 nix search nixpkgs <package>
@@ -63,7 +61,7 @@ flake.nix                          # エントリポイント
 │   ├── modules/
 │   │   ├── linux/                 # NixOS/Linuxシステムモジュール
 │   │   │   ├── default.nix
-│   │   │   ├── packages.nix       # システムパッケージ（firefox, zsh, nh, nix-ld）
+│   │   │   ├── packages.nix       # システムパッケージ（firefox, zsh, nix-ld）
 │   │   │   ├── user.nix           # ユーザー設定 + home-manager統合
 │   │   │   ├── home-packages.nix  # Linux固有ユーザーパッケージ
 │   │   │   ├── niri.nix           # Niri WM + greetd
@@ -128,7 +126,7 @@ flake.nix                          # エントリポイント
 
 定義場所: `zsh/config/aliases.zsh`
 
-- `rebuild` → NixOS: `nh os switch` / macOS: `darwin-rebuild switch`
+- `rebuild` → `nix run .#switch`（NixOS / macOS 共通）
 - `g` → 引数なし: ghq+peco、引数あり: git
 - `gh-q` → ghq + fzf でリポジトリ選択・clone
 - `yolo` → `claude --dangerously-skip-permissions`

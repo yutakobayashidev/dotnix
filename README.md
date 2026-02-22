@@ -1,51 +1,139 @@
 # dotnix
 
-My NixOS configuration with Flakes and Home Manager.
+NixOS & macOS (nix-darwin) configuration with Flakes and Home Manager.
 
-## Stack
+## Module Structure
 
-- **OS**: NixOS (unstable)
-- **WM**: Niri（スクロール可能なタイリングWM）
-- **Terminal**: Ghostty
-- **Shell**: Zsh + Oh My Zsh
-- **Editor**: Neovim, VSCode
-- **IME**: fcitx5 + hazkey（LLM変換）
+```
+flake.nix                    # Entry point (nixosConfigurations + darwinConfigurations)
+├── nix/
+│   ├── hosts/
+│   │   ├── nixos/           # NixOS host config (boot, network, locale)
+│   │   └── darwin/          # macOS host config
+│   ├── profiles/
+│   │   ├── cli-minimal.nix  # Minimal CLI environment
+│   │   ├── cli.nix          # CLI environment (docker, tailscale)
+│   │   ├── gui.nix          # GUI environment (niri, audio, bluetooth)
+│   │   └── darwin.nix       # macOS environment
+│   ├── modules/
+│   │   ├── linux/           # NixOS system modules (niri, docker, audio, etc.)
+│   │   ├── darwin/          # macOS nix-darwin modules (homebrew, system defaults)
+│   │   └── home/            # Home Manager shared modules (zsh, git, claude-code)
+│   └── overlays/            # Custom packages (overlay)
+├── agents/skills/           # Claude Code agent skills
+├── nvim/                    # Neovim config (Lua)
+└── zsh/                     # Zsh config
+```
 
-## Usage
+## Initial Setup
 
-```bash
-# Apply configuration
-nh os switch
+### NixOS
 
-# Or without nh
-sudo nixos-rebuild switch --flake .
+1. Install NixOS with the unstable channel
+
+2. Clone this repository:
+
+   ```sh
+   git clone https://github.com/yutakobayashidev/dotnix.git ~/ghq/github.com/yutakobayashidev/dotnix
+   cd ~/ghq/github.com/yutakobayashidev/dotnix
+   ```
+
+3. Apply the NixOS configuration:
+
+   ```sh
+   sudo nixos-rebuild switch --flake .#nixos
+   ```
+
+### macOS
+
+1. Install [Nix](https://github.com/NixOS/nix-installer):
+
+   ```sh
+   curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install
+   ```
+
+2. Clone this repository:
+
+   ```sh
+   git clone https://github.com/yutakobayashidev/dotnix.git ~/ghq/github.com/yutakobayashidev/dotnix
+   cd ~/ghq/github.com/yutakobayashidev/dotnix
+   ```
+
+3. Apply the nix-darwin configuration (this will also install Homebrew automatically):
+
+   ```sh
+   sudo nix run nix-darwin -- switch --flake .#darwin
+   ```
+
+4. Reload your shell:
+
+   ```sh
+   exec zsh
+   ```
+
+## Daily Usage
+
+```sh
+# Apply changes (NixOS or macOS)
+nix run .#switch
+
+# Build without applying
+nix run .#build
 
 # Update flake inputs
 nix flake update
 ```
 
-## Structure
+## Available Nix Apps
 
-```
-flake.nix                    # Flake entry point
-└── nix/
-    ├── hosts/nixos/         # Host-specific config (boot, network, locale)
-    ├── profiles/            # Profile definitions (cli, gui, etc.)
-    │   ├── cli-minimal.nix
-    │   ├── cli.nix
-    │   └── gui.nix
-    ├── modules/
-    │   ├── core/            # System modules (niri, docker, audio, etc.)
-    │   └── home/            # Home Manager modules
-    │       ├── packages.nix
-    │       └── programs/    # Program configurations
-    │           ├── zsh.nix
-    │           ├── ghostty/
-    │           ├── neovim.nix
-    │           ├── git.nix
-    │           └── ...
-    └── packages/            # Custom packages (polycat, git-wt-clean, etc.)
-```
+### NixOS
+
+- `nix run .#switch` - Build and apply NixOS + Home Manager configuration (`sudo nixos-rebuild switch`)
+- `nix run .#build` - Build configuration without applying
+
+### macOS
+
+- `nix run .#switch` - Build and apply nix-darwin + Home Manager configuration (`darwin-rebuild switch`)
+- `nix run .#build` - Build configuration without applying
+
+Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) for build output.
+
+## Key Features
+
+### NixOS
+
+- **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
+- **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
+- **YubiKey**: PAM U2F authentication (polkit, hyprlock)
+- **Development**: Docker, Tailscale, Android development environment
+
+### macOS
+
+- **Homebrew**: GUI app management via casks (Ghostty, Raycast, Chrome, etc.)
+- **brew-nix**: Homebrew cask packages managed as Nix packages (version pinning & rollback)
+- **Touch ID**: sudo authentication support
+- **1Password**: Shell Plugins (gh, awscli2)
+
+## Managed Tools
+
+- **AI Development**: claude-code, codex, opencode, ccusage, vibe-kanban
+- **Version Control**: git, lazygit, jujutsu (jj), git-lfs, git-wt
+- **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, starship, tmux
+- **Editors**: Neovim, VSCode
+- **Terminal**: Ghostty, Zsh + Oh My Zsh
+- **Development**: Node.js, Bun, MoonBit, mise, Google Cloud SDK, Typst
+- **Network**: nmap, bandwhich, speedtest-cli
+
+## Agent Skills
+
+Claude Code skills are managed via [agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix).
+
+- **Config**: `nix/modules/home/agent-skills.nix`
+- **Local skills**: `agents/skills/`
+- **External skills**: [anthropics/skills](https://github.com/anthropics/skills), [vercel-labs/skills](https://github.com/vercel-labs/skills)
+- **Deploy targets**: `~/.agents/skills`, `~/.config/claude/skills`
+
+Key skills: `social-digest`, `oura-daily-watch` (local), `docx`, `pdf`, `pptx`, `xlsx` (Anthropic), `frontend-design`, `webapp-testing` (Anthropic), `find-skills` (Vercel), `ui-ux-pro-max` (community)
 
 ## YubiKey Setup
 

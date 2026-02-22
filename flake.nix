@@ -203,5 +203,46 @@
           system = "aarch64-darwin";
         };
       };
+
+      apps =
+        let
+          mkApps = system:
+            let
+              pkgs = import nixpkgs { inherit system; };
+              isDarwin = builtins.match ".*-darwin" system != null;
+              hostname = if isDarwin then "darwin" else "nixos";
+              nom = "${pkgs.nix-output-monitor}/bin/nom";
+            in {
+              build = {
+                type = "app";
+                program = toString (pkgs.writeShellScript "build" ''
+                  set -e
+                  echo "Building ${if isDarwin then "darwin" else "NixOS"} configuration..."
+                  ${nom} build ${
+                    if isDarwin
+                    then ".#darwinConfigurations.${hostname}.system"
+                    else ".#nixosConfigurations.${hostname}.config.system.build.toplevel"
+                  }
+                  echo "Build successful! Run 'nix run .#switch' to apply."
+                '');
+              };
+              switch = {
+                type = "app";
+                program = toString (pkgs.writeShellScript "switch" ''
+                  set -eo pipefail
+                  echo "Switching to ${if isDarwin then "darwin" else "NixOS"} configuration..."
+                  ${
+                    if isDarwin
+                    then "darwin-rebuild switch --flake .#${hostname} |& ${nom}"
+                    else "sudo nixos-rebuild switch --flake .#${hostname} |& ${nom}"
+                  }
+                  echo "Done!"
+                '');
+              };
+            };
+        in {
+          x86_64-linux = mkApps "x86_64-linux";
+          aarch64-darwin = mkApps "aarch64-darwin";
+        };
     };
 }
