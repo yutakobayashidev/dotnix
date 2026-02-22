@@ -1,0 +1,26 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "d0689178465c",
+  "strategy": "manual-commit",
+  "branch": "feat/darwin-support",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/modules/darwin/homebrew.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d0/689178465c/0/metadata.json",
+      "transcript": "/d0/689178465c/0/full.jsonl",
+      "context": "/d0/689178465c/0/context.md",
+      "content_hash": "/d0/689178465c/0/content_hash.txt",
+      "prompt": "/d0/689178465c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 1546,
+    "cache_read_tokens": 637184,
+    "output_tokens": 411,
+    "api_call_count": 6
+  }
+}
