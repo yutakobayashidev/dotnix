@@ -332,6 +332,12 @@
                 enable = true;
                 package = config.treefmt.build.wrapper;
               };
+              git-secrets = {
+                enable = true;
+                entry = "${pkgs.git-secrets}/bin/git-secrets --pre_commit_hook";
+                language = "system";
+                stages = [ "pre-commit" ];
+              };
             };
           };
 
