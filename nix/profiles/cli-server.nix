@@ -8,6 +8,7 @@
 
   home-manager.users.yuta.imports = [
     ./../modules/home/packages.nix
+    ./../modules/home/packages-linux.nix
     ./../modules/home/programs/gh.nix
     ./../modules/home/programs/tmux
     ./../modules/home/programs/neovim.nix

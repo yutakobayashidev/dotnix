@@ -8,7 +8,7 @@
     useUserPackages = true;
     extraSpecialArgs = { inherit helpers dotfilesDir niri local-skills anthropic-skills vercel-skills ui-ux-pro-max-skill; };
     sharedModules = [ agent-skills.homeManagerModules.default ];
-    users.yuta = import ./../home;
+    users.yuta = import ./../home/linux.nix;
   };
 
   users.users.yuta = {

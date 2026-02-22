@@ -19,6 +19,9 @@ final: prev: {
 
     buildInputs = [
       final.openssl
+    ] ++ final.lib.optionals final.stdenv.isDarwin [
+      final.darwin.apple_sdk.frameworks.Security
+      final.darwin.apple_sdk.frameworks.SystemConfiguration
     ];
 
     meta = with final.lib; {

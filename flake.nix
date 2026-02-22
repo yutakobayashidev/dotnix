@@ -1,5 +1,5 @@
 {
-  description = "yuta's NixOS configuration";
+  description = "yuta's NixOS & macOS configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -41,6 +41,11 @@
       url = "github:nextlevelbuilder/ui-ux-pro-max-skill";
       flake = false;
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    onepassword-shell-plugins.url = "github:1Password/shell-plugins";
     moonbit-overlay.url = "github:moonbit-community/moonbit-overlay";
     nix-filter.url = "github:numtide/nix-filter";
   };
@@ -67,18 +72,18 @@
       anthropic-skills,
       vercel-skills,
       ui-ux-pro-max-skill,
+      nix-darwin,
+      onepassword-shell-plugins,
       moonbit-overlay,
       nix-filter,
       ...
     }:
     let
-      system = "x86_64-linux";
-
       # Helper functions for home-manager
       helpers = import ./nix/modules/lib/helpers { lib = nixpkgs.lib; };
 
-      # Dotfiles directory path
-      dotfilesDir = "/home/yuta/ghq/github.com/yutakobayashidev/dotnix";
+      # Dotfiles directory path helper
+      mkDotfilesDir = homeDir: "${homeDir}/ghq/github.com/yutakobayashidev/dotnix";
 
       # Local agent skills (filtered from this repo)
       local-skills = nix-filter.lib {
@@ -86,24 +91,25 @@
         include = [ "agents/skills" ];
       };
 
-      # Overlay for external flake packages
-      externalOverlay = final: prev: {
+      # Overlay for external flake packages (parameterized by system)
+      mkExternalOverlay = system: final: prev: {
         claude-code = llm-agents.packages.${system}.claude-code;
         ccusage = llm-agents.packages.${system}.ccusage;
         codex = llm-agents.packages.${system}.codex;
         opencode = llm-agents.packages.${system}.opencode;
         vibe-kanban = llm-agents.packages.${system}.vibe-kanban;
-        ghostty = ghostty.packages.${system}.default;
         version-lsp = version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
           doCheck = false;
         });
         gh-nippou = gh-nippou.packages.${system}.default;
-      };
+      } // (if builtins.match ".*-linux" system != null then {
+        ghostty = ghostty.packages.${system}.default;
+      } else {});
 
       # Custom package overlays
       customOverlay = import ./nix/overlays;
 
-      # mkSystem helper function
+      # mkSystem helper function (NixOS)
       mkSystem =
         {
           host,
@@ -111,6 +117,9 @@
           profile,
           extraModules ? [ ],
         }:
+        let
+          dotfilesDir = mkDotfilesDir "/home/yuta";
+        in
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
@@ -121,7 +130,7 @@
             ./nix/hosts/${host}
             ./nix/profiles/${profile}.nix
             {
-              nixpkgs.overlays = [ externalOverlay moonbit-overlay.overlays.default customOverlay ];
+              nixpkgs.overlays = [ (mkExternalOverlay system) moonbit-overlay.overlays.default customOverlay ];
               nixpkgs.config.allowUnfreePredicate =
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) [
                   "claude-code"
@@ -139,6 +148,41 @@
             nix-hazkey.nixosModules.hazkey
           ] ++ extraModules;
         };
+
+      # mkDarwin helper function (macOS)
+      mkDarwin =
+        {
+          host,
+          system,
+          extraModules ? [ ],
+        }:
+        let
+          dotfilesDir = mkDotfilesDir "/Users/yuta";
+        in
+        nix-darwin.lib.darwinSystem {
+          inherit system;
+          specialArgs = {
+            inherit helpers dotfilesDir home-manager local-skills anthropic-skills vercel-skills ui-ux-pro-max-skill agent-skills onepassword-shell-plugins;
+          };
+          modules = [
+            ./nix/modules/darwin
+            ./nix/hosts/${host}
+            ./nix/profiles/darwin.nix
+            {
+              nixpkgs.overlays = [ (mkExternalOverlay system) moonbit-overlay.overlays.default customOverlay ];
+              nixpkgs.config.allowUnfreePredicate =
+                pkg: builtins.elem (nixpkgs.lib.getName pkg) [
+                  "claude-code"
+                  "vscode"
+                  "discord"
+                  "slack"
+                  "obsidian"
+                  "1password"
+                  "spotify"
+                ];
+            }
+          ] ++ extraModules;
+        };
     in
     {
       nixosConfigurations = {
@@ -147,6 +191,13 @@
           system = "x86_64-linux";
           profile = "gui";
           extraModules = [ ];
+        };
+      };
+
+      darwinConfigurations = {
+        darwin = mkDarwin {
+          host = "darwin";
+          system = "aarch64-darwin";
         };
       };
     };

@@ -1,10 +1,9 @@
-# home-managerのパッケージリスト
+# home-managerの共通パッケージリスト（Linux/macOS共通）
 { pkgs, ... }:
 
 {
   home.packages = with pkgs; [
     # Overlay packages
-    ghostty
     claude-code
     ccusage
     codex
@@ -29,14 +28,6 @@
     nodejs_22
     bun
     ni
-    android-tools
-    android-studio
-
-    # YubiKey
-    yubikey-manager
-    yubioath-flutter
-    pam_u2f
-    pamtester
 
     # CLI Utilities
     curl
@@ -63,49 +54,11 @@
     # Network Tools
     speedtest-cli
     bandwhich
-    arp-scan
     nmap
     dnsutils
 
-    # Browsers & Communication
-    google-chrome
-    discord
-    slack
-
-    # Productivity
-    vscode
-    obsidian
-    anki
-    _1password-gui
-    insomnia
-
-    # Media
-    spotify
-
-    # Wayland Tools
-    rofi
-    cliphist
-    wl-clipboard
-    swww
-    grimblast
-    swappy
-    zenity
-
-    # Screen Management
-    hyprlock
-    brightnessctl
-
-    # System Tools
-    rpi-imager
-    difit
-    binutils
-
-    # VR
-    vrcx
-
     # Misc
     sl
-    cava
     fastfetch
   ];
 }
