@@ -91,7 +91,7 @@ runs:
       run: |
         OLD_REV="${{ steps.current.outputs.rev }}"
         NEW_REV="${{ steps.updated.outputs.rev }}"
-        PACKAGES="claude-code ccusage codex opencode vibe-kanban amp gemini-cli goose-cli"
+        PACKAGES="claude-code ccusage codex opencode vibe-kanban"
 
         TABLE="| Package | Old | New |"
         TABLE="${TABLE}
