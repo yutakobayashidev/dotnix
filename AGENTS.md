@@ -61,10 +61,11 @@ flake.nix                          # エントリポイント
 │   │   ├── gui.nix                # GUI環境（niri, audio, bluetooth含む）
 │   │   └── darwin.nix             # macOS環境
 │   ├── modules/
-│   │   ├── core/                  # NixOSシステムモジュール
+│   │   ├── linux/                 # NixOS/Linuxシステムモジュール
 │   │   │   ├── default.nix
 │   │   │   ├── packages.nix       # システムパッケージ（firefox, zsh, nh, nix-ld）
 │   │   │   ├── user.nix           # ユーザー設定 + home-manager統合
+│   │   │   ├── home-packages.nix  # Linux固有ユーザーパッケージ
 │   │   │   ├── niri.nix           # Niri WM + greetd
 │   │   │   ├── input.nix          # fcitx5 + hazkey
 │   │   │   ├── audio.nix          # pipewire
@@ -74,29 +75,30 @@ flake.nix                          # エントリポイント
 │   │   │   ├── tailscale.nix
 │   │   │   ├── android.nix
 │   │   │   ├── fonts.nix
-│   │   │   └── ssh.nix
+│   │   │   ├── ssh.nix
+│   │   │   └── programs/          # Linux固有home-managerプログラム
+│   │   │       ├── niri.nix       # Niri home設定
+│   │   │       ├── waybar.nix
+│   │   │       ├── swayidle.nix
+│   │   │       └── swaylock.nix
 │   │   ├── darwin/                # macOS nix-darwinモジュール
 │   │   │   ├── default.nix
 │   │   │   ├── system.nix         # macOS defaults (Dock, Finder, trackpad等)
 │   │   │   ├── homebrew.nix       # Homebrew cask管理
 │   │   │   ├── fonts.nix          # macOSフォント設定
+│   │   │   ├── packages.nix       # macOS固有ユーザーパッケージ（brew-nix含む）
 │   │   │   └── user.nix           # ユーザー設定 + home-manager統合
-│   │   ├── home/                  # home-manager設定（共通 + プラットフォーム別）
+│   │   ├── home/                  # home-manager共通設定
 │   │   │   ├── default.nix        # 共通設定（zsh, git, claude-code等）
-│   │   │   ├── linux.nix          # Linux用エントリポイント
-│   │   │   ├── darwin.nix         # macOS用エントリポイント（1Password Shell Plugins）
 │   │   │   ├── packages.nix       # 共通ユーザーパッケージ
-│   │   │   ├── packages-linux.nix # Linux固有パッケージ
-│   │   │   ├── packages-darwin.nix # macOS固有パッケージ
-│   │   │   ├── niri.nix           # Niri home設定
-│   │   │   └── programs/          # プログラム設定
+│   │   │   └── programs/          # 共通プログラム設定
+│   │   │       ├── common-cli.nix # 共通CLIプログラム集約
 │   │   │       ├── zsh.nix
 │   │   │       ├── ghostty/
 │   │   │       ├── neovim.nix
 │   │   │       ├── tmux.nix
 │   │   │       ├── git.nix
 │   │   │       ├── vscode.nix
-│   │   │       ├── waybar.nix
 │   │   │       └── ...
 │   │   └── lib/                   # ヘルパー関数
 │   │       └── helpers/

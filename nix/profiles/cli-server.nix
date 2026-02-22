@@ -2,18 +2,12 @@
 {
   imports = [
     ./cli-minimal.nix
-    ./../modules/core/docker.nix
+    ./../modules/linux/docker.nix
     # Tailscaleは含めない
   ];
 
   home-manager.users.yuta.imports = [
-    ./../modules/home/packages.nix
-    ./../modules/home/packages-linux.nix
-    ./../modules/home/programs/gh.nix
-    ./../modules/home/programs/tmux
-    ./../modules/home/programs/neovim.nix
-    ./../modules/home/programs/bat.nix
-    ./../modules/home/programs/btop.nix
-    ./../modules/home/programs/fastfetch
+    ./../modules/home/programs/common-cli.nix
+    ./../modules/linux/home-packages.nix
   ];
 }

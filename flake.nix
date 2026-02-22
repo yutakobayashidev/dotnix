@@ -139,7 +139,7 @@
             inherit helpers dotfilesDir home-manager niri local-skills anthropic-skills vercel-skills ui-ux-pro-max-skill agent-skills;
           };
           modules = [
-            ./nix/modules/core
+            ./nix/modules/linux
             ./nix/hosts/${host}
             ./nix/profiles/${profile}.nix
             {
