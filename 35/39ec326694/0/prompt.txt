@@ -1,0 +1,45 @@
+ryoppippi/dotfilesを参考に、nix updaterを実装したい。最小限から始めて、近づける deepwiki
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+ubuntuじゃあなくてnixosでビルドしたいんだけど、みんなどうしてるんだろ？
+
+---
+
+あとは何が必要あんだっけ
+
+---
+
+ryoppippiとの実装の差分を調べて、github cliでファイル叩い足舖太がいいかも
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+いや、既存ファイルの差分だけでいい
+
+---
+
+取り込んだ良さそうなのをやって,Cachixの書き込みもしたいね,github_access_tokenについてなんの話陏婁
+
+---
+
+setup-git-botの実装が違うように見えるんだけど、何が違う？
+
+---
+
+v3にして
+
+---
+
+ブランチ切ってコミットして
+
+---
+
+recogra projectの.envrcを確認して。ghqで遷移できる。pinactをこのプロジェクトにも入れたい
