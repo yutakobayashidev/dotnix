@@ -1,0 +1,36 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "7e0a64046471",
+  "strategy": "manual-commit",
+  "branch": "feat/darwin-support",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "CLAUDE.md",
+    "flake.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/programs/common-cli.nix",
+    "nix/modules/linux/home-packages.nix",
+    "nix/modules/linux/packages.nix",
+    "nix/modules/linux/user.nix",
+    "nix/profiles/cli-server.nix",
+    "nix/profiles/cli.nix",
+    "nix/profiles/darwin.nix",
+    "nix/profiles/gui.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/7e/0a64046471/0/metadata.json",
+      "transcript": "/7e/0a64046471/0/full.jsonl",
+      "context": "/7e/0a64046471/0/context.md",
+      "content_hash": "/7e/0a64046471/0/content_hash.txt",
+      "prompt": "/7e/0a64046471/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 34,
+    "cache_creation_tokens": 57073,
+    "cache_read_tokens": 2128924,
+    "output_tokens": 1659,
+    "api_call_count": 30
+  }
+}
