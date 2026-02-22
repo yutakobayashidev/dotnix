@@ -1,0 +1,394 @@
+Implement the following plan:
+
+# dotnix モジュール構造リファクタリング計画
+
+## Context
+
+Darwin 対応の実装は完了したが、モジュールのディレクトリ構造に問題がある。プラットフォーム固有ファイルが `home/` に散在し、`core/` の命名が不正確で、プロファイル間でインポートが重複している。ryoppippi/dotfiles のパターンに倣い、プラットフォーム固有ファイルをそれぞれのディレクトリに集約する。
+
+**これは純粋な構造リファクタリング。機能追加・動作変更なし。**
+
+---
+
+## 問題点
+
+1. **`modules/core/` は NixOS 専用なのに「core」と命名** → `linux/` が正確
+2. **プラットフォーム固有ファイルが `home/` に散在**:
+   - `home/packages-darwin.nix` (brewCasks含む) → `darwin/` にあるべき
+   - `home/packages-linux.nix` → `linux/` にあるべき
+   - `home/darwin.nix`, `home/linux.nix` (薄いラッパー) → 各 `user.nix` に吸収すべき
+   - `home/niri.nix`, `home/programs/{waybar,swayidle,swaylock}.nix` → Linux 専用なのに `home/` にある
+3. **プロファイルのインポート重複**: cli.nix, cli-server.nix, darwin.nix が同じ7モジュールを列挙
+
+---
+
+## Step 1: `modules/core/` → `modules/linux/` リネーム
+
+```bash
+git mv nix/modules/core nix/modules/linux
+```
+
+`linux/default.nix` の内部 import は相対パス (`./packages.nix` 等) なので変更不要。
+
+---
+
+## Step 2: `flake.nix` のパス更新
+
+**ファイル**: `flake.nix`
+
+```nix
+# Before
+./nix/modules/core
+# After
+./nix/modules/linux
+```
+
+---
+
+## Step 3: `linux/programs/` 作成 & Linux 専用 home-manager ファイル移動
+
+```bash
+mkdir -p nix/modules/linux/programs
+git mv nix/modules/home/niri.nix nix/modules/linux/programs/niri.nix
+git mv nix/modules/home/programs/waybar.nix nix/modules/linux/programs/waybar.nix
+git mv nix/modules/home/programs/swayidle.nix nix/modules/linux/programs/swayidle.nix
+git mv nix/modules/home/programs/swaylock.nix nix/modules/linux/programs/swaylock.nix
+```
+
+---
+
+## Step 4: パッケージファイル移動
+
+```bash
+git mv nix/modules/home/packages-linux.nix nix/modules/linux/home-packages.nix
+git mv nix/modules/home/packages-darwin.nix nix/modules/darwin/packages.nix
+```
+
+---
+
+## Step 5: `home/linux.nix` を `linux/user.nix` に吸収
+
+**ファイル**: `nix/modules/linux/user.nix`
+
+```nix
+# Before
+users.yuta = import ./../home/linux.nix;
+
+# After
+users.yuta = {
+  imports = [ ../home ];
+  home.homeDirectory = "/home/yuta";
+};
+```
+
+`home/linux.nix` が行っていた `imports = [ ./default.nix ]` + `home.homeDirectory` をインライン化。
+
+---
+
+## Step 6: `home/darwin.nix` を `darwin/user.nix` に吸収
+
+**ファイル**: `nix/modules/darwin/user.nix`
+
+```nix
+# Before
+users.yuta = import ../home/darwin.nix;
+
+# After
+users.yuta = {
+  imports = [
+    ../home
+    onepassword-shell-plugins.hmModules.default
+  ];
+  home.homeDirectory = "/Users/yuta";
+  programs.onepassword-shell-plugins = {
+    enable = true;
+    plugins = with pkgs; [ gh awscli2 ];
+  };
+};
+```
+
+`onepassword-shell-plugins` と `pkgs` は `darwin/user.nix` の関数引数スコープ内でアクセス可能。
+
+---
+
+## Step 7: `home/programs/common-cli.nix` 作成 (重複排除)
+
+**ファイル (新規)**: `nix/modules/home/programs/common-cli.nix`
+
+```nix
+# 共通CLIプログラムの集約モジュール
+# cli.nix, cli-server.nix, darwin.nix で共通して使用
+{ ... }:
+{
+  imports = [
+    ../packages.nix
+    ./gh.nix
+    ./tmux
+    ./neovim.nix
+    ./bat.nix
+    ./btop.nix
+    ./fastfetch
+  ];
+}
+```
+
+---
+
+## Step 8: プロファイル更新
+
+### `profiles/cli.nix`
+
+```nix
+{ ... }:
+{
+  imports = [
+    ./cli-minimal.nix
+    ./../modules/linux/docker.nix
+    ./../modules/linux/tailscale.nix
+  ];
+
+  home-manager.users.yuta.imports = [
+    ./../modules/home/programs/common-cli.nix
+    ./../modules/linux/home-packages.nix
+  ];
+}
+```
+
+### `profiles/cli-server.nix`
+
+```nix
+{ ... }:
+{
+  imports = [
+    ./cli-minimal.nix
+    ./../modules/linux/docker.nix
+    # Tailscaleは含めない
+  ];
+
+  home-manager.users.yuta.imports = [
+    ./../modules/home/programs/common-cli.nix
+    ./../modules/linux/home-packages.nix
+  ];
+}
+```
+
+### `profiles/gui.nix`
+
+```nix
+{ niri, ... }:
+{
+  imports = [
+    ./cli.nix
+    ./../modules/linux/niri.nix
+    ./../modules/linux/input.nix
+    ./../modules/linux/pam.nix
+    ./../modules/linux/audio.nix
+    ./../modules/linux/bluetooth.nix
+    ./../modules/linux/android.nix
+  ];
+
+  services.printing.enable = true;
+
+  home-manager.users.yuta.imports = [
+    niri.homeModules.niri
+    ./../modules/linux/programs/niri.nix
+    ./../modules/home/programs/vscode.nix
+    ./../modules/linux/programs/waybar.nix
+    ./../modules/home/programs/ghostty
+    ./../modules/linux/programs/swayidle.nix
+    ./../modules/linux/programs/swaylock.nix
+  ];
+}
+```
+
+### `profiles/darwin.nix`
+
+```nix
+{ ... }:
+{
+  home-manager.users.yuta.imports = [
+    ./../modules/home/programs/common-cli.nix
+    ./../modules/darwin/packages.nix
+    ./../modules/home/programs/vscode.nix
+    ./../modules/home/programs/ghostty
+  ];
+}
+```
+
+---
+
+## Step 9: 不要ファイル削除
+
+```bash
+git rm nix/modules/home/linux.nix
+git rm nix/modules/home/darwin.nix
+```
+
+---
+
+## Step 10: CLAUDE.md 更新
+
+ディレクトリ構造の記述を新構造に合わせて更新:
+- `modules/core/` → `modules/linux/`
+- `home/packages-linux.nix` → `linux/home-packages.nix`
+- `home/packages-darwin.nix` → `darwin/packages.nix`
+- `home/linux.nix`, `home/darwin.nix` の記述削除
+- `home/niri.nix` → `linux/programs/niri.nix`
+- Linux 専用プログラムの場所を `linux/programs/` に修正
+- `home/programs/common-cli.nix` を追加
+
+---
+
+## ファイル操作一覧
+
+| 操作 | 対象 | 移動先/備考 |
+|------|------|------------|
+| git mv | `nix/modules/core/` | `nix/modules/linux/` |
+| git mv | `home/niri.nix` | `linux/programs/niri.nix` |
+| git mv | `home/programs/waybar.nix` | `linux/programs/waybar.nix` |
+| git mv | `home/programs/swayidle.nix` | `linux/programs/swayidle.nix` |
+| git mv | `home/programs/swaylock.nix` | `linux/programs/swaylock.nix` |
+| git mv | `home/packages-linux.nix` | `linux/home-packages.nix` |
+| git mv | `home/packages-darwin.nix` | `darwin/packages.nix` |
+| 変更 | `flake.nix` | `core` → `linux` パス |
+| 変更 | `linux/user.nix` | `home/linux.nix` 吸収 |
+| 変更 | `darwin/user.nix` | `home/darwin.nix` 吸収 |
+| 新規 | `home/programs/common-cli.nix` | 共通CLI集約 |
+| 変更 | `profiles/cli.nix` | パス更新 + common-cli |
+| 変更 | `profiles/cli-server.nix` | パス更新 + common-cli |
+| 変更 | `profiles/gui.nix` | パス更新 |
+| 変更 | `profiles/darwin.nix` | パス更新 + common-cli |
+| 削除 | `home/linux.nix` | user.nix に吸収済み |
+| 削除 | `home/darwin.nix` | user.nix に吸収済み |
+| 変更 | `CLAUDE.md` | ドキュメント更新 |
+
+---
+
+## 検証
+
+1. `nix flake check` で整合性確認
+2. NixOS: `nixos-rebuild dry-build --flake .` で既存環境が壊れないことを確認
+3. Darwin: `nix build .#darwinConfigurations.darwin.system` でビルド確認
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /home/yuta/.REDACTED.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+コミットして
+
+---
+
+ngrok,visual-studio-code,cursor,epic-games,parsec,steam,readdle-spark,arc,firefox,discord-canaryはけして
+
+---
+
+[Request interrupted by user]
+
+---
+
+firefox,vscodeはlinuxはlinux,macからも消したい
+
+---
+
+cloudflare-warp,microsoft-edge,amazon-qも消したい
+
+---
+
+brewとnixpkgsで重複管理してるものあったりしない？参考リポジトリはどうやってbrewとnixpkgs使い分けてる？macで
+
+---
+
+いい感じに参考リポジトリを参考にやっておいて
+
+---
+
+コミットしt
+
+---
+
+シェルコマンドはどのくらい共通化されてるの？参考リポジトリでは
+
+---
+
+Darwinじゃすべてallowunfreeにしたほうがよさそう。参考リポジトリはどうしてるの？
+
+---
+
+うん
+
+---
+
+keifuは、homebrew版があるみたいなんですが、macではこれ使った宝玉ない？
+
+---
+
+なんかtapの記載が漏れているような気がする、確認したい、あと、オーバーレイの分岐をこれで消せるはず
+
+---
+
+yuta@YutanoMacBook-Air:~/ > brew tap
+1password/tap
+agrinman/tap
+ddddddo/tap
+heroku/brew
+homebrew/bundle
+homebrew/cask-fonts
+homebrew/cask-versions
+hpedrorodrigues/tools
+josephpage/jetpack-io
+lencx/chatgpt
+osx-cross/arm
+osx-cross/avr
+parksb/x
+planetscale/tap
+playcover/playcover
+qmk/qmk
+shopify/shopify
+stripe/stripe-cli
+yutakobayashidev/formulae
+yuta@YutanoMacBook-Air:~/ > macでbrew tapしてたらこれ使ってたけど、依存してるのある？
+
+---
+
+追加したい
+
+---
+
+<bash-input>git push</bash-input>
+
+---
+
+<bash-stdout>[entire] Pushing session logs to origin...
+To https://github.com/yutakobayashidev/dotnix.git
+   35d84a5..84bd4c0  feat/darwin-support -> feat/darwin-support</bash-stdout><bash-stderr></bash-stderr>
+
+---
+
+learn-nixではappでビルドコマンドなどを定義してたと思うんですが、このリポジトリと参考リポジトリではどうしていますか？
+
+---
+
+platformの分岐をシェルスクリプト側で持たせたくない。nix-output-monitorってなんですか？
+
+---
+
+今nh使ってた気がするけど、何が違？
+
+---
+
+nhは消しちゃって標準機能だけでもいいかも、自分でflake appsするのがブラックボックス感がないし
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+codexにレビューしてもらわなくていいよ、何を変えた儂？
+
+---
+
+[Request interrupted by user for tool use]
