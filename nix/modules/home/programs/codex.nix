@@ -20,8 +20,12 @@ in
 {
   home.packages = [ pkgs.codex ];
 
-  home.file.".codex/config.toml".source = tomlFormat.generate "codex-config.toml" settings;
+  home.sessionVariables = {
+    CODEX_HOME = "${config.xdg.configHome}/codex";
+  };
 
-  home.file.".codex/AGENTS.md".source =
+  xdg.configFile."codex/config.toml".source = tomlFormat.generate "codex-config.toml" settings;
+
+  xdg.configFile."codex/AGENTS.md".source =
     config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
 }

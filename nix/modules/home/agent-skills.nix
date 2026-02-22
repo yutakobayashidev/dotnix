@@ -109,9 +109,9 @@
         dest = ".config/claude/skills";
         structure = "link";
       };
-      # Codex CLI user config
+      # Codex CLI user config (XDG: ~/.config/codex/skills)
       codex = {
-        dest = ".codex/skills";
+        dest = ".config/codex/skills";
         structure = "link";
       };
     };
