@@ -3,7 +3,14 @@
 #
 # All skills (local and external) are managed here via agent-skills-nix.
 # Skills are deployed to ~/.agents (standard location) and ~/.config/claude/skills
-{ pkgs, local-skills, anthropic-skills, vercel-skills, ui-ux-pro-max-skill, ... }:
+{
+  pkgs,
+  local-skills,
+  anthropic-skills,
+  vercel-skills,
+  ui-ux-pro-max-skill,
+  ...
+}:
 {
   programs.agent-skills = {
     enable = true;

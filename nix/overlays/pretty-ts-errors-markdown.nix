@@ -17,21 +17,21 @@ final: prev: {
     npmBuildScript = "build";
 
     installPhase = ''
-      runHook preInstall
+            runHook preInstall
 
-      mkdir -p $out/bin $out/lib
-      cp -r lib $out/lib/
-      cp -r bin $out/lib/
-      cp -r node_modules $out/lib/
-      cp package.json $out/lib/
+            mkdir -p $out/bin $out/lib
+            cp -r lib $out/lib/
+            cp -r bin $out/lib/
+            cp -r node_modules $out/lib/
+            cp package.json $out/lib/
 
-      cat > $out/bin/pretty-ts-errors-markdown << EOF
-#!/bin/sh
-exec ${final.nodejs}/bin/node $out/lib/bin/pretty-ts-errors-markdown.js "\$@"
-EOF
-      chmod +x $out/bin/pretty-ts-errors-markdown
+            cat > $out/bin/pretty-ts-errors-markdown << EOF
+      #!/bin/sh
+      exec ${final.nodejs}/bin/node $out/lib/bin/pretty-ts-errors-markdown.js "\$@"
+      EOF
+            chmod +x $out/bin/pretty-ts-errors-markdown
 
-      runHook postInstall
+            runHook postInstall
     '';
 
     meta = with final.lib; {

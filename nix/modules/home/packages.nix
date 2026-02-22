@@ -24,7 +24,6 @@
     # Development Tools
     moonbit-bin.moonbit.latest
     nil
-    nixfmt-tree
     nix-init
     google-cloud-sdk
     nodejs_22
@@ -32,7 +31,6 @@
     ni
     cmake
     typst
-    mise
 
     # CLI Utilities
     curl

@@ -19,7 +19,7 @@ if [ -z "$selectedText" ]; then
 fi
 
 # クリップボードの値をURL用にエンコード
-encodedText=$(python3 -c "import urllib.parse; print(urllib.parse.quote(input()))" <<< "$selectedText")
+encodedText=$(python3 -c "import urllib.parse; print(urllib.parse.quote(input()))" <<<"$selectedText")
 
 # 標準のブラウザでjishoを開く、検索パラメータ付き
 open "https://jisho.org/search/${encodedText}"

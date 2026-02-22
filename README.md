@@ -80,6 +80,9 @@ nix run .#switch
 # Build without applying
 nix run .#build
 
+# Format all files (nix, lua, sh)
+nix run .#fmt
+
 # Update flake inputs
 nix flake update
 ```
@@ -90,11 +93,13 @@ nix flake update
 
 - `nix run .#switch` - Build and apply NixOS + Home Manager configuration (`sudo nixos-rebuild switch`)
 - `nix run .#build` - Build configuration without applying
+- `nix run .#fmt` - Format all files (nix, lua, sh) via [treefmt](https://github.com/numtide/treefmt-nix)
 
 ### macOS
 
 - `nix run .#switch` - Build and apply nix-darwin + Home Manager configuration (`darwin-rebuild switch`)
 - `nix run .#build` - Build configuration without applying
+- `nix run .#fmt` - Format all files (nix, lua, sh) via [treefmt](https://github.com/numtide/treefmt-nix)
 
 Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) for build output.
 
@@ -121,7 +126,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, starship, tmux
 - **Editors**: Neovim, VSCode
 - **Terminal**: Ghostty, Zsh + Oh My Zsh
-- **Development**: Node.js, Bun, MoonBit, mise, Google Cloud SDK, Typst
+- **Development**: Node.js, Bun, MoonBit, Google Cloud SDK, Typst
 - **Network**: nmap, bandwhich, speedtest-cli
 
 ## Agent Skills

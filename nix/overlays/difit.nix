@@ -30,20 +30,20 @@ final: prev: {
     '';
 
     installPhase = ''
-      runHook preInstall
+            runHook preInstall
 
-      mkdir -p $out/bin $out/lib/difit
-      cp -r dist $out/lib/difit/
-      cp -r node_modules $out/lib/difit/
-      cp package.json $out/lib/difit/
+            mkdir -p $out/bin $out/lib/difit
+            cp -r dist $out/lib/difit/
+            cp -r node_modules $out/lib/difit/
+            cp package.json $out/lib/difit/
 
-      cat > $out/bin/difit << EOF
-#!/bin/sh
-exec ${final.nodejs}/bin/node $out/lib/difit/dist/cli/index.js "\$@"
-EOF
-      chmod +x $out/bin/difit
+            cat > $out/bin/difit << EOF
+      #!/bin/sh
+      exec ${final.nodejs}/bin/node $out/lib/difit/dist/cli/index.js "\$@"
+      EOF
+            chmod +x $out/bin/difit
 
-      runHook postInstall
+            runHook postInstall
     '';
 
     meta = with final.lib; {
