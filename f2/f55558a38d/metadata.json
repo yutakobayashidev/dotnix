@@ -3,13 +3,15 @@
   "checkpoint_id": "f2f55558a38d",
   "strategy": "manual-commit",
   "branch": "feat/darwin-support",
-  "checkpoints_count": 1,
+  "checkpoints_count": 4,
   "files_touched": [
     ".claude/settings.local.json",
     "CLAUDE.md",
+    "README.md",
     "flake.nix",
     "nix/modules/darwin/homebrew.nix",
     "nix/modules/darwin/packages.nix",
+    "nix/modules/darwin/system.nix",
     "nix/modules/darwin/user.nix",
     "nix/modules/home/packages.nix",
     "nix/modules/home/programs/.claude/settings.local.json",
@@ -38,13 +40,20 @@
       "context": "/f2/f55558a38d/1/context.md",
       "content_hash": "/f2/f55558a38d/1/content_hash.txt",
       "prompt": "/f2/f55558a38d/1/prompt.txt"
+    },
+    {
+      "metadata": "/f2/f55558a38d/2/metadata.json",
+      "transcript": "/f2/f55558a38d/2/full.jsonl",
+      "context": "/f2/f55558a38d/2/context.md",
+      "content_hash": "/f2/f55558a38d/2/content_hash.txt",
+      "prompt": "/f2/f55558a38d/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 179,
-    "cache_creation_tokens": 99542,
-    "cache_read_tokens": 4162681,
-    "output_tokens": 11648,
-    "api_call_count": 54
+    "input_tokens": 214,
+    "cache_creation_tokens": 137280,
+    "cache_read_tokens": 5147256,
+    "output_tokens": 15261,
+    "api_call_count": 77
   }
 }

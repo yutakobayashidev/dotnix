@@ -1,0 +1,71 @@
+Implement the following plan:
+
+# README.md 更新計画
+
+## Context
+
+現在の README.md は NixOS のみの記述で、macOS (nix-darwin) 対応の情報がない。nh 削除 & flake apps 導入に伴い、README を ryoppippi/dotfiles のスタイルを参考に NixOS / macOS 両対応の内容に更新する。
+
+---
+
+## 変更内容
+
+**ファイル**: `README.md`
+
+### 構成
+
+ryoppippi パターンに倣い、以下のセクション構成にする：
+
+1. **タイトル + 概要** — NixOS & macOS flake 構成であることを明記
+2. **Module Structure** — flake.nix / linux / darwin / home の役割を簡潔に
+3. **Initial Setup** — NixOS / macOS それぞれのセットアップ手順
+4. **Daily Usage** — `nix run .#switch` / `nix run .#build` / `nix flake update`
+5. **Available Nix Apps** — NixOS / macOS で利用可能な flake apps
+6. **Key Features** — NixOS / macOS それぞれの主要機能（WM、IME、Homebrew、1Password 等）
+7. **Managed Tools** — AI 開発ツール、コア CLI ツール、開発言語等
+8. **Agent Skills** — Claude Code スキル管理の概要
+9. **YubiKey Setup** — 既存の YubiKey セットアップ手順を維持
+
+### 削除するセクション
+
+- 旧 `Stack` セクション（Key Features に統合）
+- 旧 `Structure` セクション（Module Structure に置き換え）
+- 旧 `Usage` セクション（Daily Usage + Initial Setup に置き換え）
+
+### ポイント
+
+- ryoppippi と同様に `nix run .#switch` を中心に据える
+- NixOS 固有 / macOS 固有の情報を明確に分離
+- AI 開発ツール（claude-code, codex, opencode 等）を目立たせる
+- 英語で記述（ryoppippi パターン踏襲、YubiKey セクションのみ日本語維持）
+
+---
+
+## 検証
+
+- README.md の Markdown が正しくレンダリングされることを確認（目視）
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /home/yuta/.REDACTED.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+タッチIDの設定なんかしてたっけ⁉︎参考リポジトリはどうなってる？
+
+---
+
+reattachって何？
+
+---
+
+追加しよう
+
+---
+
+Determinateじゃなくてhttps://github.com/NixOS/nix-installer こっちの方がいいと思う
+
+---
+
+コミットして
