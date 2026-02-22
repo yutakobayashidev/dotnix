@@ -9,10 +9,10 @@ jobs:
   update:
     uses: ./.github/workflows/_update-flake-reusable.yaml
     with:
-      include-inputs: "llm-agents"
+      inputs: "llm-agents"
       skip-delay: true
-      minimum-release-age-days: 0
+      minimum-release-age-days: "0"
     secrets:
-      FLAKE_UPDATER_APP_ID: ${{ secrets.FLAKE_UPDATER_APP_ID }}
-      FLAKE_UPDATER_APP_PRIVATE_KEY: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
-      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
+      private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
+      cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}

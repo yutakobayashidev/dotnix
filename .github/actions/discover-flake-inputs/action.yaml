@@ -1,55 +1,143 @@
 name: Discover Flake Inputs
-description: Parse flake metadata and output matrix of inputs to update
+description: Discover Nix flake inputs and create a matrix for parallel updates
 
 inputs:
+  inputs:
+    description: Space-separated list of specific inputs to update (empty for all)
+    required: false
+    default: ""
   exclude-inputs:
-    description: Comma-separated list of inputs to exclude
+    description: Space-separated list of inputs to exclude from discovery
+    required: false
     default: ""
-  include-inputs:
-    description: Comma-separated list of inputs to include (if set, only these are included)
+  skip-delay-inputs:
+    description: Space-separated list of inputs that should skip the release age check
+    required: false
     default: ""
-  skip-delay:
-    description: Skip random delay between updates
-    default: "false"
 
 outputs:
   matrix:
-    description: JSON matrix of flake inputs
+    description: JSON matrix for GitHub Actions strategy
     value: ${{ steps.discover.outputs.matrix }}
+  has-updates:
+    description: Whether there are inputs to update
+    value: ${{ steps.discover.outputs.has-updates }}
 
 runs:
   using: composite
   steps:
-    - id: discover
+    - name: Discover flake inputs
+      id: discover
       shell: bash
+      env:
+        INPUTS: ${{ inputs.inputs }}
+        EXCLUDE_INPUTS: ${{ inputs.exclude-inputs }}
+        SKIP_DELAY_INPUTS: ${{ inputs.skip-delay-inputs }}
       run: |
-        METADATA=$(nix flake metadata --json 2>/dev/null)
+        set -euo pipefail
 
-        MATRIX=$(echo "$METADATA" | jq -c \
-          --arg include "${{ inputs.include-inputs }}" \
-          --arg exclude "${{ inputs.exclude-inputs }}" \
-          --arg skip_delay "${{ inputs.skip-delay }}" \
-          '
-          .locks.nodes as $nodes |
-          [
-            .locks.nodes.root.inputs | to_entries[] |
-            . as $entry |
-            $nodes[$entry.value] |
-            select((.locked.type == "github") or (.original.type == "github")) |
-            {
-              input: $entry.key,
-              owner: (.original.owner // .locked.owner),
-              repo: (.original.repo // .locked.repo)
-            }
-          ] |
-          if ($include | length) > 0 then
-            map(select(.input | IN($include | split(",") | map(gsub("\\s+"; ""))[])))
-          else . end |
-          if ($exclude | length) > 0 then
-            map(select(.input | IN($exclude | split(",") | map(gsub("\\s+"; ""))[]) | not))
-          else . end |
-          map(. + {skip_delay: ($skip_delay == "true")})
-          ')
+        echo "=== Discovery Configuration ==="
+        echo "INPUTS: ${INPUTS:-<all>}"
+        echo "Exclude inputs: ${EXCLUDE_INPUTS:-<none>}"
+        echo "Skip delay inputs: ${SKIP_DELAY_INPUTS:-<none>}"
+        echo
 
-        echo "matrix={\"include\":${MATRIX}}" >> "$GITHUB_OUTPUT"
-        echo "Discovered inputs: $(echo "$MATRIX" | jq -r '[.[].input] | join(", ")')"
+        # Convert to arrays
+        IFS=' ' read -ra exclude_array <<< "${EXCLUDE_INPUTS:-}"
+        IFS=' ' read -ra skip_delay_array <<< "${SKIP_DELAY_INPUTS:-}"
+
+        should_exclude() {
+          local input="$1"
+          for exclude_input in "${exclude_array[@]}"; do
+            if [ "$input" = "$exclude_input" ]; then
+              return 0
+            fi
+          done
+          return 1
+        }
+
+        should_skip_delay() {
+          local input="$1"
+          for skip_input in "${skip_delay_array[@]}"; do
+            if [ "$input" = "$skip_input" ]; then
+              return 0
+            fi
+          done
+          return 1
+        }
+
+        declare -a matrix_items=()
+
+        if [ ! -f "flake.lock" ]; then
+          echo "No flake.lock found"
+          echo "matrix={\"include\":[]}" >> "$GITHUB_OUTPUT"
+          echo "has-updates=false" >> "$GITHUB_OUTPUT"
+          exit 0
+        fi
+
+        if ! metadata=$(nix flake metadata --json --no-write-lock-file 2>/dev/null); then
+          echo "Failed to get flake metadata"
+          exit 1
+        fi
+
+        if [ -n "$INPUTS" ]; then
+          requested_inputs="$INPUTS"
+        else
+          requested_inputs=$(echo "$metadata" | jq -r '.locks.nodes.root.inputs | keys[]' | sort)
+        fi
+
+        echo "Discovering flake inputs..."
+        for input in $requested_inputs; do
+          if [ ${#exclude_array[@]} -gt 0 ] && should_exclude "$input"; then
+            echo "  - $input (excluded)"
+            continue
+          fi
+
+          if ! echo "$metadata" | jq -e ".locks.nodes.\"$input\"" >/dev/null 2>&1; then
+            echo "Warning: Input $input not found, skipping"
+            continue
+          fi
+
+          current_rev=$(echo "$metadata" | jq -r ".locks.nodes.\"$input\".locked.rev // \"unknown\"" | head -c 8)
+          owner=$(echo "$metadata" | jq -r ".locks.nodes.\"$input\".original.owner // \"unknown\"")
+          repo=$(echo "$metadata" | jq -r ".locks.nodes.\"$input\".original.repo // \"unknown\"")
+          ref=$(echo "$metadata" | jq -r ".locks.nodes.\"$input\".original.ref // \"\"")
+
+          if should_skip_delay "$input"; then
+            skip_delay="true"
+          else
+            skip_delay="false"
+          fi
+
+          matrix_items+=("{\"name\":\"$input\",\"current_version\":\"$current_rev\",\"skip_delay\":$skip_delay,\"owner\":\"$owner\",\"repo\":\"$repo\",\"ref\":\"$ref\"}")
+          if [ -n "$ref" ]; then
+            echo "  - $input ($current_rev) [skip_delay=$skip_delay, ref=$ref]"
+          else
+            echo "  - $input ($current_rev) [skip_delay=$skip_delay]"
+          fi
+        done
+
+        echo
+        echo "=== Discovery Results ==="
+
+        if [ ${#matrix_items[@]} -eq 0 ]; then
+          matrix='{"include":[]}'
+          has_updates="false"
+          echo "No items to update"
+        else
+          matrix_json='{"include":['
+          for i in "${!matrix_items[@]}"; do
+            if [ "$i" -gt 0 ]; then
+              matrix_json+=","
+            fi
+            matrix_json+="${matrix_items[$i]}"
+          done
+          matrix_json+="]}"
+
+          matrix="$matrix_json"
+          has_updates="true"
+          echo "Found ${#matrix_items[@]} input(s) to check"
+        fi
+
+        echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+        echo "has-updates=$has_updates" >> "$GITHUB_OUTPUT"

@@ -3,28 +3,44 @@ name: Update Flake Inputs (Reusable)
 on:
   workflow_call:
     inputs:
+      inputs:
+        description: Space-separated list of specific inputs to update (empty for all)
+        type: string
+        default: ""
       exclude-inputs:
-        description: Comma-separated list of inputs to exclude
+        description: Space-separated list of inputs to exclude from discovery
         type: string
         default: ""
-      include-inputs:
-        description: Comma-separated list of inputs to include (if set, only these)
+      skip-delay-inputs:
+        description: Space-separated list of inputs that should skip the release age check
         type: string
         default: ""
+      minimum-release-age-days:
+        description: Minimum release age in days before updating
+        type: string
+        default: "3"
       skip-delay:
-        description: Skip random delay between updates
+        description: Skip the minimum release age check for all inputs
         type: boolean
         default: false
-      minimum-release-age-days:
-        description: Minimum age in days for the release commit
-        type: number
-        default: 0
+      pr-labels:
+        description: Labels to add to PRs (comma-separated)
+        type: string
+        default: "dependencies,automated"
+      auto-merge:
+        description: Enable auto-merge for PRs
+        type: boolean
+        default: true
+      summary-title:
+        description: Title for the summary section
+        type: string
+        default: "Update Summary"
     secrets:
-      FLAKE_UPDATER_APP_ID:
+      app-id:
         required: true
-      FLAKE_UPDATER_APP_PRIVATE_KEY:
+      private-key:
         required: true
-      CACHIX_AUTH_TOKEN:
+      cachix-auth-token:
         required: false
 
 jobs:
@@ -32,31 +48,35 @@ jobs:
     runs-on: ubuntu-24.04-arm
     outputs:
       matrix: ${{ steps.discover.outputs.matrix }}
+      has-updates: ${{ steps.discover.outputs.has-updates }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-nix
       - id: discover
         uses: ./.github/actions/discover-flake-inputs
         with:
+          inputs: ${{ inputs.inputs }}
           exclude-inputs: ${{ inputs.exclude-inputs }}
-          include-inputs: ${{ inputs.include-inputs }}
-          skip-delay: ${{ inputs.skip-delay }}
+          skip-delay-inputs: ${{ inputs.skip-delay-inputs }}
 
   update:
     needs: discover
-    if: ${{ fromJSON(needs.discover.outputs.matrix).include[0] != null }}
+    if: needs.discover.outputs.has-updates == 'true'
     runs-on: ubuntu-24.04-arm
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - id: setup-bot
         uses: ./.github/actions/setup-git-bot
         with:
-          app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
-          app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
+          app-id: ${{ secrets.app-id }}
+          app-private-key: ${{ secrets.private-key }}
 
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -64,23 +84,54 @@ jobs:
 
       - uses: ./.github/actions/setup-nix
         with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+          cachix-auth-token: ${{ secrets.cachix-auth-token }}
 
       - uses: ./.github/actions/update-flake-input
         with:
-          input: ${{ matrix.input }}
+          input-name: ${{ matrix.name }}
+          current-version: ${{ matrix.current_version }}
           owner: ${{ matrix.owner }}
           repo: ${{ matrix.repo }}
-          token: ${{ steps.setup-bot.outputs.token }}
-          skip-delay: ${{ matrix.skip_delay }}
+          ref: ${{ matrix.ref }}
+          skip-delay: ${{ inputs.skip-delay && 'true' || matrix.skip_delay }}
           minimum-release-age-days: ${{ inputs.minimum-release-age-days }}
+          auto-merge: ${{ inputs.auto-merge && 'true' || 'false' }}
+          pr-labels: ${{ inputs.pr-labels }}
+          github-token: ${{ steps.setup-bot.outputs.token }}
 
   summary:
     needs: [discover, update]
-    if: always()
+    if: always() && needs.discover.outputs.has-updates == 'true'
     runs-on: ubuntu-24.04-arm
     steps:
-      - run: |
-          echo "## Update Summary" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Discover: ${{ needs.discover.result }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Update: ${{ needs.update.result }}" >> "$GITHUB_STEP_SUMMARY"
+      - name: Generate summary
+        env:
+          SUMMARY_TITLE: ${{ inputs.summary-title }}
+          INPUTS: ${{ inputs.inputs }}
+          EXCLUDE_INPUTS: ${{ inputs.exclude-inputs }}
+          SKIP_DELAY_INPUTS: ${{ inputs.skip-delay-inputs }}
+          MIN_AGE_DAYS: ${{ inputs.minimum-release-age-days }}
+          AUTO_MERGE: ${{ inputs.auto-merge }}
+          UPDATE_RESULT: ${{ needs.update.result }}
+        run: |
+          echo "## $SUMMARY_TITLE" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Configuration" >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$INPUTS" ]; then
+            echo "- Inputs: $INPUTS" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -n "$EXCLUDE_INPUTS" ]; then
+            echo "- Excluded: $EXCLUDE_INPUTS" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          if [ -n "$SKIP_DELAY_INPUTS" ]; then
+            echo "- Skip delay: $SKIP_DELAY_INPUTS" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "- Minimum release age: $MIN_AGE_DAYS days" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Auto-merge: $AUTO_MERGE" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$UPDATE_RESULT" = "failure" ]; then
+            echo ":warning: Some updates failed. Check individual job logs for details." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo ":white_check_mark: All update jobs completed." >> "$GITHUB_STEP_SUMMARY"
+          fi
