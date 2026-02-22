@@ -1,3 +1,4 @@
+# Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/actions/discover-flake-inputs/action.yaml
 name: Discover Flake Inputs
 description: Discover Nix flake inputs and create a matrix for parallel updates
 

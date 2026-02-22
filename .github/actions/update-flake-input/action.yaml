@@ -1,3 +1,4 @@
+# Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/actions/update-flake-input/action.yaml
 name: Update Flake Input
 description: Update a single Nix flake input with optional release age check and auto-merge
 

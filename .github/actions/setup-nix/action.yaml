@@ -1,3 +1,4 @@
+# Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/actions/setup-nix/action.yaml
 name: Setup Nix
 description: Install Nix and configure caches
 

@@ -1,3 +1,4 @@
+# Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/workflows/update-flake.yaml
 name: "Update Flake Inputs (Stable)"
 
 on:

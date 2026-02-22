@@ -1,3 +1,4 @@
+# Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/workflows/update-flake-frequent.yaml
 name: "Update Flake Inputs (Frequent)"
 
 on:
