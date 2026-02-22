@@ -25,6 +25,10 @@
       url = "github:ryoppippi/gh-nippou";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    gh-graph = {
+      url = "github:kawarimidoll/gh-graph";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-hazkey = {
       url = "github:aster-void/nix-hazkey";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -47,6 +51,10 @@
     };
     ui-ux-pro-max-skill = {
       url = "github:nextlevelbuilder/ui-ux-pro-max-skill";
+      flake = false;
+    };
+    ast-grep-skill = {
+      url = "github:ast-grep/claude-skill";
       flake = false;
     };
     nix-darwin = {
@@ -96,12 +104,14 @@
       niri,
       llm-agents,
       gh-nippou,
+      gh-graph,
       nix-hazkey,
       version-lsp,
       agent-skills,
       anthropic-skills,
       vercel-skills,
       ui-ux-pro-max-skill,
+      ast-grep-skill,
       nix-darwin,
       onepassword-shell-plugins,
       brew-nix,
@@ -135,6 +145,7 @@
             doCheck = false;
           });
           gh-nippou = gh-nippou.packages.${system}.default;
+          gh-graph = gh-graph.packages.${system}.default;
         }
         // (
           if builtins.match ".*-linux" system != null then
@@ -171,6 +182,7 @@
               anthropic-skills
               vercel-skills
               ui-ux-pro-max-skill
+              ast-grep-skill
               agent-skills
               ;
           };
@@ -224,6 +236,7 @@
               anthropic-skills
               vercel-skills
               ui-ux-pro-max-skill
+              ast-grep-skill
               agent-skills
               onepassword-shell-plugins
               ;
@@ -337,6 +350,7 @@
                 entry = "${pkgs.git-secrets}/bin/git-secrets --pre_commit_hook";
                 language = "system";
                 stages = [ "pre-commit" ];
+                excludes = [ "^\.direnv/" ];
               };
             };
           };

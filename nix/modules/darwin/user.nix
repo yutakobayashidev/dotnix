@@ -7,6 +7,7 @@
   anthropic-skills,
   vercel-skills,
   ui-ux-pro-max-skill,
+  ast-grep-skill,
   agent-skills,
   onepassword-shell-plugins,
   ...
@@ -26,6 +27,7 @@
         anthropic-skills
         vercel-skills
         ui-ux-pro-max-skill
+        ast-grep-skill
         onepassword-shell-plugins
         ;
     };

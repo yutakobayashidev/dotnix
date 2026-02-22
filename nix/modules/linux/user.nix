@@ -8,6 +8,7 @@
   anthropic-skills,
   vercel-skills,
   ui-ux-pro-max-skill,
+  ast-grep-skill,
   agent-skills,
   ...
 }:
@@ -27,6 +28,7 @@
         anthropic-skills
         vercel-skills
         ui-ux-pro-max-skill
+        ast-grep-skill
         ;
     };
     sharedModules = [ agent-skills.homeManagerModules.default ];

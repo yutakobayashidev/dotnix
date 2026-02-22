@@ -9,6 +9,7 @@
   anthropic-skills,
   vercel-skills,
   ui-ux-pro-max-skill,
+  ast-grep-skill,
   ...
 }:
 {
@@ -36,6 +37,11 @@
       nextlevelbuilder = {
         path = ui-ux-pro-max-skill;
         subdir = ".claude/skills";
+      };
+      # ast-grep: AST-based code search and transform skill
+      ast-grep = {
+        path = ast-grep-skill;
+        subdir = "ast-grep/skills";
       };
     };
 
@@ -83,6 +89,11 @@
       ui-ux-pro-max = {
         from = "nextlevelbuilder";
         path = "ui-ux-pro-max";
+      };
+      # ast-grep skills
+      ast-grep = {
+        from = "ast-grep";
+        path = "ast-grep";
       };
     };
 
