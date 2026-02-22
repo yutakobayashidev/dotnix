@@ -1,0 +1,49 @@
+.pre-commit-config.yamlってなんで生成されたの？
+
+---
+
+github cliでライセンス生成して
+
+---
+
+[Request interrupted by user]
+
+---
+
+github cliでgitignore生成成して
+
+---
+
+コミットして
+
+---
+
+hyprlockって今使ってるッケ？readme色々更新して
+
+---
+
+コミットして
+
+---
+
+ryoppippi/dotfilesとclaudeの設定を参考に、nixで設定管理をしチ。deepwiki
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+ryoppippi/dotfilesとclaudeの設定を参考に、nixでcodex設定管理をして。deepwiki
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+今のでいいと思うよ
+
+---
+
+コミットして
