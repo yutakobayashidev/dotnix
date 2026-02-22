@@ -15,7 +15,6 @@
   home-manager.users.yuta.imports = [
     niri.homeModules.niri
     ./../modules/linux/programs/niri.nix
-    ./../modules/home/programs/vscode.nix
     ./../modules/linux/programs/waybar.nix
     ./../modules/home/programs/ghostty
     ./../modules/linux/programs/swayidle.nix

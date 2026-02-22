@@ -8,7 +8,6 @@
   ];
 
   # プログラム設定
-  programs.firefox.enable = true;
   programs.zsh.enable = true;
 
   # nh - Nix helper

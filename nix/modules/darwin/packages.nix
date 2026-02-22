@@ -16,13 +16,8 @@
     ]
     # brew-nix casks
     ++ (with pkgs.brewCasks; [
-      # Browsers
-      arc
-      firefox
-
       # Communication
       discord
-      discord-canary
       element
       halloy
       mattermost
@@ -36,7 +31,6 @@
 
       # AI / LLM
       chatgpt
-      cursor
 
       # Productivity
       anki
@@ -45,13 +39,10 @@
       notion
       notion-calendar
       obsidian
-      readdle-spark
 
       # Development
-      ngrok
       proxyman
       tableplus
-      visual-studio-code
 
       # Media
       spotify
@@ -65,11 +56,6 @@
       screen-studio
       stats
       yubico-authenticator
-
-      # Gaming
-      epic-games
-      parsec
-      steam
 
       # Other
       keybase

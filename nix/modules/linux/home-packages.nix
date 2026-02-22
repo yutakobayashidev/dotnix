@@ -22,7 +22,6 @@
     slack
 
     # Productivity (Nix管理)
-    vscode
     obsidian
     anki
     _1password-gui

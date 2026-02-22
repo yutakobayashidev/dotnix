@@ -148,7 +148,6 @@
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) [
                   "claude-code"
                   "android-studio"
-                  "vscode"
                   "google-chrome"
                   "discord"
                   "slack"
@@ -186,7 +185,6 @@
               nixpkgs.config.allowUnfreePredicate =
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) [
                   "claude-code"
-                  "vscode"
                   "discord"
                   "slack"
                   "obsidian"
