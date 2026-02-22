@@ -83,9 +83,10 @@ flake.nix                          # エントリポイント
 │   │   │       └── ...
 │   │   └── lib/                   # ヘルパー関数
 │   │       └── helpers/
-│   └── packages/                  # カスタムパッケージ
+│   └── overlays/                  # カスタムパッケージ（overlay形式）
+│       ├── default.nix            # 全overlayの集約
 │       ├── polycat.nix
-│       ├── git-wt-clean.nix
+│       ├── aqua.nix
 │       └── ...
 └── nvim/                          # Neovim設定（Lua）
     └── lua/plugins/               # lazy.nvim プラグイン設定

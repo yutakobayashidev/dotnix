@@ -86,39 +86,22 @@
         include = [ "agents/skills" ];
       };
 
-      # Overlay to add external packages to pkgs
-      overlay = final: prev: {
-        # llm-agents packages
+      # Overlay for external flake packages
+      externalOverlay = final: prev: {
         claude-code = llm-agents.packages.${system}.claude-code;
         ccusage = llm-agents.packages.${system}.ccusage;
         codex = llm-agents.packages.${system}.codex;
         opencode = llm-agents.packages.${system}.opencode;
         vibe-kanban = llm-agents.packages.${system}.vibe-kanban;
-        # ghostty
         ghostty = ghostty.packages.${system}.default;
-        # version-lsp
         version-lsp = version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
           doCheck = false;
         });
-        # gh-nippou
         gh-nippou = gh-nippou.packages.${system}.default;
-        # pretty-ts-errors-markdown
-        pretty-ts-errors-markdown = prev.callPackage ./nix/packages/pretty-ts-errors-markdown.nix { };
-        # difit
-        difit = prev.callPackage ./nix/packages/difit.nix { };
-        # aqua
-        aqua = prev.callPackage ./nix/packages/aqua.nix { };
-        # jj-desc
-        jj-desc = prev.callPackage ./nix/packages/jj-desc.nix { };
-        # entire
-        entire = prev.callPackage ./nix/packages/entire.nix { };
-        # polycat
-        polycat = prev.callPackage ./nix/packages/polycat.nix { };
-        # keifu
-        keifu = prev.callPackage ./nix/packages/keifu.nix { };
-        # similarity-ts
-        similarity-ts = prev.callPackage ./nix/packages/similarity-ts.nix { };
       };
+
+      # Custom package overlays
+      customOverlay = import ./nix/overlays;
 
       # mkSystem helper function
       mkSystem =
@@ -138,7 +121,7 @@
             ./nix/hosts/${host}
             ./nix/profiles/${profile}.nix
             {
-              nixpkgs.overlays = [ overlay moonbit-overlay.overlays.default ];
+              nixpkgs.overlays = [ externalOverlay moonbit-overlay.overlays.default customOverlay ];
               nixpkgs.config.allowUnfreePredicate =
                 pkg: builtins.elem (nixpkgs.lib.getName pkg) [
                   "claude-code"
