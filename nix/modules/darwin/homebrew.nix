@@ -47,8 +47,16 @@
 
     # Mac App Store (mas で管理)
     masApps = {
-      # 必要に応じて追加
-      # "App Name" = APP_STORE_ID;
+      "Xcode" = 497799835;
+      "Developer" = 640199958;
+      "Keynote" = 409183694;
+      "RunCat" = 1429033973;
+      "TestFlight" = 899247664;
+      "DaVinci Resolve" = 571213070;
+      "Pages" = 409201541;
+      "GarageBand" = 682658836;
+      "Numbers" = 409203825;
+      # Telegram は brew-nix (packages-darwin.nix) で管理
     };
   };
 }
