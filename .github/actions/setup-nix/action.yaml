@@ -19,5 +19,5 @@ runs:
     - if: inputs.cachix-auth-token != ''
       uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
       with:
-        name: yutakobayashidev
+        name: yuta
         authToken: ${{ inputs.cachix-auth-token }}
