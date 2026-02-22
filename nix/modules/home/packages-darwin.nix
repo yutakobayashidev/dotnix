@@ -35,33 +35,23 @@
       # AI / LLM
       chatgpt
       cursor
-      diffusionbee
-      ollama
-      superwhisper
 
       # Productivity
       anki
-      deepl
       figma
       linear-linear
       notion
       notion-calendar
       obsidian
       readdle-spark
-      mimestream
 
       # Development
-      bruno
       ngrok
-      postman
       proxyman
       tableplus
       visual-studio-code
-      webstorm
-      zed
 
       # Media
-      obs
       spotify
       vlc
       krita
@@ -70,19 +60,14 @@
       # Utilities
       appcleaner
       raycast
-      warp
-      hyper
       stats
 
       # Gaming
       epic-games
-      minecraft
-      osu
       parsec
       steam
 
       # Other
-      dropbox
       keybase
       tor-browser
       zoom

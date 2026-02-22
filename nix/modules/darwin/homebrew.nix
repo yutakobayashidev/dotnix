@@ -13,7 +13,6 @@
       "1password"
       "karabiner-elements"
       "bettertouchtool"
-      "cleanmymac"
       "cloudflare-warp"
       "elgato-stream-deck"
       "gpg-suite"
@@ -32,8 +31,7 @@
       "ghostty"
       "google-cloud-sdk"
       "microsoft-auto-update"
-      "nvidia-geforce-now"
-      "rstudio"
+      "qgis"
 
       # Hardware
       "arduino-ide"
@@ -43,7 +41,6 @@
       # Other
       "amazon-q"
       "bitcoin-core"
-      "local"
       "sidequest"
       "virtual-desktop-streamer"
     ];
