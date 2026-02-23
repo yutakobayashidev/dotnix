@@ -1,0 +1,28 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "8f10ed2bac35",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 12,
+  "files_touched": [
+    "README.md",
+    "docs/M2-MacBook-Air.md",
+    "docs/UM790Pro.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/8f/10ed2bac35/0/metadata.json",
+      "transcript": "/8f/10ed2bac35/0/full.jsonl",
+      "context": "/8f/10ed2bac35/0/context.md",
+      "content_hash": "/8f/10ed2bac35/0/content_hash.txt",
+      "prompt": "/8f/10ed2bac35/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2440,
+    "cache_creation_tokens": 64122,
+    "cache_read_tokens": 1642038,
+    "output_tokens": 4332,
+    "api_call_count": 45
+  }
+}
