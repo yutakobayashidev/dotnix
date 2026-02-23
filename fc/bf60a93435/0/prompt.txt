@@ -1,0 +1,9 @@
+https://github.com/kepano/obsidian-skills このスキル追加して
+
+---
+
+flake updateして,readmeとかも更新して
+
+---
+
+コミットして
