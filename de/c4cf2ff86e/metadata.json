@@ -1,0 +1,32 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "dec4cf2ff86e",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.lock",
+    "flake.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/linux/user.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/de/c4cf2ff86e/0/metadata.json",
+      "transcript": "/de/c4cf2ff86e/0/full.jsonl",
+      "context": "/de/c4cf2ff86e/0/context.md",
+      "content_hash": "/de/c4cf2ff86e/0/content_hash.txt",
+      "prompt": "/de/c4cf2ff86e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2441,
+    "cache_creation_tokens": 66799,
+    "cache_read_tokens": 1691170,
+    "output_tokens": 4333,
+    "api_call_count": 46
+  }
+}
