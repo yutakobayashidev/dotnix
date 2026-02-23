@@ -1,9 +1,3 @@
-# Global Claude Code Settings
+# Agent Guidelines
 
-このファイルは全プロジェクトに共通で適用されるグローバル設定です。
-
-## Coding Preferences
-
-- 日本語で応答
-- 絶対パスを使用
-- 実行可能なコマンドを提示
+Always prefer simplicity over pathological correctness. YAGNI, KISS, DRY. No backward-compat shims or fallback paths unless they come free without adding cyclomatic complexity.

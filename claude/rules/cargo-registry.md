@@ -5,8 +5,8 @@ paths:
   - "**/Cargo.lock"
 ---
 
-# Cargo Registry ソースの読み取り許可
+# Cargo Registry Source Read Permission
 
-Rustの依存クレートのソースコードを調査する際、`~/.cargo/registry/src/` 配下のファイルを読み取ってよい。
+When investigating Rust dependency crate source code, you may read files under `~/.cargo/registry/src/`.
 
-ライブラリの内部実装の確認、デバッグ、API の挙動調査などに活用すること。
+Use this for checking library internals, debugging, and investigating API behavior.

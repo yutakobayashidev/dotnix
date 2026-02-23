@@ -6,89 +6,99 @@ user-invocable: true
 
 # GitHub Actions Lint & Security
 
-GitHub Actions ワークフローの静的解析・セキュリティチェックツール群。全て nixpkgs から利用可能。各ツールは検査項目が異なり競合しないため、併用を推奨する。
+Static analysis and security checking tools for GitHub Actions workflows. All tools are available via nixpkgs for local use. Each tool covers different checks with no overlap, so using all of them together is recommended.
 
-| ツール | 用途 | nixpkgs |
-|--------|------|---------|
-| **actionlint** | ワークフロー構文チェック | `nixpkgs#actionlint` |
-| **pinact** | アクション参照の SHA ピン留め | `nixpkgs#pinact` |
-| **ghalint** | セキュリティベストプラクティス検査 | `nixpkgs#ghalint` |
-| **zizmor** | セキュリティ脆弱性分析 | `nixpkgs#zizmor` |
+| Tool | Purpose | nixpkgs |
+|------|---------|---------|
+| **actionlint** | Workflow syntax checking | `nixpkgs#actionlint` |
+| **pinact** | SHA-pin action references | `nixpkgs#pinact` |
+| **ghalint** | Security best practices | `nixpkgs#ghalint` |
+| **zizmor** | Security vulnerability analysis | `nixpkgs#zizmor` |
 
 ---
 
 ## actionlint
 
-ワークフローファイルの構文・型チェッカー。shellcheck / pyflakes と連携してスクリプト部分も検査する。
+Syntax and type checker for workflow files. Integrates with shellcheck / pyflakes to also inspect inline scripts.
 
-### 基本コマンド
+### Basic Commands
 
 ```bash
-# .github/workflows/ 配下を自動検出して全チェック
+# Auto-detect and check all files under .github/workflows/
 nix run nixpkgs#actionlint
 
-# 特定ファイルを指定
+# Check a specific file
 nix run nixpkgs#actionlint -- .github/workflows/nix-build.yaml
 
-# JSON 出力
+# JSON output
 nix run nixpkgs#actionlint -- -format '{{json .}}'
 ```
 
-### 検出内容
+### What It Detects
 
-- ワークフロー構文エラー（必須キーの欠落、キー重複、不正な値）
-- `${{ }}` 式の型チェック（未定義のコンテキスト参照など）
-- shellcheck によるシェルスクリプト内の問題
-- pyflakes による Python スクリプト内の問題
-- マトリクスの不整合、不正な glob パターン
-- 非推奨コマンド（`set-output` 等）の使用
+- Workflow syntax errors (missing required keys, duplicate keys, invalid values)
+- Type checking of `${{ }}` expressions (undefined context references, etc.)
+- Shell script issues via shellcheck
+- Python script issues via pyflakes
+- Matrix inconsistencies, invalid glob patterns
+- Deprecated commands (`set-output`, etc.)
 
-### CI での使い方
+### CI Usage
+
+Use `suzuki-shunsuke/actionlint-action` (installs actionlint + reviewdog + shellcheck via aqua):
 
 ```yaml
+      - uses: suzuki-shunsuke/actionlint-action@29e0b7cda52e51a495d15f22759745ef6e19583a # v0.1.1
+```
+
+Or use the official download script:
+
+```yaml
+      - name: Install actionlint
+        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
       - name: actionlint
-        run: nix run nixpkgs#actionlint
+        run: ./actionlint
 ```
 
 ---
 
 ## pinact
 
-GitHub Actions のバージョン参照をコミット SHA に変換するツール。タグの書き換えによるサプライチェーン攻撃を防ぐ。
+Converts GitHub Actions version references to commit SHAs. Prevents supply chain attacks via tag rewriting.
 
-### 設定
+### Configuration
 
-リポジトリルートに `.pinact.yml` を配置:
+Place `.pinact.yml` at the repository root:
 
 ```yaml
 # yaml-language-server: $schema=https://raw.githubusercontent.com/suzuki-shunsuke/pinact/refs/heads/main/json-schema/pinact.json
 version: 3
 ```
 
-初期化: `nix run nixpkgs#pinact -- init`
+Initialize: `nix run nixpkgs#pinact -- init`
 
-### 基本コマンド
+### Basic Commands
 
 ```bash
-# .github/workflows/ 配下を一括ピン留め
+# Pin all actions under .github/workflows/
 nix run nixpkgs#pinact -- run
 
-# composite action 等も含めて指定
+# Include composite actions etc.
 nix run nixpkgs#pinact -- run \
   .github/actions/setup-nix/action.yaml \
   .github/actions/setup-git-bot/action.yaml
 
-# 検証のみ（ファイル変更なし、CI 向き）
+# Validate only (no file changes, good for CI)
 nix run nixpkgs#pinact -- run --check
 
-# diff のみ表示
+# Show diff only
 nix run nixpkgs#pinact -- run --diff
 
-# 最新バージョンに更新
+# Update to latest versions
 nix run nixpkgs#pinact -- run --update
 ```
 
-### 変換フォーマット
+### Conversion Format
 
 ```yaml
 # Before
@@ -98,24 +108,24 @@ nix run nixpkgs#pinact -- run --update
 - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4.3.1
 ```
 
-- タグが SHA に置き換わり、元バージョンはコメントとして付与される
-- `.github/workflows/` 以外のファイル（composite action 等）は引数で明示指定が必要
+- Tags are replaced with SHAs; the original version is appended as a comment
+- Files outside `.github/workflows/` (composite actions, etc.) must be specified explicitly
 
-### 主要オプション
+### Key Options
 
-| オプション | 説明 |
-|-----------|------|
-| `--check` | 未ピン留めがあれば非ゼロ終了。ファイル変更なし |
-| `--verify, -v` | SHA とバージョンの整合性を検証 |
-| `--update, -u` | 最新バージョンに更新 |
-| `--diff` | 差分のみ出力。ファイル変更なし |
-| `--include, -i` | 正規表現で対象を絞り込み |
-| `--exclude, -e` | 正規表現で対象を除外 |
-| `--min-age, -m` | 指定日数以内のリリースをスキップ（`-u` と併用） |
+| Option | Description |
+|--------|-------------|
+| `--check` | Non-zero exit if unpinned references exist. No file changes |
+| `--verify, -v` | Verify SHA and version annotation consistency |
+| `--update, -u` | Update to latest versions |
+| `--diff` | Output diff only. No file changes |
+| `--include, -i` | Filter targets by regex |
+| `--exclude, -e` | Exclude targets by regex |
+| `--min-age, -m` | Skip releases newer than N days (use with `-u`) |
 
-### CI での使い方
+### CI Usage
 
-pinact-action を使う方法:
+Use `suzuki-shunsuke/pinact-action`:
 
 ```yaml
       - uses: suzuki-shunsuke/pinact-action@1081f5ad49ac904b7d977784f338145150a32112 # v1.4.0
@@ -123,101 +133,122 @@ pinact-action を使う方法:
           skip_push: "true"
 ```
 
-nixpkgs から直接実行する方法:
-
-```yaml
-      - name: pinact
-        run: nix run nixpkgs#pinact -- run --check
-```
-
 ---
 
 ## ghalint
 
-ワークフローとアクション定義のセキュリティベストプラクティスを検査するリンター。
+Linter for security best practices in workflow and action definitions.
 
-### 基本コマンド
+### Basic Commands
 
 ```bash
-# ワークフローを検査
+# Check workflows
 nix run nixpkgs#ghalint -- run
 
-# アクション定義を検査
+# Check action definitions
 nix run nixpkgs#ghalint -- run-action
 ```
 
-### 検出内容
+### What It Detects
 
-- ジョブに `permissions` が明示されていない
-- アクション参照がコミットハッシュでピン留めされていない
-- `actions/checkout` で `persist-credentials: false` が設定されていない
-- その他セキュリティベストプラクティス違反
+- Jobs missing explicit `permissions`
+- Action references not pinned to commit SHAs
+- `actions/checkout` without `persist-credentials: false`
+- Other security best practice violations
 
-### CI での使い方
+### CI Usage
+
+Install via aqua:
 
 ```yaml
-      - name: ghalint
-        run: nix run nixpkgs#ghalint -- run
+      - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+        with:
+          aqua_version: v2.56.6
+      - run: ghalint run
+        env:
+          GHALINT_LOG_COLOR: always
+```
+
+Requires `aqua.yaml` in the repository with ghalint registered:
+
+```yaml
+# aqua.yaml
+registries:
+  - type: standard
+    ref: v4.294.0
+packages:
+  - name: suzuki-shunsuke/ghalint@v1.5.5
 ```
 
 ---
 
 ## zizmor
 
-GitHub Actions のセキュリティ脆弱性を分析するツール。3段階のペルソナで検出感度を調整できる。
+Security vulnerability analyzer for GitHub Actions. Offers 3 personas to tune detection sensitivity.
 
-### 基本コマンド
+### Basic Commands
 
 ```bash
-# カレントリポジトリを分析（.github/ を自動検出）
+# Analyze current repository (auto-detects .github/)
 nix run nixpkgs#zizmor -- .
 
-# 特定ファイルを指定
+# Check a specific file
 nix run nixpkgs#zizmor -- .github/workflows/nix-build.yaml
 
-# pedantic モード（コードスメルも検出）
+# Pedantic mode (also detects code smells)
 nix run nixpkgs#zizmor -- --pedantic .
 
-# オフラインモード（GitHub API 不要）
+# Offline mode (no GitHub API needed)
 nix run nixpkgs#zizmor -- --offline .
 
-# SARIF 形式で出力
+# SARIF output
 nix run nixpkgs#zizmor -- --format sarif .
 ```
 
-### ペルソナ（検出感度）
+### Personas (Detection Sensitivity)
 
-| ペルソナ | 説明 |
-|---------|------|
-| `regular`（デフォルト） | 誤検知を最小化 |
-| `pedantic` | コードスメルも検出 |
-| `auditor` | 誤検知を許容して網羅的に検出 |
+| Persona | Description |
+|---------|-------------|
+| `regular` (default) | Minimizes false positives |
+| `pedantic` | Also detects code smells |
+| `auditor` | Comprehensive detection, tolerates false positives |
 
-### 検出内容
+### What It Detects
 
-- 過剰な `permissions` 設定
-- テンプレート展開（`${{ }}` ）によるコードインジェクション
-- 信頼できない入力の直接使用
-- なりすましコミットの可能性
-- `pull_request_target` の危険な使用
-- セルフホストランナーの不適切な利用
+- Excessive `permissions` settings
+- Code injection via template expansion (`${{ }}`)
+- Direct use of untrusted inputs
+- Potential commit spoofing
+- Dangerous use of `pull_request_target`
+- Improper use of self-hosted runners
 
-### CI での使い方
+### CI Usage
+
+Use `zizmorcore/zizmor-action`:
 
 ```yaml
-      - name: zizmor
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: nix run nixpkgs#zizmor -- .
+      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
 ```
 
-`GH_TOKEN` を渡すとオンライン監査ルールも有効になる。
+With GitHub Advanced Security:
+
+```yaml
+      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+```
+
+Without Advanced Security:
+
+```yaml
+      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+        with:
+          advanced-security: false
+```
 
 ---
 
-## CI Integration: 全ツール併用
+## CI Integration: All Tools Combined
 
-4ツールを1つのワークフローにまとめる例:
+Example workflow combining all 4 tools using their official actions (no nixpkgs):
 
 ```yaml
 name: "CI: GitHub Actions lint"
@@ -230,34 +261,48 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   gha-lint:
     runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: false
-      - uses: cachix/install-nix-action@2126ae7fc54c9df00dd18f7f18754393182c73cd # v31.9.1
-        with:
-          github_access_token: ${{ github.token }}
+
       - name: actionlint
-        run: nix run nixpkgs#actionlint
-      - name: pinact
-        run: nix run nixpkgs#pinact -- run --check
+        run: |
+          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint
+
+      - uses: suzuki-shunsuke/pinact-action@1081f5ad49ac904b7d977784f338145150a32112 # v1.4.0
+        with:
+          skip_push: "true"
+
+      - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+        with:
+          aqua_version: v2.56.6
       - name: ghalint
-        run: nix run nixpkgs#ghalint -- run
-      - name: zizmor
+        run: ghalint run
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: nix run nixpkgs#zizmor -- .
+          GHALINT_LOG_COLOR: always
+
+      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+        with:
+          advanced-security: false
 ```
 
 ---
 
-## Workflow: GitHub Actions を追加・変更したとき
+## Workflow: When Adding or Modifying GitHub Actions
 
-1. ワークフローや composite action を編集する
-2. ローカルで全ツールを実行:
+1. Edit workflows or composite actions
+2. Run all tools locally:
 
 ```bash
 nix run nixpkgs#actionlint
@@ -266,16 +311,16 @@ nix run nixpkgs#ghalint -- run
 nix run nixpkgs#zizmor -- .
 ```
 
-3. 変更を確認してコミット:
+3. Review changes and commit:
 
 ```bash
 git diff
 ```
 
-4. PR を出して CI が通ることを確認する
+4. Open a PR and verify CI passes
 
 ## Notes
 
-- `GITHUB_TOKEN` / `GH_TOKEN` を設定すると API レート制限を回避できる（pinact, zizmor）
-- actionlint は shellcheck, pyflakes が PATH にあれば自動連携する（nixpkgs 版はバンドル済み）
-- ghalint の検出項目は pinact と一部重複する（SHA ピン留めチェック）が、ghalint はそれ以外のベストプラクティスも検査するため併用する価値がある
+- Setting `GITHUB_TOKEN` / `GH_TOKEN` avoids API rate limits (pinact, zizmor)
+- actionlint auto-integrates with shellcheck and pyflakes if they're in PATH (nixpkgs version bundles them)
+- ghalint's checks partially overlap with pinact (SHA pinning), but ghalint also covers other best practices, so using both is worthwhile
