@@ -34,9 +34,6 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
-# aliases
-source ~/.config/zsh/config/aliases.zsh
-
 # ========================================
 # Load functions
 # ========================================
@@ -44,3 +41,6 @@ source ~/.config/zsh/config/aliases.zsh
 for func in ~/.config/zsh/functions/*.zsh; do
   source "$func"
 done
+
+# aliases (must be after functions loop — "do" alias breaks for/do/done)
+source ~/.config/zsh/config/aliases.zsh
