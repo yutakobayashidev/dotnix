@@ -51,7 +51,7 @@ flake.nix                          # エントリポイント
 ├── raycast/                       # macOS Raycastスクリプト
 ├── nix/
 │   ├── hosts/                     # ホスト固有の設定
-│   │   ├── nixos/                 # NixOS (x86_64-linux)
+│   │   ├── UM790-Pro/             # NixOS (x86_64-linux)
 │   │   │   ├── default.nix        # システム基本設定（boot, network, locale）
 │   │   │   └── hardware-configuration.nix
 │   │   └── M2-MacBook-Air/        # macOS (aarch64-darwin)

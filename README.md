@@ -6,7 +6,7 @@
 
 | Machine | Name | OS | System | Stable |
 |---|---|---|---|---|
-| UM790 Pro | nixos | NixOS | x86_64-linux | ◎ |
+| UM790 Pro | UM790-Pro | NixOS | x86_64-linux | ◎ |
 | M2 MacBook Air | M2-MacBook-Air | macOS | aarch64-darwin | ◎ |
 | Galaxy S23 FE | Galaxy-S23FE | Android (nix-on-droid) | aarch64-linux | △ |
 
@@ -17,7 +17,7 @@
 flake.nix                    # Entry point (nixos + darwin + nixOnDroid Configurations)
 ├── nix/
 │   ├── hosts/
-│   │   ├── nixos/           # NixOS host config (boot, network, locale)
+│   │   ├── UM790-Pro/       # NixOS host config (boot, network, locale)
 │   │   ├── M2-MacBook-Air/  # macOS host config
 │   │   └── Galaxy-S23FE/    # nix-on-droid host config
 │   ├── profiles/

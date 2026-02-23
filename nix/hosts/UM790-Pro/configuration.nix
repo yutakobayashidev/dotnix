@@ -1,4 +1,4 @@
-# nixos ホスト固有の設定
+# UM790-Pro ホスト固有の設定
 { lib, ... }:
 
 {
@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Networking
-  networking.hostName = "nixos";
+  networking.hostName = "UM790-Pro";
   networking.networkmanager.enable = true;
   networking.useDHCP = lib.mkDefault true;
   networking.resolvconf.enable = false;

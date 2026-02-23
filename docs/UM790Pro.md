@@ -14,7 +14,7 @@
 3. Apply the NixOS configuration:
 
    ```sh
-   sudo nixos-rebuild switch --flake .#nixos
+   sudo nixos-rebuild switch --flake .#UM790-Pro
    ```
 
 ## YubiKey Setup
@@ -25,7 +25,7 @@ YubiKeyでpolkit認証（1Passwordのロック解除など）を行うための�
 
 ```bash
 mkdir -p ~/.config/Yubico
-pamu2fcfg -o pam://nixos -i pam://nixos > ~/.config/Yubico/u2f_keys
+pamu2fcfg -o pam://UM790-Pro -i pam://UM790-Pro > ~/.config/Yubico/u2f_keys
 ```
 
 ### 2. 動作確認

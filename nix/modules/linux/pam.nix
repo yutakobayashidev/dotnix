@@ -11,8 +11,8 @@
     enable = true;
     control = "sufficient";
     settings = {
-      origin = "pam://nixos";
-      appid = "pam://nixos";
+      origin = "pam://UM790-Pro";
+      appid = "pam://UM790-Pro";
     };
   };
 
