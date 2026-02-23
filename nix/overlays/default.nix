@@ -2,6 +2,7 @@ let
   overlayFiles = [
     ./difit.nix
     ./entire.nix
+    ./gogcli.nix
     ./jj-desc.nix
     ./keifu.nix
     ./polycat.nix

@@ -29,6 +29,9 @@
     cmake
     typst
 
+    # Google Suite
+    gogcli
+
     # CLI Utilities
     curl
     wget
