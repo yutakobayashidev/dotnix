@@ -1,7 +1,7 @@
 final: prev: {
   polycat = final.stdenv.mkDerivation rec {
     pname = "polycat";
-    version = "unstable-2024-12-04";
+    version = "2.0.0";
 
     src = final.fetchFromGitHub {
       owner = "2IMT";
