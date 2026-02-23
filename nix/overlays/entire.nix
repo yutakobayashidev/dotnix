@@ -1,16 +1,16 @@
 final: prev: {
   entire = final.buildGo126Module rec {
     pname = "entire";
-    version = "0.4.4";
+    version = "0.4.5";
 
     src = final.fetchFromGitHub {
       owner = "entireio";
       repo = "cli";
       rev = "v${version}";
-      hash = "sha256-6/TsSmJ0z72Ta5ZihO06uV4Mik+fFpm8eCa7d5zlq24=";
+      hash = "sha256-BDke84xQ6t7W+BONQn7r8ZBENNr8oGv8mtJ5unyv0lA=";
     };
 
-    vendorHash = "sha256-rh2VhdwNT5XJYCVjj8tnoY7cacEhc/kcxi0NHYFPYO8=";
+    vendorHash = "sha256-zgVdh80aNnvC1oMp/CS0nx4b1y9b0jwVKFotil6kQZ0=";
 
     subPackages = [ "cmd/entire" ];
 
