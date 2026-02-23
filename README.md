@@ -7,7 +7,7 @@
 | Machine | Name | OS | System | Stable |
 |---|---|---|---|---|
 | UM790 Pro | nixos | NixOS | x86_64-linux | ◎ |
-| M2 MacBook Air | darwin | macOS | aarch64-darwin | ◎ |
+| M2 MacBook Air | M2-MacBook-Air | macOS | aarch64-darwin | ◎ |
 | Galaxy S23 FE | Galaxy-S23FE | Android (nix-on-droid) | aarch64-linux | △ |
 
 
@@ -18,7 +18,7 @@ flake.nix                    # Entry point (nixos + darwin + nixOnDroid Configur
 ├── nix/
 │   ├── hosts/
 │   │   ├── nixos/           # NixOS host config (boot, network, locale)
-│   │   ├── darwin/          # macOS host config
+│   │   ├── M2-MacBook-Air/  # macOS host config
 │   │   └── Galaxy-S23FE/    # nix-on-droid host config
 │   ├── profiles/
 │   │   ├── cli-minimal.nix  # Minimal CLI environment
@@ -29,7 +29,7 @@ flake.nix                    # Entry point (nixos + darwin + nixOnDroid Configur
 │   │   └── darwin.nix       # macOS environment
 │   ├── modules/
 │   │   ├── linux/           # NixOS system modules (niri, docker, audio, etc.)
-│   │   ├── darwin/          # macOS nix-darwin modules (homebrew, system defaults)
+│   │   ├── darwin/          # macOS nix-darwin modules (homebrew, system defaults, nix)
 │   │   ├── nix-on-droid/    # nix-on-droid shared modules
 │   │   └── home/            # Home Manager shared modules (zsh, git, claude-code)
 │   └── overlays/            # Custom packages (overlay)

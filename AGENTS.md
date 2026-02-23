@@ -54,7 +54,7 @@ flake.nix                          # エントリポイント
 │   │   ├── nixos/                 # NixOS (x86_64-linux)
 │   │   │   ├── default.nix        # システム基本設定（boot, network, locale）
 │   │   │   └── hardware-configuration.nix
-│   │   └── darwin/                # macOS (aarch64-darwin)
+│   │   └── M2-MacBook-Air/        # macOS (aarch64-darwin)
 │   │       └── default.nix        # ホスト名設定
 │   ├── profiles/                  # プロファイル定義
 │   │   ├── cli-minimal.nix        # 最小CLI環境
@@ -65,6 +65,7 @@ flake.nix                          # エントリポイント
 │   │   ├── linux/                 # NixOS/Linuxシステムモジュール
 │   │   │   ├── default.nix
 │   │   │   ├── packages.nix       # システムパッケージ（firefox, zsh, nix-ld）
+│   │   │   ├── nix.nix            # Nix設定
 │   │   │   ├── user.nix           # ユーザー設定 + home-manager統合
 │   │   │   ├── home-packages.nix  # Linux固有ユーザーパッケージ
 │   │   │   ├── niri.nix           # Niri WM + greetd
@@ -87,8 +88,8 @@ flake.nix                          # エントリポイント
 │   │   │   ├── system.nix         # macOS defaults (Dock, Finder, trackpad等)
 │   │   │   ├── homebrew.nix       # Homebrew cask管理
 │   │   │   ├── fonts.nix          # macOSフォント設定
-│   │   │   ├── packages.nix       # macOS固有ユーザーパッケージ（brew-nix含む）
-│   │   │   └── user.nix           # ユーザー設定 + home-manager統合
+│   │   │   ├── nix.nix            # Nix設定
+│   │   │   └── packages.nix       # macOS固有ユーザーパッケージ（brew-nix含む）
 │   │   ├── home/                  # home-manager共通設定
 │   │   │   ├── default.nix        # 共通設定（zsh, git, claude-code等）
 │   │   │   ├── packages.nix       # 共通ユーザーパッケージ

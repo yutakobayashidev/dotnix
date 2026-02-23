@@ -1,7 +1,8 @@
-{ ... }:
+{ username, ... }:
 
 {
   system = {
+    primaryUser = username;
     stateVersion = 6;
 
     defaults = {
@@ -16,12 +17,16 @@
         AppleShowAllFiles = true;
         AppleShowAllExtensions = true;
         FXEnableExtensionChangeWarning = false;
+        _FXShowPosixPathInTitle = true;
         ShowPathbar = true;
+        ShowStatusBar = true;
       };
 
       LaunchServices = {
         LSQuarantine = false;
       };
+
+      WindowManager.EnableStandardClickToShowDesktop = false;
 
       dock = {
         autohide = true;
@@ -62,23 +67,24 @@
         };
       };
     };
+
+    activationScripts.extraActivation.text = ''
+      softwareupdate --all --install
+    '';
   };
 
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    substituters = [
-      "https://cache.nixos.org"
-      "https://cache.numtide.com"
-      "https://yuta.cachix.org"
-    ];
-    trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-      "yuta.cachix.org-1:VGiC7m0kQjut7lp+RG/9pCRHFpzf11ELQrM2Nc2QCCk="
-    ];
+  time.timeZone = "Asia/Tokyo";
+
+  system.startup.chime = false;
+
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToControl = true;
+  };
+
+  power = {
+    restartAfterFreeze = true;
+    sleep.allowSleepByPowerButton = true;
   };
 
   security.pam.services.sudo_local.touchIdAuth = true;

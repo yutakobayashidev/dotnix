@@ -6,6 +6,7 @@
     # Overlay packages (Linux-only)
     ghostty
     keifu
+    moonbit-bin.moonbit.latest
 
     # Android
     android-tools

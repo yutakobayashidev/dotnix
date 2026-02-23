@@ -8,7 +8,6 @@
     with pkgs;
     [
       # macOS CLI tools
-      mas
       terminal-notifier
       coreutils
       cocoapods
@@ -29,7 +28,6 @@
 
       # AI / LLM
       chatgpt
-      claude
 
       # Productivity
       anki
@@ -43,9 +41,7 @@
       tableplus
 
       # Media
-      spotify
       vlc
-      krita
       ogdesign-eagle
 
       # Utilities
@@ -56,8 +52,7 @@
       yubico-authenticator
 
       # Other
-      keybase
-      tor-browser
+      sidequest
       zoom
     ]);
 }

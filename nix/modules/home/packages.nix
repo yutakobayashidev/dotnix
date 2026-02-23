@@ -1,5 +1,5 @@
 # home-managerの共通パッケージリスト（Linux/macOS共通）
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -20,7 +20,6 @@
     entire
 
     # Development Tools
-    moonbit-bin.moonbit.latest
     nil
     nix-init
     google-cloud-sdk

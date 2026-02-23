@@ -39,6 +39,7 @@ nix-darwin.lib.darwinSystem {
   inherit system;
   specialArgs = {
     inherit inputs;
+    username = "yuta";
   };
   modules = [
     ../../modules/darwin
@@ -76,7 +77,7 @@ nix-darwin.lib.darwinSystem {
               inputs.onepassword-shell-plugins.hmModules.default
             ];
             home.homeDirectory = "/Users/yuta";
-            programs.onepassword-shell-plugins = {
+            programs._1password-shell-plugins = {
               enable = true;
               plugins = with pkgs; [
                 gh

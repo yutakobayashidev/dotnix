@@ -39,6 +39,7 @@ nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = {
     inherit inputs;
+    username = "yuta";
   };
   modules = [
     home-manager.nixosModules.home-manager
@@ -87,23 +88,6 @@ nixpkgs.lib.nixosSystem {
           };
         };
 
-        users.users.yuta = {
-          isNormalUser = true;
-          description = "yuta";
-          shell = pkgs.zsh;
-          extraGroups = [
-            "networkmanager"
-            "wheel"
-            "docker"
-            "adbusers"
-          ];
-        };
-
-        nix.settings.allowed-users = [ "yuta" ];
-        nix.settings.trusted-users = [
-          "root"
-          "yuta"
-        ];
       }
     )
   ];
