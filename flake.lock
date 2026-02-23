@@ -53,6 +53,22 @@
         "type": "github"
       }
     },
+    "aws-agent-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771542841,
+        "narHash": "sha256-9djov4yPPOXj+1/ySjpse9cTpfmCgideFukZgOGXuiw=",
+        "owner": "itsmostafa",
+        "repo": "aws-agent-skills",
+        "rev": "2ccd14e6700ba96524e0961a6750ce6b056ed9c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "itsmostafa",
+        "repo": "aws-agent-skills",
+        "type": "github"
+      }
+    },
     "blueprint": {
       "inputs": {
         "nixpkgs": [
@@ -117,6 +133,22 @@
         "type": "github"
       }
     },
+    "cloudflare-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771597221,
+        "narHash": "sha256-bOz9Zx0CdtYS0jva7kufkfcLaHNSQ3Ho7S1WlT78ahY=",
+        "owner": "cloudflare",
+        "repo": "skills",
+        "rev": "57301e49ebfd311178c4acde41c8772503c88997",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cloudflare",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1767319442,
@@ -129,6 +161,22 @@
       "original": {
         "owner": "ipetkov",
         "repo": "crane",
+        "type": "github"
+      }
+    },
+    "deno-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771419636,
+        "narHash": "sha256-RaAEW6dMtWnNdFAOaQsbLaKFHvtwxAm37+6O8flJlLQ=",
+        "owner": "denoland",
+        "repo": "skills",
+        "rev": "1a4267f4fc60d75839d740ae39a7e0bb0170cf0b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "denoland",
+        "repo": "skills",
         "type": "github"
       }
     },
@@ -424,6 +472,22 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "gitignore.nix",
+        "type": "github"
+      }
+    },
+    "hashicorp-agent-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771624979,
+        "narHash": "sha256-B5V/P1f9DTdwlBR+//cpjKbejMDfqbitmPIX9VnnGn8=",
+        "owner": "hashicorp",
+        "repo": "agent-skills",
+        "rev": "30b22828889a0484aa6d799d038c4b91ca687879",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hashicorp",
+        "repo": "agent-skills",
         "type": "github"
       }
     },
@@ -996,13 +1060,17 @@
         "agent-skills": "agent-skills",
         "anthropic-skills": "anthropic-skills",
         "ast-grep-skill": "ast-grep-skill",
+        "aws-agent-skills": "aws-agent-skills",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
+        "cloudflare-skills": "cloudflare-skills",
+        "deno-skills": "deno-skills",
         "flake-parts": "flake-parts",
         "gh-graph": "gh-graph",
         "gh-nippou": "gh-nippou",
         "ghostty": "ghostty",
         "git-hooks": "git-hooks_2",
+        "hashicorp-agent-skills": "hashicorp-agent-skills",
         "home-manager": "home-manager_3",
         "llm-agents": "llm-agents",
         "moonbit-overlay": "moonbit-overlay",

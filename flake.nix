@@ -58,6 +58,22 @@
       url = "github:ast-grep/claude-skill";
       flake = false;
     };
+    cloudflare-skills = {
+      url = "github:cloudflare/skills";
+      flake = false;
+    };
+    hashicorp-agent-skills = {
+      url = "github:hashicorp/agent-skills";
+      flake = false;
+    };
+    deno-skills = {
+      url = "github:denoland/skills";
+      flake = false;
+    };
+    aws-agent-skills = {
+      url = "github:itsmostafa/aws-agent-skills";
+      flake = false;
+    };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -10,6 +10,10 @@
   vercel-skills,
   ui-ux-pro-max-skill,
   ast-grep-skill,
+  cloudflare-skills,
+  hashicorp-agent-skills,
+  deno-skills,
+  aws-agent-skills,
   ...
 }:
 {
@@ -43,10 +47,36 @@
         path = ast-grep-skill;
         subdir = "ast-grep/skills";
       };
+      # Cloudflare: skills from cloudflare/skills
+      cloudflare = {
+        path = cloudflare-skills;
+        subdir = "skills";
+      };
+      # HashiCorp: skills from hashicorp/agent-skills (terraform/, packer/ at root)
+      hashicorp = {
+        path = hashicorp-agent-skills;
+        subdir = ".";
+      };
+      # Deno: skills from denoland/skills
+      deno = {
+        path = deno-skills;
+        subdir = "skills";
+      };
+      # AWS: skills from itsmostafa/aws-agent-skills
+      aws = {
+        path = aws-agent-skills;
+        subdir = "skills";
+      };
     };
 
     # Enable all local skills
-    skills.enableAll = [ "local" ];
+    skills.enableAll = [
+      "local"
+      "cloudflare"
+      "hashicorp"
+      "deno"
+      "aws"
+    ];
 
     # Enable specific Anthropic skills
     skills.explicit = {

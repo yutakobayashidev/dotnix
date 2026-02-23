@@ -9,6 +9,10 @@
   vercel-skills,
   ui-ux-pro-max-skill,
   ast-grep-skill,
+  cloudflare-skills,
+  hashicorp-agent-skills,
+  deno-skills,
+  aws-agent-skills,
   agent-skills,
   ...
 }:
@@ -29,6 +33,10 @@
         vercel-skills
         ui-ux-pro-max-skill
         ast-grep-skill
+        cloudflare-skills
+        hashicorp-agent-skills
+        deno-skills
+        aws-agent-skills
         ;
     };
     sharedModules = [ agent-skills.homeManagerModules.default ];
