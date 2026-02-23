@@ -3,7 +3,7 @@
   "checkpoint_id": "93950775648b",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 1,
+  "checkpoints_count": 2,
   "files_touched": [
     "nix/modules/linux/home-packages.nix"
   ],
@@ -14,13 +14,20 @@
       "context": "/93/950775648b/0/context.md",
       "content_hash": "/93/950775648b/0/content_hash.txt",
       "prompt": "/93/950775648b/0/prompt.txt"
+    },
+    {
+      "metadata": "/93/950775648b/1/metadata.json",
+      "transcript": "/93/950775648b/1/full.jsonl",
+      "context": "/93/950775648b/1/context.md",
+      "content_hash": "/93/950775648b/1/content_hash.txt",
+      "prompt": "/93/950775648b/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 2386,
-    "cache_creation_tokens": 109384,
-    "cache_read_tokens": 1536958,
-    "output_tokens": 1637,
-    "api_call_count": 43
+    "input_tokens": 3810,
+    "cache_creation_tokens": 142351,
+    "cache_read_tokens": 2904755,
+    "output_tokens": 3271,
+    "api_call_count": 77
   }
 }
