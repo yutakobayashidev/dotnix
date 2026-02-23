@@ -1,30 +1,26 @@
-final: prev: {
+{
+  sources,
+  final,
+  prev,
+}:
+{
   entire = final.buildGo126Module rec {
-    pname = "entire";
-    version = "0.4.4";
+    inherit (sources.entire) pname version src;
 
-    src = final.fetchFromGitHub {
-      owner = "entireio";
-      repo = "cli";
-      rev = "v${version}";
-      hash = "sha256-6/TsSmJ0z72Ta5ZihO06uV4Mik+fFpm8eCa7d5zlq24=";
-    };
-
-    vendorHash = "sha256-rh2VhdwNT5XJYCVjj8tnoY7cacEhc/kcxi0NHYFPYO8=";
+    vendorHash = sources.entire.vendorHash;
 
     subPackages = [ "cmd/entire" ];
 
     ldflags = [
       "-s"
       "-w"
-      "-X=main.version=${version}"
+      "-X=main.version=${final.lib.removePrefix "v" version}"
     ];
 
     meta = with final.lib; {
       description = "Capture AI agent sessions on every push - git hooks integration for Claude Code and other AI agents";
       homepage = "https://github.com/entireio/cli";
       license = licenses.mit;
-      maintainers = [ ];
       mainProgram = "entire";
     };
   };

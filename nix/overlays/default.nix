@@ -1,4 +1,14 @@
+final: prev:
 let
+  sources = import ./_sources/generated.nix {
+    inherit (final)
+      fetchgit
+      fetchurl
+      fetchFromGitHub
+      dockerTools
+      ;
+  };
+
   overlayFiles = [
     ./aqua.nix
     ./difit.nix
@@ -11,6 +21,5 @@ let
   ];
 in
 builtins.foldl' (
-  acc: overlay: final: prev:
-  (acc final prev) // ((import overlay) final prev)
-) (_: _: { }) overlayFiles
+  acc: overlay: acc // ((import overlay) { inherit sources final prev; })
+) { } overlayFiles

@@ -1,0 +1,90 @@
+name: "Update Custom Overlays (nvfetcher)"
+
+on:
+  schedule:
+    - cron: "0 18 * * 5" # Saturday 03:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - id: setup-bot
+        uses: ./.github/actions/setup-git-bot
+        with:
+          app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
+          app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          token: ${{ steps.setup-bot.outputs.token }}
+
+      - uses: ./.github/actions/setup-nix
+
+      - name: Run nvfetcher
+        run: |
+          nix run nixpkgs#nvfetcher -- \
+            -c nix/overlays/nvfetcher.toml \
+            -o nix/overlays/_sources
+
+      - name: Check for changes
+        id: check
+        run: |
+          if git diff --quiet nix/overlays/_sources/; then
+            echo "updated=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "updated=true" >> "$GITHUB_OUTPUT"
+            echo "### Changed packages" >> "$GITHUB_STEP_SUMMARY"
+            git diff --stat nix/overlays/_sources/ >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Create pull request
+        if: steps.check.outputs.updated == 'true'
+        env:
+          GH_TOKEN: ${{ steps.setup-bot.outputs.token }}
+        run: |
+          set -euo pipefail
+
+          branch="update-overlays-nvfetcher"
+          pr_title="chore(overlays): auto update package versions via nvfetcher"
+
+          changes=$(git diff --stat nix/overlays/_sources/)
+
+          pr_body="Automated update of custom overlay packages via nvfetcher.
+
+          ## Changes
+
+          \`\`\`
+          ${changes}
+          \`\`\`
+
+          ---
+          This PR was automatically created by the nvfetcher update workflow."
+
+          git add nix/overlays/_sources/
+          git checkout -b "$branch"
+          git commit -m "$pr_title"
+          git push --force origin "$branch"
+
+          pr_number=$(gh pr list --head "$branch" --json number --jq '.[0].number // empty')
+
+          if [ -n "$pr_number" ]; then
+            gh pr edit "$pr_number" --title "$pr_title" --body "$pr_body"
+          else
+            gh pr create \
+              --title "$pr_title" \
+              --body "$pr_body" \
+              --base main \
+              --head "$branch" \
+              --label dependencies \
+              --label automated
+          fi
+
+          pr_number=$(gh pr list --head "$branch" --json number --jq '.[0].number')
+          gh pr merge "$pr_number" --auto --squash || echo "Note: Auto-merge may require branch protection rules"

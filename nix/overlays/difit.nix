@@ -1,14 +1,11 @@
-final: prev: {
+{
+  sources,
+  final,
+  prev,
+}:
+{
   difit = final.stdenv.mkDerivation (finalAttrs: {
-    pname = "difit";
-    version = "3.0.2";
-
-    src = final.fetchFromGitHub {
-      owner = "yoshiko-pg";
-      repo = "difit";
-      rev = "v${finalAttrs.version}";
-      hash = "sha256-EFoDA8KN/3giLzz39v7Rsr1in6gVilsI5vrPNgAI1d4=";
-    };
+    inherit (sources.difit) pname version src;
 
     nativeBuildInputs = [
       final.nodejs
@@ -19,7 +16,7 @@ final: prev: {
 
     pnpmDeps = final.fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
-      hash = "sha256-JDp3mBDV0cPK5445nRJqLn/uFhfl3P4unO42tqzTUmY=";
+      hash = sources.difit.pnpmDepsHash;
       fetcherVersion = 3;
     };
 

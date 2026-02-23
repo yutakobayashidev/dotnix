@@ -1,14 +1,12 @@
-final: prev: {
-  polycat = final.stdenv.mkDerivation rec {
-    pname = "polycat";
-    version = "unstable-2024-12-04";
-
-    src = final.fetchFromGitHub {
-      owner = "2IMT";
-      repo = "polycat";
-      rev = "main";
-      hash = "sha256-wpDx6hmZe/dLv+F+kbo+YUIZ2A8XgnrZP0amkz6I5IQ=";
-    };
+{
+  sources,
+  final,
+  prev,
+}:
+{
+  polycat = final.stdenv.mkDerivation {
+    inherit (sources.polycat) pname src;
+    version = "unstable-${sources.polycat.date}";
 
     makeFlags = [ "PREFIX=$(out)" ];
 

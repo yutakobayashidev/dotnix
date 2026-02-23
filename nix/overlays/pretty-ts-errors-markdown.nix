@@ -1,16 +1,13 @@
-final: prev: {
-  pretty-ts-errors-markdown = final.buildNpmPackage rec {
-    pname = "pretty-ts-errors-markdown";
-    version = "0.0.15";
+{
+  sources,
+  final,
+  prev,
+}:
+{
+  pretty-ts-errors-markdown = final.buildNpmPackage {
+    inherit (sources.pretty-ts-errors-markdown) pname version src;
 
-    src = final.fetchFromGitHub {
-      owner = "hexh250786313";
-      repo = "pretty-ts-errors-markdown";
-      rev = "4d4a167d4cc9bd6c07945c89441b154746e2b2d6";
-      hash = "sha256-zxp8YAfF15sE8EZmO3IFB7PmJAw9GfGhGlJQs0qliz4=";
-    };
-
-    npmDepsHash = "sha256-aC+t2FYWJgDzXmfYg2IDJ7W2pLPAZ1o3TC68MWZhbSg=";
+    npmDepsHash = sources.pretty-ts-errors-markdown.npmDepsHash;
 
     nativeBuildInputs = [ final.rsync ];
 

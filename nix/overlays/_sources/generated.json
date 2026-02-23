@@ -1,0 +1,193 @@
+{
+    "aqua": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "aqua",
+        "passthru": {
+            "vendorHash": "sha256-YdbHccVVWJ/1eVzTaXSV+PeDQNiZhOnJGd+dtOtmKac="
+        },
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "aquaproj",
+            "repo": "aqua",
+            "rev": "v2.55.3",
+            "sha256": "sha256-7m7lDMUeN4m3yUMelwVZyC+cWhwD20/FUbbb7YfNWfw=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v2.55.3"
+    },
+    "difit": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "difit",
+        "passthru": {
+            "pnpmDepsHash": "sha256-JDp3mBDV0cPK5445nRJqLn/uFhfl3P4unO42tqzTUmY="
+        },
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "yoshiko-pg",
+            "repo": "difit",
+            "rev": "v3.0.2",
+            "sha256": "sha256-EFoDA8KN/3giLzz39v7Rsr1in6gVilsI5vrPNgAI1d4=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v3.0.2"
+    },
+    "entire": {
+        "cargoLock": null,
+        "date": null,
+        "extract": null,
+        "name": "entire",
+        "passthru": {
+            "vendorHash": "sha256-rh2VhdwNT5XJYCVjj8tnoY7cacEhc/kcxi0NHYFPYO8="
+        },
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "entireio",
+            "repo": "cli",
+            "rev": "v0.4.4",
+            "sha256": "sha256-6/TsSmJ0z72Ta5ZihO06uV4Mik+fFpm8eCa7d5zlq24=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v0.4.4"
+    },
+    "jj-desc": {
+        "cargoLock": {
+            "Cargo.lock": [
+                "sha256-ptenxz97I17xgfSzDKrF_ieOCe7u25i1bZz45nsPExw=/Cargo.lock",
+                {}
+            ]
+        },
+        "date": null,
+        "extract": null,
+        "name": "jj-desc",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "tumf",
+            "repo": "jj-desc",
+            "rev": "v0.4.3",
+            "sha256": "sha256-ptenxz97I17xgfSzDKrF/ieOCe7u25i1bZz45nsPExw=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v0.4.3"
+    },
+    "keifu": {
+        "cargoLock": {
+            "Cargo.lock": [
+                "sha256-8fjR204Wa9LJa9JGQ1CRHDoiHei6P3J81RGgA0G77EA=/Cargo.lock",
+                {}
+            ]
+        },
+        "date": null,
+        "extract": null,
+        "name": "keifu",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "trasta298",
+            "repo": "keifu",
+            "rev": "v0.2.3",
+            "sha256": "sha256-8fjR204Wa9LJa9JGQ1CRHDoiHei6P3J81RGgA0G77EA=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v0.2.3"
+    },
+    "polycat": {
+        "cargoLock": null,
+        "date": "2025-05-23",
+        "extract": null,
+        "name": "polycat",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "2IMT",
+            "repo": "polycat",
+            "rev": "f81e73bbb5de90a496bb0b844cdb3a93e54fbaad",
+            "sha256": "sha256-wpDx6hmZe/dLv+F+kbo+YUIZ2A8XgnrZP0amkz6I5IQ=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "f81e73bbb5de90a496bb0b844cdb3a93e54fbaad"
+    },
+    "pretty-ts-errors-markdown": {
+        "cargoLock": null,
+        "date": "2025-04-24",
+        "extract": null,
+        "name": "pretty-ts-errors-markdown",
+        "passthru": {
+            "npmDepsHash": "sha256-aC+t2FYWJgDzXmfYg2IDJ7W2pLPAZ1o3TC68MWZhbSg="
+        },
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "hexh250786313",
+            "repo": "pretty-ts-errors-markdown",
+            "rev": "4d4a167d4cc9bd6c07945c89441b154746e2b2d6",
+            "sha256": "sha256-zxp8YAfF15sE8EZmO3IFB7PmJAw9GfGhGlJQs0qliz4=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "4d4a167d4cc9bd6c07945c89441b154746e2b2d6"
+    },
+    "similarity-ts": {
+        "cargoLock": {
+            "Cargo.lock": [
+                "sha256-_rvLl2SaeB0AHEbjkT_XTvVZHHoRaau44SteImRWguE=/Cargo.lock",
+                {}
+            ]
+        },
+        "date": null,
+        "extract": null,
+        "name": "similarity-ts",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "mizchi",
+            "repo": "similarity",
+            "rev": "v0.4.2",
+            "sha256": "sha256-/rvLl2SaeB0AHEbjkT/XTvVZHHoRaau44SteImRWguE=",
+            "sparseCheckout": [],
+            "type": "github"
+        },
+        "version": "v0.4.2"
+    }
+}

@@ -1,16 +1,13 @@
-final: prev: {
-  similarity-ts = final.rustPlatform.buildRustPackage rec {
-    pname = "similarity-ts";
-    version = "0.4.2";
+{
+  sources,
+  final,
+  prev,
+}:
+{
+  similarity-ts = final.rustPlatform.buildRustPackage {
+    inherit (sources.similarity-ts) pname version src;
 
-    src = final.fetchFromGitHub {
-      owner = "mizchi";
-      repo = "similarity";
-      rev = "v${version}";
-      hash = "sha256-/rvLl2SaeB0AHEbjkT/XTvVZHHoRaau44SteImRWguE=";
-    };
-
-    cargoHash = "sha256-d2PZ65uudYPZv1ZtILF+7Zt+sv4LcZKUkeFLQkk7uPA=";
+    cargoLock = sources.similarity-ts.cargoLock."Cargo.lock";
 
     buildAndTestSubdir = "crates/similarity-ts";
 
@@ -20,7 +17,6 @@ final: prev: {
       description = "CLI tool for detecting code duplication in TypeScript/JavaScript projects";
       homepage = "https://github.com/mizchi/similarity";
       license = licenses.mit;
-      maintainers = [ ];
       mainProgram = "similarity-ts";
     };
   };

@@ -1,0 +1,42 @@
+[polycat]
+src.git = "https://github.com/2IMT/polycat"
+fetch.github = "2IMT/polycat"
+
+[aqua]
+src.github_tag = "aquaproj/aqua"
+fetch.github = "aquaproj/aqua"
+[aqua.passthru]
+vendorHash = "sha256-YdbHccVVWJ/1eVzTaXSV+PeDQNiZhOnJGd+dtOtmKac="
+
+[difit]
+src.github_tag = "yoshiko-pg/difit"
+fetch.github = "yoshiko-pg/difit"
+[difit.passthru]
+pnpmDepsHash = "sha256-JDp3mBDV0cPK5445nRJqLn/uFhfl3P4unO42tqzTUmY="
+
+[entire]
+src.github_tag = "entireio/cli"
+fetch.github = "entireio/cli"
+[entire.passthru]
+vendorHash = "sha256-rh2VhdwNT5XJYCVjj8tnoY7cacEhc/kcxi0NHYFPYO8="
+
+[jj-desc]
+src.github_tag = "tumf/jj-desc"
+fetch.github = "tumf/jj-desc"
+cargo_lock = ["Cargo.lock"]
+
+[keifu]
+src.github_tag = "trasta298/keifu"
+fetch.github = "trasta298/keifu"
+cargo_lock = ["Cargo.lock"]
+
+[similarity-ts]
+src.github_tag = "mizchi/similarity"
+fetch.github = "mizchi/similarity"
+cargo_lock = ["Cargo.lock"]
+
+[pretty-ts-errors-markdown]
+src.git = "https://github.com/hexh250786313/pretty-ts-errors-markdown"
+fetch.github = "hexh250786313/pretty-ts-errors-markdown"
+[pretty-ts-errors-markdown.passthru]
+npmDepsHash = "sha256-aC+t2FYWJgDzXmfYg2IDJ7W2pLPAZ1o3TC68MWZhbSg="
