@@ -95,6 +95,10 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    mcp-servers-nix = {
+      url = "github:natsukium/mcp-servers-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     moonbit-overlay.url = "github:moonbit-community/moonbit-overlay";
     nix-filter.url = "github:numtide/nix-filter";
     # TODO: Pinned to specific nixpkgs commit as workaround for nix-community/nix-on-droid#495

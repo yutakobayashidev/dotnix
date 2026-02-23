@@ -56,6 +56,7 @@ nixpkgs.lib.nixosSystem {
       deno-skills
       aws-agent-skills
       agent-skills
+      mcp-servers-nix
       ;
   };
   modules = [

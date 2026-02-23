@@ -594,6 +594,26 @@
         "type": "github"
       }
     },
+    "mcp-servers-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771809278,
+        "narHash": "sha256-JCiXUFX5qyw5rqGKeWE5XMXEzbb+tdrCd1Qmb8T+e3Y=",
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "rev": "523cf72320cb3e9a39cac1ab522eeda65d2211e1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "natsukium",
+        "repo": "mcp-servers-nix",
+        "type": "github"
+      }
+    },
     "moonbit-overlay": {
       "inputs": {
         "nixpkgs": "nixpkgs_3",
@@ -1073,6 +1093,7 @@
         "hashicorp-agent-skills": "hashicorp-agent-skills",
         "home-manager": "home-manager_3",
         "llm-agents": "llm-agents",
+        "mcp-servers-nix": "mcp-servers-nix",
         "moonbit-overlay": "moonbit-overlay",
         "niri": "niri",
         "nix-darwin": "nix-darwin",

@@ -3,6 +3,7 @@
   config,
   pkgs,
   dotfilesDir,
+  mcp-servers-nix,
   ...
 }:
 
@@ -10,6 +11,19 @@ let
   claudeConfigDir = "${config.xdg.configHome}/claude";
   claudeDotfilesDir = "${dotfilesDir}/claude";
   jq = lib.getExe pkgs.jq;
+
+  mcpServers =
+    (mcp-servers-nix.lib.evalModule pkgs {
+      programs = {
+        context7.enable = true;
+      };
+    }).config.settings.servers
+    // {
+      deepwiki = {
+        type = "http";
+        url = "https://mcp.deepwiki.com/mcp";
+      };
+    };
 in
 {
   home.sessionVariables = {
@@ -28,6 +42,7 @@ in
       };
       language = "Japanese";
       skipDangerousModePermissionPrompt = true;
+      inherit mcpServers;
       statusline = {
         type = "command";
         command = "ccusage statusline";

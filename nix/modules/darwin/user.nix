@@ -13,6 +13,7 @@
   deno-skills,
   aws-agent-skills,
   agent-skills,
+  mcp-servers-nix,
   onepassword-shell-plugins,
   ...
 }:
@@ -36,6 +37,7 @@
         hashicorp-agent-skills
         deno-skills
         aws-agent-skills
+        mcp-servers-nix
         onepassword-shell-plugins
         ;
     };

@@ -54,6 +54,7 @@ nix-darwin.lib.darwinSystem {
       deno-skills
       aws-agent-skills
       agent-skills
+      mcp-servers-nix
       onepassword-shell-plugins
       ;
   };

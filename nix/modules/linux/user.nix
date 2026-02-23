@@ -14,6 +14,7 @@
   deno-skills,
   aws-agent-skills,
   agent-skills,
+  mcp-servers-nix,
   ...
 }:
 
@@ -37,6 +38,7 @@
         hashicorp-agent-skills
         deno-skills
         aws-agent-skills
+        mcp-servers-nix
         ;
     };
     sharedModules = [ agent-skills.homeManagerModules.default ];
