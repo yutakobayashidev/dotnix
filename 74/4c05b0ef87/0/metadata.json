@@ -1,0 +1,36 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "744c05b0ef87",
+  "session_id": "3a382506-9c3b-4d45-b0af-331344cfc33e",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T01:04:55.32644661Z",
+  "branch": "feat/nvfetcher-overlays",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/overlays/jj-desc.nix",
+    "nix/overlays/keifu.nix",
+    "nix/overlays/nvfetcher.toml",
+    "nix/overlays/similarity-ts.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "0abfe6d9-18dc-4a65-9a8c-409fe6e22b1d",
+  "checkpoint_transcript_start": 478,
+  "transcript_lines_at_start": 478,
+  "token_usage": {
+    "input_tokens": 42,
+    "cache_creation_tokens": 26896,
+    "cache_read_tokens": 5033478,
+    "output_tokens": 6289,
+    "api_call_count": 34
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T01:04:55.104861865Z",
+    "agent_lines": 6,
+    "human_added": 5808,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 5814,
+    "agent_percentage": 0.10319917440660474
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/3a382506-9c3b-4d45-b0af-331344cfc33e.jsonl"
+}
