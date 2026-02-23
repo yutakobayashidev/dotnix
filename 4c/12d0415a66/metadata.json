@@ -3,7 +3,7 @@
   "checkpoint_id": "4c12d0415a66",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 1,
+  "checkpoints_count": 5,
   "files_touched": [
     "zsh/zshrc"
   ],
@@ -14,13 +14,20 @@
       "context": "/4c/12d0415a66/0/context.md",
       "content_hash": "/4c/12d0415a66/0/content_hash.txt",
       "prompt": "/4c/12d0415a66/0/prompt.txt"
+    },
+    {
+      "metadata": "/4c/12d0415a66/1/metadata.json",
+      "transcript": "/4c/12d0415a66/1/full.jsonl",
+      "context": "/4c/12d0415a66/1/context.md",
+      "content_hash": "/4c/12d0415a66/1/content_hash.txt",
+      "prompt": "/4c/12d0415a66/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 905,
-    "cache_creation_tokens": 759314,
-    "cache_read_tokens": 16897166,
-    "output_tokens": 24577,
-    "api_call_count": 182
+    "input_tokens": 1217,
+    "cache_creation_tokens": 899273,
+    "cache_read_tokens": 17881721,
+    "output_tokens": 25939,
+    "api_call_count": 214
   }
 }
