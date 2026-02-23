@@ -3,7 +3,7 @@
   "checkpoint_id": "ead1f0b91b9d",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 5,
+  "checkpoints_count": 2,
   "files_touched": [
     "nix/modules/home/programs/claude-code.nix"
   ],
@@ -31,10 +31,10 @@
     }
   ],
   "token_usage": {
-    "input_tokens": 1376,
-    "cache_creation_tokens": 946002,
-    "cache_read_tokens": 18315002,
-    "output_tokens": 27002,
-    "api_call_count": 228
+    "input_tokens": 1228,
+    "cache_creation_tokens": 959411,
+    "cache_read_tokens": 18106540,
+    "output_tokens": 26015,
+    "api_call_count": 221
   }
 }
