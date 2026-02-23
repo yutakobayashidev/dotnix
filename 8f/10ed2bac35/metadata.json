@@ -3,7 +3,7 @@
   "checkpoint_id": "8f10ed2bac35",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 13,
+  "checkpoints_count": 14,
   "files_touched": [
     "README.md",
     "docs/M2-MacBook-Air.md",
@@ -23,13 +23,20 @@
       "context": "/8f/10ed2bac35/1/context.md",
       "content_hash": "/8f/10ed2bac35/1/content_hash.txt",
       "prompt": "/8f/10ed2bac35/1/prompt.txt"
+    },
+    {
+      "metadata": "/8f/10ed2bac35/2/metadata.json",
+      "transcript": "/8f/10ed2bac35/2/full.jsonl",
+      "context": "/8f/10ed2bac35/2/context.md",
+      "content_hash": "/8f/10ed2bac35/2/content_hash.txt",
+      "prompt": "/8f/10ed2bac35/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 4826,
-    "cache_creation_tokens": 173506,
-    "cache_read_tokens": 3178996,
-    "output_tokens": 5969,
-    "api_call_count": 88
+    "input_tokens": 6252,
+    "cache_creation_tokens": 207012,
+    "cache_read_tokens": 4654596,
+    "output_tokens": 7684,
+    "api_call_count": 124
   }
 }
