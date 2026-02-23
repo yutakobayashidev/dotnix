@@ -3,7 +3,7 @@
   "checkpoint_id": "ead1f0b91b9d",
   "session_id": "1eb6b09c-a608-41ed-aed4-5d0ec9c2d8b0",
   "strategy": "manual-commit",
-  "created_at": "2026-02-23T10:19:54.768292256Z",
+  "created_at": "2026-02-23T10:22:31.003325261Z",
   "branch": "main",
   "checkpoints_count": 1,
   "files_touched": [
@@ -20,12 +20,12 @@
     "api_call_count": 182
   },
   "initial_attribution": {
-    "calculated_at": "2026-02-23T10:19:54.303327692Z",
-    "agent_lines": 47,
+    "calculated_at": "2026-02-23T10:22:30.522589646Z",
+    "agent_lines": 1,
     "human_added": 0,
     "human_modified": 0,
     "human_removed": 0,
-    "total_committed": 47,
+    "total_committed": 1,
     "agent_percentage": 100
   },
   "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/1eb6b09c-a608-41ed-aed4-5d0ec9c2d8b0.jsonl"
