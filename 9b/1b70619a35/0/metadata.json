@@ -1,0 +1,32 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "9b1b70619a35",
+  "session_id": "fd4eeae7-fb57-47e6-9362-a90bf4b9dedf",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T00:03:41.992664204Z",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "agents/skills/gha-lint/SKILL.md",
+    "agents/skills/pinact/SKILL.md"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "cfb0a892-430d-4440-b519-3947a6ecce76",
+  "token_usage": {
+    "input_tokens": 6099,
+    "cache_creation_tokens": 96153,
+    "cache_read_tokens": 1463140,
+    "output_tokens": 7260,
+    "api_call_count": 32
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T00:03:41.853369604Z",
+    "agent_lines": 281,
+    "human_added": 0,
+    "human_modified": 114,
+    "human_removed": 90,
+    "total_committed": 395,
+    "agent_percentage": 71.13924050632912
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/fd4eeae7-fb57-47e6-9362-a90bf4b9dedf.jsonl"
+}
