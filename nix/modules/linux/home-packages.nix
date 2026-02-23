@@ -41,7 +41,6 @@
     zenity
 
     # Screen Management
-    hyprlock
     brightnessctl
 
     # System Tools
