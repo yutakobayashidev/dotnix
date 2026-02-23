@@ -7,6 +7,7 @@ let
     ./polycat.nix
     ./pretty-ts-errors-markdown.nix
     ./similarity-ts.nix
+    ./tunnelto.nix
   ];
 in
 builtins.foldl' (

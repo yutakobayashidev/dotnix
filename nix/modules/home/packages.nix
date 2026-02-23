@@ -59,6 +59,7 @@
     halloy
 
     # Network Tools
+    tunnelto
     speedtest-cli
     bandwhich
     nmap
