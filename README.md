@@ -13,7 +13,9 @@ flake.nix                    # Entry point (nixosConfigurations + darwinConfigur
 │   ├── profiles/
 │   │   ├── cli-minimal.nix  # Minimal CLI environment
 │   │   ├── cli.nix          # CLI environment (docker, tailscale)
+│   │   ├── cli-server.nix   # Server CLI environment (docker, no tailscale)
 │   │   ├── gui.nix          # GUI environment (niri, audio, bluetooth)
+│   │   ├── laptop.nix       # Laptop environment (gui + extras)
 │   │   └── darwin.nix       # macOS environment
 │   ├── modules/
 │   │   ├── linux/           # NixOS system modules (niri, docker, audio, etc.)
@@ -114,7 +116,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 
 ### macOS
 
-- **Homebrew**: GUI app management via casks (Ghostty, Raycast, Chrome, etc.)
+- **Homebrew**: GUI app management via casks (Ghostty, Chrome, OrbStack, etc.)
 - **brew-nix**: Homebrew cask packages managed as Nix packages (version pinning & rollback)
 - **Touch ID**: sudo authentication support
 - **1Password**: Shell Plugins (gh, awscli2)
@@ -123,7 +125,8 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 
 - **AI Development**: claude-code, codex, opencode, ccusage, vibe-kanban
 - **Version Control**: git, lazygit, jujutsu (jj), git-lfs, git-wt
-- **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, starship, tmux
+- **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, tmux
+- **Communication**: halloy (IRC)
 - **Editors**: Neovim, VSCode
 - **Terminal**: Ghostty, Zsh + Oh My Zsh
 - **Development**: Node.js, Bun, MoonBit, Google Cloud SDK, Typst
@@ -135,10 +138,10 @@ Claude Code skills are managed via [agent-skills-nix](https://github.com/Kyure-A
 
 - **Config**: `nix/modules/home/agent-skills.nix`
 - **Local skills**: `agents/skills/`
-- **External skills**: [anthropics/skills](https://github.com/anthropics/skills), [vercel-labs/skills](https://github.com/vercel-labs/skills)
-- **Deploy targets**: `~/.agents/skills`, `~/.config/claude/skills`
+- **External skills**: [anthropics/skills](https://github.com/anthropics/skills), [vercel-labs/skills](https://github.com/vercel-labs/skills), [ast-grep/claude-skill](https://github.com/ast-grep/claude-skill)
+- **Deploy targets**: `~/.agents/skills`, `~/.config/claude/skills`, `~/.config/codex/skills`
 
-Key skills: `social-digest`, `oura-daily-watch` (local), `docx`, `pdf`, `pptx`, `xlsx` (Anthropic), `frontend-design`, `webapp-testing` (Anthropic), `find-skills` (Vercel), `ui-ux-pro-max` (community)
+Key skills: `social-digest`, `oura-daily-watch`, `gha-lint`, `check-similarity`, `dce` (local), `docx`, `pdf`, `pptx`, `xlsx`, `frontend-design`, `webapp-testing`, `skill-creator` (Anthropic), `find-skills` (Vercel), `ast-grep` (ast-grep), `ui-ux-pro-max` (community)
 
 ## YubiKey Setup
 

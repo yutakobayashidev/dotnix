@@ -48,12 +48,11 @@
     tree
     glow
     vhs
-    zellij
     yazi
     imagemagick
     ffmpeg
     yt-dlp
-    starship
+    halloy
 
     # Network Tools
     speedtest-cli

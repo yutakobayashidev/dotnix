@@ -19,9 +19,7 @@
       # Communication
       discord
       element
-      halloy
       mattermost
-      messenger
       nani
       signal
       simplex
@@ -31,12 +29,12 @@
 
       # AI / LLM
       chatgpt
+      claude
 
       # Productivity
       anki
       figma
       linear-linear
-      notion
       notion-calendar
       obsidian
 
