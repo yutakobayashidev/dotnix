@@ -1,6 +1,16 @@
 # dotnix
 
+[![DeepWiki](https://img.shields.io/badge/DeepWiki-yutakobayashidev%2Fdotnix-blue.svg?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAyCAYAAAAnWDnqAAAAAXNSR0IArs4c6QAAA05JREFUaEPtmUtyEzEQhtWTQyQLHNak2AB7ZnyXZMEjXMGeK/AIi+QuHrMnbChYY7MIh8g01fJoopFb0uhhEqqcbWTp06/uv1saEDv4O3n3dV60RfP947Mm9/SQc0ICFQgzfc4CYZoTPAswgSJCCUJUnAAoRHOAUOcATwbmVLWdGoH//PB8mnKqScAhsD0kYP3j/Yt5LPQe2KvcXmGvRHcDnpxfL2zOYJ1mFwrryWTz0advv1Ut4CJgf5uhDuDj5eUcAUoahrdY/56ebRWeraTjMt/00Sh3UDtjgHtQNHwcRGOC98BJEAEymycmYcWwOprTgcB6VZ5JK5TAJ+fXGLBm3FDAmn6oPPjR4rKCAoJCal2eAiQp2x0vxTPB3ALO2CRkwmDy5WohzBDwSEFKRwPbknEggCPB/imwrycgxX2NzoMCHhPkDwqYMr9tRcP5qNrMZHkVnOjRMWwLCcr8ohBVb1OMjxLwGCvjTikrsBOiA6fNyCrm8V1rP93iVPpwaE+gO0SsWmPiXB+jikdf6SizrT5qKasx5j8ABbHpFTx+vFXp9EnYQmLx02h1QTTrl6eDqxLnGjporxl3NL3agEvXdT0WmEost648sQOYAeJS9Q7bfUVoMGnjo4AZdUMQku50McDcMWcBPvr0SzbTAFDfvJqwLzgxwATnCgnp4wDl6Aa+Ax283gghmj+vj7feE2KBBRMW3FzOpLOADl0Isb5587h/U4gGvkt5v60Z1VLG8BhYjbzRwyQZemwAd6cCR5/XFWLYZRIMpX39AR0tjaGGiGzLVyhse5C9RKC6ai42ppWPKiBagOvaYk8lO7DajerabOZP46Lby5wKjw1HCRx7p9sVMOWGzb/vA1hwiWc6jm3MvQDTogQkiqIhJV0nBQBTU+3okKCFDy9WwferkHjtxib7t3xIUQtHxnIwtx4mpg26/HfwVNVDb4oI9RHmx5WGelRVlrtiw43zboCLaxv46AZeB3IlTkwouebTr1y2NjSpHz68WNFjHvupy3q8TFn3Hos2IAk4Ju5dCo8B3wP7VPr/FGaKiG+T+v+TQqIrOqMTL1VdWV1DdmcbO8KXBz6esmYWYKPwDL5b5FA1a0hwapHiom0r/cKaoqr+27/XcrS5UwSMbQAAAABJRU5ErkJggg==)](https://deepwiki.com/yutakobayashidev/dotnix)
+
 NixOS & macOS (nix-darwin) configuration with Flakes and Home Manager.
+
+## Target
+
+| Machine | Name | OS | System | Stable |
+|---|---|---|---|---|
+| UM790 Pro | nixos | NixOS | x86_64-linux | ◎ |
+| M2 MacBook Air | darwin | macOS | aarch64-darwin | ◎ |
+
 
 ## Module Structure
 
@@ -27,51 +37,10 @@ flake.nix                    # Entry point (nixosConfigurations + darwinConfigur
 └── zsh/                     # Zsh config
 ```
 
-## Initial Setup
+## Documentation
 
-### NixOS
-
-1. Install NixOS with the unstable channel
-
-2. Clone this repository:
-
-   ```sh
-   git clone https://github.com/yutakobayashidev/dotnix.git ~/ghq/github.com/yutakobayashidev/dotnix
-   cd ~/ghq/github.com/yutakobayashidev/dotnix
-   ```
-
-3. Apply the NixOS configuration:
-
-   ```sh
-   sudo nixos-rebuild switch --flake .#nixos
-   ```
-
-### macOS
-
-1. Install [Nix](https://github.com/NixOS/nix-installer):
-
-   ```sh
-   curl -sSfL https://artifacts.nixos.org/nix-installer | sh -s -- install
-   ```
-
-2. Clone this repository:
-
-   ```sh
-   git clone https://github.com/yutakobayashidev/dotnix.git ~/ghq/github.com/yutakobayashidev/dotnix
-   cd ~/ghq/github.com/yutakobayashidev/dotnix
-   ```
-
-3. Apply the nix-darwin configuration (this will also install Homebrew automatically):
-
-   ```sh
-   sudo nix run nix-darwin -- switch --flake .#darwin
-   ```
-
-4. Reload your shell:
-
-   ```sh
-   exec zsh
-   ```
+- [docs/UM790Pro.md](docs/UM790Pro.md) - NixOS installation guide
+- [docs/M2-MacBook-Air.md](docs/M2-MacBook-Air.md) - nix-darwin installation guide for macOS
 
 ## Daily Usage
 
@@ -143,25 +112,3 @@ Claude Code skills are managed via [agent-skills-nix](https://github.com/Kyure-A
 
 Key skills: `social-digest`, `oura-daily-watch`, `gha-lint`, `check-similarity`, `dce` (local), `docx`, `pdf`, `pptx`, `xlsx`, `frontend-design`, `webapp-testing`, `skill-creator` (Anthropic), `find-skills` (Vercel), `ast-grep` (ast-grep), `ui-ux-pro-max` (community)
 
-## YubiKey Setup
-
-YubiKeyでpolkit認証（1Passwordのロック解除など）を行うための設定。
-
-### 1. YubiKeyの登録
-
-```bash
-mkdir -p ~/.config/Yubico
-pamu2fcfg -o pam://nixos -i pam://nixos > ~/.config/Yubico/u2f_keys
-```
-
-### 2. 動作確認
-
-```bash
-pamtester polkit-1 yuta authenticate
-```
-
-YubiKeyをタッチして「successfully authenticated」と表示されればOK。
-
-### 3. 1Password設定
-
-1Password → 設定 → セキュリティ → 「システム認証でロック解除」を有効化
