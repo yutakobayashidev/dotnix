@@ -3,7 +3,7 @@
   "checkpoint_id": "dec4cf2ff86e",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 1,
+  "checkpoints_count": 5,
   "files_touched": [
     "flake.lock",
     "flake.nix",
@@ -27,13 +27,20 @@
       "context": "/de/c4cf2ff86e/1/context.md",
       "content_hash": "/de/c4cf2ff86e/1/content_hash.txt",
       "prompt": "/de/c4cf2ff86e/1/prompt.txt"
+    },
+    {
+      "metadata": "/de/c4cf2ff86e/2/metadata.json",
+      "transcript": "/de/c4cf2ff86e/2/full.jsonl",
+      "context": "/de/c4cf2ff86e/2/context.md",
+      "content_hash": "/de/c4cf2ff86e/2/content_hash.txt",
+      "prompt": "/de/c4cf2ff86e/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 4827,
-    "cache_creation_tokens": 176183,
-    "cache_read_tokens": 3228128,
-    "output_tokens": 5970,
-    "api_call_count": 89
+    "input_tokens": 4868,
+    "cache_creation_tokens": 512468,
+    "cache_read_tokens": 5718116,
+    "output_tokens": 9262,
+    "api_call_count": 119
   }
 }
