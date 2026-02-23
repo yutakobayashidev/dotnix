@@ -1,0 +1,48 @@
+zoxideをcdに割り当てて
+
+---
+
+hmm yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix   main ±  cd
+direnv: unloading
+ yuta@nixos  ~ 
+
+---
+
+direnv: unloadingなんて今まででなかったんだけど
+
+---
+
+今までこれは出てこなかった
+
+---
+
+どこがスマートなの？
+
+---
+
+学習さえれてるのか買う人私て
+
+---
+
+yuta@nixos  ~  cd dotnix
+cd: no such file or directory: dotnix
+
+---
+
+おお、きた。silentもいらないのでは？
+
+---
+
+[Request interrupted by user]
+
+---
+
+これ確認して https://github.com/direnv/direnv/issues/726
+
+---
+
+まだunloadingなる
+
+---
+
+差分みてコミットして
