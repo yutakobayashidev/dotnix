@@ -1,6 +1,5 @@
 let
   overlayFiles = [
-    ./aqua.nix
     ./difit.nix
     ./entire.nix
     ./jj-desc.nix

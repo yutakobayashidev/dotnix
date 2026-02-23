@@ -282,8 +282,23 @@
           isDarwin = builtins.match ".*-darwin" system != null;
           hostname = if isDarwin then "darwin" else "nixos";
           nom = "${pkgs.nix-output-monitor}/bin/nom";
+          customPkgs = import nixpkgs {
+            inherit system;
+            overlays = [ customOverlay ];
+          };
         in
         {
+          packages = {
+            inherit (customPkgs)
+              difit
+              entire
+              jj-desc
+              keifu
+              polycat
+              pretty-ts-errors-markdown
+              similarity-ts
+              ;
+          };
           apps = {
             build = {
               type = "app";
