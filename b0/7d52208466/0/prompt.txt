@@ -1,0 +1,29 @@
+notion,messenger,starshipを削除して、claude desktopをmacに追加したい
+
+---
+
+https://github.REDACTED.nix halloy,nixpkgsでmac / nixos共に入れておきたい
+
+---
+
+README全体を一部古くなっているところがあるので更新して
+
+---
+
+zeliijはREADMEからもnixからも消し手
+
+---
+
+不要になったgitkeep消して
+
+---
+
+差分みてコミットして
+
+---
+
+ghosttyの設定にこれ追加して unfocused-split-opacity = 0.85
+
+---
+
+コミットして
