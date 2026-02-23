@@ -3,4 +3,5 @@ background-opacity = 0.85
 font-size = 18
 macos-option-as-alt = true
 copy-on-select = clipboard
+unfocused-split-opacity = 0.85
 shell-integration-features = ssh-terminfo,ssh-env
