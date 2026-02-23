@@ -1,0 +1,123 @@
+name: "Update Custom Overlays"
+
+on:
+  schedule:
+    - cron: "0 18 * * 5" # Saturday 03:00 JST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - id: setup-bot
+        uses: ./.github/actions/setup-git-bot
+        with:
+          app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
+          app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          token: ${{ steps.setup-bot.outputs.token }}
+
+      - uses: ./.github/actions/setup-nix
+        with:
+          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Update overlay packages
+        run: |
+          nix shell nixpkgs#nix-update nixpkgs#jq -c bash <<'SCRIPT'
+          set -uo pipefail
+
+          packages=$(nix eval .#packages.x86_64-linux --apply 'pkgs: builtins.attrNames pkgs' --json | jq -r '.[]')
+          : > /tmp/nix-update-failures
+
+          for pkg in $packages; do
+            echo "::group::Updating $pkg"
+            if nix-update "$pkg" --flake --commit 2>&1; then
+              echo "Successfully updated $pkg"
+            else
+              git checkout -- nix/overlays/
+              if nix-update "$pkg" --flake --version=branch --commit 2>&1; then
+                echo "Successfully updated $pkg (branch tracking)"
+              else
+                echo "::warning::Failed to update $pkg, restoring files"
+                git checkout -- nix/overlays/
+                echo "$pkg" >> /tmp/nix-update-failures
+              fi
+            fi
+            echo "::endgroup::"
+          done
+          SCRIPT
+
+      - name: Format
+        run: nix fmt
+
+      - name: Commit formatting fixes
+        run: |
+          if ! git diff --quiet; then
+            git add -A
+            git commit -m "style: format overlay files"
+          fi
+
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ steps.setup-bot.outputs.token }}
+        run: |
+          failures=""
+          if [ -s /tmp/nix-update-failures ]; then
+            failures=$(sed 's/^/- `/' /tmp/nix-update-failures | sed 's/$/`/')
+          fi
+
+          if [ "$(git rev-list --count origin/main..HEAD)" -eq 0 ]; then
+            echo "No overlay updates found"
+            exit 0
+          fi
+
+          branch="update-overlays"
+          git push --force origin "HEAD:refs/heads/$branch"
+
+          commits=$(git log --oneline origin/main..HEAD | sed 's/^/- /')
+
+          body="Automated update of custom overlay packages via \`nix-update\`.
+
+          ## Commits
+
+          ${commits}"
+
+          if [ -n "$failures" ]; then
+            body="${body}
+
+          ## Failed to update
+
+          ${failures}"
+          fi
+
+          body="${body}
+
+          ---
+          This PR was automatically created by the overlay update workflow."
+
+          pr_number=$(gh pr list --head "$branch" --json number --jq '.[0].number // empty')
+
+          if [ -n "$pr_number" ]; then
+            gh pr edit "$pr_number" --title "nix/overlays: update packages" --body "$body"
+          else
+            gh pr create \
+              --title "nix/overlays: update packages" \
+              --body "$body" \
+              --base main \
+              --head "$branch" \
+              --label dependencies --label automated
+
+            pr_number=$(gh pr list --head "$branch" --json number --jq '.[0].number')
+          fi
+
+          gh pr merge "$pr_number" --auto --squash || echo "Note: Auto-merge may require branch protection rules"

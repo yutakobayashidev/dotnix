@@ -8,8 +8,6 @@
     ccusage
     opencode
     vibe-kanban
-    aqua
-
     # Version Control
     git
     git-wt
