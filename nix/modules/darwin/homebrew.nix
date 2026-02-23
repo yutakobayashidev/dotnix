@@ -24,7 +24,7 @@
       "elgato-stream-deck"
       "gpg-suite"
       "orbstack"
-      "tailscale"
+      "tailscale-app"
       "blackhole-2ch"
 
       # Browsers (システム統合が深い)
@@ -40,7 +40,7 @@
 
       # Hardware
       "arduino-ide"
-      "ledger-live"
+      "ledger-wallet"
       "qmk-toolbox"
 
       # Media
