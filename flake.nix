@@ -21,6 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
+    nix-steipete-tools.url = "github:openclaw/nix-steipete-tools";
     gh-nippou = {
       url = "github:ryoppippi/gh-nippou";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -105,6 +106,7 @@
       home-manager,
       niri,
       llm-agents,
+      nix-steipete-tools,
       gh-nippou,
       gh-graph,
       nix-hazkey,
@@ -144,6 +146,7 @@
           opencode = llm-agents.packages.${system}.opencode;
           vibe-kanban = llm-agents.packages.${system}.vibe-kanban;
           cursor-agent = llm-agents.packages.${system}.cursor-agent;
+          gogcli = nix-steipete-tools.packages.${system}.gogcli;
           version-lsp = version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
             doCheck = false;
           });
