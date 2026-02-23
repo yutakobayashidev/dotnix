@@ -3,7 +3,7 @@
   "checkpoint_id": "1e6473fd1ffc",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 28,
+  "checkpoints_count": 29,
   "files_touched": [
     "README.md",
     "nix/hosts/darwin/configuration.nix",
@@ -32,13 +32,20 @@
       "context": "/1e/6473fd1ffc/1/context.md",
       "content_hash": "/1e/6473fd1ffc/1/content_hash.txt",
       "prompt": "/1e/6473fd1ffc/1/prompt.txt"
+    },
+    {
+      "metadata": "/1e/6473fd1ffc/2/metadata.json",
+      "transcript": "/1e/6473fd1ffc/2/full.jsonl",
+      "context": "/1e/6473fd1ffc/2/context.md",
+      "content_hash": "/1e/6473fd1ffc/2/content_hash.txt",
+      "prompt": "/1e/6473fd1ffc/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 3264,
-    "cache_creation_tokens": 369660,
-    "cache_read_tokens": 6506356,
-    "output_tokens": 4292,
-    "api_call_count": 118
+    "input_tokens": 3269,
+    "cache_creation_tokens": 391005,
+    "cache_read_tokens": 6578268,
+    "output_tokens": 4305,
+    "api_call_count": 121
   }
 }
