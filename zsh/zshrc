@@ -13,12 +13,6 @@ fi
 # Enable completion
 autoload -Uz compinit && compinit
 
-# direnv
-eval "$(direnv hook zsh)"
-
-# zoxide
-eval "$(zoxide init zsh)"
-
 # git-wt
 eval "$(git wt --init zsh)"
 
@@ -33,6 +27,12 @@ source ~/.config/zsh/config/oh-my-zsh.zsh
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+
+# zoxide (must be after oh-my-zsh to avoid cd being overwritten)
+eval "$(zoxide init zsh --cmd cd)"
+
+# direnv (must be last to avoid spurious unloading messages)
+eval "$(direnv hook zsh)"
 
 # ========================================
 # Load functions
