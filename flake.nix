@@ -81,6 +81,13 @@
     };
     moonbit-overlay.url = "github:moonbit-community/moonbit-overlay";
     nix-filter.url = "github:numtide/nix-filter";
+    # TODO: Pinned to specific nixpkgs commit as workaround for nix-community/nix-on-droid#495
+    # Issue: "getting pseudoterminal attributes: Permission denied" with nixpkgs after 2026-01-24
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid";
+      inputs.nixpkgs.url = "github:NixOS/nixpkgs/2bceeb45e516fc6956714014c92ddfdafe4c9da3";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   nixConfig = {
@@ -97,172 +104,9 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      flake-parts,
-      treefmt-nix,
-      ghostty,
-      home-manager,
-      niri,
-      llm-agents,
-      nix-steipete-tools,
-      gh-nippou,
-      gh-graph,
-      nix-hazkey,
-      version-lsp,
-      agent-skills,
-      anthropic-skills,
-      vercel-skills,
-      ui-ux-pro-max-skill,
-      ast-grep-skill,
-      nix-darwin,
-      onepassword-shell-plugins,
-      brew-nix,
-      moonbit-overlay,
-      nix-filter,
-      ...
-    }:
+    inputs@{ flake-parts, treefmt-nix, ... }:
     let
-      # Helper functions for home-manager
-      helpers = import ./nix/modules/lib/helpers { lib = nixpkgs.lib; };
-
-      # Dotfiles directory path helper
-      mkDotfilesDir = homeDir: "${homeDir}/ghq/github.com/yutakobayashidev/dotnix";
-
-      # Local agent skills (filtered from this repo)
-      local-skills = nix-filter.lib {
-        root = self;
-        include = [ "agents/skills" ];
-      };
-
-      # Overlay for external flake packages (parameterized by system)
-      mkExternalOverlay =
-        system: final: prev:
-        {
-          claude-code = llm-agents.packages.${system}.claude-code;
-          ccusage = llm-agents.packages.${system}.ccusage;
-          codex = llm-agents.packages.${system}.codex;
-          opencode = llm-agents.packages.${system}.opencode;
-          vibe-kanban = llm-agents.packages.${system}.vibe-kanban;
-          cursor-agent = llm-agents.packages.${system}.cursor-agent;
-          gogcli = nix-steipete-tools.packages.${system}.gogcli;
-          version-lsp = version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
-            doCheck = false;
-          });
-          gh-nippou = gh-nippou.packages.${system}.default;
-          gh-graph = gh-graph.packages.${system}.default;
-        }
-        // (
-          if builtins.match ".*-linux" system != null then
-            {
-              ghostty = ghostty.packages.${system}.default;
-            }
-          else
-            { }
-        );
-
-      # Custom package overlays
       customOverlay = import ./nix/overlays;
-
-      # mkSystem helper function (NixOS)
-      mkSystem =
-        {
-          host,
-          system,
-          profile,
-          extraModules ? [ ],
-        }:
-        let
-          dotfilesDir = mkDotfilesDir "/home/yuta";
-        in
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit
-              helpers
-              dotfilesDir
-              home-manager
-              niri
-              local-skills
-              anthropic-skills
-              vercel-skills
-              ui-ux-pro-max-skill
-              ast-grep-skill
-              agent-skills
-              ;
-          };
-          modules = [
-            ./nix/modules/linux
-            ./nix/hosts/${host}
-            ./nix/profiles/${profile}.nix
-            {
-              nixpkgs.overlays = [
-                (mkExternalOverlay system)
-                moonbit-overlay.overlays.default
-                customOverlay
-              ];
-              nixpkgs.config.allowUnfreePredicate =
-                pkg:
-                builtins.elem (nixpkgs.lib.getName pkg) [
-                  "claude-code"
-                  "android-studio"
-                  "google-chrome"
-                  "discord"
-                  "slack"
-                  "obsidian"
-                  "1password"
-                  "insomnia"
-                  "spotify"
-                ];
-            }
-            nix-hazkey.nixosModules.hazkey
-          ]
-          ++ extraModules;
-        };
-
-      # mkDarwin helper function (macOS)
-      mkDarwin =
-        {
-          host,
-          system,
-          extraModules ? [ ],
-        }:
-        let
-          dotfilesDir = mkDotfilesDir "/Users/yuta";
-        in
-        nix-darwin.lib.darwinSystem {
-          inherit system;
-          specialArgs = {
-            inherit
-              helpers
-              dotfilesDir
-              home-manager
-              local-skills
-              anthropic-skills
-              vercel-skills
-              ui-ux-pro-max-skill
-              ast-grep-skill
-              agent-skills
-              onepassword-shell-plugins
-              ;
-          };
-          modules = [
-            ./nix/modules/darwin
-            ./nix/hosts/${host}
-            ./nix/profiles/darwin.nix
-            {
-              nixpkgs.overlays = [
-                (mkExternalOverlay system)
-                moonbit-overlay.overlays.default
-                customOverlay
-                brew-nix.overlays.default
-              ];
-              nixpkgs.config.allowUnfree = true;
-            }
-          ]
-          ++ extraModules;
-        };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
@@ -286,7 +130,7 @@
           isDarwin = builtins.match ".*-darwin" system != null;
           hostname = if isDarwin then "darwin" else "nixos";
           nom = "${pkgs.nix-output-monitor}/bin/nom";
-          customPkgs = import nixpkgs {
+          customPkgs = import inputs.nixpkgs {
             inherit system;
             overlays = [ customOverlay ];
           };
@@ -385,19 +229,15 @@
 
       flake = {
         nixosConfigurations = {
-          nixos = mkSystem {
-            host = "nixos";
-            system = "x86_64-linux";
-            profile = "gui";
-            extraModules = [ ];
-          };
+          nixos = import ./nix/hosts/nixos { inherit inputs; };
         };
 
         darwinConfigurations = {
-          darwin = mkDarwin {
-            host = "darwin";
-            system = "aarch64-darwin";
-          };
+          darwin = import ./nix/hosts/darwin { inherit inputs; };
+        };
+
+        nixOnDroidConfigurations = {
+          Galaxy-S23FE = import ./nix/hosts/Galaxy-S23FE { inherit inputs; };
         };
       };
     };

@@ -1,60 +1,83 @@
-# nixos ホスト固有の設定
-{ lib, ... }:
+{ inputs }:
+let
+  inherit (inputs)
+    nixpkgs
+    home-manager
+    niri
+    nix-hazkey
+    nix-filter
+    moonbit-overlay
+    ;
 
-{
-  imports = [
-    ./hardware-configuration.nix
+  system = "x86_64-linux";
+
+  helpers = import ../../modules/lib/helpers { lib = nixpkgs.lib; };
+  dotfilesDir = "/home/yuta/ghq/github.com/yutakobayashidev/dotnix";
+  customOverlay = import ../../overlays;
+
+  local-skills = nix-filter.lib {
+    root = inputs.self;
+    include = [ "agents/skills" ];
+  };
+
+  externalOverlay = final: prev: {
+    claude-code = inputs.llm-agents.packages.${system}.claude-code;
+    ccusage = inputs.llm-agents.packages.${system}.ccusage;
+    codex = inputs.llm-agents.packages.${system}.codex;
+    opencode = inputs.llm-agents.packages.${system}.opencode;
+    vibe-kanban = inputs.llm-agents.packages.${system}.vibe-kanban;
+    cursor-agent = inputs.llm-agents.packages.${system}.cursor-agent;
+    gogcli = inputs.nix-steipete-tools.packages.${system}.gogcli;
+    version-lsp = inputs.version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
+      doCheck = false;
+    });
+    gh-nippou = inputs.gh-nippou.packages.${system}.default;
+    gh-graph = inputs.gh-graph.packages.${system}.default;
+    ghostty = inputs.ghostty.packages.${system}.default;
+  };
+in
+nixpkgs.lib.nixosSystem {
+  inherit system;
+  specialArgs = {
+    inherit
+      helpers
+      dotfilesDir
+      home-manager
+      niri
+      local-skills
+      ;
+    inherit (inputs)
+      anthropic-skills
+      vercel-skills
+      ui-ux-pro-max-skill
+      ast-grep-skill
+      agent-skills
+      ;
+  };
+  modules = [
+    ../../modules/linux
+    ./configuration.nix
+    ../../profiles/gui.nix
+    {
+      nixpkgs.overlays = [
+        externalOverlay
+        moonbit-overlay.overlays.default
+        customOverlay
+      ];
+      nixpkgs.config.allowUnfreePredicate =
+        pkg:
+        builtins.elem (nixpkgs.lib.getName pkg) [
+          "claude-code"
+          "android-studio"
+          "google-chrome"
+          "discord"
+          "slack"
+          "obsidian"
+          "1password"
+          "insomnia"
+          "spotify"
+        ];
+    }
+    nix-hazkey.nixosModules.hazkey
   ];
-
-  nix.settings = {
-    experimental-features = [
-      "nix-command"
-      "flakes"
-    ];
-    # Trust flake's nixConfig settings
-    accept-flake-config = true;
-    substituters = [
-      "https://cache.nixos.org"
-      "https://cache.numtide.com"
-      "https://yuta.cachix.org"
-    ];
-    trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
-      "yuta.cachix.org-1:VGiC7m0kQjut7lp+RG/9pCRHFpzf11ELQrM2Nc2QCCk="
-    ];
-  };
-
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  # Networking
-  networking.hostName = "nixos";
-  networking.networkmanager.enable = true;
-  networking.useDHCP = lib.mkDefault true;
-  networking.resolvconf.enable = false;
-
-  # Locale & Time
-  time.timeZone = "Asia/Tokyo";
-  i18n.defaultLocale = "ja_JP.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "ja_JP.UTF-8";
-    LC_IDENTIFICATION = "ja_JP.UTF-8";
-    LC_MEASUREMENT = "ja_JP.UTF-8";
-    LC_MONETARY = "ja_JP.UTF-8";
-    LC_NAME = "ja_JP.UTF-8";
-    LC_NUMERIC = "ja_JP.UTF-8";
-    LC_PAPER = "ja_JP.UTF-8";
-    LC_TELEPHONE = "ja_JP.UTF-8";
-    LC_TIME = "ja_JP.UTF-8";
-  };
-
-  # Disable power key handling (HHKB ESC misfire prevention)
-  services.logind.settings.Login = {
-    HandlePowerKey = "ignore";
-    HandlePowerKeyLongPress = "poweroff";
-  };
-
-  system.stateVersion = "25.11";
 }
