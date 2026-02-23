@@ -2,8 +2,8 @@
   lib,
   config,
   pkgs,
+  inputs,
   dotfilesDir,
-  mcp-servers-nix,
   ...
 }:
 
@@ -13,7 +13,7 @@ let
   jq = lib.getExe pkgs.jq;
 
   mcpServers =
-    (mcp-servers-nix.lib.evalModule pkgs {
+    (inputs.mcp-servers-nix.lib.evalModule pkgs {
       programs = {
         context7.enable = true;
       };

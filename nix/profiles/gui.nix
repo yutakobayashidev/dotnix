@@ -1,4 +1,4 @@
-{ niri, ... }:
+{ ... }:
 {
   imports = [
     ./cli.nix
@@ -13,7 +13,6 @@
   services.printing.enable = true;
 
   home-manager.users.yuta.imports = [
-    niri.homeModules.niri
     ./../modules/linux/programs/niri.nix
     ./../modules/linux/programs/waybar.nix
     ./../modules/home/programs/ghostty

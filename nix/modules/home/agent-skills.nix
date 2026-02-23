@@ -5,15 +5,8 @@
 # Skills are deployed to ~/.agents (standard location) and ~/.config/claude/skills
 {
   pkgs,
+  inputs,
   local-skills,
-  anthropic-skills,
-  vercel-skills,
-  ui-ux-pro-max-skill,
-  ast-grep-skill,
-  cloudflare-skills,
-  hashicorp-agent-skills,
-  deno-skills,
-  aws-agent-skills,
   ...
 }:
 {
@@ -29,42 +22,42 @@
       };
       # Anthropic: official skills from anthropics/skills
       anthropic = {
-        path = anthropic-skills;
+        path = inputs.anthropic-skills;
         subdir = "skills";
       };
       # Vercel: skills from vercel-labs/skills
       vercel = {
-        path = vercel-skills;
+        path = inputs.vercel-skills;
         subdir = "skills";
       };
       # nextlevelbuilder: UI/UX Pro Max skill
       nextlevelbuilder = {
-        path = ui-ux-pro-max-skill;
+        path = inputs.ui-ux-pro-max-skill;
         subdir = ".claude/skills";
       };
       # ast-grep: AST-based code search and transform skill
       ast-grep = {
-        path = ast-grep-skill;
+        path = inputs.ast-grep-skill;
         subdir = "ast-grep/skills";
       };
       # Cloudflare: skills from cloudflare/skills
       cloudflare = {
-        path = cloudflare-skills;
+        path = inputs.cloudflare-skills;
         subdir = "skills";
       };
       # HashiCorp: skills from hashicorp/agent-skills (terraform/, packer/ at root)
       hashicorp = {
-        path = hashicorp-agent-skills;
+        path = inputs.hashicorp-agent-skills;
         subdir = ".";
       };
       # Deno: skills from denoland/skills
       deno = {
-        path = deno-skills;
+        path = inputs.deno-skills;
         subdir = "skills";
       };
       # AWS: skills from itsmostafa/aws-agent-skills
       aws = {
-        path = aws-agent-skills;
+        path = inputs.aws-agent-skills;
         subdir = "skills";
       };
     };

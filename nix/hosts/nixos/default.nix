@@ -3,7 +3,6 @@ let
   inherit (inputs)
     nixpkgs
     home-manager
-    niri
     nix-hazkey
     nix-filter
     moonbit-overlay
@@ -39,27 +38,10 @@ in
 nixpkgs.lib.nixosSystem {
   inherit system;
   specialArgs = {
-    inherit
-      helpers
-      dotfilesDir
-      home-manager
-      niri
-      local-skills
-      ;
-    inherit (inputs)
-      anthropic-skills
-      vercel-skills
-      ui-ux-pro-max-skill
-      ast-grep-skill
-      cloudflare-skills
-      hashicorp-agent-skills
-      deno-skills
-      aws-agent-skills
-      agent-skills
-      mcp-servers-nix
-      ;
+    inherit inputs;
   };
   modules = [
+    home-manager.nixosModules.home-manager
     ../../modules/linux
     ./configuration.nix
     ../../profiles/gui.nix
@@ -84,5 +66,45 @@ nixpkgs.lib.nixosSystem {
         ];
     }
     nix-hazkey.nixosModules.hazkey
+    (
+      { pkgs, ... }:
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = {
+            inherit
+              inputs
+              helpers
+              dotfilesDir
+              local-skills
+              ;
+          };
+          sharedModules = [ inputs.agent-skills.homeManagerModules.default ];
+          users.yuta = {
+            imports = [ ../../modules/home ];
+            home.homeDirectory = "/home/yuta";
+          };
+        };
+
+        users.users.yuta = {
+          isNormalUser = true;
+          description = "yuta";
+          shell = pkgs.zsh;
+          extraGroups = [
+            "networkmanager"
+            "wheel"
+            "docker"
+            "adbusers"
+          ];
+        };
+
+        nix.settings.allowed-users = [ "yuta" ];
+        nix.settings.trusted-users = [
+          "root"
+          "yuta"
+        ];
+      }
+    )
   ];
 }

@@ -38,25 +38,7 @@ in
 nix-darwin.lib.darwinSystem {
   inherit system;
   specialArgs = {
-    inherit
-      helpers
-      dotfilesDir
-      home-manager
-      local-skills
-      ;
-    inherit (inputs)
-      anthropic-skills
-      vercel-skills
-      ui-ux-pro-max-skill
-      ast-grep-skill
-      cloudflare-skills
-      hashicorp-agent-skills
-      deno-skills
-      aws-agent-skills
-      agent-skills
-      mcp-servers-nix
-      onepassword-shell-plugins
-      ;
+    inherit inputs;
   };
   modules = [
     ../../modules/darwin
@@ -70,6 +52,46 @@ nix-darwin.lib.darwinSystem {
         brew-nix.overlays.default
       ];
       nixpkgs.config.allowUnfree = true;
+    }
+    {
+      imports = [ home-manager.darwinModules.home-manager ];
+
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs = {
+          inherit
+            inputs
+            helpers
+            dotfilesDir
+            local-skills
+            ;
+        };
+        sharedModules = [ inputs.agent-skills.homeManagerModules.default ];
+        users.yuta =
+          { pkgs, ... }:
+          {
+            imports = [
+              ../../modules/home
+              inputs.onepassword-shell-plugins.hmModules.default
+            ];
+            home.homeDirectory = "/Users/yuta";
+            programs.onepassword-shell-plugins = {
+              enable = true;
+              plugins = with pkgs; [
+                gh
+                awscli2
+              ];
+            };
+          };
+      };
+
+      users.users.yuta.home = "/Users/yuta";
+
+      nix.settings.trusted-users = [
+        "root"
+        "yuta"
+      ];
     }
   ];
 }

@@ -1,7 +1,8 @@
 # niri home-manager設定
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
+  imports = [ inputs.niri.homeModules.niri ];
   # niri パッケージをテストスキップでオーバーライド
   programs.niri.package = pkgs.niri.overrideAttrs (oldAttrs: {
     doCheck = false;
