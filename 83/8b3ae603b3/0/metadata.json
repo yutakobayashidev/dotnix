@@ -1,0 +1,41 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "838b3ae603b3",
+  "session_id": "3a382506-9c3b-4d45-b0af-331344cfc33e",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T00:55:41.416381848Z",
+  "branch": "feat/nvfetcher-overlays",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".github/workflows/update-overlays.yaml",
+    "nix/overlays/aqua.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/difit.nix",
+    "nix/overlays/entire.nix",
+    "nix/overlays/jj-desc.nix",
+    "nix/overlays/keifu.nix",
+    "nix/overlays/nvfetcher.toml",
+    "nix/overlays/polycat.nix",
+    "nix/overlays/pretty-ts-errors-markdown.nix",
+    "nix/overlays/similarity-ts.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "537da056-de54-4ef1-8ac7-9efaefbaa158",
+  "token_usage": {
+    "input_tokens": 4255,
+    "cache_creation_tokens": 173374,
+    "cache_read_tokens": 6575618,
+    "output_tokens": 10542,
+    "api_call_count": 83
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T00:55:41.228487944Z",
+    "agent_lines": 218,
+    "human_added": 290,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 508,
+    "agent_percentage": 42.91338582677165
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/3a382506-9c3b-4d45-b0af-331344cfc33e.jsonl"
+}

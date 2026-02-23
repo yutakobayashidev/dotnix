@@ -1,0 +1,28 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "3b0fe4c6b404",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/modules/home/packages.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/gogcli.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3b/0fe4c6b404/0/metadata.json",
+      "transcript": "/3b/0fe4c6b404/0/full.jsonl",
+      "context": "/3b/0fe4c6b404/0/context.md",
+      "content_hash": "/3b/0fe4c6b404/0/content_hash.txt",
+      "prompt": "/3b/0fe4c6b404/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 187,
+    "cache_creation_tokens": 30049,
+    "cache_read_tokens": 563077,
+    "output_tokens": 1069,
+    "api_call_count": 18
+  }
+}

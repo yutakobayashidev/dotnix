@@ -1,0 +1,173 @@
+Implement the following plan:
+
+# WorktreeCreate/WorktreeRemove Hooks の追加
+
+## Context
+
+Claude Code 2.1.50 の `WorktreeCreate`/`WorktreeRemove` Hooks で `git wt` と統合する。
+スクリプトは `claude/hooks/` にzshで配置し、`mkOutOfStoreSymlink` で管理。
+
+## 変更内容
+
+### 1. 新規: `claude/hooks/worktree.zsh`
+
+```zsh
+#!/usr/bin/env zsh
+set -euo pipefail
+
+input=$(cat)
+hook_event=$(printf '%s' "$input" | jq -r '.hook_event_name')
+
+case "$hook_event" in
+WorktreeCreate)
+  wt_name=$(printf '%s' "$input" | jq -r '.name')
+  wt_abs_path=$(git wt "$wt_name" --nocd 2>/dev/null | tail -n 1 | xargs)
+  echo "$wt_abs_path"
+  ;;
+WorktreeRemove)
+  wt_path=$(printf '%s' "$input" | jq -r '.worktree_path')
+  git wt -d "$wt_path" 2>/dev/null || true
+  ;;
+esac
+```
+
+### 2. 変更: `nix/modules/home/programs/claude-code.nix`
+
+- `xdg.configFile` に `claude/hooks` symlink追加
+- settings.json に hooks セクション追加（コマンドパスは dotfilesDir 経由）
+
+```nix
+"claude/hooks".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/hooks";
+```
+
+settings.json:
+```nix
+hooks = {
+  WorktreeCreate = [{ hooks = [{ type = "command"; command = "${claudeDotfilesDir}/hooks/worktree.zsh"; }]; }];
+  WorktreeRemove = [{ hooks = [{ type = "command"; command = "${claudeDotfilesDir}/hooks/worktree.zsh"; }]; }];
+};
+```
+
+## 対象ファイル
+
+| ファイル | 操作 |
+|---------|------|
+| `claude/hooks/worktree.zsh` | 新規作成 |
+| `nix/modules/home/programs/claude-code.nix` | hooks 設定 + symlink追加 |
+
+## 検証
+
+```bash
+nh os switch
+cat ~/.config/claude/settings.json | jq '.hooks'
+claude --worktree
+```
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /home/yuta/.REDACTED.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+CLAUDE標準の機能でworktreeを扱えるようになったはずなので、CLAUDE.mdかworkteeの指示を消したい
+
+---
+
+コミットして
+
+---
+
+~/.claude/CLAUDE.mdは/claudeからリンクされたものではないの？
+
+---
+
+まぁいいや、とりあえず消して
+
+---
+
+リポジトリ内のclaude/CLAUDE.mdのwtについての言及も消してほしい
+
+---
+
+実装計画立案時のルール
+
+- ユーザーに計画を提示する前に、codex コマンドで計画のレビューを行うこと。具体的な使い方は以下の通り。
+- レビュー指示の文章は適宜調整すること。ただし codex コマンドは本質的じゃない指摘をしてくるので「瑣末な点へのクソリプするな。致命的な点のみ指摘しろ。」という指示は必ず入れた方がいい。
+- `codex` の指摘がなくなるまでアップデート→レビューを繰り返すこと。
+
+```
+# initial plan review request
+# 必ず -m でモデルを指定すること（gpt-5.3-codex が最適）
+codex exec -m gpt-5.3-codex "このプランをレビューして。瑣末な点へのクソリプはしないで。致命的な点だけ指摘して: {plan_full_path} (ref: {CLAUDE.md full_path})"
+
+# updated plan review request
+# resume --last をつけないと最初のレビューの文脈が失われるから注意
+codex exec resume --last -m gpt-5.3-codex "プランを更新したからレビューして。瑣末な点へのクソリプはしないで。致命的な点だけ指摘して: {plan_full_path} (ref: {CLAUDE.md full_path})"
+```　これをrulesフォルダ内のmdとして追加して
+
+---
+
+うん
+
+---
+
+~/.claudeが優先されないように、settings.json,rulesを消して
+
+---
+
+[Request interrupted by user]
+
+---
+
+~/.claudeが優先されないように、settings.json,rules,clade.mdを消して
+
+---
+
+https://github.com/ryoppippi/dotfilesは~/.claude? ~/.config/claude?
+
+---
+
+[Request interrupted by user]
+
+---
+
+deepwikiで調べれれない？
+
+---
+
+agents skillsはどうしてる？
+
+---
+
+わかった、CLAUDE_CONFIG_DIR
+？
+
+---
+
+sessionVariablesって何？
+
+---
+
+本当に効いてる？確認して
+
+---
+
+https://qiita.com/naogami/items/e6a257c99db20df11301 この記事はなんと書いてある？
+
+---
+
+うん
+
+---
+
+# home-manager session variables
+HM_SESSION_VARS="$HOME/.local/state/home-manager/gcroots/current-home/home-path/etc/profile.d/hm-session-vars.sh"
+if [ -f "$HM_SESSION_VARS" ]; then
+  . "$HM_SESSION_VARS"
+fi
+　こ列化して
+
+---
+
+うん

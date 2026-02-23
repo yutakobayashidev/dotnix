@@ -1,0 +1,33 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "56d8021519aa",
+  "session_id": "d075c775-0aaf-45b1-8454-585a567c05df",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T18:51:56.83463571Z",
+  "branch": "feat/darwin-support",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "nix/modules/darwin/homebrew.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "0fc2d77e-f0ae-44b9-b0d5-f554a726b35b",
+  "checkpoint_transcript_start": 1330,
+  "transcript_lines_at_start": 1330,
+  "token_usage": {
+    "input_tokens": 477,
+    "cache_creation_tokens": 25476,
+    "cache_read_tokens": 415303,
+    "output_tokens": 461,
+    "api_call_count": 10
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T18:51:54.755937629Z",
+    "agent_lines": 10,
+    "human_added": 74,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 84,
+    "agent_percentage": 11.904761904761903
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/d075c775-0aaf-45b1-8454-585a567c05df.jsonl"
+}

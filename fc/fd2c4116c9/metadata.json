@@ -1,0 +1,27 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "fcfd2c4116c9",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/packages.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/fc/fd2c4116c9/0/metadata.json",
+      "transcript": "/fc/fd2c4116c9/0/full.jsonl",
+      "context": "/fc/fd2c4116c9/0/context.md",
+      "content_hash": "/fc/fd2c4116c9/0/content_hash.txt",
+      "prompt": "/fc/fd2c4116c9/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 13,
+    "cache_creation_tokens": 27221,
+    "cache_read_tokens": 283565,
+    "output_tokens": 517,
+    "api_call_count": 9
+  }
+}

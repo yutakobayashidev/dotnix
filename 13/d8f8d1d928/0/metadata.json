@@ -1,0 +1,32 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "13d8f8d1d928",
+  "session_id": "f2cfe0fd-ce59-4200-b901-9ba69749af1c",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-14T16:28:49.426865531Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/packages.nix",
+    "nix/packages/git-wt-clean.nix"
+  ],
+  "agent": "Claude Code",
+  "token_usage": {
+    "input_tokens": 2848,
+    "cache_creation_tokens": 23502,
+    "cache_read_tokens": 905863,
+    "output_tokens": 3738,
+    "api_call_count": 26
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-14T16:28:49.365575148Z",
+    "agent_lines": 49,
+    "human_added": 34,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 83,
+    "agent_percentage": 59.036144578313255
+  },
+  "transcript_path": ".claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/f2cfe0fd-ce59-4200-b901-9ba69749af1c.jsonl"
+}

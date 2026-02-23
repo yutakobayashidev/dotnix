@@ -1,0 +1,43 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "ea99f193dbfd",
+  "session_id": "1e78cbac-dcee-412d-90a9-20055180c381",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-15T12:43:58.729362522Z",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "nix/modules/home/default.nix",
+    "nix/modules/home/dotfiles.nix",
+    "nix/modules/home/programs/zsh.nix",
+    "zsh/config/aliases.zsh",
+    "zsh/config/oh-my-zsh.zsh",
+    "zsh/functions/cd-up.zsh",
+    "zsh/functions/g.zsh",
+    "zsh/functions/gb.zsh",
+    "zsh/functions/gh-q.zsh",
+    "zsh/functions/gwt.zsh",
+    "zsh/functions/jb.zsh",
+    "zsh/zshrc",
+    "zshenv"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "e0e51d6a-7f0c-471c-8d78-40a3f3feb737",
+  "token_usage": {
+    "input_tokens": 3387,
+    "cache_creation_tokens": 185085,
+    "cache_read_tokens": 3111749,
+    "output_tokens": 12621,
+    "api_call_count": 65
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-15T12:43:58.645173366Z",
+    "agent_lines": 231,
+    "human_added": 105,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 336,
+    "agent_percentage": 68.75
+  },
+  "transcript_path": ".claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/1e78cbac-dcee-412d-90a9-20055180c381.jsonl"
+}

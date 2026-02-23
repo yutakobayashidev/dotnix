@@ -1,0 +1,53 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "dec4cf2ff86e",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 6,
+  "files_touched": [
+    "flake.lock",
+    "flake.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/linux/user.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/de/c4cf2ff86e/0/metadata.json",
+      "transcript": "/de/c4cf2ff86e/0/full.jsonl",
+      "context": "/de/c4cf2ff86e/0/context.md",
+      "content_hash": "/de/c4cf2ff86e/0/content_hash.txt",
+      "prompt": "/de/c4cf2ff86e/0/prompt.txt"
+    },
+    {
+      "metadata": "/de/c4cf2ff86e/1/metadata.json",
+      "transcript": "/de/c4cf2ff86e/1/full.jsonl",
+      "context": "/de/c4cf2ff86e/1/context.md",
+      "content_hash": "/de/c4cf2ff86e/1/content_hash.txt",
+      "prompt": "/de/c4cf2ff86e/1/prompt.txt"
+    },
+    {
+      "metadata": "/de/c4cf2ff86e/2/metadata.json",
+      "transcript": "/de/c4cf2ff86e/2/full.jsonl",
+      "context": "/de/c4cf2ff86e/2/context.md",
+      "content_hash": "/de/c4cf2ff86e/2/content_hash.txt",
+      "prompt": "/de/c4cf2ff86e/2/prompt.txt"
+    },
+    {
+      "metadata": "/de/c4cf2ff86e/3/metadata.json",
+      "transcript": "/de/c4cf2ff86e/3/full.jsonl",
+      "context": "/de/c4cf2ff86e/3/context.md",
+      "content_hash": "/de/c4cf2ff86e/3/content_hash.txt",
+      "prompt": "/de/c4cf2ff86e/3/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6294,
+    "cache_creation_tokens": 545974,
+    "cache_read_tokens": 7193716,
+    "output_tokens": 10977,
+    "api_call_count": 155
+  }
+}

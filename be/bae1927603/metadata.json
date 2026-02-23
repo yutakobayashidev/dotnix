@@ -1,0 +1,26 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "bebae1927603",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "claude/rules/cargo-registry.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/be/bae1927603/0/metadata.json",
+      "transcript": "/be/bae1927603/0/full.jsonl",
+      "context": "/be/bae1927603/0/context.md",
+      "content_hash": "/be/bae1927603/0/content_hash.txt",
+      "prompt": "/be/bae1927603/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 184,
+    "cache_creation_tokens": 44623,
+    "cache_read_tokens": 259509,
+    "output_tokens": 527,
+    "api_call_count": 10
+  }
+}

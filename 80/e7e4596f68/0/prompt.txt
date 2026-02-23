@@ -1,0 +1,37 @@
+gitのglobal設定で、今.wtになっているけど.gitの中につくるようにかえたいな、そうすればリンターとかAIが間違って範囲内に入ることがないし
+
+---
+
+コミットして
+
+---
+
+気づいたらgコマンドが死んでたんだけどなんでだ
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+いydaなぁ、なんとかならンオカ？
+
+---
+
+コミットして
+
+---
+
+pushして
+
+---
+
+nixkpgsにtonneltoある？ https://github.com/agrinman/tunnelto
+
+---
+
+じゃあオーバーレイ作って
+
+---
+
+[Request interrupted by user for tool use]

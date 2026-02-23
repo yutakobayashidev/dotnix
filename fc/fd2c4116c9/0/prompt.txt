@@ -1,0 +1,9 @@
+moonbitをいれたい、nixpkgsにある？
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+https://github.com/moonbit-community/moonbit-overlay　公式のオーバーレイあった

@@ -1,0 +1,12 @@
+https://github.com/kawarimidoll/gh-graph これ追加して
+
+---
+
+ast-grep-skill = {
+      url = "github:ast-grep/claude-skill";
+      flake = false;
+    }; このスキル追加して
+
+---
+
+https://github.com/mattn/vim-maketable 追加して

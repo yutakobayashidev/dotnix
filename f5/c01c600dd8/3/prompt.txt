@@ -1,0 +1,17 @@
+.pre-commit-config.yamlってなんで生成されたの？
+
+---
+
+github cliでライセンス生成して
+
+---
+
+[Request interrupted by user]
+
+---
+
+github cliでgitignore生成成して
+
+---
+
+コミットして

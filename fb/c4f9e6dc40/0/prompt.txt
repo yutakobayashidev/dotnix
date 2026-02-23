@@ -1,0 +1,16 @@
+# Agent Guidelines
+
+Always prefer simplicity over pathological correctness. YAGNI, KISS, DRY. No backward-compat shims or fallback paths unless they come free without adding cyclomatic complexity.
+ これをcodex,claudのMDに追加しt
+
+---
+
+[Request interrupted by user]
+
+---
+
+AGENTS,md,CLAUDE.mdをこれに置き換えて
+
+---
+
+コミットして

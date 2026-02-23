@@ -1,0 +1,9 @@
+https://github.com/mizchi/similarity/blob/main/.claude/commands/check-similarity.md https://github.com/mizchi/similarity/blob/main/.claude/commands/dce.md この2つをSkillsとしてagents/skillsに追加して
+
+---
+
+[Request interrupted by user]
+
+---
+
+raycontentからcurlで取ってパイプで保存してrename

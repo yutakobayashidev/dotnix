@@ -1,0 +1,36 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "854a7a243d98",
+  "session_id": "5c575ab8-85a2-4582-93fa-012df777d5d3",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T23:41:42.06313265Z",
+  "branch": "main",
+  "checkpoints_count": 24,
+  "files_touched": [
+    "nix/modules/home/programs/ghostty/config",
+    "nix/modules/home/programs/tmux.nix",
+    "nix/modules/home/programs/tmux/default.nix",
+    "nix/modules/home/programs/tmux/extra.conf",
+    "nix/profiles/cli-server.nix",
+    "nix/profiles/cli.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "ae279f3a-f1e2-41e9-8311-94c279fc639f",
+  "token_usage": {
+    "input_tokens": 116,
+    "cache_creation_tokens": 173799,
+    "cache_read_tokens": 2207629,
+    "output_tokens": 4513,
+    "api_call_count": 61
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T23:41:41.993440759Z",
+    "agent_lines": 73,
+    "human_added": 864,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 938,
+    "agent_percentage": 7.782515991471215
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/5c575ab8-85a2-4582-93fa-012df777d5d3.jsonl"
+}

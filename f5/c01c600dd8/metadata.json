@@ -1,0 +1,56 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "f5c01c600dd8",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 8,
+  "files_touched": [
+    ".envrc",
+    ".gitignore",
+    "agents/skills/oura-daily-watch/scripts/__pycache__/oura_fetch.cpython-313.pyc",
+    "flake.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/home/programs/gh.nix",
+    "nix/modules/home/programs/git.nix",
+    "nix/modules/linux/user.nix",
+    "nvim/lua/plugins/maketable.lua"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f5/c01c600dd8/0/metadata.json",
+      "transcript": "/f5/c01c600dd8/0/full.jsonl",
+      "context": "/f5/c01c600dd8/0/context.md",
+      "content_hash": "/f5/c01c600dd8/0/content_hash.txt",
+      "prompt": "/f5/c01c600dd8/0/prompt.txt"
+    },
+    {
+      "metadata": "/f5/c01c600dd8/1/metadata.json",
+      "transcript": "/f5/c01c600dd8/1/full.jsonl",
+      "context": "/f5/c01c600dd8/1/context.md",
+      "content_hash": "/f5/c01c600dd8/1/content_hash.txt",
+      "prompt": "/f5/c01c600dd8/1/prompt.txt"
+    },
+    {
+      "metadata": "/f5/c01c600dd8/2/metadata.json",
+      "transcript": "/f5/c01c600dd8/2/full.jsonl",
+      "context": "/f5/c01c600dd8/2/context.md",
+      "content_hash": "/f5/c01c600dd8/2/content_hash.txt",
+      "prompt": "/f5/c01c600dd8/2/prompt.txt"
+    },
+    {
+      "metadata": "/f5/c01c600dd8/3/metadata.json",
+      "transcript": "/f5/c01c600dd8/3/full.jsonl",
+      "context": "/f5/c01c600dd8/3/context.md",
+      "content_hash": "/f5/c01c600dd8/3/content_hash.txt",
+      "prompt": "/f5/c01c600dd8/3/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 504,
+    "cache_creation_tokens": 213837,
+    "cache_read_tokens": 2500855,
+    "output_tokens": 4441,
+    "api_call_count": 75
+  }
+}

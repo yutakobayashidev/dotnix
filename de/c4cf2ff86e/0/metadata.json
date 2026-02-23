@@ -1,0 +1,38 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "dec4cf2ff86e",
+  "session_id": "01cb1340-52ae-4e2e-b010-c604c0b93234",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T07:16:54.113704603Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.lock",
+    "flake.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/linux/user.nix"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "abb53530435a",
+  "transcript_identifier_at_start": "fd6b6dfb-ee28-4c64-be55-c9d2c6a39506",
+  "token_usage": {
+    "input_tokens": 2441,
+    "cache_creation_tokens": 66799,
+    "cache_read_tokens": 1691170,
+    "output_tokens": 4333,
+    "api_call_count": 46
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T07:16:54.007309697Z",
+    "agent_lines": 139,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 139,
+    "agent_percentage": 100
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/01cb1340-52ae-4e2e-b010-c604c0b93234.jsonl"
+}

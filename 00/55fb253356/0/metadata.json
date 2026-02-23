@@ -1,0 +1,33 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "0055fb253356",
+  "session_id": "672f6c0d-c25e-48c9-ae9e-8814795e751f",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T20:15:30.137130682Z",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/packages.nix",
+    "nix/packages/keifu.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "4e10bcd2-179e-4592-a940-85de3251babb",
+  "token_usage": {
+    "input_tokens": 373,
+    "cache_creation_tokens": 74654,
+    "cache_read_tokens": 1558265,
+    "output_tokens": 2421,
+    "api_call_count": 37
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T20:15:30.014353858Z",
+    "agent_lines": 31,
+    "human_added": 117,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 148,
+    "agent_percentage": 20.945945945945947
+  },
+  "transcript_path": ".claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/672f6c0d-c25e-48c9-ae9e-8814795e751f.jsonl"
+}

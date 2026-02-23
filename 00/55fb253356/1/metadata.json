@@ -1,0 +1,35 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "0055fb253356",
+  "session_id": "dc0d7f79-e7e3-436d-a52e-4b9ddb794a49",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T20:15:30.173784875Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/packages.nix",
+    "nix/packages/git-wt-clean.nix",
+    "zsh/functions/claude-zai.zsh",
+    "zsh/functions/git-wt-clean.zsh"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "429ef1b5-2b3f-4e4f-a840-4eb1f87a38ae",
+  "token_usage": {
+    "input_tokens": 219,
+    "cache_creation_tokens": 27238,
+    "cache_read_tokens": 740301,
+    "output_tokens": 3187,
+    "api_call_count": 20
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T20:15:30.149152544Z",
+    "agent_lines": 3,
+    "human_added": 52,
+    "human_modified": 49,
+    "human_removed": 0,
+    "total_committed": 104,
+    "agent_percentage": 2.8846153846153846
+  },
+  "transcript_path": ".claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/dc0d7f79-e7e3-436d-a52e-4b9ddb794a49.jsonl"
+}

@@ -1,0 +1,26 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "148c426d6f1c",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".github/workflows/update-overlays.yaml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/14/8c426d6f1c/0/metadata.json",
+      "transcript": "/14/8c426d6f1c/0/full.jsonl",
+      "context": "/14/8c426d6f1c/0/context.md",
+      "content_hash": "/14/8c426d6f1c/0/content_hash.txt",
+      "prompt": "/14/8c426d6f1c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 14,
+    "cache_creation_tokens": 82904,
+    "cache_read_tokens": 1126512,
+    "output_tokens": 1431,
+    "api_call_count": 12
+  }
+}

@@ -1,0 +1,150 @@
+Implement the following plan:
+
+# nh 削除 & flake apps 導入計画
+
+## Context
+
+`nh` は NixOS 専用ツールで macOS 非対応。そのため `aliases.zsh` にプラットフォーム分岐 (`nh os switch` vs `darwin-rebuild switch`) が残っている。nh を削除し、flake apps で `nix run .#switch` に統一することで、シェル側の分岐を解消する。nh の GC 機能は NixOS 標準の `nix.gc` で代替する。
+
+---
+
+## Step 1: flake.nix に apps 出力を追加
+
+**ファイル**: `flake.nix`
+
+`nixosConfigurations` / `darwinConfigurations` の後に `apps` を追加する。
+
+ryoppippi パターンに倣い、`nom build` (nix-output-monitor のラッパー) を使う。
+
+```nix
+apps =
+  let
+    mkApps = system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        isDarwin = builtins.match ".*-darwin" system != null;
+        hostname = if isDarwin then "darwin" else "nixos";
+        nom = "${pkgs.nix-output-monitor}/bin/nom";
+      in {
+        build = {
+          type = "app";
+          program = toString (pkgs.writeShellScript "build" ''
+            set -e
+            echo "Building ${if isDarwin then "darwin" else "NixOS"} configuration..."
+            ${nom} build ${
+              if isDarwin
+              then ".#darwinConfigurations.${hostname}.system"
+              else ".#nixosConfigurations.${hostname}.config.system.build.toplevel"
+            }
+            echo "Build successful! Run 'nix run .#switch' to apply."
+          '');
+        };
+        switch = {
+          type = "app";
+          program = toString (pkgs.writeShellScript "switch" ''
+            set -eo pipefail
+            echo "Switching to ${if isDarwin then "darwin" else "NixOS"} configuration..."
+            ${
+              if isDarwin
+              then "darwin-rebuild switch --flake .#${hostname} |& ${nom}"
+              else "sudo nixos-rebuild switch --flake .#${hostname} |& ${nom}"
+            }
+            echo "Done!"
+          '');
+        };
+      };
+  in {
+    x86_64-linux = mkApps "x86_64-linux";
+    aarch64-darwin = mkApps "aarch64-darwin";
+  };
+```
+
+---
+
+## Step 2: nh 削除 & nix.gc で GC 代替
+
+**ファイル**: `nix/modules/linux/packages.nix`
+
+```nix
+# 削除
+programs.nh = {
+  enable = true;
+  clean.enable = true;
+  clean.extraArgs = "--keep-since 4d --keep 3";
+  flake = "/home/yuta/ghq/github.com/yutakobayashidev/dotnix";
+};
+
+# 追加
+nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 4d";
+};
+```
+
+---
+
+## Step 3: aliases.zsh のプラットフォーム分岐を解消
+
+**ファイル**: `zsh/config/aliases.zsh`
+
+```bash
+# Before
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias rebuild="darwin-rebuild switch --flake ~/ghq/github.com/yutakobayashidev/dotnix && source ~/.zshrc"
+  alias cpd="pwd | pbcopy"
+else
+  alias rebuild="nh os switch && source ~/.zshrc"
+  alias cpd="pwd | wl-copy"
+fi
+
+# After
+alias rebuild="nix run ~/ghq/github.com/yutakobayashidev/dotnix#switch && source ~/.zshrc"
+
+# cpd はクリップボードコマンドが OS ごとに異なるため分岐を残す
+if [[ "$(uname)" == "Darwin" ]]; then
+  alias cpd="pwd | pbcopy"
+else
+  alias cpd="pwd | wl-copy"
+fi
+```
+
+---
+
+## ファイル操作一覧
+
+| 操作 | ファイル | 内容 |
+|------|---------|------|
+| 変更 | `flake.nix` | `apps` 出力を追加 |
+| 変更 | `nix/modules/linux/packages.nix` | `programs.nh` 削除、`nix.gc` 追加 |
+| 変更 | `zsh/config/aliases.zsh` | `rebuild` を統一、`cpd` の分岐のみ残す |
+
+---
+
+## 検証
+
+1. `nix flake check` で NixOS / Darwin 両方の整合性確認
+2. `nixos-rebuild dry-build --flake .` で NixOS ビルド確認
+3. `nix run .#build` で nom 経由の dry-build 実行確認
+4. macOS での検証は push 後に `darwin-rebuild switch --flake .` で実施
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /home/yuta/.REDACTED.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+ryoppippi さんの dotfiles. NixOS / macOSでの説明を書きたい
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+codexレビューは不要
+
+---
+
+[Request interrupted by user for tool use]

@@ -1,0 +1,101 @@
+# TODO: Pinned to specific nixpkgs commit as workaround for nix-community/nix-on-droid#495
+    # Issue: "getting pseudoterminal attributes: Permission denied" with nixpkgs after 2026-01-24
+    nix-on-droid = {
+      url = "github:nix-community/nix-on-droid";
+      inputs.nixpkgs.url = "github:NixOS/nixpkgs/2bceeb45e516fc6956714014c92ddfdafe4c9da3";
+      inputs.home-manager.follows = "home-manager";
+    }; 追加して
+
+---
+
+nixOnDroidConfigurations = {
+          OPPO-A79 = import ./hosts/OPPO-A79 { inherit inputs; };
+        }; Galaxy S23FE
+
+---
+
+OPPO-A79生えして
+
+---
+
+oppoはいらない
+
+---
+
+modules/nix-on-droid
+/default.nixにして
+
+---
+
+READMEも更新して、unstable
+
+---
+
+droidはいい感じだけど、nixo,darwinは設定がflake.nixに直で結構書かれている気がする、https://raw.githubusercontent.com/yutakobayashidev/dotnix/refs/heads/main/flake.nix これを参考に、hosts側に寄せて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+droidはいい感じだけど、nixo,darwinは設定がflake.nixに直で結構書かれている気がする、 これを参考に、hosts側に寄せて https://github.com/takeokunn/nixos-configuration/blob/main/flake.nix https://github.com/takeokunn/nixos-configuration/blob/main/hosts/Attm-M4-Max/default.nix https://github.com/takeokunn/nixos-configuration/blob/main/hosts/X13Gen2/default.nix
+
+---
+
+https://raw.githubusercontent.com/takeokunn/nixos-configuration/refs/heads/main/docs/OPPO-A79.org これ参考にドキュメント生やして
+
+---
+
+flake lock更新してコミットしたい
+
+---
+
+cloudflare-skills = {
+      url = "github:cloudflare/skills";
+      flake = false;
+    };
+    hashicorp-agent-skills = {
+      url = "github:hashicorp/agent-skills";
+      flake = false;
+    };
+    deno-skills = {
+      url = "github:denoland/skills";
+      flake = false;
+    };
+    aws-agent-skills = {
+      url = "github:itsmostafa/aws-agent-skills";
+      flake = false;
+    }; これ追加しておいて
+
+---
+
+dawwin,nixosで
+
+---
+
+これでビルド通るの？漏れてない
+
+---
+
+続けて
+
+---
+
+user.nixにも記載が必要では？
+
+---
+
+コミットして
+
+---
+
+dotnix-workflow.mdを削除して
+
+---
+
+https://github.com/takeokunn/nixos-configuration/tree/main deepwiki. このリポジトリを参考にmcp-servers-nixの設定をして
+
+---
+
+コミットして

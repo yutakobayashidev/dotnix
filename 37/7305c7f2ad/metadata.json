@@ -1,0 +1,27 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "377305c7f2ad",
+  "strategy": "manual-commit",
+  "branch": "feat/improve-nix-updater",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/darwin/system.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/37/7305c7f2ad/0/metadata.json",
+      "transcript": "/37/7305c7f2ad/0/full.jsonl",
+      "context": "/37/7305c7f2ad/0/context.md",
+      "content_hash": "/37/7305c7f2ad/0/content_hash.txt",
+      "prompt": "/37/7305c7f2ad/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7512,
+    "cache_creation_tokens": 563773,
+    "cache_read_tokens": 10200569,
+    "output_tokens": 17628,
+    "api_call_count": 119
+  }
+}

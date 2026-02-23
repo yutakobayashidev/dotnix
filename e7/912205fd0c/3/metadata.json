@@ -1,0 +1,40 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "e7912205fd0c",
+  "session_id": "272a9955-ac0b-45eb-a3ac-3600ceaa03fd",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T05:40:32.699206744Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix",
+    "nix/hosts/Galaxy-S23FE/default.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/configuration.nix",
+    "README.md",
+    "nix/hosts/darwin/configuration.nix",
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/nix-on-droid/default.nix",
+    "docs/Galaxy-S23FE.md",
+    "flake.lock"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "9002bbe55a6b",
+  "token_usage": {
+    "input_tokens": 1426,
+    "cache_creation_tokens": 33506,
+    "cache_read_tokens": 1475600,
+    "output_tokens": 1715,
+    "api_call_count": 36
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T05:40:32.646606672Z",
+    "agent_lines": 387,
+    "human_added": 63,
+    "human_modified": 20,
+    "human_removed": 0,
+    "total_committed": 470,
+    "agent_percentage": 82.34042553191489
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/272a9955-ac0b-45eb-a3ac-3600ceaa03fd.jsonl"
+}

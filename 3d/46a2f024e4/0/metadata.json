@@ -1,0 +1,36 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "3d46a2f024e4",
+  "session_id": "2895683b-7a01-49e8-bc9a-47748afddf75",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-14T16:03:01.135821265Z",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/niri.nix",
+    "nix/modules/home/programs/waybar.nix",
+    "nix/packages/polycat.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "716056c9-3b56-4e7e-92b1-078ccaa5bb25",
+  "checkpoint_transcript_start": 582,
+  "transcript_lines_at_start": 582,
+  "token_usage": {
+    "input_tokens": 283,
+    "cache_creation_tokens": 17929,
+    "cache_read_tokens": 2761326,
+    "output_tokens": 4670,
+    "api_call_count": 24
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-14T16:03:00.913444198Z",
+    "agent_lines": 33,
+    "human_added": 136,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 169,
+    "agent_percentage": 19.526627218934912
+  },
+  "transcript_path": ".claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/2895683b-7a01-49e8-bc9a-47748afddf75.jsonl"
+}

@@ -1,0 +1,35 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "f5c01c600dd8",
+  "session_id": "dab207eb-d179-42a1-afb9-652e66be8da8",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T21:44:44.222045746Z",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "agents/skills/oura-daily-watch/scripts/__pycache__/oura_fetch.cpython-313.pyc",
+    "flake.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/programs/git.nix",
+    "nix/modules/linux/user.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "52b49aad-8124-4722-b4db-522a5acd9b25",
+  "token_usage": {
+    "input_tokens": 79,
+    "cache_creation_tokens": 129950,
+    "cache_read_tokens": 1022303,
+    "output_tokens": 1923,
+    "api_call_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T21:44:44.184475762Z",
+    "agent_lines": 108,
+    "human_added": 129,
+    "human_modified": 11,
+    "human_removed": 0,
+    "total_committed": 248,
+    "agent_percentage": 43.54838709677419
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/dab207eb-d179-42a1-afb9-652e66be8da8.jsonl"
+}

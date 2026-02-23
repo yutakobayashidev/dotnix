@@ -1,0 +1,32 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "377305c7f2ad",
+  "session_id": "27e7ca68-967e-4dd5-b756-52dce3fb152b",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T22:54:02.05806884Z",
+  "branch": "feat/improve-nix-updater",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/darwin/system.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "142dac7b-083c-4b31-bae0-01d57b2fa4a5",
+  "token_usage": {
+    "input_tokens": 7512,
+    "cache_creation_tokens": 563773,
+    "cache_read_tokens": 10200569,
+    "output_tokens": 17628,
+    "api_call_count": 119
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T22:54:01.825173569Z",
+    "agent_lines": 20,
+    "human_added": 38,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 58,
+    "agent_percentage": 34.48275862068966
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/27e7ca68-967e-4dd5-b756-52dce3fb152b.jsonl"
+}

@@ -1,0 +1,29 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "744c05b0ef87",
+  "strategy": "manual-commit",
+  "branch": "feat/nvfetcher-overlays",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/overlays/jj-desc.nix",
+    "nix/overlays/keifu.nix",
+    "nix/overlays/nvfetcher.toml",
+    "nix/overlays/similarity-ts.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/74/4c05b0ef87/0/metadata.json",
+      "transcript": "/74/4c05b0ef87/0/full.jsonl",
+      "context": "/74/4c05b0ef87/0/context.md",
+      "content_hash": "/74/4c05b0ef87/0/content_hash.txt",
+      "prompt": "/74/4c05b0ef87/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 42,
+    "cache_creation_tokens": 26896,
+    "cache_read_tokens": 5033478,
+    "output_tokens": 6289,
+    "api_call_count": 34
+  }
+}

@@ -1,0 +1,21 @@
+今のリポジトリで使われているようなpinactの使い方を書いたskillを追加してほしい
+
+---
+
+[Request interrupted by user]
+
+---
+
+nixpkgsから直接使えばいいと思う
+
+---
+
+github actionsでのCIも例示して
+
+---
+
+https://zenn.dev/kou_pg_0131/articles/gha-static-checker なんかこのあたりのツールを一通り例示しておきたいな
+
+---
+
+komiltutosite

@@ -1,0 +1,193 @@
+https://github.com/k1LoW/git-wt zsh統合はマストで入れて、pecoとfzfのコマンドについて教えtください
+
+---
+
+peco,fzf何が違うの？
+
+---
+
+じゃあfzfのコマンド追加して
+
+---
+
+git-wtのhook設定はどこで保存されるの？調べて
+
+---
+
+ああ、プロジェクト間でこれ共有できないのか、ーうん
+
+---
+
+[Request interrupted by user]
+
+---
+
+ああ、チーム間でこれ共有できないのか、ーうん
+
+---
+
+lefthookいいかも
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+READMEに書こう、recograプロジェクトにおいておこう
+
+---
+
+正直 ghq root 直下にリポジトリと並んでワークツリーディレクトリがあると、理由あってワークツリーディレクトリを削除する時にかなりハラハラすることになる。間違ったら .git ディレクトリごとリポジトリを消すことになるので壊滅的な打撃を被ることになる (手に汗握る) 。ワークツリーディレクトリが、リポジトリ配下の管理になるとリポジトリのルートディレクトリに移動して rm -rf .worktrees などすれば良いので、かなり精神的に楽。
+
+じゃあ、リポジトリ配下にするとなるとそれはそれで一手間面倒だなというのがあったのを解決したのが上記の PR で、これは完全にアイデアの勝利というか、本当にありがとうございますというものだった。songmu さんはすごい人。
+
+自分的にはこれでワークツリーディレクトリをどこに置くか問題に終止符が打たれたと思っていて、peco などの ghq root からのリポジトリ選択のフィルタリングツールにもワークツリーディレクトリが入らないし、いいことしかない。git-wt では、このような位置にワークツリーディレクトリのデフォルトを変更しようかという動きがあるので、意見のある人はコメントをしてみると良いと思う。
+
+ どういうこと？ https://koic.hatenablog.com/entry/introduce-git-wt
+
+---
+
+I have set wt.basedir to .wt under the main repository. To prevent Git from accidentally tracking it and coding agents from reading it, I've made it automatically output a README and .gitignore into basedir when creating. Although this adds to the default behavior, I believe having this as a standard is quite convenient.
+
+Initialize basedir with .gitignore and README.md when creating a new
+worktree. Files are only created if they don't already exist.
+
+README.md: Instructions for users about the worktree directory
+.gitignore: Guardrail to ignore all files when basedir is placed under a Git repository 高あるけど、どういうこと？
+
+---
+
+git.nixに追加しておいて
+
+---
+
+worktreeはいいんだが、並列で開発しているとポート干渉を起こす気がする。envrcでPORT環境変数を動的にするのはどうか
+
+---
+
+nixのflakeとdirenv使ってるんだけど、recogra projectの一番綺麗な方法はなんだ？
+
+---
+
+AQUA_ROOT_DIR=っているの？
+
+---
+
+[Request interrupted by user]
+
+---
+
+理解した、それでいこう。書き終わったらREADMEにも追加しておいて
+
+---
+
+サーバーポートとフロントエンドポート別れてる？
+
+---
+
+さ０ば０側のコードを変えよう
+
+---
+
+コミットして
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+なぜpnpmが見つからない？これもwtのhookとしてallowするべきなのでは？
+
+---
+
+更新して、私の環境も更新して
+
+---
+
+あ、git globalではhook設定したくない、プロジェクトごと
+
+---
+
+[Request interrupted by user]
+
+---
+
+basedirの設定はそれで
+
+---
+
+[Request interrupted by user]
+
+---
+
+続けて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+遅い、もう一回コミットしてみて
+
+---
+
+あなたのグローバル設定に、ブランチを切る際は必ずgit-wtでworktreeを作る形にするようにとの指示を追加してください
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+いや、グローバル設定で
+
+---
+
+あなたにはglobalで命令を受け取る専用ファイルがあるはず。調べて。$ git wt                            # List all worktrees
+$ git wt --json                     # List all worktrees in JSON format
+$ git wt <branch|worktree|path>     # Switch to worktree (create worktree/branch if needed)
+$ git wt -d <branch|worktree|path>  # Delete worktree and branch (safe)
+$ git wt -D <branch|worktree|path>  # Force delete worktree and branch
+
+---
+
+[Request interrupted by user]
+
+---
+
+Webで調べて
+
+---
+
+recograで試しに仮でブランチ作ってみて、direnvがちゃんと動くか確認したい、portも
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+上手いことhookで読み込むようにしたいんだけど
+
+---
+
+[Request interrupted by user]
+
+---
+
+よろしく
+
+---
+
+READMEも更新しておいて
+
+---
+
+運
+
+---
+
+envrcはコミット指定なので、README直して

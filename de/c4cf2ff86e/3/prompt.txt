@@ -1,0 +1,33 @@
+Implement the following plan:
+
+# tunnelto overlay 追加
+
+## Context
+nixpkgsに tunnelto パッケージが存在しないため、既存の overlay パターンに従ってカスタムオーバーレイを作成する。
+
+## 変更内容
+
+### 1. `nix/overlays/tunnelto.nix` を作成
+- `rustPlatform.buildRustPackage` を使用
+- workspace構成のため `buildAndTestSubdir = "tunnelto"` を指定（クライアントバイナリのみ）
+- rustls ベースなので openssl 等の native dependency は不要
+- GitHub: `agrinman/tunnelto`, version `0.1.19`
+- hash / cargoHash はダミーで初回ビルドし、エラーから正しい値を取得
+
+### 2. `nix/overlays/default.nix` にエントリ追加
+- overlayFiles リストに `./tunnelto.nix` を追加
+
+### 3. `nix/modules/home/packages.nix` にパッケージ追加
+- `tunnelto` を共通パッケージに追加
+
+## 検証
+- `nix build .#nixosConfigurations.nixos.config.system.build.toplevel` でビルド確認
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /home/yuta/.REDACTED.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+コミットして

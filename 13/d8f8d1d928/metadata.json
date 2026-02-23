@@ -1,0 +1,28 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "13d8f8d1d928",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/packages.nix",
+    "nix/packages/git-wt-clean.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/13/d8f8d1d928/0/metadata.json",
+      "transcript": "/13/d8f8d1d928/0/full.jsonl",
+      "context": "/13/d8f8d1d928/0/context.md",
+      "content_hash": "/13/d8f8d1d928/0/content_hash.txt",
+      "prompt": "/13/d8f8d1d928/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2848,
+    "cache_creation_tokens": 23502,
+    "cache_read_tokens": 905863,
+    "output_tokens": 3738,
+    "api_call_count": 26
+  }
+}

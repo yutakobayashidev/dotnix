@@ -1,0 +1,33 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "148c426d6f1c",
+  "session_id": "3a382506-9c3b-4d45-b0af-331344cfc33e",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T01:44:33.910858526Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    ".github/workflows/update-overlays.yaml"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "fec9e75c-9084-4578-9a9b-74d164d3de22",
+  "checkpoint_transcript_start": 953,
+  "transcript_lines_at_start": 953,
+  "token_usage": {
+    "input_tokens": 14,
+    "cache_creation_tokens": 82904,
+    "cache_read_tokens": 1126512,
+    "output_tokens": 1431,
+    "api_call_count": 12
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T01:44:33.539448933Z",
+    "agent_lines": 0,
+    "human_added": 39,
+    "human_modified": 1,
+    "human_removed": 0,
+    "total_committed": 39,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/3a382506-9c3b-4d45-b0af-331344cfc33e.jsonl"
+}

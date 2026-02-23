@@ -1,0 +1,33 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "c603c157754d",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "nix/modules/home/programs/gh.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c6/03c157754d/0/metadata.json",
+      "transcript": "/c6/03c157754d/0/full.jsonl",
+      "context": "/c6/03c157754d/0/context.md",
+      "content_hash": "/c6/03c157754d/0/content_hash.txt",
+      "prompt": "/c6/03c157754d/0/prompt.txt"
+    },
+    {
+      "metadata": "/c6/03c157754d/1/metadata.json",
+      "transcript": "/c6/03c157754d/1/full.jsonl",
+      "context": "/c6/03c157754d/1/context.md",
+      "content_hash": "/c6/03c157754d/1/content_hash.txt",
+      "prompt": "/c6/03c157754d/1/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 9138,
+    "cache_creation_tokens": 172087,
+    "cache_read_tokens": 1670840,
+    "output_tokens": 6052,
+    "api_call_count": 33
+  }
+}

@@ -1,0 +1,17 @@
+sshでもpoklitが求められるんだけどなんとかならない？
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+パスワードは必要にしたいな
+
+---
+
+yubikey.nixって名前違和感あるな
+
+---
+
+pam.nixかなぁ

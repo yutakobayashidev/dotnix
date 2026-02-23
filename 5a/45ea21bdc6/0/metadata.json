@@ -1,0 +1,52 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "5a45ea21bdc6",
+  "session_id": "d075c775-0aaf-45b1-8454-585a567c05df",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T19:21:49.92483649Z",
+  "branch": "feat/darwin-support",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "AGENTS.md",
+    "flake.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/modules/core/user.nix",
+    "nix/modules/darwin/default.nix",
+    "nix/modules/darwin/fonts.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/darwin/system.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/darwin.nix",
+    "nix/modules/home/default.nix",
+    "nix/modules/home/linux.nix",
+    "nix/modules/home/packages-darwin.nix",
+    "nix/modules/home/packages-linux.nix",
+    "nix/modules/home/packages.nix",
+    "nix/overlays/keifu.nix",
+    "nix/profiles/cli-server.nix",
+    "nix/profiles/cli.nix",
+    "nix/profiles/darwin.nix",
+    "zsh/config/aliases.zsh"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "0fc2d77e-f0ae-44b9-b0d5-f554a726b35b",
+  "checkpoint_transcript_start": 1392,
+  "transcript_lines_at_start": 1392,
+  "token_usage": {
+    "input_tokens": 2892,
+    "cache_creation_tokens": 88692,
+    "cache_read_tokens": 817510,
+    "output_tokens": 7967,
+    "api_call_count": 14
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T19:21:47.346318008Z",
+    "agent_lines": 36,
+    "human_added": 834,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 870,
+    "agent_percentage": 4.137931034482759
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/d075c775-0aaf-45b1-8454-585a567c05df.jsonl"
+}

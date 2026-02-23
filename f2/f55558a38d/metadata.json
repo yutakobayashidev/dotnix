@@ -1,0 +1,59 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "f2f55558a38d",
+  "strategy": "manual-commit",
+  "branch": "feat/darwin-support",
+  "checkpoints_count": 4,
+  "files_touched": [
+    ".claude/settings.local.json",
+    "CLAUDE.md",
+    "README.md",
+    "flake.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/darwin/packages.nix",
+    "nix/modules/darwin/system.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/packages.nix",
+    "nix/modules/home/programs/.claude/settings.local.json",
+    "nix/modules/home/programs/common-cli.nix",
+    "nix/modules/linux/home-packages.nix",
+    "nix/modules/linux/packages.nix",
+    "nix/modules/linux/user.nix",
+    "nix/overlays/keifu.nix",
+    "nix/profiles/cli-server.nix",
+    "nix/profiles/cli.nix",
+    "nix/profiles/darwin.nix",
+    "nix/profiles/gui.nix",
+    "zsh/config/aliases.zsh"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f2/f55558a38d/0/metadata.json",
+      "transcript": "/f2/f55558a38d/0/full.jsonl",
+      "context": "/f2/f55558a38d/0/context.md",
+      "content_hash": "/f2/f55558a38d/0/content_hash.txt",
+      "prompt": "/f2/f55558a38d/0/prompt.txt"
+    },
+    {
+      "metadata": "/f2/f55558a38d/1/metadata.json",
+      "transcript": "/f2/f55558a38d/1/full.jsonl",
+      "context": "/f2/f55558a38d/1/context.md",
+      "content_hash": "/f2/f55558a38d/1/content_hash.txt",
+      "prompt": "/f2/f55558a38d/1/prompt.txt"
+    },
+    {
+      "metadata": "/f2/f55558a38d/2/metadata.json",
+      "transcript": "/f2/f55558a38d/2/full.jsonl",
+      "context": "/f2/f55558a38d/2/context.md",
+      "content_hash": "/f2/f55558a38d/2/content_hash.txt",
+      "prompt": "/f2/f55558a38d/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 214,
+    "cache_creation_tokens": 137280,
+    "cache_read_tokens": 5147256,
+    "output_tokens": 15261,
+    "api_call_count": 77
+  }
+}

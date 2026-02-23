@@ -1,0 +1,37 @@
+ryoppippi/dotfilesを参考に、packagesじゃなくてoverlaysという名前にしたいだけど
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+deepwikiで調べて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+ryoppippi/dotfilesを参考に、packagesじゃなくてoverlaysという名前にしたいだけど,deepwikiで調べて
+
+---
+
+> callPackage 形式から final: prev: の overlay 関数形式に変換　何がちがうの？今までと
+
+---
+
+なんかmoonbitだけoverlayの位置おかしくない？
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+まだmoonbitだけ位置おかしくない？
+
+---
+
+これで完了？

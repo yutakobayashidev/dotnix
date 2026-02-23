@@ -1,0 +1,35 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "69fe0cdc829f",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".claude/settings.json",
+    "flake.nix",
+    "nix/modules/home/programs/gh.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/69/fe0cdc829f/0/metadata.json",
+      "transcript": "/69/fe0cdc829f/0/full.jsonl",
+      "context": "/69/fe0cdc829f/0/context.md",
+      "content_hash": "/69/fe0cdc829f/0/content_hash.txt",
+      "prompt": "/69/fe0cdc829f/0/prompt.txt"
+    },
+    {
+      "metadata": "/69/fe0cdc829f/1/metadata.json",
+      "transcript": "/69/fe0cdc829f/1/full.jsonl",
+      "context": "/69/fe0cdc829f/1/context.md",
+      "content_hash": "/69/fe0cdc829f/1/content_hash.txt",
+      "prompt": "/69/fe0cdc829f/1/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 625,
+    "cache_creation_tokens": 45811,
+    "cache_read_tokens": 591351,
+    "output_tokens": 4128,
+    "api_call_count": 18
+  }
+}

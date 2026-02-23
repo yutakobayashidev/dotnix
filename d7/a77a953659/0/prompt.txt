@@ -1,0 +1,111 @@
+extensions = [
+      inputs.gh-graph.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ]; これ追加されてる？調べて
+
+---
+
+extensionsとして追加しないと
+
+---
+
+yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo nixos-rebuild switch --flake /home/yuta/ghq/github.com/yutakobayashidev/dotnix#nixos
+[sudo] yuta のパスワード:
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+building the system configuration...
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while calling the 'head' builtin
+         at REDACTED.nix:1713:13:
+         1712|           if length values == 1 || pred here (elemAt values 1) (head values) then
+         1713|             head values
+             |             ^
+         1714|           else
+
+       … while evaluating the attribute 'value'
+         at REDACTED.nix:1160:7:
+         1159|     // {
+         1160|       value = addErrorContext "while evaluating the option `${showOption loc}':" value;
+             |       ^
+         1161|       inherit (res.defsFinal') highestPrio;
+
+       … while evaluating the option `system.build.toplevel':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `warnings':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `systemd.services.home-manager-yuta.serviceConfig':
+
+       … while evaluating definitions from `REDACTED':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/git/config".source':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."/home/yuta/.config/git/config".text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.configFile."git/config".text':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: A definition for option `home-manager.users.yuta.programs.git.settings.credential."https://github.com".helper' is not of type `string or boolean or signed integer or list of (string or boolean or signed integer)'. TypeError: The option `home-manager.users.yuta.programs.git.settings.credential."https://github.com".helper` is neither a value of type `string or boolean or signed integer` nor `list of (string or boolean or signed integer)`, Definition values:
+       - In `REDACTED.nix': "!gh auth git-credential"
+       - In `REDACTED.nix':
+           [
+             ""
+             "REDACTED.86.0/bin/gh auth git-credential"
+           ]
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '/home/yuta/ghq/github.com/yutakobayashidev/dotnix#nixosConfigurations."nixos".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 
+
+---
+
+[Request interrupted by user]
+
+---
+
+yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo nixos-rebuild switch --flake /home/yuta/ghq/github.com/yutakobayashidev/dotnix#nixos
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+building the system configuration...
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Checking switch inhibitors... done
+activating the configuration...
+setting up /etc...
+reloading user units for yuta...
+restarting sysinit-reactivation.target
+restarting the following units: home-manager-yuta.service
+Failed to restart home-manager-yuta.service
+the following new units were started: NetworkManager-dispatcher.service
+warning: the following units failed: home-manager-yuta.service
+× home-manager-yuta.service - Home Manager environment for yuta
+     Loaded: loaded (/etc/systemd/system/home-manager-yuta.service; enabled; preset: ignored)
+     Active: failed (Result: exit-code) since Mon 2026-02-23 07:06:06 JST; 264ms ago
+   Duration: 24min 59.517s
+ Invocation: 093a4180b3c44accb764c2460e29194e
+    Process: 1798319 REDACTED REDACTED (code=exited, status=1/FAILURE)
+   Main PID: 1798319 (code=exited, status=1/FAILURE)
+         IP: 0B in, 0B out
+         IO: 0B read, 0B written
+   Mem peak: 16.7M
+        CPU: 143ms
+
+ 2月 23 07:06:06 nixos hm-activate-yuta[1798465]: - In standalone mode, use 'home-manager switch -b backup' to back up files automatically.
+ 2月 23 07:06:06 nixos hm-activate-yuta[1798465]: - When used as a NixOS or nix-darwin module, set either
+ 2月 23 07:06:06 nixos hm-activate-yuta[1798465]:   - 'home-manager.backupFileExtension', or
+ 2月 23 07:06:06 nixos hm-activate-yuta[1798465]:   - 'home-manager.backupCommand',
+ 2月 23 07:06:06 nixos hm-activate-yuta[1798465]:   to move the file to a new location in the same directory, or run a custom command.
+ 2月 23 07:06:06 nixos hm-activate-yuta[1798465]: - Set 'force = true' on the related file options to forcefully overwrite the files below. eg. 'xdg.configFile."mimeapps.list".force = true'
+ 2月 23 07:06:06 nixos hm-activate-yuta[1798465]: Existing file '/home/yuta/.config/gh/config.yml' would be clobbered
+ 2月 23 07:06:06 nixos systemd[1]: home-manager-yuta.service: Main process exited, code=exited, status=1/FAILURE
+ 2月 23 07:06:06 nixos systemd[1]: home-manager-yuta.service: Failed with result 'exit-code'.
+ 2月 23 07:06:06 nixos systemd[1]: Failed to start Home Manager environment for yuta.
+Command 'systemd-run -E LOCALE_ARCHIVE -E NIXOS_INSTALL_BOOTLOADER -E NIXOS_NO_CHECK --collect --no-ask-password --pipe --quiet --service-type=exec --unit=nixos-rebuild-switch-to-configuration /nix/store/474npmnlas3yywf4f6k3ay2xl5z4xhy7-nixos-system-nixos-26.05.20260217.0182a36/bin/switch-to-configuration switch' returned non-zero exit status 4.
+ ✘ yuta@nixos  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 

@@ -1,0 +1,49 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "d2dbe92c80f3",
+  "session_id": "ae63295e-b58a-4d46-a12a-bf14e907e89a",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-22T18:04:26.091864013Z",
+  "branch": "feat/darwin-support",
+  "checkpoints_count": 4,
+  "files_touched": [
+    "CLAUDE.md",
+    "flake.nix",
+    "nix/overlays/aqua.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/difit.nix",
+    "nix/overlays/entire.nix",
+    "nix/overlays/jj-desc.nix",
+    "nix/overlays/keifu.nix",
+    "nix/overlays/polycat.nix",
+    "nix/overlays/pretty-ts-errors-markdown.nix",
+    "nix/overlays/similarity-ts.nix",
+    "nix/packages/aqua.nix",
+    "nix/packages/difit.nix",
+    "nix/packages/entire.nix",
+    "nix/packages/jj-desc.nix",
+    "nix/packages/keifu.nix",
+    "nix/packages/polycat.nix",
+    "nix/packages/pretty-ts-errors-markdown.nix",
+    "nix/packages/similarity-ts.nix"
+  ],
+  "agent": "Claude Code",
+  "transcript_identifier_at_start": "89312f15-5af8-4023-a154-756cac311d8a",
+  "token_usage": {
+    "input_tokens": 467,
+    "cache_creation_tokens": 117329,
+    "cache_read_tokens": 1219050,
+    "output_tokens": 6470,
+    "api_call_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-22T18:04:26.008166025Z",
+    "agent_lines": 280,
+    "human_added": 495,
+    "human_modified": 12,
+    "human_removed": 0,
+    "total_committed": 786,
+    "agent_percentage": 35.6234096692112
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/ae63295e-b58a-4d46-a12a-bf14e907e89a.jsonl"
+}

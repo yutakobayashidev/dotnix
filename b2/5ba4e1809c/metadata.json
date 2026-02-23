@@ -1,0 +1,28 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "b25ba4e1809c",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/packages.nix",
+    "nix/packages/similarity-ts.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b2/5ba4e1809c/0/metadata.json",
+      "transcript": "/b2/5ba4e1809c/0/full.jsonl",
+      "context": "/b2/5ba4e1809c/0/context.md",
+      "content_hash": "/b2/5ba4e1809c/0/content_hash.txt",
+      "prompt": "/b2/5ba4e1809c/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1020,
+    "cache_creation_tokens": 24183,
+    "cache_read_tokens": 950329,
+    "output_tokens": 1856,
+    "api_call_count": 26
+  }
+}

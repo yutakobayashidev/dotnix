@@ -1,0 +1,56 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "e7912205fd0c",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 10,
+  "files_touched": [
+    "README.md",
+    "docs/Galaxy-S23FE.md",
+    "flake.lock",
+    "flake.nix",
+    "nix/hosts/Galaxy-S23FE/default.nix",
+    "nix/hosts/darwin/configuration.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/configuration.nix",
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/nix-on-droid/default.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e7/912205fd0c/0/metadata.json",
+      "transcript": "/e7/912205fd0c/0/full.jsonl",
+      "context": "/e7/912205fd0c/0/context.md",
+      "content_hash": "/e7/912205fd0c/0/content_hash.txt",
+      "prompt": "/e7/912205fd0c/0/prompt.txt"
+    },
+    {
+      "metadata": "/e7/912205fd0c/1/metadata.json",
+      "transcript": "/e7/912205fd0c/1/full.jsonl",
+      "context": "/e7/912205fd0c/1/context.md",
+      "content_hash": "/e7/912205fd0c/1/content_hash.txt",
+      "prompt": "/e7/912205fd0c/1/prompt.txt"
+    },
+    {
+      "metadata": "/e7/912205fd0c/2/metadata.json",
+      "transcript": "/e7/912205fd0c/2/full.jsonl",
+      "context": "/e7/912205fd0c/2/context.md",
+      "content_hash": "/e7/912205fd0c/2/content_hash.txt",
+      "prompt": "/e7/912205fd0c/2/prompt.txt"
+    },
+    {
+      "metadata": "/e7/912205fd0c/3/metadata.json",
+      "transcript": "/e7/912205fd0c/3/full.jsonl",
+      "context": "/e7/912205fd0c/3/context.md",
+      "content_hash": "/e7/912205fd0c/3/content_hash.txt",
+      "prompt": "/e7/912205fd0c/3/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7001,
+    "cache_creation_tokens": 306565,
+    "cache_read_tokens": 7802481,
+    "output_tokens": 18885,
+    "api_call_count": 185
+  }
+}
