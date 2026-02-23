@@ -8,6 +8,7 @@
     ccusage
     opencode
     vibe-kanban
+    cursor-agent
     # Version Control
     git
     git-wt

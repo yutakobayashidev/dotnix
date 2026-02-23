@@ -143,6 +143,7 @@
           codex = llm-agents.packages.${system}.codex;
           opencode = llm-agents.packages.${system}.opencode;
           vibe-kanban = llm-agents.packages.${system}.vibe-kanban;
+          cursor-agent = llm-agents.packages.${system}.cursor-agent;
           version-lsp = version-lsp.packages.${system}.default.overrideAttrs (oldAttrs: {
             doCheck = false;
           });
