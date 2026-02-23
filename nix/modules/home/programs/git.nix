@@ -111,7 +111,7 @@
       };
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
-      wt.basedir = ".wt";
+      wt.basedir = ".git/wt";
     };
   };
 }
