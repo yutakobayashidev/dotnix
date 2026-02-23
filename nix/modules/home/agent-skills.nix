@@ -60,6 +60,11 @@
         path = inputs.aws-agent-skills;
         subdir = "skills";
       };
+      # Obsidian: skills from kepano/obsidian-skills
+      obsidian = {
+        path = inputs.obsidian-skills;
+        subdir = "skills";
+      };
     };
 
     # Enable all local skills
@@ -69,6 +74,7 @@
       "hashicorp"
       "deno"
       "aws"
+      "obsidian"
     ];
 
     # Enable specific Anthropic skills

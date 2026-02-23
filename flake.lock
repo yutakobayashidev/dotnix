@@ -1056,6 +1056,22 @@
         "type": "gitlab"
       }
     },
+    "obsidian-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770766319,
+        "narHash": "sha256-sCJlf9u3JCo0YliGH6fcZSjwGR/nQOehAYx9wK04RfA=",
+        "owner": "kepano",
+        "repo": "obsidian-skills",
+        "rev": "be978124b80dc6b60586773e1d125d1cdf36d26a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kepano",
+        "repo": "obsidian-skills",
+        "type": "github"
+      }
+    },
     "onepassword-shell-plugins": {
       "inputs": {
         "nixpkgs": "nixpkgs_7",
@@ -1102,6 +1118,7 @@
         "nix-on-droid": "nix-on-droid",
         "nix-steipete-tools": "nix-steipete-tools",
         "nixpkgs": "nixpkgs_6",
+        "obsidian-skills": "obsidian-skills",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
         "treefmt-nix": "treefmt-nix_4",
         "ui-ux-pro-max-skill": "ui-ux-pro-max-skill",

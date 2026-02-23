@@ -48,6 +48,16 @@
 その他のVercelスキルは`nix/modules/home/agent-skills.nix`で追加可能です。
 利用可能なスキル一覧: https://github.com/vercel-labs/skills
 
+### Obsidianスキル
+
+- `obsidian-markdown` - Obsidian Flavored Markdown の作成・編集
+- `obsidian-bases` - Obsidian Bases（`.base`ファイル）の操作
+- `json-canvas` - JSON Canvas（`.canvas`ファイル）の操作
+- `obsidian-cli` - Obsidian CLI によるVault操作・プラグイン開発
+- `defuddle` - WebページからクリーンなMarkdownを抽出
+
+利用可能なスキル一覧: https://github.com/kepano/obsidian-skills
+
 ### コミュニティスキル
 
 - `ui-ux-pro-max` - UI/UXデザインシステム生成（nextlevelbuilder）

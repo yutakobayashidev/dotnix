@@ -36,6 +36,7 @@ nix flake update
 - `frontend-design`, `skill-creator`, `webapp-testing` - 開発支援（Anthropic）
 - `find-skills` - スキル検索・発見支援（Vercel）
 - `ui-ux-pro-max` - UI/UXデザインシステム生成（コミュニティ）
+- `obsidian-markdown`, `obsidian-bases`, `json-canvas`, `obsidian-cli`, `defuddle` - Obsidian連携（kepano）
 
 詳細: `agents/README.md`
 

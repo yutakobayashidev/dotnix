@@ -74,6 +74,10 @@
       url = "github:itsmostafa/aws-agent-skills";
       flake = false;
     };
+    obsidian-skills = {
+      url = "github:kepano/obsidian-skills";
+      flake = false;
+    };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
