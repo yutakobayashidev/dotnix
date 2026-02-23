@@ -1,0 +1,32 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "cdc5672286a8",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "README.md",
+    "docs/UM790Pro.md",
+    "flake.nix",
+    "nix/hosts/UM790-Pro/configuration.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/hosts/UM790-Pro/hardware-configuration.nix",
+    "nix/modules/linux/pam.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/cd/c5672286a8/0/metadata.json",
+      "transcript": "/cd/c5672286a8/0/full.jsonl",
+      "context": "/cd/c5672286a8/0/context.md",
+      "content_hash": "/cd/c5672286a8/0/content_hash.txt",
+      "prompt": "/cd/c5672286a8/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3220,
+    "cache_creation_tokens": 89318,
+    "cache_read_tokens": 2131450,
+    "output_tokens": 3639,
+    "api_call_count": 41
+  }
+}

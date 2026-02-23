@@ -1,0 +1,38 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "cdc5672286a8",
+  "session_id": "b9037d47-143f-42eb-bfd1-cabdb16bd9df",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T16:25:40.293178876Z",
+  "branch": "main",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "README.md",
+    "docs/UM790Pro.md",
+    "flake.nix",
+    "nix/hosts/UM790-Pro/configuration.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/hosts/UM790-Pro/hardware-configuration.nix",
+    "nix/modules/linux/pam.nix"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "b8d4251e9dab",
+  "transcript_identifier_at_start": "538e2970-5e20-4fad-ac6a-53a1e6cf0582",
+  "token_usage": {
+    "input_tokens": 3220,
+    "cache_creation_tokens": 89318,
+    "cache_read_tokens": 2131450,
+    "output_tokens": 3639,
+    "api_call_count": 41
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T16:25:40.161536689Z",
+    "agent_lines": 0,
+    "human_added": 738,
+    "human_modified": 104,
+    "human_removed": 0,
+    "total_committed": 738,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/b9037d47-143f-42eb-bfd1-cabdb16bd9df.jsonl"
+}
