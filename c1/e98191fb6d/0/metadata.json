@@ -1,0 +1,43 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "c1e98191fb6d",
+  "session_id": "1eb6b09c-a608-41ed-aed4-5d0ec9c2d8b0",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-23T07:46:22.176369282Z",
+  "branch": "main",
+  "checkpoints_count": 5,
+  "files_touched": [
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/darwin/default.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/home/programs/claude-code.nix",
+    "nix/modules/linux/default.nix",
+    "nix/modules/linux/programs/niri.nix",
+    "nix/modules/linux/user.nix",
+    "nix/profiles/gui.nix"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "a2d1b9a3336b",
+  "transcript_identifier_at_start": "f2b5a899-4ad8-4a12-80d3-fa2cf061d55d",
+  "checkpoint_transcript_start": 604,
+  "transcript_lines_at_start": 604,
+  "token_usage": {
+    "input_tokens": 74,
+    "cache_creation_tokens": 280984,
+    "cache_read_tokens": 7894261,
+    "output_tokens": 5082,
+    "api_call_count": 60
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-23T07:46:21.722049574Z",
+    "agent_lines": 97,
+    "human_added": 3,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 100,
+    "agent_percentage": 97
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/1eb6b09c-a608-41ed-aed4-5d0ec9c2d8b0.jsonl"
+}

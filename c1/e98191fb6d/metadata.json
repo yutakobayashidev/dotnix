@@ -1,0 +1,35 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "c1e98191fb6d",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 5,
+  "files_touched": [
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/default.nix",
+    "nix/modules/darwin/default.nix",
+    "nix/modules/darwin/user.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/home/programs/claude-code.nix",
+    "nix/modules/linux/default.nix",
+    "nix/modules/linux/programs/niri.nix",
+    "nix/modules/linux/user.nix",
+    "nix/profiles/gui.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/c1/e98191fb6d/0/metadata.json",
+      "transcript": "/c1/e98191fb6d/0/full.jsonl",
+      "context": "/c1/e98191fb6d/0/context.md",
+      "content_hash": "/c1/e98191fb6d/0/content_hash.txt",
+      "prompt": "/c1/e98191fb6d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 74,
+    "cache_creation_tokens": 280984,
+    "cache_read_tokens": 7894261,
+    "output_tokens": 5082,
+    "api_call_count": 60
+  }
+}
