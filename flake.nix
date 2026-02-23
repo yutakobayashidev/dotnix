@@ -152,7 +152,7 @@
         }:
         let
           isDarwin = builtins.match ".*-darwin" system != null;
-          hostname = if isDarwin then "darwin" else "nixos";
+          hostname = if isDarwin then "M2-MacBook-Air" else "nixos";
           nom = "${pkgs.nix-output-monitor}/bin/nom";
           customPkgs = import inputs.nixpkgs {
             inherit system;
@@ -257,7 +257,7 @@
         };
 
         darwinConfigurations = {
-          darwin = import ./nix/hosts/darwin { inherit inputs; };
+          M2-MacBook-Air = import ./nix/hosts/M2-MacBook-Air { inherit inputs; };
         };
 
         nixOnDroidConfigurations = {
