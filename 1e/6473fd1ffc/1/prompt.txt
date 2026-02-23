@@ -1,0 +1,494 @@
+差分見てほしいんだけど、cask移動してるんだよね、できれば元のままがいいんだけど、一部applicationsの要求があったりするので、段階的に戻してみてほしい
+
+---
+
+masだけはbrewで管理したい
+
+---
+
+pkgs.brewCasksにすると何がいいんだっけ
+
+---
+
+hmm yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  sudo nix run nix-darwin -- switch --flake .#M2-MacBook-Air
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error: hash mismatch in fixed-output derivation 'REDACTED.dmg.drv':
+         specified: sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+            got:    REDACTED
+error: hash mismatch in fixed-output derivation 'REDACTED.dmg.drv':
+         specified: sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+            got:    REDACTED
+error: Cannot build 'REDACTED.5.5-20260205204731-f6b3bf4110.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.5.5-20260205204731-f6b3bf4110
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.6a7fdcd.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.6a7fdcd
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚  sudo nix run nix-darwin -- switch --flake .#M2-MacBook-Air
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error: Cannot build 'REDACTED.2.15.drv'.
+       Reason: builder failed with exit code 2.
+       Output paths:
+         REDACTED.2.15
+       Last 25 log lines:
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5ItemModels.dylib : libKF5ItemModels.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5WindowSystem.dylib : libKF5WindowSystem.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5ItemViews.dylib : libKF5ItemViews.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5GuiAddons.dylib : libKF5GuiAddons.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5CoreAddons.dylib : libKF5CoreAddons.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritaimage.dylib : libkritaimage.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritaexifcommon.dylib : libkritaexifcommon.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritalibpaintop.dylib : libkritalibpaintop.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritaui.dylib : libkritaui.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5KDcraw.dylib : libKF5KDcraw.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritawidgetutils.dylib : libkritawidgetutils.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritalibkis.dylib : libkritalibkis.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritaresourcewidgets.dylib : libkritaresourcewidgets.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritalibkra.dylib : libkritalibkra.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5WidgetsAddons.dylib : libKF5WidgetsAddons.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritaresources.dylib : libkritaresources.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritaqmicinterface.dylib : libkritaqmicinterface.19.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libKF5I18n.dylib : libKF5I18n.5.dylib
+       > ERROR: Dangerous link via another link was ignored : krita.app/Contents/Frameworks/libkritatiffpsd.dylib : libkritatiffpsd.19.dylib
+       >
+       > Sub items Errors: 22
+       >
+       > Archives with Errors: 1
+       >
+       > Sub items Errors: 22
+       For full logs, run:
+         nix log REDACTED.2.15.drv
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/nf6vs93ra0hcpvppnk9mdha3n93h90n7-user-environment
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.6a7fdcd.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.6a7fdcd
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  sudo nix run nix-darwin -- switch --flake .#M2-MacBook-Air
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error: Cannot build 'REDACTED.0.6.drv'.
+       Reason: builder failed with exit code 1.
+       Output paths:
+         /nix/store/mhsidh2vn906svbbprdbvnbjri3j7vsz-tor-browser-15.0.6
+       Last 25 log lines:
+       > Blocks = 529
+       > Cluster Size = 1048576
+       > Checksum = AB2009DB
+       > CRC = AB2009DB
+       > ID = -2
+       > --
+       > Path = 0.unknown partition
+       > Type = HFS
+       > Physical Size = 554311680
+       > Method = HFS+
+       > Cluster Size = 4096
+       > Free Space = 38547456
+       > Created = 2026-02-16 15:30:00
+       > Modified = 2026-02-16 15:30:00
+       >
+       > Everything is Ok
+       >
+       > Archives with Warnings: 1
+       >
+       > Warnings: 1
+       > Folders: 49
+       > Files: 238
+       > Size:       502160604
+       > Compressed: 176640740
+       > chmod: cannot access 'Tor Browser.app': No such file or directory
+       For full logs, run:
+         nix log REDACTED.0.6.drv
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.6a7fdcd.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.6a7fdcd
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚  sudo nix run nix-darwin -- switch --flake .#M2-MacBook-Air
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+[1/1/15 built, 19.2 KiB DL] building xWeChatMac_universal_4.1.7.31_34367.dmg:                                  Dload  Upload   Total   Spent    L
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[1/2/14 built, 19.2 KiB DL] building wechat-4.1.7.31-34367 (unpackPhase): Running phase: unpackPhase
+
+[1/2/14 built, 19.2 KiB DL] building wechat-4.1.7.31-34367 (unpackPhase)
+[3/15 built, 19.2 KiB DL]
+error: Cannot build 'REDACTED.drv'.
+       Reason: builder failed with exit code 25.
+       Output paths:
+         REDACTED
+       Last 5 log lines:
+       > pkgs.buildEnv error: two given paths contain a conflicting subpath:
+       >   `REDACTED.1.4010-da63f369d7533437f1b59f14173962eb5b54c714/bin/claude' and
+       >   `REDACTED.1.50/bin/claude'
+       > hint: this may be caused by two different versions of the same package in buildEnv's `paths` parameter
+       > hint: `pkgs.nix-diff` can be used to compare derivations
+       For full logs, run:
+         nix log REDACTED.drv
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.6a7fdcd.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.6a7fdcd
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±✚ 
+
+---
+
+一応通るようになった、まだ移動できる気が薄rke度なぁ
+
+---
+
+sidequest,virtual-desktop-streamer
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  sudo nix run nix-darwin -- switch --flake .#M2-MacBook-Air
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error: hash mismatch in fixed-output derivation 'REDACTED.Streamer.Setup.pkg.drv':
+         specified: sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
+            got:    REDACTED
+error: Cannot build 'REDACTED.34.16.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.34.16
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.6a7fdcd.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.6a7fdcd
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
+
+---
+
+system.nix,      WindowManager.EnableStandardClickToShowDesktop = false;     };
+
+    activationScripts.extraActivation.text = ''
+      softwareupdate --all --install
+    '';,  time.timeZone = "Asia/Tokyo";
+
+  power = {
+    restartAfterFreeze = true;
+    sleep.allowSleepByPowerButton = true;
+  };
+追加して
+
+---
+
+startup.chime = false;
+
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToControl = true;
+    };
+
+ これ何？
+
+---
+
+キーのリマッピングとは
+
+---
+
+ああ、なるほど、追加して
+
+---
+
+_FXShowPosixPathInTitle = true;
+        ShowPathbar = true;
+        ShowStatusBar = true;
+ これ何
+
+---
+
+追加して
+
+---
+
+users.nixでnixosのusers.users.を切り出して
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+users.users.${username}を引数で受け取るイメージだった
+
+---
+
+[Request interrupted by user]
+
+---
+
+それは共通化しないで
+
+---
+
+darwin,always-allow-substitutesを追加してえ
+
+---
+
+"devenv.cachix.org-1:REDACTED"
+        "nix-community.cachix.org-1:REDACTED"
+これ追加して
+
+---
+
+substitutersにも
+
+---
+
+linuxにも
+
+---
+
+デフォルトでは      sandbox = falseになってるの？
+
+---
+
+sandboxって何がいいの？
+
+---
+
+keep-outputs = true;
+      keep-derivations = true;
+      connect-timeout = 5;
+ これなに？
+
+---
+
+nixosにコレ設定しておいて
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  sudo nix run nix-darwin -- switch --flake .#M2-MacBook-Air
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while evaluating the attribute 'config.system.build.toplevel'
+         at «github:NixOS/nixpkgs/0182a361324364ae3f436a63005877674cf45efb?REDACTED%3D»/lib/modules.nix:403:9:
+          402|         options = checked options;
+          403|         config = checked (removeAttrs config [ "_module" ]);
+             |         ^
+          404|         _module = checked (config._module);
+
+       … while calling the 'seq' builtin
+         at «github:NixOS/nixpkgs/0182a361324364ae3f436a63005877674cf45efb?REDACTED%3D»/lib/modules.nix:403:18:
+          402|         options = checked options;
+          403|         config = checked (removeAttrs config [ "_module" ]);
+             |                  ^
+          404|         _module = checked (config._module);
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `keyboard' does not exist. Definition values:
+       - In `REDACTED.nix':
+           {
+             enableKeyMapping = true;
+             remapCapsLockToControl = true;
+           }
+
+       Did you mean `meta', `fonts' or `launchd'?
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚  sudo nix run nix-darwin -- switch --flake .#M2-MacBook-Air
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while evaluating the attribute 'config.system.build.toplevel'
+         at «github:NixOS/nixpkgs/0182a361324364ae3f436a63005877674cf45efb?REDACTED%3D»/lib/modules.nix:403:9:
+          402|         options = checked options;
+          403|         config = checked (removeAttrs config [ "_module" ]);
+             |         ^
+          404|         _module = checked (config._module);
+
+       … while calling the 'seq' builtin
+         at «github:NixOS/nixpkgs/0182a361324364ae3f436a63005877674cf45efb?REDACTED%3D»/lib/modules.nix:403:18:
+          402|         options = checked options;
+          403|         config = checked (removeAttrs config [ "_module" ]);
+             |                  ^
+          404|         _module = checked (config._module);
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: The option `startup' does not exist. Definition values:
+       - In `REDACTED.nix':
+           {
+             chime = false;
+           }
+
+       Did you mean `system', `fonts' or `meta'?
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ✚ 

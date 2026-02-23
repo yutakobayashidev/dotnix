@@ -1,0 +1,5 @@
+READMEとdocsのhostm名やnameを更新して
+
+---
+
+差分みてコミットして

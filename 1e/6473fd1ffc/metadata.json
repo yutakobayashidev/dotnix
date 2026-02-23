@@ -1,0 +1,51 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "1e6473fd1ffc",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 29,
+  "files_touched": [
+    "README.md",
+    "nix/hosts/darwin/configuration.nix",
+    "nix/hosts/darwin/default.nix",
+    "nix/hosts/nixos/configuration.nix",
+    "nix/modules/darwin/default.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/darwin/nix.nix",
+    "nix/modules/darwin/packages.nix",
+    "nix/modules/darwin/system.nix",
+    "nix/modules/linux/default.nix",
+    "nix/modules/linux/nix.nix",
+    "nix/modules/linux/packages.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/1e/6473fd1ffc/0/metadata.json",
+      "transcript": "/1e/6473fd1ffc/0/full.jsonl",
+      "context": "/1e/6473fd1ffc/0/context.md",
+      "content_hash": "/1e/6473fd1ffc/0/content_hash.txt",
+      "prompt": "/1e/6473fd1ffc/0/prompt.txt"
+    },
+    {
+      "metadata": "/1e/6473fd1ffc/1/metadata.json",
+      "transcript": "/1e/6473fd1ffc/1/full.jsonl",
+      "context": "/1e/6473fd1ffc/1/context.md",
+      "content_hash": "/1e/6473fd1ffc/1/content_hash.txt",
+      "prompt": "/1e/6473fd1ffc/1/prompt.txt"
+    },
+    {
+      "metadata": "/1e/6473fd1ffc/2/metadata.json",
+      "transcript": "/1e/6473fd1ffc/2/full.jsonl",
+      "context": "/1e/6473fd1ffc/2/context.md",
+      "content_hash": "/1e/6473fd1ffc/2/content_hash.txt",
+      "prompt": "/1e/6473fd1ffc/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3269,
+    "cache_creation_tokens": 391005,
+    "cache_read_tokens": 6578268,
+    "output_tokens": 4305,
+    "api_call_count": 121
+  }
+}
