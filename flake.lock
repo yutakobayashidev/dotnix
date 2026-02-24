@@ -1175,6 +1175,8 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "obsidian-skills": "obsidian-skills",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
+        "template-next-firebase-auth-e2e": "template-next-firebase-auth-e2e",
+        "template-web-app": "template-web-app",
         "treefmt-nix": "treefmt-nix_4",
         "ui-ux-pro-max-skill": "ui-ux-pro-max-skill",
         "vercel-skills": "vercel-skills",
@@ -1260,6 +1262,38 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "template-next-firebase-auth-e2e": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1740638538,
+        "narHash": "sha256-DcHGLuRNaOP3Qmljiuid7KlRRRbh27PuCNwpiNe8TXs=",
+        "owner": "yutakobayashidev",
+        "repo": "next-app-router-firebase-auth-e2e",
+        "rev": "b43805da282628574ed7568f62ede602a15ef27c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "next-app-router-firebase-auth-e2e",
+        "type": "github"
+      }
+    },
+    "template-web-app": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1771650025,
+        "narHash": "sha256-pvD8vbHqy9gQ0QJKm0a2yZQcLk2emESKGFMLChM0NsU=",
+        "owner": "hiroppy",
+        "repo": "web-app-template",
+        "rev": "68c2a84dd84993d0b46ff685029f4bf214a26b9c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hiroppy",
+        "repo": "web-app-template",
         "type": "github"
       }
     },
