@@ -1,0 +1,41 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "0c75d2be39de",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "karabiner/karabiner.json",
+    "nix/modules/darwin/homebrew.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/0c/75d2be39de/0/metadata.json",
+      "transcript": "/0c/75d2be39de/0/full.jsonl",
+      "context": "/0c/75d2be39de/0/context.md",
+      "content_hash": "/0c/75d2be39de/0/content_hash.txt",
+      "prompt": "/0c/75d2be39de/0/prompt.txt"
+    },
+    {
+      "metadata": "/0c/75d2be39de/1/metadata.json",
+      "transcript": "/0c/75d2be39de/1/full.jsonl",
+      "context": "/0c/75d2be39de/1/context.md",
+      "content_hash": "/0c/75d2be39de/1/content_hash.txt",
+      "prompt": "/0c/75d2be39de/1/prompt.txt"
+    },
+    {
+      "metadata": "/0c/75d2be39de/2/metadata.json",
+      "transcript": "/0c/75d2be39de/2/full.jsonl",
+      "context": "/0c/75d2be39de/2/context.md",
+      "content_hash": "/0c/75d2be39de/2/content_hash.txt",
+      "prompt": "/0c/75d2be39de/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2155,
+    "cache_creation_tokens": 107742,
+    "cache_read_tokens": 2356109,
+    "output_tokens": 3716,
+    "api_call_count": 47
+  }
+}

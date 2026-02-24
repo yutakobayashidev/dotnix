@@ -1,0 +1,123 @@
+obsidian,nixpkgsからobsidianをlinux,macに入れる形に変更して
+
+---
+
+entire,llm-agentsに追加されたので、カスタムオーバーレイ消して
+
+---
+
+exexternalOverlayってダサいから、overlays/ai-tools.nixとかにまとめたほうがよさそう
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+inherit (prev._llm-agents.packages.${prev.stdenv.hostPlatform.system})
+こういうイメージ
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+続けて
+
+---
+
+# Create pkgs with overlays
+      mkPkgs =
+        system:
+        let
+          isDarwin = builtins.match ".*-darwin" system != null;
+        in
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [
+            (_final: _prev: {
+              _llm-agents = llm-agents;
+              _claude-code-overlay = claude-code-overlay;
+            })
+            gh-nippou.overlays.default
+            gh-graph.overlays.default
+            (import ./nix/overlays/default.nix)
+          ]
+          ++ nixpkgs.lib.optionals isDarwin [
+            brew-nix.overlays.default
+          ];
+        };
+ こんな感じのを生やしておきたい
+
+---
+
+overlays/external.nixに一箇所に集めるのは嫌だな、ここはai-toolsにしたい
+
+---
+
+ghosttyのmac版はghostty-binにあるみたい。homebrewから入れなくていい In Nixpkgs, Ghostty is available as a repackaging of the official .dmg under the package name ghostty-bin, not to be confused with ghostty, which is the GTK app available for Nix on Linux.
+
+Note
+
+Unfortunately, Nix currently cannot compile Ghostty from source under macOS.
+
+The reason behind that is because Nixpkgs does not yet have the ecosystem support required for it, chief among them include Swift 6 support, free, automatable and reproducible xcodebuild alternatives, etc. In the future, we may consider merging ghostty-bin into ghostty and provide from-source builds for both macOS and GTK apps.
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+いや、linuxはghostty,macはghostty-bin
+
+---
+
+まとめて
+
+---
+
+あれ、linuxからghostty消したまま?
+
+---
+
+gh-graohとgh-nippouはhome/programs
+/gh.nixのextensionsで有効化するだけではダメなの？
+
+---
+
+ryoppippi/dotfilesはどうしてるの？deepwiki
+
+---
+
+[Request interrupted by user]
+
+---
+
+https://raw.githubusercontent.REDACTED.nix
+
+---
+
+彼の実装ではmkPkgでは見当たらないんだけど
+
+---
+
+[Request interrupted by user]
+
+---
+
+あれ、moonbit,macosでも追加してる？
+
+---
+
+もLinuxのみ条件付きで適用
+
+---
+
+コミットしてほしいが、karabiner.jsonを少し前のコミットで修正しているけど不完全だったのでそれを取り消してforce pushしたとに
+
+---
+
+コミットしてほしい

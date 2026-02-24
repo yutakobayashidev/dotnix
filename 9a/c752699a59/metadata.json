@@ -1,0 +1,26 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "9ac752699a59",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".github/workflows/nix-build.yaml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/9a/c752699a59/0/metadata.json",
+      "transcript": "/9a/c752699a59/0/full.jsonl",
+      "context": "/9a/c752699a59/0/context.md",
+      "content_hash": "/9a/c752699a59/0/content_hash.txt",
+      "prompt": "/9a/c752699a59/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1973,
+    "cache_creation_tokens": 35359,
+    "cache_read_tokens": 642897,
+    "output_tokens": 718,
+    "api_call_count": 19
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "27d9e5024a40",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "karabiner/karabiner.json",
+    "nvim/lua/plugins/treesitter.lua"
+  ],
+  "sessions": [
+    {
+      "metadata": "/27/d9e5024a40/0/metadata.json",
+      "transcript": "/27/d9e5024a40/0/full.jsonl",
+      "context": "/27/d9e5024a40/0/context.md",
+      "content_hash": "/27/d9e5024a40/0/content_hash.txt",
+      "prompt": "/27/d9e5024a40/0/prompt.txt"
+    },
+    {
+      "metadata": "/27/d9e5024a40/1/metadata.json",
+      "transcript": "/27/d9e5024a40/1/full.jsonl",
+      "context": "/27/d9e5024a40/1/context.md",
+      "content_hash": "/27/d9e5024a40/1/content_hash.txt",
+      "prompt": "/27/d9e5024a40/1/prompt.txt"
+    },
+    {
+      "metadata": "/27/d9e5024a40/2/metadata.json",
+      "transcript": "/27/d9e5024a40/2/full.jsonl",
+      "context": "/27/d9e5024a40/2/context.md",
+      "content_hash": "/27/d9e5024a40/2/content_hash.txt",
+      "prompt": "/27/d9e5024a40/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2061,
+    "cache_creation_tokens": 105523,
+    "cache_read_tokens": 3689797,
+    "output_tokens": 12023,
+    "api_call_count": 90
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "857eca1820f1",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "flake.nix",
+    "nix/hosts/M2-MacBook-Air/default.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/darwin/packages.nix",
+    "nix/modules/home/packages.nix",
+    "nix/modules/linux/android.nix",
+    "nix/modules/linux/home-packages.nix",
+    "nix/overlays/ai-tools.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/dev-tools.nix",
+    "nix/overlays/entire.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/85/7eca1820f1/0/metadata.json",
+      "transcript": "/85/7eca1820f1/0/full.jsonl",
+      "context": "/85/7eca1820f1/0/context.md",
+      "content_hash": "/85/7eca1820f1/0/content_hash.txt",
+      "prompt": "/85/7eca1820f1/0/prompt.txt"
+    },
+    {
+      "metadata": "/85/7eca1820f1/1/metadata.json",
+      "transcript": "/85/7eca1820f1/1/full.jsonl",
+      "context": "/85/7eca1820f1/1/context.md",
+      "content_hash": "/85/7eca1820f1/1/content_hash.txt",
+      "prompt": "/85/7eca1820f1/1/prompt.txt"
+    },
+    {
+      "metadata": "/85/7eca1820f1/2/metadata.json",
+      "transcript": "/85/7eca1820f1/2/full.jsonl",
+      "context": "/85/7eca1820f1/2/context.md",
+      "content_hash": "/85/7eca1820f1/2/content_hash.txt",
+      "prompt": "/85/7eca1820f1/2/prompt.txt"
+    },
+    {
+      "metadata": "/85/7eca1820f1/3/metadata.json",
+      "transcript": "/85/7eca1820f1/3/full.jsonl",
+      "context": "/85/7eca1820f1/3/context.md",
+      "content_hash": "/85/7eca1820f1/3/content_hash.txt",
+      "prompt": "/85/7eca1820f1/3/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3449,
+    "cache_creation_tokens": 287148,
+    "cache_read_tokens": 7093381,
+    "output_tokens": 11797,
+    "api_call_count": 128
+  }
+}

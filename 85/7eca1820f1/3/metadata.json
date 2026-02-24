@@ -1,0 +1,42 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "857eca1820f1",
+  "session_id": "04bd8d5b-3db4-4482-9576-5c565c384686",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-24T09:56:43.376823Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "nix/overlays/default.nix",
+    "nix/hosts/M2-MacBook-Air/default.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/linux/android.nix",
+    "nix/overlays/dev-tools.nix",
+    "nix/overlays/entire.nix",
+    "flake.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/darwin/packages.nix",
+    "nix/modules/home/packages.nix",
+    "nix/modules/linux/home-packages.nix",
+    "nix/overlays/ai-tools.nix"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "96f2c5c450e1",
+  "token_usage": {
+    "input_tokens": 25,
+    "cache_creation_tokens": 24441,
+    "cache_read_tokens": 604412,
+    "output_tokens": 1064,
+    "api_call_count": 15
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T09:56:42.997565Z",
+    "agent_lines": 0,
+    "human_added": 1,
+    "human_modified": 7,
+    "human_removed": 0,
+    "total_committed": 1,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".config/claude/projects/-Users-yuta-ghq-github-com-yutakobayashidev-dotnix/04bd8d5b-3db4-4482-9576-5c565c384686.jsonl"
+}

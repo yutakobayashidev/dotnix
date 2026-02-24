@@ -1,0 +1,63 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "b0b003169f08",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 5,
+  "files_touched": [
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/darwin/packages.nix",
+    "zshenv"
+  ],
+  "sessions": [
+    {
+      "metadata": "/b0/b003169f08/0/metadata.json",
+      "transcript": "/b0/b003169f08/0/full.jsonl",
+      "context": "/b0/b003169f08/0/context.md",
+      "content_hash": "/b0/b003169f08/0/content_hash.txt",
+      "prompt": "/b0/b003169f08/0/prompt.txt"
+    },
+    {
+      "metadata": "/b0/b003169f08/1/metadata.json",
+      "transcript": "/b0/b003169f08/1/full.jsonl",
+      "context": "/b0/b003169f08/1/context.md",
+      "content_hash": "/b0/b003169f08/1/content_hash.txt",
+      "prompt": "/b0/b003169f08/1/prompt.txt"
+    },
+    {
+      "metadata": "/b0/b003169f08/2/metadata.json",
+      "transcript": "/b0/b003169f08/2/full.jsonl",
+      "context": "/b0/b003169f08/2/context.md",
+      "content_hash": "/b0/b003169f08/2/content_hash.txt",
+      "prompt": "/b0/b003169f08/2/prompt.txt"
+    },
+    {
+      "metadata": "/b0/b003169f08/3/metadata.json",
+      "transcript": "/b0/b003169f08/3/full.jsonl",
+      "context": "/b0/b003169f08/3/context.md",
+      "content_hash": "/b0/b003169f08/3/content_hash.txt",
+      "prompt": "/b0/b003169f08/3/prompt.txt"
+    },
+    {
+      "metadata": "/b0/b003169f08/4/metadata.json",
+      "transcript": "/b0/b003169f08/4/full.jsonl",
+      "context": "/b0/b003169f08/4/context.md",
+      "content_hash": "/b0/b003169f08/4/content_hash.txt",
+      "prompt": "/b0/b003169f08/4/prompt.txt"
+    },
+    {
+      "metadata": "/b0/b003169f08/5/metadata.json",
+      "transcript": "/b0/b003169f08/5/full.jsonl",
+      "context": "/b0/b003169f08/5/context.md",
+      "content_hash": "/b0/b003169f08/5/content_hash.txt",
+      "prompt": "/b0/b003169f08/5/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6842,
+    "cache_creation_tokens": 308239,
+    "cache_read_tokens": 5938314,
+    "output_tokens": 18883,
+    "api_call_count": 146
+  }
+}

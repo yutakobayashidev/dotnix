@@ -1,0 +1,18 @@
+modified:   nix/modules/darwin/homebrew.nix
+        modified:   nix/modules/darwin/packages.nix,zshenvだけステージして
+
+---
+
+karabiner/karabiner.jsonもステージされてない？
+
+---
+
+うん
+
+---
+
+[Request interrupted by user]
+
+---
+
+差分みてコミットして
