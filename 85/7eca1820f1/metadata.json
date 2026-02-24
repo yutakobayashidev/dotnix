@@ -3,7 +3,7 @@
   "checkpoint_id": "857eca1820f1",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 14,
+  "checkpoints_count": 15,
   "files_touched": [
     "flake.nix",
     "nix/hosts/M2-MacBook-Air/default.nix",
@@ -31,13 +31,20 @@
       "context": "/85/7eca1820f1/1/context.md",
       "content_hash": "/85/7eca1820f1/1/content_hash.txt",
       "prompt": "/85/7eca1820f1/1/prompt.txt"
+    },
+    {
+      "metadata": "/85/7eca1820f1/2/metadata.json",
+      "transcript": "/85/7eca1820f1/2/full.jsonl",
+      "context": "/85/7eca1820f1/2/context.md",
+      "content_hash": "/85/7eca1820f1/2/content_hash.txt",
+      "prompt": "/85/7eca1820f1/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 1449,
-    "cache_creation_tokens": 226620,
-    "cache_read_tokens": 5721864,
-    "output_tokens": 9930,
-    "api_call_count": 92
+    "input_tokens": 3423,
+    "cache_creation_tokens": 262258,
+    "cache_read_tokens": 6404500,
+    "output_tokens": 10698,
+    "api_call_count": 112
   }
 }
