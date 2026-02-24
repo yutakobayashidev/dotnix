@@ -4,6 +4,9 @@
 # Main zsh configuration
 # ========================================
 
+# "do" alias breaks for/do/done keywords on re-source
+unalias do 2>/dev/null
+
 # home-manager session variables
 HM_SESSION_VARS="$HOME/.local/state/home-manager/gcroots/current-home/home-path/etc/profile.d/hm-session-vars.sh"
 if [ -f "$HM_SESSION_VARS" ]; then

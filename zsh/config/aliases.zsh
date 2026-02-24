@@ -43,7 +43,6 @@ alias dcr="docker compose restart"
 alias ns="nix-shell"
 alias ngc="nix-collect-garbage"
 nrn() { nix run "nixpkgs#$1" "${@:2}"; }
-ashiba() { nix flake init -t "github:yutakobayashidev/ashiba#$1"; }
 
 alias p="pnpm"
 alias ls="lsd -1A"

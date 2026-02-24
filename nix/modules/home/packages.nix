@@ -50,6 +50,7 @@
     zoxide
     tree
     glow
+    gum
     vhs
     yazi
     imagemagick
