@@ -3,7 +3,7 @@
   "checkpoint_id": "857eca1820f1",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 3,
+  "checkpoints_count": 2,
   "files_touched": [
     "flake.nix",
     "nix/hosts/M2-MacBook-Air/default.nix",
