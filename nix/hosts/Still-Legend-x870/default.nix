@@ -3,7 +3,7 @@ let
   inherit (inputs)
     nixpkgs
     home-manager
-    nix-hazkey
+    nixos-wsl
     nix-filter
     ;
 
@@ -25,11 +25,11 @@ nixpkgs.lib.nixosSystem {
   };
   modules = [
     home-manager.nixosModules.home-manager
+    nixos-wsl.nixosModules.default
     ../../modules/linux
     ./hardware-configuration.nix
-    ../../profiles/gui.nix
+    ../../profiles/cli.nix
     { nixpkgs.pkgs = mkPkgs system; }
-    nix-hazkey.nixosModules.hazkey
     (
       { pkgs, ... }:
       {
@@ -50,7 +50,6 @@ nixpkgs.lib.nixosSystem {
             home.homeDirectory = "/home/yuta";
           };
         };
-
       }
     )
   ];

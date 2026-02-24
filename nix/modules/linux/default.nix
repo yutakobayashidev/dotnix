@@ -7,5 +7,6 @@
     ./ssh.nix
     ./fonts.nix
     ./user.nix
+    ./locale.nix
   ];
 }

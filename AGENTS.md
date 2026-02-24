@@ -52,8 +52,11 @@ flake.nix                          # エントリポイント
 ├── nix/
 │   ├── hosts/                     # ホスト固有の設定
 │   │   ├── UM790-Pro/             # NixOS (x86_64-linux)
-│   │   │   ├── default.nix        # システム基本設定（boot, network, locale）
-│   │   │   └── hardware-configuration.nix
+│   │   │   ├── default.nix        # モジュール構成
+│   │   │   └── hardware-configuration.nix  # boot, network, hardware, logind
+│   │   ├── Still-Legend-x870/     # NixOS-WSL (x86_64-linux)
+│   │   │   ├── default.nix        # モジュール構成
+│   │   │   └── hardware-configuration.nix  # WSL設定, hostname
 │   │   └── M2-MacBook-Air/        # macOS (aarch64-darwin)
 │   │       └── default.nix        # ホスト名設定
 │   ├── profiles/                  # プロファイル定義
@@ -78,6 +81,7 @@ flake.nix                          # エントリポイント
 │   │   │   ├── android.nix
 │   │   │   ├── fonts.nix
 │   │   │   ├── ssh.nix
+│   │   │   ├── locale.nix          # i18n/タイムゾーン共通設定
 │   │   │   └── programs/          # Linux固有home-managerプログラム
 │   │   │       ├── niri.nix       # Niri home設定
 │   │   │       ├── waybar.nix

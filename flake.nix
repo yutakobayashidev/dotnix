@@ -112,6 +112,10 @@
       inputs.nixpkgs.url = "github:NixOS/nixpkgs/2bceeb45e516fc6956714014c92ddfdafe4c9da3";
       inputs.home-manager.follows = "home-manager";
     };
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -193,7 +197,7 @@
         }:
         let
           isDarwin = builtins.match ".*-darwin" system != null;
-          hostname = if isDarwin then "M2-MacBook-Air" else "UM790-Pro";
+          darwinHostname = "M2-MacBook-Air";
           nom = "${pkgs.nix-output-monitor}/bin/nom";
           allPkgs = mkPkgs system;
         in
@@ -214,12 +218,18 @@
               program = toString (
                 pkgs.writeShellScript "build" ''
                   set -e
-                  echo "Building ${if isDarwin then "darwin" else "NixOS"} configuration..."
-                  ${nom} build ${
+                  ${
                     if isDarwin then
-                      ".#darwinConfigurations.${hostname}.system"
+                      ''
+                        echo "Building darwin configuration..."
+                        ${nom} build ".#darwinConfigurations.${darwinHostname}.system"
+                      ''
                     else
-                      ".#nixosConfigurations.${hostname}.config.system.build.toplevel"
+                      ''
+                        HOSTNAME="$(hostname)"
+                        echo "Building NixOS configuration for $HOSTNAME..."
+                        ${nom} build ".#nixosConfigurations.$HOSTNAME.config.system.build.toplevel"
+                      ''
                   }
                   echo "Build successful! Run 'nix run .#switch' to apply."
                 ''
@@ -230,12 +240,18 @@
               program = toString (
                 pkgs.writeShellScript "switch" ''
                   set -eo pipefail
-                  echo "Switching to ${if isDarwin then "darwin" else "NixOS"} configuration..."
                   ${
                     if isDarwin then
-                      "darwin-rebuild switch --flake .#${hostname} |& ${nom}"
+                      ''
+                        echo "Switching to darwin configuration..."
+                        darwin-rebuild switch --flake ".#${darwinHostname}" |& ${nom}
+                      ''
                     else
-                      "sudo nixos-rebuild switch --flake .#${hostname} |& ${nom}"
+                      ''
+                        HOSTNAME="$(hostname)"
+                        echo "Switching to NixOS configuration for $HOSTNAME..."
+                        sudo nixos-rebuild switch --flake ".#$HOSTNAME" |& ${nom}
+                      ''
                   }
                   echo "Done!"
                 ''
@@ -291,6 +307,7 @@
       flake = {
         nixosConfigurations = {
           UM790-Pro = import ./nix/hosts/UM790-Pro { inherit inputs mkPkgs; };
+          Still-Legend-x870 = import ./nix/hosts/Still-Legend-x870 { inherit inputs mkPkgs; };
         };
 
         darwinConfigurations = {
