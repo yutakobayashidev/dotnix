@@ -44,6 +44,7 @@ alias ns="nix-shell"
 alias ngc="nix-collect-garbage"
 nrn() { nix run "nixpkgs#$1" "${@:2}"; }
 alias ashiba="nfi github:yutakobayashidev/ashiba"
+alias ndt="nfi github:the-nix-way/dev-templates"
 
 # Security
 scorecard() { GITHUB_AUTH_TOKEN="$(gh auth token)" command scorecard "$@"; }
