@@ -119,13 +119,5 @@ Key skills: `social-digest`, `oura-daily-watch`, `gha-lint`, `check-similarity`,
 
 ## Templates
 
-Flake templates for scaffolding new projects. Use with `nix flake init -t github:yutakobayashidev/dotnix#<name>`.
-
-| Name | Description | Source |
-|---|---|---|
-| `flake-devenv` | Nix flake with devenv, treefmt, and git-hooks | Local |
-| `next-firebase-auth-e2e` | Next.js App Router with Firebase Auth and E2E testing | [yutakobayashidev/next-app-router-firebase-auth-e2e](https://github.com/yutakobayashidev/next-app-router-firebase-auth-e2e) |
-| `web-app` | Web app template by hiroppy | [hiroppy/web-app-template](https://github.com/hiroppy/web-app-template) |
-
-For language-specific flake templates, see also [the-nix-way/dev-templates](https://github.com/the-nix-way/dev-templates).
+Project templates are managed in [ashiba](https://github.com/yutakobayashidev/ashiba). See the repository for available templates.
 

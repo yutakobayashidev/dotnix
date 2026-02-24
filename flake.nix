@@ -117,14 +117,6 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    template-next-firebase-auth-e2e = {
-      url = "github:yutakobayashidev/next-app-router-firebase-auth-e2e";
-      flake = false;
-    };
-    template-web-app = {
-      url = "github:hiroppy/web-app-template";
-      flake = false;
-    };
   };
 
   nixConfig = {
@@ -339,8 +331,6 @@
         nixOnDroidConfigurations = {
           Galaxy-S23FE = import ./nix/hosts/Galaxy-S23FE { inherit inputs; };
         };
-
-        templates = import ./template.nix { inherit inputs; };
       };
     };
 }
