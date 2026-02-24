@@ -7,7 +7,7 @@ return {
 		init = function()
 			local treesitter_grammars = vim.env.TREESITTER_GRAMMARS
 			if treesitter_grammars then
-				vim.opt.runtimepath:prepend(treesitter_grammars)
+				vim.opt.runtimepath:append(treesitter_grammars)
 			end
 		end,
 		opts = {
