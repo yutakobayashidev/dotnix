@@ -3,7 +3,7 @@
   "checkpoint_id": "6aac666076de",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 2,
+  "checkpoints_count": 3,
   "files_touched": [
     "nix/modules/darwin/fonts.nix",
     "nix/modules/linux/fonts.nix",
@@ -24,13 +24,20 @@
       "context": "/6a/ac666076de/1/context.md",
       "content_hash": "/6a/ac666076de/1/content_hash.txt",
       "prompt": "/6a/ac666076de/1/prompt.txt"
+    },
+    {
+      "metadata": "/6a/ac666076de/2/metadata.json",
+      "transcript": "/6a/ac666076de/2/full.jsonl",
+      "context": "/6a/ac666076de/2/context.md",
+      "content_hash": "/6a/ac666076de/2/content_hash.txt",
+      "prompt": "/6a/ac666076de/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 557,
-    "cache_creation_tokens": 69562,
-    "cache_read_tokens": 329754,
-    "output_tokens": 627,
-    "api_call_count": 12
+    "input_tokens": 3778,
+    "cache_creation_tokens": 159228,
+    "cache_read_tokens": 2526811,
+    "output_tokens": 4267,
+    "api_call_count": 54
   }
 }
