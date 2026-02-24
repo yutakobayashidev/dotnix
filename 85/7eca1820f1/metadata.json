@@ -11,6 +11,7 @@
     "nix/modules/darwin/homebrew.nix",
     "nix/modules/darwin/packages.nix",
     "nix/modules/home/packages.nix",
+    "nix/modules/linux/android.nix",
     "nix/modules/linux/home-packages.nix",
     "nix/overlays/ai-tools.nix",
     "nix/overlays/default.nix",
@@ -38,13 +39,20 @@
       "context": "/85/7eca1820f1/2/context.md",
       "content_hash": "/85/7eca1820f1/2/content_hash.txt",
       "prompt": "/85/7eca1820f1/2/prompt.txt"
+    },
+    {
+      "metadata": "/85/7eca1820f1/3/metadata.json",
+      "transcript": "/85/7eca1820f1/3/full.jsonl",
+      "context": "/85/7eca1820f1/3/context.md",
+      "content_hash": "/85/7eca1820f1/3/content_hash.txt",
+      "prompt": "/85/7eca1820f1/3/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 3423,
-    "cache_creation_tokens": 262258,
-    "cache_read_tokens": 6404500,
-    "output_tokens": 10698,
-    "api_call_count": 112
+    "input_tokens": 3448,
+    "cache_creation_tokens": 286699,
+    "cache_read_tokens": 7008912,
+    "output_tokens": 11762,
+    "api_call_count": 127
   }
 }
