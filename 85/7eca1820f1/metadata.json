@@ -1,0 +1,35 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "857eca1820f1",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 13,
+  "files_touched": [
+    "flake.nix",
+    "nix/hosts/M2-MacBook-Air/default.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/darwin/packages.nix",
+    "nix/modules/home/packages.nix",
+    "nix/modules/linux/home-packages.nix",
+    "nix/overlays/ai-tools.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/dev-tools.nix",
+    "nix/overlays/entire.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/85/7eca1820f1/0/metadata.json",
+      "transcript": "/85/7eca1820f1/0/full.jsonl",
+      "context": "/85/7eca1820f1/0/context.md",
+      "content_hash": "/85/7eca1820f1/0/content_hash.txt",
+      "prompt": "/85/7eca1820f1/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1417,
+    "cache_creation_tokens": 205772,
+    "cache_read_tokens": 4954476,
+    "output_tokens": 9245,
+    "api_call_count": 73
+  }
+}
