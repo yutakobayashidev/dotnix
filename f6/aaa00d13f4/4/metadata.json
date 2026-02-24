@@ -1,0 +1,42 @@
+{
+  "cli_version": "dev",
+  "checkpoint_id": "f6aaa00d13f4",
+  "session_id": "8b2c8d27-2d50-433a-9a06-e3db31f312c2",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-24T10:43:14.762665Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.nix",
+    "nix/hosts/Still-Legend-x870/default.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/hosts/UM790-Pro/hardware-configuration.nix",
+    "AGENTS.md",
+    "README.md",
+    "flake.lock",
+    "nix/hosts/Still-Legend-x870/hardware-configuration.nix",
+    "nix/hosts/UM790-Pro/configuration.nix",
+    "nix/modules/linux/default.nix",
+    "nix/modules/linux/locale.nix"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "ea5986d2ba22",
+  "transcript_identifier_at_start": "dd72bd87-4bbb-4dbf-832b-96f874150556",
+  "token_usage": {
+    "input_tokens": 1974,
+    "cache_creation_tokens": 35638,
+    "cache_read_tokens": 682636,
+    "output_tokens": 768,
+    "api_call_count": 20
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T10:43:14.688129Z",
+    "agent_lines": 0,
+    "human_added": 350,
+    "human_modified": 58,
+    "human_removed": 0,
+    "total_committed": 350,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".config/claude/projects/-Users-yuta-ghq-github-com-yutakobayashidev-dotnix/8b2c8d27-2d50-433a-9a06-e3db31f312c2.jsonl"
+}
