@@ -1,0 +1,33 @@
+https://github.com/Comamoca/scaffold/blob/main/template.nix これ参考にdotnixにテンプレートセットしてみたいんだけど、外部リポジトリを対象にできないの？
+
+---
+
+github.com/yutakobayashidev/next-app-router-firebase-auth-e2e じゃあこれを
+
+---
+
+https://github.com/hiroppy/web-app-template これも
+
+---
+
+template.nixに分離したい
+
+---
+
+dotnixのtemplatesのルートにflake-devenv作って今のflake.nixをベースにテンプレートとして追加したい devenv,treefmt-nix,nixpkgs,nix-systems/default,git-hooksnixpkgs,flake-parts
+
+---
+
+READMEにテンプレートの説明追加して
+
+---
+
+コミットして
+
+---
+
+[Request interrupted by user]
+
+---
+
+flake作る場合はこれもおすすめするテキストにしておいて https://github.com/the-nix-way/dev-templates
