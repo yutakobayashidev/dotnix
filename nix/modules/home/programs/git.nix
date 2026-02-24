@@ -110,6 +110,7 @@
         email = "hi@yutakobayashi.com";
       };
       push.autoSetupRemote = true;
+      pull.rebase = true;
       init.defaultBranch = "main";
       wt.basedir = ".git/wt";
     };
