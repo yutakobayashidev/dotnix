@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -79,7 +80,7 @@
       flake = false;
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     onepassword-shell-plugins.url = "github:1Password/shell-plugins";
@@ -136,6 +137,7 @@
       flake-parts,
       treefmt-nix,
       nixpkgs,
+      nixpkgs-stable,
       llm-agents,
       nix-steipete-tools,
       version-lsp,
@@ -159,6 +161,14 @@
             android_sdk.accept_license = true;
           };
           overlays = [
+            (_final: _prev: {
+              stable = import nixpkgs-stable {
+                inherit system;
+                config = {
+                  allowUnfree = true;
+                };
+              };
+            })
             (_final: _prev: {
               _llm-agents = llm-agents;
               _nix-steipete-tools = nix-steipete-tools;

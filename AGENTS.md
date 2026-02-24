@@ -42,7 +42,7 @@ nix flake update
 
 ## Architecture
 
-NixOS & macOS flake構成 with home-manager（nixos-unstable）
+NixOS & macOS flake構成 with home-manager（nixos-unstable + nixpkgs-stable fallback）
 
 ```
 flake.nix                          # エントリポイント

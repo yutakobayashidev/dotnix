@@ -54,7 +54,7 @@
     yazi
     imagemagick
     ffmpeg
-    yt-dlp
+    stable.yt-dlp
     halloy
     obsidian
 
