@@ -7,7 +7,7 @@
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
       inter
-      jetbrains-mono
+      stable.jetbrains-mono
       nerd-fonts.jetbrains-mono
       nerd-fonts.fira-code
       nerd-fonts.hack

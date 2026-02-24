@@ -24,7 +24,7 @@
     slack
 
     # Productivity (Nix管理)
-    anki
+    stable.anki
     _1password-gui
     insomnia
 
