@@ -128,9 +128,50 @@
   };
 
   outputs =
-    inputs@{ flake-parts, treefmt-nix, ... }:
+    inputs@{
+      flake-parts,
+      treefmt-nix,
+      nixpkgs,
+      llm-agents,
+      nix-steipete-tools,
+      version-lsp,
+      ghostty,
+      gh-nippou,
+      gh-graph,
+      moonbit-overlay,
+      brew-nix,
+      ...
+    }:
     let
-      customOverlay = import ./nix/overlays;
+      mkPkgs =
+        system:
+        let
+          isDarwin = builtins.match ".*-darwin" system != null;
+        in
+        import nixpkgs {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            android_sdk.accept_license = true;
+          };
+          overlays = [
+            (_final: _prev: {
+              _llm-agents = llm-agents;
+              _nix-steipete-tools = nix-steipete-tools;
+              _version-lsp = version-lsp;
+              _ghostty = ghostty;
+            })
+            gh-nippou.overlays.default
+            gh-graph.overlays.default
+            (import ./nix/overlays/default.nix)
+          ]
+          ++ nixpkgs.lib.optionals (!isDarwin) [
+            moonbit-overlay.overlays.default
+          ]
+          ++ nixpkgs.lib.optionals isDarwin [
+            brew-nix.overlays.default
+          ];
+        };
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
@@ -154,16 +195,12 @@
           isDarwin = builtins.match ".*-darwin" system != null;
           hostname = if isDarwin then "M2-MacBook-Air" else "UM790-Pro";
           nom = "${pkgs.nix-output-monitor}/bin/nom";
-          customPkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = [ customOverlay ];
-          };
+          allPkgs = mkPkgs system;
         in
         {
           packages = {
-            inherit (customPkgs)
+            inherit (allPkgs)
               difit
-              entire
               jj-desc
               keifu
               polycat
@@ -253,11 +290,11 @@
 
       flake = {
         nixosConfigurations = {
-          UM790-Pro = import ./nix/hosts/UM790-Pro { inherit inputs; };
+          UM790-Pro = import ./nix/hosts/UM790-Pro { inherit inputs mkPkgs; };
         };
 
         darwinConfigurations = {
-          M2-MacBook-Air = import ./nix/hosts/M2-MacBook-Air { inherit inputs; };
+          M2-MacBook-Air = import ./nix/hosts/M2-MacBook-Air { inherit inputs mkPkgs; };
         };
 
         nixOnDroidConfigurations = {

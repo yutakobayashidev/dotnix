@@ -7,6 +7,9 @@
   home.packages =
     with pkgs;
     [
+      # Terminal
+      ghostty-bin
+
       # macOS CLI tools
       terminal-notifier
       coreutils
@@ -34,7 +37,6 @@
       figma
       linear-linear
       notion-calendar
-      obsidian
 
       # Development
       proxyman

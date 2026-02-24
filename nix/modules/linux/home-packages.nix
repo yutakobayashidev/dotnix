@@ -24,7 +24,6 @@
     slack
 
     # Productivity (Nix管理)
-    obsidian
     anki
     _1password-gui
     insomnia

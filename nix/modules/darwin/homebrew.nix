@@ -34,7 +34,6 @@
       "adobe-acrobat-reader"
       "adobe-creative-cloud"
       "android-studio"
-      "ghostty"
       "microsoft-auto-update"
       "qgis"
 

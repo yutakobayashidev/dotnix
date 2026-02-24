@@ -56,6 +56,7 @@
     ffmpeg
     yt-dlp
     halloy
+    obsidian
 
     # Network Tools
     tunnelto
