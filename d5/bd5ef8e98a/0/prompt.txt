@@ -1,0 +1,87 @@
+https://github.com/Comamoca/scaffold/blob/main/template.nix これ参考にdotnixにテンプレートセットしてみたいんだけど、外部リポジトリを対象にできないの？
+
+---
+
+github.com/yutakobayashidev/next-app-router-firebase-auth-e2e じゃあこれを
+
+---
+
+https://github.com/hiroppy/web-app-template これも
+
+---
+
+template.nixに分離したい
+
+---
+
+dotnixのtemplatesのルートにflake-devenv作って今のflake.nixをベースにテンプレートとして追加したい devenv,treefmt-nix,nixpkgs,nix-systems/default,git-hooksnixpkgs,flake-parts
+
+---
+
+READMEにテンプレートの説明追加して
+
+---
+
+コミットして
+
+---
+
+[Request interrupted by user]
+
+---
+
+flake作る場合はこれもおすすめするテキストにしておいて https://github.com/the-nix-way/dev-templates
+
+---
+
+github apiで自分のリポジトリ一覧取得してテンプレート系のやつがあれば追加しておきたい
+
+---
+
+playbookに今後テンプレート置くようにしようかなぁ、まあいいや、一旦コミットして
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+いや、今のままでいい。コミットして
+
+---
+
+yuta@UM790-Pro  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main  git push
+[entire] Pushing session logs to origin...
+clearTo https://github.com/yutakobayashidev/dotnix.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/yutakobayashidev/dotnix.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+ ✘ yuta@UM790-Pro  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main 
+
+---
+
+git pull、デフォルトでrebaseするようになってなさそう、nix更新しておいて
+
+---
+
+コミットして
+
+---
+
+ashibaにplaybookをrenameしてcloneしたので、nextのfirebaseをこれに移動したい
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+いや。そもそも、テンプレートをこのリポジトリから剥がしてashibaに移動したい
+
+---
+
+うん,hiroppyさんのはやらなくていいけど
