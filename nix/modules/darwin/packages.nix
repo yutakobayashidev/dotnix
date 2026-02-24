@@ -51,6 +51,9 @@
       stats
       yubico-authenticator
 
+      # Hardware
+      arduino-ide
+
       # Other
       sidequest
       zoom

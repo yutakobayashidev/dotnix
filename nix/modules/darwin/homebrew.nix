@@ -39,22 +39,23 @@
       "qgis"
 
       # Hardware
-      "arduino-ide"
       "ledger-wallet"
       "qmk-toolbox"
 
-      # Media
+      # Media (brew-nix のビルドが壊れているため cask で管理)
       "krita"
       "spotify"
 
       # AI / LLM
       "claude"
 
+      # VR (brew-nix のハッシュが壊れているため cask で管理)
+      "virtual-desktop-streamer"
+
       # Other
       "bitcoin-core"
       "keybase"
       "tor-browser"
-      "virtual-desktop-streamer"
     ];
 
     masApps = {
