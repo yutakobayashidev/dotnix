@@ -1,0 +1,5 @@
+nrnみたいにashibanix flake init -t github:yutakobayashidev/ashiba#<name>みたいにしてほしい
+
+---
+
+コミットして
