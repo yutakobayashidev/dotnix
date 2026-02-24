@@ -1,0 +1,127 @@
+plz  fix OK、いま起きてることを「仕組み→なぜ落ちる→どう直す」の順で整理して説明するね。
+
+## 何が起きてるか
+
+あなたのログには大きく2段階あります。
+
+### (A) `No handler for set-lang-from-info-string!`
+
+Tree-sitter のクエリ（`*.scm`）には、`#something!` みたいな“命令（directive）”を書けます。
+
+その中に `#set-lang-from-info-string!` という命令が出てきているんだけど、Neovim がそれを処理するときに
+
+* 「その命令を処理する関数（handler）が登録されてない」
+* だから「知らない命令だ」としてエラーになる
+
+これが `No handler for set-lang-from-info-string!` の意味です。
+
+ここで重要なのは：
+
+* `set-lang-from-info-string!` は **Neovim本体の標準命令ではなく**、主に **nvim-treesitter が追加で提供する命令**です
+  （nvim-treesitter は Lua で “この directive が来たらこう処理する” を追加できます）
+
+なのでこのエラーが出る典型パターンは
+
+* **クエリファイルが新しくて、その directive を使っている**
+* でも **nvim-treesitter 側が古い / 読み込まれてない / 無効化されてる**せいで handler が登録されていない
+
+という「クエリと nvim-treesitter の不整合」です。
+
+### (B) `Parser could not be created ... language "sh"`
+
+(A)で Tree-sitter ハイライト処理が途中で落ちた結果として、Telescope のプレビュー側が `sh` を解析しようとしても
+
+* `sh` 用の parser がない/ロードできない
+
+みたいな状態になって、追加でこのエラーが出ています。
+
+ただ、順序的に見ると **最初の原因は (A)** で、(B) は巻き添えになっている可能性が高いです。
+
+---
+
+## どう直すのが正解か
+
+選択肢は3つあって、上ほどおすすめです。
+
+### 1) nvim-treesitter を新しめに揃える（根本）
+
+いまの状態は「クエリが `set-lang-from-info-string!` を使ってるのに、nvim-treesitter がそれを提供できてない」なので、
+
+* **nvim-treesitter をその directive を提供する版以降に更新する**
+* そして `:TSUpdate` で parser/queries を揃える
+
+これが本筋です。
+
+Nix や lazy.nvim で「Neovim は固定」「プラグイン/クエリだけ更新」みたいな運用をしてると、このズレが起きやすいです。
+
+### 2) 逆にクエリを古くする（ピン留め）
+
+Neovim や nvim-treesitter を上げられない事情があるなら、
+
+* `queries` を `set-lang-from-info-string!` を含まない古い版に戻す
+
+でも直ります。
+
+### 3) 応急処置：Telescope プレビューの treesitter を切る
+
+とりあえずエラーを止めたいなら
+
+* Telescope の preview treesitter を無効化
+
+で回避できます（根本原因は残ります）。
+
+---
+
+## いまの状態を確定させる最短チェック
+
+Neovim でこれを見ると一発で分かります。
+
+* `:Lazy`（または lockfile）で **nvim-treesitter のコミットが古くないか**
+* `:checkhealth nvim-treesitter` で **bash/sh の parser が入ってるか**
+* `:lua print(vim.inspect(vim.treesitter.query.list_directives()))` を実行して
+  **`set-lang-from-info-string!` が一覧に出るか**
+
+  * 出ない → handler が登録されてない（今回の原因に一致）
+  * 出る → 別の理由で handler が見えてない可能性（runtimepath の問題など）
+
+---
+
+もし「直し方をあなたの環境に合わせて1つに決めて」って意味なら、次のどれか1つだけ貼ってくれたら、ほぼ確定で指示できます。
+
+* `lazy-lock.json` の nvim-treesitter 行
+  または
+* Nix で nvim-treesitter を pin してる revision 部分
+  または
+* `:checkhealth nvim-treesitter` の該当箇所（parser一覧が見える部分）
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+何が問題なのか根本原因を解説して
+
+---
+
+.scmって何？
+
+---
+
+ryoppippi/dotfilesがどうしているか、nixで調べて
+
+---
+
+sそれにしよう。原因はなんなの？
+
+---
+
+じゃあ直して
+
+---
+
+[Request interrupted by user]
+
+---
+
+原因をもう少しわかりやすく解説してください

@@ -3,11 +3,12 @@
   "checkpoint_id": "857eca1820f1",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 13,
+  "checkpoints_count": 14,
   "files_touched": [
     "flake.nix",
     "nix/hosts/M2-MacBook-Air/default.nix",
     "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/darwin/homebrew.nix",
     "nix/modules/darwin/packages.nix",
     "nix/modules/home/packages.nix",
     "nix/modules/linux/home-packages.nix",
@@ -23,13 +24,20 @@
       "context": "/85/7eca1820f1/0/context.md",
       "content_hash": "/85/7eca1820f1/0/content_hash.txt",
       "prompt": "/85/7eca1820f1/0/prompt.txt"
+    },
+    {
+      "metadata": "/85/7eca1820f1/1/metadata.json",
+      "transcript": "/85/7eca1820f1/1/full.jsonl",
+      "context": "/85/7eca1820f1/1/context.md",
+      "content_hash": "/85/7eca1820f1/1/content_hash.txt",
+      "prompt": "/85/7eca1820f1/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 1417,
-    "cache_creation_tokens": 205772,
-    "cache_read_tokens": 4954476,
-    "output_tokens": 9245,
-    "api_call_count": 73
+    "input_tokens": 1449,
+    "cache_creation_tokens": 226620,
+    "cache_read_tokens": 5721864,
+    "output_tokens": 9930,
+    "api_call_count": 92
   }
 }
