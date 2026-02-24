@@ -3,18 +3,20 @@
   "checkpoint_id": "857eca1820f1",
   "session_id": "6835ec59-a72a-4b89-9151-c5cfa3a51f8e",
   "strategy": "manual-commit",
-  "created_at": "2026-02-24T09:45:29.086779Z",
+  "created_at": "2026-02-24T09:56:44.837023Z",
   "branch": "main",
-  "checkpoints_count": 13,
+  "checkpoints_count": 1,
   "files_touched": [
     "flake.nix",
-    "nix/hosts/M2-MacBook-Air/default.nix",
     "nix/hosts/UM790-Pro/default.nix",
     "nix/modules/darwin/packages.nix",
     "nix/modules/home/packages.nix",
     "nix/modules/linux/home-packages.nix",
     "nix/overlays/ai-tools.nix",
     "nix/overlays/default.nix",
+    "nix/hosts/M2-MacBook-Air/default.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/linux/android.nix",
     "nix/overlays/dev-tools.nix",
     "nix/overlays/entire.nix"
   ],
@@ -22,20 +24,20 @@
   "turn_id": "3abf677c7824",
   "transcript_identifier_at_start": "02d459e1-5da0-46f8-a80a-647238814b99",
   "token_usage": {
-    "input_tokens": 1417,
-    "cache_creation_tokens": 205772,
-    "cache_read_tokens": 4954476,
-    "output_tokens": 9245,
-    "api_call_count": 73
+    "input_tokens": 1418,
+    "cache_creation_tokens": 206221,
+    "cache_read_tokens": 5038945,
+    "output_tokens": 9280,
+    "api_call_count": 74
   },
   "initial_attribution": {
-    "calculated_at": "2026-02-24T09:45:28.518346Z",
-    "agent_lines": 71,
-    "human_added": 0,
-    "human_modified": 2,
-    "human_removed": 7,
-    "total_committed": 73,
-    "agent_percentage": 97.26027397260275
+    "calculated_at": "2026-02-24T09:56:44.086287Z",
+    "agent_lines": 0,
+    "human_added": 1,
+    "human_modified": 7,
+    "human_removed": 0,
+    "total_committed": 1,
+    "agent_percentage": 0
   },
   "transcript_path": ".config/claude/projects/-Users-yuta-ghq-github-com-yutakobayashidev-dotnix/6835ec59-a72a-4b89-9151-c5cfa3a51f8e.jsonl"
 }
