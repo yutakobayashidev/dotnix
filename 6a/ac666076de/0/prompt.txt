@@ -1,0 +1,95 @@
+なぜ　========
+       > FAILED tests/svg_test.py::test_topicosvg[stroke-capjoinmiterlimit-before.svg-stroke-capjoinmiterlimit-nano.svg] - assert '<svg xmlns="..."/>\n</svg>\n' == '<svg xmlns="..."/>\n</svg>\n'
+       > FAILED tests/svg_test.py::test_topicosvg[stroke-circle-dasharray-before.svg-stroke-circle-dasharray-nano.svg] - assert '<svg xmlns="..."/>\n</svg>\n' == '<svg xmlns="..."/>\n</svg>\n'
+       > FAILED tests/svg_test.py::test_topicosvg[arcs-before.svg-arcs-nano.svg] - assert '<svg xmlns="..."/>\n</svg>\n' == '<svg xmlns="..."/>\n</svg>\n'
+       > FAILED tests/svg_test.py::test_topicosvg[clipped-strokes-before.svg-clipped-strokes-nano.svg] - assert '<svg xmlns="..."/>\n</svg>\n' == '<svg xmlns="..."/>\n</svg>\n'
+       > FAILED tests/svg_test.py::test_topicosvg[pathops-tricky-path-before.svg-pathops-tricky-path-nano.svg] - assert '<svg xmlns="..."/>\n</svg>\n' == '<svg xmlns="..."/>\n</svg>\n'
+       > ======================== 5 failed, 356 passed in 2.45s =========================
+       For full logs, run:
+         nix log REDACTED.13-picosvg-0.22.3.drv
+error: Cannot build 'REDACTED.13-nanoemoji-0.15.9.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/pqscyxinfp2w9h63cya5xp8piw373yyx-python3.13-nanoemoji-0.15.9-dist
+         REDACTED.13-nanoemoji-0.15.9
+error: Cannot build '/nix/store/lqinaxgarppyscmfpprc7nhns58gmbri-python3.13-gftools-0.9.991.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.13-gftools-0.9.991
+         REDACTED.13-gftools-0.9.991-dist
+error: Cannot build 'REDACTED.304.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.304
+error: Cannot build 'REDACTED.conf.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.conf
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.20260223.2fc6539.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.20260223.2fc6539
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."UM790-Pro".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
+ ✘ yuta@UM790-Pro  ~/ghq/github.com/yutakobayashidev/dotnix  
+
+---
+
+> ==================================== ERRORS ====================================
+       > ____________________ ERROR collecting tests/test_addons.py _____________________
+       > ImportError while importing test module '/build/source/qt/tests/test_addons.py'.
+       > Hint: make sure your test modules/packages have valid Python names.
+       > Traceback:
+       > REDACTED.13.12/lib/python3.13/importlib/__init__.py:88: in import_module
+       >     return _bootstrap._gcd_import(name[level:], package, level)
+       >            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       > qt/tests/test_addons.py:10: in <module>
+       >     from aqt.addons import AddonManager, package_name_valid
+       > qt/aqt/__init__.py:65: in <module>
+       >     from aqt import gui_hooks
+       > qt/aqt/gui_hooks.py:11: in <module>
+       >     from _aqt.hooks import *
+       > out/qt/_aqt/hooks.py:18: in <module>                                           >     from aqt.qt import QDialog, QEvent, QMenu, QModelIndex, QWidget, QMimeData
+       > qt/aqt/qt/__init__.py:19: in <module>
+       >     from .qt6 import *
+       > qt/aqt/qt/qt6.py:17: in <module>
+       >     from PyQt6.QtWebChannel import QWebChannel
+       > E   ImportError: libQt6WebChannel.so.6: cannot open shared object file: No such file or directory
+       > =========================== short test summary info ============================
+       > ERROR qt/tests/test_addons.py
+       > !!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+       > =============================== 1 error in 0.39s ===============================
+       For full logs, run:
+         nix log REDACTED.09.2.drv
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.20260223.2fc6539.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.20260223.2fc6539
+Command 'nix --extra-experimental-features 'nix-command flakes' build --print-out-paths '.#nixosConfigurations."UM790-Pro".config.system.build.toplevel' --no-link' returned non-zero exit status 1.
