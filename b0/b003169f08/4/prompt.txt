@@ -1,0 +1,9 @@
+今azookey使ってるんだけど、karabinerの設定があってない気がするので直したい
+
+---
+
+聞かない、デバッグしたい
+
+---
+
+[Request interrupted by user for tool use]
