@@ -6,6 +6,7 @@
   "checkpoints_count": 7,
   "files_touched": [
     "zsh/config/aliases.zsh",
+    "zsh/functions/README.md",
     "zsh/functions/ashiba.zsh",
     "zsh/functions/nfi.zsh"
   ],
@@ -23,13 +24,20 @@
       "context": "/89/87485b9664/1/context.md",
       "content_hash": "/89/87485b9664/1/content_hash.txt",
       "prompt": "/89/87485b9664/1/prompt.txt"
+    },
+    {
+      "metadata": "/89/87485b9664/2/metadata.json",
+      "transcript": "/89/87485b9664/2/full.jsonl",
+      "context": "/89/87485b9664/2/context.md",
+      "content_hash": "/89/87485b9664/2/content_hash.txt",
+      "prompt": "/89/87485b9664/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 1924,
-    "cache_creation_tokens": 625058,
-    "cache_read_tokens": 4671489,
-    "output_tokens": 12542,
-    "api_call_count": 116
+    "input_tokens": 6440,
+    "cache_creation_tokens": 1239859,
+    "cache_read_tokens": 10738350,
+    "output_tokens": 17371,
+    "api_call_count": 239
   }
 }
