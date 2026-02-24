@@ -7,7 +7,8 @@
   "files_touched": [
     "nix/modules/darwin/fonts.nix",
     "nix/modules/linux/fonts.nix",
-    "nix/modules/linux/home-packages.nix"
+    "nix/modules/linux/home-packages.nix",
+    "nvim/lazy-lock.json"
   ],
   "sessions": [
     {
@@ -16,13 +17,20 @@
       "context": "/6a/ac666076de/0/context.md",
       "content_hash": "/6a/ac666076de/0/content_hash.txt",
       "prompt": "/6a/ac666076de/0/prompt.txt"
+    },
+    {
+      "metadata": "/6a/ac666076de/1/metadata.json",
+      "transcript": "/6a/ac666076de/1/full.jsonl",
+      "context": "/6a/ac666076de/1/context.md",
+      "content_hash": "/6a/ac666076de/1/content_hash.txt",
+      "prompt": "/6a/ac666076de/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 223,
-    "cache_creation_tokens": 56023,
-    "cache_read_tokens": 281634,
-    "output_tokens": 315,
-    "api_call_count": 9
+    "input_tokens": 557,
+    "cache_creation_tokens": 69562,
+    "cache_read_tokens": 329754,
+    "output_tokens": 627,
+    "api_call_count": 12
   }
 }
