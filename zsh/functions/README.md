@@ -6,7 +6,6 @@
 
 | 関数 | 説明 | 使い方 |
 |------|------|--------|
-| `ashiba` | ghq create + nix flake init でプロジェクト雛形作成 | `ashiba [--local] <name> [template]` |
 | `cd-up` | 親ディレクトリに移動（Alt+Up にバインド） | キーバインド |
 | `claude-zai` | Z.AI API プロキシ経由で Claude Code を実行 | `claude-zai [args]` |
 | `ct` | Claude Code を tmux teammate mode で起動 | `ct [args]` |
@@ -17,3 +16,4 @@
 | `git-wt-clean` | マージ済み worktree とブランチを一括削除 | `git-wt-clean` |
 | `gwt` | fzf で git worktree を検索・移動 | `gwt` |
 | `jb` | fzf で jj bookmark を選択・new | `jb` |
+| `nfi` | nix flake init with fuzzy template selection | `nfi <flake_ref> [template]` |

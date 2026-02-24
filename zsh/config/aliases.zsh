@@ -43,6 +43,10 @@ alias dcr="docker compose restart"
 alias ns="nix-shell"
 alias ngc="nix-collect-garbage"
 nrn() { nix run "nixpkgs#$1" "${@:2}"; }
+ashiba() { nfi github:yutakobayashidev/ashiba "$@"; }
+
+# Security
+scorecard() { GITHUB_AUTH_TOKEN="$(gh auth token)" command scorecard "$@"; }
 
 alias p="pnpm"
 alias ls="lsd -1A"
