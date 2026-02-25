@@ -11,6 +11,10 @@
     ./programs/zsh.nix
   ];
 
+  # nix-index for command-not-found and comma
+  programs.nix-index.enable = true;
+  programs.nix-index-database.comma.enable = true;
+
   home.username = "yuta";
 
   home.stateVersion = "25.11";

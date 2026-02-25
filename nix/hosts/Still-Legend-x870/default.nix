@@ -44,7 +44,10 @@ nixpkgs.lib.nixosSystem {
               local-skills
               ;
           };
-          sharedModules = [ inputs.agent-skills.homeManagerModules.default ];
+          sharedModules = [
+            inputs.agent-skills.homeManagerModules.default
+            inputs.nix-index-database.hmModules.nix-index
+          ];
           users.yuta = {
             imports = [ ../../modules/home ];
             home.homeDirectory = "/home/yuta";
