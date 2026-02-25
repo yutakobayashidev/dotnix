@@ -1,26 +1,26 @@
 # PR Aftercare
 
-PR を作成した後の CI 監視・レビュー対応のワークフロー。
+Workflow for CI monitoring and review handling after creating a PR.
 
 ## 1. CI Watch
 
-PR 作成直後、CI の完了を待って結果を確認する。
+Immediately after PR creation, wait for CI to complete and check results.
 
 ```bash
 gh pr checks <PR_NUMBER> --watch --fail-fast
 ```
 
-- **全 pass** → 次のステップへ
-- **failure** → ログを読み、原因を特定して修正。コミット & push 後に再度 watch。green になるまでループ
+- **All pass** → proceed to the next step
+- **Failure** → read logs, identify the cause, and fix. Commit & push, then watch again. Loop until green.
 
-修正時は最小限の diff に留める。CI を通すためだけの無関係な変更を混ぜない。
+Keep fixes to minimal diffs. Do not mix in unrelated changes just to pass CI.
 
 ## 2. Review Triage
 
-レビューコメントの確認を依頼されたら:
+When asked to check review comments:
 
 ```bash
-# レビュースレッド一覧を取得
+# Fetch review threads
 gh api graphql -f query='
 {
   repository(owner: "<OWNER>", name: "<REPO>") {
@@ -39,36 +39,36 @@ gh api graphql -f query='
 }'
 ```
 
-各コメントを以下の基準で分類する:
+Classify each comment by the following criteria:
 
-| 分類 | 判断基準 | アクション |
-|------|----------|------------|
-| **即修正** | コードで対応可能、spec に影響なし | 修正してコミット |
-| **spec トレードオフ** | 修正すると spec と矛盾、または性能・複雑性のトレードオフが発生 | トレードオフを整理して AskUserQuestion |
-| **誤指摘** | レビュアーの誤解や、既に対応済み | コメントで説明 |
+| Category | Criteria | Action |
+|----------|----------|--------|
+| **Fix immediately** | Can be addressed in code, no spec impact | Fix and commit |
+| **Spec trade-off** | Fix would conflict with spec, or involves performance/complexity trade-offs | Summarize trade-offs and AskUserQuestion |
+| **Incorrect feedback** | Reviewer misunderstanding or already addressed | Explain in a comment |
 
-### デフォルトは「修正」
+### Default to "fix"
 
-迷ったら修正する。修正コストが低いものを議論するのは時間の無駄。
+When in doubt, just fix it. Debating low-cost fixes is a waste of time.
 
-### spec 妥協が必要な場合
+### When spec compromise is needed
 
-以下のフォーマットで AskUserQuestion する:
+Use the following format for AskUserQuestion:
 
 ```
-レビュー指摘: [指摘の要約]
+Review comment: [summary of the feedback]
 
-選択肢:
-A) [修正内容] — [メリット] / [デメリット (spec 変更、性能影響など)]
-B) [代替案] — [メリット] / [デメリット]
-C) [現状維持] — [理由]
+Options:
+A) [fix description] — [pros] / [cons (spec change, perf impact, etc.)]
+B) [alternative] — [pros] / [cons]
+C) [keep as-is] — [reason]
 
-推奨: [推奨案とその理由]
+Recommendation: [recommended option and rationale]
 ```
 
 ## 3. Resolve
 
-修正をコミット & push したら、対応済みのレビュースレッドを resolve する。
+After committing & pushing fixes, resolve the addressed review threads.
 
 ```bash
 gh api graphql -f query='
@@ -79,23 +79,23 @@ mutation {
 }'
 ```
 
-複数スレッドがある場合は mutation 内で `t1: resolveReviewThread(...)` `t2: resolveReviewThread(...)` のように一括 resolve する。
+For multiple threads, batch them in a single mutation using aliases: `t1: resolveReviewThread(...)` `t2: resolveReviewThread(...)`.
 
-**resolve する前に必ず:**
-- テストが pass していること (`go test ./...` / `npm test` 等)
-- lint が pass していること
-- push 済みであること
+**Before resolving, ensure:**
+- Tests pass (`go test ./...` / `npm test` etc.)
+- Lint passes
+- Changes are pushed
 
-## 4. 全体フロー
+## 4. Overall Flow
 
 ```
-PR 作成
+PR created
   └→ CI watch (fail → fix → push → re-watch)
       └→ CI green
-          └→ レビュー待ち
-              └→ レビュー確認依頼
-                  ├→ 即修正 → commit & push → resolve
-                  ├→ spec トレードオフ → AskUser → 決定に従い修正 or spec 更新 → resolve
-                  └→ 誤指摘 → コメントで説明 → resolve
+          └→ Awaiting review
+              └→ Review check requested
+                  ├→ Fix immediately → commit & push → resolve
+                  ├→ Spec trade-off → AskUser → fix or update spec per decision → resolve
+                  └→ Incorrect feedback → explain in comment → resolve
                       └→ CI re-watch (fail → fix loop)
 ```
