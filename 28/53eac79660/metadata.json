@@ -3,11 +3,9 @@
   "checkpoint_id": "2853eac79660",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 11,
+  "checkpoints_count": 2,
   "files_touched": [
-    "nix/modules/home/programs/git.nix",
-    "zsh/config/aliases.zsh",
-    "zsh/functions/gb.zsh"
+    "nix/modules/home/programs/git.nix"
   ],
   "sessions": [
     {
@@ -19,10 +17,10 @@
     }
   ],
   "token_usage": {
-    "input_tokens": 174,
-    "cache_creation_tokens": 29931,
-    "cache_read_tokens": 1597381,
-    "output_tokens": 5992,
-    "api_call_count": 53
+    "input_tokens": 217,
+    "cache_creation_tokens": 90989,
+    "cache_read_tokens": 2305543,
+    "output_tokens": 7629,
+    "api_call_count": 82
   }
 }

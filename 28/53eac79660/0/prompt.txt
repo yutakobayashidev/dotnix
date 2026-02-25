@@ -167,3 +167,27 @@ logg = log --graph --abbrev-commit --pretty=format:\"%C(yellow)%h%C(reset) - %C(
 ---
 
 コミットしておいて
+
+---
+
+jb.zshもエイリアスに変えたい jj
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+jb.zshもエイリアスに変えたい jjtrace: warning: yuta profile: The option `programs.git.aliases' defined in `REDACTED.nix' has been renamed to `programs.git.settings.alias'.
+
+---
+
+[Request interrupted by user]
+
+---
+
+trace: warning: yuta profile: The option `programs.git.aliases' defined in `REDACTED.nix' has been renamed to `programs.git.settings.alias'.
+
+---
+
+--amend
