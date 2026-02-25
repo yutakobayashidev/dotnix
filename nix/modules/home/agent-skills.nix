@@ -65,6 +65,11 @@
         path = inputs.obsidian-skills;
         subdir = "skills";
       };
+      # repiq: OSS metrics CLI skill
+      repiq = {
+        path = inputs.repiq;
+        subdir = "skills";
+      };
     };
 
     # Enable all local skills
@@ -75,6 +80,7 @@
       "deno"
       "aws"
       "obsidian"
+      "repiq"
     ];
 
     # Enable specific Anthropic skills

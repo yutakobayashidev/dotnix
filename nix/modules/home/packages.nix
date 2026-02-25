@@ -20,6 +20,7 @@
     entire
 
     # Development Tools
+    repiq
     nil
     nix-init
     google-cloud-sdk

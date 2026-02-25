@@ -9,4 +9,5 @@ in
     doCheck = false;
   });
   ghostty = prev._ghostty.packages.${system}.default;
+  repiq = prev._repiq.packages.${system}.default;
 }

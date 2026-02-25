@@ -79,6 +79,10 @@
       url = "github:kepano/obsidian-skills";
       flake = false;
     };
+    repiq = {
+      url = "github:yutakobayashidev/repiq";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -178,6 +182,7 @@
               _nix-steipete-tools = nix-steipete-tools;
               _version-lsp = version-lsp;
               _ghostty = ghostty;
+              _repiq = inputs.repiq;
             })
             gh-nippou.overlays.default
             gh-graph.overlays.default
