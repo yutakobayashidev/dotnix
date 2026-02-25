@@ -6,6 +6,7 @@ let
     ./difit.nix
     ./jj-desc.nix
     ./keifu.nix
+    ./opensrc.nix
     ./polycat.nix
     ./pretty-ts-errors-markdown.nix
     ./similarity-ts.nix
