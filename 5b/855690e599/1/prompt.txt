@@ -1,0 +1,17 @@
+Still Legend x870というターゲットをREAMDEに追加してnixos-wslを追加して     nixos-wsl.url = "github:nix-community/NixOS-WSL";
+
+---
+
+configuration.nixを廃止して, hardware-configuration.nixに統合だけでいいかも。UM790-Proも、i18はnixos moduleに移動でいいかも
+
+---
+
+wsl.enableってどこでやって艫？
+
+---
+
+よさそう、コミットして
+
+---
+
+[Request interrupted by user]
