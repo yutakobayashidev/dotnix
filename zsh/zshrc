@@ -31,12 +31,6 @@ source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
 
-# zoxide (must be after oh-my-zsh to avoid cd being overwritten)
-eval "$(zoxide init zsh --cmd cd)"
-
-# direnv (must be last to avoid spurious unloading messages)
-eval "$(direnv hook zsh)"
-
 # ========================================
 # Load functions
 # ========================================
@@ -47,3 +41,9 @@ done
 
 # aliases (must be after functions loop — "do" alias breaks for/do/done)
 source ~/.config/zsh/config/aliases.zsh
+
+# zoxide (must be after oh-my-zsh to avoid cd being overwritten)
+eval "$(zoxide init zsh --cmd cd)"
+
+# direnv (must be last to avoid spurious unloading messages)
+eval "$(direnv hook zsh)"

@@ -103,6 +103,9 @@
       # Claude Code
       "**/.claude/settings.local.json"
       "**/CLAUDE.local.md"
+
+      # Continues
+      ".continues-handoff.md"
     ];
     settings = {
       alias = {
