@@ -1,0 +1,21 @@
+moonbit消して
+
+---
+
+Google Cloud SDK,Typstmpプロジェクトごとのflakeで入れたいので消しておいて
+
+---
+
+Node.js, Bunって今入ってるっけ？
+
+---
+
+これも消した方良くない？
+
+---
+
+cmake？
+
+---
+
+コミットして
