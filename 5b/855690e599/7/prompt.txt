@@ -1,0 +1,21 @@
+https://github.com/yigitkonur/cli-continues これをdotnixに追加したいんだけど ryoppippi/dotfilesはnpm packageどう追加しているのか調べて。deepwiki
+
+---
+
+一応nixpkgs確認して
+
+---
+
+彼のnodenioいているパターンと私の実装は何が違うの？
+
+---
+
+どっち�nix的
+
+---
+
+おlyaあそうしよう
+
+---
+
+続けて

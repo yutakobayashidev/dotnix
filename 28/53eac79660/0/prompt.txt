@@ -1,0 +1,193 @@
+差分みてコミットして
+
+---
+
+push
+
+---
+
+alias grepush='git recommit && git push -f'
+alias gsp='git stash && git pull && git stash pop'
+alias gpgp='git pull && git push' alias gpu='git pull' これエイリアス追加しておいて
+
+---
+
+alias grepush='git recommit && git push -f'
+  alias gsp='git stash && git pull && git stash pop'
+  alias gpgp='git pull && git push' alias gpu='git pull'
+  これエイリアス追加しておいて
+
+---
+
+continuesのエイリアスも
+
+---
+
+コミットして
+
+---
+
+git recommitなんてあるっけ
+
+---
+
+git recommitなんてあるっけ
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+uncommit = reset HEAD^
+    recommit = commit -c ORIG_HEAD
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+programs/git
+/aliases
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+programs/git/aliases
+
+---
+
+init.defaultBranch = "main";
+
+---
+
+push = {
+        default = "simple";
+        autoSetupRemote = true;
+        useForceIfIncludes = true;
+      };
+
+      commit.verbose = true;
+ 解説
+
+---
+
+うん
+
+---
+
+column.ui = "auto";
+
+      branch.sort = "-committerdate";
+
+      help.autocorrect = "prompt";
+
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
+
+      wt.remover = "trash";
+
+---
+
+して
+
+---
+
+rebase = {
+        autoStash = true;
+        autoSquash = true;
+        updateRefs = true;
+      };
+
+      merge = {
+        ff = false;
+        conflictstyle = "zdiff3";
+      };
+
+      pull.rebase = true;
+
+---
+
+fetch = {
+        writeCommitGraph = true;
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+
+---
+
+これはzshのエイリアスに追加ッシテ   ; Open the repository in a web browser
+  browse = !gh repo view --web
+  ; Open the pull request in a web browser
+  browse-pr = !gh pr view --web
+  ; Get the commit URL for the current HEAD
+  brc = !"echo $(gh repo view --json url  --jq .url)/commit/$(git rev-parse HEAD)"
+
+---
+
+root = rev-parse --show-toplevel
+
+---
+
+; View an issue selected with fzf from the issue list
+  isv = !gh issue list| fzf-tmux --prompt \"issue preview>\" --preview \"echo {} | awk '{print \\$1}' | xargs gh issue view -p\" | xargs gh issue view
+  ; View a PR selected with fzf from the PR list
+  prv = !gh pr list| fzf-tmux --prompt \"pr preview>\" --preview \"echo {} | awk '{print \\$1}' | xargs gh pr view -p\" | xargs gh pr view
+　これもzsh
+
+---
+
+logg = log --graph --abbrev-commit --pretty=format:\"%C(yellow)%h%C(reset) - %C(cyan)%ad%C(reset) %C(green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%n\"
+ なにこれ
+
+---
+
+うん
+
+---
+
+; Switch to a remote branch selected with fzf
+  swor = "!f() { local -r ref=$(git branch -r | fzf); git sw \"${1:-${ref#*/}}\" $ref; }; f"
+  ; Switch to a branch (local or remote) selected with fzf
+  swf =!git branch -a | fzf | xargs git switch
+ これ追加して関連するzsh function消して
+
+---
+
+; Show git status for all submodules
+  sms = submodule foreach \"git status\"
+
+---
+
+コミットしておいて
+
+---
+
+jb.zshもエイリアスに変えたい jj
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+jb.zshもエイリアスに変えたい jjtrace: warning: yuta profile: The option `programs.git.aliases' defined in `REDACTED.nix' has been renamed to `programs.git.settings.alias'.
+
+---
+
+[Request interrupted by user]
+
+---
+
+trace: warning: yuta profile: The option `programs.git.aliases' defined in `REDACTED.nix' has been renamed to `programs.git.settings.alias'.
+
+---
+
+--amend

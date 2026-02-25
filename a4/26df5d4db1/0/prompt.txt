@@ -1,0 +1,26 @@
+差分みてコミットして
+
+---
+
+push
+
+---
+
+alias grepush='git recommit && git push -f'
+alias gsp='git stash && git pull && git stash pop'
+alias gpgp='git pull && git push' alias gpu='git pull' これエイリアス追加しておいて
+
+---
+
+alias grepush='git recommit && git push -f'
+  alias gsp='git stash && git pull && git stash pop'
+  alias gpgp='git pull && git push' alias gpu='git pull'
+  これエイリアス追加しておいて
+
+---
+
+continuesのエイリアスも
+
+---
+
+コミットして
