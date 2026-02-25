@@ -1,3 +1,8 @@
+---
+paths:
+  - "~/ghq/github.com/yutakobayashidev/**"
+---
+
 # Commit Message Convention
 
 Follow [Conventional Commits](https://www.conventionalcommits.org/) with **required scope**.
