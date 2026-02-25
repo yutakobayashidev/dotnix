@@ -1,0 +1,17 @@
+claude/rulesに、ユーザーがあまり知らないエコシステムのツールチェーンに関しては、それぞれのツールの違いとrepiq skillsで客観的なメトリクスを取得して解説をするように求めるルールを追加して。ユーザーが得意なのはWeb toolchain,TypeScript,Terraform,Go,Nix,Python　学習中なのが、Go,BI,ETL / ELT,R Lang,Typstなどです
+
+---
+
+repiqはコマンドじゃないしスキルに委ねる儂出導線だけでいい
+
+---
+
+あと、Rustも
+
+---
+
+/rules以下は全部英語にして
+
+---
+
+コミットして
