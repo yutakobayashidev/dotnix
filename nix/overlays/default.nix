@@ -1,6 +1,7 @@
 let
   overlayFiles = [
     ./ai-tools.nix
+    ./continues.nix
     ./dev-tools.nix
     ./difit.nix
     ./jj-desc.nix

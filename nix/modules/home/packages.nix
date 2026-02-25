@@ -6,6 +6,7 @@
     # Overlay packages
     claude-code
     ccusage
+    continues
     opencode
     vibe-kanban
     cursor-agent
