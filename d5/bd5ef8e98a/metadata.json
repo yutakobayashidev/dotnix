@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "d5bd5ef8e98a",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "templates/flake-devenv/flake.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/d5/bd5ef8e98a/0/metadata.json",
+      "transcript": "/d5/bd5ef8e98a/0/full.jsonl",
+      "context": "/d5/bd5ef8e98a/0/context.md",
+      "content_hash": "/d5/bd5ef8e98a/0/content_hash.txt",
+      "prompt": "/d5/bd5ef8e98a/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 4477,
+    "cache_creation_tokens": 230496,
+    "cache_read_tokens": 4620410,
+    "output_tokens": 3884,
+    "api_call_count": 97
+  }
+}

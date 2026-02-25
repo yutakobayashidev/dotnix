@@ -1,0 +1,5 @@
+rulesのツールの学習中に、Solidity,nvim,luaを追加して。あと得意な方にlinux
+
+---
+
+コミットして

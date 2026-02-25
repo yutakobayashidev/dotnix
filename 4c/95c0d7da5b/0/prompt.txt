@@ -1,0 +1,28 @@
+キャッシュアップロードして
+
+---
+
+substituters = [
+      "https://cache.nixos.org"
+      "https://cache.numtide.com"
+      "https://yuta.cachix.org"
+      "https://devenv.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+ これ、flake.nixにないのは何故？そもそもなんでhostsと記載があるの？
+
+---
+
+CIはどうなる？
+
+---
+
+なんで消すべきなの？flake.nixにdevenv.cachix.org、nix-community.cachix.orgを追加するのは変?
+
+---
+
+じゃあ追加して
+
+---
+
+コミットして

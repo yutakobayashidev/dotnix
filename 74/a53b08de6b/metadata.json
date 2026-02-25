@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "74a53b08de6b",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 9,
+  "files_touched": [
+    "nix/modules/home/packages.nix",
+    "zsh/config/aliases.zsh",
+    "zsh/functions/ashiba.zsh",
+    "zsh/zshrc"
+  ],
+  "sessions": [
+    {
+      "metadata": "/74/a53b08de6b/0/metadata.json",
+      "transcript": "/74/a53b08de6b/0/full.jsonl",
+      "context": "/74/a53b08de6b/0/context.md",
+      "content_hash": "/74/a53b08de6b/0/content_hash.txt",
+      "prompt": "/74/a53b08de6b/0/prompt.txt"
+    },
+    {
+      "metadata": "/74/a53b08de6b/1/metadata.json",
+      "transcript": "/74/a53b08de6b/1/full.jsonl",
+      "context": "/74/a53b08de6b/1/context.md",
+      "content_hash": "/74/a53b08de6b/1/content_hash.txt",
+      "prompt": "/74/a53b08de6b/1/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5391,
+    "cache_creation_tokens": 952988,
+    "cache_read_tokens": 8351571,
+    "output_tokens": 13037,
+    "api_call_count": 188
+  }
+}

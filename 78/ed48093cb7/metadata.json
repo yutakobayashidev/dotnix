@@ -1,0 +1,40 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "78ed48093cb7",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "zsh/config/aliases.zsh"
+  ],
+  "sessions": [
+    {
+      "metadata": "/78/ed48093cb7/0/metadata.json",
+      "transcript": "/78/ed48093cb7/0/full.jsonl",
+      "context": "/78/ed48093cb7/0/context.md",
+      "content_hash": "/78/ed48093cb7/0/content_hash.txt",
+      "prompt": "/78/ed48093cb7/0/prompt.txt"
+    },
+    {
+      "metadata": "/78/ed48093cb7/1/metadata.json",
+      "transcript": "/78/ed48093cb7/1/full.jsonl",
+      "context": "/78/ed48093cb7/1/context.md",
+      "content_hash": "/78/ed48093cb7/1/content_hash.txt",
+      "prompt": "/78/ed48093cb7/1/prompt.txt"
+    },
+    {
+      "metadata": "/78/ed48093cb7/2/metadata.json",
+      "transcript": "/78/ed48093cb7/2/full.jsonl",
+      "context": "/78/ed48093cb7/2/context.md",
+      "content_hash": "/78/ed48093cb7/2/content_hash.txt",
+      "prompt": "/78/ed48093cb7/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5140,
+    "cache_creation_tokens": 644449,
+    "cache_read_tokens": 6768432,
+    "output_tokens": 5742,
+    "api_call_count": 142
+  }
+}

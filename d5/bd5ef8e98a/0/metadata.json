@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "d5bd5ef8e98a",
+  "session_id": "7df5a10e-8fcf-474c-bd8d-02c6e97a047a",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-24T16:57:00.002422784Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "README.md",
+    "templates/flake-devenv/flake.nix"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "f44d7201ae3b",
+  "transcript_identifier_at_start": "ef5207b1-fd5e-40ef-a7b7-e6aa18331e48",
+  "token_usage": {
+    "input_tokens": 4477,
+    "cache_creation_tokens": 230496,
+    "cache_read_tokens": 4620410,
+    "output_tokens": 3884,
+    "api_call_count": 97
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-24T16:56:59.803702685Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 1,
+    "human_removed": 90,
+    "total_committed": 0,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".config/claude/projects/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/7df5a10e-8fcf-474c-bd8d-02c6e97a047a.jsonl"
+}

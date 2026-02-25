@@ -1,0 +1,43 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "8987485b9664",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 7,
+  "files_touched": [
+    "zsh/config/aliases.zsh",
+    "zsh/functions/README.md",
+    "zsh/functions/ashiba.zsh",
+    "zsh/functions/nfi.zsh"
+  ],
+  "sessions": [
+    {
+      "metadata": "/89/87485b9664/0/metadata.json",
+      "transcript": "/89/87485b9664/0/full.jsonl",
+      "context": "/89/87485b9664/0/context.md",
+      "content_hash": "/89/87485b9664/0/content_hash.txt",
+      "prompt": "/89/87485b9664/0/prompt.txt"
+    },
+    {
+      "metadata": "/89/87485b9664/1/metadata.json",
+      "transcript": "/89/87485b9664/1/full.jsonl",
+      "context": "/89/87485b9664/1/context.md",
+      "content_hash": "/89/87485b9664/1/content_hash.txt",
+      "prompt": "/89/87485b9664/1/prompt.txt"
+    },
+    {
+      "metadata": "/89/87485b9664/2/metadata.json",
+      "transcript": "/89/87485b9664/2/full.jsonl",
+      "context": "/89/87485b9664/2/context.md",
+      "content_hash": "/89/87485b9664/2/content_hash.txt",
+      "prompt": "/89/87485b9664/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 6440,
+    "cache_creation_tokens": 1239859,
+    "cache_read_tokens": 10738350,
+    "output_tokens": 17371,
+    "api_call_count": 239
+  }
+}

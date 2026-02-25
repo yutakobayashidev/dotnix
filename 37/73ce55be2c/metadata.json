@@ -1,0 +1,51 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "3773ce55be2c",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "flake.lock",
+    "flake.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/home/packages.nix",
+    "nix/overlays/dev-tools.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/37/73ce55be2c/0/metadata.json",
+      "transcript": "/37/73ce55be2c/0/full.jsonl",
+      "context": "/37/73ce55be2c/0/context.md",
+      "content_hash": "/37/73ce55be2c/0/content_hash.txt",
+      "prompt": "/37/73ce55be2c/0/prompt.txt"
+    },
+    {
+      "metadata": "/37/73ce55be2c/1/metadata.json",
+      "transcript": "/37/73ce55be2c/1/full.jsonl",
+      "context": "/37/73ce55be2c/1/context.md",
+      "content_hash": "/37/73ce55be2c/1/content_hash.txt",
+      "prompt": "/37/73ce55be2c/1/prompt.txt"
+    },
+    {
+      "metadata": "/37/73ce55be2c/2/metadata.json",
+      "transcript": "/37/73ce55be2c/2/full.jsonl",
+      "context": "/37/73ce55be2c/2/context.md",
+      "content_hash": "/37/73ce55be2c/2/content_hash.txt",
+      "prompt": "/37/73ce55be2c/2/prompt.txt"
+    },
+    {
+      "metadata": "/37/73ce55be2c/3/metadata.json",
+      "transcript": "/37/73ce55be2c/3/full.jsonl",
+      "context": "/37/73ce55be2c/3/context.md",
+      "content_hash": "/37/73ce55be2c/3/content_hash.txt",
+      "prompt": "/37/73ce55be2c/3/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5388,
+    "cache_creation_tokens": 808839,
+    "cache_read_tokens": 6677513,
+    "output_tokens": 6206,
+    "api_call_count": 145
+  }
+}
