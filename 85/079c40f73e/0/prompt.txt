@@ -1,0 +1,22 @@
+Scorecard入れて
+
+---
+
+ERRO[0000] GitHub token env var is not set. Please read https://github.com/ossf/scorecard#authentication  error="an error occurred while getting GitHub credentials"
+INFO[0000] Rate limit exceeded. Waiting 59m13.188359762s to retry... gh-doでいけない？
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+うーん全部の子lye艫に渡すの気も否
+
+---
+
+[Request interrupted by user]
+
+---
+
+うーん全部のシェルにグローバルで握らせるのは怖い

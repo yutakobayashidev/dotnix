@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "85079c40f73e",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "claude/commands/repo-creator.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/85/079c40f73e/0/metadata.json",
+      "transcript": "/85/079c40f73e/0/full.jsonl",
+      "context": "/85/079c40f73e/0/context.md",
+      "content_hash": "/85/079c40f73e/0/content_hash.txt",
+      "prompt": "/85/079c40f73e/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 612,
+    "cache_creation_tokens": 28686,
+    "cache_read_tokens": 220293,
+    "output_tokens": 855,
+    "api_call_count": 13
+  }
+}
