@@ -5,7 +5,11 @@
   "branch": "main",
   "checkpoints_count": 2,
   "files_touched": [
-    "nix/modules/home/packages.nix"
+    "flake.lock",
+    "flake.nix",
+    "nix/modules/home/agent-skills.nix",
+    "nix/modules/home/packages.nix",
+    "nix/overlays/dev-tools.nix"
   ],
   "sessions": [
     {
@@ -21,13 +25,20 @@
       "context": "/37/73ce55be2c/1/context.md",
       "content_hash": "/37/73ce55be2c/1/content_hash.txt",
       "prompt": "/37/73ce55be2c/1/prompt.txt"
+    },
+    {
+      "metadata": "/37/73ce55be2c/2/metadata.json",
+      "transcript": "/37/73ce55be2c/2/full.jsonl",
+      "context": "/37/73ce55be2c/2/context.md",
+      "content_hash": "/37/73ce55be2c/2/content_hash.txt",
+      "prompt": "/37/73ce55be2c/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 623,
-    "cache_creation_tokens": 180306,
-    "cache_read_tokens": 560326,
-    "output_tokens": 909,
-    "api_call_count": 19
+    "input_tokens": 5139,
+    "cache_creation_tokens": 795107,
+    "cache_read_tokens": 6627187,
+    "output_tokens": 5738,
+    "api_call_count": 142
   }
 }
