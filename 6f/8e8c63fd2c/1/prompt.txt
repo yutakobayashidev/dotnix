@@ -1,0 +1,41 @@
+gh-poiがgit worktree対応したっぽいだけど、git-wt-cleanいる？調べて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+gbqでクローンしてあります
+
+---
+
+goneフラグとは？lessonに追加しておいて
+
+---
+
+porcelainって何？
+
+---
+
+じゃあ git-wt-clean消して
+
+---
+
+git configのワークツリー、wtはわかりづらいので変えたいかも、worktreeは予約後だっけ？
+
+---
+
+wt.basedirの話。.git/worktreeか.git/worktreesとかにしたいんだけど
+
+---
+
+そうしよう
+
+---
+
+コミットして
+
+---
+
+lessonはコミットしたい
