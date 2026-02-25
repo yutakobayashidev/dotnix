@@ -105,14 +105,52 @@
       "**/CLAUDE.local.md"
     ];
     settings = {
+      alias = {
+        clone = "clone --recursive";
+        logg = "log --graph --abbrev-commit --pretty=format:\"%C(yellow)%h%C(reset) - %C(cyan)%ad%C(reset) %C(green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%n\"";
+        swor = ''!f() { local -r ref=$(git branch -r | fzf); git sw "''${1:-''${ref#*/}}" $ref; }; f'';
+        swf = "!git branch -a | fzf | xargs git switch";
+        sms = "submodule foreach \"git status\"";
+        root = "rev-parse --show-toplevel";
+        uncommit = "reset HEAD^";
+        recommit = "commit -c ORIG_HEAD";
+      };
       user = {
         name = "yutakobayashidev";
         email = "hi@yutakobayashi.com";
       };
-      push.autoSetupRemote = true;
+      push = {
+        default = "simple";
+        autoSetupRemote = true;
+        useForceIfIncludes = true;
+      };
+      commit.verbose = true;
+      rebase = {
+        autoStash = true;
+        autoSquash = true;
+        updateRefs = true;
+      };
+      merge = {
+        ff = false;
+        conflictstyle = "zdiff3";
+      };
+      fetch = {
+        writeCommitGraph = true;
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
       pull.rebase = true;
       init.defaultBranch = "main";
+      column.ui = "auto";
+      branch.sort = "-committerdate";
+      help.autocorrect = "prompt";
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
       wt.basedir = ".git/worktree";
+      wt.remover = "trash";
     };
   };
 }
