@@ -15,7 +15,7 @@ No explanation needed for proficient areas. Apply this rule when tools from lear
 
 ### 1. Compare Similar Tools
 
-List the major alternatives in the category and briefly explain the differences.
+List the major alternatives in the category and briefly explain the differences. **Use existing domain knowledge first. Do NOT WebSearch unless knowledge cutoff makes the information unreliable.**
 
 - Design philosophy and use-case differences
 - Analogies to technologies the user already knows (e.g. "This is the equivalent of ESLint in TypeScript")
@@ -23,7 +23,7 @@ List the major alternatives in the category and briefly explain the differences.
 
 ### 2. Fetch Objective Metrics with repiq
 
-Use the `repiq` skill to fetch objective metrics (stars, downloads, maintenance activity, etc.) for each candidate tool.
+Use the `repiq` skill to fetch objective metrics (stars, downloads, maintenance activity, etc.) for each candidate tool. repiq provides sufficient data for comparison — WebSearch is unnecessary for metrics.
 
 ### 3. Present a Recommendation
 
