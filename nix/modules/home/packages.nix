@@ -24,12 +24,7 @@
     repiq
     nil
     nix-init
-    google-cloud-sdk
-    nodejs_22
-    bun
     ni
-    cmake
-    typst
 
     # Google Suite
     gogcli

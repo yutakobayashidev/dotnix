@@ -108,7 +108,6 @@
       url = "github:natsukium/mcp-servers-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    moonbit-overlay.url = "github:moonbit-community/moonbit-overlay";
     nix-filter.url = "github:numtide/nix-filter";
     # TODO: Pinned to specific nixpkgs commit as workaround for nix-community/nix-on-droid#495
     # Issue: "getting pseudoterminal attributes: Permission denied" with nixpkgs after 2026-01-24
@@ -156,7 +155,6 @@
       ghostty,
       gh-nippou,
       gh-graph,
-      moonbit-overlay,
       brew-nix,
       ...
     }:
@@ -191,9 +189,6 @@
             gh-nippou.overlays.default
             gh-graph.overlays.default
             (import ./nix/overlays/default.nix)
-          ]
-          ++ nixpkgs.lib.optionals (!isDarwin) [
-            moonbit-overlay.overlays.default
           ]
           ++ nixpkgs.lib.optionals isDarwin [
             brew-nix.overlays.default

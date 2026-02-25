@@ -103,7 +103,6 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **Communication**: halloy (IRC)
 - **Editors**: Neovim, VSCode
 - **Terminal**: Ghostty, Zsh + Oh My Zsh
-- **Development**: Node.js, Bun, MoonBit, Google Cloud SDK, Typst
 - **Network**: nmap, bandwhich, speedtest-cli
 
 ## Agent Skills
