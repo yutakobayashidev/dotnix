@@ -1,0 +1,328 @@
+nixpkgs,ベースはstableのやつを使うようにしたい、なんかビルドコケるのがあるので
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+よさそう
+
+---
+
+[Request interrupted by user]
+
+---
+
+よさそう、ただし名前はnixpkgs-unstableにして
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ±  nix run .#build
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Building darwin configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … in the condition of the assert statement
+         at REDACTED.nix:25:1:
+           24|
+           25| assert enableNixpkgsReleaseCheck -> checkRelease lib || throw ''
+             | ^
+           26|
+
+       … in the right operand of the IMPL (->) operator
+         at REDACTED.nix:25:34:
+           24|
+           25| assert enableNixpkgsReleaseCheck -> checkRelease lib || throw ''
+             |                                  ^
+           26|
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error:
+       nix-darwin now uses release branches that correspond to Nixpkgs releases.
+       The nix-darwin and Nixpkgs branches in use must match, but you are currently
+       using nix-darwin 26.05 with Nixpkgs 25.11.
+
+       On macOS, you should use either the `nixpkgs-unstable` or
+       `nixpkgs-YY.MM-darwin` branches of Nixpkgs. These correspond to the
+       `master` and `nix-darwin-YY.MM` branches of nix-darwin, respectively. Check
+       <https://status.nixos.org/> for the currently supported Nixpkgs releases.
+
+       If you’re using flakes, make sure your inputs look like this:
+
+           inputs = {
+             nixpkgs.url = "github:NixOS/nixpkgs/NIXPKGS-BRANCH";
+             nix-darwin.url = "github:nix-darwin/nix-darwin/NIX-DARWIN-BRANCH";
+             nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+             # …
+           };
+
+       If you’re using channels, you can check your current channels with:
+
+           $ sudo nix-channel --list
+           nixpkgs https://nixos.REDACTED
+           darwin https://github.com/nix-darwin/nix-darwin/archive/NIX-DARWIN-BRANCH.tar.gz
+           …
+           $ nix-channel --list
+           …
+
+       If `darwin` or `nixpkgs` are present in `nix-channel --list` (without
+       `sudo`), you should delete them with `nix-channel --remove NAME`. These can
+       contribute to version mismatch problems.
+
+       You can then fix your channels like this:
+
+           $ sudo nix-channel --add https://nixos.REDACTED nixpkgs
+           $ sudo nix-channel --add https://github.com/nix-darwin/nix-darwin/archive/NIX-DARWIN-BRANCH.tar.gz darwin
+           $ sudo nix-channel --update
+
+       After that, activating your system again should work correctly. If it
+       doesn’t, please open an issue at
+       <https://github.com/nix-darwin/nix-darwin/issues/new> and include as much
+       information as possible.
+┏━ 1 Errors:
+ ⋮
+┃              nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+┃              # …
+┃            };
+┃
+┃        If you’re using channels, you can check your current channels with:
+┃
+┃            $ sudo nix-channel --list
+┃            nixpkgs https://nixos.REDACTED
+┃            darwin https://github.com/nix-darwin/nix-darwin/archive/NIX-DARWIN-BRANCH.tar.gz
+┃            …
+┃            $ nix-channel --list
+┃            …
+┃
+┃        If `darwin` or `nixpkgs` are present in `nix-channel --list` (without
+┃        `sudo`), you should delete them with `nix-channel --remove NAME`. These can
+┃        contribute to version mismatch problems.
+┃
+┃        You can then fix your channels like this:
+┃
+┃            $ sudo nix-channel --add https://nixos.REDACTED nixpkgs
+┃            $ sudo nix-channel --add https://github.com/nix-darwin/nix-darwin/archive/NIX-DARWIN-BRANCH.tar.gz darwin
+┃            $ sudo nix-channel --update
+┃
+┃        After that, activating your system again should work correctly. If it
+┃        doesn’t, please open an issue at
+┃        <https://github.com/nix-darwin/nix-darwin/issues/new> and include as much
+┃        information as possible.
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 19:51:49 after 0s
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ± 
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  nix run .#build
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Building darwin configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
+error:
+       … while evaluating the attribute 'optionalValue.value'
+         at REDACTED.nix:1256:5:
+         1255|
+         1256|     optionalValue = if isDefined then { value = mergedValue; } else { };
+             |     ^
+         1257|   };
+
+       … while evaluating a branch condition
+         at REDACTED.nix:1256:21:
+         1255|
+         1256|     optionalValue = if isDefined then { value = mergedValue; } else { };
+             |                     ^
+         1257|   };
+
+       … while evaluating definitions from `REDACTED':
+
+       … while evaluating the option `home-manager.users.yuta.home.file':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.xdg.dataFile':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       … while evaluating the option `home-manager.users.yuta.programs.gh.extensions':
+
+       … while evaluating definitions from `REDACTED.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: attribute 'gh-do' missing
+       at REDACTED.nix:13:7:
+           12|       pkgs.gh-notify
+           13|       pkgs.gh-do
+             |       ^
+           14|     ];
+       Did you mean one of gh-eco, gh-f, gh-i, gh-poi or gh-s?
+┏━ 1 Errors:
+ ⋮
+┃          1256|     optionalValue = if isDefined then { value = mergedValue; } else { };
+┃              |                     ^
+┃          1257|   };
+┃
+┃        … while evaluating definitions from `REDACTED':
+┃
+┃        … while evaluating the option `home-manager.users.yuta.home.file':
+┃
+┃        … while evaluating definitions from `REDACTED.nix':
+┃
+┃        … while evaluating the option `home-manager.users.yuta.xdg.dataFile':
+┃
+┃        … while evaluating definitions from `REDACTED.nix':
+┃
+┃        … while evaluating the option `home-manager.users.yuta.programs.gh.extensions':
+┃
+┃        … while evaluating definitions from `REDACTED.nix':
+┃
+┃        (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+┃
+┃        error: attribute 'gh-do' missing
+┃        at REDACTED.nix:13:7:
+┃            12|       pkgs.gh-notify
+┃            13|       pkgs.gh-do
+┃              |       ^
+┃            14|     ];
+┃        Did you mean one of gh-eco, gh-f, gh-i, gh-poi or gh-s?
+┣━━━
+┗━ ∑ ⚠ Exited with 1 errors reported by nix at 19:54:14 after 3s
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 
+
+---
+
+うーん戻して、 nixpkgsがunstable,stableがnixpkgs-stableという名前空間にして、壊れたやつだけstableにするほうがいい気がしてきてあ
+
+---
+
+openssl> clang  -I. -Iinclude -fPIC -arch arm64 -O3 -Wall -DL_ENDIAN -DOPENSSL_PIC -DOPENSSL_CPUID_OBJ -DOPENSSL_BN_ASM_MONT -DSHA1_ASM -DSHA256_ASM -DSHA512_ASM -DKECCAK1600_ASM -DVPAES_ASM -DECP_NISTZ256_ASM -DPOLY1305_ASM -DOPENSSLDIR="\"REDACTED.1.1w/etc/ssl\"" -DENGINESDIR="\"REDACTED.1.1w/lib/engines-1.1\"" -D_REENTRANT -DNDEBUG  -MMD -MF crypto/dso/dso_dl.d.tmp -MT crypto/dso/dso_dl.o -c -o crypto/dso/dso_dl.o crypto/dso/dso_dl.c
+rust-std> building 'REDACTED.92.0-aarch64-apple-darwin.drv'
+rustc> building 'REDACTED.92.0-aarch64-apple-darwin.drv'
+error: Cannot build 'REDACTED.13-jeepney-0.9.drv'.
+       Reason: builder failed with exit code 127.
+       Output paths:
+         REDACTED.13-jeepney-0.9-dist
+         REDACTED.13-jeepney-0.9
+       Last 25 log lines:
+       > Running phase: buildPhase
+       > Executing pypaBuildPhase
+       > Creating a wheel...
+       > pypa build flags: --no-isolation --outdir dist/ --wheel
+       > * Getting build dependencies for wheel...
+       > * Building wheel...
+       > Successfully built jeepney-0.9.0-py3-none-any.whl
+       > Finished creating a wheel...
+       > Finished executing pypaBuildPhase
+       > Running phase: pythonRuntimeDepsCheckHook
+       > Executing pythonRuntimeDepsCheck
+       > Checking runtime dependencies for jeepney-0.9.0-py3-none-any.whl
+       > Finished executing pythonRuntimeDepsCheck
+       > Running phase: installPhase
+       > Executing pypaInstallPhase
+       > Successfully installed jeepney-0.9.0-py3-none-any.whl
+       > Finished executing pypaInstallPhase
+       > Running phase: pythonOutputDistPhase
+       > Executing pythonOutputDistPhase
+       > Finished executing pythonOutputDistPhase
+       > Running phase: fixupPhase
+       > checking for references to /nix/var/nix/builds/nix-92019-215327886/ in REDACTED.13-jeepney-0.9...
+       > patching script interpreter paths in REDACTED.13-jeepney-0.9
+       > stripping (with command strip and flags -S) in  REDACTED.13-jeepney-0.9/lib
+       > checking for references to /nix/var/nix/builds/nix-92019-215327886/ in REDACTED.13-jeepney-0.9-dist...
+       For full logs, run:
+         nix log REDACTED.13-jeepney-0.9.drv
+error: Cannot build 'REDACTED.13-secretstorage-3.5.0.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.13-secretstorage-3.5.0
+         REDACTED.13-secretstorage-3.5.0-dist
+error: Cannot build 'REDACTED.02.21.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.02.21-dist
+         REDACTED.02.21
+system-applications> building 'REDACTED.drv'
+system-path> building 'REDACTED.drv'
+ttfautohint> building 'REDACTED.8.4.drv'
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED
+error: Cannot build 'REDACTED.05.6a7fdcd.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         REDACTED.05.6a7fdcd
+┏━ 10 Errors:
+ ⋮
+┃             ┌─ ⏸ python3.13-fontmake-3.11.1
+┃          ┌─ ⏸ python3-3.13.12-env
+┃       ┌─ ⏸ python3.13-gftools-0.9.991
+┃    ┌─ ⏸ jetbrains-mono-2.304
+┃ ┌─ ⏸ fonts
+┃ │           ┌─ ⏵ gh-nippou-74f87d2 (checkPhase) ⏱ 5m13s
+┃ │        ┌─ ⏸ gh-extensions
+┃ │        │                 ┌─ ⏵ rustc-1.92.0-aarch64-apple-darwin ⏱ 10s
+┃ │        │                 ├─ ⏵ rust-std-1.92.0-aarch64-apple-darwin ⏱ 12s
+┃ │        │              ┌─ ⏸ rust-minimal-1.92.0
+┃ │        │           ┌─ ⏸ version-lsp-deps-0.5.1
+┃ │        │        ┌─ ⏸ version-lsp-0.5.1
+┃ │        │     ┌─ ⏸ neovim-0.11.6
+┃ │        │     │  ┌─ ⏵ openssl-1.1.1w (buildPhase) ⏱ 5m12s
+┃ │        │     ├─ ⏸ tunnelto-0.1.18
+┃ │        │     ├─ ⏵ slack-4.48.95 (unpackPhase) ⏱ 5m56s
+┃ │        │     ├─ ⏵ ogdesign-eagle-4.0-18 (unpackPhase) ⏱ 6m2s
+┃ │        │     ├─ ⏵ jj-desc-0.4.3 (buildPhase) ⏱ 6m3s
+┃ │        │  ┌─ ⏸ home-manager-fonts
+┃ │        ├─ ⏸ hm_LibraryFonts.homemanagerfontsversion
+┃ │     ┌─ ⏸ home-manager-files
+┃ │  ┌─ ⏸ home-manager-generation
+┃ ├─ ⏸ activation-yuta
+┃ ⏸ darwin-system-26.05.6a7fdcd
+┣━━━ Builds            │ Downloads        │ Host
+┃    ⏵ 8 │ ✔ 14 │      │     │      │     │ localhost
+┃        │      │      │     │ ↓ 18 │     │ [1]: https://cache.nixos.org
+┃        │      │      │     │ ↓  1 │     │ [2]: https://cache.numtide.com
+┗━ ∑ ⏵ 8 │ ✔ 14 │ ⏸ 43 │ ↓ 0 │ ↓ 19 │ ⏸ 0 │ ⚠ Exited with 10 errors reported by nix at 20:07:49 after 7m0s
+
+---
+
+unstableのせい？
+
+---
+
+差分みてコミットして
+
+---
+
+[Request interrupted by user]
