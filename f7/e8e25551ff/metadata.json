@@ -1,0 +1,31 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "f7e8e25551ff",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.lock",
+    "flake.nix",
+    "nix/hosts/M2-MacBook-Air/default.nix",
+    "nix/hosts/Still-Legend-x870/default.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/home/default.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f7/e8e25551ff/0/metadata.json",
+      "transcript": "/f7/e8e25551ff/0/full.jsonl",
+      "context": "/f7/e8e25551ff/0/context.md",
+      "content_hash": "/f7/e8e25551ff/0/content_hash.txt",
+      "prompt": "/f7/e8e25551ff/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2041,
+    "cache_creation_tokens": 74877,
+    "cache_read_tokens": 892333,
+    "output_tokens": 4421,
+    "api_call_count": 31
+  }
+}

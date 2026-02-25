@@ -1,0 +1,43 @@
+claude/rulesに、ユーザーがあまり知らないエコシステムのツールチェーンに関しては、それぞれのツールの違いとrepiq skillsで客観的なメトリクスを取得して解説をするように求めるルールを追加して。ユーザーが得意なのはWeb toolchain,TypeScript,Terraform,Go,Nix,Python　学習中なのが、Go,BI,ETL / ELT,R Lang,Typstなどです
+
+---
+
+repiqはコマンドじゃないしスキルに委ねる儂出導線だけでいい
+
+---
+
+あと、Rustも
+
+---
+
+/rules以下は全部英語にして
+
+---
+
+コミットして
+
+---
+
+repo-creator commandsを作って。claudeの。ユーザーにプロジェクト名を聞き,ghq create,また、ツールチェーンを質問し、 nfiコマンドの中で使われてる--jsonから(the-nix-way/dev-templates)の中からflakeを選択。github cliでライセンス、gitignoreなども生成
+
+---
+
+コミットして
+
+---
+
+yuta@UM790-Pro  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ±  git push
+[entire] Pushing session logs to origin...
+cleaTo https://github.com/yutakobayashidev/dotnix.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/yutakobayashidev/dotnix.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+ ✘ yuta@UM790-Pro  ~/ghq/github.com/yutakobayashidev/dotnix  ↱ main ± 
+
+---
+
+gitkeep消して
