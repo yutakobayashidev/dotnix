@@ -11,6 +11,8 @@ let
   claudeConfigDir = "${config.xdg.configHome}/claude";
   claudeDotfilesDir = "${dotfilesDir}/claude";
   jq = lib.getExe pkgs.jq;
+  terminal-notifier =
+    if pkgs.stdenv.isDarwin then lib.getExe' pkgs.terminal-notifier "terminal-notifier" else "";
 
   mcpServers =
     (inputs.mcp-servers-nix.lib.evalModule pkgs {
@@ -123,6 +125,16 @@ in
               {
                 type = "command";
                 command = "${claudeDotfilesDir}/hooks/notify.zsh";
+              }
+            ];
+          }
+        ];
+        Notification = lib.optionals pkgs.stdenv.isDarwin [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "${jq} -r '.message' | xargs -I {} ${terminal-notifier} -message \"{}\" -title \"Claude Code\" -group \"$(pwd):hook\" -activate com.mitchellh.ghostty";
               }
             ];
           }
