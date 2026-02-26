@@ -107,6 +107,16 @@ in
             ];
           }
         ];
+        Stop = lib.optionals pkgs.stdenv.isDarwin [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "${claudeDotfilesDir}/hooks/notify.zsh";
+              }
+            ];
+          }
+        ];
         WorktreeCreate = [
           {
             hooks = [
