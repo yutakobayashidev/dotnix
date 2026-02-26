@@ -1,0 +1,28 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "673f2b04bd51",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "claude/hooks/notify.zsh",
+    "nix/modules/home/programs/claude-code.nix",
+    "nix/modules/home/programs/ghostty/config"
+  ],
+  "sessions": [
+    {
+      "metadata": "/67/3f2b04bd51/0/metadata.json",
+      "transcript": "/67/3f2b04bd51/0/full.jsonl",
+      "context": "/67/3f2b04bd51/0/context.md",
+      "content_hash": "/67/3f2b04bd51/0/content_hash.txt",
+      "prompt": "/67/3f2b04bd51/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2445,
+    "cache_creation_tokens": 13993,
+    "cache_read_tokens": 746611,
+    "output_tokens": 1573,
+    "api_call_count": 21
+  }
+}
