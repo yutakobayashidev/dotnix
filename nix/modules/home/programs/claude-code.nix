@@ -107,7 +107,17 @@ in
             ];
           }
         ];
-        Stop = lib.optionals pkgs.stdenv.isDarwin [
+        Stop = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = "${claudeDotfilesDir}/hooks/notify.zsh";
+              }
+            ];
+          }
+        ];
+        PermissionRequest = [
           {
             hooks = [
               {
