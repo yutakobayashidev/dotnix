@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "b363f87278d9",
+  "session_id": "afc90696-6564-4f0b-9f39-ac1ecb417255",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-27T03:04:07.302793Z",
+  "branch": "main",
+  "checkpoints_count": 4,
+  "files_touched": [
+    ".sops.yaml",
+    "flake.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/linux/networking.nix",
+    "nix/modules/linux/sops.nix",
+    "nix/profiles/gui.nix",
+    "secrets/secrets.yaml",
+    "tasks/todo.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "61f2cab47820",
+  "token_usage": {
+    "input_tokens": 405,
+    "cache_creation_tokens": 367202,
+    "cache_read_tokens": 5661145,
+    "output_tokens": 28584,
+    "api_call_count": 103
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-27T03:04:06.75984Z",
+    "agent_lines": 88,
+    "human_added": 31,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 119,
+    "agent_percentage": 73.94957983193278
+  }
+}
