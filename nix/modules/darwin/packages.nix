@@ -9,6 +9,7 @@
     [
       # Terminal
       ghostty-bin
+      difit
 
       # macOS CLI tools
       terminal-notifier

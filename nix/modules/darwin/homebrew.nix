@@ -8,6 +8,7 @@
       cleanup = "uninstall";
     };
     taps = [
+      "manaflow-ai/cmux"
       "trasta298/tap"
     ];
     brews = [
@@ -52,6 +53,7 @@
       "virtual-desktop-streamer"
 
       # Other
+      "cmux"
       "bitcoin-core"
       "keybase"
       "tor-browser"
