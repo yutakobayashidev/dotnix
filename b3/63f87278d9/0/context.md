@@ -1,0 +1,34 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+これをtask.mdに追加して # 1. age public key を取得
+  nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+  # → .sops.yaml のプレースホルダーを置換
+
+  # 2. secrets を暗号化
+  nix-shell -p sops --run 'sops secrets/secrets.yaml'
+  # → wifi_env の WIFI_PSK_HOME を実際のパスワードに、SSID も networking.nix で設定
+
+  # 3. 適用
+  nix run .#switch
+
+### Prompt 2
+
+[Request interrupted by user for tool use]
+
+### Prompt 3
+
+これをtask.mdに追加して # 1. age public key を取得
+  nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+  # → .sops.yaml のプレースホルダーを置換
+
+  # 2. secrets を暗号化
+  nix-shell -p sops --run 'sops secrets/secrets.yaml'
+  # → wifi_env の WIFI_PSK_HOME を実際のパスワードに、SSID も networking.nix で設定
+
+  # 3. 適用
+  nix run .#switch
+
