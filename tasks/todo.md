@@ -2,16 +2,10 @@
 
 ## agent-skills-nix: `pkgs.system` 廃止対応
 
-- [ ] `Kyure-A/agent-skills-nix` に issue を立てる
-  - `pkgs.system` が5箇所で使われており `evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'` が発生
-  - 該当箇所:
-    - `flake.nix:85` — `system = pkgs.system;`
-    - `lib/default.nix:387` — `activeTargets = targetsFor { ... system = pkgs.system; };`
-    - `lib/default.nix:523` — `system ? pkgs.system,`
-    - `modules/home-manager/agent-skills.nix:15` — `system = pkgs.system;`
-    - `modules/home-manager/agent-skills.nix:24` — `system = pkgs.system;`
-  - 修正: `pkgs.system` → `pkgs.stdenv.hostPlatform.system`
-- [ ] upstream 修正後、`nix flake update agent-skills` で取り込む
+- [x] `Kyure-A/agent-skills-nix` に issue を立てる → https://github.com/Kyure-A/agent-skills-nix/issues/23
+- [x] PR を送る → https://github.com/Kyure-A/agent-skills-nix/pull/24 (draft)
+  - 4ファイル7箇所: `pkgs.system` → `pkgs.stdenv.hostPlatform.system`
+- [ ] PR マージ後、`nix flake update agent-skills` で取り込む
 
 ## sops-nix: WiFi秘密情報のセットアップ
 
