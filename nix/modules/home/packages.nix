@@ -53,6 +53,7 @@
     yazi
     imagemagick
     ffmpeg
+    python313Packages.markitdown
     stable.yt-dlp
     halloy
     obsidian
