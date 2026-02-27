@@ -25,6 +25,7 @@
 - `social-digest` - Discord + Mastodon投稿をObsidianに保存
 - `oura-daily-watch` - Oura Ring データ + Discord行動分析
 - `markitdown` - 各種ファイル（PDF, DOCX, PPTX等）をMarkdownに変換
+- `speakerdeck` - SpeakerDeckスライド画像のダウンロード
 
 ### Anthropic公式スキル
 
