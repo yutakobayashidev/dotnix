@@ -103,15 +103,15 @@ in
       };
       hooks = {
         PreToolUse = [
-          {
-            matcher = "Read";
-            hooks = [
-              {
-                type = "command";
-                command = "${claudeDotfilesDir}/hooks/obsidian-backlinks.zsh";
-              }
-            ];
-          }
+          # {
+          #   matcher = "Read";
+          #   hooks = [
+          #     {
+          #       type = "command";
+          #       command = "${claudeDotfilesDir}/hooks/obsidian-backlinks.zsh";
+          #     }
+          #   ];
+          # }
           {
             matcher = "Bash";
             hooks = [

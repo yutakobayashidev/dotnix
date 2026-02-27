@@ -25,6 +25,7 @@ nixpkgs.lib.nixosSystem {
   };
   modules = [
     home-manager.nixosModules.home-manager
+    inputs.sops-nix.nixosModules.sops
     ../../modules/linux
     ./hardware-configuration.nix
     ../../profiles/gui.nix
