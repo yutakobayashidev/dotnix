@@ -13,7 +13,7 @@ Download all slide images from a SpeakerDeck presentation URL. Zero dependencies
 ## Run
 
 ```bash
-BUN_BE_BUN=1 claude {baseDir}/scripts/speakerdeck.ts <speakerdeck-url> [-o output-dir]
+nix-shell -p bun --run "bun {baseDir}/scripts/speakerdeck.ts <speakerdeck-url> [-o output-dir]"
 ```
 
 ### Arguments
@@ -40,14 +40,14 @@ BUN_BE_BUN=1 claude {baseDir}/scripts/speakerdeck.ts <speakerdeck-url> [-o outpu
 ### Read slides with Claude Vision
 
 ```bash
-result=$(BUN_BE_BUN=1 claude {baseDir}/scripts/speakerdeck.ts "https://speakerdeck.com/user/talk")
+result=$(nix-shell -p bun --run "bun {baseDir}/scripts/speakerdeck.ts 'https://speakerdeck.com/user/talk'")
 # Then use the file paths from the JSON output with Read tool
 ```
 
 ### Convert to Markdown with markitdown
 
 ```bash
-result=$(BUN_BE_BUN=1 claude {baseDir}/scripts/speakerdeck.ts "https://speakerdeck.com/user/talk")
+result=$(nix-shell -p bun --run "bun {baseDir}/scripts/speakerdeck.ts 'https://speakerdeck.com/user/talk'")
 dir=$(echo "$result" | jq -r '.outputDir')
 for f in "$dir"/*.jpg; do markitdown "$f"; done
 ```
@@ -61,5 +61,5 @@ for f in "$dir"/*.jpg; do markitdown "$f"; done
 ## Notes
 
 - Images are 1920x1080 JPEG from SpeakerDeck's CDN
-- Zero external dependencies — runs with `BUN_BE_BUN=1 claude` (no bun/node install needed)
+- Zero external dependencies — bun is provided via `nix-shell -p bun`
 - Private or password-protected presentations are not supported
