@@ -32,6 +32,8 @@ nix flake update
 - `oura-daily-watch` - Oura Ring データ + Discord行動分析（ローカル）
 - `check-similarity` - TypeScript/JavaScript重複コード検知（ローカル）
 - `dce` - Dead Code Elimination（ローカル）
+- `markitdown` - 各種ファイル（PDF, DOCX, PPTX等）をMarkdownに変換（ローカル）
+- `speakerdeck` - SpeakerDeckスライド画像のダウンロード（ローカル）
 - `docx`, `pdf`, `pptx`, `xlsx` - ドキュメント処理（Anthropic）
 - `frontend-design`, `skill-creator`, `webapp-testing` - 開発支援（Anthropic）
 - `find-skills` - スキル検索・発見支援（Vercel）
