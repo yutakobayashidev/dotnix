@@ -1,0 +1,265 @@
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system' plz fix
+
+---
+
+直して
+
+---
+
+これをtasks/にメモしておいて。あとでやる
+
+---
+
+変更を戻しておいて
+
+---
+
+壁紙がオタクすぎるので、外出時にだけ切り替えるオートメーションを作りたいんだけどできるかな
+
+---
+
+wifiがいいな、ズボラだから
+
+---
+
+まずSSIDをnixで管理することから始めたいな、それができるのはnixosだったっけ
+
+---
+
+networking.networkmanager.ensureProfiles.profilesではない？
+
+---
+
+うん
+
+---
+
+それtaskに書き込んでおいて、gitignore外してそれmko見ッtsoいて押いて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+続けて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+[Request interrupted by user]
+
+---
+
+おけ、SSID,
+
+---
+
+[Image: source: /var/folders/vv/mxnw00710vz1tlm22yrds99c0000gn/T/TemporaryItems/NSIRD_screencaptureui_ynCn0r/screenshots 2026-02-27 at 12.02.57.jpg]
+
+---
+
+コミットして
+
+---
+
+じゃあ壁紙の件
+
+---
+
+今使ってるパスってコマンドで分からないんだっけ
+
+---
+
+macOS デフォルト
+
+---
+
+y
+
+---
+
+上書きして
+
+---
+
+[Request interrupted by user]
+
+---
+
+いいですね、
+
+---
+
+Sonomaじゃなくて、Tahoeにできる？
+
+---
+
+y
+
+---
+
+今tahoe
+
+---
+
+[Request interrupted by user]
+
+---
+
+https://apple.stackexchange.com/questions/475370/networksetup-getairportnetwork-return-you-are-not-associated-with-an-airport-ne
+
+---
+
+[Request interrupted by user]
+
+---
+
+Asked 1 year, 5 months ago
+Modified 7 months ago
+Viewed 4k times
+
+Report this ad
+12
+
+I’m trying to retrieve the name of my Wi-Fi network via the terminal, but I’m encountering some issues.
+
+I tried with the command:
+
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s
+However, it returns the following warning:
+
+WARNING: The airport command line tool is deprecated and will be removed in a future release.
+For diagnosing Wi-Fi related issues, use the Wireless Diagnostics app or the wdutil command line tool.
+I also tried:
+
+networksetup -getairportnetwork en0
+But it returns:
+
+You are not associated with an AirPort network.
+Even though I am connected to Wi-Fi. I have tried disconnecting and reconnecting, as well as deleting the following .plist files in /Library/Preferences/SystemConfiguration/:
+
+com.apple.airport.preferences.plist
+com.apple.network.identification.plist
+com.apple.wifi.message-tracer.plist
+NetworkInterfaces.plist
+preferences.plist
+Despite these efforts, I still have not resolved the issue.
+
+I DON'T want to use wdutil since it requires the sudo password. Is there any way to fix the problem with networksetup, or is there an alternative method to retrieve the Wi-Fi name?
+
+Specifications: macOS Sequoia 15.0 Apple Silicon M3 Pro
+
+UPDATE: Today I reset my mac to the factory settings and the system installed Sonoma as the default OS. I have tried the terminal command networksetup and it works fine. After updating again to Sequoia the problem appears again so I think the problem is directly related to this new update. Unfortunately, I can't find any info about deprecation or warnings on the man.
+
+macosnetworkcommand-linewifiairport
+Share
+Improve this question
+Follow
+edited Sep 18, 2024 at 17:54
+nohillside's user avatar
+nohillside♦
+109k4343 gold badges231231 silver badges293293 bronze badges
+asked Sep 16, 2024 at 21:14
+Piero's user avatar
+Piero
+27022 silver badges1010 bronze badges
+Please post your solution as an answer below. – 
+nohillside
+♦
+ CommentedSep 18, 2024 at 17:55
+@nohillside I haven't found a solution yet – 
+Piero
+ CommentedSep 18, 2024 at 20:45
+Yep, it's silently gone with Sequoia... – 
+Halil Özgür
+ CommentedSep 23, 2024 at 13:11
+Add a comment
+5 Answers
+Sorted by:
+
+Highest score (default)
+11
+
+From my limited testing networksetup -listpreferredwirelessnetworks en0 outputs a list of Wifi SSIDs where the first one is the one you're connected to.
+
+Then it would be a matter of formatting the output:
+
+networksetup -listpreferredwirelessnetworks en0 | sed -n '2 p' | tr -d '\t'
+I'd like to confirm if this behavior is the same for others as well.
+
+EDIT:
+
+Also works:
+
+ipconfig getsummary en0 | awk -F ' SSID : '  '/ SSID : / {print $2}'
+Credit: https://github.com/FelixKratz/SketchyBar/issues/616#issuecomment-2370891970
+
+Share
+Improve this answer
+Follow
+edited Sep 27, 2024 at 17:53
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+try _get_wifi_ifname() {
+  if ! scutil <<< list |
+    awk -F/ '/Setup:.*AirPort$/{i=$(NF-1);exit} END {if(i) {print i} else {exit 1}}'; then
+    scutil <<< list | awk -F/ '/en[0-9]+\/AirPort$/ {print $(NF-1);exit}'
+  fi
+}
+
+networksetup -listpreferredwirelessnetworks "$(_get_wifi_ifname)" |
+awk 'NR==2 && sub("\t","") { print; exit }'
+
+---
+
+yes
+
+---
+
+動作テストしたい
+
+---
+
+wifiオフにしたけおd切り替わらない
+
+---
+
+変わらないね
+
+---
+
+[Request interrupted by user for tool use]
