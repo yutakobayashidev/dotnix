@@ -75,6 +75,7 @@ in
         padding = 0;
       };
       permissions = {
+        defaultMode = "bypassPermissions";
         deny = [
           "Bash(rm -rf /*)"
           "Bash(rm -rf /)"
