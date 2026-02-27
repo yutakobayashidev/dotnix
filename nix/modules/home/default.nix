@@ -4,6 +4,7 @@
   imports = [
     ./dotfiles.nix
     ./agent-skills.nix
+    ./programs/cage.nix
     ./programs/claude-code.nix
     ./programs/codex.nix
     ./programs/git.nix

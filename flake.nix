@@ -104,6 +104,13 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    cage = {
+      url = "github:Warashi/cage";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.git-hooks.follows = "git-hooks";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
     mcp-servers-nix = {
       url = "github:natsukium/mcp-servers-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -185,6 +192,7 @@
               _version-lsp = version-lsp;
               _ghostty = ghostty;
               _repiq = inputs.repiq;
+              _cage = inputs.cage;
             })
             gh-nippou.overlays.default
             gh-graph.overlays.default

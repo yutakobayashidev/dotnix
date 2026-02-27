@@ -10,7 +10,10 @@
 let
   claudeConfigDir = "${config.xdg.configHome}/claude";
   claudeDotfilesDir = "${dotfilesDir}/claude";
+  inherit (config.home) homeDirectory;
   jq = lib.getExe pkgs.jq;
+  rtk = lib.getExe pkgs.rtk;
+  rtkHookPath = "${homeDirectory}/.claude/hooks/rtk-rewrite.sh";
   terminal-notifier =
     if pkgs.stdenv.isDarwin then lib.getExe' pkgs.terminal-notifier "terminal-notifier" else "";
 
@@ -108,6 +111,16 @@ in
               }
             ];
           }
+          {
+            matcher = "Bash";
+            hooks = [
+              {
+                type = "command";
+                command = rtkHookPath;
+                timeout = 10;
+              }
+            ];
+          }
         ];
         Stop = [
           {
@@ -169,6 +182,11 @@ in
       config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/output-styles";
     "claude/rules".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/rules";
   };
+
+  home.activation.setupRtk = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    echo "Setting up rtk hook..."
+    ${rtk} init -g --hook-only --no-patch 2>/dev/null || true
+  '';
 
   home.activation.validateClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     SETTINGS_FILE="${claudeConfigDir}/settings.json"

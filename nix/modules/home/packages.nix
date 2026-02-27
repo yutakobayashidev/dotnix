@@ -8,6 +8,7 @@
     ccusage
     continues
     opencode
+    rtk
     vibe-kanban
     cursor-agent
     # Version Control

@@ -13,4 +13,5 @@ in
     cursor-agent
     entire
     ;
+  cage = prev._cage.packages.${system}.default;
 }

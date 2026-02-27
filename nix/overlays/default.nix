@@ -9,6 +9,7 @@ let
     ./opensrc.nix
     ./polycat.nix
     ./pretty-ts-errors-markdown.nix
+    ./rtk.nix
     ./similarity-ts.nix
     ./tunnelto.nix
   ];
