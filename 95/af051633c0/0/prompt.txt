@@ -1,0 +1,2 @@
+modified:   nix/modules/darwin/wallpaper-switcher.nix
+        modified:   nix/profiles/darwin.nix これらのdiffは消してこ見ットシテ
