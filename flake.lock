@@ -1261,11 +1261,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771994290,
-        "narHash": "sha256-seaZZnsLuFpa5TvI1iDFLsWfBVak5RZykSUlEFVa6R8=",
+        "lastModified": 1771998150,
+        "narHash": "sha256-2wNhBNysaFTp0UuKPg5ggdxGkDZi+BPKkuMAFEzcgIg=",
         "owner": "yutakobayashidev",
         "repo": "repiq",
-        "rev": "349845be36b5f31b50cb4b942f38adccf6322e2b",
+        "rev": "768a779c7129edf520bd0f9dfd1dfd3e31f4448c",
         "type": "github"
       },
       "original": {
