@@ -11,6 +11,9 @@
       ghostty-bin
       difit
 
+      # macOS apps (overlay)
+      readout
+
       # macOS CLI tools
       terminal-notifier
       coreutils
