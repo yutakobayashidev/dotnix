@@ -1,0 +1,25 @@
+tasks/todo.mdに取り組んで
+
+---
+
+ghq cloneしてforkしてpr送りたいな
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+draft prで
+
+---
+
+いいね、変更漏れがないかチェックして
+
+---
+
+tasks/todo.md更新
+
+---
+
+コミットして

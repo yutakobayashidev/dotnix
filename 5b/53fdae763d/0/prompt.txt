@@ -1,0 +1,72 @@
+MarkItDownはnix packageにありますか？調べて
+
+---
+
+mcpではなく、cliとして
+
+---
+
+追加して
+
+---
+
+コミットして
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main  sudo darwin-rebuild switch --flake .#M2-MacBook-Air
+
+building the system configuration...
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
+error:
+       … while calling the 'derivationStrict' builtin
+         at <nix/derivation-internal.nix>:37:12:
+           36|
+           37|   strict = derivationStrict drvAttrs;
+             |            ^
+           38|
+
+       … while evaluating derivation 'darwin-system-26.05.6a7fdcd'
+         whose name attribute is located at /nix/store/zkrz054gvl1dcxkw25d8lgx8l10px665-source/pkgs/stdenv/generic/make-derivation.nix:536:13
+
+       … while evaluating attribute 'activationScript' of derivation 'darwin-system-26.05.6a7fdcd'
+         at /nix/store/dj8xa2k16y1a2wv2qm7cjz4dzlwszsqs-source/modules/system/default.nix:89:7:
+           88|
+           89|       activationScript = cfg.activationScripts.script.text;
+             |       ^
+           90|
+
+       … while evaluating the option `system.activationScripts.script.text':
+
+       … while evaluating definitions from `/nix/store/dj8xa2k16y1a2wv2qm7cjz4dzlwszsqs-source/modules/system/activation-scripts.nix':
+
+       … while evaluating the option `system.activationScripts.postActivation.text':
+
+       … while evaluating definitions from `/nix/store/REDACTED/nix-darwin':
+
+       … while evaluating the option `home-manager.users.yuta.home.activation.checkFilesChanged.data':
+
+       … while evaluating definitions from `/nix/store/REDACTED/modules/files.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."Library/Fonts/.home-manager-fonts-version".onChange':
+
+       … while evaluating definitions from `/nix/store/REDACTED/modules/targets/darwin/fonts.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.packages':
+
+       … while evaluating definitions from `/nix/store/8rr13zn8cci0fndjfgnaj2dg28qjlvd9-source/nix/modules/home/packages.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: undefined variable 'markitdown'
+       at /nix/store/8rr13zn8cci0fndjfgnaj2dg28qjlvd9-source/nix/modules/home/packages.nix:56:5:
+           55|     ffmpeg
+           56|     markitdown
+             |     ^
+           57|     stable.yt-dlp
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main 
+
+---
+
+amendして

@@ -1,0 +1,90 @@
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system' plz fix
+
+---
+
+直して
+
+---
+
+これをtasks/にメモしておいて。あとでやる
+
+---
+
+変更を戻しておいて
+
+---
+
+壁紙がオタクすぎるので、外出時にだけ切り替えるオートメーションを作りたいんだけどできるかな
+
+---
+
+wifiがいいな、ズボラだから
+
+---
+
+まずSSIDをnixで管理することから始めたいな、それができるのはnixosだったっけ
+
+---
+
+networking.networkmanager.ensureProfiles.profilesではない？
+
+---
+
+うん
+
+---
+
+それtaskに書き込んでおいて、gitignore外してそれmko見ッtsoいて押いて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+続けて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+それtaskに書き込んでおい
+
+---
+
+[Request interrupted by user]
+
+---
+
+おけ、SSID,
+
+---
+
+[Image: source: /var/folders/vv/mxnw00710vz1tlm22yrds99c0000gn/T/TemporaryItems/NSIRD_screencaptureui_ynCn0r/screenshots 2026-02-27 at 12.02.57.jpg]
+
+---
+
+コミットして

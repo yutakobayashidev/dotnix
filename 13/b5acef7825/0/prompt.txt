@@ -1,0 +1,101 @@
+https://github.com/microsoft/markitdown MarkItDown
+
+---
+
+[Request interrupted by user]
+
+---
+
+https://github.com/microsoft/markitdown MarkItDownのAgents Skillsをagents/skillsに作って
+
+---
+
+コミットして
+
+---
+
+https://github.com/moqada/speakerdeck https://github.com/stk132/wril これ動くのか試してみて
+
+---
+
+https://github.com/hikagami0210/speakerdeck_to_markdown_mcp/blob/main/src/index.js これは比較的よさそう
+
+---
+
+pdfのmd化はMarkItDownでいいので、SpeakerDeckのスクレイピング部分のコードを参考にしてtstbund書き直して、agents skillsに同梱する形にして
+
+---
+
+[Request interrupted by user]
+
+---
+
+Puppeteerは使ったほうがいい気がする、できればplaywrightがいいけど
+
+---
+
+[Request interrupted by user]
+
+---
+
+それDeck Not Foundだけど
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+それもないよ
+
+---
+
+https://speakerdeck.com/line_developers/new-year-greeting-preparation-in-line-sticker
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+さっき参考にしたプロジェクト、丸々参考にしたら動きそうだけど、無理？
+
+---
+
+[Request interrupted by user]
+
+---
+
+PDF化ももいらん。ファイルを落とせればいい
+
+---
+
+[Request interrupted by user]
+
+---
+
+続けて
+
+---
+
+node modulesとか生えるのいやだカrこれを試したい https://efcl.info/2024/10/06/bun-single-file-executable-binary/
+
+---
+
+[Request interrupted by user]
+
+---
+
+依存関係0ならBUN_BE_BUN=1 claude foo.tsで言えkruよ
+
+---
+
+[Request interrupted by user]
+
+---
+
+違う、claudeもbunバイナリなのでBUN_BE_BUN=1 claudeでbunランタイムとして振る舞う
+
+---
+
+コミットして

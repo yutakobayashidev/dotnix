@@ -1,0 +1,37 @@
+/Users/yuta/ghq/github.com/kawarimidoll/dotfiles cageの実装を参考にこのプロジェクトにも取り入れtkuれる？
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+/Users/yuta/ghq/github.com/kawarimidoll/dotfiles cageの設定を参考にこのプロジェクトにも取り入れてくれる？
+
+---
+
+rtkの設定も参考にして
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+kawarimidoll/dotfilesはrtk-rewrite.shないけど自動生成されるんじゃないの？
+
+---
+
+ア劬手ベーションスクリプトでできないかな
+
+---
+
+設定してみた。反映されてる？確認してみて
+
+---
+
+実際にトリガーされるところを見たいんだけど
+
+---
+
+コミットして

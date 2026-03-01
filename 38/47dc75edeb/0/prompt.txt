@@ -1,0 +1,64 @@
+afplay /System/Library/Sounds/Pop.aiff &
+
+if echo "$VSCODE_GIT_ASKPASS_MAIN" | grep -q Cursor; then
+    osascript -e 'tell application "Cursor" to activate'
+elif [ "$TERM_PROGRAM" = "ghostty" ]; then
+    osascript -e 'tell application "Ghostty" to activate'
+fi  これ、claude/hooksに設定して
+
+---
+
+darwinにしてくれ
+
+---
+
+コミットして
+
+---
+
+SSHで繋いでるマシンでもクライアントが発火するようにできないのかな
+
+---
+
+これ、sshせずにlinux本体で実行したらどうなる？
+
+---
+
+tell applicationってlinuzで動くの？
+
+---
+
+printf '\a'って何
+
+---
+
+https://software-dc.com/blog/4-claude-code-tmux-how-i-got-notifications-working この記事見て
+
+---
+
+反映して
+
+---
+
+terminal-notifier =
+    if pkgs.stdenv.isDarwin then lib.getExe' pkgs.terminal-notifier "terminal-notifier" else "";
+         "Notification": [
+            {
+                "matcher": "",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "__JQ_PATH__ -r '.message' | xargs -I {} __TERMINAL_NOTIFIER_PATH__ -message \"{}\" -title \"Claude Hook\" -group \"$(pwd):hook\" -execute \"$(which wezterm) cli activate-pane --pane-id $WEZTERM_PANE\" -activate com.github.wez.wezterm"
+                    }
+                ]
+            }
+        ]
+ これdarwinの時だけ適用したいんだけど
+
+---
+
+何がどうなる？
+
+---
+
+コミットして

@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "13b5acef7825",
+  "session_id": "e28f2b7d-8cf2-4cf2-a2ac-b248b2f04071",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-27T04:18:04.768748Z",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "agents/README.md",
+    "agents/skills/speakerdeck/SKILL.md",
+    "agents/skills/speakerdeck/scripts/speakerdeck.ts"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "64544a157227",
+  "token_usage": {
+    "input_tokens": 1497,
+    "cache_creation_tokens": 87516,
+    "cache_read_tokens": 4272552,
+    "output_tokens": 38368,
+    "api_call_count": 65
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-27T04:18:04.146234Z",
+    "agent_lines": 0,
+    "human_added": 172,
+    "human_modified": 234,
+    "human_removed": 0,
+    "total_committed": 172,
+    "agent_percentage": 0
+  }
+}

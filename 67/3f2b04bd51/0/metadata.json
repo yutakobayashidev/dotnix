@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "673f2b04bd51",
+  "session_id": "e8cee93c-b497-4626-baf0-ec94101cea01",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-26T06:19:34.407719Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "claude/hooks/notify.zsh",
+    "nix/modules/home/programs/claude-code.nix",
+    "nix/modules/home/programs/ghostty/config"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "357ee82b5576",
+  "transcript_identifier_at_start": "4b86339f-1a61-426f-9f08-6e4e3fecb086",
+  "checkpoint_transcript_start": 74,
+  "transcript_lines_at_start": 74,
+  "token_usage": {
+    "input_tokens": 2445,
+    "cache_creation_tokens": 13993,
+    "cache_read_tokens": 746611,
+    "output_tokens": 1573,
+    "api_call_count": 21
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-26T06:19:34.238483Z",
+    "agent_lines": 14,
+    "human_added": 15,
+    "human_modified": 2,
+    "human_removed": 0,
+    "total_committed": 31,
+    "agent_percentage": 45.16129032258064
+  },
+  "transcript_path": ".config/claude/projects/-Users-yuta-ghq-github-com-yutakobayashidev-dotnix/e8cee93c-b497-4626-baf0-ec94101cea01.jsonl"
+}

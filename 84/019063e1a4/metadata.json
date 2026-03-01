@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "84019063e1a4",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "claude/hooks/obsidian-backlinks.zsh",
+    "nix/modules/home/programs/claude-code.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/84/019063e1a4/0/metadata.json",
+      "transcript": "/84/019063e1a4/0/full.jsonl",
+      "context": "/84/019063e1a4/0/context.md",
+      "content_hash": "/84/019063e1a4/0/content_hash.txt",
+      "prompt": "/84/019063e1a4/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 2904,
+    "cache_creation_tokens": 50661,
+    "cache_read_tokens": 1835152,
+    "output_tokens": 4132,
+    "api_call_count": 49
+  }
+}

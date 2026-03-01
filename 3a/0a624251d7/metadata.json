@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "3a0a624251d7",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/default.nix",
+    "nix/modules/home/packages.nix",
+    "nix/modules/home/programs/cage.nix",
+    "nix/modules/home/programs/claude-code.nix",
+    "nix/overlays/ai-tools.nix",
+    "nix/overlays/rtk.nix",
+    "zsh/config/aliases.zsh"
+  ],
+  "sessions": [
+    {
+      "metadata": "/3a/0a624251d7/0/metadata.json",
+      "transcript": "/3a/0a624251d7/0/full.jsonl",
+      "context": "/3a/0a624251d7/0/context.md",
+      "content_hash": "/3a/0a624251d7/0/content_hash.txt",
+      "prompt": "/3a/0a624251d7/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 5157,
+    "cache_creation_tokens": 183757,
+    "cache_read_tokens": 5622782,
+    "output_tokens": 15135,
+    "api_call_count": 90
+  }
+}
