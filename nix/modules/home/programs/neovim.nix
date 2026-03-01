@@ -31,6 +31,9 @@ in
       pretty-ts-errors-markdown
       version-lsp
 
+      # Rust
+      rustowl
+
       # Node.js-based language servers
       astro-language-server
       emmet-language-server

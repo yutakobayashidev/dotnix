@@ -13,6 +13,7 @@ let
     ./rtk.nix
     ./similarity-ts.nix
     ./tunnelto.nix
+    ./rustowl.nix
   ];
 in
 builtins.foldl' (
