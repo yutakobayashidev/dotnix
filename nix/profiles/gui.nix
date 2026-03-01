@@ -14,6 +14,8 @@
 
   services.printing.enable = true;
 
+  programs.firefox.enable = true;
+
   home-manager.users.yuta.imports = [
     ./../modules/linux/programs/niri.nix
     ./../modules/linux/programs/waybar.nix
