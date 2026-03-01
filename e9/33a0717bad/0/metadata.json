@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "e933a0717bad",
+  "session_id": "8d9d9673-6340-4b60-8f66-3e1b5321f4e4",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-01T23:43:55.513842072Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/modules/home/programs/neovim.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/rustowl.nix",
+    "nvim/lua/plugins/rustowl.lua"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "dbd13d9e969b",
+  "token_usage": {
+    "input_tokens": 10875,
+    "cache_creation_tokens": 71787,
+    "cache_read_tokens": 1158160,
+    "output_tokens": 7759,
+    "api_call_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-01T23:43:55.407856276Z",
+    "agent_lines": 58,
+    "human_added": 19,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 77,
+    "agent_percentage": 75.32467532467533
+  }
+}

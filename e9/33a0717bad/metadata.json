@@ -1,0 +1,29 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "e933a0717bad",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nix/modules/home/programs/neovim.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/rustowl.nix",
+    "nvim/lua/plugins/rustowl.lua"
+  ],
+  "sessions": [
+    {
+      "metadata": "/e9/33a0717bad/0/metadata.json",
+      "transcript": "/e9/33a0717bad/0/full.jsonl",
+      "context": "/e9/33a0717bad/0/context.md",
+      "content_hash": "/e9/33a0717bad/0/content_hash.txt",
+      "prompt": "/e9/33a0717bad/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10875,
+    "cache_creation_tokens": 71787,
+    "cache_read_tokens": 1158160,
+    "output_tokens": 7759,
+    "api_call_count": 31
+  }
+}
