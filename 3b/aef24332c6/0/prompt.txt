@@ -1,0 +1,33 @@
+https://readout-updates.vercel.app/appcast.xml これnix overlayにしたいんだけどできるかな
+
+---
+
+yes
+
+---
+
+これ、オーバーレイ更新のCI載るの？appcastのURL設定しなくても
+
+---
+
+darwin.installApplicationってのがあるっぽい？調べて
+
+---
+
+コミュニティパターンを取り入れつつ、appcastメタデータも追加しておいて
+
+---
+
+> 
+  darwin.installApplication について
+
+  nixpkgs の公式関数ではない。 jwiegley 氏の個人 nix-config にあったコミュニティパターンで、upstream
+  には取り込まれていません。 これ
+
+---
+
+[Request interrupted by user]
+
+---
+
+コミットして
