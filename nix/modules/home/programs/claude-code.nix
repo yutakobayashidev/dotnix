@@ -151,7 +151,7 @@ in
             hooks = [
               {
                 type = "command";
-                command = "${jq} -r '.message' | xargs -I {} ${terminal-notifier} -message \"{}\" -title \"Claude Code\" -group \"$(pwd):hook\" -activate com.mitchellh.ghostty";
+                command = "if [ -n \"$CMUX_TAB_ID\" ] && command -v cmux >/dev/null 2>&1; then cmux select-workspace --workspace \"$CMUX_TAB_ID\" && ${jq} -r '.message' | xargs -I {} cmux notify --title \"Claude Code\" --body \"{}\" --tab \"$CMUX_TAB_ID\"; else ${jq} -r '.message' | xargs -I {} ${terminal-notifier} -message \"{}\" -title \"Claude Code\" -group \"$(pwd):hook\" -activate com.mitchellh.ghostty; fi";
               }
             ];
           }
