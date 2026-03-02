@@ -1,0 +1,26 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "fdf21b41a11d",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "zsh/functions/difit-cmux.zsh"
+  ],
+  "sessions": [
+    {
+      "metadata": "/fd/f21b41a11d/0/metadata.json",
+      "transcript": "/fd/f21b41a11d/0/full.jsonl",
+      "context": "/fd/f21b41a11d/0/context.md",
+      "content_hash": "/fd/f21b41a11d/0/content_hash.txt",
+      "prompt": "/fd/f21b41a11d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1194,
+    "cache_creation_tokens": 33664,
+    "cache_read_tokens": 160641,
+    "output_tokens": 2593,
+    "api_call_count": 8
+  }
+}
