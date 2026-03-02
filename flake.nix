@@ -194,8 +194,8 @@
                 };
               };
             })
+            llm-agents.overlays.default
             (_final: _prev: {
-              _llm-agents = llm-agents;
               _nix-steipete-tools = nix-steipete-tools;
               _version-lsp = version-lsp;
               _ghostty = ghostty;

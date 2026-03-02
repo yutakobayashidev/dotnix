@@ -12,7 +12,7 @@ let
   claudeDotfilesDir = "${dotfilesDir}/claude";
   inherit (config.home) homeDirectory;
   jq = lib.getExe pkgs.jq;
-  rtk = lib.getExe pkgs.rtk;
+  rtk = lib.getExe pkgs.llm-agents.rtk;
   rtkHookPath = "${homeDirectory}/.claude/hooks/rtk-rewrite.sh";
   terminal-notifier =
     if pkgs.stdenv.isDarwin then lib.getExe' pkgs.terminal-notifier "terminal-notifier" else "";

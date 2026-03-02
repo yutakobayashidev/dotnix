@@ -10,7 +10,6 @@ let
     ./polycat.nix
     ./pretty-ts-errors-markdown.nix
     ./readout.nix
-    ./rtk.nix
     ./similarity-ts.nix
     ./tunnelto.nix
   ];
