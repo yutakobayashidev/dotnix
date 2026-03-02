@@ -1,0 +1,340 @@
+claudeのhookが今ghossty開くようになっているが、cmuxに変えられる？cmuxは複数ターミナルのタブを作れるけど、対象のタブを開くようにしたいな https://github.com/craigsc/cmux
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+claudeのhookが今ghossty開くようになっているが、cmuxに変えられる？cmuxは複数ターミナルのタブを作れるけど、対象のタブを開くようにしたいな https://github.com/manaflow-ai/cmux
+
+---
+
+<task-notification>
+<task-id>a32c13791e7360139</task-id>
+<tool-use-id>toolu_01M5z4BkAtPzWucxKovKQzQM</tool-use-id>
+<status>completed</status>
+<summary>Agent "Research cmux tool" completed</summary>
+<result>Here is a comprehensive research summary of cmux.
+
+---
+
+## What cmux Is
+
+**cmux** is a native macOS terminal application built with Swift and AppKit that extends [Ghostty](https://ghostty.org)'s capabilities. It uses a Ghostty fork (`manaflow-ai/ghostty`) as its rendering engine via `GhosttyKit.xcframework`, meaning it is GPU-accelerated and reads your existing Ghostty config at `~/.config/ghostty/config` (themes, fonts, colors all carry over).
+
+The primary use case is **managing multiple AI coding agents simultaneously** -- think of it as a terminal multiplexer (like tmux) but as a native macOS app with a vertical sidebar, built-in browser, and a rich CLI/socket API designed for agent automation.
+
+Repository: `https://github.com/manaflow-ai/cmux`  
+License: AGPL-3.0-or-later  
+Latest version: 0.61.0 (2026-02-25)
+
+---
+
+## Core Concepts / Hierarchy
+
+cmux uses a strict hierarchy of objects:
+
+| Concept | Description |
+|---|---|
+| **Window** | A native macOS window |
+| **Workspace** | A sidebar entry within a window (the "tab" in the sidebar) |
+| **Pane** | A split region inside a workspace |
+| **Surface** | A tab within a pane (the primary automation target) |
+
+Each object has a stable ID. Since v0.53.0, the CLI uses **short ID references** like `surface:1`, `pane:2`, `workspace:3` instead of raw UUIDs.
+
+---
+
+## Key Features
+
+### 1. Vertical Tab Sidebar
+The sidebar shows each workspace with:
+- Git branch information
+- Linked PR status/number
+- Working directory
+- Active listening ports
+- Latest notification text
+
+### 2. Notification System
+- Panes get **blue rings** when agents need attention
+- Sidebar tabs illuminate for unread notifications
+- A dedicated notification panel consolidates all alerts
+- `Cmd+Shift+U` jumps to the most recent unread notification
+
+### 3. Integrated Browser
+An in-app browser with a scriptable API (ported from `agent-browser`) allows agents to:
+- Snapshot accessibility trees
+- Obtain element references (`@e1`, `@e2`, etc.)
+- Click, fill forms, execute JavaScript
+- Navigate, reload, go back/forward
+
+### 4. Session Restoration
+On restart, cmux restores window/workspace/pane layouts, working directories, terminal scrollback (best-effort), and browser history/URLs. It does **not** restore live process state (running agents, tmux sessions, vim instances).
+
+### 5. Command Palette
+`Cmd+Shift+P` opens a command palette for cross-window tab switching, update actions, and more (added in v0.61.0).
+
+---
+
+## Installation
+
+**Homebrew (recommended):**
+```bash
+brew tap manaflow-ai/cmux
+brew install --cask cmux
+```
+
+**DMG:** Download from the GitHub releases page and drag to Applications. Auto-updates via Sparkle.
+
+Nightly builds are available as a separate application.
+
+---
+
+## How to Open/Focus a Specific Tab (Workspace)
+
+This was one of your key questions. There are multiple approaches:
+
+### Keyboard Shortcuts
+| Shortcut | Action |
+|---|---|
+| `Cmd+N` | New workspace |
+| `Cmd+1` through `Cmd+8` | Jump to workspace by index |
+| `Cmd+9` | Jump to last workspace |
+| `Ctrl+Cmd+]` | Next workspace |
+| `Ctrl+Cmd+[` | Previous workspace |
+| `Cmd+Shift+P` | Command palette (cross-window tab switching) |
+
+### CLI Commands
+```bash
+# List all workspaces (see IDs and selection status)
+cmux list-workspaces
+
+# Select/focus a specific workspace by ID
+cmux select-workspace --workspace <id>
+
+# Create a new workspace, optionally running a command in a directory
+cmux new-workspace --command "claude --dangerously-skip-permissions" --cwd ~/projects/myrepo
+
+# Rename a workspace
+cmux rename-workspace --workspace <id> "My Agent"
+
+# Move a workspace to a different window
+cmux move-workspace-to-window --workspace <id> --window <id>
+```
+
+### Surface/Pane Focus (within a workspace)
+```bash
+# Focus a specific pane
+cmux focus-pane --pane <id>
+
+# List surfaces in a pane, then focus one
+cmux list-pane-surfaces
+# Ctrl+1 through Ctrl+9 to jump to surfaces by index
+
+# Focus directionally between split panes
+# Option+Cmd+Arrow keys
+```
+
+### Environment Variables
+cmux automatically sets these in child shells:
+- `CMUX_SOCKET_PATH` -- the control socket path
+- `CMUX_TAB_ID` -- current tab/workspace UUID
+- `CMUX_PANEL_ID` -- current panel/surface UUID
+- `CMUX_WORKSPACE_ID` -- used by CLI commands for workspace-relative operations
+
+---
+
+## Full CLI Command Reference
+
+The CLI binary is `cmux` and communicates with the app via a Unix domain socket.
+
+### Global Flags
+| Flag | Description |
+|---|---|
+| `--socket <path>` | Specify socket location |
+| `--json` | JSON output format |
+| `--id-format refs\|uuids\|both` | Identifier display mode |
+| `--window <id>` | Target specific window |
+| `--password <value>` | Socket authentication |
+| `-v, --version` | Version info |
+
+### Window Management
+```bash
+cmux list-windows
+cmux current-window
+cmux new-window
+cmux focus-window --window <id>
+cmux close-window --window <id>
+```
+
+### Workspace Management
+```bash
+cmux list-workspaces
+cmux new-workspace [--command <text>] [--cwd <path>]
+cmux current-workspace
+cmux select-workspace --workspace <id>
+cmux close-workspace --workspace <id>
+cmux rename-workspace --workspace <id> <title>
+cmux move-workspace-to-window --workspace <id> --window <id>
+cmux reorder-workspace --workspace <id> [--before <id>] [--after <id>]
+```
+
+### Pane & Surface Management
+```bash
+cmux list-panes [--workspace <id>]
+cmux new-pane [--workspace <id>] [--direction <dir>] [--type <type>] [--url <url>]
+cmux focus-pane --pane <id>
+cmux list-pane-surfaces
+cmux new-surface [--workspace <id>] [--pane <id>] [--type <type>] [--url <url>]
+cmux close-surface [--workspace <id>] [--surface <id>]
+cmux move-surface --surface <id> [--pane <id>] [--index <n>] [--focus true|false]
+cmux reorder-surface --surface <id> [--before <id>] [--after <id>] [--index <n>]
+cmux drag-surface-to-split --surface <id> <direction>
+cmux surface-health
+cmux trigger-flash [--surface <id>]
+cmux refresh-surfaces
+```
+
+### Splits
+```bash
+# Keyboard: Cmd+D (split right), Cmd+Shift+D (split down)
+# CLI: use new-pane with --direction
+cmux new-pane --direction right
+cmux new-pane --direction down
+```
+
+### Text Input / Screen Reading
+```bash
+cmux send --surface <id> <text>
+cmux send-key --surface <id> <key>
+cmux read-screen [--surface <id>] [--lines <n>] [--scrollback]
+```
+
+### Notifications
+```bash
+cmux notify --title "Done" --body "Task complete" [--subtitle <text>] [--tab <id>] [--panel <id>]
+cmux list-notifications
+cmux clear-notifications
+```
+
+### Status & Progress
+```bash
+cmux set-status <key> <value> [--icon <icon>] [--color <color>]
+cmux clear-status <key>
+cmux list-status
+cmux set-progress <value> [--label <text>]
+cmux clear-progress
+```
+
+### Logging
+```bash
+cmux log [--level <level>] [--source <src>] <message>
+cmux list-log [--limit <n>]
+cmux clear-log
+```
+
+### Browser
+```bash
+cmux browser open [--url <url>]     # or Cmd+Shift+L to open browser in split
+cmux browser navigate <url>
+cmux browser back
+cmux browser forward
+cmux browser reload
+cmux browser get-url
+cmux browser focus-webview
+cmux browser is-webview-focused
+# Full agent-browser API: snapshot, click, fill, eval, screenshot, etc.
+cmux browser --surface <id> snapshot -i
+cmux browser --surface <id> click @e<N>
+cmux browser --surface <id> fill @e<N> "text"
+cmux browser --surface <id> eval "document.title"
+```
+
+### System / Diagnostics
+```bash
+cmux ping
+cmux capabilities
+cmux identify [--workspace <id>] [--surface <id>]
+cmux tree                          # hierarchical display of windows/workspaces/panes/surfaces
+cmux sidebar-state
+cmux version
+```
+
+### Tmux Compatibility Shimmed Commands
+cmux provides shims for common tmux commands: `capture-pane`, `resize-pane`, `pipe-pane`, `swap-pane`, `break-pane`, `join-pane`, `last-window`, `last-pane`, `next-window`, `previous-window`, `find-window`, `clear-history`, `popup`, `bind-key`, `unbind-key`, `copy-mode`, `paste-buffer`, `list-buffers`, and more.
+
+---
+
+## Integration with Terminal / Agent Workflows
+
+### Claude Code Integration
+
+cmux provides a `claude-hook` command for Claude editor hooks with session tracking. You can configure notification hooks in `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "matchers": ["idle_prompt", "permission_prompt"],
+    "command": "cmux notify --title 'Claude' --body 'Needs attention'"
+  }
+}
+```
+
+A safe fallback pattern for scripts that may run outside cmux:
+```bash
+command -v cmux &>/dev/null && cmux notify --title "Done" --body "Task complete" \
+  || osascript -e 'display notification "Task complete" with title "Done"'
+```
+
+### V2 JSON Socket Protocol
+
+For programmatic integration, cmux exposes a JSON-RPC v2 protocol over its Unix socket. Request format:
+```json
+{"id":"1","method":"workspace.list","params":{}}
+```
+Response:
+```json
+{"id":"1","ok":true,"result":{...}}
+```
+
+This enables building custom tooling that orchestrates workspaces, sends input, reads screens, manages browser sessions, and handles notifications -- all programmatically.
+
+### Key Design Principle
+
+From the project's own description: "cmux is not prescriptive about how developers hold their tools. It's a terminal and browser with a CLI, and the rest is up to you." It provides composable primitives rather than enforcing specific workflows.
+
+---
+
+## Keyboard Shortcuts Summary
+
+| Shortcut | Action |
+|---|---|
+| `Cmd+N` | New workspace |
+| `Cmd+1-8` | Jump to workspace 1-8 |
+| `Cmd+9` | Last workspace |
+| `Ctrl+Cmd+]` / `Ctrl+Cmd+[` | Next/previous workspace |
+| `Cmd+T` | New surface/tab |
+| `Cmd+Shift+]` / `Cmd+Shift+[` | Next/previous surface |
+| `Ctrl+1-9` | Jump to surface by index |
+| `Cmd+D` | Split right |
+| `Cmd+Shift+D` | Split down |
+| `Option+Cmd+Arrow` | Focus pane directionally |
+| `Cmd+B` | Toggle sidebar |
+| `Cmd+I` | Show notifications panel |
+| `Cmd+Shift+U` | Jump to latest unread |
+| `Cmd+K` | Clear scrollback |
+| `Cmd+Shift+L` | Open browser in split |
+| `Cmd+L` | Focus browser address bar |
+| `Cmd+Shift+P` | Command palette |</result>
+<usage><total_tokens>24036</total_tokens><tool_uses>14</tool_uses><duration_ms>195940</duration_ms></usage>
+</task-notification>
+Full transcript available at: /tmp/claude-1000/-home-yuta-ghq-github-com-yutakobayashidev-dotnix/tasks/a32c13791e7360139.output
+
+---
+
+、実際にタブを切り替える処理、ghosttyにはあったと思うので、採用して
+
+---
+
+変更をまとめて
