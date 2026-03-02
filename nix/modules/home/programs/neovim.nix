@@ -57,6 +57,9 @@ in
       "--set"
       "PRETTY_TS_ERRORS_BIN"
       "${pkgs.pretty-ts-errors-markdown}/bin/pretty-ts-errors-markdown"
+      "--set"
+      "RUSTOWL_NVIM"
+      "${pkgs.rustowl-nvim}"
     ];
   };
 

@@ -1,6 +1,6 @@
 return {
-	"cordx56/rustowl",
-	version = "*",
+	dir = vim.env.RUSTOWL_NVIM,
+	name = "rustowl",
 	lazy = false,
 	opts = {},
 }
