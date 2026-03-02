@@ -1,7 +1,7 @@
 ---
 name: markitdown
 description: Convert files (PDF, DOCX, PPTX, XLSX, HTML, images, audio, etc.) to Markdown using Microsoft's markitdown CLI. Use when the user wants to extract text content from documents, convert files for LLM processing, or read non-text file formats.
-metadata: {"openclaw":{"requires":{"bins":["markitdown"]}}}
+metadata: { 'openclaw': { 'requires': { 'bins': ['markitdown'] } } }
 user-invocable: true
 ---
 
@@ -13,14 +13,14 @@ Convert a wide variety of file formats into Markdown text using Microsoft's [mar
 
 ## Supported Formats
 
-| Category | Formats |
-|----------|---------|
-| Documents | PDF, DOCX, PPTX, XLSX, XLS |
-| Web & Data | HTML, CSV, JSON, XML |
-| Media | Images (EXIF + OCR), Audio (metadata + transcription) |
-| eBooks | EPub |
-| Archives | ZIP (iterates over contents) |
-| Other | YouTube URLs, Outlook messages |
+| Category   | Formats                                               |
+| ---------- | ----------------------------------------------------- |
+| Documents  | PDF, DOCX, PPTX, XLSX, XLS                            |
+| Web & Data | HTML, CSV, JSON, XML                                  |
+| Media      | Images (EXIF + OCR), Audio (metadata + transcription) |
+| eBooks     | EPub                                                  |
+| Archives   | ZIP (iterates over contents)                          |
+| Other      | YouTube URLs, Outlook messages                        |
 
 ## Basic Usage
 
@@ -37,13 +37,13 @@ cat path/to/file.pdf | markitdown
 
 ## Options
 
-| Flag | Description |
-|------|-------------|
-| `-o <file>` | Write output to a file instead of stdout |
-| `-d` | Use Azure Document Intelligence for conversion |
-| `-e "<endpoint>"` | Azure Document Intelligence endpoint URL |
-| `--use-plugins` | Enable third-party plugins |
-| `--list-plugins` | Show installed plugins |
+| Flag              | Description                                    |
+| ----------------- | ---------------------------------------------- |
+| `-o <file>`       | Write output to a file instead of stdout       |
+| `-d`              | Use Azure Document Intelligence for conversion |
+| `-e "<endpoint>"` | Azure Document Intelligence endpoint URL       |
+| `--use-plugins`   | Enable third-party plugins                     |
+| `--list-plugins`  | Show installed plugins                         |
 
 ## Workflow
 

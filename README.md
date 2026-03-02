@@ -4,13 +4,12 @@
 
 ## Target
 
-| Machine | Name | OS | System | Stable |
-|---|---|---|---|---|
-| UM790 Pro | UM790-Pro | NixOS | x86_64-linux | ◎ |
-| Still Legend x870 | Still-Legend-x870 | NixOS (WSL) | x86_64-linux | △ |
-| M2 MacBook Air | M2-MacBook-Air | macOS | aarch64-darwin | ◎ |
-| Galaxy S23 FE | Galaxy-S23FE | Android (nix-on-droid) | aarch64-linux | △ |
-
+| Machine           | Name              | OS                     | System         | Stable |
+| ----------------- | ----------------- | ---------------------- | -------------- | ------ |
+| UM790 Pro         | UM790-Pro         | NixOS                  | x86_64-linux   | ◎      |
+| Still Legend x870 | Still-Legend-x870 | NixOS (WSL)            | x86_64-linux   | △      |
+| M2 MacBook Air    | M2-MacBook-Air    | macOS                  | aarch64-darwin | ◎      |
+| Galaxy S23 FE     | Galaxy-S23FE      | Android (nix-on-droid) | aarch64-linux  | △      |
 
 ## Module Structure
 
@@ -119,4 +118,3 @@ Key skills: `social-digest`, `oura-daily-watch`, `gha-lint`, `check-similarity`,
 ## Templates
 
 Project templates are managed in [ashiba](https://github.com/yutakobayashidev/ashiba). See the repository for available templates.
-

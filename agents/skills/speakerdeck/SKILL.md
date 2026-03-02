@@ -18,20 +18,20 @@ nix-shell -p bun --run "bun {baseDir}/scripts/speakerdeck.ts <speakerdeck-url> [
 
 ### Arguments
 
-| Arg | Description |
-|-----|-------------|
-| `<url>` | SpeakerDeck presentation URL (required) |
+| Arg                  | Description                                             |
+| -------------------- | ------------------------------------------------------- |
+| `<url>`              | SpeakerDeck presentation URL (required)                 |
 | `-o, --output <dir>` | Output directory (default: `$TMPDIR/speakerdeck-<id>/`) |
 
 ### Output (JSON to stdout)
 
 ```json
 {
-  "title": "Presentation Title",
-  "presentationId": "abc123def456",
-  "slideCount": 30,
-  "outputDir": "/tmp/speakerdeck-abc123def456",
-  "files": ["/tmp/speakerdeck-abc123def456/slide_000.jpg", "..."]
+	"title": "Presentation Title",
+	"presentationId": "abc123def456",
+	"slideCount": 30,
+	"outputDir": "/tmp/speakerdeck-abc123def456",
+	"files": ["/tmp/speakerdeck-abc123def456/slide_000.jpg", "..."]
 }
 ```
 

@@ -30,12 +30,14 @@
 ### Anthropic公式スキル
 
 #### ドキュメントスキル
+
 - `docx` - Word文書作成・編集
 - `pdf` - PDF作成・抽出
 - `pptx` - PowerPoint作成・編集
 - `xlsx` - Excel処理
 
 #### サンプルスキル
+
 - `frontend-design` - フロントエンドデザイン
 - `skill-creator` - スキル作成ガイド
 - `webapp-testing` - Webアプリテスト（Playwright）

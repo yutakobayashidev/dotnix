@@ -93,12 +93,10 @@ Results:
 ### Types of Unused Exports
 
 1. **Type Definitions** (`oxc_types.ts`)
-
    - Many AST types are exported but unused
    - Action: Export only actually used types
 
 2. **Internal Utility Functions**
-
    - Example: `getNodeLabel`, `getNodeChildren` (apted.ts)
    - Action: Remove `export` as they are internal implementation
 
@@ -109,12 +107,10 @@ Results:
 ### Types of Unused Files
 
 1. **Test-only Files**
-
    - `*_test.ts` files
    - Action: Include as test entrypoints
 
 2. **Duplicate Functionality**
-
    - Example: `function_body_comparer.ts` (integrated elsewhere)
    - Action: Delete
 
@@ -160,12 +156,10 @@ git diff  # Check changes
 ## Example in This Project
 
 1. **Unused code found in diagnostics**
-
    - Unused imports in `semantic_normalizer.ts`
    - `extractSemanticPatterns` function (commented out for potential future use)
 
 2. **Actions taken**
-
    - Removed unused imports
    - Kept potentially useful code commented out
 

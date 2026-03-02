@@ -1,7 +1,19 @@
 ---
 name: social-digest
 description: Fetch today's Discord channel + Mastodon posts via API tokens, summarize to Markdown, and save into an Obsidian vault (Bun script).
-metadata: {"openclaw":{"requires":{"bins":["bun"],"env":["DISCORD_BOT_TOKEN","MASTODON_TOKEN","OBSIDIAN_VAULT"],"config":[]},"primaryEnv":"OBSIDIAN_VAULT"}}
+metadata:
+  {
+    'openclaw':
+      {
+        'requires':
+          {
+            'bins': ['bun'],
+            'env': ['DISCORD_BOT_TOKEN', 'MASTODON_TOKEN', 'OBSIDIAN_VAULT'],
+            'config': [],
+          },
+        'primaryEnv': 'OBSIDIAN_VAULT',
+      },
+  }
 user-invocable: true
 ---
 
@@ -64,8 +76,8 @@ bun test
 
 Two-step flow:
 
-1) The Bun script outputs **JSON** (raw daily posts + extracted `links`).
-2) The agent optionally reads link targets (via `web_fetch`) and writes the final Obsidian Markdown note to:
+1. The Bun script outputs **JSON** (raw daily posts + extracted `links`).
+2. The agent optionally reads link targets (via `web_fetch`) and writes the final Obsidian Markdown note to:
 
 `$OBSIDIAN_VAULT/Daily/Social/YYYY-MM-DD.md`
 

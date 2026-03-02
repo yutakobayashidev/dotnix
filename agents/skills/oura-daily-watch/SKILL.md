@@ -1,7 +1,14 @@
 ---
 name: oura-daily-watch
 description: Build and run a daily Oura + Discord behavior monitor. Use when the user wants morning wellness summaries, anomaly alerts, readiness/sleep trend checks, or advice based on Oura Ring data combined with chat activity patterns.
-metadata: {"openclaw":{"requires":{"bins":["python3"],"env":["OURA_PERSONAL_ACCESS_TOKEN"],"config":[]},"primaryEnv":"OURA_PERSONAL_ACCESS_TOKEN"}}
+metadata:
+  {
+    'openclaw':
+      {
+        'requires': { 'bins': ['python3'], 'env': ['OURA_PERSONAL_ACCESS_TOKEN'], 'config': [] },
+        'primaryEnv': 'OURA_PERSONAL_ACCESS_TOKEN',
+      },
+  }
 user-invocable: true
 ---
 

@@ -40,6 +40,7 @@ gh repo create <project_name> \
 ```
 
 Notes:
+
 - Map the toolchain to the closest GitHub gitignore template name (e.g. go→Go, rust→Rust, python→Python, node→Node). If no match, omit `--gitignore`.
 - If description is empty, omit `--description`.
 - Pull the generated LICENSE and .gitignore from remote: `git pull --rebase origin main`
@@ -57,6 +58,7 @@ git push -u origin main
 ## 6. Summary
 
 Print the final result:
+
 - Repository URL
 - Local path
 - Toolchain and license used

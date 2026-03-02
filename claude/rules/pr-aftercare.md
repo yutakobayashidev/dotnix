@@ -41,11 +41,11 @@ gh api graphql -f query='
 
 Classify each comment by the following criteria:
 
-| Category | Criteria | Action |
-|----------|----------|--------|
-| **Fix immediately** | Can be addressed in code, no spec impact | Fix and commit |
-| **Spec trade-off** | Fix would conflict with spec, or involves performance/complexity trade-offs | Summarize trade-offs and AskUserQuestion |
-| **Incorrect feedback** | Reviewer misunderstanding or already addressed | Explain in a comment |
+| Category               | Criteria                                                                    | Action                                   |
+| ---------------------- | --------------------------------------------------------------------------- | ---------------------------------------- |
+| **Fix immediately**    | Can be addressed in code, no spec impact                                    | Fix and commit                           |
+| **Spec trade-off**     | Fix would conflict with spec, or involves performance/complexity trade-offs | Summarize trade-offs and AskUserQuestion |
+| **Incorrect feedback** | Reviewer misunderstanding or already addressed                              | Explain in a comment                     |
 
 ### Default to "fix"
 
@@ -82,6 +82,7 @@ mutation {
 For multiple threads, batch them in a single mutation using aliases: `t1: resolveReviewThread(...)` `t2: resolveReviewThread(...)`.
 
 **Before resolving, ensure:**
+
 - Tests pass (`go test ./...` / `npm test` etc.)
 - Lint passes
 - Changes are pushed

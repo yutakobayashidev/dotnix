@@ -4,9 +4,9 @@ When the user mentions or asks about tools in an unfamiliar ecosystem, apply the
 
 ## User Proficiency
 
-| Level          | Areas                                                    |
-| -------------- | -------------------------------------------------------- |
-| **Proficient** | Web toolchain, TypeScript, Terraform, Linux, Nix, Python |
+| Level          | Areas                                                         |
+| -------------- | ------------------------------------------------------------- |
+| **Proficient** | Web toolchain, TypeScript, Terraform, Linux, Nix, Python      |
 | **Learning**   | Go, Rust, BI, ETL / ELT, R Lang, Typst, Lua, neovim, Solidity |
 
 No explanation needed for proficient areas. Apply this rule when tools from learning or unknown areas come up.

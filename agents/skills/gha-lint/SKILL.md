@@ -8,12 +8,12 @@ user-invocable: true
 
 Static analysis and security checking tools for GitHub Actions workflows. All tools are available via nixpkgs for local use. Each tool covers different checks with no overlap, so using all of them together is recommended.
 
-| Tool | Purpose | nixpkgs |
-|------|---------|---------|
-| **actionlint** | Workflow syntax checking | `nixpkgs#actionlint` |
-| **pinact** | SHA-pin action references | `nixpkgs#pinact` |
-| **ghalint** | Security best practices | `nixpkgs#ghalint` |
-| **zizmor** | Security vulnerability analysis | `nixpkgs#zizmor` |
+| Tool           | Purpose                         | nixpkgs              |
+| -------------- | ------------------------------- | -------------------- |
+| **actionlint** | Workflow syntax checking        | `nixpkgs#actionlint` |
+| **pinact**     | SHA-pin action references       | `nixpkgs#pinact`     |
+| **ghalint**    | Security best practices         | `nixpkgs#ghalint`    |
+| **zizmor**     | Security vulnerability analysis | `nixpkgs#zizmor`     |
 
 ---
 
@@ -48,16 +48,16 @@ nix run nixpkgs#actionlint -- -format '{{json .}}'
 Use `suzuki-shunsuke/actionlint-action` (installs actionlint + reviewdog + shellcheck via aqua):
 
 ```yaml
-      - uses: suzuki-shunsuke/actionlint-action@29e0b7cda52e51a495d15f22759745ef6e19583a # v0.1.1
+- uses: suzuki-shunsuke/actionlint-action@29e0b7cda52e51a495d15f22759745ef6e19583a # v0.1.1
 ```
 
 Or use the official download script:
 
 ```yaml
-      - name: Install actionlint
-        run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-      - name: actionlint
-        run: ./actionlint
+- name: Install actionlint
+  run: bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+- name: actionlint
+  run: ./actionlint
 ```
 
 ---
@@ -113,24 +113,24 @@ nix run nixpkgs#pinact -- run --update
 
 ### Key Options
 
-| Option | Description |
-|--------|-------------|
-| `--check` | Non-zero exit if unpinned references exist. No file changes |
-| `--verify, -v` | Verify SHA and version annotation consistency |
-| `--update, -u` | Update to latest versions |
-| `--diff` | Output diff only. No file changes |
-| `--include, -i` | Filter targets by regex |
-| `--exclude, -e` | Exclude targets by regex |
-| `--min-age, -m` | Skip releases newer than N days (use with `-u`) |
+| Option          | Description                                                 |
+| --------------- | ----------------------------------------------------------- |
+| `--check`       | Non-zero exit if unpinned references exist. No file changes |
+| `--verify, -v`  | Verify SHA and version annotation consistency               |
+| `--update, -u`  | Update to latest versions                                   |
+| `--diff`        | Output diff only. No file changes                           |
+| `--include, -i` | Filter targets by regex                                     |
+| `--exclude, -e` | Exclude targets by regex                                    |
+| `--min-age, -m` | Skip releases newer than N days (use with `-u`)             |
 
 ### CI Usage
 
 Use `suzuki-shunsuke/pinact-action`:
 
 ```yaml
-      - uses: suzuki-shunsuke/pinact-action@1081f5ad49ac904b7d977784f338145150a32112 # v1.4.0
-        with:
-          skip_push: "true"
+- uses: suzuki-shunsuke/pinact-action@1081f5ad49ac904b7d977784f338145150a32112 # v1.4.0
+  with:
+    skip_push: 'true'
 ```
 
 ---
@@ -161,12 +161,12 @@ nix run nixpkgs#ghalint -- run-action
 Install via aqua:
 
 ```yaml
-      - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
-        with:
-          aqua_version: v2.56.6
-      - run: ghalint run
-        env:
-          GHALINT_LOG_COLOR: always
+- uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
+  with:
+    aqua_version: v2.56.6
+- run: ghalint run
+  env:
+    GHALINT_LOG_COLOR: always
 ```
 
 Requires `aqua.yaml` in the repository with ghalint registered:
@@ -207,11 +207,11 @@ nix run nixpkgs#zizmor -- --format sarif .
 
 ### Personas (Detection Sensitivity)
 
-| Persona | Description |
-|---------|-------------|
-| `regular` (default) | Minimizes false positives |
-| `pedantic` | Also detects code smells |
-| `auditor` | Comprehensive detection, tolerates false positives |
+| Persona             | Description                                        |
+| ------------------- | -------------------------------------------------- |
+| `regular` (default) | Minimizes false positives                          |
+| `pedantic`          | Also detects code smells                           |
+| `auditor`           | Comprehensive detection, tolerates false positives |
 
 ### What It Detects
 
@@ -227,21 +227,21 @@ nix run nixpkgs#zizmor -- --format sarif .
 Use `zizmorcore/zizmor-action`:
 
 ```yaml
-      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+- uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
 ```
 
 With GitHub Advanced Security:
 
 ```yaml
-      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+- uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
 ```
 
 Without Advanced Security:
 
 ```yaml
-      - uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
-        with:
-          advanced-security: false
+- uses: zizmorcore/zizmor-action@0dce2577a4760a2749d8cfb7a84b7d5585ebcb7d # v0.5.0
+  with:
+    advanced-security: false
 ```
 
 ---
@@ -251,7 +251,7 @@ Without Advanced Security:
 Example workflow combining all 4 tools using their official actions (no nixpkgs):
 
 ```yaml
-name: "CI: GitHub Actions lint"
+name: 'CI: GitHub Actions lint'
 
 on:
   pull_request:
@@ -282,7 +282,7 @@ jobs:
 
       - uses: suzuki-shunsuke/pinact-action@1081f5ad49ac904b7d977784f338145150a32112 # v1.4.0
         with:
-          skip_push: "true"
+          skip_push: 'true'
 
       - uses: aquaproj/aqua-installer@11dd79b4e498d471a9385aa9fb7f62bb5f52a73c # v4.0.4
         with:

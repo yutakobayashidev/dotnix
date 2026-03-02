@@ -28,6 +28,7 @@ nix flake update
 - **デプロイ先**: `~/.agents/skills`, `~/.config/claude/skills`
 
 主なスキル：
+
 - `social-digest` - Discord + Mastodon投稿をObsidianに保存（ローカル）
 - `oura-daily-watch` - Oura Ring データ + Discord行動分析（ローカル）
 - `check-similarity` - TypeScript/JavaScript重複コード検知（ローカル）
@@ -128,12 +129,14 @@ flake.nix                          # エントリポイント
 ## Key Features
 
 ### NixOS
+
 - **WM**: Niri（スクロール可能なタイリングWM）
 - **IME**: fcitx5 + hazkey（LLM変換）
 - **YubiKey**: PAM U2F認証サポート（polkit, swaylock対応）
 - **Development**: Docker, Tailscale, Android開発環境
 
 ### macOS
+
 - **Homebrew**: GUI アプリ管理（Ghostty, Raycast, Chrome等）
 - **Touch ID**: sudo認証対応
 - **1Password**: Shell Plugins（gh, awscli2）
