@@ -11,6 +11,7 @@
     rtk
     vibe-kanban
     cursor-agent
+    agent-browser
     # Version Control
     git
     git-wt

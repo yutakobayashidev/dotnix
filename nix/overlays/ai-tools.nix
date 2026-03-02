@@ -12,6 +12,7 @@ in
     vibe-kanban
     cursor-agent
     entire
+    agent-browser
     ;
   cage = prev._cage.packages.${system}.default;
 }

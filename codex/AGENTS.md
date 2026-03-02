@@ -66,6 +66,28 @@ Skip if the change has no doc impact.
 5. **Document Results**: Add review section to `z-ai/todo.md`
 6. **Capture Lessons**: Update `z-ai/lessons.md` after corrections
 
+## Browser Automation (agent-browser)
+
+agent-browser is available to check on the browser.
+
+```bash
+# 1. Open page (--allow-private is required to open localhost)
+agent-browser open <url> --allow-private
+
+# 2. Get element reference
+agent-browser snapshot -i
+
+# 3. Operate
+agent-browser click @e<N>
+agent-browser fill @e<N> "テキスト"
+
+# 4. Save screenshot
+agent-browser screenshot z-ai/screenshot.png
+
+# ex. save credentials
+agent-browser open <url> --profile ~/.browser-profile --allow-private
+```
+
 ## Core Principles
 
 * **Simplicity First**: Make every change as simple as possible. Impact minimal code.
