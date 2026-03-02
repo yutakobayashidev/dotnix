@@ -3,7 +3,7 @@
   "checkpoint_id": "31daac470ad7",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 1,
+  "checkpoints_count": 3,
   "files_touched": [
     "nix/modules/home/programs/claude-code.nix"
   ],
@@ -14,13 +14,20 @@
       "context": "/31/daac470ad7/0/context.md",
       "content_hash": "/31/daac470ad7/0/content_hash.txt",
       "prompt": "/31/daac470ad7/0/prompt.txt"
+    },
+    {
+      "metadata": "/31/daac470ad7/1/metadata.json",
+      "transcript": "/31/daac470ad7/1/full.jsonl",
+      "context": "/31/daac470ad7/1/context.md",
+      "content_hash": "/31/daac470ad7/1/content_hash.txt",
+      "prompt": "/31/daac470ad7/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 171,
-    "cache_creation_tokens": 45098,
-    "cache_read_tokens": 103545,
-    "output_tokens": 1210,
-    "api_call_count": 6
+    "input_tokens": 188,
+    "cache_creation_tokens": 94306,
+    "cache_read_tokens": 301814,
+    "output_tokens": 3348,
+    "api_call_count": 16
   }
 }
