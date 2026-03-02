@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "fdf21b41a11d",
+  "session_id": "3012742a-68db-4ee5-b600-76b70a6a2351",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-02T06:19:01.707973483Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "zsh/functions/difit-cmux.zsh"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "4c6935ebf421",
+  "token_usage": {
+    "input_tokens": 1194,
+    "cache_creation_tokens": 33664,
+    "cache_read_tokens": 160641,
+    "output_tokens": 2593,
+    "api_call_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-02T06:19:01.666630534Z",
+    "agent_lines": 23,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 23,
+    "agent_percentage": 100
+  }
+}

@@ -1,0 +1,17 @@
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC外して
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+0
+
+---
+
+違う、値を0に
+
+---
+
+他にもトラフィック系のやつ0にしといて

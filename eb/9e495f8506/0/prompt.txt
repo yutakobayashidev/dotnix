@@ -1,0 +1,17 @@
+Obsidianのhookのコメント外してdarwinでは有効化するように変えて
+
+---
+
+コミットして
+
+---
+
+[Request interrupted by user]
+
+---
+
+テレメトリ関連の環境変数変更は戻して
+
+---
+
+コミット
