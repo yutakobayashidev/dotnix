@@ -2,75 +2,64 @@
 { pkgs, lib, ... }:
 
 {
-  home.packages =
-    (with pkgs.llm-agents; [
-      claude-code
-      ccusage
-      opencode
-      rtk
-      vibe-kanban
-      cursor-agent
-      agent-browser
-      entire
-    ])
-    ++ (with pkgs; [
-      # Overlay packages
-      continues
-      # Version Control
-      git
-      git-wt
-      git-lfs
-      git-filter-repo
-      lazygit
-      jujutsu
-      jj-desc
+  home.packages = with pkgs; [
+    # Overlay packages
+    continues
+    # Version Control
+    git
+    git-wt
+    git-lfs
+    git-filter-repo
+    lazygit
+    jujutsu
+    jj-desc
 
-      # Development Tools
-      repiq
-      nil
-      nix-init
-      ni
+    # Development Tools
+    repiq
+    nil
+    nix-init
+    ni
 
-      # Google Suite
-      gogcli
+    # Google Suite
+    gogcli
 
-      # CLI Utilities
-      curl
-      wget
-      aria2
-      xh
-      ripgrep
-      fzf
-      peco
-      jq
-      jnv
-      tokei
-      cloc
-      similarity-ts
-      lsd
-      btop
-      zoxide
-      tree
-      glow
-      gum
-      vhs
-      yazi
-      imagemagick
-      ffmpeg
-      python313Packages.markitdown
-      stable.yt-dlp
-      halloy
-      obsidian
+    # CLI Utilities
+    curl
+    wget
+    aria2
+    xh
+    ripgrep
+    fzf
+    peco
+    jq
+    jnv
+    tokei
+    cloc
+    similarity-ts
+    lsd
+    btop
+    zoxide
+    tree
+    glow
+    gum
+    vhs
+    yazi
+    imagemagick
+    ffmpeg
+    python313Packages.markitdown
+    stable.yt-dlp
+    halloy
+    obsidian
 
-      # Network Tools
-      tunnelto
-      speedtest-cli
-      bandwhich
-      nmap
-      dnsutils
+    # Network Tools
+    tunnelto
+    speedtest-cli
+    bandwhich
+    nmap
+    dnsutils
 
-      # Misc
-      sl
-      fastfetch
-    ]);
+    # Misc
+    sl
+    fastfetch
+  ];
 }
