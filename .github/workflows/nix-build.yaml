@@ -1,5 +1,5 @@
 # Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/workflows/nix-build.yaml
-name: "CI: Nix build"
+name: 'CI: Nix build'
 
 on:
   push:

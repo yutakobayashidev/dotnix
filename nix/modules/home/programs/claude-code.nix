@@ -151,7 +151,7 @@ in
             hooks = [
               {
                 type = "command";
-                command = "if [ -n \"$CMUX_TAB_ID\" ] && command -v cmux >/dev/null 2>&1; then cmux select-workspace --workspace \"$CMUX_TAB_ID\" && ${jq} -r '.message' | xargs -I {} cmux notify --title \"Claude Code\" --body \"{}\" --tab \"$CMUX_TAB_ID\"; else ${jq} -r '.message' | xargs -I {} ${terminal-notifier} -message \"{}\" -title \"Claude Code\" -group \"$(pwd):hook\" -activate com.mitchellh.ghostty; fi";
+                command = "CMUX_BIN=\"\"; if command -v cmux >/dev/null 2>&1; then CMUX_BIN=cmux; elif [ -x /Applications/cmux.app/Contents/Resources/bin/cmux ]; then CMUX_BIN=/Applications/cmux.app/Contents/Resources/bin/cmux; fi; if [ -n \"$CMUX_TAB_ID\" ] && [ -n \"$CMUX_BIN\" ]; then \"$CMUX_BIN\" set-app-focus active; \"$CMUX_BIN\" select-workspace --workspace \"$CMUX_TAB_ID\" && ${jq} -r '.message' | xargs -I {} \"$CMUX_BIN\" notify --title \"Claude Code\" --body \"{}\" --tab \"$CMUX_TAB_ID\"; else ${jq} -r '.message' | xargs -I {} ${terminal-notifier} -message \"{}\" -title \"Claude Code\" -group \"$(pwd):hook\"; fi";
               }
             ];
           }

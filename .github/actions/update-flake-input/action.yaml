@@ -12,31 +12,31 @@ inputs:
   owner:
     description: GitHub owner of the input repository
     required: false
-    default: ""
+    default: ''
   repo:
     description: GitHub repository name of the input
     required: false
-    default: ""
+    default: ''
   ref:
     description: Git ref (branch/tag) of the input
     required: false
-    default: ""
+    default: ''
   skip-delay:
     description: Skip the minimum release age check
     required: false
-    default: "false"
+    default: 'false'
   minimum-release-age-days:
     description: Minimum release age in days before updating
     required: false
-    default: "3"
+    default: '3'
   auto-merge:
     description: Enable auto-merge for the PR
     required: false
-    default: "true"
+    default: 'true'
   pr-labels:
     description: Comma-separated labels to add to the PR
     required: false
-    default: "dependencies,automated"
+    default: 'dependencies,automated'
   github-token:
     description: GitHub token for creating PRs and enabling auto-merge
     required: true

@@ -6,15 +6,15 @@ inputs:
   inputs:
     description: Space-separated list of specific inputs to update (empty for all)
     required: false
-    default: ""
+    default: ''
   exclude-inputs:
     description: Space-separated list of inputs to exclude from discovery
     required: false
-    default: ""
+    default: ''
   skip-delay-inputs:
     description: Space-separated list of inputs that should skip the release age check
     required: false
-    default: ""
+    default: ''
 
 outputs:
   matrix:

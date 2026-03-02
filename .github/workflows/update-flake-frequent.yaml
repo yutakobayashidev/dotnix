@@ -1,9 +1,9 @@
 # Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/workflows/update-flake-frequent.yaml
-name: "Update Flake Inputs (Frequent)"
+name: 'Update Flake Inputs (Frequent)'
 
 on:
   schedule:
-    - cron: "0 */3 * * *"
+    - cron: '0 */3 * * *'
   workflow_dispatch:
 
 permissions:
@@ -14,9 +14,9 @@ jobs:
   update:
     uses: ./.github/workflows/_update-flake-reusable.yaml
     with:
-      inputs: "llm-agents"
+      inputs: 'llm-agents'
       skip-delay: true
-      minimum-release-age-days: "0"
+      minimum-release-age-days: '0'
     secrets:
       app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
       private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}

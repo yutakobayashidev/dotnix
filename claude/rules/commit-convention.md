@@ -1,6 +1,6 @@
 ---
 paths:
-  - "~/ghq/github.com/yutakobayashidev/**"
+  - '~/ghq/github.com/yutakobayashidev/**'
 ---
 
 # Commit Message Convention

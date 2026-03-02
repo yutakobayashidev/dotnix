@@ -1,4 +1,4 @@
-name: "CI: Pinact check"
+name: 'CI: Pinact check'
 
 on:
   pull_request:
@@ -17,4 +17,4 @@ jobs:
           persist-credentials: false
       - uses: suzuki-shunsuke/pinact-action@1081f5ad49ac904b7d977784f338145150a32112 # v1.4.0
         with:
-          skip_push: "true"
+          skip_push: 'true'

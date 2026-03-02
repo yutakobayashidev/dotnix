@@ -1,7 +1,7 @@
 ---
 paths:
-  - ".github/workflows/**"
-  - ".github/actions/**"
+  - '.github/workflows/**'
+  - '.github/actions/**'
 ---
 
 # GitHub Actions Lint Requirement

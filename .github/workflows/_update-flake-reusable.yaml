@@ -7,19 +7,19 @@ on:
       inputs:
         description: Space-separated list of specific inputs to update (empty for all)
         type: string
-        default: ""
+        default: ''
       exclude-inputs:
         description: Space-separated list of inputs to exclude from discovery
         type: string
-        default: ""
+        default: ''
       skip-delay-inputs:
         description: Space-separated list of inputs that should skip the release age check
         type: string
-        default: ""
+        default: ''
       minimum-release-age-days:
         description: Minimum release age in days before updating
         type: string
-        default: "3"
+        default: '3'
       skip-delay:
         description: Skip the minimum release age check for all inputs
         type: boolean
@@ -27,7 +27,7 @@ on:
       pr-labels:
         description: Labels to add to PRs (comma-separated)
         type: string
-        default: "dependencies,automated"
+        default: 'dependencies,automated'
       auto-merge:
         description: Enable auto-merge for PRs
         type: boolean
@@ -35,7 +35,7 @@ on:
       summary-title:
         description: Title for the summary section
         type: string
-        default: "Update Summary"
+        default: 'Update Summary'
     secrets:
       app-id:
         required: true

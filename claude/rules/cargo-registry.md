@@ -1,8 +1,8 @@
 ---
 paths:
-  - "**/*.rs"
-  - "**/Cargo.toml"
-  - "**/Cargo.lock"
+  - '**/*.rs'
+  - '**/Cargo.toml'
+  - '**/Cargo.lock'
 ---
 
 # Cargo Registry Source Read Permission

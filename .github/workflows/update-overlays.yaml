@@ -1,8 +1,8 @@
-name: "Update Custom Overlays"
+name: 'Update Custom Overlays'
 
 on:
   schedule:
-    - cron: "0 18 * * 5" # Saturday 03:00 JST
+    - cron: '0 18 * * 5' # Saturday 03:00 JST
   workflow_dispatch:
 
 permissions:

@@ -1,18 +1,18 @@
 # Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/workflows/update-flake.yaml
-name: "Update Flake Inputs (Stable)"
+name: 'Update Flake Inputs (Stable)'
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    - cron: '0 6 * * *'
   workflow_dispatch:
     inputs:
       minimum-release-age-days:
-        description: "Minimum release age in days before updating"
+        description: 'Minimum release age in days before updating'
         required: false
         type: number
         default: 3
       skip-delay:
-        description: "Skip the minimum release age check for all inputs"
+        description: 'Skip the minimum release age check for all inputs'
         required: false
         type: boolean
         default: false
@@ -25,7 +25,7 @@ jobs:
   update:
     uses: ./.github/workflows/_update-flake-reusable.yaml
     with:
-      exclude-inputs: "llm-agents"
+      exclude-inputs: 'llm-agents'
       minimum-release-age-days: ${{ github.event.inputs.minimum-release-age-days && github.event.inputs.minimum-release-age-days || '3' }}
       skip-delay: ${{ github.event.inputs.skip-delay == 'true' }}
     secrets:
