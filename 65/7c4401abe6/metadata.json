@@ -1,0 +1,52 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "657c4401abe6",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    ".claude/settings.json",
+    "AGENTS.md",
+    "README.md",
+    "agents/README.md",
+    "agents/skills/check-similarity/SKILL.md",
+    "agents/skills/dce/SKILL.md",
+    "agents/skills/gha-lint/SKILL.md",
+    "agents/skills/markitdown/SKILL.md",
+    "agents/skills/oura-daily-watch/SKILL.md",
+    "agents/skills/social-digest/SKILL.md",
+    "agents/skills/social-digest/scripts/fxtweet.ts",
+    "agents/skills/social-digest/scripts/social-digest.ts",
+    "agents/skills/social-digest/src/renderDaily.ts",
+    "agents/skills/social-digest/src/socialDigest.ts",
+    "agents/skills/social-digest/test/renderDaily.test.ts",
+    "agents/skills/social-digest/test/socialDigest.test.ts",
+    "agents/skills/speakerdeck/SKILL.md",
+    "agents/skills/speakerdeck/scripts/speakerdeck.ts",
+    "claude/CLAUDE.md",
+    "claude/commands/repo-creator.md",
+    "claude/rules/pr-aftercare.md",
+    "claude/rules/toolchain-explainer.md",
+    "codex/AGENTS.md",
+    "karabiner/karabiner.json",
+    "nix/modules/home/programs/fastfetch/config.jsonc",
+    "secrets/secrets.yaml",
+    "zsh/functions/README.md"
+  ],
+  "sessions": [
+    {
+      "metadata": "/65/7c4401abe6/0/metadata.json",
+      "transcript": "/65/7c4401abe6/0/full.jsonl",
+      "context": "/65/7c4401abe6/0/context.md",
+      "content_hash": "/65/7c4401abe6/0/content_hash.txt",
+      "prompt": "/65/7c4401abe6/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 10,
+    "cache_creation_tokens": 5454,
+    "cache_read_tokens": 393321,
+    "output_tokens": 576,
+    "api_call_count": 6
+  }
+}
