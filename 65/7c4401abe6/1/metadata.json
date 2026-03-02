@@ -1,0 +1,33 @@
+{
+  "cli_version": "0.4.7",
+  "checkpoint_id": "657c4401abe6",
+  "session_id": "a2743aeb-1d06-42e2-b3ac-625763cfdc6a",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-02T18:46:34.202992778Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "claude/rules/pr-aftercare.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "df8b8c94960e",
+  "transcript_identifier_at_start": "a9ba8860-b78d-4f6b-8e8c-3addb79a961b",
+  "checkpoint_transcript_start": 201,
+  "transcript_lines_at_start": 201,
+  "token_usage": {
+    "input_tokens": 2041,
+    "cache_creation_tokens": 74877,
+    "cache_read_tokens": 892333,
+    "output_tokens": 4421,
+    "api_call_count": 31
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-02T18:46:34.158546675Z",
+    "agent_lines": 0,
+    "human_added": 2329,
+    "human_modified": 5,
+    "human_removed": 0,
+    "total_committed": 2329,
+    "agent_percentage": 0
+  }
+}
