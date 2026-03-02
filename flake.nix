@@ -308,6 +308,13 @@
               nixfmt.enable = true;
               stylua.enable = true;
               shfmt.enable = true;
+              oxfmt = {
+                enable = true;
+                excludes = [
+                  "nvim/template/**"
+                  "nvim/lazy-lock.json"
+                ];
+              };
             };
             settings.global.excludes = [
               ".git/**"
