@@ -102,27 +102,30 @@ in
         ];
       };
       hooks = {
-        PreToolUse = [
-          # {
-          #   matcher = "Read";
-          #   hooks = [
-          #     {
-          #       type = "command";
-          #       command = "${claudeDotfilesDir}/hooks/obsidian-backlinks.zsh";
-          #     }
-          #   ];
-          # }
-          {
-            matcher = "Bash";
-            hooks = [
-              {
-                type = "command";
-                command = rtkHookPath;
-                timeout = 10;
-              }
-            ];
-          }
-        ];
+        PreToolUse =
+          lib.optionals pkgs.stdenv.isDarwin [
+            {
+              matcher = "Read";
+              hooks = [
+                {
+                  type = "command";
+                  command = "${claudeDotfilesDir}/hooks/obsidian-backlinks.zsh";
+                }
+              ];
+            }
+          ]
+          ++ [
+            {
+              matcher = "Bash";
+              hooks = [
+                {
+                  type = "command";
+                  command = rtkHookPath;
+                  timeout = 10;
+                }
+              ];
+            }
+          ];
         Stop = [
           {
             hooks = [
