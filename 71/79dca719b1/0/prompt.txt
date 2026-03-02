@@ -1,0 +1,17 @@
+CLAUDE.mdとAGENTS.md,tasks/をz-ai/に変えて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+gitの設定でglobalにignoreして、あとAGENTS.mdはおかない、今までのtasks/以下をrenameするイメージ
+
+---
+
+AGENTS.md,CLAUDE.mdはignoreしないで。z-aiをignoreする
+
+---
+
+kコミットして
