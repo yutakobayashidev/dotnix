@@ -1,0 +1,90 @@
+CLAUDE.mdとAGENTS.md,tasks/をz-ai/に変えて
+
+---
+
+[Request interrupted by user for tool use]
+
+---
+
+gitの設定でglobalにignoreして、あとAGENTS.mdはおかない、今までのtasks/以下をrenameするイメージ
+
+---
+
+AGENTS.md,CLAUDE.mdはignoreしないで。z-aiをignoreする
+
+---
+
+kコミットして
+
+---
+
+これをclaude/CLAUDE.md、codex/AGENTS.mdに追加して Browser Automation (agent-browser)
+agent-browser is available to check on the browser.
+
+# 1. Open page (`--allow-private` is required to open localhost)
+agent-browser open <url> --allow-private
+
+# 2. Get element reference
+agent-browser snapshot -i
+
+# 3. Operate
+agent-browser click @e<N>
+agent-browser fill @e<N> "テキスト"
+
+# 4. Save screenshot
+agent-browser screenshot z-ai/screenshot.png
+
+# ex. save credentials
+
+agent-browser open <url> --profile ~/.browser-profile --allow-private
+
+---
+
+llm-agents.agent-browserも追加してからコミットして
+
+---
+
+<bash-input>git push</bash-input>
+
+---
+
+<bash-stdout>[entire] Pushing session logs to origin...
+To https://github.com/yutakobayashidev/dotnix.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/yutakobayashidev/dotnix.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</bash-stdout><bash-stderr>[entire] Pushing session logs to origin...
+To https://github.com/yutakobayashidev/dotnix.git
+ ! [rejected]        main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/yutakobayashidev/dotnix.git'
+hint: Updates were rejected because the remote contains work that you do not
+hint: have locally. This is usually caused by another repository pushing to
+hint: the same ref. If you want to integrate the remote changes, use
+hint: 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</bash-stderr>
+
+---
+
+pullして
+
+---
+
+<bash-input>git push</bash-input>
+
+---
+
+<bash-stdout>To https://github.com/yutakobayashidev/dotnix.git
+   02fb0e9..328b699  main -> main</bash-stdout><bash-stderr></bash-stderr>
+
+---
+
+https://github.com/yutakobayashidev/dotnix/commit/03106cdf0f3b68f320bb42b3f8c17674a2a346b8 あれ、なんでCLAUDE.md,AGENTS.md消してるの
+
+---
+
+戻して
