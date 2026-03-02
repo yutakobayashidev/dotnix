@@ -6,6 +6,7 @@
     ./agent-skills.nix
     ./programs/ai-tools.nix
     ./programs/cage.nix
+    ./programs/dev-tools.nix
     ./programs/claude-code.nix
     ./programs/codex.nix
     ./programs/git.nix

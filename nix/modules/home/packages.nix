@@ -3,8 +3,6 @@
 
 {
   home.packages = with pkgs; [
-    # Overlay packages
-    continues
     # Version Control
     git
     git-wt
@@ -15,13 +13,9 @@
     jj-desc
 
     # Development Tools
-    repiq
     nil
     nix-init
     ni
-
-    # Google Suite
-    gogcli
 
     # CLI Utilities
     curl
