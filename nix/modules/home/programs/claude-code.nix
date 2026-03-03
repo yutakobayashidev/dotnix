@@ -69,7 +69,7 @@ in
       skipDangerousModePermissionPrompt = true;
       enableAllProjectMcpServers = true;
       inherit mcpServers;
-      statusline = {
+      statusLine = {
         type = "command";
         command = "ccusage statusline";
         padding = 0;

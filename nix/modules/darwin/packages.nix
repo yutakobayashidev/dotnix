@@ -26,7 +26,7 @@
       discord
       element
       mattermost
-      nani
+      # nani # TODO: upstream download URL returns 404
       signal
       simplex
       slack
