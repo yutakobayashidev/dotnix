@@ -16,6 +16,7 @@
     nil
     nix-init
     ni
+    wabt
 
     # CLI Utilities
     curl
