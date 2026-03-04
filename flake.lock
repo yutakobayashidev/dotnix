@@ -1028,11 +1028,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771563879,
-        "narHash": "sha256-vA5hocvdGhr+jfBN7A7ogeZqIz2qx01EixXwdVsQcnE=",
+        "lastModified": 1772333626,
+        "narHash": "sha256-frUkVDphK8oJNOKo3DDs3+Y4zMnA6YmOOIJ+pP5OSfM=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "379d20c55f552e91fb9f3f0382e4a97d3f452943",
+        "rev": "50776c02c6fc6fd127b67aa1f010bbadd12da47c",
         "type": "github"
       },
       "original": {
