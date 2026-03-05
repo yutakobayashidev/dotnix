@@ -1800,11 +1800,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1772177178,
-        "narHash": "sha256-1GU3ZMX0/ZNPtGXdosnIFKefWUmbsXO8MhUv8CpOfWg=",
+        "lastModified": 1772403185,
+        "narHash": "sha256-VuSIBRjWe2Pt+fy2i93roG5qhPSzsVAv7HPbMFAtS0A=",
         "owner": "skanehira",
         "repo": "version-lsp",
-        "rev": "5a62f038e701366f75cb2d041a2ade8b79145dfa",
+        "rev": "2fe8eeadc88cfb631c42a6912914d3637f7048a8",
         "type": "github"
       },
       "original": {
