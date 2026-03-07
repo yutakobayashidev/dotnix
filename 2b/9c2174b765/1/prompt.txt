@@ -1,0 +1,40 @@
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  git pull
+From https://github.com/yutakobayashidev/dotnix
+ - [deleted]         (none)                              -> origin/update-flake-rustowl-flake
+ - [deleted]         (none)                              -> origin/update-flake-ui-ux-pro-max-skill
+remote: Enumerating objects: 45, done.
+remote: Counting objects: 100% (25/25), done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 45 (delta 23), reused 16 (delta 16), pack-reused 20 (from 1)
+Unpacking objects: 100% (45/45), 18.86 KiB | 301.00 KiB/s, done.
+   dab0583..8b1deb4  main                                -> origin/main
+ + 10be802...cae7090 update-flake-brew-api               -> origin/update-flake-brew-api  (forced update)
+ + f80e6d2...c3160a4 update-flake-flake-parts            -> origin/update-flake-flake-parts  (forced update)
+ + cdf9a55...6512ab2 update-flake-ghostty                -> origin/update-flake-ghostty  (forced update)
+ * [new branch]      update-flake-hashicorp-agent-skills -> origin/update-flake-hashicorp-agent-skills
+ + 876ef40...1a82829 update-flake-home-manager           -> origin/update-flake-home-manager  (forced update)
+ + 63bf960...e33353a update-flake-mcp-servers-nix        -> origin/update-flake-mcp-servers-nix  (forced update)
+ + 03be78f...cb9fbda update-flake-niri                   -> origin/update-flake-niri  (forced update)
+ + 9c0425f...968c3d6 update-flake-nix-index-database     -> origin/update-flake-nix-index-database  (forced update)
+ + c06069d...db9658b update-flake-obsidian-skills        -> origin/update-flake-obsidian-skills  (forced update)
+ + 88bba3c...7bc6db2 update-flake-sops-nix               -> origin/update-flake-sops-nix  (forced update)
+Updating dab0583..8b1deb4
+Created autostash: 931bfc3
+Fast-forward
+ flake.lock | 54 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
+Applying autostash resulted in conflicts.
+Your changes are safe in the stash.
+You can run "git stash pop" or "git stash drop" at any time.
+direnv: loading ~/ghq/github.com/yutakobayashidev/dotnix/.envrc
+direnv: using flake
+direnv: nix-direnv: cache invalidated: files newer than cache:
+nix-direnv: /Users/yuta/ghq/github.com/yutakobayashidev/dotnix/flake.nix
+/Users/yuta/ghq/github.com/yutakobayashidev/dotnix/flake.lock
+error:
+       … while updating the lock file of flake 'git+file:///Users/yuta/ghq/github.com/yutakobayashidev/dotnix'
+
+       error: Could not parse '/nix/store/mhijy1190s1ayk1p1xvx8hdxrv9wlbp0-source/flake.lock': [json.exception.parse_error.101] parse error at line 1745, column 1: syntax error while parsing object key - invalid literal; last read: '"github"<U+000A>      }<U+000A>    },<U+000A><'; expected string literal
+direnv: nix-direnv: Evaluating current devShell failed. Falling back to previous environment!
+direnv: export +AR +AS +CC +CONFIG_SHELL +CXX +DEVELOPER_DIR +HOST_PATH +IN_NIX_SHELL +LD +LD_DYLD_PATH +MACOSX_DEPLOYMENT_TARGET +NIX_APPLE_SDK_VERSION +NIX_BINTOOLS REDACTED +NIX_BUILD_CORES +NIX_CC REDACTED +NIX_CFLAGS_COMPILE +NIX_DIRENV_DID_FALLBACK +NIX_DONT_SET_RPATH +NIX_DONT_SET_RPATH_FOR_BUILD +NIX_ENFORCE_NO_NATIVE +NIX_HARDENING_ENABLE +NIX_IGNORE_LD_THROUGH_GCC +NIX_LDFLAGS +NIX_NO_SELF_RPATH +NIX_STORE +NM +OBJCOPY +OBJDUMP +PATH_LOCALE +RANLIB +SDKROOT +SIZE +SOURCE_DATE_EPOCH +STRINGS +STRIP +ZERO_AR_DATE +__darwinAllowLocalNetworking +__impureHostDeps +__propagatedImpureHostDeps +__propagatedSandboxProfile +__sandboxProfile +__structuredAttrs +buildInputs +buildPhase +builder +cmakeFlags +configureFlags +depsBuildBuild +depsBuildBuildPropagated +depsBuildTarget +depsBuildTargetPropagated +depsHostHost +depsHostHostPropagated +depsTargetTarget +depsTargetTargetPropagated +doCheck +doInstallCheck +dontAddDisableDepTrack +mesonFlags +name +nativeBuildInputs +out +outputs +patches +phases +preferLocalBuild +propagatedBuildInputs +propagatedNativeBuildInputs +shell +shellHook +stdenv +strictDeps +system ~PATH
+ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ±✚  plz fic
