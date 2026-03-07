@@ -132,7 +132,7 @@ vim.lsp.config.tailwindcss = {
 		"svelte",
 		"astro",
 	},
-	root_markers = { "tailwind.config.js", "tailwind.config.ts", "postcss.config.js", ".git" },
+	root_markers = { "tailwind.config.js", "tailwind.config.ts", "postcss.config.js", "vite.config.ts", ".git" },
 }
 
 -- html (vscode-langservers-extracted)
