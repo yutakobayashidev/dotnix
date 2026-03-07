@@ -1,0 +1,32 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "2b9c2174b765",
+  "session_id": "3f58ab22-9e38-44cb-84e9-6500781c0783",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-07T08:32:17.299594Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nvim/lazy-lock.json"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "aafe2a8d89af",
+  "checkpoint_transcript_start": 229,
+  "transcript_lines_at_start": 229,
+  "token_usage": {
+    "input_tokens": 1,
+    "cache_creation_tokens": 319,
+    "cache_read_tokens": 50550,
+    "output_tokens": 44,
+    "api_call_count": 1
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-07T08:32:17.021694Z",
+    "agent_lines": 18,
+    "human_added": 349,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 367,
+    "agent_percentage": 4.904632152588556
+  }
+}
