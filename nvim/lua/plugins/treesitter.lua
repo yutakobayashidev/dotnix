@@ -9,6 +9,10 @@ return {
 			if treesitter_grammars then
 				vim.opt.runtimepath:append(treesitter_grammars)
 			end
+			local treesitter_moonbit = vim.env.TREESITTER_MOONBIT
+			if treesitter_moonbit then
+				vim.opt.runtimepath:append(treesitter_moonbit)
+			end
 		end,
 		opts = {
 			auto_install = false, -- Grammars are provided by Nix

@@ -48,6 +48,7 @@
 
       # AI / LLM
       "claude"
+      "codex-app"
 
       # VR (brew-nix のハッシュが壊れているため cask で管理)
       "virtual-desktop-streamer"

@@ -35,10 +35,6 @@
       url = "github:aster-void/nix-hazkey";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    version-lsp = {
-      url = "github:skanehira/version-lsp";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     agent-skills = {
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -139,6 +135,14 @@
       url = "github:nix-community/rustowl-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    moonbit-overlay = {
+      url = "github:moonbit-community/moonbit-overlay";
+      flake = false;
+    };
+    tree-sitter-moonbit = {
+      url = "github:moonbitlang/tree-sitter-moonbit";
+      flake = false;
+    };
   };
 
   nixConfig = {
@@ -166,7 +170,6 @@
       nixpkgs-stable,
       llm-agents,
       nix-steipete-tools,
-      version-lsp,
       ghostty,
       gh-nippou,
       gh-graph,
@@ -197,10 +200,11 @@
             llm-agents.overlays.default
             (_final: _prev: {
               _nix-steipete-tools = nix-steipete-tools;
-              _version-lsp = version-lsp;
               _ghostty = ghostty;
               _repiq = inputs.repiq;
               _cage = inputs.cage;
+              _moonbit-overlay = inputs.moonbit-overlay;
+              _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
             })
             gh-nippou.overlays.default
             gh-graph.overlays.default

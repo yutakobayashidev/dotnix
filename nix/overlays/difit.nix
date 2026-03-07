@@ -36,6 +36,7 @@ final: prev: {
             cp -r dist $out/lib/difit/
             cp -r node_modules $out/lib/difit/
             cp package.json $out/lib/difit/
+            find $out/lib/difit/node_modules -xtype l -delete
 
             cat > $out/bin/difit << EOF
       #!/bin/sh

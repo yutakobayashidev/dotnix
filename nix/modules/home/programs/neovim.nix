@@ -30,6 +30,7 @@ in
       vtsls
       pretty-ts-errors-markdown
       version-lsp
+      moonbit-lsp
 
       # Rust
       rustowl
@@ -60,6 +61,9 @@ in
       "--set"
       "RUSTOWL_NVIM"
       "${pkgs.rustowl-nvim}"
+      "--set"
+      "TREESITTER_MOONBIT"
+      "${pkgs.tree-sitter-moonbit-grammar}"
     ];
   };
 

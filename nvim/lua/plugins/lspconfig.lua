@@ -177,6 +177,19 @@ vim.lsp.config.version_lsp = {
 	root_markers = { "package.json", "pnpm-workspace.yaml", "Cargo.toml", "go.mod", ".git" },
 }
 
+-- moonbit (direnv経由でPATHに入る前提)
+vim.lsp.config.moonbit = {
+	cmd = { "moonbit-lsp" },
+	filetypes = { "moonbit" },
+	root_markers = { "moon.mod.json", ".git" },
+}
+
+vim.filetype.add({
+	extension = {
+		mbt = "moonbit",
+	},
+})
+
 -- Enable all LSPs
 vim.lsp.enable({
 	"vtsls",
@@ -193,6 +206,7 @@ vim.lsp.enable({
 	"volar",
 	"yamlls",
 	"version_lsp",
+	"moonbit",
 })
 
 return {}
