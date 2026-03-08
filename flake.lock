@@ -1393,11 +1393,11 @@
     "obsidian-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1771987928,
-        "narHash": "sha256-IuHRttse8Th1Wh4lsWtnTIZ1+M2OPtMgDjRobqc2tc8=",
+        "lastModified": 1772463036,
+        "narHash": "sha256-nLsv1cJl/4wnb1TBkz6OA/9tC9TM15Yx7Tquk0NbjHk=",
         "owner": "kepano",
         "repo": "obsidian-skills",
-        "rev": "790904bd700b0eb072a3bb77e512d2b4069bc83f",
+        "rev": "bb9ec95e1b59c3471bd6fd77a78a4042430bfac3",
         "type": "github"
       },
       "original": {
