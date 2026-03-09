@@ -706,11 +706,11 @@
     "hashicorp-agent-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1772576926,
-        "narHash": "sha256-7954F2JyqMm0HQg1faVhF1DmI82WecGUTzeJjmbE4ZU=",
+        "lastModified": 1772625576,
+        "narHash": "sha256-gtXcigFYy5xMEBMgTa0pQjmwXfO0uHCLb0ybT22r5xM=",
         "owner": "hashicorp",
         "repo": "agent-skills",
-        "rev": "285e0d72334bb2659cab47e43c8766ab7c3865da",
+        "rev": "876a095c71079e4c112fb1de2f1a66dca0ffea23",
         "type": "github"
       },
       "original": {
