@@ -1,0 +1,6 @@
+brew install gnu-tar openssl@3 ldid-procursus sshpass keystone autoconf automake pkg-config libtool git-lfs
+これ、nixpkgsではいるのはnixpkgs,なければbrewで入れて
+
+---
+
+openssl,@3になッ手艫？
