@@ -8,10 +8,12 @@
       cleanup = "uninstall";
     };
     taps = [
+      "blacktop/tap"
       "manaflow-ai/cmux"
       "trasta298/tap"
     ];
     brews = [
+      "blacktop/tap/ipsw"
       "mas"
       "trasta298/tap/keifu"
 
