@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "92e604e744db",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 3,
+  "files_touched": [
+    "nix/overlays/bit-vcs.nix"
+  ],
+  "sessions": [
+    {
+      "metadata": "/92/e604e744db/0/metadata.json",
+      "transcript": "/92/e604e744db/0/full.jsonl",
+      "content_hash": "/92/e604e744db/0/content_hash.txt",
+      "prompt": "/92/e604e744db/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1375,
+    "cache_creation_tokens": 73769,
+    "cache_read_tokens": 644475,
+    "output_tokens": 5291,
+    "api_call_count": 25
+  }
+}

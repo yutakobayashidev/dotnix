@@ -1,0 +1,41 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "ad59a31903e7",
+  "session_id": "48ef15c9-1018-4090-8d25-1adb565b861b",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-10T04:48:03.07153703Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "nix/modules/home/programs/zsh.nix",
+    "nix/modules/linux/networking.nix",
+    "nix/modules/linux/sops.nix",
+    "secrets/.gitkeep",
+    "nix/profiles/gui.nix",
+    "secrets/secrets.yaml",
+    "zsh/config/aliases.zsh",
+    "zsh/zshrc",
+    ".sops.yaml",
+    "flake.lock",
+    "flake.nix",
+    "nix/hosts/UM790-Pro/default.nix"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "8298b5eb726b",
+  "token_usage": {
+    "input_tokens": 860,
+    "cache_creation_tokens": 37639,
+    "cache_read_tokens": 290431,
+    "output_tokens": 3077,
+    "api_call_count": 13
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-10T04:48:03.048512312Z",
+    "agent_lines": 55,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 55,
+    "agent_percentage": 100
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "4d1a0760f11f",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 27,
+  "files_touched": [
+    "nix/modules/darwin/packages.nix",
+    "nvim/lazy-lock.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/4d/1a0760f11f/0/metadata.json",
+      "transcript": "/4d/1a0760f11f/0/full.jsonl",
+      "content_hash": "/4d/1a0760f11f/0/content_hash.txt",
+      "prompt": "/4d/1a0760f11f/0/prompt.txt"
+    },
+    {
+      "metadata": "/4d/1a0760f11f/1/metadata.json",
+      "transcript": "/4d/1a0760f11f/1/full.jsonl",
+      "content_hash": "/4d/1a0760f11f/1/content_hash.txt",
+      "prompt": "/4d/1a0760f11f/1/prompt.txt"
+    },
+    {
+      "metadata": "/4d/1a0760f11f/2/metadata.json",
+      "transcript": "/4d/1a0760f11f/2/full.jsonl",
+      "content_hash": "/4d/1a0760f11f/2/content_hash.txt",
+      "prompt": "/4d/1a0760f11f/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 7461,
+    "cache_creation_tokens": 601696,
+    "cache_read_tokens": 19912099,
+    "output_tokens": 85481,
+    "api_call_count": 243
+  }
+}
