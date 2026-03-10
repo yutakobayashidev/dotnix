@@ -4,6 +4,7 @@
 {
   home.packages = with pkgs; [
     # Version Control
+    bit-vcs
     git
     git-wt
     git-lfs
