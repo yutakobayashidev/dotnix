@@ -257,3 +257,7 @@ make setup_machineでいいが、nixの設定で宣言されていないhomebrew
 ---
 
 devShell はもう不要になるので削除して、代わりに homebrew.nix の brews に追加
+
+---
+
+y
