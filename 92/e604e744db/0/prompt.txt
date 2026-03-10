@@ -3,3 +3,7 @@ https://github.com/bit-vcs/bit これオーバーレイあるカ調べて
 ---
 
 macにもnixosにも入れて押いて
+
+---
+
+コミットして
