@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "4d1a0760f11f",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "nvim/lazy-lock.json"
+  ],
+  "sessions": [
+    {
+      "metadata": "/4d/1a0760f11f/0/metadata.json",
+      "transcript": "/4d/1a0760f11f/0/full.jsonl",
+      "content_hash": "/4d/1a0760f11f/0/content_hash.txt",
+      "prompt": "/4d/1a0760f11f/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 3,
+    "cache_creation_tokens": 13225,
+    "cache_read_tokens": 0,
+    "output_tokens": 484,
+    "api_call_count": 1
+  }
+}
