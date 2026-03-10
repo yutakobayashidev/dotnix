@@ -40,6 +40,15 @@ done
 # aliases & abbreviations (must be after functions loop and zsh-abbr)
 source ~/.config/zsh/config/aliases.zsh
 
+# Highlight abbreviations as valid commands for zsh-syntax-highlighting
+ZSH_HIGHLIGHT_HIGHLIGHTERS+=(regexp)
+typeset -gA ZSH_HIGHLIGHT_REGEXP
+() {
+  local keys=(${(k)ABBR_REGULAR_USER_ABBREVIATIONS})
+  keys=(${keys//\"/})
+  ZSH_HIGHLIGHT_REGEXP+=('^[[:blank:][:space:]]*('${(j:|:)keys}')$' 'fg=blue')
+}
+
 # zoxide (must be after oh-my-zsh to avoid cd being overwritten)
 eval "$(zoxide init zsh --cmd cd)"
 
