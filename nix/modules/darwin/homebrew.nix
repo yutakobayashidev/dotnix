@@ -28,6 +28,13 @@
       "git-lfs"
       "python@3.13"
       "ideviceinstaller"
+      "libimobiledevice"
+      "libplist"
+      "libimobiledevice-glue"
+      "libtasn1"
+      "libtatsu"
+      "libusbmuxd"
+      "ca-certificates"
       "wget"
     ];
     # /Applications への直接インストールやシステム統合が必要な cask
