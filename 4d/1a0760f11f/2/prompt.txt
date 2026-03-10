@@ -1,0 +1,215 @@
+abbrとzshのコマンドハイライトが干渉してしまってわかりづらいんだけど
+
+---
+
+やっぱその変更取り消して、治ってない気がする
+
+---
+
+そもそも色使なくなった
+
+---
+
+Webで調べて
+
+---
+
+abbr -Sって何
+
+---
+
+なんのための機能？
+
+---
+
+直してくれ
+
+---
+
+なおっとらん
+
+---
+
+公式のパッチないの？
+
+---
+
+キーにクォートが含まれる問題とは
+
+---
+
+コミットして
+
+---
+
+Oops!
+Failed query: select "id", "name", "url", "description", "category", "category_slug", "kind", "created_at", "updated_at" from "sources" "sources" order by "sources"."name" asc params:
+
+Error: Failed query: select "id", "name", "url", "description", "category", "category_slug", "kind", "created_at", "updated_at" from "sources" "sources" order by "sources"."name" asc
+params: 
+    at D1PreparedQuery.queryWithCache (/home/yuta/ghq/github.com/yutakobayashidev/feed-app/node_modules/.vite/deps_ssr/chunk-B2WUCUQQ.js:3541:15)
+    at D1PreparedQuery.values (/home/yuta/ghq/github.com/yutakobayashidev/feed-app/node_modules/.vite/deps_ssr/drizzle-orm_d1.js:220:12)
+    at D1PreparedQuery.all (/home/yuta/ghq/github.com/yutakobayashidev/feed-app/node_modules/.vite/deps_ssr/drizzle-orm_d1.js:172:18)
+    at async Promise.all (index 0)
+    at loader (/home/yuta/ghq/github.com/yutakobayashidev/feed-app/app/routes/home.tsx:52:42)
+    at callRouteHandler (/home/yuta/ghq/github.com/yutakobayashidev/feed-app/node_modules/.vite/deps_ssr/chunk-GJTNTGJK.js:11522:16)
+    at commonRoute.loader (/home/yuta/ghq/github.com/yutakobayashidev/feed-app/node_modules/.vite/deps_ssr/chunk-GJTNTGJK.js:11666:19)
+    at /home/yuta/ghq/github.com/yutakobayashidev/feed-app/node_modules/.vite/deps_ssr/chunk-GJTNTGJK.js:5136:19
+    at callLoaderOrAction (/home/yuta/ghq/github.com/yutakobayashidev/feed-app/node_modules/.vite/deps_ssr/chunk-GJTNTGJK.js:5188:16)
+    at async Promise.all (index 0)
+
+---
+
+まぁいいや、コミットしてpush
+
+---
+
+NIP-07でログインできるようにしといて、そこからTL構築
+
+---
+
+y
+
+---
+
+singinしても何もこラン
+
+---
+
+Uncaught Error: Minified React error #418; visit https://react.dev/errors/418?args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at ma (entry.client-Bekps8aM.js:32:24706)
+    at Ms (entry.client-Bekps8aM.js:32:73961)
+    at Is (entry.client-Bekps8aM.js:32:106366)
+    at Gy (entry.client-Bekps8aM.js:32:106339)
+    at Yy (entry.client-Bekps8aM.js:32:106199)
+    at ws (entry.client-Bekps8aM.js:32:102089)
+    at vd (entry.client-Bekps8aM.js:32:113740)
+    at MessagePort.Ma (entry.client-Bekps8aM.js:9:1638)
+
+---
+
+治ってないね
+
+---
+
+ああ、動いてた、直さなくてよかったのかも、何買えたんだっけ
+
+---
+
+未ログインでも私のnpubからTL構築するようにしたいな、REDACTED mutate部分だけnip-07のアカウントを使うイメージ
+
+---
+
+あ、ごめんこれ、REDACTED
+
+---
+
+radarのtop pageみたいにtweetdeckみたいなdeck形にしたい。自分のアカウント、タイムライン、タグみたいなイメージ
+
+---
+
+リレー全体のdeck
+
+---
+
+外のpaddingがradartop pageと違うよね
+
+---
+
+外のpaddingがradartop pageと違うよね,
+
+---
+
+外のpaddingがradartop pageと違うよね,Login with NIP-07はMy Notesのところに移して,twitterみたいにアカウントの情報出すようにして
+
+---
+
+https://trap.jp/post/2414/ この記事参考に色々改善して
+
+---
+
+ログインして私だったらポストもできるようにして
+
+---
+
+nostrユーザーにタグ付けしてradarのカテゴリー別ページに統合できたりしないのかな、nostr側に情報埋め込みたいんだけど
+
+---
+
+通知とリアクションのsidebarも
+
+---
+
+通知とリアクションのeckも
+
+---
+
+通知とリアクションのeeckも
+
+---
+
+push
+
+---
+
+NIP-51 Listsやろう
+
+---
+
+push
+
+---
+
+Connecting to relays...やめたいな、カラムごとにロードステートがある気がするし
+
+---
+
+トップのradarのgrid,アイコンの下にtwitterのアイコン出したいな
+
+---
+
+Connecting to relays...
+
+---
+
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://centerforhumanetechnology.substack.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.omnycontent.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://hacks.mozilla.org&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://rniwa.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://feeds.rebuild.fm&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.jmuk.org&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://www.icd.cs.tut.ac.jp&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://nyosegawa.github.io&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://safecast.jp&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://citizenlab.ca&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://feeds.turingcomplete.fm&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://takagi-hiromitsu.jp&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://sundaylettersfromsam.substack.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://boomerang-effect.espivblogs.net&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t2.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://podcast.darknetdiaries.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://vitalik.eth.limo&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://ymrl-dev.hateblo.jp&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://blog.nnn.dev&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://nitter.privacyredirect.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://ethanzuckerman.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://feed.mozaic.fm&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://kyre.hatenablog.jp&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://shanematsuo.medium.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://feeds.feedburner.com&size=16:1  Failed to load resource: the server responded with a status of 404 ()
+entry.client-Bekps8aM.js:32 Uncaught Error: Minified React error #418; visit https://react.dev/errors/418?args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
+    at ma (entry.client-Bekps8aM.js:32:24706)
+    at Ms (entry.client-Bekps8aM.js:32:73961)
+    at Is (entry.client-Bekps8aM.js:32:106366)
+    at Gy (entry.client-Bekps8aM.js:32:106339)
+    at Yy (entry.client-Bekps8aM.js:32:106199)
+    at ws (entry.client-Bekps8aM.js:32:102089)
+    at vd (entry.client-Bekps8aM.js:32:113740)
+    at MessagePort.Ma (entry.client-Bekps8aM.js:9:1638)
+relay.nostr.band/:1  Failed to load resource: net::ERR_ADDRESS_UNREACHABLE
+rx-nostr-C0rwkHHw.js:3 WebSocket connection to 'wss://relay.nostr.band/' failed: WebSocket is closed before the connection is established.
+[Symbol.dispose] @ rx-nostr-C0rwkHHw.js:3
+rx-nostr-C0rwkHHw.js:3 WebSocket connection to 'wss://relay.nostr.band/' failed: 
+(anonymous) @ rx-nostr-C0rwkHHw.js:3
+nostr-BXz-wTmi.js:1 Uncaught (in promise) ReferenceError: lists is not defined
+    at nostr-BXz-wTmi.js:1:3024
+(anonymous) @ nostr-BXz-wTmi.js:1
