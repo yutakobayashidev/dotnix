@@ -7,7 +7,6 @@ let
     ./difit.nix
     ./jj-desc.nix
     ./keifu.nix
-    ./libplist.nix
     ./opensrc.nix
     ./polycat.nix
     ./pretty-ts-errors-markdown.nix

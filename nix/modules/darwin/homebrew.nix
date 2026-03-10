@@ -14,6 +14,21 @@
     brews = [
       "mas"
       "trasta298/tap/keifu"
+
+      # vphone-cli dependencies
+      "gnu-tar"
+      "openssl@3"
+      "ldid-procursus"
+      "sshpass"
+      "keystone"
+      "autoconf"
+      "automake"
+      "pkg-config"
+      "libtool"
+      "git-lfs"
+      "python@3.13"
+      "ideviceinstaller"
+      "wget"
     ];
     # /Applications への直接インストールやシステム統合が必要な cask
     # brew-nix で管理可能なものは packages.nix に移動済み

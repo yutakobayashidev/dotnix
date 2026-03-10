@@ -339,36 +339,10 @@
             };
           };
 
-          devShells = {
-            default = pkgs.mkShell {
-              shellHook = ''
-                ${config.pre-commit.installationScript}
-              '';
-            };
-          }
-          // pkgs.lib.optionalAttrs isDarwin {
-            vphone = allPkgs.mkShell {
-              packages = with allPkgs; [
-                gnutar
-                openssl
-                ldid
-                sshpass
-                keystone
-                autoconf
-                automake
-                pkg-config
-                libtool
-                git-lfs
-                python3
-                gnumake
-                libimobiledevice # iproxy
-              ];
-              shellHook = ''
-                echo "vphone dev environment ready"
-                echo "Usage: git clone https://github.com/Lakr233/vphone-cli && cd vphone-cli"
-                echo "  make setup_tools && source .venv/bin/activate"
-              '';
-            };
+          devShells.default = pkgs.mkShell {
+            shellHook = ''
+              ${config.pre-commit.installationScript}
+            '';
           };
         };
 
