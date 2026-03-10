@@ -1,0 +1,259 @@
+vphone - macOS で仮想 iOS を動かす
+いちばん下へジャンプ
+ピン留めされたアイテム
+Plat
+Plat
+1時間前に更新
+
+!
+vphone-cli の更新が早すぎるので多分ここの情報は古いです。公式READMEの日本語版を見たほうがいいです
+
+要約
+事前準備
+macOS 26 以上を用意
+64GB くらいの空き容量を確保する(余裕を持って)
+SIP, AMFI を無効化 ← つまり、お使いの端末は脆弱になりますわよ
+Homebrew
+リカバリーモード で
+
+csrutil disable
+csrutil allow-research-guests enable
+
+再起動後、通常ターミナルで
+
+sudo nvram boot-args="amfi_get_out_of_my_way=1 -v"
+
+もう一回再起動
+
+必要なツールをインストール:
+
+brew install gnu-tar openssl@3 ldid-procursus sshpass keystone autoconf automake pkg-config libtool git-lfs
+
+ツール
+一番簡単な方法は vphone-cli を使う。エンドユーザー向けに最適化されているので README 読んで従うだけで OK。
+
+
+
+git clone https://github.com/Lakr233/vphone-cli
+cd vphone-cli
+
+後から気づいたが、CFW のインストールまで以下の 1 コマンドで完了するみたい
+
+make setup_machine 
+
+お手軽だ。CFW インストール以後 (make boot から) は手動でコマンド打ち込みが必要。
+
+初回実行時
+セットアップ
+make setup_tools 
+source .venv/bin/activate
+
+これで python venv などが整う
+
+バイナリのパッチなど
+make build
+make vm_new
+make fw_prepare
+make fw_patch
+
+復元
+二つのターミナルを同時に開いておく必要がある。
+
+ターミナル1    ターミナル2
+make boot_dfu (DFU で起動する)    -
+(DFU のまま)    make restore_get_shsh
+(DFU のまま)    make restore (時間かかる)
+実行すると DFU のやつが終了する。
+
+Ramdisk と CFW
+二つのターミナルを同時に開いておく必要がある。
+
+ターミナル1    ターミナル2
+make boot_dfu (DFU で起動する)    -
+(DFU のまま)    make ramdisk_build
+(DFU のまま)    make ramdisk_send
+(DFU のまま)    iproxy 2222 22 & (バックグラウンドで実行される)
+(DFU のまま)    make cfw_install (時間かかる)
+実行すると DFU のやつが終了する。
+
+起動
+make cfw_install
+
+実行すると仮想 iPhone が立ち上がる。しばらく待つと、bash-4.4# みたいな表示がターミナルに出るので、上のコマンドを実行したターミナル内でそのまま 以下のコマンドを実行する。
+
+export PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/bin/X11:/usr/games:/iosbinpack64/usr/local/sbin:/iosbinpack64/usr/local/bin:/iosbinpack64/usr/sbin:/iosbinpack64/usr/bin:/iosbinpack64/sbin:/iosbinpack64/bin'
+
+mkdir -p /var/dropbear
+cp /iosbinpack64/etc/profile /var/profile
+cp /iosbinpack64/etc/motd /var/motd
+
+# generate SSH host keys (required for SSH to work)
+dropbearkey -t rsa -f /var/dropbear/dropbear_rsa_host_key
+dropbearkey -t ecdsa -f /var/dropbear/dropbear_ecdsa_host_key
+
+shutdown -h now
+
+実行すると終了する
+
+2回目以降の起動
+以下を実行すると iPhone が立ち上がる。
+
+make boot
+
+以下のコマンドで SSH, VNC ができるようになる。
+
+iproxy 22222 22222 &   # SSH
+iproxy 5901 5901  &    # VNC
+
+それぞれ
+
+SSH: ssh -p 22222 root@127.0.0.1
+VNC: vnc://127.0.0.1:5901
+で繋がる。パスワードはもちろん alpine
+
+
+
+返信
+返信を追加
+Plat
+Plat
+8日前に更新
+
+オリジナルの手法と解説
+
+
+
+
+
+wh1te4ever による手法は tart を用いてるが、vphone-cli では使っていない。
+
+どちらも、macOS に搭載されている研究用の仮想 iOS を動かす Virtualization フレームワークを使っていると思う。Apple の Private Cloud Compute (PCC) で使われる CloudOS というものを使っているはず... ちょっと理解が曖昧。
+
+
+
+今回の方法で動作する iOS は、実機の iOS とは違うものになっており、実機の機能が完全再現されているというわけでは全くない。非常に制約が強いため、むしろ Xcode についてくる Simulator に近いものになっている。
+例えば、カメラ機能はないし WiFi もいじれない (代わりにイーサネット機能があり、そこからネットワークを設定する)。
+
+とはいえ、セキュリティ研究用の iOS なので若干自由度が高く、脱獄ができるのが大きな違いだろう。もし今後 Apple アカウント関連の機能が有効になれば、IPA 復号もより簡単になるかもしれない。
+
+iOS 26 など、近年の新しい iOS では実機での脱獄は基本的に不可能であり、セキュリティ研究のために脱獄環境が必要になる場合は Corellium という商業サービスを利用するしかなかった。
+
+
+
+Corellium は Apple とは無関係のセキュリティ会社で、仮想 iOS のサービスを提供している。Corellium のすごいところは、どんなバージョンの iOS でも脱獄状態を有効にできることだった。ローカル環境でこれを再現する技術はほぼ(qemuを使った特定バージョン限定のものはたまにあった)なく、Corellium の独占市場ともいえた。
+
+しかし、今回非常に簡単な条件・セットアップだけで Corellium と同様の環境を作れるようになったのは、セキュリティ研究分野で大きな変化だと思われる。
+
+個人的には iOS/iPadOS だけでしか使えないアプリを mac でも使いたい需要があるので、.ipa の復号が簡単になればいいな... と思ったり。
+
+逆に、それ以外ではあまりこの手法を使うメリットはないのではないかなと思う。 これnixで構築したいけどいい方法ないかな
+
+---
+
+1b4086ee970fd428f463a397ab9f145bfd36987a hashと4d6560d9b493e1d383de8af2796a700ce76e7588の部分をdevshellにしたい
+
+---
+
+コミットして
+
+---
+
+どうやってvphone
+
+---
+
+どうやってvphoneこの状態でセットアップすればいいの
+
+---
+
+push
+
+---
+
+nix develop .#vphoneは~/ghq/github.com/Lakr233/vphone-cliで使いたいんだけど
+
+---
+
+dev shell作ったはいいが、インストールスクリプトで結局homebrewを使わされそうだ、、yuta@M2-MacBook-Air  ~/ghq/github.com/Lakr233/vphone-cli   main  make setup_machine
+
+SUDO_PASSWORD="" \
+        NONE_INTERACTIVE="" \
+        zsh scripts/setup_machine.sh \
+                 \
+                 \
+
+[*] setup_machine mode: base, project_setup=run, non_interactive=0
+=== Installing Homebrew dependencies ===
+  ideviceinstaller: installing
+✔︎ JSON API cask.jws.json                                                                Downloaded   15.4MB/ 15.4MB
+✔︎ JSON API formula.jws.json                                                             Downloaded   31.9MB/ 31.9MB
+==> Fetching downloads for: ideviceinstaller
+✔︎ Bottle Manifest ideviceinstaller (1.2.0)                                              Downloaded   23.6KB/ 23.6KB
+✔︎ Bottle Manifest ca-certificates (2025-12-02)                                          Downloaded    2.0KB/  2.0KB
+✔︎ Bottle ca-certificates (2025-12-02)                                                   Downloaded  131.8KB/131.8KB
+✔︎ Bottle Manifest openssl@3 (3.6.1)                                                     Downloaded   11.8KB/ 11.8KB
+✔︎ Bottle Manifest xz (5.8.2)                                                            Downloaded   11.8KB/ 11.8KB
+✔︎ Bottle Manifest libplist (2.7.0)                                                      Downloaded   10.2KB/ 10.2KB
+✔︎ Bottle Manifest libimobiledevice-glue (1.3.2)                                         Downloaded   10.8KB/ 10.8KB
+✔︎ Bottle Manifest zstd (1.5.7_1)                                                        Downloaded   13.2KB/ 13.2KB
+✔︎ Bottle Manifest libusbmuxd (2.1.1)                                                    Downloaded   12.5KB/ 12.5KB
+✔︎ Bottle libplist (2.7.0)                                                               Downloaded  170.6KB/170.6KB
+✔︎ Bottle Manifest libtatsu (1.0.5)                                                      Downloaded   16.6KB/ 16.6KB
+✔︎ Bottle Manifest libimobiledevice (1.4.0)                                              Downloaded   22.6KB/ 22.6KB
+✔︎ Bottle Manifest lz4 (1.10.0)                                                          Downloaded   13.8KB/ 13.8KB
+✔︎ Bottle lz4 (1.10.0)                                                                   Downloaded  279.7KB/279.7KB
+✔︎ Bottle Manifest libzip (1.11.4_1)                                                     Downloaded   11.4KB/ 11.4KB
+✔︎ Bottle Manifest libtasn1 (4.21.0)                                                     Downloaded    7.9KB/  7.9KB
+✔︎ Bottle xz (5.8.2)                                                                     Downloaded  764.3KB/764.3KB
+✔︎ Bottle libtasn1 (4.21.0)                                                              Downloaded  165.3KB/165.3KB
+✔︎ Bottle zstd (1.5.7_1)                                                                 Downloaded  793.6KB/793.6KB
+✔︎ Bottle libimobiledevice-glue (1.3.2)                                                  Downloaded   76.3KB/ 76.3KB
+✔︎ Bottle libtatsu (1.0.5)                                                               Downloaded   49.9KB/ 49.9KB
+✔︎ Bottle libusbmuxd (2.1.1)                                                             Downloaded   58.7KB/ 58.7KB
+✔︎ Bottle libimobiledevice (1.4.0)                                                       Downloaded  526.5KB/526.5KB
+✔︎ Bottle libzip (1.11.4_1)                                                              Downloaded  144.8KB/144.8KB
+✔︎ Bottle ideviceinstaller (1.2.0)                                                       Downloaded   27.5KB/ 27.5KB
+✔︎ Bottle openssl@3 (3.6.1)                                                              Downloaded   10.9MB/ 10.9MB
+==> Installing dependencies for ideviceinstaller: libplist, libimobiledevice-glue, libtasn1, libtatsu, libusbmuxd, ca-certificates, openssl@3, libimobiledevice, xz, lz4, zstd and libzip
+==> Installing ideviceinstaller dependency: libplist
+==> Pouring libplist--2.7.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libplist/2.7.0: 32 files, 659.7KB
+==> Installing ideviceinstaller dependency: libimobiledevice-glue
+==> Pouring libimobiledevice-glue--1.3.2.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libimobiledevice-glue/1.3.2: 21 files, 253.4KB
+==> Installing ideviceinstaller dependency: libtasn1
+==> Pouring libtasn1--4.21.0.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libtasn1/4.21.0: 64 files, 723.8KB
+==> Installing ideviceinstaller dependency: libtatsu
+==> Pouring libtatsu--1.0.5.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libtatsu/1.0.5: 12 files, 180KB
+==> Installing ideviceinstaller dependency: libusbmuxd
+==> Pouring libusbmuxd--2.1.1.arm64_tahoe.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/libusbmuxd/2.1.1: 17 files, 301.5KB
+==> Installing ideviceinstaller dependency: ca-certificates
+==> Pouring ca-certificates--2025-12-02.all.bottle.1.tar.gz
+==> Regenerating CA certificate bundle from keychain, this may take a while...
+^CWarning: The post-install step did not complete successfully
+You can try again using:
+  brew postinstall ca-certificates
+Warning: Removed Sorbet lines from backtrace!
+Rerun with `--verbose` to see the original backtrace
+==> Summary
+🍺  /opt/homebrew/Cellar/ca-certificates/2025-12-02: 4 files, 236.4KB
+==> Installing ideviceinstaller dependency: openssl@3
+==> Pouring openssl@3--3.6.1.arm64_tahoe.bottle.tar.gz
+^C^C
+One sec, cleaning up...
+
+make: *** [setup_machine] Error 130
+
+
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/Lakr233/vphone-cli   main 
+
+---
+
+make setup_machineでいいが、nixの設定で宣言されていないhomebrewは消されるようになってるはず
+
+---
+
+devShell はもう不要になるので削除して、代わりに homebrew.nix の brews に追加
