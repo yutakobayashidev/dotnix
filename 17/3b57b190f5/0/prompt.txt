@@ -1,0 +1,5 @@
+Error: Refusing to uninstall /opt/homebrew/Cellar/libplist/2.7.0, /opt/homebrew/Cellar/libimobiledevice-glue/1.3.2, /opt/homebrew/Cellar/libtasn1/4.21.0, /opt/homebrew/Cellar/libtatsu/1.0.5, /opt/homebrew/Cellar/libusbmuxd/2.1.1 and /opt/homebrew/Cellar/ca-certificates/2025-12-02
+
+---
+
+うん

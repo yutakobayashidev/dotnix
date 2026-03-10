@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "173b57b190f5",
+  "session_id": "34ba886b-df27-49a6-ac68-99d890a9a99b",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-10T09:01:38.856981Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "nix/modules/darwin/homebrew.nix",
+    "nvim/lazy-lock.json"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6",
+  "turn_id": "9be8907b6996",
+  "token_usage": {
+    "input_tokens": 170,
+    "cache_creation_tokens": 22380,
+    "cache_read_tokens": 135199,
+    "output_tokens": 2070,
+    "api_call_count": 8
+  },
+  "session_metrics": {
+    "turn_count": 2
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-10T09:01:38.817708Z",
+    "agent_lines": 25,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 25,
+    "agent_percentage": 100
+  }
+}
