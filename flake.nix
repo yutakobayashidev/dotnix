@@ -127,10 +127,6 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     rustowl-flake = {
       url = "github:nix-community/rustowl-flake";
       inputs.nixpkgs.follows = "nixpkgs";

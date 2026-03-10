@@ -14,6 +14,7 @@
 
   # zshプラグインはHome Managerで管理
   home.packages = with pkgs; [
+    zsh-abbr
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-fzf-tab
@@ -36,5 +37,9 @@
 
   home.file.".zsh/plugins/fzf-tab" = {
     source = "${pkgs.zsh-fzf-tab}/share/fzf-tab";
+  };
+
+  home.file.".zsh/plugins/zsh-abbr" = {
+    source = "${pkgs.zsh-abbr}/share/zsh/zsh-abbr";
   };
 }

@@ -4,9 +4,6 @@
 # Main zsh configuration
 # ========================================
 
-# "do" alias breaks for/do/done keywords on re-source
-unalias do 2>/dev/null
-
 # home-manager session variables
 HM_SESSION_VARS="$HOME/.local/state/home-manager/gcroots/current-home/home-path/etc/profile.d/hm-session-vars.sh"
 if [ -f "$HM_SESSION_VARS" ]; then
@@ -27,6 +24,7 @@ eval "$(git wt --init zsh)"
 source ~/.config/zsh/config/oh-my-zsh.zsh
 
 # zsh plugins
+source ~/.zsh/plugins/zsh-abbr/zsh-abbr.plugin.zsh
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
@@ -39,7 +37,7 @@ for func in ~/.config/zsh/functions/*.zsh; do
   source "$func"
 done
 
-# aliases (must be after functions loop — "do" alias breaks for/do/done)
+# aliases & abbreviations (must be after functions loop and zsh-abbr)
 source ~/.config/zsh/config/aliases.zsh
 
 # zoxide (must be after oh-my-zsh to avoid cd being overwritten)

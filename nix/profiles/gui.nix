@@ -8,7 +8,6 @@
     ./../modules/linux/audio.nix
     ./../modules/linux/bluetooth.nix
     ./../modules/linux/android.nix
-    ./../modules/linux/sops.nix
     ./../modules/linux/networking.nix
   ];
 
