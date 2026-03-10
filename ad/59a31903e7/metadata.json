@@ -5,7 +5,16 @@
   "branch": "main",
   "checkpoints_count": 1,
   "files_touched": [
+    ".sops.yaml",
+    "flake.lock",
+    "flake.nix",
+    "nix/hosts/UM790-Pro/default.nix",
     "nix/modules/home/programs/zsh.nix",
+    "nix/modules/linux/networking.nix",
+    "nix/modules/linux/sops.nix",
+    "nix/profiles/gui.nix",
+    "secrets/.gitkeep",
+    "secrets/secrets.yaml",
     "zsh/config/aliases.zsh",
     "zsh/zshrc"
   ],
@@ -15,13 +24,19 @@
       "transcript": "/ad/59a31903e7/0/full.jsonl",
       "content_hash": "/ad/59a31903e7/0/content_hash.txt",
       "prompt": "/ad/59a31903e7/0/prompt.txt"
+    },
+    {
+      "metadata": "/ad/59a31903e7/1/metadata.json",
+      "transcript": "/ad/59a31903e7/1/full.jsonl",
+      "content_hash": "/ad/59a31903e7/1/content_hash.txt",
+      "prompt": "/ad/59a31903e7/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 653,
-    "cache_creation_tokens": 112885,
-    "cache_read_tokens": 632680,
-    "output_tokens": 11787,
-    "api_call_count": 22
+    "input_tokens": 1513,
+    "cache_creation_tokens": 150524,
+    "cache_read_tokens": 923111,
+    "output_tokens": 14864,
+    "api_call_count": 35
   }
 }
