@@ -1,0 +1,47 @@
+push
+
+---
+
+✘ yuta@M2-MacBook-Air  ~/ghq/github.com/Lakr233/vphone-cli   main  make setup_machine
+
+SUDO_PASSWORD="" \
+        NONE_INTERACTIVE="" \
+        zsh scripts/setup_machine.sh \
+                 \
+                 \
+
+[*] setup_machine mode: base, project_setup=run, non_interactive=0
+=== Installing Homebrew dependencies ===
+  ideviceinstaller: already installed
+  wget: already installed
+  gnu-tar: already installed
+  openssl@3: already installed
+  ldid-procursus: already installed
+  sshpass: already installed
+  keystone: already installed
+  autoconf: already installed
+  automake: already installed
+  pkg-config: already installed
+  libtool: already installed
+  git-lfs: already installed
+  python@3.13: already installed
+
+
+=== Project setup ===
+zsh scripts/setup_tools.sh
+[1/5] Checking brew packages...
+  All brew packages installed
+[2/5] trustcache
+  Building from source (CRKatri/trustcache)...
+  Installed: /Users/yuta/ghq/github.com/Lakr233/vphone-cli/.tools/bin/trustcache
+[3/5] insert_dylib
+  Building insert_dylib...
+  Installed: /Users/yuta/ghq/github.com/Lakr233/vphone-cli/.tools/bin/insert_dylib
+[4/5] libimobiledevice
+[-] Missing: cmake — brew install cmake
+make[1]: *** [setup_tools] Error 1
+make: *** [setup_machine] Error 2
+
+---
+
+dotnix の Homebrew
