@@ -19,6 +19,17 @@
       coreutils
       cocoapods
       watchman
+
+      # Build tools
+      gnutar
+      openssl
+      ldid
+      sshpass
+      keystone
+      autoconf
+      automake
+      pkg-config
+      libtool
     ]
     # brew-nix casks
     ++ (with pkgs.brewCasks; [
