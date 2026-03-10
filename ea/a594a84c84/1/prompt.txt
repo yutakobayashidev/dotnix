@@ -1,0 +1,9 @@
+claude code周りのhook設置を直近のコミット更新したんだけど、cmuxのactivate処理がないので追加して、diffみて。ghosttyにはあるんだけど
+
+---
+
+これ、元からactivateしてたっけ⁉︎直近のdiffを見てほしい
+
+---
+
+push

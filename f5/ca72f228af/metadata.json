@@ -1,0 +1,25 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "f5ca72f228af",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "nvim/lua/plugins/lspconfig.lua"
+  ],
+  "sessions": [
+    {
+      "metadata": "/f5/ca72f228af/0/metadata.json",
+      "transcript": "/f5/ca72f228af/0/full.jsonl",
+      "content_hash": "/f5/ca72f228af/0/content_hash.txt",
+      "prompt": "/f5/ca72f228af/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 199,
+    "cache_creation_tokens": 48048,
+    "cache_read_tokens": 215538,
+    "output_tokens": 2075,
+    "api_call_count": 13
+  }
+}

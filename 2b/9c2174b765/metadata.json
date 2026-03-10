@@ -1,0 +1,47 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "2b9c2174b765",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 14,
+  "files_touched": [
+    "flake.lock",
+    "flake.nix",
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/home/programs/neovim.nix",
+    "nix/overlays/default.nix",
+    "nix/overlays/dev-tools.nix",
+    "nix/overlays/difit.nix",
+    "nix/overlays/tree-sitter-moonbit.nix",
+    "nvim/lazy-lock.json",
+    "nvim/lua/plugins/lspconfig.lua",
+    "nvim/lua/plugins/treesitter.lua"
+  ],
+  "sessions": [
+    {
+      "metadata": "/2b/9c2174b765/0/metadata.json",
+      "transcript": "/2b/9c2174b765/0/full.jsonl",
+      "content_hash": "/2b/9c2174b765/0/content_hash.txt",
+      "prompt": "/2b/9c2174b765/0/prompt.txt"
+    },
+    {
+      "metadata": "/2b/9c2174b765/1/metadata.json",
+      "transcript": "/2b/9c2174b765/1/full.jsonl",
+      "content_hash": "/2b/9c2174b765/1/content_hash.txt",
+      "prompt": "/2b/9c2174b765/1/prompt.txt"
+    },
+    {
+      "metadata": "/2b/9c2174b765/2/metadata.json",
+      "transcript": "/2b/9c2174b765/2/full.jsonl",
+      "content_hash": "/2b/9c2174b765/2/content_hash.txt",
+      "prompt": "/2b/9c2174b765/2/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 1209,
+    "cache_creation_tokens": 764905,
+    "cache_read_tokens": 8499548,
+    "output_tokens": 23590,
+    "api_call_count": 122
+  }
+}

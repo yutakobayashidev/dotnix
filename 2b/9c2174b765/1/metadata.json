@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "2b9c2174b765",
+  "session_id": "af0de35b-abda-42cf-88f6-58eb7e69dffa",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-07T08:32:17.483338Z",
+  "branch": "main",
+  "checkpoints_count": 1,
+  "files_touched": [
+    "flake.lock",
+    "flake.nix",
+    "nix/modules/home/programs/neovim.nix",
+    "nix/overlays/dev-tools.nix",
+    "nix/overlays/difit.nix",
+    "nvim/lazy-lock.json",
+    "nvim/lua/plugins/lspconfig.lua"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "0756b14dc947",
+  "token_usage": {
+    "input_tokens": 9,
+    "cache_creation_tokens": 36729,
+    "cache_read_tokens": 213448,
+    "output_tokens": 1498,
+    "api_call_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-07T08:32:17.339527Z",
+    "agent_lines": 0,
+    "human_added": 110,
+    "human_modified": 109,
+    "human_removed": 0,
+    "total_committed": 110,
+    "agent_percentage": 0
+  }
+}

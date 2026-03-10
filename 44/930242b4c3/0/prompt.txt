@@ -1,0 +1,122 @@
+claude codeのccusage statusline動いてないんだけど、なんでだ
+
+---
+
+まだ出ないっす
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  nix run .#switch
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Switching to darwin configuration...
+/run/current-system/sw/bin/darwin-rebuild: system activation must now be run as root
+Finished at 10:45:29 after 0s
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo nix run .#switch
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Switching to darwin configuration...
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+these 38 derivations will be built:
+  /nix/store/0vplfi7h2bg0zq0k8y2q6ypfzkxa06ip-vlc-3.0.23.drv
+  /nix/store/1yivp4chfgbb49vy7pch9i4h87g6a30i-neovim-0.11.6.drv
+  /nix/store/REDACTED.6.0-60600.drv
+  /nix/store/REDACTED.3.0-mac.dmg.drv
+  /nix/store/REDACTED.dmg.drv
+  /nix/store/REDACTED.8.0-654.drv
+  /nix/store/REDACTED.0-18.drv
+  /nix/store/663kca0bh3spl7qz3wl8cqygclla2zf0-stats-2.12.0.drv
+  /nix/store/REDACTED.pkg.drv
+  /nix/store/8binmps75xishi9kx8hxg4f9x8309wfy-simplex-6.4.8.drv
+  /nix/store/REDACTED.0.0.zip.drv
+  /nix/store/REDACTED.0.0.drv
+  /nix/store/REDACTED.0.5.drv
+  /nix/store/REDACTED.3.8.drv
+  /nix/store/fv7vhwj7aml5saf7j5axm947ssppp298-telegram-12.4.2-278481.drv
+  /nix/store/fyly299lqxq6kzdmi6d9gq8dy1h7h7w1-difit-3.1.11.drv
+  /nix/store/b2y34bmmi7qqszc3s42ssa2iz37aqi1m-nani-1.0.67.dmg.drv
+  /nix/store/g97vv69dhx9hhndg22l37vvwnw3igimw-nani-1.0.67.drv
+  /nix/store/REDACTED.3.0.drv
+  /nix/store/REDACTED.1.7.31_34367.dmg.drv
+  /nix/store/m7lk3n51hcax964arvc6k57km572smh2-wechat-4.1.7.31-34367.drv
+  /nix/store/mk06gjmr6m0cndwd1fl19j4mf6ax5k1p-zoom-6.7.6.75444.drv
+  /nix/store/REDACTED.10.42.drv
+  /nix/store/REDACTED.104.7.drv
+  /nix/store/sidf3gyr8an17cw4brkj7hr3fk6nfrrw-element-1.12.11.drv
+  /nix/store/REDACTED.6.0-4214.drv
+  /nix/store/REDACTED.48.95.drv
+  /nix/store/REDACTED.drv
+  /nix/store/REDACTED.drv
+  /nix/store/REDACTED.homemanagerfontsversion.drv
+  /nix/store/REDACTED.drv
+  /nix/store/m7qhraaxi1y7m4g0w1zmqmax7fidw4nm-home-manager-path.drv
+  /nix/store/REDACTED.drv
+  /nix/store/izb4mav8ij4d0zm3vlhir47hq7lah8qv-etc.drv
+  /nix/store/REDACTED.drv
+  /nix/store/m0a694rn08ga7bkw48yrzr5m00hvc3xx-home-manager-generation.drv
+  /nix/store/zv2nib9pwk1k7p3a8im3yvbis8dpv6jd-activation-yuta.drv
+  /nix/store/REDACTED.05.3bfa436.drv
+building '/nix/store/REDACTED.3.8.drv'...
+building '/nix/store/fyly299lqxq6kzdmi6d9gq8dy1h7h7w1-difit-3.1.11.drv'...
+building '/nix/store/sidf3gyr8an17cw4brkj7hr3fk6nfrrw-element-1.12.11.drv'...
+building '/nix/store/1yivp4chfgbb49vy7pch9i4h87g6a30i-neovim-0.11.6.drv'...
+building '/nix/store/REDACTED.0-18.drv'...
+building '/nix/store/REDACTED.6.0-60600.drv'...
+building '/nix/store/REDACTED.104.7.drv'...
+building '/nix/store/REDACTED.0.5.drv'...
+building '/nix/store/b2y34bmmi7qqszc3s42ssa2iz37aqi1m-nani-1.0.67.dmg.drv'...
+building '/nix/store/REDACTED.6.0-4214.drv'...
+building '/nix/store/REDACTED.10.42.drv'...
+building '/nix/store/REDACTED.0.0.zip.drv'...
+error: Cannot build '/nix/store/b2y34bmmi7qqszc3s42ssa2iz37aqi1m-nani-1.0.67.dmg.drv'.
+       Reason: builder failed with exit code 1.
+       Output paths:
+         /nix/store/3bjs4ksx5p7b6jjlbwjy06rap9b7qzaj-nani-1.0.67.dmg
+       Last 18 log lines:
+       > structuredAttrs is enabled
+       >
+       > trying https://nani-desktop.kiok.jp/artifacts/nani-1.0.67.dmg
+       >   % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+       >                                  Dload  Upload  Total   Spent   Left   Speed
+       >   0      0   0      0   0      0      0      0                              0
+       > curl: (22) The requested URL returned error: 404
+       > Warning: Problem (retrying all errors). Will retry in 1 second. 3 retries left.
+       >   0      0   0      0   0      0      0      0                              0
+       > curl: (22) The requested URL returned error: 404
+       > Warning: Problem (retrying all errors). Will retry in 2 seconds. 2 retries
+       > Warning: left.
+       >   0      0   0      0   0      0      0      0                              0
+       > curl: (22) The requested URL returned error: 404
+       > Warning: Problem (retrying all errors). Will retry in 4 seconds. 1 retry left.
+       >   0      0   0      0   0      0      0      0                              0
+       > curl: (22) The requested URL returned error: 404
+       > error: cannot download nani-1.0.67.dmg from any mirror
+       For full logs, run:
+         nix log /nix/store/b2y34bmmi7qqszc3s42ssa2iz37aqi1m-nani-1.0.67.dmg.drv
+error: Cannot build '/nix/store/g97vv69dhx9hhndg22l37vvwnw3igimw-nani-1.0.67.drv'.
+       Reason: 1 dependency failed.
+       Output paths:
+         /nix/store/q84hk2ncddwdcak9k59imnpi2wq20mja-nani-1.0.67
+┏━ Dependency Graph:
+┏━ Dependency Graph:
+┃             ┌─ ⏵ signal-desktop-mac-arm64-8.0.0.zip ⏱ 4s
+┃          ┌─ ⏸ signal-8.0.0
+┃          │  ┌─ ⏵ nani-1.0.67.dmg ⏱ 13s
+┃          ├─ ⏸ nani-1.0.67
+┃          ├─ ⏵ screen-studio-3.6.0-4214 ⏱ 11s (∅ 3m14s)
+┃          ├─ ⏵ ogdesign-eagle-4.0-18 ⏱ 13s (∅ 11m13s)
+┃          ├─ ⏵ element-1.12.11 ⏱ 13s (∅ 40s)
+┃          ├─ ⏵ difit-3.1.11 ⏱ 13s (∅ 7m22s)
+┃          ├─ ⏵ arduino-ide-2.3.8 ⏱ 13s
+┃       ┌─ ⏸ home-manager-path
+┃    ┌─ ⏸ user-environment
+┃ ┌─ ⏸ etc
+┃ ⏸ darwin-system-26.05.3bfa436
+┣━━━ Builds
+┗━ ∑ ⏵ 7 │ ✔ 5 │ ⏸ 26 │ Finished at 10:45:57 after 23s
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 
+
+---
+
+きた、コミットして
