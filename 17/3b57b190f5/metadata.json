@@ -3,7 +3,7 @@
   "checkpoint_id": "173b57b190f5",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 2,
+  "checkpoints_count": 4,
   "files_touched": [
     "nix/modules/darwin/homebrew.nix",
     "nvim/lazy-lock.json"
@@ -14,13 +14,19 @@
       "transcript": "/17/3b57b190f5/0/full.jsonl",
       "content_hash": "/17/3b57b190f5/0/content_hash.txt",
       "prompt": "/17/3b57b190f5/0/prompt.txt"
+    },
+    {
+      "metadata": "/17/3b57b190f5/1/metadata.json",
+      "transcript": "/17/3b57b190f5/1/full.jsonl",
+      "content_hash": "/17/3b57b190f5/1/content_hash.txt",
+      "prompt": "/17/3b57b190f5/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 170,
-    "cache_creation_tokens": 22380,
-    "cache_read_tokens": 135199,
-    "output_tokens": 2070,
-    "api_call_count": 8
+    "input_tokens": 948,
+    "cache_creation_tokens": 129133,
+    "cache_read_tokens": 2215102,
+    "output_tokens": 12323,
+    "api_call_count": 54
   }
 }
