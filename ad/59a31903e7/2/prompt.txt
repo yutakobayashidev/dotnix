@@ -1,0 +1,47 @@
+hmm ✘ yuta@UM790-Pro  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo nixos-rebuild switch --flake .#UM790-Pro
+[sudo] yuta のパスワード:
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+building the system configuration...
+warning: Git tree '/home/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
+Checking switch inhibitors... done
+stopping the following units: docker.service, docker.socket, systemd-tmpfiles-resetup.service
+NOT restarting the following changed units: greetd.service, post-boot.service
+activating the configuration...
+setting up /etc...
+sops-install-secrets: Imported /etc/ssh/ssh_host_rsa_key as GPG key with fingerprint 2ac3e63e0d28080d2eb24034e678e3815a720398
+sops-install-secrets: Imported /etc/ssh/ssh_host_ed25519_key as age key with fingerprint REDACTED
+/nix/store/REDACTED.0.1/bin/sops-install-secrets: failed to decrypt '/nix/store/REDACTED.yaml': sops metadata not found
+Activation script snippet 'setupSecrets' failed (1)
+Failed to run activate script
+reloading user units for yuta...
+restarting sysinit-reactivation.target
+reloading the following units: dbus.service
+restarting the following units: home-manager-yuta.service, polkit.service
+starting the following units: docker.socket, systemd-tmpfiles-resetup.service
+the following new units were started: NetworkManager-dispatcher.service, run-docker-netns-4f7b44c3ed6b.mount, run-secrets.d.mount, sys-devices-virtual-net-veth4f1b00a.device, sys-devices-virtual-net-veth52f572e.device, sys-devices-virtual-net-veth888261b.device, sys-devices-virtual-net-vethb729394.device, sys-devices-virtual-net-vethb82ba74.device, sys-devices-virtual-net-vethdeff265.device, sys-subsystem-net-devices-veth4f1b00a.device, sys-subsystem-net-devices-veth52f572e.device, sys-subsystem-net-devices-veth888261b.device, sys-subsystem-net-devices-vethb729394.device, sys-subsystem-net-devices-vethb82ba74.device, sys-subsystem-net-devices-vethdeff265.device, var-lib-docker-rootfs-overlayfs-ebea2b90376fa396e534c21e896e57e4bf36cb4c0028f4b8937e94f552b57664.mount, var-lib-docker-rootfs-overlayfs-f19b67a10ce91a15ce275eed710d7d67f7cb9f304f55611fd7ae67c2fa4e26cc.mount
+warning: the following units failed: NetworkManager-ensure-profiles.service
+× NetworkManager-ensure-profiles.service - Ensure that NetworkManager declarative profiles are created
+     Loaded: loaded (/etc/systemd/system/NetworkManager-ensure-profiles.service; enabled; preset: ignored)
+     Active: failed (Result: resources)
+ Invocation: 4a58bc1c134f4c829465c7aeea3c3bea
+         IP: 0B in, 0B out
+         IO: 0B read, 0B written
+   Mem peak: 0B
+        CPU: 0
+
+ 3月 10 13:37:35 UM790-Pro systemd[1]: NetworkManager-ensure-profiles.service: Failed to load environment files: No such file or directory                                                                                             3月 10 13:37:35 UM790-Pro systemd[1]: NetworkManager-ensure-profiles.service: Failed to spawn 'start' task: No such file or directory                                                                                                 3月 10 13:37:35 UM790-Pro systemd[1]: NetworkManager-ensure-profiles.service: Failed with result 'resources'.      3月 10 13:37:35 UM790-Pro systemd[1]: Failed to start Ensure that NetworkManager declarative profiles are created.Command 'systemd-run -E LOCALE_ARCHIVE -E NIXOS_INSTALL_BOOTLOADER -E NIXOS_NO_CHECK --collect --no-ask-password --pipe --quiet --service-type=exec --unit=nixos-rebuild-switch-to-configuration /nix/store/REDACTED.05.20260306.aca4d95/bin/switch-to-configuration switch' returned non-zero exit status 4.
+
+---
+
+networking.nix‎
+に使ってるだけdkaらsops消したいな、wifiのパスワード、ハッシュにできないのか
+
+---
+
+network={
+        ssid="TP-Link_42B4_5G"
+        #psk="50492305"
+        psk=1503c6ce57422a89725114cbf0bd291047d6ac3e80e87c7ed015fb98c2b9d428
+}

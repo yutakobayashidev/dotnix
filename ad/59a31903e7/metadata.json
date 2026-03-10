@@ -3,7 +3,7 @@
   "checkpoint_id": "ad59a31903e7",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 1,
+  "checkpoints_count": 4,
   "files_touched": [
     ".sops.yaml",
     "flake.lock",
@@ -30,13 +30,19 @@
       "transcript": "/ad/59a31903e7/1/full.jsonl",
       "content_hash": "/ad/59a31903e7/1/content_hash.txt",
       "prompt": "/ad/59a31903e7/1/prompt.txt"
+    },
+    {
+      "metadata": "/ad/59a31903e7/2/metadata.json",
+      "transcript": "/ad/59a31903e7/2/full.jsonl",
+      "content_hash": "/ad/59a31903e7/2/content_hash.txt",
+      "prompt": "/ad/59a31903e7/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 1513,
-    "cache_creation_tokens": 150524,
-    "cache_read_tokens": 923111,
-    "output_tokens": 14864,
-    "api_call_count": 35
+    "input_tokens": 1745,
+    "cache_creation_tokens": 206208,
+    "cache_read_tokens": 1509430,
+    "output_tokens": 20691,
+    "api_call_count": 59
   }
 }
