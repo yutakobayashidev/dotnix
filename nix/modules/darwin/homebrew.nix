@@ -26,6 +26,7 @@
       "pkg-config"
       "libtool"
       "git-lfs"
+      "cmake"
       "python@3.13"
       "ideviceinstaller"
       "libimobiledevice"
