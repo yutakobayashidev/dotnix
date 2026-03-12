@@ -68,6 +68,7 @@ in
       language = "Japanese";
       skipDangerousModePermissionPrompt = true;
       enableAllProjectMcpServers = true;
+      plansDirectory = "./plans";
       inherit mcpServers;
       statusLine = {
         type = "command";
