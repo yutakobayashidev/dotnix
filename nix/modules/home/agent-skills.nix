@@ -70,6 +70,11 @@
         path = inputs.repiq;
         subdir = "skills";
       };
+      # prompt-review: AI対話履歴分析スキル
+      prompt-review = {
+        path = inputs.prompt-review-skill;
+        subdir = ".claude/skills";
+      };
     };
 
     # Enable all local skills
@@ -129,6 +134,11 @@
       ast-grep = {
         from = "ast-grep";
         path = "ast-grep";
+      };
+      # prompt-review skills
+      prompt-review = {
+        from = "prompt-review";
+        path = "prompt-review";
       };
     };
 

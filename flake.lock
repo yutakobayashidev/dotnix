@@ -1396,6 +1396,22 @@
         "type": "github"
       }
     },
+    "prompt-review-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773299474,
+        "narHash": "sha256-bwDAUHwj12sNKMHlblAUUj+nqZWf3ltgzQcxFZUOY3w=",
+        "owner": "tokoroten",
+        "repo": "prompt-review",
+        "rev": "e3a194d418cca469a13441a04eb93cb1d6484670",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tokoroten",
+        "repo": "prompt-review",
+        "type": "github"
+      }
+    },
     "repiq": {
       "inputs": {
         "flake-parts": "flake-parts_5",
@@ -1450,6 +1466,7 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "obsidian-skills": "obsidian-skills",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
+        "prompt-review-skill": "prompt-review-skill",
         "repiq": "repiq",
         "rustowl-flake": "rustowl-flake",
         "tree-sitter-moonbit": "tree-sitter-moonbit",

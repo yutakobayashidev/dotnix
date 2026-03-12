@@ -40,6 +40,7 @@ nix flake update
 - `find-skills` - スキル検索・発見支援（Vercel）
 - `ui-ux-pro-max` - UI/UXデザインシステム生成（コミュニティ）
 - `obsidian-markdown`, `obsidian-bases`, `json-canvas`, `obsidian-cli`, `defuddle` - Obsidian連携（kepano）
+- `prompt-review` - AIエージェント対話履歴の分析・プロンプティング力診断（tokoroten）
 
 詳細: `agents/README.md`
 

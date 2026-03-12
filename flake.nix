@@ -75,6 +75,10 @@
       url = "github:kepano/obsidian-skills";
       flake = false;
     };
+    prompt-review-skill = {
+      url = "github:tokoroten/prompt-review";
+      flake = false;
+    };
     repiq = {
       url = "github:yutakobayashidev/repiq";
       inputs.nixpkgs.follows = "nixpkgs";
