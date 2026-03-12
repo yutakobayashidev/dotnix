@@ -1,0 +1,38 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "864c66ac9550",
+  "session_id": "fe14cd2c-7ff0-4930-b9d6-c75c50b709ae",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-12T08:56:58.787219Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "flake.nix",
+    "nix/modules/home/default.nix",
+    "nix/modules/home/programs/cage.nix",
+    "nix/modules/home/programs/claude-code.nix",
+    "nix/overlays/ai-tools.nix",
+    "nix/overlays/default.nix",
+    "zsh/config/aliases.zsh",
+    "flake.lock"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6",
+  "turn_id": "1ef6f9db2978",
+  "token_usage": {
+    "input_tokens": 313,
+    "cache_creation_tokens": 16868,
+    "cache_read_tokens": 40037,
+    "output_tokens": 882,
+    "api_call_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-12T08:56:58.775036Z",
+    "agent_lines": 4,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 4,
+    "agent_percentage": 100
+  }
+}
