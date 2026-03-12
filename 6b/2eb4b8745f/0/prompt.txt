@@ -1,0 +1,9 @@
+claude codeの設定、plansDirectoryを./plans日シテ
+
+---
+
+claude codeの設定、plansDirectoryを./plansにして
+
+---
+
+いや、claude-code.nixで永続化できるから
