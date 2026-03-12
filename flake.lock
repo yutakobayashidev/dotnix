@@ -53,22 +53,6 @@
         "type": "github"
       }
     },
-    "aws-agent-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1771542841,
-        "narHash": "sha256-9djov4yPPOXj+1/ySjpse9cTpfmCgideFukZgOGXuiw=",
-        "owner": "itsmostafa",
-        "repo": "aws-agent-skills",
-        "rev": "2ccd14e6700ba96524e0961a6750ce6b056ed9c8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "itsmostafa",
-        "repo": "aws-agent-skills",
-        "type": "github"
-      }
-    },
     "blueprint": {
       "inputs": {
         "nixpkgs": [
@@ -167,22 +151,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "bun2nix",
-        "type": "github"
-      }
-    },
-    "cloudflare-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772551851,
-        "narHash": "sha256-QUhPWw8VdqUwn0cT8GZeEBY7+iXr16dYQu1FGRw08Po=",
-        "owner": "cloudflare",
-        "repo": "skills",
-        "rev": "d3113039790f64e052ff80f351190da65e9b7510",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cloudflare",
-        "repo": "skills",
         "type": "github"
       }
     },
@@ -671,22 +639,6 @@
       "original": {
         "owner": "hercules-ci",
         "repo": "gitignore.nix",
-        "type": "github"
-      }
-    },
-    "hashicorp-agent-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772625576,
-        "narHash": "sha256-gtXcigFYy5xMEBMgTa0pQjmwXfO0uHCLb0ybT22r5xM=",
-        "owner": "hashicorp",
-        "repo": "agent-skills",
-        "rev": "876a095c71079e4c112fb1de2f1a66dca0ffea23",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hashicorp",
-        "repo": "agent-skills",
         "type": "github"
       }
     },
@@ -1439,17 +1391,14 @@
         "agent-skills": "agent-skills",
         "anthropic-skills": "anthropic-skills",
         "ast-grep-skill": "ast-grep-skill",
-        "aws-agent-skills": "aws-agent-skills",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
-        "cloudflare-skills": "cloudflare-skills",
         "deno-skills": "deno-skills",
         "flake-parts": "flake-parts",
         "gh-graph": "gh-graph",
         "gh-nippou": "gh-nippou",
         "ghostty": "ghostty",
         "git-hooks": "git-hooks_2",
-        "hashicorp-agent-skills": "hashicorp-agent-skills",
         "home-manager": "home-manager_3",
         "llm-agents": "llm-agents",
         "mcp-servers-nix": "mcp-servers-nix",

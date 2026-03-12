@@ -40,24 +40,9 @@
         path = inputs.ast-grep-skill;
         subdir = "ast-grep/skills";
       };
-      # Cloudflare: skills from cloudflare/skills
-      cloudflare = {
-        path = inputs.cloudflare-skills;
-        subdir = "skills";
-      };
-      # HashiCorp: skills from hashicorp/agent-skills (terraform/, packer/ at root)
-      hashicorp = {
-        path = inputs.hashicorp-agent-skills;
-        subdir = ".";
-      };
       # Deno: skills from denoland/skills
       deno = {
         path = inputs.deno-skills;
-        subdir = "skills";
-      };
-      # AWS: skills from itsmostafa/aws-agent-skills
-      aws = {
-        path = inputs.aws-agent-skills;
         subdir = "skills";
       };
       # Obsidian: skills from kepano/obsidian-skills
