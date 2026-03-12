@@ -1,0 +1,5 @@
+gh auth switchとghq組み合わせていい感じに自動切り替えできないかな
+
+---
+
+一旦すべてyutakobayashidevに
