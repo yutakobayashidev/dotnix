@@ -170,35 +170,6 @@
         "type": "github"
       }
     },
-    "cage": {
-      "inputs": {
-        "flake-parts": [
-          "flake-parts"
-        ],
-        "git-hooks": [
-          "git-hooks"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1772335827,
-        "narHash": "sha256-5sbb4zXpGpNRi/7fv+Ggsgu3WRXp65O6zOnio8/0LSg=",
-        "owner": "Warashi",
-        "repo": "cage",
-        "rev": "9105203dabbb1f5d6c21f6bbe58780e755760b9c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Warashi",
-        "repo": "cage",
-        "type": "github"
-      }
-    },
     "cloudflare-skills": {
       "flake": false,
       "locked": {
@@ -1306,11 +1277,11 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1772963539,
-        "narHash": "sha256-9jVDGZnvCckTGdYT53d/EfznygLskyLQXYwJLKMPsZs=",
+        "lastModified": 1773122722,
+        "narHash": "sha256-FIqHByVqxCprNjor1NqF80F2QQoiiyqanNNefdlvOg4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+        "rev": "62dc67aa6a52b4364dd75994ec00b51fbf474e50",
         "type": "github"
       },
       "original": {
@@ -1455,7 +1426,6 @@
         "aws-agent-skills": "aws-agent-skills",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
-        "cage": "cage",
         "cloudflare-skills": "cloudflare-skills",
         "deno-skills": "deno-skills",
         "flake-parts": "flake-parts",

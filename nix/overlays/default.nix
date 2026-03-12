@@ -1,6 +1,5 @@
 let
   overlayFiles = [
-    ./ai-tools.nix
     ./bit-vcs.nix
     ./continues.nix
     ./dev-tools.nix
