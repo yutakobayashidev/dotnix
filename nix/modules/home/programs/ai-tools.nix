@@ -4,6 +4,7 @@
     (with pkgs.llm-agents; [
       claude-code
       ccusage
+      copilot-cli
       opencode
       rtk
       vibe-kanban
