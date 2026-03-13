@@ -451,11 +451,11 @@
         "zon2nix": "zon2nix"
       },
       "locked": {
-        "lastModified": 1772933660,
-        "narHash": "sha256-2FwAKFEZvUpnVmyr+U5qYulnKOU8Rlkr7/YQ+YS6EJ0=",
+        "lastModified": 1773104361,
+        "narHash": "sha256-mYiOdrX1xgNd/FsJlrx/zd/HXWV55Fr8EAKWhsE918g=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "059bd54a5d9188d2f7c6fc3a56afc35b934f4ff1",
+        "rev": "96f9772cd838fa9d562ed369ea6fa8e657f870e3",
         "type": "github"
       },
       "original": {
