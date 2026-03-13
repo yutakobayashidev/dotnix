@@ -14,38 +14,65 @@ New repository setup:
 5. Description? (one-liner, optional)
 ```
 
-## 2. Create Repository via ghq
+## 2. Add Repository to OpenTofu
 
-```bash
-ghq create <project_name>
+Add `github_repository` resource to `~/ghq/github.com/yutakobayashidev/homelab/tofu/github/repositories.tf`:
+
+```hcl
+resource "github_repository" "<project_name>" {
+  name        = "<project_name>"
+  description = "<description>"  # omit if empty
+  visibility  = "<visibility>"
+
+  has_issues    = true
+  has_projects  = true
+  has_wiki      = true
+  has_downloads = true
+
+  allow_merge_commit = true
+  allow_squash_merge = true
+  allow_rebase_merge = true
+
+  delete_branch_on_merge = true
+
+  license_template    = "<license>"           # e.g. "mit"
+  gitignore_template  = "<Gitignore_template>" # e.g. "Go", "Rust", "Python", "Node" — omit if no match
+}
 ```
 
-Then `cd` into the created directory (under ghq root).
+Notes:
 
-## 3. Init Nix Flake from dev-templates
+- Resource name: use the project name with hyphens converted to underscores
+- Map the toolchain to the closest GitHub gitignore template name (e.g. go→Go, rust→Rust, python→Python, node→Node). If no match, omit `gitignore_template`.
+- If description is empty, omit `description`.
+
+## 3. Apply OpenTofu
+
+```bash
+cd ~/ghq/github.com/yutakobayashidev/homelab/tofu/github
+tofu apply
+```
+
+## 4. Clone via ghq
+
+```bash
+ghq get yutakobayashidev/<project_name>
+cd $(ghq root)/github.com/yutakobayashidev/<project_name>
+```
+
+Pull the generated LICENSE and .gitignore:
+
+```bash
+git pull origin main
+```
+
+## 5. Init Nix Flake from dev-templates
 
 ```bash
 nix flake init -t github:the-nix-way/dev-templates#<toolchain>
 ```
 
-## 4. Create GitHub Remote
-
-```bash
-gh repo create <project_name> \
-  --source . \
-  --<visibility> \
-  --license <license> \
-  --gitignore <Gitignore_template> \
-  --description "<description>"
-```
-
-Notes:
-
-- Map the toolchain to the closest GitHub gitignore template name (e.g. go→Go, rust→Rust, python→Python, node→Node). If no match, omit `--gitignore`.
-- If description is empty, omit `--description`.
-- Pull the generated LICENSE and .gitignore from remote: `git pull --rebase origin main`
-
-## 5. Initial Commit
+## 6. Initial Commit
 
 Stage all files and create an initial commit:
 
@@ -55,7 +82,18 @@ git commit -m "feat: init <project_name> with <toolchain> flake"
 git push -u origin main
 ```
 
-## 6. Summary
+## 7. Commit OpenTofu Changes
+
+Back in the homelab repo, commit the new repository resource:
+
+```bash
+cd ~/ghq/github.com/yutakobayashidev/homelab
+git add tofu/github/repositories.tf
+git commit -m "feat: add <project_name> repository to OpenTofu"
+git push
+```
+
+## 8. Summary
 
 Print the final result:
 
