@@ -54,6 +54,9 @@
     nmap
     dnsutils
 
+    # Presentation
+    pdfpc
+
     # Misc
     sl
     fastfetch
