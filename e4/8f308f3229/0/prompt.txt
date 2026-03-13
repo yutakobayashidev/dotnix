@@ -1,0 +1,9 @@
+llm-agents.nixにcopilotあるカ調べて
+
+---
+
+いや、オーバーレイに存在していrka
+
+---
+
+llm-agents.nixのオーバーレイにcopilotがあるなら追加したいということ
