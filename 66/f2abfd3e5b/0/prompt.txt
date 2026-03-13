@@ -1,0 +1,147 @@
+pdfpc入れて
+
+---
+
+brewにもあるはずだけど、ないの?
+
+---
+
+nixpkgsとしてmacにもない？
+
+---
+
+vrcxもある？
+
+---
+
+使いたい
+
+---
+
+hmm yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo darwin-rebuild switch --flake .#M2-MacBook-Air
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
+error:
+       … while calling the 'derivationStrict' builtin
+         at <nix/derivation-internal.nix>:37:12:
+           36|
+           37|   strict = derivationStrict drvAttrs;
+             |            ^
+           38|
+
+       … while evaluating derivation 'darwin-system-26.05.da529ac'
+         whose name attribute is located at /nix/store/REDACTED/pkgs/stdenv/generic/make-derivation.nix:536:13
+
+       … while evaluating attribute 'activationScript' of derivation 'darwin-system-26.05.da529ac'
+         at /nix/store/5qw898kk7cn065fyfb6cxw9n8c975x27-source/modules/system/default.nix:89:7:
+           88|
+           89|       activationScript = cfg.activationScripts.script.text;
+             |       ^
+           90|
+
+       … while evaluating the option `system.activationScripts.script.text':
+
+       … while evaluating definitions from `/nix/store/5qw898kk7cn065fyfb6cxw9n8c975x27-source/modules/system/activation-scripts.nix':
+
+       … while evaluating the option `system.activationScripts.postActivation.text':
+
+       … while evaluating definitions from `/nix/store/pawjsckjci9xs4ac7p7yd8yf7j1yczvr-source/nix-darwin':
+
+       … while evaluating the option `home-manager.users.yuta.home.activation.checkFilesChanged.data':
+
+       … while evaluating definitions from `/nix/store/pawjsckjci9xs4ac7p7yd8yf7j1yczvr-source/modules/files.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."Library/Fonts/.home-manager-fonts-version".onChange':
+
+       … while evaluating definitions from `/nix/store/pawjsckjci9xs4ac7p7yd8yf7j1yczvr-source/modules/targets/darwin/fonts.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: Refusing to evaluate package 'vrcx-2026.02.11' in /nix/store/REDACTED/pkgs/by-name/vr/vrcx/package.nix:117 because it is marked as broken
+       a) To temporarily allow broken packages, you can use an environment variable
+          for a single invocation of the nix tools.
+
+            $ export NIXPKGS_ALLOW_BROKEN=1
+
+          Note: When using `nix shell`, `nix build`, `nix develop`, etc with a flake,
+                then pass `--impure` in order to allow use of environment variables.
+
+       b) For `nixos-rebuild` you can set
+         { nixpkgs.config.allowBroken = true; }
+       in configuration.nix to override this.
+
+       c) For `nix-env`, `nix-build`, `nix-shell` or any other Nix command you can add
+         { allowBroken = true; }
+       to ~/.config/nixpkgs/config.nix.
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 
+
+---
+
+hmm yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo darwin-rebuild switch --flake .#M2-MacBook-Air
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
+error:
+       … while calling the 'derivationStrict' builtin
+         at <nix/derivation-internal.nix>:37:12:
+           36|
+           37|   strict = derivationStrict drvAttrs;
+             |            ^
+           38|
+
+       … while evaluating derivation 'darwin-system-26.05.da529ac'
+         whose name attribute is located at /nix/store/REDACTED/pkgs/stdenv/generic/make-derivation.nix:536:13
+
+       … while evaluating attribute 'activationScript' of derivation 'darwin-system-26.05.da529ac'
+         at /nix/store/5qw898kk7cn065fyfb6cxw9n8c975x27-source/modules/system/default.nix:89:7:
+           88|
+           89|       activationScript = cfg.activationScripts.script.text;
+             |       ^
+           90|
+
+       … while evaluating the option `system.activationScripts.script.text':
+
+       … while evaluating definitions from `/nix/store/5qw898kk7cn065fyfb6cxw9n8c975x27-source/modules/system/activation-scripts.nix':
+
+       … while evaluating the option `system.activationScripts.postActivation.text':
+
+       … while evaluating definitions from `/nix/store/pawjsckjci9xs4ac7p7yd8yf7j1yczvr-source/nix-darwin':
+
+       … while evaluating the option `home-manager.users.yuta.home.activation.checkFilesChanged.data':
+
+       … while evaluating definitions from `/nix/store/pawjsckjci9xs4ac7p7yd8yf7j1yczvr-source/modules/files.nix':
+
+       … while evaluating the option `home-manager.users.yuta.home.file."Library/Fonts/.home-manager-fonts-version".onChange':
+
+       … while evaluating definitions from `/nix/store/pawjsckjci9xs4ac7p7yd8yf7j1yczvr-source/modules/targets/darwin/fonts.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: Refusing to evaluate package 'vrcx-2026.02.11' in /nix/store/REDACTED/pkgs/by-name/vr/vrcx/package.nix:117 because it is marked as broken
+       a) To temporarily allow broken packages, you can use an environment variable
+          for a single invocation of the nix tools.
+
+            $ export NIXPKGS_ALLOW_BROKEN=1
+
+          Note: When using `nix shell`, `nix build`, `nix develop`, etc with a flake,
+                then pass `--impure` in order to allow use of environment variables.
+
+       b) For `nixos-rebuild` you can set
+         { nixpkgs.config.allowBroken = true; }
+       in configuration.nix to override this.
+
+       c) For `nix-env`, `nix-build`, `nix-shell` or any other Nix command you can add
+         { allowBroken = true; }
+       to ~/.config/nixpkgs/config.nix.
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 
+
+---
+
+homebrewにない？vrcx
+
+---
+
+ok,コミットして
