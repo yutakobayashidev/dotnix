@@ -929,11 +929,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772159870,
-        "narHash": "sha256-knBPKwqhkjEaSnGu63mftdC8YDTwqBRshVHqL3axax0=",
+        "lastModified": 1773145693,
+        "narHash": "sha256-yxtvNdQWofRRkFbMcLtmK4uiA+1AM2TGvcrXOMzOloI=",
         "owner": "aster-void",
         "repo": "nix-hazkey",
-        "rev": "9cfd35d1954ffbfafb6b157d702ab635c3826312",
+        "rev": "05527ef2659aab53c1cb0d0972a25347ef3161d4",
         "type": "github"
       },
       "original": {
