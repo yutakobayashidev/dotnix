@@ -1,0 +1,35 @@
+{
+  "cli_version": "0.5.0",
+  "checkpoint_id": "47e89d4d38cc",
+  "session_id": "c8be32ca-ab62-4db2-80b1-a853e2968329",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-16T03:19:57.967821Z",
+  "branch": "main",
+  "checkpoints_count": 8,
+  "files_touched": [
+    "nix/modules/darwin/homebrew.nix",
+    "nix/modules/darwin/packages.nix"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6",
+  "turn_id": "275c00c95c27",
+  "token_usage": {
+    "input_tokens": 92,
+    "cache_creation_tokens": 63343,
+    "cache_read_tokens": 461296,
+    "output_tokens": 3441,
+    "api_call_count": 29
+  },
+  "session_metrics": {
+    "turn_count": 8
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-16T03:19:57.544129Z",
+    "agent_lines": 3,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 3,
+    "agent_percentage": 100
+  }
+}

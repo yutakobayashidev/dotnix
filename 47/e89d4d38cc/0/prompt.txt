@@ -1,0 +1,229 @@
+steipete-toolsにcodexbarがあるカ調べて
+
+---
+
+steipete-toolsにcodexbarがあるカ調べて
+
+---
+
+いや、nix-steipete-toolsのオーバーレイにcodexbarがあるか
+
+---
+
+えーないのか、じゃあbrew steipete/tap/codexbarで
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  nix run .#switch
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Switching to darwin configuration...
+/run/current-system/sw/bin/darwin-rebuild: system activation must now be run as root
+Finished at 12:11:59 after 0s
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo nix run .#switch
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Switching to darwin configuration...
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
+these 2 derivations will be built:
+  /nix/store/REDACTED.drv
+  /nix/store/REDACTED.05.da529ac.drv
+building '/nix/store/REDACTED.drv'...
+building '/nix/store/REDACTED.05.da529ac.drv'...
+┏━ Dependency Graph:
+┃ ┌─ ✔ Brewfile
+┃ ⏵ darwin-system-26.05.da529ac ⏱ 29s
+┣━━━ Builds
+┗━ ∑ ⏵ 1 │ ✔ 1 │ ⏸ 0 │ ⏱ 1m0s
+
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo darwin-rebuild switch --flake .#M2-MacBook-Air
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Software Update Tool
+
+Finding available software
+Downloading macOS Tahoe 26.3.1
+Password:
+
+Downloaded: macOS Tahoe 26.3.1
+setting up groups...
+setting up users...
+setting up /Applications/Nix Apps...
+setting up pam...
+applying patches...
+setting up /etc...
+system defaults...
+user defaults...
+restarting Dock...
+setting up launchd services...
+reloading nix-daemon...
+waiting for nix-daemon
+configuring time...
+configuring networking...
+configuring application firewall...
+configuring power...
+configuring keyboard...
+setting up /Library/Fonts/Nix Fonts...
+setting nvram variables...
+Homebrew bundle...
+==> Auto-updating Homebrew...
+Adjust how often this is run with `$HOMEBREW_AUTO_UPDATE_SECS` or disable with
+`$HOMEBREW_NO_AUTO_UPDATE=1`. Hide these hints with `$HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> Auto-updated Homebrew!
+==> Updated Homebrew from 68c72c1298 to 4c56c9a189.
+Updated 1 tap (homebrew/cask).
+==> New Casks
+gram: Code editor focused on stability, without AI, subscsriptions, or telemetry
+spectra-app: OpenSpec document management desktop app
+ulaa: Privacy-centric browser with advanced tracking protection
+
+You have 4 outdated formulae and 2 outdated casks installed.
+
+Using blacktop/tap
+Using manaflow-ai/cmux
+Tapping steipete/tap
+Using trasta298/tap
+Using blacktop/tap/ipsw
+Using mas
+Installing steipete/tap/codexbar
+Error: steipete/tap/codexbar: formula requires at least a URL
+Warning: Removed Sorbet lines from backtrace!
+Rerun with `--verbose` to see the original backtrace
+/opt/homebrew/Library/Homebrew/formula.rb:395:in 'Formula#determine_active_spec'
+/opt/homebrew/Library/Homebrew/formula.rb:285:in 'Formula#initialize'
+/opt/homebrew/Library/Homebrew/formulary.rb:463:in 'Formulary::FormulaLoader#get_formula'
+/opt/homebrew/Library/Homebrew/formulary.rb:707:in 'Formulary::FromTapLoader#get_formula'
+/opt/homebrew/Library/Homebrew/formulary.rb:965:in 'Formulary.factory'
+/opt/homebrew/Library/Homebrew/formula.rb:2624:in 'Formula.[]'
+/opt/homebrew/Library/Homebrew/bundle/formula_dumper.rb:48:in 'Homebrew::Bundle::FormulaDumper.formulae_by_full_name'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:259:in 'Homebrew::Bundle::FormulaInstaller#conflicts_with'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:269:in 'Homebrew::Bundle::FormulaInstaller#resolve_conflicts!'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:85:in 'Homebrew::Bundle::FormulaInstaller#install_change_state!'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:46:in 'Homebrew::Bundle::FormulaInstaller#install!'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:18:in 'Homebrew::Bundle::FormulaInstaller.install!'
+/opt/homebrew/Library/Homebrew/bundle/installer.rb:102:in 'block in Homebrew::Bundle::Installer.install!'
+/opt/homebrew/Library/Homebrew/bundle/installer.rb:87:in 'Array#each'
+/opt/homebrew/Library/Homebrew/bundle/installer.rb:87:in 'Homebrew::Bundle::Installer.install!'
+/opt/homebrew/Library/Homebrew/bundle/commands/install.rb:25:in 'Homebrew::Bundle::Commands::Install.run'
+/opt/homebrew/Library/Homebrew/cmd/bundle.rb:258:in 'Homebrew::Cmd::Bundle#run'
+/opt/homebrew/Library/Homebrew/brew.rb:115:in '<main>'
+Please report this issue:
+  https://docs.brew.sh/Troubleshooting
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 
+
+---
+
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  nix run .#switch
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Switching to darwin configuration...
+/run/current-system/sw/bin/darwin-rebuild: system activation must now be run as root
+Finished at 12:11:59 after 0s
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo nix run .#switch
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Switching to darwin configuration...
+warning: $HOME ('/Users/yuta') is not owned by you, falling back to the one defined in the 'passwd' file ('/var/root')
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+evaluation warning: nix-index-database: flake output `hmModules` has been renamed to `homeModules`
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
+these 2 derivations will be built:
+  /nix/store/REDACTED.drv
+  /nix/store/REDACTED.05.da529ac.drv
+building '/nix/store/REDACTED.drv'...
+building '/nix/store/REDACTED.05.da529ac.drv'...
+┏━ Dependency Graph:
+┃ ┌─ ✔ Brewfile
+┃ ⏵ darwin-system-26.05.da529ac ⏱ 29s
+┣━━━ Builds
+┗━ ∑ ⏵ 1 │ ✔ 1 │ ⏸ 0 │ ⏱ 1m0s
+
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo darwin-rebuild switch --flake .#M2-MacBook-Air
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+Software Update Tool
+
+Finding available software
+Downloading macOS Tahoe 26.3.1
+Password:
+
+Downloaded: macOS Tahoe 26.3.1
+setting up groups...
+setting up users...
+setting up /Applications/Nix Apps...
+setting up pam...
+applying patches...
+setting up /etc...
+system defaults...
+user defaults...
+restarting Dock...
+setting up launchd services...
+reloading nix-daemon...
+waiting for nix-daemon
+configuring time...
+configuring networking...
+configuring application firewall...
+configuring power...
+configuring keyboard...
+setting up /Library/Fonts/Nix Fonts...
+setting nvram variables...
+Homebrew bundle...
+==> Auto-updating Homebrew...
+Adjust how often this is run with `$HOMEBREW_AUTO_UPDATE_SECS` or disable with
+`$HOMEBREW_NO_AUTO_UPDATE=1`. Hide these hints with `$HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> Auto-updated Homebrew!
+==> Updated Homebrew from 68c72c1298 to 4c56c9a189.
+Updated 1 tap (homebrew/cask).
+==> New Casks
+gram: Code editor focused on stability, without AI, subscsriptions, or telemetry
+spectra-app: OpenSpec document management desktop app
+ulaa: Privacy-centric browser with advanced tracking protection
+
+You have 4 outdated formulae and 2 outdated casks installed.
+
+Using blacktop/tap
+Using manaflow-ai/cmux
+Tapping steipete/tap
+Using trasta298/tap
+Using blacktop/tap/ipsw
+Using mas
+Installing steipete/tap/codexbar
+Error: steipete/tap/codexbar: formula requires at least a URL
+Warning: Removed Sorbet lines from backtrace!
+Rerun with `--verbose` to see the original backtrace
+/opt/homebrew/Library/Homebrew/formula.rb:395:in 'Formula#determine_active_spec'
+/opt/homebrew/Library/Homebrew/formula.rb:285:in 'Formula#initialize'
+/opt/homebrew/Library/Homebrew/formulary.rb:463:in 'Formulary::FormulaLoader#get_formula'
+/opt/homebrew/Library/Homebrew/formulary.rb:707:in 'Formulary::FromTapLoader#get_formula'
+/opt/homebrew/Library/Homebrew/formulary.rb:965:in 'Formulary.factory'
+/opt/homebrew/Library/Homebrew/formula.rb:2624:in 'Formula.[]'
+/opt/homebrew/Library/Homebrew/bundle/formula_dumper.rb:48:in 'Homebrew::Bundle::FormulaDumper.formulae_by_full_name'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:259:in 'Homebrew::Bundle::FormulaInstaller#conflicts_with'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:269:in 'Homebrew::Bundle::FormulaInstaller#resolve_conflicts!'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:85:in 'Homebrew::Bundle::FormulaInstaller#install_change_state!'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:46:in 'Homebrew::Bundle::FormulaInstaller#install!'
+/opt/homebrew/Library/Homebrew/bundle/formula_installer.rb:18:in 'Homebrew::Bundle::FormulaInstaller.install!'
+/opt/homebrew/Library/Homebrew/bundle/installer.rb:102:in 'block in Homebrew::Bundle::Installer.install!'
+/opt/homebrew/Library/Homebrew/bundle/installer.rb:87:in 'Array#each'
+/opt/homebrew/Library/Homebrew/bundle/installer.rb:87:in 'Homebrew::Bundle::Installer.install!'
+/opt/homebrew/Library/Homebrew/bundle/commands/install.rb:25:in 'Homebrew::Bundle::Commands::Install.run'
+/opt/homebrew/Library/Homebrew/cmd/bundle.rb:258:in 'Homebrew::Cmd::Bundle#run'
+/opt/homebrew/Library/Homebrew/brew.rb:115:in '<main>'
+Please report this issue:
+  https://docs.brew.sh/Troubleshooting
+ ✘ yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚ 
+
+---
+
+tapなく定位儂？
+
+---
+
+コミットして
+
+---
+
+コミットして
