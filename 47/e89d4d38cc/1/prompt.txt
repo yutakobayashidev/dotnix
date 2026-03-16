@@ -1,0 +1,13 @@
+vsocde入れて、
+
+---
+
+vsocde入れて、
+
+---
+
+できればnixに入れたい
+
+---
+
+拡張機能の管理もして、yoavbls.pretty-ts-errorsも入れて

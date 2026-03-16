@@ -3,7 +3,7 @@
   "checkpoint_id": "47e89d4d38cc",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 8,
+  "checkpoints_count": 11,
   "files_touched": [
     "nix/modules/darwin/homebrew.nix",
     "nix/modules/darwin/packages.nix"
@@ -14,13 +14,19 @@
       "transcript": "/47/e89d4d38cc/0/full.jsonl",
       "content_hash": "/47/e89d4d38cc/0/content_hash.txt",
       "prompt": "/47/e89d4d38cc/0/prompt.txt"
+    },
+    {
+      "metadata": "/47/e89d4d38cc/1/metadata.json",
+      "transcript": "/47/e89d4d38cc/1/full.jsonl",
+      "content_hash": "/47/e89d4d38cc/1/content_hash.txt",
+      "prompt": "/47/e89d4d38cc/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 92,
-    "cache_creation_tokens": 63343,
-    "cache_read_tokens": 461296,
-    "output_tokens": 3441,
-    "api_call_count": 29
+    "input_tokens": 105,
+    "cache_creation_tokens": 81853,
+    "cache_read_tokens": 555701,
+    "output_tokens": 4514,
+    "api_call_count": 38
   }
 }
