@@ -1,0 +1,9 @@
+この環境にもこれ入れてhttps://github.com/ushironoko/dotfiles/blob/main/shell/functions/claude-sessions.sh
+
+---
+
+この環境にもこれ入れてhttps://github.com/ushironoko/dotfiles/blob/main/shell/functions/claude-sessions.sh
+
+---
+
+コミットしといて
