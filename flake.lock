@@ -1313,11 +1313,11 @@
     "prompt-review-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1773459756,
-        "narHash": "sha256-Z9IE5kZJngJ4EoF742lQbLi0xPz9zoEHvtsIbsWcWZE=",
+        "lastModified": 1773546630,
+        "narHash": "sha256-btNwBJQRg9m02sNTP4MSJlHMaMZoZfBINz96LgEHmXA=",
         "owner": "tokoroten",
         "repo": "prompt-review",
-        "rev": "6e84fb380b99707099a574711084e11596fb32aa",
+        "rev": "c2e61f0a392fb0067355a65770d5bb954b8bc7b8",
         "type": "github"
       },
       "original": {
