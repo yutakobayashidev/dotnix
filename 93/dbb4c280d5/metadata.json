@@ -7,7 +7,11 @@
   "files_touched": [
     "flake.lock",
     "flake.nix",
-    "nix/modules/home/packages.nix"
+    "nix/hosts/M2-MacBook-Air/default.nix",
+    "nix/hosts/Still-Legend-x870/default.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/home/packages.nix",
+    "nix/modules/home/programs/claude-code.nix"
   ],
   "sessions": [
     {
@@ -15,13 +19,19 @@
       "transcript": "/93/dbb4c280d5/0/full.jsonl",
       "content_hash": "/93/dbb4c280d5/0/content_hash.txt",
       "prompt": "/93/dbb4c280d5/0/prompt.txt"
+    },
+    {
+      "metadata": "/93/dbb4c280d5/1/metadata.json",
+      "transcript": "/93/dbb4c280d5/1/full.jsonl",
+      "content_hash": "/93/dbb4c280d5/1/content_hash.txt",
+      "prompt": "/93/dbb4c280d5/1/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 4572,
-    "cache_creation_tokens": 27412,
-    "cache_read_tokens": 182792,
-    "output_tokens": 1831,
-    "api_call_count": 9
+    "input_tokens": 4892,
+    "cache_creation_tokens": 42190,
+    "cache_read_tokens": 234141,
+    "output_tokens": 2741,
+    "api_call_count": 13
   }
 }

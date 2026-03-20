@@ -1,0 +1,37 @@
+{
+  "cli_version": "0.5.1",
+  "checkpoint_id": "93dbb4c280d5",
+  "session_id": "7f8ad584-2a93-4bee-9308-f9fc60fc510c",
+  "strategy": "manual-commit",
+  "created_at": "2026-03-20T17:00:17.818001Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "flake.nix",
+    "nix/hosts/M2-MacBook-Air/default.nix",
+    "nix/hosts/Still-Legend-x870/default.nix",
+    "nix/hosts/UM790-Pro/default.nix",
+    "nix/modules/home/packages.nix",
+    "nix/modules/home/programs/claude-code.nix",
+    "flake.lock"
+  ],
+  "agent": "Claude Code",
+  "model": "claude-opus-4-6[1m]",
+  "turn_id": "0d70110f6065",
+  "token_usage": {
+    "input_tokens": 320,
+    "cache_creation_tokens": 14778,
+    "cache_read_tokens": 51349,
+    "output_tokens": 910,
+    "api_call_count": 4
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-03-20T17:00:17.777148Z",
+    "agent_lines": 33,
+    "human_added": 0,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 33,
+    "agent_percentage": 100
+  }
+}
