@@ -5,6 +5,7 @@
   "branch": "main",
   "checkpoints_count": 3,
   "files_touched": [
+    "nix/modules/darwin/system.nix",
     "nix/modules/home/programs/claude-code.nix",
     "nix/overlays/default.nix",
     "nix/overlays/speechrecognition.nix"
@@ -21,13 +22,19 @@
       "transcript": "/a4/a02abd968f/1/full.jsonl",
       "content_hash": "/a4/a02abd968f/1/content_hash.txt",
       "prompt": "/a4/a02abd968f/1/prompt.txt"
+    },
+    {
+      "metadata": "/a4/a02abd968f/2/metadata.json",
+      "transcript": "/a4/a02abd968f/2/full.jsonl",
+      "content_hash": "/a4/a02abd968f/2/content_hash.txt",
+      "prompt": "/a4/a02abd968f/2/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 104,
-    "cache_creation_tokens": 46054,
-    "cache_read_tokens": 632103,
-    "output_tokens": 7288,
-    "api_call_count": 38
+    "input_tokens": 420,
+    "cache_creation_tokens": 65113,
+    "cache_read_tokens": 679299,
+    "output_tokens": 8827,
+    "api_call_count": 42
   }
 }
