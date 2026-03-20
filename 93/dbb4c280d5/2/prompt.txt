@@ -1,0 +1,41 @@
+yuta@M2-MacBook-Air  ~/ghq/github.com/yutakobayashidev/dotnix   main ✚  sudo darwin-rebuild switch --flake .#M2-MacBook-Air
+building the system configuration...
+warning: Git tree '/Users/yuta/ghq/github.com/yutakobayashidev/dotnix' is dirty
+error:
+       … while evaluating the attribute 'optionalValue.value'
+         at /nix/store/REDACTED/lib/modules.nix:1297:5:
+         1296|
+         1297|     optionalValue = if isDefined then { value = mergedValue; } else { };
+             |     ^
+         1298|   };
+
+       … while evaluating a branch condition
+         at /nix/store/REDACTED/lib/modules.nix:1297:21:
+         1296|
+         1297|     optionalValue = if isDefined then { value = mergedValue; } else { };
+             |                     ^
+         1298|   };
+
+       … while evaluating definitions from `/nix/store/5qw898kk7cn065fyfb6cxw9n8c975x27-source/modules/system':
+
+       … while evaluating the option `assertions':
+
+       … while evaluating definitions from `/nix/store/6jihbnhns8wyk87ks73ylbbfv3b638lk-source/nixos/common.nix':
+
+       (stack trace truncated; use '--show-trace' to show the full, detailed trace)
+
+       error: attribute 'homeModules' missing
+       at /nix/store/REDACTED/nix/hosts/M2-MacBook-Air/default.nix:54:15:
+           53|               ../../modules/home
+           54|               inputs.onepassword-shell-plugins.homeModules.default
+             |               ^
+           55|             ];
+       Did you mean hmModules?
+
+---
+
+続けて
+
+---
+
+evaluation warning: 'system' has been renamed to/replaced by 'stdenv.hostPlatform.system'
