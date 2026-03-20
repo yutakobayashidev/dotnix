@@ -991,11 +991,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772682530,
-        "narHash": "sha256-0Mj7WJYqHGx5RItwrzGzyxik89kjL2/zLZOq8gvjnoA=",
+        "lastModified": 1773603777,
+        "narHash": "sha256-oXSEbMR/IuHYk9nvrbRhaYBxVK5s63DH2UGOZT2ok48=",
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "rev": "c796261f21ef8264ccbff49d9e772488f632f380",
+        "rev": "0efe7af73d6e4a8d447a22936c5526d73822b0a7",
         "type": "github"
       },
       "original": {
