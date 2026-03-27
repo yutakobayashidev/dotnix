@@ -1,16 +1,16 @@
 final: prev: {
   keifu = final.rustPlatform.buildRustPackage rec {
     pname = "keifu";
-    version = "0.2.3";
+    version = "0.3.0";
 
     src = final.fetchFromGitHub {
       owner = "trasta298";
       repo = "keifu";
       rev = "v${version}";
-      hash = "sha256-8fjR204Wa9LJa9JGQ1CRHDoiHei6P3J81RGgA0G77EA=";
+      hash = "sha256-Srw71Rswafu70kKI36dY1PtB4BQhpTYYzqbrWJuvaUM=";
     };
 
-    cargoHash = "sha256-OhNT+IbR1A7QD03/I+ju2h1LArVPL47BnVmit3tNSOA=";
+    cargoHash = "sha256-Ga405TV1uDSZbADrV+3aAeLDRfdPFHzdxxTEDu+f+b4=";
 
     nativeBuildInputs = [
       final.pkg-config
