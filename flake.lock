@@ -1609,11 +1609,11 @@
     "ui-ux-pro-max-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1773122738,
-        "narHash": "sha256-zrWVV48rhz+4Hm4Ho1371yymkwbbtSveXLUvq55EGB4=",
+        "lastModified": 1774349342,
+        "narHash": "sha256-PQsU/RWX7vq3x8WyeY8IdpUOEGUfOcXsaAygzZqETeE=",
         "owner": "nextlevelbuilder",
         "repo": "ui-ux-pro-max-skill",
-        "rev": "07f4ef3ac2568c25a3b0c8ef5165a86abc3e56e4",
+        "rev": "0d58617a4281f441b58f480bf245083e57a8667d",
         "type": "github"
       },
       "original": {
