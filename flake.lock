@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774014789,
-        "narHash": "sha256-Nj68KMDcngiS+GGOJWsJ1uOCFbM+n19/PaIyGdGLjFw=",
+        "lastModified": 1774254992,
+        "narHash": "sha256-zqvZMxljkyseWObnT/p6wxbJyEs+7ZVgfQh0zWvVGWA=",
         "owner": "myuron",
         "repo": "actrun-overlay",
-        "rev": "009fd9bc03d46112d29dd955cd9de6dcb9deb0f7",
+        "rev": "da5eac65e9912e17a9e90704b389b86beca2d401",
         "type": "github"
       },
       "original": {
