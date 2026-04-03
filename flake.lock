@@ -1299,11 +1299,11 @@
     "obsidian-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1772463036,
-        "narHash": "sha256-nLsv1cJl/4wnb1TBkz6OA/9tC9TM15Yx7Tquk0NbjHk=",
+        "lastModified": 1774790862,
+        "narHash": "sha256-/D5HKtLvVdBh7g7zCFDQmInL7/q8koiR6HL0ARmTCoE=",
         "owner": "kepano",
         "repo": "obsidian-skills",
-        "rev": "bb9ec95e1b59c3471bd6fd77a78a4042430bfac3",
+        "rev": "1e1df342c231705579ece0c99527012dfe4dfa5b",
         "type": "github"
       },
       "original": {
