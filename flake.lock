@@ -476,11 +476,11 @@
         "zon2nix": "zon2nix"
       },
       "locked": {
-        "lastModified": 1775869328,
-        "narHash": "sha256-/9yNSu4MmT/0Q9CX1ynkhadcHz94Gzp6ddk1naxcJVk=",
+        "lastModified": 1775944511,
+        "narHash": "sha256-xSin/rrsb++QaBqmYdeOete5btjtPf/kkSNTUj1D6kI=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "19bf63ab714ddd5807df5ec2df0572c7fd9ac94a",
+        "rev": "557de7c92556ab0eb9725b5693d396a68b242dc3",
         "type": "github"
       },
       "original": {
