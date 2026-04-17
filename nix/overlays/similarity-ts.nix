@@ -1,16 +1,16 @@
 final: prev: {
   similarity-ts = final.rustPlatform.buildRustPackage rec {
     pname = "similarity-ts";
-    version = "0.4.2";
+    version = "0.5.0";
 
     src = final.fetchFromGitHub {
       owner = "mizchi";
       repo = "similarity";
       rev = "v${version}";
-      hash = "sha256-/rvLl2SaeB0AHEbjkT/XTvVZHHoRaau44SteImRWguE=";
+      hash = "sha256-xYA1o4nmZLo0TY56KOtm2eTR9xL4/uEVTKmFaQT+kCQ=";
     };
 
-    cargoHash = "sha256-d2PZ65uudYPZv1ZtILF+7Zt+sv4LcZKUkeFLQkk7uPA=";
+    cargoHash = "sha256-r/9Yq1h8i7OWMicK9z36TzUTQRDOk6cND+5RvL045yA=";
 
     buildAndTestSubdir = "crates/similarity-ts";
 
