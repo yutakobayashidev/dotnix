@@ -1322,11 +1322,11 @@
     "obsidian-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1774790862,
+        "lastModified": 1775150516,
         "narHash": "sha256-/D5HKtLvVdBh7g7zCFDQmInL7/q8koiR6HL0ARmTCoE=",
         "owner": "kepano",
         "repo": "obsidian-skills",
-        "rev": "1e1df342c231705579ece0c99527012dfe4dfa5b",
+        "rev": "fa1e131a014576ff8f8919f191a7ca8d8fded39b",
         "type": "github"
       },
       "original": {
