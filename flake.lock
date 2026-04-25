@@ -1687,11 +1687,11 @@
     "vercel-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1776452881,
-        "narHash": "sha256-JVJeottMyjxdiGPS7O4QsshKdbwbYcKMvwe/PB7I/Zw=",
+        "lastModified": 1776802043,
+        "narHash": "sha256-yFmumK7BpWuJSRRGpv3bP7h0aJKR7XWroPUhlsMYofQ=",
         "owner": "vercel-labs",
         "repo": "skills",
-        "rev": "bc21a37a12b90fcb5aec051c91baf5b227b704b1",
+        "rev": "5516b8ad07393f35af4b50238b9d3f7cceca5f1e",
         "type": "github"
       },
       "original": {
