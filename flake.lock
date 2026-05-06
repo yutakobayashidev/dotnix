@@ -1377,11 +1377,11 @@
     "prompt-review-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1773599148,
-        "narHash": "sha256-aI/gKHSEDkEzQIbvktpQzBZ1HRGDEk8P7VBZauhPCR0=",
+        "lastModified": 1776165326,
+        "narHash": "sha256-Ma9qm0aggx+F0FDNd0DMXsuZLZz/Ei3o1oid8ljWGfA=",
         "owner": "tokoroten",
         "repo": "prompt-review",
-        "rev": "597f6601e41cf54a55ab7f18c22efc3466cb5557",
+        "rev": "0a83fd9eeead58fe92d0b04522da9e6840a71940",
         "type": "github"
       },
       "original": {
