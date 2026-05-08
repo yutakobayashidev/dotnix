@@ -1361,11 +1361,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1774625180,
-        "narHash": "sha256-zVAN88RCvAKyAVCjve2wBzAL4yJq7LzTZgcwnGH2hdo=",
+        "lastModified": 1777937547,
+        "narHash": "sha256-zou0jC8DBmyVlvNLwl7dZPVe14W8xd1ZgrF0PTCU7hs=",
         "owner": "1Password",
         "repo": "shell-plugins",
-        "rev": "9a19f93022d5422f15b327f10c1a6312273252e8",
+        "rev": "8f84c96639d18fa8c48fa64ce47c88597371ed5a",
         "type": "github"
       },
       "original": {
