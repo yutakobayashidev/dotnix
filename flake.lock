@@ -209,11 +209,11 @@
     "difit-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1778430214,
-        "narHash": "sha256-1NmzsqbT4mTIC7W8C7filSLWLtQdAlsoJt7gRnxVMkI=",
+        "lastModified": 1778491160,
+        "narHash": "sha256-chmlNmUaxOjlQbjd/60fFc3lE2jwpp8Cnftl+O+6g4E=",
         "owner": "yoshiko-pg",
         "repo": "difit",
-        "rev": "b1602a8d47c9fce1daad5dd5e54d7ac2887d2a64",
+        "rev": "6dd8e2f937a4854f1c2e5ce61cf62bbd9fc35519",
         "type": "github"
       },
       "original": {
