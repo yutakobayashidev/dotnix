@@ -25,12 +25,30 @@
     ../services/traefik
     ../services/atuin
     ../services/coredns
+    inputs.disko.nixosModules.disko
+    inputs.impermanence.nixosModules.impermanence
+    ./disko.nix
+    ./impermanence.nix
     inputs.nur-packages.nixosModules.px4_drv
     inputs.nur-packages.nixosModules.rtl8812au
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.initrd.systemd.enable = true;
+  boot.initrd.luks.devices.cryptroot = {
+    device = "/dev/disk/by-partlabel/cryptroot";
+    allowDiscards = true;
+    bypassWorkqueues = true;
+  };
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "ahci"
+  ];
 
   networking = {
     hostName = "B450M-Pro4";
