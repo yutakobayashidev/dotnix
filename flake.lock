@@ -1212,11 +1212,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1778143761,
-        "narHash": "sha256-lkesY6x2X2qxlqLM7CT2iM/0rP2JB7fruPN3h8POXmI=",
+        "lastModified": 1778795962,
+        "narHash": "sha256-b7wHb9z5TJFnryRq1L2JsnTv+OFMyKB1PkY+qo7mjdo=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "3bcaa367d4c550d687a17ac792fd5cda214ee871",
+        "rev": "50a9758cc00c3da9aae60d2a0d00775d72b72e36",
         "type": "github"
       },
       "original": {
