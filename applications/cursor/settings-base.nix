@@ -52,7 +52,6 @@
   "biome.requireConfigFile" = true;
   "biome.suggestInstallingGlobally" = false;
   "claudeCode.preferredLocation" = "sidebar";
-  "dart.flutterSdkPaths" = [ "/Users/yuta/.asdf/installs/flutter/" ];
   "editor.accessibilitySupport" = "off";
   "editor.defaultFormatter" = "biomejs.biome";
   "editor.fontFamily" = "Fira Code,Menlo, Monaco, 'Courier New', monospace";
@@ -83,11 +82,6 @@
   };
   "github.copilot.nextEditSuggestions.enabled" = true;
   "githubPullRequests.pullBranch" = "never";
-  "haskell.manageHLS" = "PATH";
-  "hexeditor.columnWidth" = 16;
-  "hexeditor.defaultEndianness" = "little";
-  "hexeditor.inspectorType" = "aside";
-  "hexeditor.showDecodedText" = true;
   "javascript.updateImportsOnFileMove.enabled" = "never";
   "json.schemaDownload.trustedDomains" = {
     "https://biomejs.dev" = true;
@@ -100,19 +94,9 @@
     "https://www.schemastore.org/" = true;
   };
   "prisma.showPrismaDataPlatformNotification" = false;
-  "python.analysis.extraPaths" = [
-    "/Users/yuta/.asdf/installs/python/3.11.3/lib/python3.11/site-packages"
-  ];
-  "remote.SSH.remotePlatform" = {
-    nixos = "linux";
-    orb = "linux";
-    "yuta-192.168.0.22" = "linux";
-    yuta-venus-series = "linux";
-  };
   "remote.autoForwardPortsSource" = "hybrid";
   "security.workspace.trust.enabled" = false;
   "security.workspace.trust.untrustedFiles" = "open";
-  "svg.preview.mode" = "svg";
   "terminal.external.osxExec" = "Ghostty.app";
   "terminal.integrated.defaultProfile.osx" = "zsh";
   "terminal.integrated.env.osx" = {
@@ -128,7 +112,6 @@
   "workbench.colorTheme" = "GitHub Dark Default";
   "workbench.editor.empty.hint" = "hidden";
   "workbench.editor.enablePreview" = false;
-  "workbench.iconTheme" = "material-icon-theme";
   "workbench.settings.applyToAllProfiles" = [ ];
   "workbench.startupEditor" = "none";
   "yaml.customTags" = [
@@ -160,6 +143,4 @@
     "!Split"
     "!Split sequence"
   ];
-  "zig.path" = "zig";
-  "zig.zls.path" = "zls";
 }
