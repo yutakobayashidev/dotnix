@@ -4,6 +4,7 @@
   imports = [
     ../../../../applications/vrchat
     ../../../../applications/chromium
+    ../../../../applications/cursor
     ../../../../applications/firefox
     ../../../../applications/obs-studio
     ../../../../applications/ghostty
