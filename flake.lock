@@ -948,6 +948,22 @@
         "type": "github"
       }
     },
+    "modern-web-guidance": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779407315,
+        "narHash": "sha256-N5Zy3HLfDMRHDle1dF5jaUtZV2ljhRVQHVSoUtl5RQE=",
+        "owner": "GoogleChrome",
+        "repo": "modern-web-guidance",
+        "rev": "532a7ec07be99ece9609d429d044ec8a12d6cfad",
+        "type": "github"
+      },
+      "original": {
+        "owner": "GoogleChrome",
+        "repo": "modern-web-guidance",
+        "type": "github"
+      }
+    },
     "moonbit-overlay": {
       "flake": false,
       "locked": {
@@ -1799,6 +1815,7 @@
         "llm-agents": "llm-agents",
         "mcp-servers-nix": "mcp-servers-nix",
         "microvm": "microvm",
+        "modern-web-guidance": "modern-web-guidance",
         "moonbit-overlay": "moonbit-overlay",
         "niri": "niri",
         "nix-darwin": "nix-darwin",

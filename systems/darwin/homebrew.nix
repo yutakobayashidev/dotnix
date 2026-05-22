@@ -8,6 +8,7 @@
     taps = [
       "blacktop/tap"
       "manaflow-ai/cmux"
+      "steipete/tap"
       "trasta298/tap"
     ];
     brews = [
@@ -76,6 +77,7 @@
       "claude"
       "codex-app"
       "codexbar"
+      "lm-studio"
       "windows-app"
 
       # VR

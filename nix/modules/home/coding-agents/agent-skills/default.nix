@@ -61,6 +61,10 @@ in
           path = inputs.agent-browser-skill;
           subdir = "skills";
         };
+        modern-web-guidance = {
+          path = inputs.modern-web-guidance;
+          subdir = "skills";
+        };
       };
 
       skills.enableAll = [
@@ -168,6 +172,11 @@ in
         prompt-review = {
           from = "prompt-review";
           path = "prompt-review";
+        };
+
+        modern-web-guidance = {
+          from = "modern-web-guidance";
+          path = "modern-web-guidance";
         };
       };
 
