@@ -30,6 +30,8 @@ let
   hermesConfigFile = pkgs.writeText "hermes-config.yaml" (
     builtins.toJSON config.services.hermes-agent.settings
   );
+  hermesAgentsFile = ./documents/AGENTS.md;
+  hermesSoulFile = ./documents/SOUL.md;
   credentialsDir = "/run/credentials/@system";
 in
 {
@@ -93,6 +95,12 @@ in
 
       install -o hermes -g hermes -m 0640 \
         ${hermesConfigFile} /var/lib/hermes/.hermes/config.yaml
+
+      install -o hermes -g hermes -m 0640 \
+        ${hermesAgentsFile} /var/lib/hermes/.hermes/AGENTS.md
+
+      install -o hermes -g hermes -m 0640 \
+        ${hermesSoulFile} /var/lib/hermes/.hermes/SOUL.md
 
       install -o hermes -g hermes -m 0640 \
         ${credentialsDir}/hermes-agent.env /var/lib/hermes/.hermes/.env
