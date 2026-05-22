@@ -6,6 +6,7 @@
     ../../../../applications/chromium
     ../../../../applications/cursor
     ../../../../applications/firefox
+    ../../../../applications/keifu
     ../../../../applications/obs-studio
     ../../../../applications/ghostty
   ];
@@ -13,13 +14,13 @@
   home.packages =
     with pkgs;
     [
-      # AI / LLM
-      lmstudio
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
+      # AI / LLM
+      lmstudio
+
       # Overlay packages
       ghostty
-      keifu
 
       # Android
       android-tools
