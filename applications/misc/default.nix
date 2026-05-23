@@ -28,6 +28,7 @@ in
 
       # Development Tools
       actrun
+      bumblebee
       gogcli
       nil
       nix-init

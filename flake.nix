@@ -322,6 +322,7 @@
         {
           packages = {
             inherit (localPkgs)
+              bumblebee
               difit
               git-now
               jj-desc
