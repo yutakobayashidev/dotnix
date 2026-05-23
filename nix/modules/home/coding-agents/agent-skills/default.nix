@@ -65,6 +65,10 @@ in
           path = inputs.modern-web-guidance;
           subdir = "skills";
         };
+        mattpocock = {
+          path = inputs.mattpocock-skills;
+          subdir = "skills";
+        };
       };
 
       skills.enableAll = [
@@ -177,6 +181,11 @@ in
         modern-web-guidance = {
           from = "modern-web-guidance";
           path = "modern-web-guidance";
+        };
+
+        grill-me = {
+          from = "mattpocock";
+          path = "productivity/grill-me";
         };
       };
 

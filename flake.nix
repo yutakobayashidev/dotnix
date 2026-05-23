@@ -111,6 +111,10 @@
       url = "github:GoogleChrome/modern-web-guidance";
       flake = false;
     };
+    mattpocock-skills = {
+      url = "github:mattpocock/skills";
+      flake = false;
+    };
     repiq = {
       url = "github:yutakobayashidev/repiq";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -22,12 +22,7 @@ nix flake update
 
 このリポジトリは`agent-skills-nix`でスキルを管理しています。
 
-- **設定**: `nix/modules/home/coding-agents/agent-skills`
-- **ローカルスキル**: `agents/skills/`
-- **外部スキル**: `anthropics/skills`, `vercel-labs/skills`, `obra/superpowers`
-- **デプロイ先**: `~/.agents/skills`, `~/.config/claude/skills`, `~/.config/codex/skills`, Hermes microVM `/var/lib/hermes/.hermes/skills`
-
-スキル名の固定リストは保守コストが高いので置かず、利用可能なローカルスキルは `agents/skills/`、有効化している外部スキルは `nix/modules/home/coding-agents/agent-skills` を正本とします。補足は `agents/README.md` を参照してください。
+AGENTS.mdには個別のスキル名やファイル構成を置かず、実設定と専用ドキュメントを正本とします。スキルを追加・変更した場合は、必要に応じてそちらを更新してください。
 
 ## Architecture
 

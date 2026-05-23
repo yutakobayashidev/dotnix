@@ -907,6 +907,22 @@
         "type": "github"
       }
     },
+    "mattpocock-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779266813,
+        "narHash": "sha256-Qwuu27f95xgAJ4hdv/4TNahHhprCMIxl1H9f9ymEsno=",
+        "owner": "mattpocock",
+        "repo": "skills",
+        "rev": "b8be62ffacb0118fa3eaa29a0923c87c8c11985c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mattpocock",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "mcp-servers-nix": {
       "inputs": {
         "nixpkgs": [
@@ -1813,6 +1829,7 @@
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_3",
         "llm-agents": "llm-agents",
+        "mattpocock-skills": "mattpocock-skills",
         "mcp-servers-nix": "mcp-servers-nix",
         "microvm": "microvm",
         "modern-web-guidance": "modern-web-guidance",

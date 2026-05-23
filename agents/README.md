@@ -32,4 +32,5 @@ OpenClaw microVM は `systems/nixos/services/openclaw/guest.nix` で `nix-opencl
   - Anthropic: https://github.com/anthropics/skills
   - Vercel: https://github.com/vercel-labs/skills
   - Obsidian: https://github.com/kepano/obsidian-skills
+  - Matt Pocock: https://github.com/mattpocock/skills
   - Superpowers: https://github.com/obra/superpowers
