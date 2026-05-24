@@ -21,7 +21,6 @@
     ../services/comin
     ../services/comin/prometheus.nix
     ../services/cloudflare-error-page
-    ../services/openclaw
     ../services/traefik
     ../services/atuin
     ../services/coredns
@@ -35,6 +34,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
   boot.initrd.systemd.enable = true;
   boot.initrd.luks.devices.cryptroot = {
     device = "/dev/disk/by-partlabel/cryptroot";
@@ -53,6 +53,7 @@
   networking = {
     hostName = "B450M-Pro4";
     useDHCP = lib.mkDefault true;
+    useNetworkd = true;
     wireless = {
       enable = true;
       secretsFile = config.sops.secrets.wifi.path;
@@ -77,6 +78,7 @@
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.graphics = {
     enable = true;
