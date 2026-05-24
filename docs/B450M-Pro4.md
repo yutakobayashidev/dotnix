@@ -51,7 +51,7 @@ device = "/dev/disk/by-id/nvme-...";
 
 Run this from another machine.
 
-WARNING: This erases all data on the target disk. The current disko config targets `/dev/nvme0n1`.
+WARNING: This erases all data on the target disk. The current disko config targets `/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_250GB_S4EUNG0N204721K`.
 
 ```sh
 ssh nixos@<TARGET_IP>
@@ -95,7 +95,7 @@ unset LUKS_PASS
 
 ### 3. Run Disko
 
-WARNING: This erases all data on `/dev/nvme0n1`.
+WARNING: This erases all data on `/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_250GB_S4EUNG0N204721K`.
 
 ```sh
 sudo nix --experimental-features "nix-command flakes" run \

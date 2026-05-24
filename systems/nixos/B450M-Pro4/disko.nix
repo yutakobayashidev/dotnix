@@ -9,7 +9,7 @@ in
 {
   disko.devices.disk.main = {
     type = "disk";
-    device = "/dev/nvme0n1";
+    device = "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_250GB_S4EUNG0N204721K";
     content = {
       type = "gpt";
       partitions = {
