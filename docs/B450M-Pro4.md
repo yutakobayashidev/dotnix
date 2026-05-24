@@ -18,6 +18,47 @@ sudo systemctl start NetworkManager
 nmtui
 ```
 
+If the target machine cannot reach the internet directly, share the UM790-Pro
+connection over a direct LAN cable:
+
+1. On the UM790-Pro, find the wired interface name:
+
+   ```sh
+   nmcli device
+   ```
+
+2. Create a shared connection on that wired interface. Replace `enp3s0` with
+   the actual wired interface name:
+
+   ```sh
+   sudo nmcli con add type ethernet ifname enp3s0 con-name shared-b450 ipv4.method shared ipv6.method ignore
+   sudo nmcli con up shared-b450
+   ```
+
+3. On the B450M-Pro4 installer, bring up networking and confirm the shared
+   address:
+
+   ```sh
+   sudo systemctl start NetworkManager
+   ip addr
+   ping -c 3 github.com
+   ```
+
+   If this works, the B450M-Pro4 side should get a `10.42.0.x` address.
+
+4. Use that address from the UM790-Pro:
+
+   ```sh
+   ssh nixos@10.42.0.x
+   ```
+
+5. When you are done, remove the shared connection on the UM790-Pro:
+
+   ```sh
+   sudo nmcli con down shared-b450
+   sudo nmcli con delete shared-b450
+   ```
+
 ### 2. Enable SSH Access
 
 Run this on the target machine:
