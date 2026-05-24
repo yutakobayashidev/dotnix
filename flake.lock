@@ -243,6 +243,26 @@
         "type": "github"
       }
     },
+    "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1778958912,
+        "narHash": "sha256-6pvS9rIF9mZRj1ENwu9fDLHeG1JFDTCpRyy6vJhXkTA=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "6e8dc7aa0e65fce67c76e18227a13a7d529f2cdf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -881,6 +901,29 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "impermanence": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769548169,
+        "narHash": "sha256-03+JxvzmfwRu+5JafM0DLbxgHttOQZkUtDWBmeUkN8Y=",
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "rev": "7b1d382faf603b6d264f58627330f9faa5cba149",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "impermanence",
         "type": "github"
       }
     },
@@ -1820,6 +1863,7 @@
         "comin": "comin",
         "deno-skills": "deno-skills",
         "difit-skills": "difit-skills",
+        "disko": "disko",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
         "gh-graph": "gh-graph",
@@ -1828,6 +1872,7 @@
         "git-hooks": "git-hooks_2",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_3",
+        "impermanence": "impermanence",
         "llm-agents": "llm-agents",
         "mattpocock-skills": "mattpocock-skills",
         "mcp-servers-nix": "mcp-servers-nix",

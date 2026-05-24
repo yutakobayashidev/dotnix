@@ -22,20 +22,39 @@
     ../services/comin
     ../services/comin/prometheus.nix
     ../services/cloudflare-error-page
-    ../services/openclaw
     ../services/traefik
     ../services/atuin
     ../services/coredns
+    inputs.disko.nixosModules.disko
+    inputs.impermanence.nixosModules.impermanence
+    ./disko.nix
+    ./impermanence.nix
     inputs.nur-packages.nixosModules.px4_drv
     inputs.nur-packages.nixosModules.rtl8812au
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.initrd.systemd.enable = true;
+  boot.initrd.luks.devices.cryptroot = {
+    device = "/dev/disk/by-partlabel/cryptroot";
+    allowDiscards = true;
+    bypassWorkqueues = true;
+  };
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "ahci"
+  ];
 
   networking = {
     hostName = "B450M-Pro4";
     useDHCP = lib.mkDefault true;
+    useNetworkd = true;
     wireless = {
       enable = true;
       secretsFile = config.sops.secrets.wifi.path;
@@ -60,6 +79,7 @@
     open = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.graphics = {
     enable = true;
