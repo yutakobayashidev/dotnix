@@ -277,10 +277,53 @@ fileSystems."/srv/bulk" = {
 };
 ```
 
+Nextcloud and Immich keep the NixOS module default state locations and mount
+dedicated bulk subvolumes there:
+
+```nix
+fileSystems."/var/lib/nextcloud" = {
+  device = "/dev/disk/by-label/bulk";
+  fsType = "btrfs";
+  options = [
+    "subvol=@bulk/nextcloud"
+    "compress=zstd:1"
+    "noatime"
+  ];
+};
+
+fileSystems."/var/lib/immich" = {
+  device = "/dev/disk/by-label/bulk";
+  fsType = "btrfs";
+  options = [
+    "subvol=@bulk/immich"
+    "compress=zstd:1"
+    "noatime"
+  ];
+};
+```
+
+Create the subvolumes before switching:
+
+```sh
+sudo mount /dev/disk/by-label/bulk /mnt/bulk
+sudo btrfs subvolume create /mnt/bulk/@bulk/nextcloud
+sudo btrfs subvolume create /mnt/bulk/@bulk/immich
+sudo umount /mnt/bulk
+```
+
+If `/mnt/bulk/@bulk/nextcloud` or `/mnt/bulk/@bulk/immich` already exists as a
+regular directory, move or remove it before creating the subvolume.
+
 Nextcloud uses:
 
 ```text
-/srv/bulk/nextcloud/data
+/var/lib/nextcloud
+```
+
+Immich uses:
+
+```text
+/var/lib/immich
 ```
 
 ArchiveBox uses:

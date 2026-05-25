@@ -80,6 +80,26 @@
     ];
   };
 
+  fileSystems."/var/lib/immich" = {
+    device = "/dev/disk/by-label/bulk";
+    fsType = "btrfs";
+    options = [
+      "subvol=@bulk/immich"
+      "compress=zstd:1"
+      "noatime"
+    ];
+  };
+
+  fileSystems."/var/lib/nextcloud" = {
+    device = "/dev/disk/by-label/bulk";
+    fsType = "btrfs";
+    options = [
+      "subvol=@bulk/nextcloud"
+      "compress=zstd:1"
+      "noatime"
+    ];
+  };
+
   services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [ "systemd" ];
