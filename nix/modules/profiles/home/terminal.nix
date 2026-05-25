@@ -5,6 +5,7 @@
     ../../../../applications/atuin
     ../../../../applications/bat
     ../../../../applications/git
+    ../../../../applications/neovim
     ../../../../applications/tmux
   ];
 

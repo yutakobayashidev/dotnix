@@ -6,6 +6,5 @@
     ../../../../applications/misc
     ../../../../applications/btop
     ../../../../applications/fastfetch
-    ../../../../applications/neovim
   ];
 }
