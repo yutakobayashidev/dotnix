@@ -114,7 +114,24 @@ path is safer than a kernel-assigned name:
 device = "/dev/disk/by-id/nvme-...";
 ```
 
-### 4. Run nixos-anywhere
+### 4. Place SOPS Age Key
+
+`nixos-anywhere` 実行中に sops-nix が secrets を復号するため、事前に B450M 用の age 秘密鍵をターゲットに配置する必要がある。配置しないと `generateKey = true` によりランダムな鍵が生成され、`.sops.yaml` の recipient と一致せず復号に失敗する。
+
+```sh
+# Mac 側（age 鍵を生成したマシン）で実行
+scp ~/.config/sops/age/b450m-pro4.keys.txt nixos@<TARGET_IP>:~/.config/sops/age/keys.txt
+```
+
+ターゲット側でパーミッションを確認:
+
+```sh
+ssh nixos@<TARGET_IP> -- 'mkdir -p ~/.config/sops/age && chmod 600 ~/.config/sops/age/keys.txt'
+```
+
+> **Note**: `sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ]` は SSH ホスト鍵から age 鍵を派生させるフォールバックだが、この SSH 鍵の age 公開鍵は `.sops.yaml` に recipient 登録されていないため復号には使えない。`nix-anywhere` 時に SSH ホスト鍵が生成されても secrets 復号の役には立たない。
+
+### 5. Run nixos-anywhere
 
 Run this from another machine.
 
@@ -133,7 +150,7 @@ nix run github:nix-community/nixos-anywhere -- \
 unset LUKS_PASS
 ```
 
-### 5. Reboot
+### 6. Reboot
 
 ```sh
 sudo reboot

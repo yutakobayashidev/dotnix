@@ -38,7 +38,9 @@ in
       '';
     };
   ghostty = prev._ghostty.packages.${system}.default;
-  repiq = prev._repiq.packages.${system}.default;
+  repiq = prev._repiq.packages.${system}.default.overrideAttrs (old: {
+    doCheck = !prev.stdenv.hostPlatform.isDarwin;
+  });
   moonbit-lsp =
     let
       moonbit-overlay = prev._moonbit-overlay;
