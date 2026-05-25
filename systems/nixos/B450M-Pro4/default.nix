@@ -19,6 +19,7 @@
     ../services/opentelemetry-collector
     ../services/oura-metrics
     ../services/archivebox
+    ../services/n8n
     ../services/comin
     ../services/comin/prometheus.nix
     ../services/cloudflare-error-page

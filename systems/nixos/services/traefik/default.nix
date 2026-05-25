@@ -55,6 +55,11 @@ in
             rule = "Host(`archive.${domain}`)";
             service = "archivebox";
           };
+          n8n = {
+            entryPoints = [ "web" ];
+            rule = "Host(`n8n.${domain}`)";
+            service = "n8n";
+          };
           error-pages = {
             entryPoints = [ "web" ];
             rule = "HostRegexp(`.+`)";
@@ -91,6 +96,9 @@ in
             { url = "http://localhost:${toString config.services.atuin.port}"; }
           ];
           archivebox.loadBalancer.servers = [ { url = "http://127.0.0.1:8000"; } ];
+          n8n.loadBalancer.servers = [
+            { url = "http://127.0.0.1:${toString config.services.n8n.environment.N8N_PORT}"; }
+          ];
           error-pages-service = {
             loadBalancer = {
               servers = [ { url = "http://127.0.0.1:5000"; } ];
