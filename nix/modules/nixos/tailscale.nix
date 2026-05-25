@@ -21,7 +21,10 @@ in
           enable = true;
           useRoutingFeatures = "server";
           authKeyFile = config.sops.secrets.tailscale-authkey.path;
-          extraUpFlags = [ "--ssh" ];
+          extraUpFlags = [
+            "--ssh"
+            "--accept-dns=false"
+          ];
         };
 
         networking = {
