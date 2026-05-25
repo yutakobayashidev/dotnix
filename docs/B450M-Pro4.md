@@ -27,32 +27,58 @@ connection over a direct LAN cable:
    nmcli device
    ```
 
-2. Create a shared connection on that wired interface. Replace `enp3s0` with
+2. Create a shared connection on that wired interface. Replace `enp1s0` with
    the actual wired interface name:
 
    ```sh
-   sudo nmcli con add type ethernet ifname enp3s0 con-name shared-b450 ipv4.method shared ipv6.method ignore
+   sudo nmcli con add type ethernet ifname enp1s0 con-name shared-b450 ipv4.method shared ipv6.method ignore
    sudo nmcli con up shared-b450
    ```
 
-3. On the B450M-Pro4 installer, bring up networking and confirm the shared
-   address:
+3. If the B450M-Pro4 side sends DHCP requests but never receives a `10.42.0.x`
+   address, check whether the requests reach UM790-Pro:
+
+   ```sh
+   nix shell nixpkgs#tcpdump -c sudo tcpdump -ni enp1s0 'port 67 or port 68'
+   ```
+
+   If `DHCP Request` or `DHCP Discover` packets appear but no lease is
+   assigned, allow DHCP and DNS through the UM790-Pro NixOS firewall:
+
+   ```sh
+   sudo iptables -I nixos-fw 1 -i enp1s0 -p udp --dport 67 -j nixos-fw-accept
+   sudo iptables -I nixos-fw 2 -i enp1s0 -p udp --dport 53 -j nixos-fw-accept
+   sudo iptables -I nixos-fw 3 -i enp1s0 -p tcp --dport 53 -j nixos-fw-accept
+   ```
+
+4. If the B450M-Pro4 side receives a `10.42.0.x` address but cannot reach the
+   internet, add temporary NAT and forwarding rules on UM790-Pro. Replace
+   `wlp2s0` with the UM790-Pro Wi-Fi interface if different:
+
+   ```sh
+   sudo iptables -t nat -A POSTROUTING -s 10.42.0.0/24 -o wlp2s0 -j MASQUERADE
+   sudo iptables -I FORWARD 1 -i enp1s0 -o wlp2s0 -j ACCEPT
+   sudo iptables -I FORWARD 1 -i wlp2s0 -o enp1s0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+   ```
+
+5. On the B450M-Pro4 installer, reconnect Ethernet and confirm internet access.
+   Replace `enp5s0` with the B450M-Pro4 wired interface if different:
 
    ```sh
    sudo systemctl start NetworkManager
-   ip addr
+   sudo nmcli device disconnect enp5s0
+   sudo nmcli device connect enp5s0
+   ip -4 addr show enp5s0
    ping -c 3 github.com
    ```
 
-   If this works, the B450M-Pro4 side should get a `10.42.0.x` address.
-
-4. Use that address from the UM790-Pro:
+6. Use that address from the UM790-Pro:
 
    ```sh
    ssh nixos@10.42.0.x
    ```
 
-5. When you are done, remove the shared connection on the UM790-Pro:
+7. When you are done, remove the shared connection on the UM790-Pro:
 
    ```sh
    sudo nmcli con down shared-b450
