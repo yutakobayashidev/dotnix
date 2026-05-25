@@ -15,7 +15,9 @@
     ../../home/coding-agents/spec-kit
     ../../home/coding-agents/vibe-kanban
     ../../home/coding-agents/waza
+    ../../../../applications/gh
     ../../../../applications/jj
+    ../../../../applications/neovim
   ];
 
   my.programs.agent-browser.enable = true;
