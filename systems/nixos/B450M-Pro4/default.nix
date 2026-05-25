@@ -88,6 +88,8 @@
     ];
   };
 
+  services.nginx.virtualHosts."localhost".listenAddresses = [ "127.0.0.1" ];
+
   boot.kernelModules = [ "nvidia-uvm" ];
 
   hardware.nvidia-container-toolkit.enable = true;
