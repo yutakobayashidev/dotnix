@@ -24,6 +24,10 @@ nix flake update
 
 AGENTS.mdには個別のスキル名やファイル構成を置かず、実設定と専用ドキュメントを正本とします。スキルを追加・変更した場合は、必要に応じてそちらを更新してください。
 
+## Secret Handling
+
+シークレット、APIトークン、sops/age秘密鍵、SSH秘密鍵を`/tmp`や`/private/tmp`などの一時ディレクトリに書かないでください。生成・編集が必要な場合は、最終配置先（例: `~/.config/sops/age/keys.txt`）か、repo外の永続ディレクトリに`chmod 600`で保存し、配置先と復旧手順を記録してください。
+
 ## Architecture
 
 NixOS & macOS flake構成 with home-manager（nixos-unstable + nixpkgs-stable fallback）
