@@ -1,6 +1,15 @@
 { config, pkgs, ... }:
 
 {
+  home.packages = with pkgs; [
+    git
+    git-now
+    git-wt
+    git-lfs
+    git-filter-repo
+    lazygit
+  ];
+
   programs.git = {
     enable = true;
     ignores = [

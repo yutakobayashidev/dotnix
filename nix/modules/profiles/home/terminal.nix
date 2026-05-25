@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../../../../applications/atuin
     ../../../../applications/bat
     ../../../../applications/git
     ../../../../applications/tmux
