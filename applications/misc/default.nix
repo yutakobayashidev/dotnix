@@ -44,6 +44,8 @@ in
       vhs
       yazi
       imagemagick
+      exiftool
+      mat2
       ffmpeg
       apkeep
       ipatool
