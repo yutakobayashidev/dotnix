@@ -10,3 +10,12 @@ result-*
 
 # Swap files
 *.swp
+
+# Terraform state
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+override.tf
+override.tf.json
+terraform.rc
