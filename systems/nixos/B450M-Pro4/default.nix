@@ -31,12 +31,11 @@
     ./disko.nix
     ./impermanence.nix
     inputs.nur-packages.nixosModules.px4_drv
-    inputs.nur-packages.nixosModules.rtl8812au
   ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = pkgs.linuxPackages_7_0;
   boot.initrd.systemd.enable = true;
   boot.initrd.luks.devices.cryptroot = {
     device = "/dev/disk/by-partlabel/cryptroot";
@@ -109,7 +108,6 @@
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   hardware.px4_drv.enable = true;
-  hardware.rtl8812au.enable = true;
 
   hardware.nvidia = {
     open = true;
@@ -133,7 +131,10 @@
     ];
   };
 
-  boot.kernelModules = [ "nvidia-uvm" ];
+  boot.kernelModules = [
+    "nvidia-uvm"
+    "rtw88_8821au"
+  ];
 
   hardware.nvidia-container-toolkit.enable = true;
 

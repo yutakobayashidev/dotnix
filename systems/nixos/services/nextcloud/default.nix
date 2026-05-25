@@ -19,10 +19,14 @@
       adminpassFile = config.sops.secrets."nextcloud-admin-pass".path;
     };
 
-    settings.trusted_domains = [
-      "localhost"
-      "cloud.home.yutakobayashi.com"
-    ];
+    settings = {
+      trusted_domains = [
+        "localhost"
+        "cloud.home.yutakobayashi.com"
+      ];
+      trusted_proxies = [ "127.0.0.1" ];
+      "ratelimit.protection.enabled" = false;
+    };
   };
 
   systemd.services.nextcloud-setup.unitConfig.RequiresMountsFor = [
