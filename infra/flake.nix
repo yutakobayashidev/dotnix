@@ -1,7 +1,7 @@
 {
   description = "Infrastructure deployment environment for B450M-Pro4";
 
-  inputs.nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs =
     { self, ... }@inputs:
