@@ -10,6 +10,8 @@
     hostName = "localhost";
     configureRedis = true;
 
+    database.createLocally = true;
+
     config = {
       dbtype = "pgsql";
       adminuser = "root";
