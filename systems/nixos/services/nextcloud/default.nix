@@ -18,5 +18,10 @@
       adminuser = "root";
       adminpassFile = config.sops.secrets."nextcloud-admin-pass".path;
     };
+
+    settings.trusted_domains = [
+      "localhost"
+      "cloud.home.yutakobayashi.com"
+    ];
   };
 }
