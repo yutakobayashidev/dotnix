@@ -4,7 +4,7 @@ let
   mitmDomain = "www.mod.gov.cn";
   homeDomain = "home.yutakobayashi.com";
   tailDomain = "tail29d068.ts.net";
-  b450m = "100.64.0.1";
+  b450m = "100.111.109.43";
 in
 {
   services.resolved.enable = false;
