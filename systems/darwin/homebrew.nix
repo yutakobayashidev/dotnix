@@ -47,6 +47,7 @@
       "orbstack"
       "blackhole-2ch"
       "nani"
+      "nextcloud"
       "telegram"
       "azookey"
 
