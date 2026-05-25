@@ -88,7 +88,14 @@
     ];
   };
 
-  services.nginx.virtualHosts."localhost".listenAddresses = [ "127.0.0.1" ];
+  services.nginx.virtualHosts."localhost" = {
+    listen = [
+      {
+        addr = "127.0.0.1";
+        port = 8080;
+      }
+    ];
+  };
 
   boot.kernelModules = [ "nvidia-uvm" ];
 

@@ -7,6 +7,8 @@ let
   b450m = "100.64.0.1";
 in
 {
+  services.resolved.enable = false;
+
   services.coredns = {
     enable = true;
     config = ''

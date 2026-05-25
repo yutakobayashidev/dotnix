@@ -14,6 +14,7 @@
 
     config = {
       dbtype = "pgsql";
+      dbhost = "/run/postgresql";
       adminuser = "root";
       adminpassFile = config.sops.secrets."nextcloud-admin-pass".path;
     };

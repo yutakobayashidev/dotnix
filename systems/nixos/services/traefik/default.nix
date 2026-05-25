@@ -83,7 +83,7 @@ in
           grafana.loadBalancer.servers = [
             { url = "http://localhost:${toString config.services.grafana.settings.server.http_port}"; }
           ];
-          nextcloud.loadBalancer.servers = [ { url = "http://localhost:80"; } ];
+          nextcloud.loadBalancer.servers = [ { url = "http://localhost:8080"; } ];
           immich.loadBalancer.servers = [ { url = "http://localhost:2283"; } ];
           home-assistant.loadBalancer.servers = [
             { url = "http://localhost:${toString config.services.home-assistant.config.http.server_port}"; }
