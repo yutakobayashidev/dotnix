@@ -69,6 +69,16 @@
 
   sops.secrets.wifi = { };
 
+  fileSystems."/srv/bulk" = {
+    device = "/dev/disk/by-label/bulk";
+    fsType = "btrfs";
+    options = [
+      "subvol=@bulk"
+      "compress=zstd:1"
+      "noatime"
+    ];
+  };
+
   services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [ "systemd" ];

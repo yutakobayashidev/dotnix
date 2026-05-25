@@ -1,7 +1,7 @@
 # B450M-Pro4 HDD Service Storage Notes
 
-These notes record the May 2026 investigation for using the 3TB HDD as bulk
-storage for Nextcloud and ArchiveBox while preserving the existing NTFS data.
+These notes record the May 2026 migration for using the 3TB HDD as bulk storage
+for Nextcloud and ArchiveBox while preserving the existing NTFS data.
 
 ## Goal
 
@@ -148,12 +148,10 @@ Preferred fix:
 
 Only proceed if the read-write probe exits `0` and the dry-run still succeeds.
 
-## Windows-Side Shrink Plan
+## Windows-Side Shrink
 
-If using Windows PE, a Windows installer USB, or another temporary Windows
-environment, prefer doing both the NTFS repair and the NTFS shrink there. The
-goal is to clean the NTFS state first, then shrink `/dev/sda2` while keeping the
-existing data.
+Windows was used to clean and shrink the NTFS volume. This avoided writing to an
+unclean NTFS volume from Linux.
 
 1. Boot the Windows environment.
 2. Open Command Prompt.
@@ -172,9 +170,8 @@ existing data.
    chkdsk D: /f
    ```
 
-5. Shrink the NTFS volume from Windows. The target is to leave about 1200GB for
-   the NTFS migration source. With a roughly 3TB source volume, shrinking by
-   about 1800000MB leaves roughly 1.2TB:
+5. Shrink the NTFS volume from Windows. The target was to leave about 1TB for
+   the NTFS migration source:
 
    ```cmd
    diskpart
@@ -196,12 +193,12 @@ existing data.
    sudo ntfsresize --check /dev/sda2
    ```
 
-Expected result:
+Verified result after booting back into NixOS:
 
-- `/dev/sda2` is about 1.2TB.
-- There is unallocated/free space after `/dev/sda2`.
-- `ntfs-3g.probe --readwrite /dev/sda2` exits `0`.
-- `ntfsresize --check /dev/sda2` reports no errors.
+- `/dev/sda2` is about 1TB.
+- There was about 1.7TB of free space after `/dev/sda2`.
+- `ntfs-3g.probe --readwrite /dev/sda2` exited `0`.
+- `ntfsresize --check /dev/sda2` reported no errors.
 
 After Windows has already shrunk the NTFS volume, do not run
 `ntfsresize --size ...` from Linux. Only create the new btrfs partition in the
@@ -226,34 +223,68 @@ sudo partprobe /dev/sda
 sudo mkfs.btrfs -L bulk /dev/sda3
 ```
 
-Linux-only fallback:
+Completed result:
+
+```text
+/dev/sda3  btrfs  label=bulk  uuid=b51f01a3-5afd-4439-b5a0-e55503e2ebc7
+```
+
+An `@bulk` btrfs subvolume was created and service directories were prepared:
+
+```sh
+sudo mkdir -p /mnt/bulk
+sudo mount /dev/disk/by-label/bulk /mnt/bulk
+sudo btrfs subvolume create /mnt/bulk/@bulk
+sudo umount /mnt/bulk
+
+sudo mount -o subvol=@bulk,compress=zstd:1,noatime /dev/disk/by-label/bulk /mnt/bulk
+sudo mkdir -p /mnt/bulk/nextcloud/data /mnt/bulk/archivebox/data
+sudo umount /mnt/bulk
+```
+
+Linux-only fallback considered during planning:
 
 ```sh
 sudo ntfsfix /dev/sda2
 ```
 
-Then re-run the same probes and dry-run. `ntfsfix` is not a full replacement
-for Windows `chkdsk /f`, so prefer Windows PE when practical.
+`ntfsfix` is not a full replacement for Windows `chkdsk /f`, so Windows-side
+repair was preferred.
 
-## Commands Not Yet Run
-
-These are intentionally not run yet:
-
-```sh
-sudo parted /dev/sda
-sudo mkfs.btrfs -L bulk /dev/sda3
-```
-
-If Windows shrinks the NTFS volume, do not also shrink it from Linux with
-`ntfsresize --size ...`. Linux should only create and format the new btrfs
-partition in the free space left after `/dev/sda2`.
-
-The intended final layout is:
+Final layout:
 
 ```text
 /dev/sda1  Microsoft reserved partition
-/dev/sda2  NTFS, about 1200GB, existing migration source
+/dev/sda2  NTFS, about 1TB, existing migration source
 /dev/sda3  btrfs, remaining space, label=bulk
 ```
 
 Then mount the btrfs partition at `/srv/bulk` and move service data there.
+
+## NixOS Configuration
+
+The B450M-Pro4 host mounts the btrfs subvolume at `/srv/bulk`:
+
+```nix
+fileSystems."/srv/bulk" = {
+  device = "/dev/disk/by-label/bulk";
+  fsType = "btrfs";
+  options = [
+    "subvol=@bulk"
+    "compress=zstd:1"
+    "noatime"
+  ];
+};
+```
+
+Nextcloud uses:
+
+```text
+/srv/bulk/nextcloud/data
+```
+
+ArchiveBox uses:
+
+```text
+/srv/bulk/archivebox/data
+```

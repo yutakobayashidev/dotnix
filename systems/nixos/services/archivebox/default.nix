@@ -10,7 +10,7 @@ in
     image = "ghcr.io/archivebox/archivebox:main";
     ports = [ "127.0.0.1:${toString archiveboxPort}:8000" ];
     volumes = [
-      "/mnt/usb/services/archivebox/data:/data"
+      "/srv/bulk/archivebox/data:/data"
     ];
     environment = {
       ALLOWLIST_HOSTS = "localhost,127.0.0.1,archive.home.yutakobayashi.com";
@@ -19,4 +19,11 @@ in
       REVERSE_PROXY_WHITELIST = "127.0.0.1/32,100.86.129.23/32";
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /srv/bulk/archivebox 0755 root root -"
+    "d /srv/bulk/archivebox/data 0755 root root -"
+  ];
+
+  systemd.services.docker-archivebox.unitConfig.RequiresMountsFor = [ "/srv/bulk/archivebox/data" ];
 }
