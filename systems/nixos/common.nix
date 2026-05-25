@@ -67,6 +67,8 @@
 
   environment.systemPackages = with pkgs; [
     coreutils
+    dnsmasq
+    tcpdump
   ];
 
   programs.zsh.enable = true;
