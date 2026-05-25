@@ -1,5 +1,6 @@
 locals {
-  ipv4 = "10.42.0.42"
+  ipv4        = "10.42.0.44"
+  instance_id = "B450M-Pro4"
 }
 
 module "deploy" {
@@ -9,7 +10,7 @@ module "deploy" {
   nixos_partitioner_attr = "github:yutakobayashidev/dotnix#nixosConfigurations.B450M-Pro4.config.system.build.diskoScript"
 
   target_host = local.ipv4
-  instance_id = local.ipv4
+  instance_id = local.instance_id
 
   disk_encryption_key_scripts = [{
     path   = "/tmp/luks-password"
