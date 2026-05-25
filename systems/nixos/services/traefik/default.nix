@@ -57,10 +57,9 @@ in
           };
           error-pages = {
             entryPoints = [ "web" ];
-            rule = "HostRegexp(`{host:.+}`)";
+            rule = "HostRegexp(`.+`)";
             priority = 1;
             service = "error-pages-service";
-            middlewares = [ "error-pages" ];
           };
         };
 
@@ -72,7 +71,7 @@ in
                 "404"
                 "403"
               ];
-              query = "/{status}.html";
+              query = "/";
               service = "error-pages-service";
             };
           };
