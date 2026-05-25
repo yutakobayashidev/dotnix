@@ -2,11 +2,23 @@
 
 {
   imports = [
+    ../../../../applications/bat
     ../../../../applications/git
     ../../../../applications/tmux
   ];
 
-  home.packages = [
-    pkgs.sshpass
+  home.packages = with pkgs; [
+    curl
+    fzf
+    glow
+    gum
+    jq
+    lsd
+    ripgrep
+    sshpass
+    tree
+    wget
+    xh
+    zoxide
   ];
 }

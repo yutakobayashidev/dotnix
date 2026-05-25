@@ -39,24 +39,13 @@ in
       wabt
 
       # CLI Utilities
-      curl
       curl-impersonate
-      wget
       aria2
-      xh
-      ripgrep
-      fzf
-      jq
       jnv
       tokei
       cloc
       similarity-ts
-      lsd
       btop
-      zoxide
-      tree
-      glow
-      gum
       roots
       vhs
       yazi
