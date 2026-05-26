@@ -69,6 +69,8 @@
   environment.systemPackages = with pkgs; [
     coreutils
     dnsmasq
+    opensc
+    pcsc-tools
     tcpdump
   ];
 
@@ -82,7 +84,10 @@
   };
 
   services.openssh.enable = true;
-  services.pcscd.enable = true;
+  services.pcscd = {
+    enable = true;
+    plugins = [ pkgs.acsccid ];
+  };
   my.services.kubo.enable = true;
 
   security.sudo.extraConfig = ''
