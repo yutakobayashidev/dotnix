@@ -11,4 +11,6 @@
     ];
     home.homeDirectory = "/home/${username}";
   };
+
+  users.users.${username}.extraGroups = [ "cdrom" ];
 }
