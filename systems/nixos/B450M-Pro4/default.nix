@@ -10,6 +10,7 @@
   imports = [
     ../common.nix
     ../services/nextcloud
+    ../services/navidrome
     ../services/immich
     ../services/gitea
     ../services/home-assistant

@@ -7,6 +7,7 @@
     imports = [
       ../../../nix/modules/profiles/home/terminal.nix
       ../../../nix/modules/profiles/home/development.nix
+      ../../../applications/abcde
     ];
     home.homeDirectory = "/home/${username}";
   };
