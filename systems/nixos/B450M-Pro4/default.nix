@@ -67,7 +67,10 @@
     };
   };
 
-  sops.secrets.wifi = { };
+  sops.secrets.wifi = {
+    owner = "wpa_supplicant";
+    group = "wpa_supplicant";
+  };
 
   fileSystems."/srv/bulk" = {
     device = "/dev/disk/by-label/bulk";
