@@ -8,6 +8,7 @@
       ../../../nix/modules/profiles/home/terminal.nix
       ../../../nix/modules/profiles/home/development.nix
       ../../../applications/abcde
+      ../../../applications/beets
     ];
     home.homeDirectory = "/home/${username}";
   };
