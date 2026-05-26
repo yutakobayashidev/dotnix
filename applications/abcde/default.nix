@@ -1,6 +1,11 @@
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.abcde ];
+  home.packages = with pkgs; [
+    abcde
+    cdparanoia
+    flac
+    cdrtools
+  ];
 
   xdg.configFile."abcde.conf".text = ''
     OUTPUTDIR=/var/lib/nextcloud/data/yuta/files/music
@@ -10,7 +15,7 @@
     CDDBMETHOD=cddb
     CDDBPROTO=7
     FLACOPTS="--best -V"
-    CDROMREADERSYNTAX=cdda2wav
+    CDROMREADERSYNTAX=cdparanoia
     EJECTCD=y
     INTERACTIVE=n
     MAXPROCS=4
