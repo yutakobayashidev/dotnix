@@ -69,9 +69,13 @@
   environment.systemPackages = with pkgs; [
     coreutils
     dnsmasq
+    dvb-apps
     opensc
     pcsc-tools
+    pciutils
     tcpdump
+    usbutils
+    v4l-utils
   ];
 
   programs.zsh.enable = true;
