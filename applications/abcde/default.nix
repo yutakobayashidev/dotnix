@@ -7,7 +7,7 @@
     cdrtools
   ];
 
-  xdg.configFile."abcde.conf".text = ''
+  home.file.".abcde.conf".text = ''
     OUTPUTDIR=/var/lib/nextcloud/data/yuta/files/music
     OUTPUTFORMAT=''${ARTISTFILE}/''${ALBUMFILE}/''${TRACKFILE}
     OUTPUTTYPE=flac
