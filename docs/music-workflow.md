@@ -18,7 +18,6 @@ CD ripping to Navidrome streaming on B450M-Pro4.
 ## 1. CD Ripping
 
 ```bash
-exec sg cdrom zsh
 abcde -N
 ```
 
