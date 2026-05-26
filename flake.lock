@@ -1010,11 +1010,11 @@
     "modern-web-guidance": {
       "flake": false,
       "locked": {
-        "lastModified": 1779407315,
-        "narHash": "sha256-N5Zy3HLfDMRHDle1dF5jaUtZV2ljhRVQHVSoUtl5RQE=",
+        "lastModified": 1779451684,
+        "narHash": "sha256-ZyEzrjxMcuwNR703Ta/C+5+hqQXSTVdqP13Wh+6nypw=",
         "owner": "GoogleChrome",
         "repo": "modern-web-guidance",
-        "rev": "532a7ec07be99ece9609d429d044ec8a12d6cfad",
+        "rev": "65d7f20ac85517a362107ce89b7be7f905105fd3",
         "type": "github"
       },
       "original": {
