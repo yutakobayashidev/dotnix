@@ -12,7 +12,7 @@
     OUTPUTFORMAT=''${ARTISTFILE}/''${ALBUMFILE}/''${TRACKFILE}
     OUTPUTTYPE=flac
     ACTIONS=cddb,read,encode,tag,move,clean
-    CDDBMETHOD=cddb
+    CDDBMETHOD=cddb,musicbrainz,cdtext
     CDDBPROTO=7
     FLACOPTS="--best -V"
     CDROMREADERSYNTAX=cdparanoia
