@@ -1,49 +1,49 @@
 # Music CD Ripping & Management Workflow
 
-B450M-Pro4 での CD リッピングから Navidrome 配信までの一連の流れ。
+CD ripping to Navidrome streaming on B450M-Pro4.
 
-## システム構成
+## System Components
 
-| ツール                                  | 役割                 | 設定場所                            |
-| --------------------------------------- | -------------------- | ----------------------------------- |
-| [abcde](https://abcde.einval.com/)      | CD リッピング (FLAC) | `applications/abcde/`               |
-| [beets](https://beets.io/)              | タグ補完・整理       | `applications/beets/`               |
-| [Navidrome](https://www.navidrome.org/) | 音楽配信サーバー     | `systems/nixos/services/navidrome/` |
-| [Nextcloud](https://nextcloud.com/)     | ファイルストレージ   | `systems/nixos/services/nextcloud/` |
-| [Traefik](https://traefik.io/)          | リバースプロキシ     | `systems/nixos/services/traefik/`   |
+| Tool                                    | Role                          | Config                              |
+| --------------------------------------- | ----------------------------- | ----------------------------------- |
+| [abcde](https://abcde.einval.com/)      | CD ripping (FLAC)             | `applications/abcde/`               |
+| [beets](https://beets.io/)              | Tag enrichment & organization | `applications/beets/`               |
+| [Navidrome](https://www.navidrome.org/) | Music streaming server        | `systems/nixos/services/navidrome/` |
+| [Nextcloud](https://nextcloud.com/)     | File storage                  | `systems/nixos/services/nextcloud/` |
+| [Traefik](https://traefik.io/)          | Reverse proxy                 | `systems/nixos/services/traefik/`   |
 
 - **MusicFolder**: `/var/lib/nextcloud/data/yuta/files/music/`
 - **Navidrome URL**: `https://music.home.yutakobayashi.com`
 
-## 1. CD リッピング
+## 1. CD Ripping
 
 ```bash
 exec sg cdrom zsh
 abcde -N
 ```
 
-- `-N`: 非インタラクティブモード（CDDB の最初のマッチを自動採用）
-- CDDB が存在しない場合は手動入力が必要
-- 終了後自動イジェクト → 次の CD を入れて `abcde -N` 繰り返し
-- 出力先: `/var/lib/nextcloud/data/yuta/files/music/` (アーティスト/アルバム/トラック番号 曲名.flac)
+- `-N`: non-interactive mode (auto-accepts first CDDB/MusicBrainz match)
+- Manual input required if no online match is found
+- Auto-ejects on completion; insert next CD and run `abcde -N` again
+- Output: `/var/lib/nextcloud/data/yuta/files/music/` (`artist/album/track title.flac`)
 
-## 2. タグ補完・整理
+## 2. Tag Enrichment & Organization
 
 ```bash
 beet import -A /var/lib/nextcloud/data/yuta/files/music
 ```
 
-- `-A`: オートインポート（トラックマッチをインタラクティブに確認）
-- MusicBrainz から正確なメタデータを取得しタグ補完
-- アルバムアートの自動取得・埋め込み (`fetchart` + `embedart` プラグイン)
-- 設定は `~/.config/beets/config.yaml`
+- `-A`: auto-import with interactive track matching
+- Fetches accurate metadata from MusicBrainz and writes tags
+- Auto-fetches and embeds album art (`fetchart` + `embedart` plugins)
+- Config: `~/.config/beets/config.yaml`
 
-## 3. Nextcloud にインデックス
+## 3. Nextcloud Re-index
 
 ```bash
 sudo -u nextcloud php /run/nextcloud/occ files:scan --path="/yuta/files/music"
 ```
 
-## 4. Navidrome で再生
+## 4. Play on Navidrome
 
-インデックス後、Navidrome が自動スキャン → `https://music.home.yutakobayashi.com` で聴ける。
+After indexing, Navidrome auto-scans and music is available at `https://music.home.yutakobayashi.com`.
