@@ -19,7 +19,6 @@ in
 
   config = lib.mkIf cfg.enable {
     services.udev.packages = [ pkgs.yubikey-personalization ];
-    services.pcscd.enable = true;
 
     security.pam.u2f = {
       enable = true;

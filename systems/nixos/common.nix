@@ -82,6 +82,7 @@
   };
 
   services.openssh.enable = true;
+  services.pcscd.enable = true;
   my.services.kubo.enable = true;
 
   security.sudo.extraConfig = ''
