@@ -47,5 +47,4 @@
     owner = "grafana";
   };
 
-  networking.firewall.allowedTCPPorts = [ config.services.grafana.settings.server.http_port ];
 }

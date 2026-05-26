@@ -63,7 +63,4 @@ in
     };
   };
 
-  networking.firewall.allowedTCPPorts = [
-    config.services.loki.configuration.server.http_listen_port
-  ];
 }

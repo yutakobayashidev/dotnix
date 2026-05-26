@@ -4,11 +4,6 @@ let
   domain = "home.yutakobayashi.com";
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
-
   sops.secrets.cloudflare-api-token = {
     sopsFile = ./secrets.yaml;
     owner = "traefik";
