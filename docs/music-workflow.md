@@ -6,7 +6,7 @@ CD ripping to Navidrome streaming on B450M-Pro4.
 
 | Tool | Role | Config |
 |---|---|---|
-| [abcde](https://abcde.einval.com/) | CD ripping (FLAC) | `applications/abcde/` |
+| [whipper](https://github.com/whipper-team/whipper) | CD ripping (FLAC, AccurateRip) | `applications/whipper/` |
 | [beets](https://beets.io/) | Tag enrichment & organization | `applications/beets/` |
 | [Navidrome](https://www.navidrome.org/) | Music streaming server | `systems/nixos/services/navidrome/` |
 | [Traefik](https://traefik.io/) | Reverse proxy | `systems/nixos/services/traefik/` |
@@ -18,12 +18,12 @@ CD ripping to Navidrome streaming on B450M-Pro4.
 ## 1. CD Ripping
 
 ```bash
-abcde -N
+whipper cd rip
 ```
 
-- `-N`: non-interactive mode (auto-accepts first CDDB/MusicBrainz match)
-- Manual input required if no online match is found
-- Auto-ejects on completion; insert next CD and run `abcde -N` again
+- Matches CD against MusicBrainz, rips with AccurateRip verification
+- Auto-ejects on success
+- Cover art fetched and embedded (`cover_art = file,embed`)
 - Output: `/srv/bulk/music/_inbox/` (`artist/album/track title.flac`)
 
 ## 2. Tag Enrichment & Organization
@@ -34,7 +34,7 @@ beet import /srv/bulk/music/_inbox
 
 - Interactive track matching with MusicBrainz
 - Fetches accurate metadata, album art (`fetchart` + `embedart`)
-- Computes ReplayGain tags (`replaygain`)
+- Computes ReplayGain tags (`replaygain` with ffmpeg backend)
 - Moves files from `_inbox/` to organized library
 - Config: `~/.config/beets/config.yaml`
 
