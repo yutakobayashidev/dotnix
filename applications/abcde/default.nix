@@ -8,7 +8,7 @@
   ];
 
   home.file.".abcde.conf".text = ''
-    OUTPUTDIR=/var/lib/nextcloud/data/yuta/files/music
+    OUTPUTDIR=/var/lib/nextcloud/data/yuta/files/music/_inbox
     OUTPUTFORMAT=''${ARTISTFILE}/''${ALBUMFILE}/''${TRACKFILE}
     OUTPUTTYPE=flac
     ACTIONS=cddb,read,encode,tag,move,clean

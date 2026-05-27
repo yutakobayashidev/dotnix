@@ -7,7 +7,7 @@
     library: /home/yuta/.local/share/beets/library.db
     import:
       copy: no
-      move: no
+      move: yes
       write: yes
       resume: ask
       incremental: yes
@@ -20,6 +20,6 @@
       comp: Compilations/''${album}/''${track} ''${title}
     ui:
       color: yes
-    plugins: fetchart embedart scrub
+    plugins: fetchart embedart scrub replaygain
   '';
 }
