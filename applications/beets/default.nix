@@ -21,5 +21,8 @@
     ui:
       color: yes
     plugins: fetchart embedart scrub replaygain
+    replaygain:
+      backend: ffmpeg
+      auto: yes
   '';
 }
