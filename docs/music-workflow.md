@@ -15,7 +15,15 @@ CD ripping to Navidrome streaming on B450M-Pro4.
 - **Library**: `/srv/bulk/music/`
 - **Navidrome URL**: `https://music.home.yutakobayashi.com`
 
-## 1. CD Ripping
+## 1. First-Time Setup
+
+```bash
+whipper offset find
+```
+
+Detects and saves the drive's read offset for AccurateRip verification. Run once per drive.
+
+## 2. CD Ripping
 
 ```bash
 whipper cd rip
@@ -26,7 +34,7 @@ whipper cd rip
 - Cover art fetched and embedded (`cover_art = file,embed`)
 - Output: `/srv/bulk/music/_inbox/` (`artist/album/track title.flac`)
 
-## 2. Tag Enrichment & Organization
+## 3. Tag Enrichment & Organization
 
 ```bash
 beet import /srv/bulk/music/_inbox
@@ -44,6 +52,6 @@ For existing files without ReplayGain:
 beet replaygain
 ```
 
-## 3. Play on Navidrome
+## 4. Play on Navidrome
 
 Navidrome auto-scans and music is available at `https://music.home.yutakobayashi.com`.
