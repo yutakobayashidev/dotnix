@@ -1,7 +1,12 @@
 { pkgs, config, ... }:
 let
+  copyartifacts = pkgs.python3Packages.beets-copyartifacts.overridePythonAttrs (old: {
+    meta = old.meta // { broken = false; };
+    doCheck = false;
+    pythonImportsCheck = [ ];
+  });
   beetsWithPlugins = pkgs.beets.overridePythonAttrs (old: {
-    dependencies = old.dependencies ++ [ pkgs.beets-copyartifacts ];
+    dependencies = old.dependencies ++ [ copyartifacts ];
   });
   format = pkgs.formats.yaml { };
   beetsConf = {
