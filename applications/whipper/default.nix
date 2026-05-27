@@ -7,6 +7,7 @@
     output_directory = /srv/bulk/music/_inbox
     unknown = True
     cdr = True
+    cover_art = complete
 
     [musicbrainz]
     https = True
