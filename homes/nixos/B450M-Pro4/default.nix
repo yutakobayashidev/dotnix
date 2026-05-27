@@ -13,8 +13,5 @@
     home.homeDirectory = "/home/${username}";
   };
 
-  users.users.${username}.extraGroups = [
-    "cdrom"
-    "nextcloud"
-  ];
+  users.users.${username}.extraGroups = [ "cdrom" ];
 }

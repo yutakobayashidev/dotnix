@@ -3,10 +3,8 @@
   services.navidrome = {
     enable = true;
     settings = {
-      MusicFolder = "/var/lib/nextcloud/data/yuta/files/music";
+      MusicFolder = "/srv/bulk/music";
       EnableSharing = true;
     };
   };
-
-  users.users.navidrome.extraGroups = [ "nextcloud" ];
 }

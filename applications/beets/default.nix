@@ -3,7 +3,7 @@
   home.packages = with pkgs; [ beets ];
 
   xdg.configFile."beets/config.yaml".text = ''
-    directory: /var/lib/nextcloud/data/yuta/files/music
+    directory: /srv/bulk/music
     library: /home/yuta/.local/share/beets/library.db
     import:
       copy: no
