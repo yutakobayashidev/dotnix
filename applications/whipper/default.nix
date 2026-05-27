@@ -6,7 +6,6 @@ let
       output_directory = "/srv/bulk/music/_inbox";
       unknown = true;
       cdr = true;
-      cover_art = "complete";
     };
     musicbrainz.https = true;
   };
