@@ -1,13 +1,5 @@
 { pkgs, config, ... }:
 let
-  copyartifacts = pkgs.python3Packages.beets-copyartifacts.overridePythonAttrs (old: {
-    meta = old.meta // { broken = false; };
-    doCheck = false;
-    pythonImportsCheck = [ ];
-  });
-  beetsWithPlugins = pkgs.beets.overridePythonAttrs (old: {
-    dependencies = old.dependencies ++ [ copyartifacts ];
-  });
   format = pkgs.formats.yaml { };
   beetsConf = {
     directory = "/srv/bulk/music";
@@ -28,18 +20,15 @@ let
       comp = "Compilations/\${album}/\${track} \${title}";
     };
     ui.color = true;
-    plugins = "fetchart embedart scrub replaygain copyartifacts";
+    plugins = "fetchart embedart scrub replaygain";
     replaygain = {
       backend = "ffmpeg";
       auto = true;
     };
-    copyartifacts = {
-      extensions = ".cue .log .m3u .jpg .png";
-    };
   };
 in
 {
-  home.packages = [ beetsWithPlugins ];
+  home.packages = with pkgs; [ beets ];
 
   xdg.configFile."beets/config.yaml".source =
     format.generate "beets-config.yaml" beetsConf;
