@@ -20,7 +20,7 @@ let
       comp = "Compilations/\${album}/\${track} \${title}";
     };
     ui.color = true;
-    plugins = "fetchart embedart scrub replaygain";
+    plugins = "musicbrainz fetchart embedart scrub replaygain";
     replaygain = {
       backend = "ffmpeg";
       auto = true;
