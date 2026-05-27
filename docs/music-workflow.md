@@ -43,7 +43,7 @@ beet import /srv/bulk/music/_inbox
 - Interactive track matching with MusicBrainz
 - Fetches accurate metadata, album art (`fetchart` + `embedart`)
 - Computes ReplayGain tags (`replaygain` with ffmpeg backend)
-- Moves files from `_inbox/` to organized library
+- Moves FLAC files from `_inbox/` to organized library (`.cue` `.log` `.m3u` remain in inbox)
 - Config: `~/.config/beets/config.yaml`
 
 For existing files without ReplayGain:
