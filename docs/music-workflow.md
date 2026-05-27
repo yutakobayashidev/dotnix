@@ -26,7 +26,7 @@ Detects and saves the drive's read offset for AccurateRip verification. Run once
 ## 2. CD Ripping
 
 ```bash
-whipper cd rip
+rip
 ```
 
 - Matches CD against MusicBrainz, rips with AccurateRip verification

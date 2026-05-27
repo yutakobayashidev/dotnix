@@ -1,18 +1,14 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 let
-  whipperConf = {
-    "whipper.cd.rip" = {
-      output_directory = "/srv/bulk/music/_inbox";
-      unknown = true;
-      cdr = true;
-      cover_art = "complete";
-    };
-    musicbrainz.https = true;
-  };
+  rip = pkgs.writeShellScriptBin "rip" ''
+    exec ${pkgs.whipper}/bin/whipper cd rip \
+      -O /srv/bulk/music/_inbox \
+      -U \
+      --cdr \
+      -C complete \
+      "$@"
+  '';
 in
 {
-  home.packages = [ pkgs.whipper ];
-
-  xdg.configFile."whipper/whipper.conf".text =
-    lib.generators.toINI { } whipperConf;
+  home.packages = [ pkgs.whipper rip ];
 }
