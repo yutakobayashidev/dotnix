@@ -27,6 +27,8 @@
     ../services/traefik
     ../services/atuin
     ../services/coredns
+    ../services/twitter-bookmark-snap
+    ../services/s3s
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
     ./disko.nix
