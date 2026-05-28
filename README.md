@@ -64,13 +64,17 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 ### System Installation Guides
 
 - [docs/systems/B450M-Pro4.md](docs/systems/B450M-Pro4.md) - NixOS installation guide
-- [docs/systems/B450M-Pro4-HDD-service-storage.md](docs/systems/B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
 - [docs/systems/UM790Pro.md](docs/systems/UM790Pro.md) - NixOS installation guide
 - [docs/systems/X870-Stell-Legend-WiFi.md](docs/systems/X870-Stell-Legend-WiFi.md) - NixOS-WSL installation guide
 - [docs/systems/Pi5.md](docs/systems/Pi5.md) - NixOS installation guide for Raspberry Pi 5
 - [docs/systems/M2-MacBook-Air.md](docs/systems/M2-MacBook-Air.md) - nix-darwin installation guide for macOS
 - [docs/systems/Galaxy-S23FE.md](docs/systems/Galaxy-S23FE.md) - nix-on-droid installation guide for Android
-- [docs/systems/Ventoy-NixOS-Minimal.md](docs/systems/Ventoy-NixOS-Minimal.md) - Ventoy USB for NixOS installation
+
+### Operations
+
+- [docs/B450M-Pro4-HDD-service-storage.md](docs/B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
+- [docs/B450M-Pro4-s3s.md](docs/B450M-Pro4-s3s.md) - s3s (Splatoon 3 stats uploader) workflow
+- [docs/Ventoy-NixOS-Minimal.md](docs/Ventoy-NixOS-Minimal.md) - Ventoy USB for NixOS installation
 
 ### Other
 
