@@ -13,10 +13,12 @@
     ];
     my.programs.gallery-dl = {
       enable = true;
+      archivePath = "/srv/bulk/gallery-dl";
+      extraArgs = [ "--mtime" ];
       settings = {
         extractor = {
-          base-directory = "~/Pictures/gallery-dl";
-          archive = "~/Pictures/gallery-dl/archive.sqlite3";
+          base-directory = "/srv/bulk/gallery-dl";
+          archive = "/srv/bulk/gallery-dl/archive.sqlite3";
           pixiv = {
             filename = "{id}_p{num}.{extension}";
             directory = [
