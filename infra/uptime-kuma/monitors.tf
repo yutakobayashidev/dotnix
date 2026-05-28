@@ -175,6 +175,24 @@ resource "uptimekuma_monitor_http" "prometheus" {
   ]
 }
 
+resource "uptimekuma_monitor_http" "tw" {
+  name           = "Twitter API Safe Proxy"
+  url            = "https://tw.home.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
 resource "uptimekuma_monitor_http" "cloudflare_error_page" {
   name                  = "Cloudflare Error Page"
   url                   = "http://localhost:5000"
