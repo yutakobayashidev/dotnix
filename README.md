@@ -6,6 +6,7 @@
 
 | Machine                | Name                   | OS                     | System         | Stable |
 | ---------------------- | ---------------------- | ---------------------- | -------------- | ------ |
+| B450M Pro4             | B450M-Pro4             | NixOS                  | x86_64-linux   | ◎      |
 | UM790 Pro              | UM790-Pro              | NixOS                  | x86_64-linux   | ◎      |
 | X870 Stell Legend WiFi | X870-Stell-Legend-WiFi | NixOS (WSL)            | x86_64-linux   | ◎      |
 | Pi 5                   | pi5                    | NixOS                  | aarch64-linux  | △      |
@@ -25,6 +26,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── fonts.nix            # Shared NixOS font settings
 │   │   ├── input-method.nix     # Shared NixOS input method settings
 │   │   ├── services/            # Host/system service bundles (microVMs, secrets, etc.)
+│   │   ├── B450M-Pro4/           # NixOS host config (services, disko, impermanence)
 │   │   ├── UM790-Pro/           # NixOS host config (boot, network, locale)
 │   │   ├── X870-Stell-Legend-WiFi/   # NixOS-WSL host config (WSL, locale)
 │   │   └── pi5/                 # NixOS host config (headless Pi 5)
@@ -59,11 +61,20 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 
 ## Documentation
 
-- [docs/UM790Pro.md](docs/UM790Pro.md) - NixOS installation guide
-- [docs/X870-Stell-Legend-WiFi.md](docs/X870-Stell-Legend-WiFi.md) - NixOS-WSL installation guide
-- [docs/Pi5.md](docs/Pi5.md) - NixOS installation guide for Raspberry Pi 5
-- [docs/M2-MacBook-Air.md](docs/M2-MacBook-Air.md) - nix-darwin installation guide for macOS
-- [docs/Galaxy-S23FE.md](docs/Galaxy-S23FE.md) - nix-on-droid installation guide for Android
+### System Installation Guides
+
+- [docs/systems/B450M-Pro4.md](docs/systems/B450M-Pro4.md) - NixOS installation guide
+- [docs/systems/B450M-Pro4-HDD-service-storage.md](docs/systems/B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
+- [docs/systems/UM790Pro.md](docs/systems/UM790Pro.md) - NixOS installation guide
+- [docs/systems/X870-Stell-Legend-WiFi.md](docs/systems/X870-Stell-Legend-WiFi.md) - NixOS-WSL installation guide
+- [docs/systems/Pi5.md](docs/systems/Pi5.md) - NixOS installation guide for Raspberry Pi 5
+- [docs/systems/M2-MacBook-Air.md](docs/systems/M2-MacBook-Air.md) - nix-darwin installation guide for macOS
+- [docs/systems/Galaxy-S23FE.md](docs/systems/Galaxy-S23FE.md) - nix-on-droid installation guide for Android
+- [docs/systems/Ventoy-NixOS-Minimal.md](docs/systems/Ventoy-NixOS-Minimal.md) - Ventoy USB for NixOS installation
+
+### Other
+
+- [docs/music-workflow.md](docs/music-workflow.md) - CD ripping and music library management
 
 ## Daily Usage
 

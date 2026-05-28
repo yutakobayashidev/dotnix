@@ -10,6 +10,7 @@
       ../../../applications/whipper
       ../../../applications/beets
     ];
+    home.packages = [ pkgs.stable.gallery-dl ];
     home.homeDirectory = "/home/${username}";
   };
 
