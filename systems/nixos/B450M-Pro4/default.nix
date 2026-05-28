@@ -29,6 +29,7 @@
     ../services/coredns
     ../services/twitter-bookmark-snap
     ../services/s3s
+    ../services/uptime-kuma
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
     ./disko.nix
