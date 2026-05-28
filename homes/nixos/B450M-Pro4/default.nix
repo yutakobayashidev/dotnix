@@ -14,7 +14,7 @@
     my.programs.gallery-dl = {
       enable = true;
       archivePath = "/srv/bulk/gallery-dl";
-      extraArgs = [ "--mtime" ];
+      extraArgs = [ ];
       settings = {
         extractor = {
           base-directory = "/srv/bulk/gallery-dl";
