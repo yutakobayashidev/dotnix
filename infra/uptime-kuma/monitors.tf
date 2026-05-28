@@ -176,15 +176,16 @@ resource "uptimekuma_monitor_http" "prometheus" {
 }
 
 resource "uptimekuma_monitor_http" "tw" {
-  name           = "Twitter API Safe Proxy"
-  url            = "https://tw.home.yutakobayashi.com"
-  interval       = 60
-  timeout        = 30
-  max_retries    = 2
-  retry_interval = 60
-  active         = true
-  method         = "GET"
-  max_redirects  = 10
+  name                  = "Twitter API Safe Proxy"
+  url                   = "https://tw.home.yutakobayashi.com"
+  accepted_status_codes = ["200-299", "404"]
+  interval              = 60
+  timeout               = 30
+  max_retries           = 2
+  retry_interval        = 60
+  active                = true
+  method                = "GET"
+  max_redirects         = 10
   parent         = uptimekuma_monitor_group.internal.id
   tags = [
     {
