@@ -50,6 +50,7 @@ in
       apkeep
       ipatool
       stable.yt-dlp
+      stable.gallery-dl
       halloy
       immich-go
       luanti
