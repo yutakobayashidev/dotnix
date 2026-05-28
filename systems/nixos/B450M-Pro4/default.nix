@@ -93,6 +93,16 @@
     ];
   };
 
+  fileSystems."/var/lib/immich/net-pics" = {
+    device = "/dev/disk/by-label/bulk";
+    fsType = "btrfs";
+    options = [
+      "subvol=@bulk/immich-net-pics"
+      "compress=zstd:1"
+      "noatime"
+    ];
+  };
+
   fileSystems."/var/lib/nextcloud" = {
     device = "/dev/disk/by-label/bulk";
     fsType = "btrfs";
