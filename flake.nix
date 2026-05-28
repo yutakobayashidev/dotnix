@@ -158,11 +158,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-filter.url = "github:numtide/nix-filter";
-    # TODO: Pinned to specific nixpkgs commit as workaround for nix-community/nix-on-droid#495
-    # Issue: "getting pseudoterminal attributes: Permission denied" with nixpkgs after 2026-01-24
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
-      inputs.nixpkgs.url = "github:NixOS/nixpkgs/2bceeb45e516fc6956714014c92ddfdafe4c9da3";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
     nix-index-database = {
