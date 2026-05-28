@@ -93,7 +93,7 @@
     ];
   };
 
-  fileSystems."/var/lib/immich/net-pics" = {
+  fileSystems."/var/lib/immich-net-pics" = {
     device = "/dev/disk/by-label/bulk";
     fsType = "btrfs";
     options = [
@@ -104,7 +104,7 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /var/lib/immich/net-pics 0755 yuta users - -"
+    "d /var/lib/immich-net-pics 0755 yuta users - -"
   ];
 
   fileSystems."/var/lib/nextcloud" = {
