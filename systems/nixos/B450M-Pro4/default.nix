@@ -103,6 +103,10 @@
     ];
   };
 
+  systemd.tmpfiles.rules = [
+    "d /var/lib/immich/net-pics 0755 yuta users - -"
+  ];
+
   fileSystems."/var/lib/nextcloud" = {
     device = "/dev/disk/by-label/bulk";
     fsType = "btrfs";
