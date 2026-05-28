@@ -20,3 +20,6 @@ override.tf
 override.tf.json
 terraform.rc
 abcde.*/
+
+# Terraform tfvars (local secrets)
+infra/uptime-kuma/*.tfvars

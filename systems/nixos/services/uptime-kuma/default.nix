@@ -3,5 +3,8 @@
 }:
 
 {
-  services.uptime-kuma.enable = true;
+  services.uptime-kuma = {
+    enable = true;
+    settings.PORT = "3002";
+  };
 }

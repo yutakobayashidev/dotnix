@@ -98,15 +98,6 @@ in
             service = "home-assistant";
             tls.certResolver = "letsencrypt";
           };
-          atuin = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`atuin.${domain}`)";
-            service = "atuin";
-            tls.certResolver = "letsencrypt";
-          };
           archivebox = {
             entryPoints = [
               "web"
@@ -123,6 +114,15 @@ in
             ];
             rule = "Host(`n8n.${domain}`)";
             service = "n8n";
+            tls.certResolver = "letsencrypt";
+          };
+          prometheus = {
+            entryPoints = [
+              "web"
+              "websecure"
+            ];
+            rule = "Host(`prometheus.${domain}`)";
+            service = "prometheus";
             tls.certResolver = "letsencrypt";
           };
           tv = {
@@ -170,6 +170,15 @@ in
             service = "tw";
             tls.certResolver = "letsencrypt";
           };
+          uptime-kuma = {
+            entryPoints = [
+              "web"
+              "websecure"
+            ];
+            rule = "Host(`status.${domain}`)";
+            service = "uptime-kuma";
+            tls.certResolver = "letsencrypt";
+          };
           error-pages = {
             entryPoints = [
               "web"
@@ -205,19 +214,18 @@ in
           home-assistant.loadBalancer.servers = [
             { url = "http://localhost:${toString config.services.home-assistant.config.http.server_port}"; }
           ];
-          atuin.loadBalancer.servers = [
-            { url = "http://localhost:${toString config.services.atuin.port}"; }
-          ];
           archivebox.loadBalancer.servers = [ { url = "http://127.0.0.1:8000"; } ];
           n8n.loadBalancer.servers = [
             { url = "http://127.0.0.1:${toString config.services.n8n.environment.N8N_PORT}"; }
           ];
+          prometheus.loadBalancer.servers = [ { url = "http://127.0.0.1:9090"; } ];
           konomitv.loadBalancer.servers = [ { url = "https://localhost:7000"; } ];
           konomitv.loadBalancer.serversTransport = "insecure";
           mirakurun.loadBalancer.servers = [ { url = "http://localhost:40772"; } ];
           edcb.loadBalancer.servers = [ { url = "http://localhost:5510"; } ];
           navidrome.loadBalancer.servers = [ { url = "http://localhost:4533"; } ];
           tw.loadBalancer.servers = [ { url = "http://localhost:3090"; } ];
+          uptime-kuma.loadBalancer.servers = [ { url = "http://localhost:3002"; } ];
           error-pages-service = {
             loadBalancer = {
               servers = [ { url = "http://127.0.0.1:5000"; } ];
