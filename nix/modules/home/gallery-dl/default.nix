@@ -11,8 +11,6 @@ let
 
   jsonFormat = pkgs.formats.json { };
 
-  galleryDlConfigDir = "${config.xdg.configHome}/gallery-dl";
-
   fullSettings = lib.recursiveUpdate cfg.settings {
     extractor.pixiv.refresh-token = config.sops.placeholder."${cfg.sopsSecretName}";
     extractor.pixiv.user-id = config.sops.placeholder."${cfg.sopsPixivUserId}";
@@ -155,14 +153,6 @@ in
       content = builtins.toJSON fullSettings;
     };
 
-    home.activation.initGalleryDlConfig = lib.hm.dag.entryAfter [ "sops-nix" ] ''
-      mkdir -p "${galleryDlConfigDir}"
-      ${pkgs.coreutils}/bin/cp ${
-        config.sops.templates."gallery-dl-config.json".path
-      } "${galleryDlConfigDir}/config.json"
-      ${pkgs.coreutils}/bin/chmod 600 "${galleryDlConfigDir}/config.json"
-    '';
-
     systemd.user.services = lib.mapAttrs' (
       name: value:
       lib.nameValuePair (jobUnitName name) {
@@ -175,13 +165,15 @@ in
           ExecStart =
             let
               jobSettingsFile = jsonFormat.generate "gallery-dl-job-${name}-settings" value.settings;
+              configFile = config.sops.templates."gallery-dl-config.json".path;
               runScript = pkgs.writeShellScript "gallery-dl-run-${name}" ''
-                PIXIV_ID=$(${lib.getExe pkgs.jq} -r '.extractor.pixiv."user-id"' ${lib.escapeShellArg galleryDlConfigDir}/config.json 2>/dev/null || echo "")
+                PIXIV_ID=$(${lib.getExe pkgs.jq} -r '.extractor.pixiv."user-id"' ${lib.escapeShellArg configFile} 2>/dev/null || echo "")
                 URLS=()
                 for url in ${lib.escapeShellArgs value.urls}; do
                   URLS+=("''${url//\{PIXIV_USER_ID\}/$PIXIV_ID}")
                 done
                 exec ${lib.getExe cfg.package} \
+                  --config ${lib.escapeShellArg configFile} \
                   ${lib.escapeShellArgs cfg.extraArgs} \
                   ${lib.escapeShellArgs value.extraArgs} \
                   ${lib.optionalString (value.settings != { }) "--config ${jobSettingsFile}"} \
