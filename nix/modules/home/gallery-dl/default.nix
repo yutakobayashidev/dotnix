@@ -155,13 +155,10 @@ in
       content = builtins.toJSON fullSettings;
     };
 
-    home.activation.initGalleryDlConfig = lib.hm.dag.entryAfter [ "sops-nix" ] ''
-      mkdir -p "${galleryDlConfigDir}"
-      ${pkgs.coreutils}/bin/cp ${
-        config.sops.templates."gallery-dl-config.json".path
-      } "${galleryDlConfigDir}/config.json"
-      ${pkgs.coreutils}/bin/chmod 600 "${galleryDlConfigDir}/config.json"
-    '';
+    xdg.configFile."gallery-dl/config.json" = {
+      source = config.sops.templates."gallery-dl-config.json".path;
+      mutable = false;
+    };
 
     systemd.user.services = lib.mapAttrs' (
       name: value:
