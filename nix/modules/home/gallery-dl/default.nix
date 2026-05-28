@@ -155,10 +155,8 @@ in
       content = builtins.toJSON fullSettings;
     };
 
-    xdg.configFile."gallery-dl/config.json" = {
-      source = config.sops.templates."gallery-dl-config.json".path;
-      mutable = false;
-    };
+    xdg.configFile."gallery-dl/config.json".source =
+      config.sops.templates."gallery-dl-config.json".path;
 
     systemd.user.services = lib.mapAttrs' (
       name: value:
