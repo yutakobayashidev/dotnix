@@ -36,3 +36,7 @@ creation_rules:
           - *um790
           - *b450m
           - *m2-macbook-air
+  - path_regex: nix/modules/home/gallery-dl/secrets\.yaml$
+    key_groups:
+      - age:
+          - *b450m
