@@ -19,6 +19,7 @@ let
   s3s = pkgs.stdenv.mkDerivation {
     pname = "s3s";
     version = "0.7.0-unstable-2025-08-19";
+    meta.mainProgram = "s3s";
 
     src = pkgs.fetchFromGitHub {
       owner = "frozenpandaman";
