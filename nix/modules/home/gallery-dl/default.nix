@@ -16,6 +16,7 @@ let
   fullSettings = lib.recursiveUpdate cfg.settings {
     extractor.pixiv.refresh-token = config.sops.placeholder."${cfg.sopsSecretName}";
     extractor.pixiv.user-id = config.sops.placeholder."${cfg.sopsPixivUserId}";
+    extractor.fanbox.cookies.FANBOXSESSID = config.sops.placeholder."${cfg.sopsFanboxSessid}";
   };
 
   jobType =
@@ -113,6 +114,12 @@ in
       description = "Name of the sops secret containing the Pixiv user ID.";
     };
 
+    sopsFanboxSessid = lib.mkOption {
+      type = lib.types.str;
+      default = "gallery-dl-fanbox-sessid";
+      description = "Name of the sops secret containing the FANBOXSESSID cookie.";
+    };
+
     sopsFile = lib.mkOption {
       type = lib.types.path;
       default = ./secrets.yaml;
@@ -137,6 +144,10 @@ in
     };
 
     sops.secrets.${cfg.sopsPixivUserId} = {
+      sopsFile = cfg.sopsFile;
+    };
+
+    sops.secrets.${cfg.sopsFanboxSessid} = {
       sopsFile = cfg.sopsFile;
     };
 

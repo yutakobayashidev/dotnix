@@ -33,6 +33,10 @@
         urls = [ "https://www.pixiv.net/users/{PIXIV_USER_ID}/bookmarks/artworks" ];
         startAt = "daily";
       };
+      jobs.fanbox-supporting = {
+        urls = [ "https://fanbox.cc/home/supporting" ];
+        startAt = "daily";
+      };
     };
     home.homeDirectory = "/home/${username}";
   };
