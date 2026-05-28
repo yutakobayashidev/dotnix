@@ -146,7 +146,7 @@ in
           RestartSec = "30min";
           RuntimeMaxSec = "86400";
           ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/.config/s3s";
-          ExecStart = "${lib.getExe s3s} -M 3600 -r";
+          ExecStart = "${lib.getExe s3s} -M 300 -r";
           WorkingDirectory = "%h/.config/s3s";
         };
         Install = {
