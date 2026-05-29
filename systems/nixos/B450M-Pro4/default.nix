@@ -26,6 +26,7 @@
     ../services/cloudflare-error-page
     ../services/traefik
     ../services/atuin
+    ../services/couchdb
     ../services/coredns
     ../services/twitter-bookmark-snap
     ../services/s3s

@@ -111,6 +111,15 @@ in
             service = "archivebox";
             tls.certResolver = "letsencrypt";
           };
+          couchdb = {
+            entryPoints = [
+              "web"
+              "websecure"
+            ];
+            rule = "Host(`sync.${domain}`)";
+            service = "couchdb";
+            tls.certResolver = "letsencrypt";
+          };
           n8n = {
             entryPoints = [
               "web"
@@ -219,6 +228,7 @@ in
             { url = "http://localhost:${toString config.services.home-assistant.config.http.server_port}"; }
           ];
           archivebox.loadBalancer.servers = [ { url = "http://127.0.0.1:8000"; } ];
+          couchdb.loadBalancer.servers = [ { url = "http://127.0.0.1:5984"; } ];
           n8n.loadBalancer.servers = [
             { url = "http://127.0.0.1:${toString config.services.n8n.environment.N8N_PORT}"; }
           ];
