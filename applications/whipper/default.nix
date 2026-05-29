@@ -1,4 +1,9 @@
-{ pkgs, config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 let
   whipperConfigDir = "${config.xdg.configHome}/whipper";
   whipperConfAttrs = {
@@ -9,8 +14,7 @@ let
     };
     musicbrainz.https = true;
   };
-  whipperConf = pkgs.writeText "whipper.conf"
-    (lib.generators.toINI { } whipperConfAttrs);
+  whipperConf = pkgs.writeText "whipper.conf" (lib.generators.toINI { } whipperConfAttrs);
 in
 {
   home.packages = [ pkgs.whipper ];
