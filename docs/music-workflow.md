@@ -4,12 +4,12 @@ CD ripping to Navidrome streaming on B450M-Pro4.
 
 ## System Components
 
-| Tool | Role | Config |
-|---|---|---|
-| [whipper](https://github.com/whipper-team/whipper) | CD ripping (FLAC, AccurateRip) | `applications/whipper/` |
-| [beets](https://beets.io/) | Tag enrichment & organization | `applications/beets/` |
-| [Navidrome](https://www.navidrome.org/) | Music streaming server | `systems/nixos/services/navidrome/` |
-| [Traefik](https://traefik.io/) | Reverse proxy | `systems/nixos/services/traefik/` |
+| Tool                                               | Role                           | Config                              |
+| -------------------------------------------------- | ------------------------------ | ----------------------------------- |
+| [whipper](https://github.com/whipper-team/whipper) | CD ripping (FLAC, AccurateRip) | `applications/whipper/`             |
+| [beets](https://beets.io/)                         | Tag enrichment & organization  | `applications/beets/`               |
+| [Navidrome](https://www.navidrome.org/)            | Music streaming server         | `systems/nixos/services/navidrome/` |
+| [Traefik](https://traefik.io/)                     | Reverse proxy                  | `systems/nixos/services/traefik/`   |
 
 - **Inbox**: `/srv/bulk/music/_inbox/`
 - **Library**: `/srv/bulk/music/`

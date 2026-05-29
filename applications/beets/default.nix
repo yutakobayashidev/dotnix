@@ -30,6 +30,5 @@ in
 {
   home.packages = with pkgs; [ beets ];
 
-  xdg.configFile."beets/config.yaml".source =
-    format.generate "beets-config.yaml" beetsConf;
+  xdg.configFile."beets/config.yaml".source = format.generate "beets-config.yaml" beetsConf;
 }
