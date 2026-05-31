@@ -209,61 +209,7 @@
   };
 
   outputs =
-    inputs@{
-      flake-parts,
-      treefmt-nix,
-      nixpkgs,
-      nixpkgs-stable,
-      llm-agents,
-      nix-steipete-tools,
-      ghostty,
-      gh-nippou,
-      gh-graph,
-      brew-nix,
-      ...
-    }:
-    let
-      mkPkgs =
-        system:
-        let
-          isDarwin = builtins.match ".*-darwin" system != null;
-        in
-        import nixpkgs {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            android_sdk.accept_license = true;
-          };
-          overlays = [
-            (_final: _prev: {
-              stable = import nixpkgs-stable {
-                inherit system;
-                config = {
-                  allowUnfree = true;
-                };
-              };
-            })
-            llm-agents.overlays.default
-            (_final: _prev: {
-              _nix-steipete-tools = nix-steipete-tools;
-              _ghostty = ghostty;
-              _repiq = inputs.repiq;
-              _moonbit-overlay = inputs.moonbit-overlay;
-              _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
-            })
-            gh-nippou.overlays.default
-            gh-graph.overlays.default
-            inputs.rustowl-flake.overlays.default
-            inputs.actrun-overlay.overlays.default
-            inputs.firefox-addons.overlays.default
-            inputs.nur-packages.overlays.default
-            (import ./nix/overlays/default.nix)
-          ]
-          ++ nixpkgs.lib.optionals isDarwin [
-            brew-nix.overlays.default
-          ];
-        };
-    in
+    { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [
         "x86_64-linux"
@@ -273,13 +219,13 @@
 
       imports = [
         ./flake-module.nix
-        treefmt-nix.flakeModule
-        inputs.git-hooks.flakeModule
+        ./modules/flake/_registries.nix
+        ./modules/flake/per-system/pkgs.nix
+        ./modules/flake/per-system/packages.nix
+        ./modules/flake/per-system/treefmt.nix
+        ./modules/flake/per-system/pre-commit.nix
+        ./modules/flake/per-system/dev-shell.nix
       ];
-
-      _module.args = {
-        inherit mkPkgs;
-      };
 
       hosts = {
         B450M-Pro4 = {
@@ -302,195 +248,5 @@
           platform = "android";
         };
       };
-
-      perSystem =
-        {
-          pkgs,
-          config,
-          ...
-        }:
-        let
-          system = pkgs.stdenv.hostPlatform.system;
-          isDarwin = builtins.match ".*-darwin" system != null;
-          localPkgs = mkPkgs system;
-          nom = "${localPkgs.nix-output-monitor}/bin/nom";
-
-          isAgentCheck = ''
-            IS_AI_AGENT=false
-            for var in CLAUDE_CODE CLAUDECODE CODEX_SANDBOX CODEX_THREAD_ID GEMINI_CLI OPENCODE AUGMENT_AGENT GOOSE_PROVIDER CURSOR_AGENT AI_AGENT; do
-              eval "val=\''${!var:-}"
-              if [ -n "$val" ]; then
-                IS_AI_AGENT=true
-                break
-              fi
-            done
-          '';
-        in
-        {
-          packages = {
-            inherit (localPkgs)
-              bumblebee
-              difit
-              git-now
-              jj-desc
-              keifu
-              polycat
-              pretty-ts-errors-markdown
-              readout
-              roots
-              similarity-ts
-              tunnelto
-              waza
-              ;
-          };
-
-          apps = {
-            build = {
-              type = "app";
-              program = toString (
-                localPkgs.writeShellScript "build" ''
-                  set -e
-                  ${isAgentCheck}
-
-                  HOSTNAME="$(hostname)"
-
-                  ${
-                    if isDarwin then
-                      ''
-                        echo "Building darwin configuration for $HOSTNAME..."
-                        if [ "$IS_AI_AGENT" = true ]; then
-                          nix build ".#darwinConfigurations.$HOSTNAME.system"
-                        else
-                          ${nom} build ".#darwinConfigurations.$HOSTNAME.system"
-                        fi
-                      ''
-                    else
-                      ''
-                        echo "Building NixOS configuration for $HOSTNAME..."
-                        if [ "$IS_AI_AGENT" = true ]; then
-                          nix build ".#nixosConfigurations.$HOSTNAME.config.system.build.toplevel"
-                        else
-                          ${nom} build ".#nixosConfigurations.$HOSTNAME.config.system.build.toplevel"
-                        fi
-                      ''
-                  }
-
-                  echo "Build successful! Run 'nix run .#switch' to apply."
-                ''
-              );
-            };
-
-            switch = {
-              type = "app";
-              program = toString (
-                localPkgs.writeShellScript "switch" ''
-                  set -eo pipefail
-                  ${isAgentCheck}
-
-                  HOSTNAME="$(hostname)"
-
-                  ${
-                    if isDarwin then
-                      ''
-                        echo "Switching to darwin configuration for $HOSTNAME..."
-                        if [ "$IS_AI_AGENT" = true ]; then
-                          sudo darwin-rebuild switch --flake ".#$HOSTNAME"
-                        else
-                          sudo darwin-rebuild switch --flake ".#$HOSTNAME" |& ${nom}
-                        fi
-                      ''
-                    else
-                      ''
-                        echo "Switching to NixOS configuration for $HOSTNAME..."
-                        if [ "$IS_AI_AGENT" = true ]; then
-                          sudo nixos-rebuild switch --flake ".#$HOSTNAME"
-                        else
-                          sudo nixos-rebuild switch --flake ".#$HOSTNAME" |& ${nom}
-                        fi
-                      ''
-                  }
-
-                  echo "Done!"
-                ''
-              );
-            };
-
-            fmt = {
-              type = "app";
-              program = toString (
-                localPkgs.writeShellScript "treefmt-wrapper" ''
-                  exec ${config.treefmt.build.wrapper}/bin/treefmt "$@"
-                ''
-              );
-            };
-          };
-
-          treefmt = {
-            projectRootFile = "flake.nix";
-            programs = {
-              nixfmt.enable = true;
-              stylua.enable = true;
-              shfmt.enable = true;
-              taplo.enable = true;
-              ruff-format.enable = true;
-              oxfmt = {
-                enable = true;
-                excludes = [
-                  "nvim/template/**"
-                  "nvim/lazy-lock.json"
-                ];
-              };
-            };
-
-            settings = {
-              global.excludes = [
-                ".git/**"
-                "*.lock"
-              ];
-
-              formatter.gitleaks = {
-                command = "${localPkgs.gitleaks}/bin/gitleaks";
-                options = [
-                  "detect"
-                  "--no-git"
-                  "--exit-code"
-                  "0"
-                ];
-                includes = [ "*" ];
-                excludes = [
-                  "*.png"
-                  "*.jpg"
-                  "*.jpeg"
-                  "*.gif"
-                  "*.ico"
-                  "*.pdf"
-                  "*.woff"
-                  "*.woff2"
-                  "*.ttf"
-                  "*.eot"
-                  "node_modules/**"
-                  ".direnv/**"
-                ];
-              };
-            };
-          };
-
-          pre-commit = {
-            check.enable = false;
-            settings.hooks = {
-              treefmt = {
-                enable = true;
-                package = config.treefmt.build.wrapper;
-              };
-            };
-          };
-
-          devShells.default = localPkgs.mkShell {
-            shellHook = ''
-              ${config.pre-commit.installationScript}
-            '';
-          };
-        };
-
     };
 }
