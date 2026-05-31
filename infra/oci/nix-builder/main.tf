@@ -113,6 +113,7 @@ module "deploy" {
   target_host            = oci_core_instance.nix_builder.public_ip
   instance_id            = oci_core_instance.nix_builder.public_ip
   install_user           = "ubuntu"
+  extra_files_script     = "${path.module}/decrypt-ssh-secret.sh"
 }
 
 output "ip-address" {

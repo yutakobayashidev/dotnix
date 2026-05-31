@@ -1,5 +1,11 @@
 { ... }:
 
+let
+  defaultMountOptions = [
+    "compress=zstd:1"
+    "noatime"
+  ];
+in
 {
   disko.devices.disk.main = {
     type = "disk";
@@ -21,13 +27,34 @@
         root = {
           size = "100%";
           content = {
-            type = "filesystem";
-            format = "btrfs";
-            mountpoint = "/";
-            mountOptions = [
-              "compress=zstd:1"
-              "noatime"
+            type = "btrfs";
+            extraArgs = [
+              "-f"
+              "-L"
+              "nixos"
             ];
+            subvolumes = {
+              "@root" = {
+                mountpoint = "/";
+                mountOptions = defaultMountOptions;
+              };
+              "@home" = {
+                mountpoint = "/home";
+                mountOptions = defaultMountOptions;
+              };
+              "@nix" = {
+                mountpoint = "/nix";
+                mountOptions = defaultMountOptions;
+              };
+              "@persist" = {
+                mountpoint = "/persist";
+                mountOptions = defaultMountOptions;
+              };
+              "@log" = {
+                mountpoint = "/var/log";
+                mountOptions = defaultMountOptions;
+              };
+            };
           };
         };
       };

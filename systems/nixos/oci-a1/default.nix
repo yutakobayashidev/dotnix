@@ -8,7 +8,9 @@
   imports = [
     ../common.nix
     inputs.disko.nixosModules.disko
+    inputs.impermanence.nixosModules.impermanence
     ./disko.nix
+    ./impermanence.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

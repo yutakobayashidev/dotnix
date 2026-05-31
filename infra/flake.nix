@@ -35,6 +35,7 @@
               opentofu
               terragrunt
               tflint
+              sops
               packer
               nomad
               vault
@@ -53,6 +54,7 @@
               terragrunt
               tflint
               checkov
+              sops
             ];
           };
         }
