@@ -8,10 +8,10 @@ i=0
 while true; do
   i=$((i + 1))
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] Attempt #$i"
-  if nix develop "path:/home/yuta/ghq/github.com/yutakobayashidev/dotnix/infra#terraform" --command terraform apply -auto-approve 2>&1; then
+  if nix develop "path:/home/yuta/ghq/github.com/yutakobayashidev/dotnix/infra#default" --command tofu apply -auto-approve 2>&1; then
     echo ""
     echo "SUCCESS! nix-builder deployed"
-    nix develop "path:/home/yuta/ghq/github.com/yutakobayashidev/dotnix/infra#terraform" --command terraform output ip-address
+    nix develop "path:/home/yuta/ghq/github.com/yutakobayashidev/dotnix/infra#default" --command tofu output ip-address
     break
   fi
   echo "Retry in 60s..."
