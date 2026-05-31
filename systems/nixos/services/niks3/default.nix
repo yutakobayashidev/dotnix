@@ -55,7 +55,10 @@ in
     oidc.providers.github = {
       issuer = "https://token.actions.githubusercontent.com";
       audience = "https://${serverDomain}";
-      boundClaims.repository = [ "yutakobayashidev/dotnix" ];
+      boundClaims.repository = [
+        "yutakobayashidev/dotnix"
+        "yutakobayashidev/nur-packages"
+      ];
     };
   };
 
