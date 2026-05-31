@@ -24,7 +24,7 @@
     };
   };
 
-  my.services.tailscale.enable = true;
+  my.services.tailscale.enable = lib.mkDefault true;
 
   nix.gc.dates = "weekly";
 
