@@ -247,6 +247,9 @@
         pi5 = {
           system = "aarch64-linux";
         };
+        oci-a1 = {
+          system = "aarch64-linux";
+        };
         M2-MacBook-Air = {
           system = "aarch64-darwin";
         };

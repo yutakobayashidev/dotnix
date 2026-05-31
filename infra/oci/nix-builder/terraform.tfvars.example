@@ -1,0 +1,8 @@
+tenancy_ocid        = "ocid1.tenancy.oc1..."
+user_ocid           = "ocid1.user.oc1..."
+fingerprint         = "00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00"
+region              = "ap-tokyo-1"
+availability_domain = "<tenancy-prefix>:AP-TOKYO-1-AD-1"
+image_id            = "ocid1.image.oc1.ap-tokyo-1..."
+ssh_public_key      = "ssh-ed25519 ..."
+ssh_ingress_cidr    = "203.0.113.10/32"
