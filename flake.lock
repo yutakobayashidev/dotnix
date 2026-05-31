@@ -1039,6 +1039,29 @@
         "type": "github"
       }
     },
+    "niks3": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780048298,
+        "narHash": "sha256-m6dV4M2k+Y649DsJ+CN8nzk01WzXBx8YGl9O68S8LjM=",
+        "owner": "Mic92",
+        "repo": "niks3",
+        "rev": "6a99ed756c95629d586deb8a67952a916a65ae30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "niks3",
+        "type": "github"
+      }
+    },
     "niri": {
       "inputs": {
         "niri-stable": "niri-stable",
@@ -1865,6 +1888,7 @@
         "microvm": "microvm",
         "modern-web-guidance": "modern-web-guidance",
         "moonbit-overlay": "moonbit-overlay",
+        "niks3": "niks3",
         "niri": "niri",
         "nix-darwin": "nix-darwin",
         "nix-filter": "nix-filter",

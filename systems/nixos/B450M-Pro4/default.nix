@@ -21,6 +21,7 @@
     ../services/oura-metrics
     ../services/archivebox
     ../services/n8n
+    ../services/niks3
     ../services/comin
     ../services/comin/prometheus.nix
     ../services/cloudflare-error-page
@@ -163,6 +164,18 @@
 
   virtualisation.docker.enable = true;
   virtualisation.docker.daemon.settings.features.cdi = true;
+
+  services.cloudflared.enable = true;
+
+  my.services.cloudflared-tunnel = {
+    enable = true;
+    id = "3e1ff621-e8bf-47d1-b095-4b5c15eec63c";
+    credentialsFile = config.sops.secrets.cloudflared-tunnel.path;
+  };
+
+  sops.secrets.cloudflared-tunnel = {
+    sopsFile = ./secrets.yaml;
+  };
 
   system.stateVersion = "25.11";
 }
