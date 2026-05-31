@@ -61,8 +61,18 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-nix
-      - name: Check flake (host platform)
-        run: nix flake check --no-build --keep-going
+      - name: Evaluate flake outputs (host platform)
+        run: |
+          for output in checks packages devShells apps; do
+            nix eval ".#$output.x86_64-linux" --apply 'x: builtins.attrNames x'
+          done
+          nix eval '.#formatter.x86_64-linux'
+          nix eval '.#nixosConfigurations' --apply 'x: builtins.attrNames x'
+          for host in B450M-Pro4 UM790-Pro X870-Stell-Legend-WiFi; do
+            nix eval ".#nixosConfigurations.$host.config.networking.hostName" 2>&1 || true
+          done
+      - name: Check treefmt
+        run: nix build .#checks.x86_64-linux.treefmt
 
   build:
     needs: [changes, check]
