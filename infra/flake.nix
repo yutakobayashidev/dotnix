@@ -31,10 +31,12 @@
         {
           default = pkgs.mkShellNoCC {
             packages = with pkgs; [
+              oci-cli
               terraform
               opentofu
               terragrunt
               tflint
+              sops
               packer
               nomad
               vault
@@ -49,10 +51,12 @@
 
           terraform = pkgs.mkShellNoCC {
             packages = with pkgs; [
+              oci-cli
               terraform
               terragrunt
               tflint
               checkov
+              sops
             ];
           };
         }

@@ -10,6 +10,7 @@
 | UM790 Pro              | UM790-Pro              | NixOS                  | x86_64-linux   | ◎      |
 | X870 Stell Legend WiFi | X870-Stell-Legend-WiFi | NixOS (WSL)            | x86_64-linux   | ◎      |
 | Pi 5                   | pi5                    | NixOS                  | aarch64-linux  | △      |
+| OCI Ampere A1 VM       | oci-a1                 | NixOS                  | aarch64-linux  | △      |
 | M2 MacBook Air         | M2-MacBook-Air         | macOS                  | aarch64-darwin | ◎      |
 | Galaxy S23 FE          | Galaxy-S23FE           | Android (nix-on-droid) | aarch64-linux  | △      |
 
@@ -29,7 +30,8 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── B450M-Pro4/           # NixOS host config (services, disko, impermanence)
 │   │   ├── UM790-Pro/           # NixOS host config (boot, network, locale)
 │   │   ├── X870-Stell-Legend-WiFi/   # NixOS-WSL host config (WSL, locale)
-│   │   └── pi5/                 # NixOS host config (headless Pi 5)
+│   │   ├── pi5/                 # NixOS host config (headless Pi 5)
+│   │   └── oci-a1/              # OCI Ampere A1 NixOS host config (disko, boot, network)
 │   ├── darwin/
 │   │   ├── common.nix           # Shared macOS host imports
 │   │   ├── desktop.nix          # Shared macOS desktop system settings
