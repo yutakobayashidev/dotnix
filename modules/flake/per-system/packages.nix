@@ -40,6 +40,7 @@
       apps = {
         build = {
           type = "app";
+          meta.description = "Build the current host's Nix configuration";
           program = toString (
             localPkgs.writeShellScript "build" ''
               set -e
@@ -75,6 +76,7 @@
 
         switch = {
           type = "app";
+          meta.description = "Switch to the current host's Nix configuration";
           program = toString (
             localPkgs.writeShellScript "switch" ''
               set -eo pipefail
@@ -110,6 +112,7 @@
 
         fmt = {
           type = "app";
+          meta.description = "Format all files with treefmt";
           program = toString (
             localPkgs.writeShellScript "treefmt-wrapper" ''
               exec ${config.treefmt.build.wrapper}/bin/treefmt "$@"
