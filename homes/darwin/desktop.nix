@@ -16,7 +16,6 @@
       terminal-notifier
       coreutils
       cocoapods
-      watchman
     ]
     ++ (with pkgs.brewCasks; [
       # Communication

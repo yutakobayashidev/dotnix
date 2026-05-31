@@ -200,7 +200,6 @@
       "https://cache.numtide.com"
       "https://nix-cache.yutakobayashi.com"
       "https://yuta.cachix.org"
-      "https://yutakobayashidev-nur.cachix.org"
       "https://devenv.cachix.org"
       "https://nix-community.cachix.org"
     ];
@@ -209,7 +208,6 @@
       "niks3-1:Ay1+L/bEpRLOvfcAspotbB8TgNHIkMF1gX28uUcYwhM="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "yuta.cachix.org-1:VGiC7m0kQjut7lp+RG/9pCRHFpzf11ELQrM2Nc2QCCk="
-      "yutakobayashidev-nur.cachix.org-1:ta0cksnLcjWO+Pg4BK++GsY4frBs9oNNY9XjaQ5QJ20="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
