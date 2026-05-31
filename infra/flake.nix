@@ -31,6 +31,7 @@
         {
           default = pkgs.mkShellNoCC {
             packages = with pkgs; [
+              oci-cli
               terraform
               opentofu
               terragrunt
@@ -50,6 +51,7 @@
 
           terraform = pkgs.mkShellNoCC {
             packages = with pkgs; [
+              oci-cli
               terraform
               terragrunt
               tflint
