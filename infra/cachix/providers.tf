@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     cachix = {
-      source  = "takeokunn/cachix"
+      source  = "registry.terraform.io/takeokunn/cachix"
       version = "~> 1.0"
     }
   }
