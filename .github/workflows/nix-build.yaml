@@ -1,12 +1,23 @@
-# Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/workflows/nix-build.yaml
 name: 'CI: Nix build'
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
-  pull_request:
-  workflow_dispatch:
+    paths:
+      - '.github/actions/setup-nix/**'
+      - '.github/workflows/nix-build.yaml'
+      - 'applications/**'
+      - 'flake-module.nix'
+      - 'flake.lock'
+      - 'flake.nix'
+      - 'homes/**'
+      - 'modules/**'
+      - 'nix/**'
+      - 'systems/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,7 +25,11 @@ concurrency:
 
 jobs:
   changes:
-    runs-on: ubuntu-24.04-arm
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: read
     outputs:
       nix: ${{ steps.filter.outputs.nix }}
     steps:
@@ -24,24 +39,82 @@ jobs:
         with:
           filters: |
             nix:
-              - 'flake.nix'
-              - 'flake.lock'
-              - 'nix/**'
-              - '.github/workflows/nix-build.yaml'
               - '.github/actions/setup-nix/**'
+              - '.github/workflows/nix-build.yaml'
+              - 'applications/**'
+              - 'flake-module.nix'
+              - 'flake.lock'
+              - 'flake.nix'
+              - 'homes/**'
+              - 'modules/**'
+              - 'nix/**'
+              - 'systems/**'
 
-  build:
+  check:
     needs: changes
-    if: needs.changes.outputs.nix == 'true' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    if: ${{ !cancelled() && (needs.changes.outputs.nix == 'true' || github.event_name == 'push') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup-nix
-        with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - name: Build NixOS configuration
+      - name: Check flake
+        run: nix flake check --no-build --all-systems --keep-going
+
+  build:
+    needs: [changes, check]
+    if: ${{ !cancelled() && needs.check.result != 'failure' }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm, macos-latest]
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        if: needs.check.result == 'success'
+      - name: Free disk space (darwin)
+        if: needs.check.result == 'success' && matrix.os == 'macos-latest'
         run: |
-          nix build .#nixosConfigurations.UM790-Pro.config.system.build.toplevel \
-            --print-build-logs \
-            --show-trace
+          sudo rm -rf \
+            /Applications/Xcode_*.app \
+            /Library/Developer/CoreSimulator \
+            /Library/Android \
+            ~/.dotnet \
+            /usr/local/share/chromium \
+            /usr/local/lib/node_modules \
+            /usr/local/share/powershell || true
+          df -h
+      - uses: ./.github/actions/setup-nix
+        if: needs.check.result == 'success'
+      - name: Create /run for darwin
+        if: needs.check.result == 'success' && matrix.os == 'macos-latest'
+        run: |
+          printf "run\tprivate/var/run\n" | sudo tee -a /etc/synthetic.conf
+          /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t || true
+      - name: Build Nix configurations (linux)
+        if: ${{ needs.check.result == 'success' && startsWith(matrix.os, 'ubuntu') }}
+        run: |
+          nix build \
+            .#nixosConfigurations.B450M-Pro4.config.system.build.toplevel \
+            .#nixosConfigurations.UM790-Pro.config.system.build.toplevel \
+            .#nixosConfigurations.X870-Stell-Legend-WiFi.config.system.build.toplevel \
+            .#nixosConfigurations.pi5.config.system.build.toplevel \
+            .#devShells.x86_64-linux.default \
+            .#devShells.aarch64-linux.default \
+            --keep-going --no-link --show-trace \
+            --print-out-paths
+      - name: Build Nix configurations (darwin)
+        if: ${{ needs.check.result == 'success' && matrix.os == 'macos-latest' }}
+        run: |
+          nix build \
+            .#darwinConfigurations.M2-MacBook-Air.system \
+            .#devShells.aarch64-darwin.default \
+            --keep-going --no-link --show-trace \
+            --print-out-paths
