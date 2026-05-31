@@ -8,7 +8,6 @@
 let
   domain = "home.yutakobayashi.com";
   niks3Port = "5751";
-  serverDomain = "cache.${domain}";
   cacheDomain = "cache.${domain}";
 in
 {
@@ -38,31 +37,7 @@ in
     gc.olderThan = "168h";
   };
 
-  services.traefik.dynamicConfigOptions = {
-    http = {
-      routers = {
-        niks3 = {
-          entryPoints = [
-            "web"
-            "websecure"
-          ];
-          rule = "Host(`${serverDomain}`)";
-          service = "niks3";
-          tls = {
-            certResolver = "letsencrypt";
-            domains = [
-              {
-                main = domain;
-                sans = [ "*.${domain}" ];
-              }
-            ];
-          };
-        };
-      };
-
-      services.niks3.loadBalancer.servers = [ { url = "http://127.0.0.1:${niks3Port}"; } ];
-    };
-  };
+  my.services.cloudflared-tunnel.ingress."cache.${domain}" = "http://127.0.0.1:${niks3Port}";
 
   sops.secrets = {
     niks3-api-token = {
