@@ -11,7 +11,10 @@ let
     config.home-manager.users.${username}.home.homeDirectory
   }/ghq/github.com/yutakobayashidev/dotnix";
 
-  local-skills = inputs.self;
+  local-skills = inputs.nix-filter.lib {
+    root = inputs.self;
+    include = [ "agents/skills" ];
+  };
 in
 {
   home-manager = {
