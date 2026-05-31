@@ -2,6 +2,7 @@ keys:
   - &um790 age1u8ah2hga53uh7y24efhuc5vszzctqxth2rtvd7dshedpl9l50d5slzs6zq
   - &b450m age1ahvwx3a7z6df3avdy6w9y3a4ggqvv80s3thqu4dlqj76822ct36qh23jle
   - &m2-macbook-air age1a5cyt62c4ejr28d307x6prc2vrzvhugvelu7eq8vcs0gjmrjvuwq5vnd88
+  - &oci-a1 age1g96vx3ghxfge06xkxrfcfwq607p4fp75xcg6efgz9mf87l2a7u5qk04rfw
 
 creation_rules:
   - path_regex: ^secrets/.*$
@@ -10,6 +11,7 @@ creation_rules:
           - *um790
           - *b450m
           - *m2-macbook-air
+          - *oci-a1
   - path_regex: systems/nixos/services/hermes-agent/(secrets\.yaml|auth\.json)$
     key_groups:
       - age:

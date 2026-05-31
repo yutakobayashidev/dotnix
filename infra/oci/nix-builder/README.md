@@ -29,3 +29,21 @@ age identity.
 Add the age recipient derived from `ssh_host_ed25519_key.pub` to any SOPS files
 that `oci-a1` must decrypt during activation. Neither local file should be
 committed.
+
+## Persistent key sources
+
+Keep the source keys outside the repository:
+
+```text
+~/.local/share/dotnix/oci-a1/oci_api_key.pem
+~/.local/share/dotnix/oci-a1/oci_api_key_public.pem
+~/.local/share/dotnix/oci-a1/ssh_host_ed25519_key
+~/.local/share/dotnix/oci-a1/ssh_host_ed25519_key.pub
+~/.local/share/dotnix/oci-a1/oci_secrets.yaml
+```
+
+Register `oci_api_key_public.pem` as an API key for the OCI user and put the
+resulting fingerprint into `terraform.tfvars`.
+
+Back up the persistent key directory securely. Losing it prevents Terraform
+authentication and recovery of the injected SSH host identity.
