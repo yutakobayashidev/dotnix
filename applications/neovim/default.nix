@@ -23,32 +23,34 @@ in
     withRuby = false;
     withPython3 = false;
 
-    extraPackages = with pkgs; [
-      prettierd
-      eslint_d
-      git
-      gcc
-      gnumake
-      vtsls
-      pretty-ts-errors-markdown
-      version-lsp
-      moonbit-lsp
+    extraPackages =
+      with pkgs;
+      lib.filter (x: x != null) [
+        prettierd
+        eslint_d
+        git
+        gcc
+        gnumake
+        vtsls
+        pretty-ts-errors-markdown
+        version-lsp
+        moonbit-lsp
 
-      # Rust
-      rustowl
+        # Rust
+        rustowl
 
-      # Node.js-based language servers
-      astro-language-server
-      emmet-language-server
-      prisma-language-server
-      stylelint
-      stylelint-lsp
-      svelte-language-server
-      tailwindcss-language-server
-      vscode-langservers-extracted
-      vue-language-server
-      yaml-language-server
-    ];
+        # Node.js-based language servers
+        astro-language-server
+        emmet-language-server
+        prisma-language-server
+        stylelint
+        stylelint-lsp
+        svelte-language-server
+        tailwindcss-language-server
+        vscode-langservers-extracted
+        vue-language-server
+        yaml-language-server
+      ];
 
     extraWrapperArgs = [
       "--set"

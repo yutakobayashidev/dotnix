@@ -1,7 +1,12 @@
 { mkPkgs, ... }:
 {
   perSystem =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       system = pkgs.stdenv.hostPlatform.system;
       isDarwin = builtins.match ".*-darwin" system != null;
@@ -20,22 +25,27 @@
       '';
     in
     {
-      packages = {
-        inherit (localPkgs)
-          bumblebee
-          difit
-          git-now
-          jj-desc
-          keifu
-          polycat
-          pretty-ts-errors-markdown
-          readout
-          roots
-          similarity-ts
-          tunnelto
-          waza
-          ;
-      };
+      packages =
+        let
+          polycat' = lib.optionalAttrs (!isDarwin) { inherit (localPkgs) polycat; };
+          readout' = lib.optionalAttrs isDarwin { inherit (localPkgs) readout; };
+        in
+        polycat'
+        // readout'
+        // {
+          inherit (localPkgs)
+            bumblebee
+            difit
+            git-now
+            jj-desc
+            keifu
+            pretty-ts-errors-markdown
+            roots
+            similarity-ts
+            tunnelto
+            waza
+            ;
+        };
 
       apps = {
         build = {

@@ -11,12 +11,14 @@ in
       target =
         {
           "x86_64-linux" = "Linux_x86_64";
+          "aarch64-linux" = "Linux_arm64";
           "aarch64-darwin" = "Darwin_arm64";
         }
         .${system};
       hash =
         {
           "x86_64-linux" = "sha256-bJ9kRIxeBatKtqi+AjPJGMyZnBh3bgR+epuqa0cxEfY=";
+          "aarch64-linux" = "sha256-bJ9kRIxeBatKtqi+AjPJGMyZnBh3bgR+epuqa0cxEfY=";
           "aarch64-darwin" = "sha256-GLsMmrIOWBW5dS7ojH28uTnz2xZkXUZmKmmz2VMdA/I=";
         }
         .${system};
@@ -42,26 +44,29 @@ in
       moonbit-overlay = prev._moonbit-overlay;
       versions = import "${moonbit-overlay}/versions.nix" prev.lib;
       latest = versions.latest;
-      target =
-        {
-          "x86_64-linux" = "linux-x86_64";
-          "aarch64-darwin" = "darwin-aarch64";
-        }
-        .${system};
-      hashAttr = "${target}-toolchainsHash";
-    in
-    prev.stdenv.mkDerivation {
-      pname = "moonbit-lsp";
-      version = latest.version;
-      src = prev.fetchurl {
-        url = "https://github.com/moonbit-community/moonbit-overlay/releases/download/${prev.lib.escapeURL latest.version}/moonbit-${target}.tar.gz";
-        hash = latest.${hashAttr};
+      targets = {
+        "x86_64-linux" = "linux-x86_64";
+        "aarch64-linux" = "linux-aarch64";
+        "aarch64-darwin" = "darwin-aarch64";
       };
-      sourceRoot = ".";
-      installPhase = ''
-        mkdir -p $out/bin
-        cp bin/moonbit-lsp $out/bin/moonbit-lsp
-        chmod +x $out/bin/moonbit-lsp
-      '';
-    };
+      target = targets.${system} or null;
+      hashAttr = if target != null then "${target}-toolchainsHash" else null;
+    in
+    if target != null && builtins.hasAttr hashAttr latest then
+      prev.stdenv.mkDerivation {
+        pname = "moonbit-lsp";
+        version = latest.version;
+        src = prev.fetchurl {
+          url = "https://github.com/moonbit-community/moonbit-overlay/releases/download/${prev.lib.escapeURL latest.version}/moonbit-${target}.tar.gz";
+          hash = latest.${hashAttr};
+        };
+        sourceRoot = ".";
+        installPhase = ''
+          mkdir -p $out/bin
+          cp bin/moonbit-lsp $out/bin/moonbit-lsp
+          chmod +x $out/bin/moonbit-lsp
+        '';
+      }
+    else
+      null;
 }
