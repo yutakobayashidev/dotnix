@@ -174,7 +174,7 @@
   };
 
   sops.secrets.cloudflared-tunnel = {
-    sopsFile = ./cloudflared-tunnel.yaml;
+    sopsFile = ./secrets.yaml;
   };
 
   system.stateVersion = "25.11";
