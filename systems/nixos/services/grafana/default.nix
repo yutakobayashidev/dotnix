@@ -47,4 +47,18 @@
     owner = "grafana";
   };
 
+  services.traefik.dynamicConfigOptions.http = {
+    routers.grafana = {
+      entryPoints = [
+        "web"
+        "websecure"
+      ];
+      rule = "Host(`grafana.home.yutakobayashi.com`)";
+      service = "grafana";
+      tls.certResolver = "letsencrypt";
+    };
+    services.grafana.loadBalancer.servers = [
+      { url = "http://localhost:${toString config.services.grafana.settings.server.http_port}"; }
+    ];
+  };
 }

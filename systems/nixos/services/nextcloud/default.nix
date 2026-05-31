@@ -38,4 +38,17 @@
   systemd.services.nextcloud-cron.unitConfig.RequiresMountsFor = [
     config.services.nextcloud.datadir
   ];
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.nextcloud = {
+      entryPoints = [
+        "web"
+        "websecure"
+      ];
+      rule = "Host(`cloud.home.yutakobayashi.com`)";
+      service = "nextcloud";
+      tls.certResolver = "letsencrypt";
+    };
+    services.nextcloud.loadBalancer.servers = [ { url = "http://localhost:8081"; } ];
+  };
 }

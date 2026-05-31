@@ -41,211 +41,74 @@ in
       };
     };
 
-    dynamicConfigOptions = {
-      http = {
-        serversTransports = {
-          insecure = {
-            insecureSkipVerify = true;
-          };
+    dynamicConfigOptions.http = {
+      routers = {
+        error-pages = {
+          entryPoints = [
+            "web"
+            "websecure"
+          ];
+          rule = "HostRegexp(`.+`)";
+          priority = 1;
+          service = "error-pages-service";
+          middlewares = [ "error-pages" ];
         };
-        routers = {
-          gitea = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`git.${domain}`)";
-            service = "gitea";
-            tls = {
-              certResolver = "letsencrypt";
-              domains = [
-                {
-                  main = domain;
-                  sans = [ "*.${domain}" ];
-                }
-              ];
-            };
-          };
-          grafana = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`grafana.${domain}`)";
-            service = "grafana";
-            tls.certResolver = "letsencrypt";
-          };
-          nextcloud = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`cloud.${domain}`)";
-            service = "nextcloud";
-            tls.certResolver = "letsencrypt";
-          };
-          immich = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`photos.${domain}`)";
-            service = "immich";
-            tls.certResolver = "letsencrypt";
-          };
-          home-assistant = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`ha.${domain}`)";
-            service = "home-assistant";
-            tls.certResolver = "letsencrypt";
-          };
-          archivebox = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`archive.${domain}`)";
-            service = "archivebox";
-            tls.certResolver = "letsencrypt";
-          };
-          couchdb = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`sync.${domain}`)";
-            service = "couchdb";
-            tls.certResolver = "letsencrypt";
-          };
-          n8n = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`n8n.${domain}`)";
-            service = "n8n";
-            tls.certResolver = "letsencrypt";
-          };
-          prometheus = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`prometheus.${domain}`)";
-            service = "prometheus";
-            tls.certResolver = "letsencrypt";
-          };
-          tv = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`tv.${domain}`)";
-            service = "konomitv";
-            tls.certResolver = "letsencrypt";
-          };
-          mirakurun = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`mirakurun.${domain}`)";
-            service = "mirakurun";
-            tls.certResolver = "letsencrypt";
-          };
-          edcb = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`edcb.${domain}`)";
-            service = "edcb";
-            tls.certResolver = "letsencrypt";
-          };
-          navidrome = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`music.${domain}`)";
-            service = "navidrome";
-            tls.certResolver = "letsencrypt";
-          };
-          tw = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`tw.${domain}`)";
-            service = "tw";
-            tls.certResolver = "letsencrypt";
-          };
-          uptime-kuma = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "Host(`status.${domain}`)";
-            service = "uptime-kuma";
-            tls.certResolver = "letsencrypt";
-          };
-          error-pages = {
-            entryPoints = [
-              "web"
-              "websecure"
-            ];
-            rule = "HostRegexp(`.+`)";
-            priority = 1;
-            service = "error-pages-service";
-          };
+        tv = {
+          entryPoints = [
+            "web"
+            "websecure"
+          ];
+          rule = "Host(`tv.${domain}`)";
+          service = "konomitv";
+          tls.certResolver = "letsencrypt";
         };
+        mirakurun = {
+          entryPoints = [
+            "web"
+            "websecure"
+          ];
+          rule = "Host(`mirakurun.${domain}`)";
+          service = "mirakurun";
+          tls.certResolver = "letsencrypt";
+        };
+        edcb = {
+          entryPoints = [
+            "web"
+            "websecure"
+          ];
+          rule = "Host(`edcb.${domain}`)";
+          service = "edcb";
+          tls.certResolver = "letsencrypt";
+        };
+        tw = {
+          entryPoints = [
+            "web"
+            "websecure"
+          ];
+          rule = "Host(`tw.${domain}`)";
+          service = "tw";
+          tls.certResolver = "letsencrypt";
+        };
+      };
 
-        middlewares = {
-          error-pages = {
-            errors = {
-              status = [
-                "500-599"
-                "404"
-                "403"
-              ];
-              query = "/";
-              service = "error-pages-service";
-            };
-          };
+      middlewares.error-pages = {
+        errors = {
+          status = [
+            "500-599"
+            "404"
+            "403"
+          ];
+          query = "/";
+          service = "error-pages-service";
         };
+      };
 
-        services = {
-          gitea.loadBalancer.servers = [ { url = "http://localhost:3000"; } ];
-          grafana.loadBalancer.servers = [
-            { url = "http://localhost:${toString config.services.grafana.settings.server.http_port}"; }
-          ];
-          nextcloud.loadBalancer.servers = [ { url = "http://localhost:8081"; } ];
-          immich.loadBalancer.servers = [ { url = "http://localhost:2283"; } ];
-          home-assistant.loadBalancer.servers = [
-            { url = "http://localhost:${toString config.services.home-assistant.config.http.server_port}"; }
-          ];
-          archivebox.loadBalancer.servers = [ { url = "http://127.0.0.1:8000"; } ];
-          couchdb.loadBalancer.servers = [ { url = "http://127.0.0.1:5984"; } ];
-          n8n.loadBalancer.servers = [
-            { url = "http://127.0.0.1:${toString config.services.n8n.environment.N8N_PORT}"; }
-          ];
-          prometheus.loadBalancer.servers = [ { url = "http://127.0.0.1:9090"; } ];
-          konomitv.loadBalancer.servers = [ { url = "https://localhost:7000"; } ];
-          konomitv.loadBalancer.serversTransport = "insecure";
-          mirakurun.loadBalancer.servers = [ { url = "http://localhost:40772"; } ];
-          edcb.loadBalancer.servers = [ { url = "http://localhost:5510"; } ];
-          navidrome.loadBalancer.servers = [ { url = "http://localhost:4533"; } ];
-          tw.loadBalancer.servers = [ { url = "http://localhost:3090"; } ];
-          uptime-kuma.loadBalancer.servers = [ { url = "http://localhost:3002"; } ];
-          error-pages-service = {
-            loadBalancer = {
-              servers = [ { url = "http://127.0.0.1:5000"; } ];
-            };
-          };
-        };
+      services = {
+        konomitv.loadBalancer.servers = [ { url = "https://localhost:7000"; } ];
+        mirakurun.loadBalancer.servers = [ { url = "http://localhost:40772"; } ];
+        edcb.loadBalancer.servers = [ { url = "http://localhost:5510"; } ];
+        tw.loadBalancer.servers = [ { url = "http://localhost:3090"; } ];
+        error-pages-service.loadBalancer.servers = [ { url = "http://127.0.0.1:5000"; } ];
       };
     };
     environmentFiles = [

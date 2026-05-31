@@ -53,4 +53,17 @@ in
       }
     ];
   };
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.prometheus = {
+      entryPoints = [
+        "web"
+        "websecure"
+      ];
+      rule = "Host(`prometheus.home.yutakobayashi.com`)";
+      service = "prometheus";
+      tls.certResolver = "letsencrypt";
+    };
+    services.prometheus.loadBalancer.servers = [ { url = "http://127.0.0.1:9090"; } ];
+  };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   services.home-assistant = {
@@ -24,5 +24,20 @@
         ];
       };
     };
+  };
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.home-assistant = {
+      entryPoints = [
+        "web"
+        "websecure"
+      ];
+      rule = "Host(`ha.home.yutakobayashi.com`)";
+      service = "home-assistant";
+      tls.certResolver = "letsencrypt";
+    };
+    services.home-assistant.loadBalancer.servers = [
+      { url = "http://localhost:${toString config.services.home-assistant.config.http.server_port}"; }
+    ];
   };
 }

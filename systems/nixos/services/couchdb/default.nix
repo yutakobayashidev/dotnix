@@ -49,4 +49,17 @@ in
       };
     };
   };
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.couchdb = {
+      entryPoints = [
+        "web"
+        "websecure"
+      ];
+      rule = "Host(`sync.${domain}`)";
+      service = "couchdb";
+      tls.certResolver = "letsencrypt";
+    };
+    services.couchdb.loadBalancer.servers = [ { url = "http://127.0.0.1:5984"; } ];
+  };
 }

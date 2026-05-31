@@ -26,4 +26,19 @@ in
   ];
 
   systemd.services.docker-archivebox.unitConfig.RequiresMountsFor = [ "/srv/bulk/archivebox/data" ];
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.archivebox = {
+      entryPoints = [
+        "web"
+        "websecure"
+      ];
+      rule = "Host(`archive.home.yutakobayashi.com`)";
+      service = "archivebox";
+      tls.certResolver = "letsencrypt";
+    };
+    services.archivebox.loadBalancer.servers = [
+      { url = "http://127.0.0.1:${toString archiveboxPort}"; }
+    ];
+  };
 }
