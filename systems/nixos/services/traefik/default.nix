@@ -42,6 +42,10 @@ in
     };
 
     dynamicConfigOptions.http = {
+      serversTransports.insecure = {
+        insecureSkipVerify = true;
+      };
+
       routers = {
         error-pages = {
           entryPoints = [
@@ -104,7 +108,12 @@ in
       };
 
       services = {
-        konomitv.loadBalancer.servers = [ { url = "https://localhost:7000"; } ];
+        konomitv = {
+          loadBalancer = {
+            servers = [ { url = "https://localhost:7000"; } ];
+            serversTransport = "insecure";
+          };
+        };
         mirakurun.loadBalancer.servers = [ { url = "http://localhost:40772"; } ];
         edcb.loadBalancer.servers = [ { url = "http://localhost:5510"; } ];
         tw.loadBalancer.servers = [ { url = "http://localhost:3090"; } ];
