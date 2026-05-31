@@ -4,7 +4,7 @@ let
   inherit (pkgs) vscode-extensions vscode-utils;
 
   fileNestingSettings = builtins.fromJSON (
-    builtins.readFile ./vscode-file-nesting-config/config.json
+    builtins.readFile (pkgs.callPackage ./vscode-file-nesting-config { })
   );
 
   marketplaceExtensions = vscode-utils.extensionsFromVscodeMarketplace [
