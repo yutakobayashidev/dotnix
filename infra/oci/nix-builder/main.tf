@@ -34,11 +34,10 @@ resource "oci_core_vcn" "nix_builder" {
 }
 
 resource "oci_core_subnet" "nix_builder" {
-  cidr_block        = "10.0.0.0/24"
-  compartment_id    = oci_identity_compartment.nix_builder.id
-  vcn_id            = oci_core_vcn.nix_builder.id
-  route_table_id    = oci_core_route_table.nix_builder.id
-  security_list_ids = [oci_core_security_list.nix_builder.id]
+  cidr_block     = "10.0.0.0/24"
+  compartment_id = oci_identity_compartment.nix_builder.id
+  vcn_id         = oci_core_vcn.nix_builder.id
+  route_table_id = oci_core_route_table.nix_builder.id
 }
 
 resource "oci_core_internet_gateway" "nix_builder" {
@@ -54,26 +53,6 @@ resource "oci_core_route_table" "nix_builder" {
     destination       = "0.0.0.0/0"
   }
   vcn_id = oci_core_vcn.nix_builder.id
-}
-
-resource "oci_core_security_list" "nix_builder" {
-  compartment_id = oci_identity_compartment.nix_builder.id
-  vcn_id         = oci_core_vcn.nix_builder.id
-
-  egress_security_rules {
-    destination = "0.0.0.0/0"
-    protocol    = "all"
-  }
-
-  ingress_security_rules {
-    protocol = "6"
-    source   = var.ssh_ingress_cidr
-
-    tcp_options {
-      min = 22
-      max = 22
-    }
-  }
 }
 
 resource "oci_core_instance" "nix_builder" {

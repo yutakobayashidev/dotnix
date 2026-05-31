@@ -4,8 +4,7 @@ Terraform stack for the `oci-a1` NixOS machine in OCI Tokyo.
 
 ## Local files
 
-Create `terraform.tfvars` from `terraform.tfvars.example`. Keep the SSH ingress
-CIDR restricted to the deployment machine where possible.
+Create `terraform.tfvars` from `terraform.tfvars.example`.
 
 Create a SOPS-encrypted `oci_secrets.yaml` containing the OCI API private key
 and a pre-generated SSH host key:

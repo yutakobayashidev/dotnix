@@ -25,8 +25,3 @@ variable "image_id" {
 variable "ssh_public_key" {
   type = string
 }
-
-variable "ssh_ingress_cidr" {
-  description = "CIDR allowed to connect to SSH during deployment."
-  type        = string
-}
