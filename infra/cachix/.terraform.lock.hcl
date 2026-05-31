@@ -6,6 +6,7 @@ provider "registry.terraform.io/takeokunn/cachix" {
   constraints = "~> 1.0"
   hashes = [
     "h1:+uAVuTWYqSMiN/xyRf6pbXWKQMM9KTbYp8YUu5X4fwc=",
+    "h1:UduihX3DEpZ9dx6R5GBWr3of63MKwETpG+OsEvVPboE=",
     "zh:20c1fee9c7db88edac44039e8962172d5404c8e2935eda409c997781d63c8eb6",
     "zh:4193ade5261421a8de8e123690a9a0cc686daeedefb2039cd74057b021cd0b1b",
     "zh:7bd80c7a04ff1cf491573dc2e982be38b0b45d1d2cfcbbee0238ea8ecd15c024",
