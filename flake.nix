@@ -198,6 +198,7 @@
     extra-substituters = [
       "https://cache.nixos.org"
       "https://cache.numtide.com"
+      "https://nix-cache.yutakobayashi.com"
       "https://yuta.cachix.org"
       "https://yutakobayashidev-nur.cachix.org"
       "https://devenv.cachix.org"
@@ -205,6 +206,7 @@
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "niks3-1:Ay1+L/bEpRLOvfcAspotbB8TgNHIkMF1gX28uUcYwhM="
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
       "yuta.cachix.org-1:VGiC7m0kQjut7lp+RG/9pCRHFpzf11ELQrM2Nc2QCCk="
       "yutakobayashidev-nur.cachix.org-1:ta0cksnLcjWO+Pg4BK++GsY4frBs9oNNY9XjaQ5QJ20="
