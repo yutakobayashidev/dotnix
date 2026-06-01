@@ -90,6 +90,9 @@ let
           ''
         else if value.opmlUrl != null then
           ''
+            echo "PATH=$PATH" >&2
+            which curl >&2 || echo "curl not found" >&2
+            curl --version >&2 || echo "curl no version" >&2
             OPML=$(curl -sL --connect-timeout 10 "${lib.escapeURL value.opmlUrl}" 2>&1) || {
               echo "curl failed: $OPML" >&2
               exit 1
