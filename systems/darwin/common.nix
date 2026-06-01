@@ -55,6 +55,7 @@
   };
 
   my.services.newsyslog.enable = true;
+  my.services.spotlight.enableIndex = true;
 
   nix.gc.interval = {
     Weekday = 0;

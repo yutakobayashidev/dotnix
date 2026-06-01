@@ -2,7 +2,8 @@
   homebrew = {
     enable = true;
     onActivation = {
-      autoUpdate = true;
+      # Workaround for https://github.com/zhaofengli/nix-homebrew/issues/131
+      autoUpdate = false;
       cleanup = "uninstall";
       extraFlags = [ "--force-cleanup" ];
     };
