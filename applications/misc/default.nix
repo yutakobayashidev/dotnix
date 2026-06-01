@@ -72,6 +72,7 @@ in
       # Misc
       sl
       fastfetch
+      ooniprobe-cli
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
       python313Packages.markitdown
