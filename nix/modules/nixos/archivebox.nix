@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.services.archivebox;
+  cfg = config.my.services.archivebox;
   jobUnitName = name: "archivebox-job-${utils.escapeSystemdPath name}";
 
   jobType =
@@ -163,7 +163,7 @@ let
     };
 in
 {
-  options.services.archivebox = {
+  options.my.services.archivebox = {
     enable = lib.mkEnableOption "ArchiveBox scheduled jobs";
 
     jobs = lib.mkOption {

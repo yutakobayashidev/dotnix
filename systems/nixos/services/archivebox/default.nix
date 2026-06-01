@@ -4,7 +4,7 @@ let
   archiveboxPort = 8000;
 in
 {
-  services.archivebox = {
+  my.services.archivebox = {
     enable = true;
     jobs = {
       radar = {
