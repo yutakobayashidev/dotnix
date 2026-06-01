@@ -69,7 +69,7 @@ in
           path = inputs.mattpocock-skills;
           subdir = "skills";
         };
-        twitter-api-safe-relay = {
+        twitter-api-replay = {
           path = inputs.twitter-api-safe-relay-skills;
           subdir = "skills";
         };
@@ -84,7 +84,6 @@ in
         "obsidian"
         "repiq"
         "difit"
-        "twitter-api-safe-relay"
       ];
 
       skills.explicit = {
@@ -176,6 +175,27 @@ in
 
                 ${dependencies}
               '';
+          };
+
+        twitter-api-replay =
+          let
+            dollar = "$";
+          in
+          {
+            from = "twitter-api-replay";
+            path = "twitter-api-replay";
+            transform =
+              { original, ... }:
+              builtins.replaceStrings
+                [
+                  "$TWITTER_REPLAY_BASE_URL"
+                  "${dollar}{TWITTER_REPLAY_BASE_URL%/}"
+                ]
+                [
+                  "https://tw.home.yutakobayashi.com"
+                  "https://tw.home.yutakobayashi.com"
+                ]
+                original;
           };
 
         prompt-review = {
