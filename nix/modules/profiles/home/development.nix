@@ -14,7 +14,6 @@
     ../../home/coding-agents/opencode
     ../../home/coding-agents/spec-kit
     ../../home/coding-agents/vibe-kanban
-    ../../home/coding-agents/waza
     ../../../../applications/gh
     ../../../../applications/jj
   ];
@@ -31,5 +30,4 @@
   my.programs.opencode.enable = true;
   my.programs.spec-kit.enable = true;
   my.programs.vibe-kanban.enable = true;
-  my.programs.waza.enable = true;
 }
