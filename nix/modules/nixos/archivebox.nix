@@ -130,6 +130,8 @@ let
           "AF_LOCAL"
           "AF_INET"
           "AF_INET6"
+          "AF_NETLINK"
+          "AF_PACKET"
         ];
         RestrictNamespaces = true;
 
