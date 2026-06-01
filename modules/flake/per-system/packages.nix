@@ -43,6 +43,7 @@
             roots
             similarity-ts
             tunnelto
+            waza
             ;
         };
 

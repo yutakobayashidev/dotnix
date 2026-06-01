@@ -135,7 +135,7 @@
     };
     skills = {
       url = "github:yutakobayashidev/skills";
-      inputs.nixpkgs.follows = "nixpkgs";
+      flake = false;
     };
     repiq = {
       url = "github:yutakobayashidev/repiq";
