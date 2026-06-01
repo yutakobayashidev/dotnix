@@ -90,7 +90,11 @@ let
           ''
         else if value.opmlUrl != null then
           ''
-            curl -sL "${lib.escapeURL value.opmlUrl}" \
+            OPML=$(curl -sL --connect-timeout 10 "${lib.escapeURL value.opmlUrl}" 2>&1) || {
+              echo "curl failed: $OPML" >&2
+              exit 1
+            }
+            echo "$OPML" \
               | python3 -c "
             import sys, xml.etree.ElementTree as ET
             tree = ET.parse(sys.stdin)
@@ -201,6 +205,7 @@ in
           wget
           curl
           yt-dlp
+          python3
           readability-cli
         ]
         ++ lib.optional config.programs.git.enable config.programs.git.package;
