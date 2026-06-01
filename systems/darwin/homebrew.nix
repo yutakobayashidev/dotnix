@@ -40,7 +40,6 @@
     ];
     casks = [
       # System Integration
-      "1password"
       "karabiner-elements"
       "bettertouchtool"
       "elgato-stream-deck"

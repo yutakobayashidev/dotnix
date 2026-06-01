@@ -40,7 +40,6 @@
 
       # Productivity
       stable.anki
-      _1password-gui
       insomnia
       libreoffice
       nextcloud-client
