@@ -8,8 +8,8 @@
 let
   helpers = import ../nix/modules/lib/helpers { lib = inputs.nixpkgs.lib; };
   dotfilesDir = "${
-    config.home-manager.users.${username}.home.homeDirectory
-  }/ghq/github.com/yutakobayashidev/dotnix";
+    config.home-manager.users.${username}.programs.git.settings.ghq.root
+  }/github.com/yutakobayashidev/dotnix";
 
   local-skills = inputs.nix-filter.lib {
     root = inputs.self;

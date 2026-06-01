@@ -155,6 +155,7 @@
       };
       pull.rebase = true;
       init.defaultBranch = "main";
+      ghq.root = "${config.home.homeDirectory}/ghq";
       column.ui = "auto";
       branch.sort = "-committerdate";
       help.autocorrect = "prompt";
