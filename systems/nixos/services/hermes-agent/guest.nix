@@ -95,6 +95,7 @@ in
 
   services.hermes-agent = {
     enable = true;
+    extraDependencyGroups = [ "slack" ];
 
     settings = {
       model.provider = "openai-codex";
