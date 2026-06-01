@@ -12,14 +12,37 @@ let
       path = inputs.superpowers;
       subdir = "skills";
     };
+    twitter-api-replay = {
+      path = inputs.twitter-api-safe-relay-skills;
+      subdir = "skills";
+    };
   };
   hermesSkillsCatalog = agentSkillsLib.discoverCatalog hermesSkillsSources;
+  dollar = "$";
   hermesSkillsSelection = agentSkillsLib.selectSkills {
     catalog = hermesSkillsCatalog;
     sources = hermesSkillsSources;
-    skills.brainstorming = {
-      from = "superpowers";
-      path = "brainstorming";
+    skills = {
+      brainstorming = {
+        from = "superpowers";
+        path = "brainstorming";
+      };
+      twitter-api-replay = {
+        from = "twitter-api-replay";
+        path = "twitter-api-replay";
+        transform =
+          { original, ... }:
+          builtins.replaceStrings
+            [
+              "$TWITTER_REPLAY_BASE_URL"
+              "${dollar}{TWITTER_REPLAY_BASE_URL%/}"
+            ]
+            [
+              "https://tw.home.yutakobayashi.com"
+              "https://tw.home.yutakobayashi.com"
+            ]
+            original;
+      };
     };
   };
   hermesSkillsBundle = agentSkillsLib.mkBundle {
@@ -35,6 +58,10 @@ let
   credentialsDir = "/run/credentials/@system";
 in
 {
+  networking.hosts = {
+    "100.111.109.43" = [ "tw.home.yutakobayashi.com" ];
+  };
+
   microvm = {
     vcpu = 2;
     mem = 4096;
@@ -111,8 +138,8 @@ in
       fi
 
       ${lib.getExe pkgs.rsync} -aL --delete \
-        ${hermesSkillsBundle}/brainstorming/ /var/lib/hermes/.hermes/skills/brainstorming/
-      chown -R hermes:hermes /var/lib/hermes/.hermes/skills/brainstorming
+        ${hermesSkillsBundle}/ /var/lib/hermes/.hermes/skills/
+      chown -R hermes:hermes /var/lib/hermes/.hermes/skills
     '';
   };
 
