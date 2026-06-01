@@ -50,6 +50,13 @@ let
     selection = hermesSkillsSelection;
     name = "hermes-agent-skills";
   };
+  hermesSkillsInstallScript = lib.concatMapStringsSep "\n" (skill: ''
+    install -d -o hermes -g hermes -m 2770 \
+      /var/lib/hermes/.hermes/skills/${skill}
+    ${lib.getExe pkgs.rsync} -aL --delete \
+      ${hermesSkillsBundle}/${skill}/ /var/lib/hermes/.hermes/skills/${skill}/
+    chown -R hermes:hermes /var/lib/hermes/.hermes/skills/${skill}
+  '') (builtins.attrNames hermesSkillsSelection);
   hermesConfigFile = pkgs.writeText "hermes-config.yaml" (
     builtins.toJSON config.services.hermes-agent.settings
   );
@@ -138,9 +145,7 @@ in
           ${credentialsDir}/hermes-agent.auth.json /var/lib/hermes/.hermes/auth.json
       fi
 
-      ${lib.getExe pkgs.rsync} -aL --delete \
-        ${hermesSkillsBundle}/ /var/lib/hermes/.hermes/skills/
-      chown -R hermes:hermes /var/lib/hermes/.hermes/skills
+      ${hermesSkillsInstallScript}
     '';
   };
 
