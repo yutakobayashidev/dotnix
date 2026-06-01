@@ -62,11 +62,7 @@
     hostName = "B450M-Pro4";
     useDHCP = lib.mkDefault true;
     useNetworkd = true;
-    nameservers = [
-      "127.0.0.1"
-      "100.100.100.100"
-      "8.8.8.8"
-    ];
+    nameservers = lib.mkForce [ "127.0.0.1" ];
     wireless = {
       enable = true;
       secretsFile = config.sops.secrets.wifi.path;

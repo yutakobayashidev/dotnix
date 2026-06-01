@@ -23,10 +23,7 @@
     };
   };
 
-  services.tailscale = {
-    enable = true;
-    overrideLocalDns = true;
-  };
+  services.tailscale.enable = true;
 
   services.comin = {
     enable = true;
