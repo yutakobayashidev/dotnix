@@ -25,3 +25,6 @@ abcde.*/
 infra/uptime-kuma/*.tfvars
 infra/oci/nix-builder/*.tfvars
 infra/oci/nix-builder/oci_secrets.yaml
+
+# Generated agent skill deployments
+.claude/

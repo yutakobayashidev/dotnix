@@ -5,59 +5,69 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-# システム設定を反映（NixOS / macOS 共通）
+# Apply system configuration (NixOS / macOS)
 nix run .#switch
 
-# ビルドのみ（適用なし）
+# Build only (no apply)
 nix run .#build
 
-# 特定のパッケージを検索
+# Search for a package
 nix search nixpkgs <package>
 
-# flake入力を更新
+# Update flake inputs
 nix flake update
 ```
 
 ## Agent Skills
 
-このリポジトリは`agent-skills-nix`でスキルを管理しています。
+Skills are managed via the `skills` flake input (`yutakobayashidev/skills`) using `agent-skills-nix`.
 
-AGENTS.mdには個別のスキル名やファイル構成を置かず、実設定と専用ドキュメントを正本とします。スキルを追加・変更した場合は、必要に応じてそちらを更新してください。
+Skills are defined in `yutakobayashidev/skills`, nested under `skills/`. To test local changes before pushing:
+
+```bash
+nix run .#switch --override-input skills path:../skills
+```
+
+Do not list individual skill names or file layout here — the source of truth is the skills repo configuration and its documentation.
 
 ## Secret Handling
 
-シークレット、APIトークン、sops/age秘密鍵、SSH秘密鍵を`/tmp`や`/private/tmp`などの一時ディレクトリに書かないでください。生成・編集が必要な場合は、最終配置先（例: `~/.config/sops/age/keys.txt`）か、repo外の永続ディレクトリに`chmod 600`で保存し、配置先と復旧手順を記録してください。
+Do not write secrets, API tokens, sops/age private keys, or SSH private keys to temporary directories like `/tmp` or `/private/tmp`. If generation or editing is needed, save to the final destination (e.g. `~/.config/sops/age/keys.txt`) or a persistent directory outside the repo with `chmod 600`, and record the location and recovery procedure.
 
 ## Architecture
 
-NixOS & macOS flake構成 with home-manager（nixos-unstable + nixpkgs-stable fallback）
+NixOS & macOS flake configuration with home-manager (nixos-unstable + nixpkgs-stable fallback).
 
-Host 定義は root の `flake-module.nix` が `hosts` table から生成します。Host 固有の system 設定は `systems/<platform>/<hostname>/`、platform 共通の system 設定は `systems/<platform>/common.nix` や `systems/<platform>/desktop.nix`、Home Manager 設定は `homes/<platform>/<hostname>/` に置きます。アプリ単位の Home Manager 設定は direct import 用の `applications/`、option 付きの再利用可能な Home Manager 機能 module は `nix/modules/home/` に置きます。共通 module は `nix/modules/` に寄せ、NixOS profile は `nix/modules/profiles/nixos/`、Home Manager profile は `nix/modules/profiles/home/` に置きます。
+Host definitions are generated from the `hosts` table in the root `flake-module.nix`. Host-specific system config goes in `systems/<platform>/<hostname>/`, platform-shared system config in `systems/<platform>/common.nix` or `systems/<platform>/desktop.nix`. Home Manager config goes in `homes/<platform>/<hostname>/`. Per-application Home Manager config uses direct-import `applications/`, reusable Home Manager functional modules with options go in `nix/modules/home/`. Shared modules live in `nix/modules/`, NixOS profiles in `nix/modules/profiles/nixos/`, Home Manager profiles in `nix/modules/profiles/home/`.
 
-独自パッケージの実体は `yutakobayashidev/nur-packages` で管理し、`dotnix` は GitHub flake input として取り込みます。ローカルの未 push 変更を試すときだけ `--override-input nur-packages path:../nur-packages` を使います。
+Custom packages are maintained in `yutakobayashidev/nur-packages` and pulled into `dotnix` as a GitHub flake input. To test local un-pushed changes, use:
+
+```bash
+nix run .#switch --override-input nur-packages path:../nur-packages
+```
 
 ## Key Features
 
 ### NixOS
 
-- **WM**: Niri（スクロール可能なタイリングWM）
-- **IME**: fcitx5 + hazkey（LLM変換）
-- **YubiKey**: PAM U2F認証サポート（polkit, swaylock対応）
-- **Development**: Docker, Tailscale, Android開発環境、UM790-ProのVirtualBox
-- **Observability**: B450M-Pro4 の Grafana / Prometheus / Loki と Claude Code OTLP telemetry
+- **WM**: Niri (scrollable tiling WM)
+- **IME**: fcitx5 + hazkey (LLM-based conversion)
+- **YubiKey**: PAM U2F authentication support (polkit, swaylock)
+- **Development**: Docker, Tailscale, Android dev environment, VirtualBox on UM790-Pro
+- **Observability**: Grafana / Prometheus / Loki on B450M-Pro4, Claude Code OTLP telemetry
 
 ### macOS
 
-- **Homebrew**: GUI アプリ管理（Ghostty, Raycast, Chrome等）
-- **Touch ID**: sudo認証対応
-- **1Password**: Shell Plugins（gh, awscli2）
+- **Homebrew**: GUI app management (Ghostty, Raycast, Chrome, etc.)
+- **Touch ID**: sudo authentication
+- **1Password**: Shell Plugins (gh, awscli2)
 
 ## Key Shell Shortcuts
 
-定義場所: `zsh/config/aliases.zsh`, `zsh/functions/*.zsh`
+Defined in: `zsh/config/aliases.zsh`, `zsh/functions/*.zsh`
 
-- `rebuild` → `nix run .#switch`（NixOS / macOS 共通）
-- `g` → 引数なし: ghq+fzf、引数あり: git
-- `Ctrl+G` → `g` の引数なしと同じ ghq+fzf ピッカー
-- `gh-q` → ghq + fzf でリポジトリ選択・clone
+- `rebuild` → `nix run .#switch` (NixOS / macOS)
+- `g` → no args: ghq+fzf, with args: git
+- `Ctrl+G` → same as `g` with no args (ghq+fzf picker)
+- `gh-q` → ghq + fzf repo selection / clone
 - `yolo` → `claude --dangerously-skip-permissions`
