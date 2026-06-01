@@ -8,6 +8,11 @@
     in
     {
       devShells.default = localPkgs.mkShell {
+        packages = [
+          config.pre-commit.settings.package
+        ]
+        ++ config.pre-commit.settings.enabledPackages;
+
         shellHook = ''
           ${config.pre-commit.installationScript}
         '';

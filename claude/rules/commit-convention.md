@@ -5,9 +5,9 @@ paths:
 
 # Commit Message Convention
 
-Follow [Conventional Commits](https://www.conventionalcommits.org/) with **required scope**.
+Follow [Conventional Commits](https://www.conventionalcommits.org/).
 
-Format: `<type>(<scope>): <description>`
+Format: `<type>[optional scope]: <description>`
 
 ## Types
 
@@ -25,7 +25,7 @@ Format: `<type>(<scope>): <description>`
 
 ## Scope
 
-Scope is **mandatory**. Use the most relevant area for the project. Each project's CLAUDE.md lists its available scopes.
+Scope is optional. When used, choose the most relevant area for the project.
 
 ## PR Titles
 
@@ -34,7 +34,6 @@ PR titles **must** follow the same convention. Squash merges use the PR title as
 ## Bad Examples
 
 ```
-feat: add markdown output        # missing scope
 update code                      # missing type and scope
 fix(github): Fix bug.            # don't capitalize, don't end with period
 Core: CLI + GitHub プロバイダー  # PR title not following convention
