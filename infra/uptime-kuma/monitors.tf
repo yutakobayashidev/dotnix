@@ -15,7 +15,7 @@ resource "uptimekuma_monitor_group" "internal" {
 
 resource "uptimekuma_monitor_http" "gitea" {
   name           = "Gitea"
-  url            = "https://git.home.yutakobayashi.com"
+  url            = "https://git.yutakobayashi.com"
   interval       = 60
   timeout        = 30
   max_retries    = 2
@@ -186,7 +186,7 @@ resource "uptimekuma_monitor_http" "tw" {
   active                = true
   method                = "GET"
   max_redirects         = 10
-  parent         = uptimekuma_monitor_group.internal.id
+  parent                = uptimekuma_monitor_group.internal.id
   tags = [
     {
       tag_id = uptimekuma_tag.service.id
@@ -205,7 +205,7 @@ resource "uptimekuma_monitor_http" "cloudflare_error_page" {
   active                = true
   method                = "GET"
   max_redirects         = 10
-  parent         = uptimekuma_monitor_group.internal.id
+  parent                = uptimekuma_monitor_group.internal.id
   tags = [
     {
       tag_id = uptimekuma_tag.service.id

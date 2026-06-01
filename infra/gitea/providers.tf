@@ -7,6 +7,11 @@ terraform {
   }
 }
 
+variable "gitea_base_url" {
+  type    = string
+  default = "https://git.yutakobayashi.com"
+}
+
 provider "gitea" {
-  base_url = "https://git.home.yutakobayashi.com"
+  base_url = var.gitea_base_url
 }
