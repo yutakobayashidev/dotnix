@@ -10,6 +10,12 @@ in
       enable = true;
       port = archiveboxPort;
     };
+    jobs = {
+      radar = {
+        opmlUrl = "https://radar.yutakobayashi.com/sources.opml";
+        startAt = "daily";
+      };
+    };
   };
 
   systemd.tmpfiles.rules = [

@@ -25,6 +25,26 @@ let
           '';
         };
 
+        opmlFile = lib.mkOption {
+          type = with lib.types; nullOr path;
+          description = ''
+            Path to an OPML file containing links to archive.
+            Mutually exclusive with {option}`urls` and {option}`opmlUrl`.
+          '';
+          default = null;
+          example = "/var/lib/archivebox/feeds.opml";
+        };
+
+        opmlUrl = lib.mkOption {
+          type = with lib.types; nullOr str;
+          description = ''
+            URL to an OPML file to download and archive.
+            Mutually exclusive with {option}`urls` and {option}`opmlFile`.
+          '';
+          default = null;
+          example = "https://radar.yutakobayashi.com/sources.opml";
+        };
+
         extraArgs = lib.mkOption {
           type = with lib.types; listOf str;
           description = ''
@@ -58,10 +78,33 @@ let
       wants = [ "network-online.target" ];
       documentation = [ "https://docs.archivebox.io/" ];
       path = [ cfg.package ] ++ cfg.extraPackages;
-      script = ''
-        echo "${lib.concatStringsSep "\n" value.urls}" \
-          | archivebox add ${lib.escapeShellArgs value.extraArgs}
-      '';
+      script =
+        if value.urls != [ ] then
+          ''
+            echo "${lib.concatStringsSep "\n" value.urls}" \
+              | archivebox add ${lib.escapeShellArgs value.extraArgs}
+          ''
+        else if value.opmlFile != null then
+          ''
+            archivebox add ${lib.escapeShellArgs value.extraArgs} "${value.opmlFile}"
+          ''
+        else if value.opmlUrl != null then
+          ''
+            curl -sL "${lib.escapeURL value.opmlUrl}" \
+              | python3 -c "
+            import sys, xml.etree.ElementTree as ET
+            tree = ET.parse(sys.stdin)
+            for el in tree.iter():
+                url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
+                if url:
+                    print(url)
+            " \
+              | archivebox add ${lib.escapeShellArgs value.extraArgs}
+          ''
+        else
+          ''
+            archivebox add ${lib.escapeShellArgs value.extraArgs}
+          '';
       serviceConfig = {
         User = "archivebox";
         Group = "archivebox";
@@ -206,6 +249,14 @@ in
           wants = [ "network-online.target" ];
           documentation = [ "https://docs.archivebox.io/" ];
           wantedBy = [ "multi-user.target" ];
+          path = [ cfg.package ];
+          environment = {
+            PYTHONPATH = lib.makeSearchPath "lib/${pkgs.python3.libPrefix}/site-packages" (
+              lib.closePropagation ([ cfg.package ] ++ (cfg.package.propagatedBuildInputs or [ ]))
+            );
+            BASE_URL = "https://archive.home.yutakobayashi.com";
+            SERVER_SECURITY_MODE = "danger-onedomain-fullreplay";
+          };
           serviceConfig = {
             User = "archivebox";
             Group = "archivebox";
@@ -232,6 +283,8 @@ in
               "AF_LOCAL"
               "AF_INET"
               "AF_INET6"
+              "AF_NETLINK"
+              "AF_PACKET"
             ];
             RestrictNamespaces = true;
 

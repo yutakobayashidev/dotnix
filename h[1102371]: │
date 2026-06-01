@@ -1,0 +1,23 @@
+● oci-retry.service - OCI nix-builder retry loop (retry on Out of host capacity)
+     Loaded: loaded (]8;;file://B450M-Pro4/home/yuta/.config/systemd/user/oci-retry.service\/home/yuta/.config/systemd/user/oci-retry.service]8;;\; [0;1;33m[0;1;38:5:185mdisabled[0m; preset: ignored)
+     Active: activating (start) since Mon 2026-06-01 03:13:22 JST; 4h 40min ago
+        Job: 6434
+ Invocation: 64739d81d29e421c8fbc744020de6e63
+   Main PID: 971488 (bash)
+      Tasks: 2[0;90m[0;38:5:245m (limit: 19062)[0m
+     Memory: 662M (peak: 1.3G, swap: 352K, swap peak: 352K)
+        CPU: 16min 54.273s
+     CGroup: /user.slice/user-1000.slice/user@1000.service/app.slice/oci-retry.service
+             ├─[0;90m[0;38:5:245m 971488 bash /home/yuta/ghq/github.com/yutakobayashidev/dotnix/infra/oci/nix-builder/oci-retry.sh[0m
+             └─[0;90m[0;38:5:245m1102654 sleep 60[0m
+
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │ Operation Name: LaunchInstance
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │ OPC request ID: 096a7783742c896156c91631816879d5/82705ABCDBEBEAA3DBBB1C6A4E525460/7B8B80E5AF205D993E8C4484FC59C96F
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │ 
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │ 
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │   with oci_core_instance.nix_builder,
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │   on main.tf line 58, in resource "oci_core_instance" "nix_builder":
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │   58: resource "oci_core_instance" "nix_builder" {
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: │ 
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[1102371]: ╵
+ 6月 01 07:53:16 B450M-Pro4 oci-retry.sh[971488]: Retry in 60s...
