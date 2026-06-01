@@ -4,6 +4,7 @@
     onActivation = {
       autoUpdate = true;
       cleanup = "uninstall";
+      extraFlags = [ "--force-cleanup" ];
     };
     taps = [
       "blacktop/tap"
