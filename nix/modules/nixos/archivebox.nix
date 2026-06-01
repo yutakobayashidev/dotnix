@@ -55,6 +55,10 @@ let
           '';
         };
 
+        parseFeeds = lib.mkEnableOption ''
+          parsing each input URL as an RSS/Atom feed before archiving its entries
+        '';
+
         startAt = lib.mkOption {
           type = with lib.types; str;
           description = ''
@@ -86,34 +90,58 @@ let
       script =
         let
           archiveboxAdd = "podman exec -i --user=archivebox archivebox archivebox add ${lib.escapeShellArgs value.extraArgs}";
+          inputUrls =
+            if value.urls != [ ] then
+              ''
+                echo "${lib.concatStringsSep "\n" value.urls}"
+              ''
+            else if value.opmlFile != null then
+              ''
+                python3 -c "
+                import xml.etree.ElementTree as ET
+                tree = ET.parse('${value.opmlFile}')
+                for el in tree.iter():
+                    url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
+                    if url:
+                        print(url)
+                "
+              ''
+            else if value.opmlUrl != null then
+              ''
+                python3 -c "
+                import xml.etree.ElementTree as ET, urllib.request
+                req = urllib.request.Request('${value.opmlUrl}', headers={'User-Agent': 'Mozilla/5.0 (compatible; ArchiveBox/0.9)'})
+                resp = urllib.request.urlopen(req, timeout=10)
+                tree = ET.parse(resp)
+                for el in tree.iter():
+                    url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
+                    if url:
+                        print(url)
+                "
+              ''
+            else
+              "";
         in
-        if value.urls != [ ] then
+        if value.parseFeeds then
           ''
-            echo "${lib.concatStringsSep "\n" value.urls}" | ${archiveboxAdd}
+            {
+              ${inputUrls}
+            } | while IFS= read -r feed_url; do
+              if ! python3 - "$feed_url" <<'PY' | ${archiveboxAdd}; then
+            import sys, urllib.request
+            req = urllib.request.Request(sys.argv[1], headers={'User-Agent': 'Mozilla/5.0 (compatible; ArchiveBox/0.7)'})
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                sys.stdout.buffer.write(resp.read())
+            PY
+                echo "Failed to archive feed: $feed_url" >&2
+              fi
+            done
           ''
-        else if value.opmlFile != null then
+        else if inputUrls != "" then
           ''
-            python3 -c "
-            import xml.etree.ElementTree as ET
-            tree = ET.parse('${value.opmlFile}')
-            for el in tree.iter():
-                url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
-                if url:
-                    print(url)
-            " | ${archiveboxAdd}
-          ''
-        else if value.opmlUrl != null then
-          ''
-            python3 -c "
-            import xml.etree.ElementTree as ET, urllib.request
-            req = urllib.request.Request('${value.opmlUrl}', headers={'User-Agent': 'Mozilla/5.0 (compatible; ArchiveBox/0.9)'})
-            resp = urllib.request.urlopen(req, timeout=10)
-            tree = ET.parse(resp)
-            for el in tree.iter():
-                url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
-                if url:
-                    print(url)
-            " | ${archiveboxAdd}
+            {
+              ${inputUrls}
+            } | ${archiveboxAdd}
           ''
         else
           ''

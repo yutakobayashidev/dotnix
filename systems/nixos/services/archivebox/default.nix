@@ -9,9 +9,11 @@ in
     jobs = {
       radar = {
         opmlUrl = "https://radar.yutakobayashi.com/sources.opml";
+        parseFeeds = true;
         extraArgs = [
+          "--parser=rss"
           "--depth"
-          "1"
+          "0"
         ];
         startAt = "daily";
       };
