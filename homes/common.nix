@@ -11,10 +11,6 @@ let
     config.home-manager.users.${username}.programs.git.settings.ghq.root
   }/github.com/yutakobayashidev/dotnix";
 
-  local-skills = inputs.nix-filter.lib {
-    root = inputs.self;
-    include = [ "agents/skills" ];
-  };
 in
 {
   home-manager = {
@@ -25,7 +21,6 @@ in
         inputs
         helpers
         dotfilesDir
-        local-skills
         ;
     };
     sharedModules = [

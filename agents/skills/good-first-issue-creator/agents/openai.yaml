@@ -1,4 +1,0 @@
-interface:
-  display_name: 'Good First Issue Creator'
-  short_description: 'Draft scoped newcomer-friendly GitHub issues'
-  default_prompt: 'Create a good first issue from this repo context with clear scope, acceptance criteria, and a concrete implementation plan.'

@@ -1219,21 +1219,6 @@
         "type": "github"
       }
     },
-    "nix-filter": {
-      "locked": {
-        "lastModified": 1757882181,
-        "narHash": "sha256-+cCxYIh2UNalTz364p+QYmWHs0P+6wDhiWR4jDIKQIU=",
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "rev": "59c44d1909c72441144b93cf0f054be7fe764de5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "type": "github"
-      }
-    },
     "nix-formatter-pack": {
       "inputs": {
         "nixpkgs": [
@@ -1970,7 +1955,6 @@
         "niks3": "niks3",
         "niri": "niri",
         "nix-darwin": "nix-darwin",
-        "nix-filter": "nix-filter",
         "nix-hazkey": "nix-hazkey",
         "nix-index-database": "nix-index-database",
         "nix-on-droid": "nix-on-droid",
@@ -1986,6 +1970,7 @@
         "prompt-review-skill": "prompt-review-skill",
         "repiq": "repiq",
         "rustowl-flake": "rustowl-flake",
+        "skills": "skills",
         "sops-nix": "sops-nix",
         "starla": "starla",
         "superpowers": "superpowers",
@@ -2088,6 +2073,22 @@
       "original": {
         "owner": "andreymatin",
         "repo": "scss-reset",
+        "type": "github"
+      }
+    },
+    "skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780339584,
+        "narHash": "sha256-xbqRb5LtEQ05PNxHjc84xMRBnbqqUFNxfRrF+RId1Wk=",
+        "owner": "yutakobayashidev",
+        "repo": "skills",
+        "rev": "4d7cd0a845d49dfa002e6db258d33fa7b27982bd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "skills",
         "type": "github"
       }
     },

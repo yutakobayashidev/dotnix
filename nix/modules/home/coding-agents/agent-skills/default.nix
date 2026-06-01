@@ -3,7 +3,6 @@
   pkgs,
   lib,
   inputs,
-  local-skills,
   ...
 }:
 let
@@ -18,8 +17,8 @@ in
 
       sources = {
         local = {
-          path = local-skills;
-          subdir = "agents/skills";
+          path = inputs.skills;
+          subdir = "skills";
         };
         anthropic = {
           path = inputs.anthropic-skills;

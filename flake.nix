@@ -133,6 +133,10 @@
       url = "github:fa0311/twitter_api_safe_relay_skills";
       flake = false;
     };
+    skills = {
+      url = "github:yutakobayashidev/skills";
+      flake = false;
+    };
     repiq = {
       url = "github:yutakobayashidev/repiq";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -170,7 +174,6 @@
       url = "github:natsukium/mcp-servers-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-filter.url = "github:numtide/nix-filter";
     nix-on-droid = {
       url = "github:nix-community/nix-on-droid";
       inputs.nixpkgs.follows = "nixpkgs";
