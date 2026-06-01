@@ -54,6 +54,9 @@
       # Hardware
       arduino-ide
 
+      # Gaming
+      modrinth-app
+
       # Other
       ipfs-desktop
       sidequest
