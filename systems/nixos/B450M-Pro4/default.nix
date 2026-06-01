@@ -175,5 +175,9 @@
     sopsFile = ./secrets.yaml;
   };
 
+  environment.systemPackages = with pkgs; [
+    ooniprobe-cli
+  ];
+
   system.stateVersion = "25.11";
 }
