@@ -21,7 +21,6 @@ in
       jj-desc
 
       # Development Tools
-      actrun
       bumblebee
       gogcli
       nil

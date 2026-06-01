@@ -34,7 +34,6 @@ in
         inputs.gh-nippou.overlays.default
         inputs.gh-graph.overlays.default
         inputs.rustowl-flake.overlays.default
-        inputs.actrun-overlay.overlays.default
         inputs.firefox-addons.overlays.default
         inputs.nur-packages.overlays.default
         (import ../../../nix/overlays/default.nix)

@@ -195,10 +195,6 @@
       url = "github:moonbit-community/moonbit-overlay";
       flake = false;
     };
-    actrun-overlay = {
-      url = "github:myuron/actrun-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     tree-sitter-moonbit = {
       url = "github:moonbitlang/tree-sitter-moonbit";
       flake = false;
