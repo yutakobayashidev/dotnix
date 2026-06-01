@@ -78,6 +78,7 @@ let
       wants = [ "network-online.target" ];
       documentation = [ "https://docs.archivebox.io/" ];
       path = [ cfg.package ] ++ cfg.extraPackages;
+      environment.ABXPKG_BINPROVIDERS = "env";
       script =
         if value.urls != [ ] then
           ''
@@ -260,6 +261,7 @@ in
             );
             BASE_URL = "https://archive.home.yutakobayashi.com";
             SERVER_SECURITY_MODE = "danger-onedomain-fullreplay";
+            ABXPKG_BINPROVIDERS = "env";
           };
           serviceConfig = {
             User = "archivebox";
