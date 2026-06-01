@@ -20,14 +20,9 @@ nix flake update
 
 ## Agent Skills
 
-スキルは `agent-skills-nix` で管理し、`github:yutakobayashidev/skills` を flake input として取り込んでいます。設定は `nix/modules/home/coding-agents/agent-skills/` が正本です。
+このリポジトリは`agent-skills-nix`でスキルを管理しています。
 
-スキルを追加・変更するときは [skills](https://github.com/yutakobayashidev/skills) リポジトリで作業し、ローカルの未 push 変更を試すときは `--override-input` を使います：
-
-```bash
-nix run .#build --override-input skills path:../skills
-nix run .#switch --override-input skills path:../skills
-```
+AGENTS.mdには個別のスキル名やファイル構成を置かず、実設定と専用ドキュメントを正本とします。スキルを追加・変更した場合は、必要に応じてそちらを更新してください。
 
 ## Secret Handling
 
@@ -39,12 +34,7 @@ NixOS & macOS flake構成 with home-manager（nixos-unstable + nixpkgs-stable fa
 
 Host 定義は root の `flake-module.nix` が `hosts` table から生成します。Host 固有の system 設定は `systems/<platform>/<hostname>/`、platform 共通の system 設定は `systems/<platform>/common.nix` や `systems/<platform>/desktop.nix`、Home Manager 設定は `homes/<platform>/<hostname>/` に置きます。アプリ単位の Home Manager 設定は direct import 用の `applications/`、option 付きの再利用可能な Home Manager 機能 module は `nix/modules/home/` に置きます。共通 module は `nix/modules/` に寄せ、NixOS profile は `nix/modules/profiles/nixos/`、Home Manager profile は `nix/modules/profiles/home/` に置きます。
 
-独自パッケージの実体は `yutakobayashidev/nur-packages`、スキルは `yutakobayashidev/skills` で管理し、`dotnix` は GitHub flake input として取り込みます。ローカルの未 push 変更を試すときだけ `--override-input` を使います：
-
-```bash
-nix run .#build --override-input nur-packages path:../nur-packages
-nix run .#build --override-input skills path:../skills
-```
+独自パッケージの実体は `yutakobayashidev/nur-packages` で管理し、`dotnix` は GitHub flake input として取り込みます。ローカルの未 push 変更を試すときだけ `--override-input nur-packages path:../nur-packages` を使います。
 
 ## Key Features
 
