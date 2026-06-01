@@ -90,17 +90,10 @@ let
           ''
         else if value.opmlUrl != null then
           ''
-            echo "PATH=$PATH" >&2
-            which curl >&2 || echo "curl not found" >&2
-            curl --version >&2 || echo "curl no version" >&2
-            OPML=$(curl -sL --connect-timeout 10 "${lib.escapeURL value.opmlUrl}" 2>&1) || {
-              echo "curl failed: $OPML" >&2
-              exit 1
-            }
-            echo "$OPML" \
-              | python3 -c "
-            import sys, xml.etree.ElementTree as ET
-            tree = ET.parse(sys.stdin)
+            python3 -c "
+            import sys, xml.etree.ElementTree as ET, urllib.request
+            resp = urllib.request.urlopen('${lib.escapeURL value.opmlUrl}', timeout=10)
+            tree = ET.parse(resp)
             for el in tree.iter():
                 url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
                 if url:
