@@ -1,31 +1,29 @@
-{
-  ...
-}:
+{ ... }:
 
 let
   archiveboxPort = 8000;
 in
 {
-  virtualisation.oci-containers.containers.archivebox = {
-    image = "ghcr.io/archivebox/archivebox:main";
-    ports = [ "127.0.0.1:${toString archiveboxPort}:8000" ];
-    volumes = [
-      "/srv/bulk/archivebox/data:/data"
-    ];
-    environment = {
-      ALLOWLIST_HOSTS = "localhost,127.0.0.1,archive.home.yutakobayashi.com";
-      CSRF_TRUSTED_ORIGINS = "http://127.0.0.1:${toString archiveboxPort},http://archive.home.yutakobayashi.com";
-      REVERSE_PROXY_USER_HEADER = "X-Remote-User";
-      REVERSE_PROXY_WHITELIST = "127.0.0.1/32,100.86.129.23/32";
+  services.archivebox = {
+    enable = true;
+    webserver = {
+      enable = true;
+      port = archiveboxPort;
     };
   };
 
   systemd.tmpfiles.rules = [
     "d /srv/bulk/archivebox 0755 root root -"
-    "d /srv/bulk/archivebox/data 0755 root root -"
+    "d /srv/bulk/archivebox/data 0755 archivebox archivebox -"
   ];
 
-  systemd.services.docker-archivebox.unitConfig.RequiresMountsFor = [ "/srv/bulk/archivebox/data" ];
+  fileSystems."/var/lib/archivebox" = {
+    device = "/srv/bulk/archivebox/data";
+    fsType = "none";
+    options = [ "bind" ];
+  };
+
+  systemd.services.archivebox-server.unitConfig.RequiresMountsFor = [ "/var/lib/archivebox" ];
 
   services.traefik.dynamicConfigOptions.http = {
     routers.archivebox = {

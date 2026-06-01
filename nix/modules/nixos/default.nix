@@ -1,5 +1,6 @@
 {
   imports = [
+    ./archivebox.nix
     ./cloudflared-tunnel.nix
     ./docker.nix
     ./kubo.nix

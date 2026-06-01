@@ -37,7 +37,8 @@ Partition layout before changes:
 `/dev/sda2` was mounted read-only at `/tmp/hdd-sda2`. It contained about 485GB
 of existing Windows-era data, with about 2.3TB free.
 
-`ArchiveBox` currently binds this path into the container:
+Before the native service migration, `ArchiveBox` bound this path into the
+Docker container:
 
 ```nix
 "/mnt/usb/services/archivebox/data:/data"
@@ -330,4 +331,10 @@ ArchiveBox uses:
 
 ```text
 /srv/bulk/archivebox/data
+```
+
+The native ArchiveBox service bind-mounts that existing storage directory at:
+
+```text
+/var/lib/archivebox
 ```
