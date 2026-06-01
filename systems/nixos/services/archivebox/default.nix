@@ -13,6 +13,10 @@ in
     jobs = {
       radar = {
         opmlUrl = "https://radar.yutakobayashi.com/sources.opml";
+        extraArgs = [
+          "--depth"
+          "1"
+        ];
         startAt = "daily";
       };
     };
