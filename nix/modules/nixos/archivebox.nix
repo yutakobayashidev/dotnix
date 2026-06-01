@@ -92,7 +92,8 @@ let
           ''
             python3 -c "
             import sys, xml.etree.ElementTree as ET, urllib.request
-            resp = urllib.request.urlopen('${value.opmlUrl}', timeout=10)
+            req = urllib.request.Request('${value.opmlUrl}', headers={'User-Agent': 'Mozilla/5.0 (compatible; ArchiveBox/0.9)'})
+            resp = urllib.request.urlopen(req, timeout=10)
             tree = ET.parse(resp)
             for el in tree.iter():
                 url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
