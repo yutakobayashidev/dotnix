@@ -12,7 +12,7 @@ let
       path = inputs.superpowers;
       subdir = "skills";
     };
-    twitter-api-replay = {
+    twitter-api-relay = {
       path = inputs.twitter-api-safe-relay-skills;
       subdir = "skills";
     };
@@ -27,15 +27,15 @@ let
         from = "superpowers";
         path = "brainstorming";
       };
-      twitter-api-replay = {
-        from = "twitter-api-replay";
-        path = "twitter-api-replay";
+      twitter-api-relay = {
+        from = "twitter-api-relay";
+        path = "twitter-api-relay";
         transform =
           { original, ... }:
           builtins.replaceStrings
             [
-              "$TWITTER_REPLAY_BASE_URL"
-              "${dollar}{TWITTER_REPLAY_BASE_URL%/}"
+              "$TWITTER_RELAY_BASE_URL"
+              "${dollar}{TWITTER_RELAY_BASE_URL%/}"
             ]
             [
               "https://tw.home.yutakobayashi.com"

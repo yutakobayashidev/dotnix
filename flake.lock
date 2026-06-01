@@ -2322,11 +2322,11 @@
     "twitter-api-safe-relay-skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1780223390,
-        "narHash": "sha256-+ZGmspluU+fVEW85M23RepVjYOeWLfLLcEwaBhnI4Ww=",
+        "lastModified": 1780340691,
+        "narHash": "sha256-Qk/oO6xu5rM7M3Xk9CiHcIF7D7VXJrni6sE0lIl1nHA=",
         "owner": "fa0311",
         "repo": "twitter_api_safe_relay_skills",
-        "rev": "19f55e7e81fe588ed47554afa8b2419775335604",
+        "rev": "28d5515625df5f94222454eced29bdc32548cf44",
         "type": "github"
       },
       "original": {
