@@ -129,6 +129,10 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    twitter-api-safe-relay-skills = {
+      url = "github:fa0311/twitter_api_safe_relay_skills";
+      flake = false;
+    };
     repiq = {
       url = "github:yutakobayashidev/repiq";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -1911,6 +1911,7 @@
         "superpowers": "superpowers",
         "tree-sitter-moonbit": "tree-sitter-moonbit",
         "treefmt-nix": "treefmt-nix_4",
+        "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills",
         "ui-ux-pro-max-skill": "ui-ux-pro-max-skill",
         "vercel-skills": "vercel-skills"
       }
@@ -2195,6 +2196,22 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "twitter-api-safe-relay-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780223390,
+        "narHash": "sha256-+ZGmspluU+fVEW85M23RepVjYOeWLfLLcEwaBhnI4Ww=",
+        "owner": "fa0311",
+        "repo": "twitter_api_safe_relay_skills",
+        "rev": "19f55e7e81fe588ed47554afa8b2419775335604",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fa0311",
+        "repo": "twitter_api_safe_relay_skills",
         "type": "github"
       }
     },

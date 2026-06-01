@@ -69,6 +69,10 @@ in
           path = inputs.mattpocock-skills;
           subdir = "skills";
         };
+        twitter-api-safe-relay = {
+          path = inputs.twitter-api-safe-relay-skills;
+          subdir = "skills";
+        };
       };
 
       skills.enableAll = [
@@ -80,6 +84,7 @@ in
         "obsidian"
         "repiq"
         "difit"
+        "twitter-api-safe-relay"
       ];
 
       skills.explicit = {
