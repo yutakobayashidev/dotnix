@@ -92,7 +92,7 @@ let
           ''
             python3 -c "
             import sys, xml.etree.ElementTree as ET, urllib.request
-            resp = urllib.request.urlopen('${lib.escapeURL value.opmlUrl}', timeout=10)
+            resp = urllib.request.urlopen('${value.opmlUrl}', timeout=10)
             tree = ET.parse(resp)
             for el in tree.iter():
                 url = el.get('xmlUrl') or el.get('url') or el.get('htmlUrl')
