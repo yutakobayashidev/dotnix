@@ -55,6 +55,7 @@ let
     "$schema" = "https://json.schemastore.org/claude-code-settings.json";
 
     env = {
+      ANTHROPIC_BASE_URL = "https://headroom.home.yutakobayashi.com";
       BASH_DEFAULT_TIMEOUT_MS = "300000";
       BASH_MAX_TIMEOUT_MS = "1200000";
       CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR = "1";

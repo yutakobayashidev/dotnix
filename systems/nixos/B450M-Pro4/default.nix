@@ -31,6 +31,7 @@
     ../services/coredns
     ../services/twitter-bookmark-snap
     ../services/s3s
+    ../services/headroom
     ../services/starla
     ../services/uptime-kuma
     inputs.disko.nixosModules.disko
