@@ -32,6 +32,7 @@
     ../services/twitter-bookmark-snap
     ../services/s3s
     ../services/headroom
+    ../services/aivisspeech
     ../services/starla
     ../services/uptime-kuma
     inputs.disko.nixosModules.disko
@@ -162,7 +163,6 @@
   hardware.nvidia-container-toolkit.enable = true;
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.daemon.settings.features.cdi = true;
 
   services.cloudflared.enable = true;
 
