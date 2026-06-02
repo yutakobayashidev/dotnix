@@ -37,6 +37,17 @@ let
       workspace_dependencies = false;
     };
 
+    default_permissions = ":workspace";
+
+    permissions.project.network = {
+      enabled = true;
+      domains = {
+        "aivisspeech.home.yutakobayashi.com" = "allow";
+        "localhost" = "allow";
+        "127.0.0.1" = "allow";
+      };
+    };
+
     mcp_servers.deepwiki = {
       url = "https://mcp.deepwiki.com/mcp";
     };
@@ -53,6 +64,7 @@ let
       "documents@openai-primary-runtime".enabled = true;
       "spreadsheets@openai-primary-runtime".enabled = true;
       "presentations@openai-primary-runtime".enabled = true;
+      "session-tts@personal".enabled = true;
     };
   };
   codexConfig = tomlFormat.generate "codex-config" settings;

@@ -35,12 +35,14 @@ subagent)
   head="You are delegating to a subagent. Narrate WHAT you are delegating and WHY before starting it."
   ;;
 prompt)
-  # UserPromptSubmit: stdout is auto-injected as context. No JSON.
-  cat <<EOF
+  msg=$(
+    cat <<EOF
 [session-tts] User prompt received. If this turn becomes multi-step,
 narrate at milestones (transition / problem / finding / pivot).
 $tail_common
 EOF
+  )
+  jq -n --arg additionalContext "$msg" '{ additionalContext: $additionalContext }'
   exit 0
   ;;
 *)
@@ -48,5 +50,5 @@ EOF
   ;;
 esac
 
-jq -n --arg event "$event" --arg msg "[session-tts] $head $tail_common" \
-  '{ hookSpecificOutput: { hookEventName: $event, additionalContext: $msg } }'
+jq -n --arg additionalContext "[session-tts] $head $tail_common" \
+  '{ additionalContext: $additionalContext }'

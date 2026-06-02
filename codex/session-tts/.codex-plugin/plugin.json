@@ -1,7 +1,7 @@
 {
 	"name": "session-tts",
 	"description": "Read Codex responses aloud locally with a different Japanese voice per session. Instructs Codex to deliver mid-turn progress narration via a synchronous Bash call into the say adapter. Permission prompts include the workspace name. ON by default; playback volume is adjustable via /session-tts:volume. Engine and models are managed automatically. Apple Silicon only.",
-	"version": "0.1.0",
+	"version": "0.1.0+codex.20260602215058",
 	"author": {
 		"name": "Suguru Inatomi (ported to Codex by yuta)"
 	},
@@ -9,6 +9,7 @@
 	"license": "MIT",
 	"keywords": ["tts", "voice", "japanese", "session", "macos", "apple-silicon"],
 	"skills": "./skills/",
+	"hooks": "./hooks.json",
 	"interface": {
 		"displayName": "Session TTS",
 		"shortDescription": "Read Codex responses aloud locally.",
