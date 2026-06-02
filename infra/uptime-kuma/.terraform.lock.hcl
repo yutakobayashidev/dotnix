@@ -5,7 +5,20 @@ provider "registry.opentofu.org/breml/uptimekuma" {
   version     = "0.3.2"
   constraints = "~> 0.1"
   hashes = [
+    "h1:0u5TX0ju6vxVgdnrIbtO1U98/SkvZra1ohblM084D3A=",
+    "h1:1VH+fiYU5kRYrs3bd9YCMdtGy9sZ6Jd6Kkk32fUxHmA=",
+    "h1:4phvzpdk5LXKd4NbZXGqQiXieft6IrfUI31kiz68QN8=",
     "h1:7wU0Gxe4rUYBwyjy/t1ih7yD1ei8jd+eHqttYJz3h2U=",
+    "h1:7y8QYt8LZ/AKowo2DOm1ILnNmsvIa4LZ+phnKjRrb7w=",
+    "h1:G2M/wyYUVaJIiYSkdO2FJHt7G0m7tMJP+fGcdNYcB44=",
+    "h1:KwaQ9S+xA5pOsRqXAetfh0DenB0uf8Prttr7C7rvG7g=",
+    "h1:L6VTcqmTWyfQ6zRDM18K0uHBQC1s108EaxNUc02hmZM=",
+    "h1:QlLPKLLQQBMfLHhswG9oHcSwVEb82xpyPhoBLYYkPzg=",
+    "h1:TvBXSp1cSm0yJHGSz+PPJKLa9WzRn9oWhMMrQmI1N4g=",
+    "h1:VTv/Fx6nmE7R67KHuDFsXcP5bNQ1FG5d/qyq7EGJJI4=",
+    "h1:cLt/I7chegs73ju8IBZTSdxS7gPp0opUOZyyPwilOwE=",
+    "h1:lLuOBA9yxstU865xYj9wEdkxoAp95Uqh7lc8RKguqCs=",
+    "h1:wo2HdXTrcHQ0wkkwvzKdXIllzVtH8JBkSZ/MoMooRs8=",
     "zh:09023c0d0b36137f14220d5dad0e0ea94d13369a55679a24afbd0e04c05bd080",
     "zh:0937a5981b1f3d75c0c9b10f23b50851e10cacdf986a65fc2cca60f9c0f81ac4",
     "zh:825794a05c413325b921200e0bdc5dacf9546b62994475498649714a700d51f7",
