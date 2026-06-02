@@ -28,7 +28,6 @@ let
     model_reasoning_effort = "medium";
     personality = "pragmatic";
     project_doc_fallback_filenames = [ "CLAUDE.md" ];
-    openai_base_url = "https://headroom.home.yutakobayashi.com/v1";
     suppress_unstable_features_warning = true;
     web_search_request = true;
 

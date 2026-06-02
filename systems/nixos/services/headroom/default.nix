@@ -18,22 +18,17 @@ in
       RestartSec = "5";
       ExecStart = lib.concatStringsSep " " [
         headroom
-        "proxy"
-        "--port"
-        "8787"
-        "--mode"
-        "token"
-        "--no-telemetry"
+        "--listen"
+        "127.0.0.1:8787"
+        "--upstream"
+        "https://api.anthropic.com"
+        "--compression"
       ];
       User = "yuta";
     };
 
     environment = {
-      HEADROOM_TELEMETRY = "off";
-      HEADROOM_HOST = "127.0.0.1";
-      HEADROOM_PORT = "8787";
-      HEADROOM_MODE = "token";
-      ORT_LOG_LEVEL = "3";
+      HEADROOM_PROXY_COMPRESSION = "1";
     };
   };
 
