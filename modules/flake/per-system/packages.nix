@@ -41,6 +41,7 @@
             keifu
             pretty-ts-errors-markdown
             roots
+            session-tts-codex
             similarity-ts
             tunnelto
             ;

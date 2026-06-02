@@ -1,0 +1,61 @@
+{
+	"hooks": {
+		"SessionStart": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"${PLUGIN_ROOT}/scripts/session-on.sh\""
+					}
+				]
+			}
+		],
+		"Stop": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"${PLUGIN_ROOT}/scripts/dispatch.sh\"",
+						"async": true
+					}
+				]
+			}
+		],
+		"PermissionRequest": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"${PLUGIN_ROOT}/scripts/notify-permission.sh\"",
+						"async": true
+					}
+				]
+			}
+		],
+		"UserPromptSubmit": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"${PLUGIN_ROOT}/scripts/remind-say.sh\" prompt"
+					}
+				]
+			}
+		],
+		"SubagentStart": [
+			{
+				"matcher": "",
+				"hooks": [
+					{
+						"type": "command",
+						"command": "\"${PLUGIN_ROOT}/scripts/remind-say.sh\" subagent"
+					}
+				]
+			}
+		]
+	}
+}
