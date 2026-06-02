@@ -15,9 +15,6 @@ let
   inherit (config.home) homeDirectory;
 
   jq = lib.getExe pkgs.jq;
-  rtkPackage = pkgs.llm-agents.rtk;
-  rtk = lib.getExe rtkPackage;
-  rtkHookPath = "${homeDirectory}/.claude/hooks/rtk-rewrite.sh";
   jsonFormat = pkgs.formats.json { };
   boolString = value: if value then "1" else "0";
   telemetryResourceAttributes = cfg.telemetry.resourceAttributes // {
@@ -133,19 +130,6 @@ let
     };
 
     hooks = {
-      PreToolUse = [
-        {
-          matcher = "Bash";
-          hooks = [
-            {
-              type = "command";
-              command = rtkHookPath;
-              timeout = 10;
-            }
-          ];
-        }
-      ];
-
       WorktreeCreate = [
         {
           hooks = [
@@ -281,7 +265,6 @@ in
       claude-code
       apm
       ccusage
-      rtkPackage
     ];
 
     home.sessionVariables = {
@@ -291,11 +274,6 @@ in
     home.activation.writeClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p "${claudeConfigDir}"
       ${pkgs.coreutils}/bin/install -m 644 ${claudeSettings} "${claudeConfigDir}/settings.json"
-    '';
-
-    home.activation.setupRtk = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      echo "Setting up rtk hook..."
-      ${rtk} init -g --hook-only --no-patch 2>/dev/null || true
     '';
 
     xdg.configFile = {
