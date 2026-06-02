@@ -153,35 +153,28 @@ def _force_split(text: str, max_chars: int) -> list[str]:
 
 
 def _split_paragraph(text: str, max_chars: int) -> list[str]:
-    parts = re.split(r"(?<=[。．！？!?.])\s*", text)
+    parts = re.split(r"(?<=[。．！？!?.])", text)
     chunks: list[str] = []
-    current = ""
     for part in parts:
         if not part:
             continue
         if len(part) > max_chars:
-            if current:
-                chunks.append(current)
-                current = ""
             chunks.extend(_force_split(part, max_chars))
-            continue
-        if not current:
-            current = part
-        elif len(current) + len(part) <= max_chars:
-            current += part
         else:
-            chunks.append(current)
-            current = part
-    if current:
-        chunks.append(current)
+            chunks.append(part)
     return chunks
 
 
 def split_into_chunks(text: str) -> list[str]:
     chunks: list[str] = []
-    for paragraph in text.split("\n\n"):
-        paragraph = paragraph.strip()
-        if not paragraph:
+    pending_separator = ""
+    for paragraph in re.split(r"(\n\n+)", text):
+        if paragraph.startswith("\n\n"):
+            pending_separator += paragraph
+            continue
+        paragraph = pending_separator + paragraph
+        pending_separator = ""
+        if not paragraph.strip():
             continue
         if not chunks:
             head = _split_paragraph(paragraph, FIRST_CHUNK_MAX)
@@ -192,6 +185,8 @@ def split_into_chunks(text: str) -> list[str]:
                     chunks.extend(_split_paragraph(rest, LATER_CHUNK_MAX))
         else:
             chunks.extend(_split_paragraph(paragraph, LATER_CHUNK_MAX))
+    if chunks and pending_separator:
+        chunks[-1] += pending_separator
     return chunks
 
 

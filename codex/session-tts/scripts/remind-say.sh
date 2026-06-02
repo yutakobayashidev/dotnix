@@ -7,7 +7,7 @@
 # Reads the hook payload from stdin (for the session_id) and, when the
 # session has a voice and is not silenced, outputs a trigger-specific
 # reminder so Codex is nudged to narrate progress via the Bash tool +
-# `${PLUGIN_ROOT}/skills/say/say.sh`.
+# `${PLUGIN_ROOT}/scripts/say.sh`.
 
 set -e
 
@@ -23,7 +23,7 @@ data_dir="$HOME/.codex/session-tts"
 [ -e "$data_dir/silenced/$session_id" ] && exit 0
 
 plugin_root="${PLUGIN_ROOT}"
-cmd="bash \"$plugin_root/skills/say/say.sh\" \"<phrase>\""
+cmd="bash \"$plugin_root/scripts/say.sh\" \"<phrase>\""
 
 # Tail of every reminder — kept short and identical so the model
 # pattern-matches it as boilerplate it can compress.

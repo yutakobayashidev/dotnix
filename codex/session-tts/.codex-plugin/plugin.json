@@ -8,6 +8,14 @@
 	"repository": "https://github.com/yutakobayashidev/dotnix",
 	"license": "MIT",
 	"keywords": ["tts", "voice", "japanese", "session", "macos", "apple-silicon"],
-	"hooks": "./hooks/hooks.json",
-	"skills": "./skills/"
+	"skills": "./skills/",
+	"interface": {
+		"displayName": "Session TTS",
+		"shortDescription": "Read Codex responses aloud locally.",
+		"longDescription": "Reads Codex responses aloud locally with a different Japanese voice per session and provides controls for session playback and volume.",
+		"developerName": "yuta",
+		"category": "Productivity",
+		"capabilities": ["Audio playback", "Session controls"],
+		"defaultPrompt": "Check the current session TTS status."
+	}
 }

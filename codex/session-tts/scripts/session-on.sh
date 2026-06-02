@@ -35,7 +35,7 @@ message.
 
 \`\`\`
 Bash(
-  command: bash "${plugin_root_for_instr}/skills/say/say.sh" "<lead-in + body, one short Japanese phrase>",
+  command: bash "${plugin_root_for_instr}/scripts/say.sh" "<lead-in + body, one short Japanese phrase>",
   description: "TTS report"
 )
 \`\`\`

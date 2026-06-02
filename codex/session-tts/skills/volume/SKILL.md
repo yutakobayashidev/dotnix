@@ -1,6 +1,6 @@
 ---
+name: volume
 description: Adjust the session-tts playback volume globally (afplay --volume coefficient). The default is 0.8 to keep TTS quieter than other audio (notifications, music). Argument is a decimal in [0.0, 1.0] to set the volume, `status` (default) to show the current value, or `reset` to restore the default. The setting is shared across all sessions and persists across sessions and restarts.
-disable-model-invocation: true
 ---
 
 # TTS volume ($ARGUMENTS)
