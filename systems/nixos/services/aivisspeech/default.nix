@@ -25,7 +25,7 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "d /srv/bulk/aivisspeech/engine 0755 root root -"
+    "d /srv/bulk/aivisspeech/engine 0777 root root -"
   ];
 
   services.traefik.dynamicConfigOptions.http = {
