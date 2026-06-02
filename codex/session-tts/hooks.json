@@ -17,8 +17,7 @@
 				"hooks": [
 					{
 						"type": "command",
-						"command": "\"${PLUGIN_ROOT}/scripts/dispatch.sh\"",
-						"async": true
+						"command": "\"${PLUGIN_ROOT}/scripts/dispatch.sh\""
 					}
 				]
 			}
@@ -29,8 +28,7 @@
 				"hooks": [
 					{
 						"type": "command",
-						"command": "\"${PLUGIN_ROOT}/scripts/notify-permission.sh\"",
-						"async": true
+						"command": "\"${PLUGIN_ROOT}/scripts/notify-permission.sh\""
 					}
 				]
 			}

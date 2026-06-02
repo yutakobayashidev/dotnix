@@ -24,7 +24,8 @@ mkdir -p "$sessions_dir"
 
 # --- inject mid-turn narration guidance into Codex's context ---
 plugin_root_for_instr="${PLUGIN_ROOT}"
-cat <<EOF
+instructions=$(
+  cat <<EOF
 [session-tts] TTS is enabled for this session.
 
 You can deliver **verbal task-progress reports during autonomous, multi-step
@@ -35,7 +36,7 @@ message.
 
 \`\`\`
 Bash(
-  command: bash "${plugin_root_for_instr}/skills/say/say.sh" "<lead-in + body, one short Japanese phrase>",
+  command: bash "${plugin_root_for_instr}/scripts/say.sh" "<lead-in + body, one short Japanese phrase>",
   description: "TTS report"
 )
 \`\`\`
@@ -46,7 +47,7 @@ at real milestones — see the list below.
 
 Call this at these moments:
 EOF
-cat <<'EOF'
+  cat <<'EOF'
 - **Task transitions**: when you finish a task and move on to the next
 - **Problems**: when a task hits an unexpected obstacle, error, or blocker
 - **Important findings**: when investigation surfaces a notable result
@@ -79,6 +80,7 @@ Avoid:
 say.sh itself is a no-op if TTS has been silenced via /session-tts:tts off,
 so it's safe to call it without checking silence status.
 EOF
+)
 
 # --- pick a voice for this session (only if not already assigned) -----
 newly_assigned=0
@@ -102,3 +104,5 @@ fi
 if [ "$newly_assigned" = "1" ]; then
   sid=$(resolve_speaker "$session_id") && speak_text "$sid" "TTSを開始します。" "$session_id"
 fi
+
+jq -n --arg additionalContext "$instructions" '{ additionalContext: $additionalContext }'

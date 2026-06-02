@@ -1,6 +1,5 @@
 #!/bin/bash
-# /session-tts:say skill entry point. Speaks a short Japanese phrase in
-# the current session's voice.
+# Speaks a short Japanese phrase in the current session's voice.
 #
 # Usage: say.sh "<short Japanese text>"
 #
@@ -10,13 +9,13 @@
 set -e
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-plugin_root="$(cd "$script_dir/../.." && pwd)"
+plugin_root="$(cd "$script_dir/.." && pwd)"
 
-# shellcheck source=../../scripts/lib/voice-context.sh
+# shellcheck source=lib/voice-context.sh
 . "$plugin_root/scripts/lib/voice-context.sh"
 
 text="${1:-}"
-session_id="${CODEX_SESSION_ID:-}"
+session_id="${CODEX_THREAD_ID:-}"
 
 [ -z "$text" ] && exit 0
 
