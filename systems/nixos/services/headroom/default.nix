@@ -4,7 +4,7 @@
   ...
 }:
 let
-  headroom = "${pkgs.headroom-ai}/bin/headroom";
+  headroom = "${pkgs.headroom-ai}/bin/headroom-proxy";
 in
 {
   systemd.services.headroom-ai = {
