@@ -4,6 +4,8 @@
   networking.networkmanager.enable = true;
   systemd.services.NetworkManager.wantedBy = [ "multi-user.target" ];
 
+  security.sudo.wheelNeedsPassword = false;
+
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
   users.users.root.initialPassword = "netboot";

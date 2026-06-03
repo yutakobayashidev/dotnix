@@ -32,6 +32,7 @@ in
       wabt
 
       # CLI Utilities
+      pueue
       curl-impersonate
       aria2
       jnv
