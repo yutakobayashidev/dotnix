@@ -55,6 +55,10 @@
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     llm-agents.url = "github:numtide/llm-agents.nix";
     nix-steipete-tools.url = "github:openclaw/nix-steipete-tools";
     nix-openclaw = {

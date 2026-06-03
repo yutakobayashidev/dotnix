@@ -44,8 +44,8 @@
     ../../../nix/modules/profiles/nixos/base.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  ext.security.secureboot.enable = true;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.kernelPackages = pkgs.linuxPackages_7_0;
   boot.initrd.systemd.enable = true;

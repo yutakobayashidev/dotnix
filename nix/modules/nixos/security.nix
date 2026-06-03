@@ -2,42 +2,64 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 let
-  cfg = config.my.security.yubikey;
+  yubiCfg = config.ext.security.yubikey;
+  sbCfg = config.ext.security.secureboot;
 in
 {
-  options.my.security.yubikey = {
-    enable = lib.mkEnableOption "YubiKey PAM/U2F support";
+  imports = [ inputs.lanzaboote.nixosModules.lanzaboote ];
 
-    allowRemotePolkit = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-    };
-  };
+  options.ext.security = {
+    yubikey = {
+      enable = lib.mkEnableOption "YubiKey PAM/U2F support";
 
-  config = lib.mkIf cfg.enable {
-    services.udev.packages = [ pkgs.yubikey-personalization ];
-
-    security.pam.u2f = {
-      enable = true;
-      control = "sufficient";
-      settings = {
-        origin = "pam://${config.networking.hostName}";
-        appid = "pam://${config.networking.hostName}";
+      allowRemotePolkit = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
       };
     };
 
-    security.pam.services.polkit-1.u2fAuth = true;
-    security.pam.services.swaylock.u2fAuth = true;
-
-    security.polkit.extraConfig = lib.optionalString cfg.allowRemotePolkit ''
-      polkit.addRule(function(action, subject) {
-        if (subject.isInGroup("wheel") && subject.local == false) {
-          return polkit.Result.YES;
-        }
-      });
-    '';
+    secureboot = {
+      enable = lib.mkEnableOption "Secure boot with lanzaboote";
+    };
   };
+
+  config = lib.mkMerge [
+    (lib.mkIf yubiCfg.enable {
+      services.udev.packages = [ pkgs.yubikey-personalization ];
+
+      security.pam.u2f = {
+        enable = true;
+        control = "sufficient";
+        settings = {
+          origin = "pam://${config.networking.hostName}";
+          appid = "pam://${config.networking.hostName}";
+        };
+      };
+
+      security.pam.services.polkit-1.u2fAuth = true;
+      security.pam.services.swaylock.u2fAuth = true;
+
+      security.polkit.extraConfig = lib.optionalString yubiCfg.allowRemotePolkit ''
+        polkit.addRule(function(action, subject) {
+          if (subject.isInGroup("wheel") && subject.local == false) {
+            return polkit.Result.YES;
+          }
+        });
+      '';
+    })
+    (lib.mkIf sbCfg.enable {
+      environment.systemPackages = [ pkgs.sbctl ];
+
+      boot.lanzaboote = {
+        enable = true;
+        pkiBundle = "/var/lib/sbctl";
+      };
+
+      boot.loader.systemd-boot.enable = false;
+    })
+  ];
 }

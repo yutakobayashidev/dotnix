@@ -26,7 +26,7 @@
   services.greetd.enable = true;
   programs.regreet.enable = true;
 
-  my.security.yubikey.enable = true;
+  ext.security.yubikey.enable = true;
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
