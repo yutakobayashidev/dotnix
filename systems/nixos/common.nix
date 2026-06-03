@@ -67,18 +67,6 @@
     hashedPassword = "$6$jDoJHXil35EgTukO$t3Y3A9E37.q1MB7DTnud3YG8gpXS.QtXozfM95nG882i6slkmYHEtWrvdRK1iNiTrM2R.xzhbljbM31Uzc4XN1";
   };
 
-  environment.systemPackages = with pkgs; [
-    coreutils
-    dnsmasq
-    dvb-apps
-    opensc
-    pcsc-tools
-    pciutils
-    tcpdump
-    usbutils
-    v4l-utils
-  ];
-
   programs.zsh.enable = true;
 
   programs.nix-ld = {

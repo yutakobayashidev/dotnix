@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   networking.networkmanager.enable = true;
@@ -10,4 +10,17 @@
   users.users.root.initialHashedPassword = lib.mkForce null;
 
   services.getty.autologinUser = lib.mkForce "root";
+
+  environment.systemPackages = with pkgs; [
+    coreutils
+    dnsmasq
+    dvb-apps
+    opensc
+    pcsc-tools
+    pciutils
+    tcpdump
+    usbutils
+    v4l-utils
+    llm-agents.codex
+  ];
 }
