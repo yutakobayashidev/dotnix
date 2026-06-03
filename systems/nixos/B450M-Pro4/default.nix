@@ -35,6 +35,7 @@
     ../services/aivisspeech
     ../services/starla
     ../services/uptime-kuma
+    ../services/netboot
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
     ./disko.nix

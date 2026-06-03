@@ -9,6 +9,7 @@ in
 {
   systemd.services.headroom-ai = {
     description = "headroom token compression proxy";
+    wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
 
