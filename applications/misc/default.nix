@@ -35,6 +35,7 @@ in
       curl-impersonate
       aria2
       jnv
+      jolt-tui
       tokei
       cloc
       similarity-ts
@@ -64,6 +65,7 @@ in
       nmap
       dnsutils
       wireguard-tools
+      gping
 
       # Presentation
       pdfpc

@@ -12,11 +12,15 @@
       "manaflow-ai/cmux"
       "steipete/tap"
       "trasta298/tap"
+      "matthart1983/tap"
+      "Arthur-Ficial/tap"
     ];
     brews = [
       "blacktop/tap/ipsw"
       "mas"
       "trasta298/tap/keifu"
+      "matthart1983/tap/netwatch"
+      "Arthur-Ficial/tap/bgbgone"
 
       # vphone-cli dependencies
       "gnu-tar"
