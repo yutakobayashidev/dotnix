@@ -102,7 +102,7 @@ in
             "404"
             "403"
           ];
-          query = "/";
+          query = "/{status}.html";
           service = "error-pages-service";
         };
       };
