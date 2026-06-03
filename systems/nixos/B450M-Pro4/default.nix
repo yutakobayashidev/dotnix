@@ -16,6 +16,7 @@
     ../services/home-assistant
     ../services/grafana
     ../services/prometheus
+    ../services/rsshub
     ../services/loki
     ../services/opentelemetry-collector
     ../services/oura-metrics
