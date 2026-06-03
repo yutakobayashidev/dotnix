@@ -1,24 +1,49 @@
 # UM790 Pro (NixOS) Installation Guide
 
+## Prerequisites
+
+- UM790-Pro connected to the LAN (Ethernet)
+- pixiecore netboot service running (see `systems/nixos/services/netboot/`)
+
 ## Initial Setup
 
-1. Install NixOS with the unstable channel
+### 1. PXE Boot
 
-2. Clone this repository:
+Turn on the UM790-Pro and select PXE / Network Boot from the BIOS boot menu.
+The machine will boot into the NixOS installer with:
 
-   ```sh
-   mkdir -p ~/ghq/github.com/yutakobayashidev
-   nix shell nixpkgs#git -c git clone https://github.com/yutakobayashidev/dotnix.git ~/ghq/github.com/yutakobayashidev/dotnix
-   cd ~/ghq/github.com/yutakobayashidev/dotnix
-   ```
+- NetworkManager auto-started (DHCP)
+- SSH enabled (root password: `netboot`)
+- Root auto-login on console
 
-3. Apply the NixOS configuration:
+### 2. Partition Disk
 
-   ```sh
-   sudo nixos-rebuild switch --flake .#UM790-Pro
-   ```
+```sh
+lsblk
+sudo parted /dev/nvme0n1 -- mklabel gpt
+sudo parted /dev/nvme0n1 -- mkpart primary 512MiB 100%
+sudo mkfs.ext4 -L nixos /dev/nvme0n1p1
+sudo mkfs.fat -F 32 -n boot /dev/nvme0n1p1  # if UEFI boot needed
+sudo mount /dev/disk/by-label/nixos /mnt
+```
 
-   VirtualBox is enabled on this host. Log out and back in after the first switch so the `vboxusers` group is applied to your session.
+### 3. Clone and Install
+
+```sh
+nix shell nixpkgs#git -c git clone https://github.com/yutakobayashidev/dotnix.git /mnt/etc/dotnix
+sudo nixos-install --flake /mnt/etc/dotnix#UM790-Pro --root /mnt
+```
+
+### 4. Reboot
+
+```sh
+sudo umount -R /mnt
+sudo reboot
+```
+
+## Post-Install
+
+After reboot, VirtualBox is enabled on this host. Log out and back in so the `vboxusers` group is applied to your session.
 
 ## YubiKey Setup
 

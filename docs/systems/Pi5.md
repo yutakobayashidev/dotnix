@@ -1,26 +1,35 @@
 # Pi 5 (NixOS) Installation Guide
 
+## Prerequisites
+
+- Pi 5 with SD card or USB boot media
+- Network connectivity (Ethernet recommended)
+
 ## Initial Setup
 
-1. Flash a 64-bit NixOS image or installer media for `aarch64-linux`.
+### 1. Flash Media
 
-2. Partition the SD card with two labels:
-   - `boot` as `vfat`
-   - `nixos` as `ext4`
+Flash a 64-bit NixOS installer image for `aarch64-linux` to an SD card or USB drive.
 
-3. Clone this repository:
+### 2. PXE Boot (Alternative)
 
-   ```sh
-   mkdir -p ~/ghq/github.com/yutakobayashidev
-   nix shell nixpkgs#git -c git clone https://github.com/yutakobayashidev/dotnix.git ~/ghq/github.com/yutakobayashidev/dotnix
-   cd ~/ghq/github.com/yutakobayashidev/dotnix
-   ```
+If an aarch64 netboot image is configured on the netboot server (see `systems/nixos/services/netboot/`), the Pi 5 can PXE boot via the `config.txt` option `program_usb_boot_mode=1`. By default only `x86_64-linux` netboot images are served.
 
-4. Apply the Pi 5 configuration:
+### 3. Partition
 
-   ```sh
-   sudo nixos-rebuild switch --flake .#pi5
-   ```
+Partition the SD card with two labels:
+
+- `boot` as `vfat`
+- `nixos` as `ext4`
+
+### 4. Clone and Install
+
+```sh
+mkdir -p ~/ghq/github.com/yutakobayashidev
+nix shell nixpkgs#git -c git clone https://github.com/yutakobayashidev/dotnix.git ~/ghq/github.com/yutakobayashidev/dotnix
+cd ~/ghq/github.com/yutakobayashidev/dotnix
+sudo nixos-rebuild switch --flake .#pi5
+```
 
 ## Notes
 
