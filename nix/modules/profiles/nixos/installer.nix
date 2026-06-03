@@ -17,6 +17,7 @@
     coreutils
     dnsmasq
     dvb-apps
+    efibootmgr
     opensc
     pcsc-tools
     pciutils
