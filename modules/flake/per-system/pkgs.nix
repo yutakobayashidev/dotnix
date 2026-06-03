@@ -36,6 +36,7 @@ in
         inputs.rustowl-flake.overlays.default
         inputs.firefox-addons.overlays.default
         inputs.nur-packages.overlays.default
+        inputs.nix-topology.overlays.default
         (import ../../../nix/overlays/default.nix)
       ]
       ++ inputs.nixpkgs.lib.optionals isDarwin [

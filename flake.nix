@@ -199,6 +199,10 @@
       url = "github:moonbitlang/tree-sitter-moonbit";
       flake = false;
     };
+    nix-topology = {
+      url = "github:oddlama/nix-topology";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -237,6 +241,8 @@
         ./modules/flake/per-system/treefmt.nix
         ./modules/flake/per-system/pre-commit.nix
         ./modules/flake/per-system/dev-shell.nix
+        ./modules/flake/per-system/topology.nix
+        inputs.nix-topology.flakeModule
       ];
 
       hosts = {
