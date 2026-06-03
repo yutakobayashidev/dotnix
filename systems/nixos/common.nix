@@ -25,8 +25,6 @@
     };
   };
 
-  my.services.tailscale.enable = lib.mkDefault true;
-
   nix.gc.dates = "weekly";
 
   nix.settings = {
@@ -40,18 +38,29 @@
     ];
   };
 
+  # dhcpcd tries to manage Docker's veth interfaces and crashes (SEGV in ipv6nd_expire)
+  # in a loop, which eventually causes DHCP lease renewal to fail after a few days
+  networking.dhcpcd.denyInterfaces = [ "veth*" ];
+
+  virtualisation.docker.enable = true;
+
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+    # fix DNS issue caused by systemd-resolved
+    # https://discourse.nixos.org/t/rootless-docker-systemd-resolved-and-dns-inside-containers/47030
+    daemon.settings = {
+      dns = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
+    };
+  };
+
   time.timeZone = "Asia/Tokyo";
-  i18n.defaultLocale = "ja_JP.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "ja_JP.UTF-8";
-    LC_IDENTIFICATION = "ja_JP.UTF-8";
-    LC_MEASUREMENT = "ja_JP.UTF-8";
-    LC_MONETARY = "ja_JP.UTF-8";
-    LC_NAME = "ja_JP.UTF-8";
-    LC_NUMERIC = "ja_JP.UTF-8";
-    LC_PAPER = "ja_JP.UTF-8";
-    LC_TELEPHONE = "ja_JP.UTF-8";
-    LC_TIME = "ja_JP.UTF-8";
+  i18n = {
+    defaultLocale = "en_US.UTF-8";
+    extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
   };
 
   users.users.${username} = {
@@ -67,6 +76,8 @@
     hashedPassword = "$6$jDoJHXil35EgTukO$t3Y3A9E37.q1MB7DTnud3YG8gpXS.QtXozfM95nG882i6slkmYHEtWrvdRK1iNiTrM2R.xzhbljbM31Uzc4XN1";
   };
 
+  users.mutableUsers = false;
+
   programs.zsh.enable = true;
 
   programs.nix-ld = {
@@ -75,6 +86,8 @@
       stdenv.cc.cc
     ];
   };
+
+  programs.ssh.startAgent = true;
 
   services.openssh.enable = true;
   services.pcscd.enable = true;

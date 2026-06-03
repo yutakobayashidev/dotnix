@@ -1,10 +1,10 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
     ../common.nix
-    ../../../nix/modules/profiles/nixos/cli.nix
+    ../../../nix/modules/profiles/nixos/base.nix
     (
       { pkgs, ... }:
       {
@@ -23,7 +23,7 @@
 
   networking.hostName = "X870-Stell-Legend-WiFi";
 
-  my.services.tailscale.enable = false;
+  my.services.tailscale.enable = lib.mkForce false;
 
   system.stateVersion = "25.11";
 }

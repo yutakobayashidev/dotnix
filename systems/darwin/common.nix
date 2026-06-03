@@ -12,6 +12,7 @@
     ../../nix/modules/darwin
     inputs.comin.darwinModules.comin
     inputs.sops-nix.darwinModules.sops
+    ../../nix/modules/profiles/darwin/base.nix
   ];
 
   sops = {
@@ -22,8 +23,6 @@
       generateKey = true;
     };
   };
-
-  services.tailscale.enable = true;
 
   services.comin = {
     enable = true;

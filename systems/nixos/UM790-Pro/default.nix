@@ -15,7 +15,8 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./virtualbox.nix
     ../desktop.nix
-    ../../../nix/modules/profiles/nixos/cli.nix
+    ../../../nix/modules/profiles/nixos/base.nix
+    ../../../nix/modules/profiles/nixos/desktop.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
