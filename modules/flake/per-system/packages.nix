@@ -29,6 +29,21 @@
         let
           polycat' = lib.optionalAttrs (!isDarwin) { inherit (localPkgs) polycat; };
           readout' = lib.optionalAttrs isDarwin { inherit (localPkgs) readout; };
+
+          nixosMinimalIso =
+            let
+              isoEval = import "${localPkgs.path}/nixos/lib/eval-config.nix" {
+                system = "x86_64-linux";
+                modules = [
+                  "${localPkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+                  ../../../nix/modules/profiles/nixos/installer.nix
+                  {
+                    nixpkgs.pkgs = lib.mkForce localPkgs;
+                  }
+                ];
+              };
+            in
+            isoEval.config.system.build.isoImage;
         in
         polycat'
         // readout'
@@ -45,6 +60,7 @@
             similarity-ts
             tunnelto
             ;
+          nixos-minimal-iso = nixosMinimalIso;
         };
 
       apps = {

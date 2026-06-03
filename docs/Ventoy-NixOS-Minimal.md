@@ -36,35 +36,15 @@ Expected final layout:
 /dev/sda2  vfat   VTOYEFI
 ```
 
-## Download the NixOS Minimal ISO
+## Build the NixOS Minimal ISO
 
-Create a temporary workspace and download the ISO plus checksum:
-
-```sh
-mkdir -p /tmp/nixos-ventoy
-
-curl -L \
-  -o /tmp/nixos-ventoy/latest-nixos-minimal-x86_64-linux.iso.sha256 \
-  https://channels.nixos.org/nixos-25.11/latest-nixos-minimal-x86_64-linux.iso.sha256
-
-curl -L \
-  -o /tmp/nixos-ventoy/latest-nixos-minimal-x86_64-linux.iso \
-  https://channels.nixos.org/nixos-25.11/latest-nixos-minimal-x86_64-linux.iso
-```
-
-Verify the checksum:
+Build from the dotnix flake (uses your pinned nixpkgs):
 
 ```sh
-sha256sum /tmp/nixos-ventoy/latest-nixos-minimal-x86_64-linux.iso
-cat /tmp/nixos-ventoy/latest-nixos-minimal-x86_64-linux.iso.sha256
+nix build .#nixos-minimal-iso
 ```
 
-The recorded ISO was:
-
-```text
-nixos-minimal-25.11.11278.b77b3de87756-x86_64-linux.iso
-sha256: b7ab965ab5c7130aaab82ac9ecf685c97c3e7f681aff2e2aa3022f7a8cfd63ee
-```
+The ISO will be at `result/iso/*.iso`.
 
 ## Copy the ISO to Ventoy
 
@@ -73,7 +53,7 @@ Mount the Ventoy data partition, copy the ISO, flush writes, and unmount:
 ```sh
 sudo mkdir -p /mnt/ventoy
 sudo mount /dev/sda1 /mnt/ventoy
-sudo cp /tmp/nixos-ventoy/latest-nixos-minimal-x86_64-linux.iso /mnt/ventoy/
+sudo cp result/iso/*.iso /mnt/ventoy/
 sync
 sudo umount /mnt/ventoy
 ```
