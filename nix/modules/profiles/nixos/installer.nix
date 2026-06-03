@@ -18,6 +18,7 @@
     dnsmasq
     dvb-apps
     efibootmgr
+    sbctl
     opensc
     pcsc-tools
     pciutils
