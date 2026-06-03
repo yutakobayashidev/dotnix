@@ -153,6 +153,20 @@ Agent skills are managed via [agent-skills-nix](https://github.com/Kyure-A/agent
 
 Avoid maintaining a fixed skill list here. Treat `nix/modules/home/coding-agents/agent-skills` as the source of truth.
 
+## Topology
+
+![Main Network Topology](docs/topology/main.svg)
+_Main topology diagram_
+
+![Network Overview](docs/topology/network.svg)
+_Network overview diagram_
+
+Generated with [`nix-topology`](https://github.com/oddlama/nix-topology).
+
+```sh
+nix build .#topology.x86_64-linux.config.output --out-link result
+```
+
 ## Templates
 
 Project templates are managed in [ashiba](https://github.com/yutakobayashidev/ashiba). See the repository for available templates.
