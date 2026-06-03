@@ -7,8 +7,11 @@
 let
   cfg = config.my.programs.opencode;
 
-  # Read settings from external JSON file
-  settingsJsonText = builtins.readFile ./settings.json;
+  opencodeConfig = builtins.toJSON {
+    "$schema" = "https://opencode.ai/config.json";
+    autoupdate = false;
+    logLevel = "DEBUG";
+  };
 in
 {
   options.my.programs.opencode.enable = lib.mkEnableOption "OpenCode";
@@ -17,9 +20,9 @@ in
     # OpenCode package
     home.packages = lib.mkAfter [ pkgs.llm-agents.opencode ];
 
-    # Generate opencode.json from settings file
+    # Generate opencode.json
     xdg.configFile."opencode/opencode.json" = {
-      text = settingsJsonText;
+      text = opencodeConfig;
     };
   };
 }

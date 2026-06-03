@@ -15,8 +15,9 @@
         ++ config.pre-commit.settings.enabledPackages
         ++ [
           localPkgs.oci-cli
-          localPkgs.terraform
           localPkgs.terragrunt
+          localPkgs.nix-fast-build
+          localPkgs.ssh-to-age
           localPkgs.tflint
           localPkgs.sops
           localPkgs.packer
