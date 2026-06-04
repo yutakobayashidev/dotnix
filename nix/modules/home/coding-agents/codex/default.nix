@@ -37,16 +37,18 @@ let
       workspace_dependencies = false;
     };
 
-    default_permissions = ":workspace";
+    default_permissions = "project";
 
-    sandbox_workspace_write.writable_roots = [ "${codexConfigDir}/session-tts" ];
-
-    permissions.project.network = {
-      enabled = true;
-      domains = {
-        "aivisspeech.home.yutakobayashi.com" = "allow";
-        "localhost" = "allow";
-        "127.0.0.1" = "allow";
+    permissions.project = {
+      extends = ":workspace";
+      workspace_roots."${codexConfigDir}/session-tts" = true;
+      network = {
+        enabled = true;
+        domains = {
+          "aivisspeech.home.yutakobayashi.com" = "allow";
+          "localhost" = "allow";
+          "127.0.0.1" = "allow";
+        };
       };
     };
 
