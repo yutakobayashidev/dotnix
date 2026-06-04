@@ -5,8 +5,8 @@
 
   home-manager.users.${username} = {
     imports = [
-      ../../../nix/modules/profiles/home/cli.nix
-      ../../../nix/modules/profiles/home/development.nix
+      ../../../modules/profiles/home/cli.nix
+      ../../../modules/profiles/home/development.nix
     ];
     home.homeDirectory = "/home/${username}";
     home.packages = [ pkgs.xdg-utils ];

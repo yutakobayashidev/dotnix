@@ -9,10 +9,10 @@
   imports = [
     ../common.nix
     ../shared/comin/alloy.nix
-    ../../nix/modules/darwin
+    ../../modules/darwin
     inputs.comin.darwinModules.comin
     inputs.sops-nix.darwinModules.sops
-    ../../nix/modules/profiles/darwin/base.nix
+    ../../modules/profiles/darwin/base.nix
   ];
 
   sops = {

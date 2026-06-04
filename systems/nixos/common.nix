@@ -14,7 +14,7 @@
     inputs.comin.nixosModules.comin
     inputs.sops-nix.nixosModules.sops
     inputs.nix-topology.nixosModules.default
-    ../../nix/modules/nixos
+    ../../modules/nixos
   ];
 
   sops = {

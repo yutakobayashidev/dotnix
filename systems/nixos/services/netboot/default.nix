@@ -10,7 +10,7 @@ let
     system = pkgs.stdenv.hostPlatform.system;
     modules = [
       "${pkgs.path}/nixos/modules/installer/netboot/netboot-minimal.nix"
-      ../../../../nix/modules/profiles/nixos/installer.nix
+      ../../../../modules/profiles/nixos/installer.nix
       {
         system.stateVersion = config.system.nixos.release;
         nixpkgs.pkgs = lib.mkForce pkgs;

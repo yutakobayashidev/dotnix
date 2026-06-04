@@ -44,12 +44,12 @@ jobs:
             if nix-update "$pkg" --flake --commit 2>&1; then
               echo "Successfully updated $pkg"
             else
-              git checkout -- nix/overlays/
+              git checkout -- overlays/
               if nix-update "$pkg" --flake --version=branch --commit 2>&1; then
                 echo "Successfully updated $pkg (branch tracking)"
               else
                 echo "::warning::Failed to update $pkg, restoring files"
-                git checkout -- nix/overlays/
+                git checkout -- overlays/
                 echo "$pkg" >> /tmp/nix-update-failures
               fi
             fi
@@ -108,10 +108,10 @@ jobs:
           pr_number=$(gh pr list --head "$branch" --json number --jq '.[0].number // empty')
 
           if [ -n "$pr_number" ]; then
-            gh pr edit "$pr_number" --title "nix/overlays: update packages" --body "$body"
+            gh pr edit "$pr_number" --title "overlays: update packages" --body "$body"
           else
             gh pr create \
-              --title "nix/overlays: update packages" \
+              --title "overlays: update packages" \
               --body "$body" \
               --base main \
               --head "$branch" \

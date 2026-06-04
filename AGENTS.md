@@ -38,7 +38,7 @@ Do not write secrets, API tokens, sops/age private keys, or SSH private keys to 
 
 NixOS & macOS flake configuration with home-manager (nixos-unstable + nixpkgs-stable fallback).
 
-Host definitions are generated from the `hosts` table in the root `flake-module.nix`. Host-specific system config goes in `systems/<platform>/<hostname>/`, platform-shared system config in `systems/<platform>/common.nix` or `systems/<platform>/desktop.nix`. Home Manager config goes in `homes/<platform>/<hostname>/`. Per-application Home Manager config uses direct-import `applications/`, reusable Home Manager functional modules with options go in `nix/modules/home/`. Shared modules live in `nix/modules/`, NixOS profiles in `nix/modules/profiles/nixos/`, Home Manager profiles in `nix/modules/profiles/home/`.
+Host definitions are generated from the `hosts` table in the root `flake-module.nix`. Host-specific system config goes in `systems/<platform>/<hostname>/`, platform-shared system config in `systems/<platform>/common.nix` or `systems/<platform>/desktop.nix`. Home Manager config goes in `homes/<platform>/<hostname>/`. Per-application Home Manager config uses direct-import `applications/`, reusable Home Manager functional modules with options go in `modules/home/`. Shared modules live in `modules/`, NixOS profiles in `modules/profiles/nixos/`, Home Manager profiles in `modules/profiles/home/`.
 
 Custom packages are maintained in `yutakobayashidev/nur-packages` and pulled into `dotnix` as a GitHub flake input. To test local un-pushed changes, use:
 

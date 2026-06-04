@@ -5,9 +5,9 @@
 
   home-manager.users.${username} = {
     imports = [
-      ../../../nix/modules/profiles/home/terminal.nix
-      ../../../nix/modules/profiles/home/development.nix
-      ../../../nix/modules/home/gallery-dl
+      ../../../modules/profiles/home/terminal.nix
+      ../../../modules/profiles/home/development.nix
+      ../../../modules/home/gallery-dl
       ../../../applications/whipper
       ../../../applications/beets
     ];

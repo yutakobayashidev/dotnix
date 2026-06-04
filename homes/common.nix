@@ -6,7 +6,7 @@
 }:
 
 let
-  helpers = import ../nix/modules/lib/helpers { lib = inputs.nixpkgs.lib; };
+  helpers = import ../modules/lib/helpers { lib = inputs.nixpkgs.lib; };
   dotfilesDir = "${
     config.home-manager.users.${username}.programs.git.settings.ghq.root
   }/github.com/yutakobayashidev/dotnix";
@@ -31,7 +31,7 @@ in
     users.${username} =
       { config, ... }:
       {
-        imports = [ ../nix/modules/profiles/home/base.nix ];
+        imports = [ ../modules/profiles/home/base.nix ];
         sops.age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
         home = {
           inherit username;

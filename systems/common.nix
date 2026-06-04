@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../nix/modules/shared/nix
+    ../modules/shared/nix
   ];
 
   my.nix.enable = true;

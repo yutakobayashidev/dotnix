@@ -37,7 +37,7 @@ in
         inputs.firefox-addons.overlays.default
         inputs.nur-packages.overlays.default
         inputs.nix-topology.overlays.default
-        (import ../../../nix/overlays/default.nix)
+        (import ../../../overlays/default.nix)
       ]
       ++ inputs.nixpkgs.lib.optionals isDarwin [
         inputs.brew-nix.overlays.default

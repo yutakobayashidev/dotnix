@@ -43,7 +43,7 @@
     ./disko.nix
     ./impermanence.nix
     inputs.nur-packages.nixosModules.px4_drv
-    ../../../nix/modules/profiles/nixos/base.nix
+    ../../../modules/profiles/nixos/base.nix
   ];
 
   boot.loader.efi.canTouchEfiVariables = true;

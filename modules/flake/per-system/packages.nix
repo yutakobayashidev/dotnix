@@ -36,7 +36,7 @@
                 system = "x86_64-linux";
                 modules = [
                   "${localPkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-                  ../../../nix/modules/profiles/nixos/installer.nix
+                  ../../../modules/profiles/nixos/installer.nix
                   {
                     nixpkgs.pkgs = lib.mkForce localPkgs;
                   }

@@ -4,7 +4,7 @@
   imports = [
     inputs.nixos-wsl.nixosModules.default
     ../common.nix
-    ../../../nix/modules/profiles/nixos/base.nix
+    ../../../modules/profiles/nixos/base.nix
     (
       { pkgs, ... }:
       {

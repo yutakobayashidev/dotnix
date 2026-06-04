@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ../../../nix/modules/nix-on-droid ];
+  imports = [ ../../../modules/nix-on-droid ];
 
   system.stateVersion = "24.05";
   nix.extraOptions = ''
