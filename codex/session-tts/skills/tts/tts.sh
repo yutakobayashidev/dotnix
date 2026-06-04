@@ -13,7 +13,7 @@ if [ -z "$session_id" ]; then
   exit 1
 fi
 
-data_dir="$HOME/.codex/session-tts"
+data_dir="${CODEX_HOME:?}/session-tts"
 silenced_dir="$data_dir/silenced"
 pidfile_dir="$data_dir/playback"
 silenced_file="$silenced_dir/$session_id"

@@ -19,7 +19,7 @@ fi
 input=$(cat)
 session_id=$(printf '%s' "$input" | jq -r '.session_id // empty')
 
-data_dir="$HOME/.codex/session-tts"
+data_dir="${CODEX_HOME:?}/session-tts"
 if [ -z "$session_id" ] || [ ! -e "$data_dir/sessions/$session_id" ] || [ -e "$data_dir/silenced/$session_id" ]; then
   exit 0
 fi

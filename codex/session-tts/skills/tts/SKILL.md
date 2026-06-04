@@ -9,7 +9,7 @@ The session-tts plugin reads Codex responses aloud via `Stop` and `PermissionReq
 
 The voice assigned to this session is decided once at SessionStart and stays the same even after `tts off`/`tts on` — only playback is gated.
 
-The silence flag lives at `$HOME/.codex/session-tts/silenced/$CODEX_THREAD_ID`: when present, the dispatcher skips playback for this session. Other concurrent sessions stay as they are. Switching to `off` (directly or via `toggle`) additionally terminates any utterance that is still playing for this session, so the silence takes effect immediately rather than draining the current chunk queue.
+The silence flag lives at `$CODEX_HOME/session-tts/silenced/$CODEX_THREAD_ID`: when present, the dispatcher skips playback for this session. Other concurrent sessions stay as they are. Switching to `off` (directly or via `toggle`) additionally terminates any utterance that is still playing for this session, so the silence takes effect immediately rather than draining the current chunk queue.
 
 Run the action below with the Bash tool. Default to `status` when `$ARGUMENTS` is empty.
 

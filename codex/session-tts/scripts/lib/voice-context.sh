@@ -17,7 +17,7 @@
 
 resolve_speaker() {
   local session_id="$1"
-  local data_dir="$HOME/.codex/session-tts"
+  local data_dir="${CODEX_HOME:?}/session-tts"
   local session_file="$data_dir/sessions/$session_id"
   local silenced_file="$data_dir/silenced/$session_id"
 

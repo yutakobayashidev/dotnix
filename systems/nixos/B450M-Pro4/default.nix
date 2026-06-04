@@ -37,6 +37,7 @@
     ../services/starla
     ../services/uptime-kuma
     ../services/netboot
+    ../services/continuwuity
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
     ./disko.nix

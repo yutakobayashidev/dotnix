@@ -32,7 +32,8 @@ MAX_CHUNKS = 8
 TRUNCATION_NOTICE = "以下、省略します。"
 
 DEFAULT_PLAYBACK_VOLUME = 0.8
-VOLUME_FILE = os.path.expanduser("~/.codex/session-tts/volume")
+DATA_DIR = os.path.join(os.environ["CODEX_HOME"], "session-tts")
+VOLUME_FILE = os.path.join(DATA_DIR, "volume")
 
 
 def resolve_playback_volume() -> str:
@@ -47,7 +48,7 @@ def resolve_playback_volume() -> str:
     return f"{value:.2f}"
 
 
-PIDFILE_DIR = os.path.expanduser("~/.codex/session-tts/playback")
+PIDFILE_DIR = os.path.join(DATA_DIR, "playback")
 PIDFILE = os.path.join(PIDFILE_DIR, SESSION_ID) if SESSION_ID else ""
 
 

@@ -7,7 +7,7 @@ description: Adjust the session-tts playback volume globally (afplay --volume co
 
 The session-tts plugin pipes every chunk through `afplay --volume <coefficient>` so TTS does not dominate over other audio (notifications, music) when the system volume is up. macOS has no native way to make `afplay` follow the system "alert volume"; this skill is the override path.
 
-The chosen value lives at `$HOME/.codex/session-tts/volume` and is read by `say-response.py` for every chunk it plays. The setting is per-user, not per-session — adjusting it affects every active and future session. A value outside `[0.0, 1.0]` is rejected; an empty file or missing file falls back to the built-in default (`0.8`).
+The chosen value lives at `$CODEX_HOME/session-tts/volume` and is read by `say-response.py` for every chunk it plays. The setting is per-user, not per-session — adjusting it affects every active and future session. A value outside `[0.0, 1.0]` is rejected; an empty file or missing file falls back to the built-in default (`0.8`).
 
 Run the action below with the Bash tool. Default to `status` when `$ARGUMENTS` is empty.
 

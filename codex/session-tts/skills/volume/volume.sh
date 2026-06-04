@@ -5,7 +5,7 @@
 set -e
 
 action="${1:-status}"
-data_dir="$HOME/.codex/session-tts"
+data_dir="${CODEX_HOME:?}/session-tts"
 volume_file="$data_dir/volume"
 default_volume="0.8"
 
