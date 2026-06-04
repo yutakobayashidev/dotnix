@@ -12,15 +12,19 @@
 set -e
 
 trigger="${1:-}"
-[ -z "$trigger" ] && exit 0
+if [ -z "$trigger" ]; then
+  jq -n '{}'
+  exit 0
+fi
 
 input=$(cat)
 session_id=$(printf '%s' "$input" | jq -r '.session_id // empty')
 
 data_dir="$HOME/.codex/session-tts"
-[ -z "$session_id" ] && exit 0
-[ ! -e "$data_dir/sessions/$session_id" ] && exit 0
-[ -e "$data_dir/silenced/$session_id" ] && exit 0
+if [ -z "$session_id" ] || [ ! -e "$data_dir/sessions/$session_id" ] || [ -e "$data_dir/silenced/$session_id" ]; then
+  jq -n '{}'
+  exit 0
+fi
 
 plugin_root="${PLUGIN_ROOT}"
 cmd="bash \"$plugin_root/scripts/say.sh\" \"<phrase>\""
@@ -42,13 +46,26 @@ narrate at milestones (transition / problem / finding / pivot).
 $tail_common
 EOF
   )
-  jq -n --arg additionalContext "$msg" '{ additionalContext: $additionalContext }'
+  jq -n --arg additionalContext "$msg" \
+    '{
+      hookSpecificOutput: {
+        hookEventName: "UserPromptSubmit",
+        additionalContext: $additionalContext
+      }
+    }'
   exit 0
   ;;
 *)
+  jq -n '{}'
   exit 0
   ;;
 esac
 
 jq -n --arg additionalContext "[session-tts] $head $tail_common" \
-  '{ additionalContext: $additionalContext }'
+  --arg hookEventName "$event" \
+  '{
+    hookSpecificOutput: {
+      hookEventName: $hookEventName,
+      additionalContext: $additionalContext
+    }
+  }'

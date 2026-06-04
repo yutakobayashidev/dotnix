@@ -12,6 +12,7 @@ set -e
 
 session_id=$(jq -r '.session_id // empty')
 if [ -z "$session_id" ]; then
+  jq -n '{}'
   exit 0
 fi
 
@@ -102,7 +103,13 @@ fi
 # --- ready announcement (first assignment only) ---------------------------
 # Engine is remotely hosted — no local bootstrap needed.
 if [ "$newly_assigned" = "1" ]; then
-  sid=$(resolve_speaker "$session_id") && speak_text "$sid" "TTSを開始します。" "$session_id"
+  sid=$(resolve_speaker "$session_id") && speak_text "$sid" "TTSを開始します。" "$session_id" >/dev/null 2>&1 || true
 fi
 
-jq -n --arg additionalContext "$instructions" '{ additionalContext: $additionalContext }'
+jq -n --arg additionalContext "$instructions" \
+  '{
+    hookSpecificOutput: {
+      hookEventName: "SessionStart",
+      additionalContext: $additionalContext
+    }
+  }'

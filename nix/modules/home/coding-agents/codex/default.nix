@@ -39,6 +39,8 @@ let
 
     default_permissions = ":workspace";
 
+    sandbox_workspace_write.writable_roots = [ "${codexConfigDir}/session-tts" ];
+
     permissions.project.network = {
       enabled = true;
       domains = {
@@ -112,6 +114,7 @@ in
 
     home.activation.writeCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p "${codexConfigDir}"
+      mkdir -p "${codexConfigDir}/session-tts"
       ${pkgs.coreutils}/bin/install -m 644 ${codexConfig} "${codexConfigDir}/config.toml"
     '';
 
