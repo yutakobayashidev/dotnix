@@ -1,4 +1,4 @@
-# X870 Stell Legend WiFi (NixOS-WSL) Installation Guide
+# X870 Steel Legend WiFi (NixOS-WSL) Installation Guide
 
 ## Prerequisites
 
@@ -68,7 +68,7 @@
 2. Apply the host configuration:
 
    ```sh
-   sudo nixos-rebuild switch --flake .#X870-Stell-Legend-WiFi
+   sudo nixos-rebuild switch --flake .#X870-Steel-Legend-WiFi
    ```
 
 3. This host config also installs `xdg-open` and registers a local `file-protocol-handler.desktop` entry so WSL can forward browser opens to the Windows default browser.
@@ -79,4 +79,4 @@
 
    This also lets commands such as `gh auth login` open `https://github.com/login/device` in the Windows browser.
 
-4. If you want `nix run .#build` and `nix run .#switch` to work on this machine, make sure the runtime hostname is `X870-Stell-Legend-WiFi`.
+4. If you want `nix run .#build` and `nix run .#switch` to work on this machine, make sure the runtime hostname is `X870-Steel-Legend-WiFi`.

@@ -256,7 +256,7 @@
         UM790-Pro = {
           system = "x86_64-linux";
         };
-        X870-Stell-Legend-WiFi = {
+        X870-Steel-Legend-WiFi = {
           system = "x86_64-linux";
         };
         pi5 = {

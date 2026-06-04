@@ -8,7 +8,7 @@
 | ---------------------- | ---------------------- | ---------------------- | -------------- | ------ |
 | B450M Pro4             | B450M-Pro4             | NixOS                  | x86_64-linux   | ◎      |
 | UM790 Pro              | UM790-Pro              | NixOS                  | x86_64-linux   | ◎      |
-| X870 Stell Legend WiFi | X870-Stell-Legend-WiFi | NixOS (WSL)            | x86_64-linux   | ◎      |
+| X870 Steel Legend WiFi | X870-Steel-Legend-WiFi | NixOS (WSL)            | x86_64-linux   | ◎      |
 | Pi 5                   | pi5                    | NixOS                  | aarch64-linux  | △      |
 | OCI Ampere A1 VM       | oci-a1                 | NixOS                  | aarch64-linux  | △      |
 | M2 MacBook Air         | M2-MacBook-Air         | macOS                  | aarch64-darwin | ◎      |
@@ -29,7 +29,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── services/            # Host/system service bundles (microVMs, secrets, etc.)
 │   │   ├── B450M-Pro4/           # NixOS host config (services, disko, impermanence)
 │   │   ├── UM790-Pro/           # NixOS host config (boot, network, locale)
-│   │   ├── X870-Stell-Legend-WiFi/   # NixOS-WSL host config (WSL, locale)
+│   │   ├── X870-Steel-Legend-WiFi/   # NixOS-WSL host config (WSL, locale)
 │   │   ├── pi5/                 # NixOS host config (headless Pi 5)
 │   │   └── oci-a1/              # OCI Ampere A1 NixOS host config (disko, boot, network)
 │   ├── darwin/
@@ -67,7 +67,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 
 - [docs/systems/B450M-Pro4.md](docs/systems/B450M-Pro4.md) - NixOS installation guide
 - [docs/systems/UM790Pro.md](docs/systems/UM790Pro.md) - NixOS installation guide
-- [docs/systems/X870-Stell-Legend-WiFi.md](docs/systems/X870-Stell-Legend-WiFi.md) - NixOS-WSL installation guide
+- [docs/systems/X870-Steel-Legend-WiFi.md](docs/systems/X870-Steel-Legend-WiFi.md) - NixOS-WSL installation guide
 - [docs/systems/Pi5.md](docs/systems/Pi5.md) - NixOS installation guide for Raspberry Pi 5
 - [docs/systems/M2-MacBook-Air.md](docs/systems/M2-MacBook-Air.md) - nix-darwin installation guide for macOS
 - [docs/systems/Galaxy-S23FE.md](docs/systems/Galaxy-S23FE.md) - nix-on-droid installation guide for Android

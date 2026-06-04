@@ -21,7 +21,7 @@
   };
   wsl.useWindowsDriver = true;
 
-  networking.hostName = "X870-Stell-Legend-WiFi";
+  networking.hostName = "X870-Steel-Legend-WiFi";
 
   my.services.tailscale.enable = lib.mkForce false;
 
