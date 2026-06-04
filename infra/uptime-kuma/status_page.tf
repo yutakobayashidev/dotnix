@@ -52,6 +52,34 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
+          id       = uptimekuma_monitor_http.mirakurun.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.edcb.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.rsshub.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.headroom.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.aivisspeech.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.archivebox.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.couchdb.id
+          send_url = true
+        },
+        {
           id       = uptimekuma_monitor_http.cloudflare_error_page.id
           send_url = false
         },

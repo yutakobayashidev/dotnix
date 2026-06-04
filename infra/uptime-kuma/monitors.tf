@@ -194,6 +194,133 @@ resource "uptimekuma_monitor_http" "tw" {
   ]
 }
 
+resource "uptimekuma_monitor_http" "mirakurun" {
+  name           = "Mirakurun"
+  url            = "https://mirakurun.home.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "edcb" {
+  name           = "EDCB"
+  url            = "https://edcb.home.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "rsshub" {
+  name           = "RSSHub"
+  url            = "https://rsshub.home.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "headroom" {
+  name                  = "Headroom"
+  url                   = "https://headroom.home.yutakobayashi.com"
+  accepted_status_codes = ["200-299", "401", "404"]
+  interval              = 60
+  timeout               = 30
+  max_retries           = 2
+  retry_interval        = 60
+  active                = true
+  method                = "GET"
+  max_redirects         = 10
+  parent                = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "aivisspeech" {
+  name           = "AivisSpeech"
+  url            = "https://aivisspeech.home.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "archivebox" {
+  name           = "ArchiveBox"
+  url            = "https://archive.home.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "couchdb" {
+  name           = "CouchDB"
+  url            = "https://sync.home.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
 resource "uptimekuma_monitor_http" "cloudflare_error_page" {
   name                  = "Cloudflare Error Page"
   url                   = "http://localhost:5000"
