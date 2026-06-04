@@ -93,20 +93,8 @@
       url = "github:anthropics/skills";
       flake = false;
     };
-    vercel-skills = {
-      url = "github:vercel-labs/skills";
-      flake = false;
-    };
-    ui-ux-pro-max-skill = {
-      url = "github:nextlevelbuilder/ui-ux-pro-max-skill";
-      flake = false;
-    };
     ast-grep-skill = {
       url = "github:ast-grep/claude-skill";
-      flake = false;
-    };
-    deno-skills = {
-      url = "github:denoland/skills";
       flake = false;
     };
     obsidian-skills = {
@@ -123,10 +111,6 @@
     };
     agent-browser-skill = {
       url = "github:vercel-labs/agent-browser";
-      flake = false;
-    };
-    modern-web-guidance = {
-      url = "github:GoogleChrome/modern-web-guidance";
       flake = false;
     };
     mattpocock-skills = {

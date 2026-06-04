@@ -206,22 +206,6 @@
         "type": "github"
       }
     },
-    "deno-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1771419636,
-        "narHash": "sha256-RaAEW6dMtWnNdFAOaQsbLaKFHvtwxAm37+6O8flJlLQ=",
-        "owner": "denoland",
-        "repo": "skills",
-        "rev": "1a4267f4fc60d75839d740ae39a7e0bb0170cf0b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "denoland",
-        "repo": "skills",
-        "type": "github"
-      }
-    },
     "difit-skills": {
       "flake": false,
       "locked": {
@@ -1161,22 +1145,6 @@
         "type": "github"
       }
     },
-    "modern-web-guidance": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1779815558,
-        "narHash": "sha256-pZS14Kfp88NQdxeDPyNu1Jqst6qlIiSMZKOE4gb1/Fw=",
-        "owner": "GoogleChrome",
-        "repo": "modern-web-guidance",
-        "rev": "d0f7544492d329e87b4878d96c266799ac5eeeba",
-        "type": "github"
-      },
-      "original": {
-        "owner": "GoogleChrome",
-        "repo": "modern-web-guidance",
-        "type": "github"
-      }
-    },
     "moonbit-overlay": {
       "flake": false,
       "locked": {
@@ -2067,7 +2035,6 @@
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "comin": "comin",
-        "deno-skills": "deno-skills",
         "difit-skills": "difit-skills",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
@@ -2084,7 +2051,6 @@
         "mattpocock-skills": "mattpocock-skills",
         "mcp-servers-nix": "mcp-servers-nix",
         "microvm": "microvm",
-        "modern-web-guidance": "modern-web-guidance",
         "moonbit-overlay": "moonbit-overlay",
         "niks3": "niks3",
         "niri": "niri",
@@ -2111,9 +2077,7 @@
         "superpowers": "superpowers",
         "tree-sitter-moonbit": "tree-sitter-moonbit",
         "treefmt-nix": "treefmt-nix_4",
-        "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills",
-        "ui-ux-pro-max-skill": "ui-ux-pro-max-skill",
-        "vercel-skills": "vercel-skills"
+        "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills"
       }
     },
     "rust-overlay": {
@@ -2512,22 +2476,6 @@
         "type": "github"
       }
     },
-    "ui-ux-pro-max-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1775192899,
-        "narHash": "sha256-tgGnZt6ITH8IDPqglNDC1JCt5ZkVMGcET9IbP0vITjo=",
-        "owner": "nextlevelbuilder",
-        "repo": "ui-ux-pro-max-skill",
-        "rev": "b7e3af80f6e331f6fb456667b82b12cade7c9d35",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nextlevelbuilder",
-        "repo": "ui-ux-pro-max-skill",
-        "type": "github"
-      }
-    },
     "uv2nix": {
       "inputs": {
         "nixpkgs": [
@@ -2574,22 +2522,6 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
-        "type": "github"
-      }
-    },
-    "vercel-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1779917840,
-        "narHash": "sha256-gFEfdT0h9VbC+I0WUcZ9SYSW2A1liCc2An6qkti7+5U=",
-        "owner": "vercel-labs",
-        "repo": "skills",
-        "rev": "b469d6954dd10be20d3e8d9bb59463584d42efbb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vercel-labs",
-        "repo": "skills",
         "type": "github"
       }
     },

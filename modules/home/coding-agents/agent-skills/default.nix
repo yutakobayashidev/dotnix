@@ -24,21 +24,9 @@ in
           path = inputs.anthropic-skills;
           subdir = "skills";
         };
-        vercel = {
-          path = inputs.vercel-skills;
-          subdir = "skills";
-        };
-        nextlevelbuilder = {
-          path = inputs.ui-ux-pro-max-skill;
-          subdir = ".claude/skills";
-        };
         ast-grep = {
           path = inputs.ast-grep-skill;
           subdir = "ast-grep/skills";
-        };
-        deno = {
-          path = inputs.deno-skills;
-          subdir = "skills";
         };
         obsidian = {
           path = inputs.obsidian-skills;
@@ -60,10 +48,6 @@ in
           path = inputs.agent-browser-skill;
           subdir = "skills";
         };
-        modern-web-guidance = {
-          path = inputs.modern-web-guidance;
-          subdir = "skills";
-        };
         mattpocock = {
           path = inputs.mattpocock-skills;
           subdir = "skills";
@@ -78,7 +62,6 @@ in
         "local"
         "cloudflare"
         "hashicorp"
-        "deno"
         "aws"
         "obsidian"
         "repiq"
@@ -114,16 +97,6 @@ in
         webapp-testing = {
           from = "anthropic";
           path = "webapp-testing";
-        };
-
-        find-skills = {
-          from = "vercel";
-          path = "find-skills";
-        };
-
-        ui-ux-pro-max = {
-          from = "nextlevelbuilder";
-          path = "ui-ux-pro-max";
         };
 
         agent-browser =
@@ -200,11 +173,6 @@ in
         prompt-review = {
           from = "prompt-review";
           path = "prompt-review";
-        };
-
-        modern-web-guidance = {
-          from = "modern-web-guidance";
-          path = "modern-web-guidance";
         };
 
         grill-me = {
