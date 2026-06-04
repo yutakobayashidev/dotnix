@@ -105,6 +105,8 @@ in
       systemd.user.services.nxapi-token = {
         Unit = {
           Description = "Refresh s3s tokens via nxapi";
+          After = [ "sops-nix.service" ];
+          Wants = [ "sops-nix.service" ];
         };
         Service = {
           Type = "oneshot";
