@@ -12,7 +12,6 @@ set -e
 
 session_id=$(jq -r '.session_id // empty')
 if [ -z "$session_id" ]; then
-  jq -n '{}'
   exit 0
 fi
 

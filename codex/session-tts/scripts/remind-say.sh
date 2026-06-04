@@ -13,7 +13,6 @@ set -e
 
 trigger="${1:-}"
 if [ -z "$trigger" ]; then
-  jq -n '{}'
   exit 0
 fi
 
@@ -22,7 +21,6 @@ session_id=$(printf '%s' "$input" | jq -r '.session_id // empty')
 
 data_dir="$HOME/.codex/session-tts"
 if [ -z "$session_id" ] || [ ! -e "$data_dir/sessions/$session_id" ] || [ -e "$data_dir/silenced/$session_id" ]; then
-  jq -n '{}'
   exit 0
 fi
 
@@ -56,7 +54,6 @@ EOF
   exit 0
   ;;
 *)
-  jq -n '{}'
   exit 0
   ;;
 esac
