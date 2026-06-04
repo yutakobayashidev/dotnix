@@ -11,6 +11,7 @@
 
       # macOS apps (overlay)
       readout
+      prismlauncher
 
       # macOS CLI tools
       terminal-notifier
