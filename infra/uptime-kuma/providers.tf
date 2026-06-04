@@ -29,3 +29,9 @@ variable "uptimekuma_password" {
   description = "Uptime Kuma password"
   sensitive   = true
 }
+
+variable "discord_webhook_url" {
+  type        = string
+  description = "Discord webhook URL for notifications"
+  sensitive   = true
+}
