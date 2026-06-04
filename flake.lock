@@ -1399,11 +1399,11 @@
         "qmd": "qmd"
       },
       "locked": {
-        "lastModified": 1780201622,
-        "narHash": "sha256-XW4WSoeoxEF1+4gNGkciJKk6EfXGK1ULbSryV0l/7ZY=",
+        "lastModified": 1780287232,
+        "narHash": "sha256-yJv+KkQ8lDJQjUZePrAdwwNFbluxLlNQbo8P1GLRwTA=",
         "owner": "openclaw",
         "repo": "nix-openclaw",
-        "rev": "9bd2b9f299b4cbdc0cdd36d85f8379a28ed0ac94",
+        "rev": "ee71c080a78b2d0b4eaa30b2b9beae1843a85603",
         "type": "github"
       },
       "original": {
