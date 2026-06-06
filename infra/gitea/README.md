@@ -21,6 +21,7 @@ Then pass it through the environment:
 ```bash
 cd infra
 export GITEA_TOKEN="<token>"
+nix develop --command tofu -chdir=gitea import gitea_repository.kaikei 3
 nix develop --command tofu -chdir=gitea apply
 unset GITEA_TOKEN
 ```
