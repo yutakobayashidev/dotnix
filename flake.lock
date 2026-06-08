@@ -1424,11 +1424,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1779972352,
-        "narHash": "sha256-1hvJXiwqy8PEN5G/v4zfI2IVyppV+N/oJOpuDwx3ttM=",
+        "lastModified": 1780597466,
+        "narHash": "sha256-WMZWzx137H4THI8v3ju5LEqe5+sctfztLULSn5s9AN4=",
         "owner": "oddlama",
         "repo": "nix-topology",
-        "rev": "38ab5996494b84a0f80098bd384673c879b210f5",
+        "rev": "40718325a3bc3d3216eb51b8992a46eb9a77e083",
         "type": "github"
       },
       "original": {
