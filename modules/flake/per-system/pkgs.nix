@@ -13,6 +13,9 @@ in
       config = {
         allowUnfree = true;
         android_sdk.accept_license = true;
+        permittedInsecurePackages = [
+          "python3.13-ecdsa-0.19.2"
+        ];
       };
       overlays = [
         (_final: _prev: {
