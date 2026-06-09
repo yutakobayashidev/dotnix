@@ -68,7 +68,7 @@ jobs:
           done
           nix eval '.#formatter.x86_64-linux'
           nix eval '.#nixosConfigurations' --apply 'x: builtins.attrNames x'
-          for host in B450M-Pro4 UM790-Pro X870-Stell-Legend-WiFi; do
+          for host in B450M-Pro4 UM790-Pro X870-Steel-Legend-WiFi; do
             nix eval ".#nixosConfigurations.$host.config.networking.hostName" 2>&1 || true
           done
       - name: Check treefmt
@@ -114,7 +114,7 @@ jobs:
           nix build \
             .#nixosConfigurations.B450M-Pro4.config.system.build.toplevel \
             .#nixosConfigurations.UM790-Pro.config.system.build.toplevel \
-            .#nixosConfigurations.X870-Stell-Legend-WiFi.config.system.build.toplevel \
+            .#nixosConfigurations.X870-Steel-Legend-WiFi.config.system.build.toplevel \
             .#nixosConfigurations.pi5.config.system.build.toplevel \
             .#devShells.x86_64-linux.default \
             .#devShells.aarch64-linux.default \
