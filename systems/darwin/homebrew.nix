@@ -68,7 +68,6 @@
       "maxon"
       "microsoft-auto-update"
       "qgis"
-      "visual-studio-code"
 
       # Hardware
       "ledger-wallet"

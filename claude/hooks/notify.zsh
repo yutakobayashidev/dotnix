@@ -15,8 +15,6 @@ Darwin)
   if [[ -n "${CMUX_TAB_ID:-}" && -n "$cmux_bin" ]]; then
     "$cmux_bin" set-app-focus active
     "$cmux_bin" select-workspace --workspace "$CMUX_TAB_ID"
-  elif echo "$VSCODE_GIT_ASKPASS_MAIN" | grep -q Cursor 2>/dev/null; then
-    osascript -e 'tell application "Cursor" to activate'
   fi
   ;;
 *)

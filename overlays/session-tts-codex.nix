@@ -7,7 +7,7 @@ in
   session-tts-codex = pythonPackages.buildPythonApplication {
     pname = "session-tts-codex";
     version = "0.1.0";
-    src = ../../codex/session-tts/python;
+    src = ../codex/session-tts/python;
     format = "pyproject";
     nativeBuildInputs = with pythonPackages; [
       setuptools

@@ -14,8 +14,8 @@
     ../../home/coding-agents/opencode
     ../../home/coding-agents/spec-kit
     ../../home/coding-agents/vibe-kanban
-    ../../../../applications/gh
-    ../../../../applications/jj
+    ../../../applications/gh
+    ../../../applications/jj
   ];
 
   my.programs.agent-browser.enable = true;

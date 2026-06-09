@@ -2,13 +2,12 @@
 
 {
   imports = [
-    ../../../../applications/vrchat
-    ../../../../applications/chromium
-    ../../../../applications/cursor
-    ../../../../applications/firefox
-    ../../../../applications/keifu
-    ../../../../applications/obs-studio
-    ../../../../applications/ghostty
+    ../../../applications/vrchat
+    ../../../applications/chromium
+    ../../../applications/firefox
+    ../../../applications/keifu
+    ../../../applications/obs-studio
+    ../../../applications/ghostty
   ];
 
   home.packages =

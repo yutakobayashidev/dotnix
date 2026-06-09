@@ -16,8 +16,7 @@ on:
       - 'flake.nix'
       - 'homes/**'
       - 'modules/**'
-              - 'modules/**'
-              - 'overlays/**'
+      - 'overlays/**'
       - 'systems/**'
 
 concurrency:
@@ -48,8 +47,7 @@ jobs:
               - 'flake.nix'
               - 'homes/**'
               - 'modules/**'
-      - 'modules/**'
-      - 'overlays/**'
+              - 'overlays/**'
               - 'systems/**'
 
   check:
