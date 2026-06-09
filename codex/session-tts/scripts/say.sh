@@ -11,7 +11,7 @@ set -e
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 plugin_root="$(cd "$script_dir/.." && pwd)"
 
-# shellcheck source=lib/voice-context.sh
+# shellcheck source=codex/session-tts/scripts/lib/voice-context.sh
 . "$plugin_root/scripts/lib/voice-context.sh"
 
 text="${1:-}"

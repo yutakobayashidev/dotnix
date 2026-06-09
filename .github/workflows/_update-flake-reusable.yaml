@@ -41,8 +41,6 @@ on:
         required: true
       private-key:
         required: true
-      cachix-auth-token:
-        required: false
 
 jobs:
   discover:
@@ -84,8 +82,6 @@ jobs:
           token: ${{ steps.setup-bot.outputs.token }}
 
       - uses: ./.github/actions/setup-nix
-        with:
-          cachix-auth-token: ${{ secrets.cachix-auth-token }}
 
       - uses: ./.github/actions/update-flake-input
         with:
@@ -115,24 +111,26 @@ jobs:
           AUTO_MERGE: ${{ inputs.auto-merge }}
           UPDATE_RESULT: ${{ needs.update.result }}
         run: |
-          echo "## $SUMMARY_TITLE" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "### Configuration" >> "$GITHUB_STEP_SUMMARY"
-          if [ -n "$INPUTS" ]; then
-            echo "- Inputs: $INPUTS" >> "$GITHUB_STEP_SUMMARY"
-          fi
-          if [ -n "$EXCLUDE_INPUTS" ]; then
-            echo "- Excluded: $EXCLUDE_INPUTS" >> "$GITHUB_STEP_SUMMARY"
-          fi
-          if [ -n "$SKIP_DELAY_INPUTS" ]; then
-            echo "- Skip delay: $SKIP_DELAY_INPUTS" >> "$GITHUB_STEP_SUMMARY"
-          fi
-          echo "- Minimum release age: $MIN_AGE_DAYS days" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Auto-merge: $AUTO_MERGE" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "## $SUMMARY_TITLE"
+            echo ""
+            echo "### Configuration"
+            if [ -n "$INPUTS" ]; then
+              echo "- Inputs: $INPUTS"
+            fi
+            if [ -n "$EXCLUDE_INPUTS" ]; then
+              echo "- Excluded: $EXCLUDE_INPUTS"
+            fi
+            if [ -n "$SKIP_DELAY_INPUTS" ]; then
+              echo "- Skip delay: $SKIP_DELAY_INPUTS"
+            fi
+            echo "- Minimum release age: $MIN_AGE_DAYS days"
+            echo "- Auto-merge: $AUTO_MERGE"
+            echo ""
 
-          if [ "$UPDATE_RESULT" = "failure" ]; then
-            echo ":warning: Some updates failed. Check individual job logs for details." >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo ":white_check_mark: All update jobs completed." >> "$GITHUB_STEP_SUMMARY"
-          fi
+            if [ "$UPDATE_RESULT" = "failure" ]; then
+              echo ":warning: Some updates failed. Check individual job logs for details."
+            else
+              echo ":white_check_mark: All update jobs completed."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

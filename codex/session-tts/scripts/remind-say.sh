@@ -24,7 +24,7 @@ if [ -z "$session_id" ] || [ ! -e "$data_dir/sessions/$session_id" ] || [ -e "$d
   exit 0
 fi
 
-plugin_root="${PLUGIN_ROOT}"
+plugin_root="${PLUGIN_ROOT:?}"
 cmd="bash \"$plugin_root/scripts/say.sh\" \"<phrase>\""
 
 # Tail of every reminder — kept short and identical so the model

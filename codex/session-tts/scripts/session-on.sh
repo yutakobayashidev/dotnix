@@ -7,7 +7,7 @@
 
 set -e
 
-# shellcheck source=lib/voice-context.sh
+# shellcheck source=codex/session-tts/scripts/lib/voice-context.sh
 . "${PLUGIN_ROOT}/scripts/lib/voice-context.sh"
 
 session_id=$(jq -r '.session_id // empty')

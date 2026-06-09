@@ -7,12 +7,11 @@
 
 set -e
 
-# shellcheck source=lib/voice-context.sh
+# shellcheck source=codex/session-tts/scripts/lib/voice-context.sh
 . "${PLUGIN_ROOT}/scripts/lib/voice-context.sh"
 
 input=$(cat)
 session_id=$(printf '%s' "$input" | jq -r '.session_id // empty')
-tool_name=$(printf '%s' "$input" | jq -r '.tool_name // empty')
 cwd=$(printf '%s' "$input" | jq -r '.cwd // empty')
 
 if [ -n "$cwd" ]; then

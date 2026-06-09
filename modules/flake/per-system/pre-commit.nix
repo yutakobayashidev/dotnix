@@ -8,7 +8,16 @@
       pre-commit = {
         check.enable = false;
         settings.hooks = {
+          actionlint.enable = true;
           convco.enable = true;
+          shellcheck = {
+            enable = true;
+            args = [ "-x" ];
+            excludes = [
+              "\\.zsh$"
+              "^\\.envrc$"
+            ];
+          };
 
           treefmt = {
             enable = true;

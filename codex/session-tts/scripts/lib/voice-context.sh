@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Shared helpers for session-tts adapters. Source this file from any adapter
 # script that needs to resolve the per-session voice and forward text to the
 # core (say-response.py).
