@@ -5,50 +5,6 @@
   username,
   ...
 }:
-let
-  pythonEnv = pkgs.python3.withPackages (
-    ps: with ps; [
-      beautifulsoup4
-      mmh3
-      msgpack
-      packaging
-      requests
-    ]
-  );
-
-  s3s = pkgs.stdenv.mkDerivation {
-    pname = "s3s";
-    version = "0.7.0-unstable-2025-08-19";
-    meta.mainProgram = "s3s";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "frozenpandaman";
-      repo = "s3s";
-      rev = "732c91e5ac9b82a413f96bc75831996f8cf4f9ea";
-      hash = "sha256-o9GOmOin3wTyCL/KNa+WjMSV4RuyWea2lx5iS+57F68=";
-    };
-
-    nativeBuildInputs = [ pkgs.makeWrapper ];
-
-    installPhase = ''
-      runHook preInstall
-
-      mkdir -p $out/lib/s3s $out/bin
-
-      cp s3s.py iksm.py utils.py $out/lib/s3s/
-
-      substituteInPlace $out/lib/s3s/s3s.py \
-        --replace-fail \
-        'os.path.join(app_path, "config.txt")' \
-        'os.path.join(os.getcwd(), "config.txt")'
-
-      makeWrapper ${pythonEnv}/bin/python3 $out/bin/s3s \
-        --add-flags "$out/lib/s3s/s3s.py"
-
-      runHook postInstall
-    '';
-  };
-in
 {
   home-manager.users.${username} =
     { config, lib, ... }:
@@ -92,7 +48,7 @@ in
       };
 
       home.packages = [
-        s3s
+        pkgs.s3s
         pkgs.nxapi
       ];
 
@@ -149,7 +105,7 @@ in
           RestartSec = "30min";
           RuntimeMaxSec = "86400";
           ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/.config/s3s";
-          ExecStart = "${lib.getExe s3s} -M 300 -r";
+          ExecStart = "${lib.getExe pkgs.s3s} -M 300 -r";
           WorkingDirectory = "%h/.config/s3s";
         };
         Install = {

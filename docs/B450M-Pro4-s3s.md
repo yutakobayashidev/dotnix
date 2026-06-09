@@ -37,9 +37,9 @@
 
 ## Components
 
-### 1. Custom s3s Package
+### 1. s3s Package
 
-Built from `frozenpandaman/s3s@732c91e` with a patched `s3s.py` that reads `config.txt` from CWD instead of the app path. Wrapped with Python dependencies: `beautifulsoup4`, `mmh3`, `msgpack`, `packaging`, `requests`.
+Provided by the `nur-packages` flake input as `pkgs.s3s`. It is built from `frozenpandaman/s3s@732c91e` with a patched `s3s.py` that reads `config.txt` from CWD instead of the app path. Wrapped with Python dependencies: `beautifulsoup4`, `mmh3`, `msgpack`, `packaging`, `requests`.
 
 ### 2. Secrets (SOPS)
 
