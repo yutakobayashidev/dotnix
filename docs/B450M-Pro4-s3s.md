@@ -9,12 +9,12 @@
 │                       B450M-Pro4                             │
 │                                                              │
 │  ┌─────────────┐    ┌──────────────────┐                    │
-│  │ sops secrets │───▶│ home.activation  │                    │
-│  │ (encrypted)  │    │ initS3sConfig    │                    │
+│  │ sops secrets │───▶│ systemd service  │                    │
+│  │ (encrypted)  │    │ ExecStartPre     │                    │
 │  └─────────────┘    └────────┬─────────┘                    │
-│                              │ cp + chmod 600               │
+│                              │ seed if missing              │
 │                              ▼                              │
-│                     ~/.config/s3s/config.txt                 │
+│                       /var/lib/s3s/config.txt                │
 │                              │                              │
 │         ┌────────────────────┤                              │
 │         │                    │                              │
@@ -53,7 +53,8 @@ Encrypted in `systems/nixos/services/s3s/secrets.yaml`.
 ### 3. Config Generation
 
 - SOPS decrypts secrets → renders `s3s-config.txt` template as JSON
-- `home.activation.initS3sConfig` copies it to `~/.config/s3s/config.txt` (mode 600)
+- `s3s.service` / `nxapi-token.service` seed `/var/lib/s3s/config.txt` from the template if the config file is missing
+- `nxapi-token.service` mutates the config file in place as it refreshes `gtoken` / `bullettoken`
 
 ### 4. Token Refresh
 
@@ -86,18 +87,18 @@ network-online.target
 
 ```bash
 # Check all service statuses
-systemctl --user status s3s.service nxapi-token.service nxapi-token.timer
+systemctl status s3s.service nxapi-token.service nxapi-token.timer
 
 # View recent logs
-journalctl --user -u s3s.service -f
-journalctl --user -u nxapi-token.service -n 20
+journalctl -u s3s.service -f
+journalctl -u nxapi-token.service -n 20
 
 # Manual trigger
-systemctl --user restart s3s.service
-systemctl --user start nxapi-token.service
+sudo systemctl restart s3s.service
+sudo systemctl start nxapi-token.service
 
 # Check config file
-stat ~/.config/s3s/config.txt
+sudo stat /var/lib/s3s/config.txt
 ```
 
 ## Troubleshooting
