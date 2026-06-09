@@ -89,6 +89,9 @@
       "unity-hub"
       "virtual-desktop-streamer"
 
+      # Gaming
+      "modrinth"
+
       # Other
       "cmux"
       "bitcoin-core"
