@@ -18,6 +18,14 @@
               "^\\.envrc$"
             ];
           };
+          yamllint = {
+            enable = true;
+            excludes = [
+              "secrets/default.yaml"
+              "secrets.yaml"
+            ];
+            settings.configData = "{rules: {document-start: {present: false}}}";
+          };
 
           treefmt = {
             enable = true;
