@@ -8,7 +8,7 @@
     ../../../applications/keifu
     ../../../applications/obs-studio
     ../../../applications/ghostty
-    ../../../applications/zed
+    ../../../applications/zed-editor
   ];
 
   home.packages =
