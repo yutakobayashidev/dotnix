@@ -38,6 +38,20 @@
         startAt = "daily";
       };
     };
+    systemd.user.services.oci-retry = {
+      Unit = {
+        Description = "OCI nix-builder retry loop";
+      };
+      Service = {
+        Type = "oneshot";
+        ExecStart = "%h/ghq/github.com/yutakobayashidev/dotnix/infra/oci/nix-builder/oci-retry.sh";
+        Restart = "on-failure";
+        RestartSec = "60s";
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
     home.homeDirectory = "/home/${username}";
   };
 

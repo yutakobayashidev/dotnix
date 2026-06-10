@@ -38,6 +38,7 @@
     ../services/uptime-kuma
     ../services/netboot
     ../services/continuwuity
+    ../services/cliproxyapi
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
     ./disko.nix

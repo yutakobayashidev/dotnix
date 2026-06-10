@@ -73,6 +73,7 @@ in
       pdfpc
 
       # Misc
+      psmisc
       sl
       fastfetch
       ooniprobe-cli

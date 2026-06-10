@@ -16,6 +16,7 @@
   environment.systemPackages = with pkgs; [
     coreutils
     dnsmasq
+    psmisc
     dvb-apps
     efibootmgr
     sbctl
