@@ -62,6 +62,14 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Touch ID**: sudo authentication
 - **1Password**: Shell Plugins (gh, awscli2)
 
+## Skillspector
+
+Scan and analyze agent skills:
+
+```bash
+OPENAI_BASE_URL=https://cliproxy.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan ~/.agents
+```
+
 ## Key Shell Shortcuts
 
 Defined in: `zsh/config/aliases.zsh`, `zsh/functions/*.zsh`

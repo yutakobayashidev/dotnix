@@ -7,6 +7,7 @@
 
 let
   domain = "home.yutakobayashi.com";
+  cfg = config.services.cliproxyapi;
 in
 {
   imports = [
@@ -16,6 +17,12 @@ in
   services.cliproxyapi = {
     enable = true;
     package = inputs.cliproxyapi.packages.${pkgs.system}.cliproxyapi;
+    configFile = pkgs.writeText "cliproxyapi-config.yaml" ''
+      host: "127.0.0.1"
+      port: ${toString cfg.port}
+      api-keys:
+        - "sk-proxy"
+    '';
   };
 
   services.traefik.dynamicConfigOptions.http = {
