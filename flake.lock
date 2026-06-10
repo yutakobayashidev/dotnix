@@ -2199,11 +2199,11 @@
     "skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1780425977,
-        "narHash": "sha256-hbYSMOzM+iPlxwXqnxBXxZHkOJwsCMHEsMwN7cwYBXI=",
+        "lastModified": 1780426922,
+        "narHash": "sha256-FK8t/TkZhp+DBDEFm76+z11NB5wlgT6Vl1eE0v2rtR0=",
         "owner": "yutakobayashidev",
         "repo": "skills",
-        "rev": "231693f8f5cd2245a24ad8dbdbfa97203996c952",
+        "rev": "b27d8c6f81dd49cf81cbf81157b510c95278c18b",
         "type": "github"
       },
       "original": {
