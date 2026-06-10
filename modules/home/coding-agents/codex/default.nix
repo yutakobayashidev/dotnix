@@ -46,6 +46,8 @@ let
         enabled = true;
         domains = {
           "aivisspeech.home.yutakobayashi.com" = "allow";
+          "junction-mcp-up7swxs6gq-an.a.run.app" = "allow";
+          "8.232.48.91" = "allow";
           "localhost" = "allow";
           "127.0.0.1" = "allow";
         };
@@ -122,6 +124,8 @@ in
 
     xdg.configFile."codex/AGENTS.md".source =
       config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
+
+    home.file.".codex/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
 
     # Global plugin: symlink session-tts under ~/plugins/ so Codex
     # discovers the plugin from the personal marketplace in every repo.

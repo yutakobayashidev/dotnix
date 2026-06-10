@@ -1,0 +1,24 @@
+# PR Aftercare workflow: prompt before CI-watch and review-resolution commands.
+prefix_rule(
+    pattern = ["gh", "pr", "checks"],
+    decision = "allow",
+    justification = "CI watch loop: wait for completion, fix failures, re-watch until green. Do not mix unrelated changes.",
+    match = [
+        "gh pr checks 42 --watch --fail-fast",
+    ],
+    not_match = [
+        "gh pr checks 42",
+    ],
+)
+
+prefix_rule(
+    pattern = ["gh", "api", "graphql"],
+    decision = "allow",
+    justification = "Review triage: fix immediately, explain if incorrect, or ask user for spec trade-offs. Resolve threads only after fix + push + green CI. Use mutation aliases for batch resolve.",
+    match = [
+        "gh api graphql -f query='mutation { resolveReviewThread(input: {threadId: \"abc\"}) { thread { isResolved } } }'",
+    ],
+    not_match = [
+        "gh api graphql -f query='{ repository(owner: \"o\", name: \"r\") { pullRequest(number: 1) { reviewThreads { nodes { id } } } } }'",
+    ],
+)

@@ -1,0 +1,19 @@
+# Prompt before making any commit to verify conventional commit format.
+# Format: <type>[optional scope]: <description>
+# Types: feat, fix, docs, build, chore, ci, refactor, test, perf, style, revert
+prefix_rule(
+    pattern = ["git", "commit"],
+    decision = "allow",
+    justification = "Commit messages must follow Conventional Commits: <type>[optional scope]: <description>. Types: feat, fix, docs, build, chore, ci, refactor, test, perf, style, revert.",
+    match = [
+        "git commit -m \"feat: add new feature\"",
+        "git commit -m \"fix(api): resolve timeout issue\"",
+        "git commit --amend -m \"docs: update README\"",
+    ],
+    not_match = [
+        "git status",
+        "git log",
+        "git diff",
+        "git add .",
+    ],
+)
