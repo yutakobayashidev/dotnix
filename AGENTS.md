@@ -22,7 +22,14 @@ nix flake update
 
 Skills are managed via the `skills` flake input (`yutakobayashidev/skills`) using `agent-skills-nix`.
 
-Skills are defined in `yutakobayashidev/skills`, nested under `skills/`. To test local changes before pushing:
+When adding a new skill to `yutakobayashidev/skills`, prefer scanning with a GitHub URL to find existing skill implementations:
+
+```bash
+skillspector scan https://github.com/<user>/<repo>
+skillspector scan https://github.com/<user>/<repo>/tree/main/path/to/skill
+```
+
+To test local changes before pushing:
 
 ```bash
 nix run .#switch --override-input skills path:../skills
