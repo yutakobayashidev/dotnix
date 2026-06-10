@@ -22,6 +22,7 @@ in
 
       # Development Tools
       bumblebee
+      vulnix
       gogcli
       nil
       nix-init
@@ -61,6 +62,7 @@ in
       unar
 
       # Network Tools
+      vt-cli
       tunnelto
       speedtest-cli
       bandwhich

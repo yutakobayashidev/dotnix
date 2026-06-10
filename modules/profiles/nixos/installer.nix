@@ -26,6 +26,7 @@
     tcpdump
     usbutils
     v4l-utils
+    vulnix
     llm-agents.codex
   ];
 }
