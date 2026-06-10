@@ -37,6 +37,7 @@ in
       aria2
       jnv
       jolt-tui
+      magika
       tokei
       cloc
       similarity-ts

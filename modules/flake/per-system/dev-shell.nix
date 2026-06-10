@@ -25,6 +25,8 @@
           localPkgs.vault
           localPkgs.checkov
           localPkgs.pike
+          localPkgs.skill-scanner
+          localPkgs.skillspector
           (localPkgs.opentofu.withPlugins (p: [
             p.go-gitea_gitea
             p.oracle_oci
