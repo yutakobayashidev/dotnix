@@ -29,6 +29,12 @@ skillspector scan https://github.com/<user>/<repo>
 skillspector scan https://github.com/<user>/<repo>/tree/main/path/to/skill
 ```
 
+To scan local skill directories:
+
+```bash
+OPENAI_BASE_URL=https://cliproxy.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan ~/.agents
+```
+
 To test local changes before pushing:
 
 ```bash
