@@ -75,12 +75,12 @@ in
       pdfpc
 
       # Misc
-      psmisc
       sl
       fastfetch
       ooniprobe-cli
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
+      psmisc
       python313Packages.markitdown
       proton-vpn-cli
     ];
