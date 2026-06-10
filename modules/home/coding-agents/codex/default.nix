@@ -58,6 +58,10 @@ let
       url = "https://mcp.deepwiki.com/mcp";
     };
 
+    mcp_servers.junction = {
+      url = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
+    };
+
     otel = {
       environment = "${cfg.telemetry.environment}";
       exporter = otelExporter;
