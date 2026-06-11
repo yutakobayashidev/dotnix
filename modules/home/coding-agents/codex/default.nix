@@ -60,6 +60,7 @@ let
 
     mcp_servers.junction = {
       url = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
+      oauth_resource = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
     };
 
     otel = {
