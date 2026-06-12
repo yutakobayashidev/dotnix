@@ -10,6 +10,7 @@
         ../../../modules/profiles/home/cli.nix
         ../../../modules/profiles/home/development.nix
         ../../../modules/profiles/home/desktop.nix
+        ../../../applications/course-cli
         ../desktop.nix
         inputs.onepassword-shell-plugins.hmModules.default
       ];
