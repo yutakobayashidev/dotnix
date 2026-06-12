@@ -304,8 +304,100 @@ resource "uptimekuma_monitor_http" "archivebox" {
 }
 
 resource "uptimekuma_monitor_http" "couchdb" {
-  name           = "CouchDB"
-  url            = "https://sync.home.yutakobayashi.com"
+  name                  = "CouchDB"
+  url                   = "https://sync.home.yutakobayashi.com"
+  accepted_status_codes = ["200-299", "401"]
+  interval              = 60
+  timeout               = 30
+  max_retries           = 2
+  retry_interval        = 60
+  active                = true
+  method                = "GET"
+  max_redirects         = 10
+  parent                = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "nostr" {
+  name           = "Nostr Relay"
+  url            = "https://nostr.yutakobayashi.com"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "cliproxyapi" {
+  name                  = "Cliproxy API"
+  url                   = "https://cliproxy.home.yutakobayashi.com"
+  accepted_status_codes = ["200-299", "401", "404"]
+  interval              = 60
+  timeout               = 30
+  max_retries           = 2
+  retry_interval        = 60
+  active                = true
+  method                = "GET"
+  max_redirects         = 10
+  parent                = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "niks3" {
+  name           = "Niks3"
+  url            = "https://niks3.yutakobayashi.com/health"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "nix_cache" {
+  name           = "Nix Cache"
+  url            = "https://nix-cache.yutakobayashi.com/nix-cache-info"
+  interval       = 60
+  timeout        = 30
+  max_retries    = 2
+  retry_interval = 60
+  active         = true
+  method         = "GET"
+  max_redirects  = 10
+  parent         = uptimekuma_monitor_group.internal.id
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "uptime_kuma" {
+  name           = "Uptime Kuma"
+  url            = "https://status.home.yutakobayashi.com"
   interval       = 60
   timeout        = 30
   max_retries    = 2

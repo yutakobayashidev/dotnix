@@ -80,6 +80,26 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
+          id       = uptimekuma_monitor_http.nostr.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.cliproxyapi.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.niks3.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.nix_cache.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.uptime_kuma.id
+          send_url = true
+        },
+        {
           id       = uptimekuma_monitor_http.cloudflare_error_page.id
           send_url = false
         },
