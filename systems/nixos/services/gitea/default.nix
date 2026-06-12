@@ -6,9 +6,12 @@ in
 {
   services.gitea = {
     enable = true;
-    settings.server = {
-      DOMAIN = domain;
-      ROOT_URL = "https://${domain}/";
+    settings = {
+      server = {
+        DOMAIN = domain;
+        ROOT_URL = "https://${domain}/";
+      };
+      service.DISABLE_REGISTRATION = true;
     };
   };
 
