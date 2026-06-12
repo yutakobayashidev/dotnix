@@ -10,6 +10,7 @@ resource "random_password" "akazdayo" {
 
 resource "gitea_user" "moons_14" {
   username            = "moons-14"
+  login_name          = "moons-14"
   email               = "moons@moons14.com"
   password            = random_password.moons_14.result
   must_change_password = true
@@ -17,6 +18,7 @@ resource "gitea_user" "moons_14" {
 
 resource "gitea_user" "akazdayo" {
   username            = "akazdayo"
+  login_name          = "akazdayo"
   email               = "me@odango.app"
   password            = random_password.akazdayo.result
   must_change_password = true

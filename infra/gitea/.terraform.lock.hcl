@@ -37,3 +37,11 @@ provider "registry.opentofu.org/go-gitea/gitea" {
     "zh:f83e26ffb0236d9ae14985a6f3794d72d1e738a18066359f7dca70d3d0055334",
   ]
 }
+
+provider "registry.opentofu.org/hashicorp/random" {
+  version     = "3.9.0"
+  constraints = "~> 3.6"
+  hashes = [
+    "h1:xutuqenr2bGGeQgv9XJujYXWMhtAaZEe1W4u7akVP8o=",
+  ]
+}
