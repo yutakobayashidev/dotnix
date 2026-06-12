@@ -17,6 +17,7 @@
     ../services/grafana
     ../services/prometheus
     ../services/rsshub
+    ../services/simple-nostr-relay
     ../services/loki
     ../services/opentelemetry-collector
     ../services/oura-metrics

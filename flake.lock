@@ -1665,6 +1665,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_10": {
+      "locked": {
+        "lastModified": 1780749050,
+        "narHash": "sha256-3av0pIjlOWQ6rDbNOmpUSvbNnJkGORQKKjb4LtCZsIY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a799d3e3886da994fa307f817a6bc705ae538eeb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1770107345,
@@ -2125,6 +2141,7 @@
         "prompt-review-skill": "prompt-review-skill",
         "repiq": "repiq",
         "rustowl-flake": "rustowl-flake",
+        "simple-nostr-relay": "simple-nostr-relay",
         "skills": "skills",
         "sops-nix": "sops-nix",
         "starla": "starla",
@@ -2247,6 +2264,24 @@
       "original": {
         "owner": "andreymatin",
         "repo": "scss-reset",
+        "type": "github"
+      }
+    },
+    "simple-nostr-relay": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_10"
+      },
+      "locked": {
+        "lastModified": 1781200278,
+        "narHash": "sha256-ImTIqhOkKTYeSwSoNVKhGzDMTRLXwxp93DScthjYx2c=",
+        "owner": "yutakobayashidev",
+        "repo": "simple-nostr-relay",
+        "rev": "b228c3ee4766a85c3d1b38ffceea06c58e9aaa99",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "simple-nostr-relay",
         "type": "github"
       }
     },

@@ -137,6 +137,7 @@
       url = "github:ananthb/starla/v0.3.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    simple-nostr-relay.url = "github:yutakobayashidev/simple-nostr-relay";
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
