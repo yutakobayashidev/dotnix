@@ -33,6 +33,7 @@
             p.carlpett_sops
             p.hashicorp_external
             p.hashicorp_null
+            p.hashicorp_random
             (mkProvider {
               owner = "takeokunn";
               repo = "terraform-provider-cachix";

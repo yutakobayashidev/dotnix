@@ -4,6 +4,10 @@ terraform {
       source  = "go-gitea/gitea"
       version = "~> 0.7"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
+    }
   }
 }
 
