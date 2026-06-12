@@ -5,3 +5,11 @@ resource "gitea_repository" "kaikei" {
   private     = true
   auto_init   = false
 }
+
+resource "gitea_repository" "course_cli" {
+  username    = "yuta"
+  name        = "course-cli"
+  description = "Course CLI"
+  private     = true
+  auto_init   = false
+}
