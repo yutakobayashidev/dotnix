@@ -139,6 +139,7 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
           ping: status.home.yutakobayashi.com
+          args: --accept-routes=false
       - name: OpenTofu plan
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
         env:
@@ -199,6 +200,7 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
           ping: status.home.yutakobayashi.com
+          args: --accept-routes=false
       - name: OpenTofu apply
         if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
         env:
