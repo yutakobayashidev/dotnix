@@ -61,33 +61,34 @@ resource "gitea_user" "tak0m0" {
 }
 
 resource "gitea_user" "yuta" {
-  username              = "yuta"
-  login_name            = ""
-  email                 = "hi@yutakobayashi.com"
-  password              = random_password.yuta.result
-  active                = false
-  must_change_password  = false
-  send_notification     = false
-  force_password_change = false
-
-  lifecycle {
-    ignore_changes = [password]
-  }
+  username                  = "yuta"
+  login_name                = "yuta"
+  email                     = "hi@yutakobayashi.com"
+  password                  = random_password.yuta.result
+  active                    = false
+  admin                     = true
+  allow_create_organization = false
+  allow_git_hook            = false
+  allow_import_local        = false
+  max_repo_creation         = 0
+  must_change_password      = false
+  send_notification         = false
+  force_password_change     = false
 }
 
 resource "gitea_user" "tokuzou0829" {
-  username              = "tokuzou0829"
-  login_name            = ""
-  email                 = "hi@tokuzou.me"
-  password              = random_password.tokuzou0829.result
-  active                = false
-  must_change_password  = false
-  send_notification     = false
-  force_password_change = false
-
-  lifecycle {
-    ignore_changes = [password]
-  }
+  username                  = "tokuzou0829"
+  login_name                = "tokuzou0829"
+  email                     = "hi@tokuzou.me"
+  password                  = random_password.tokuzou0829.result
+  active                    = false
+  allow_create_organization = false
+  allow_git_hook            = false
+  allow_import_local        = false
+  max_repo_creation         = 0
+  must_change_password      = false
+  send_notification         = false
+  force_password_change     = false
 }
 
 import {
