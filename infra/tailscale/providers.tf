@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket                      = "homelab-infra-state"
-    key                         = "gitea/terraform.tfstate"
+    key                         = "tailscale/terraform.tfstate"
     region                      = "auto"
     skip_credentials_validation = true
     skip_region_validation      = true
@@ -13,22 +13,19 @@ terraform {
   }
 
   required_providers {
-    gitea = {
-      source  = "go-gitea/gitea"
-      version = "~> 0.7"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.6"
+    tailscale = {
+      source  = "tailscale/tailscale"
+      version = "~> 0.15"
     }
   }
 }
 
-variable "gitea_base_url" {
-  type    = string
-  default = "https://git.yutakobayashi.com"
+provider "tailscale" {
+  api_key = var.tailscale_api_key
 }
 
-provider "gitea" {
-  base_url = var.gitea_base_url
+variable "tailscale_api_key" {
+  type        = string
+  sensitive   = true
+  description = "Tailscale API access token"
 }
