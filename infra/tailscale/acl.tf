@@ -12,8 +12,8 @@ resource "tailscale_acl" "main" {
     {
       "action": "check",
       "src":    ["autogroup:member"],
-      "dst":    ["autogroup:self"],
-      "users":  ["autogroup:nonroot", "root"]
+      "dst":    ["tag:server"],
+      "users":  ["yuta","root"]
     }
   ],
   "nodeAttrs": [
