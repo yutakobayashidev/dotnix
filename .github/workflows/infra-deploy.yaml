@@ -30,8 +30,6 @@ on:
       - 'infra/gitea/**'
       - 'infra/uptime-kuma/**'
       - 'infra/tailscale/**'
-      - 'flake.lock'
-      - 'flake.nix'
       - 'modules/flake/per-system/dev-shell.nix'
   push:
     branches:
@@ -42,8 +40,6 @@ on:
       - 'infra/gitea/**'
       - 'infra/uptime-kuma/**'
       - 'infra/tailscale/**'
-      - 'flake.lock'
-      - 'flake.nix'
       - 'modules/flake/per-system/dev-shell.nix'
 
 permissions:
