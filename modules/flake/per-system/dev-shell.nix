@@ -54,6 +54,16 @@
               homepage = "https://registry.terraform.io/providers/breml/uptimekuma";
               provider-source-address = "registry.opentofu.org/breml/uptimekuma";
             })
+            (mkProvider {
+              owner = "tailscale";
+              repo = "terraform-provider-tailscale";
+              rev = "v0.29.2";
+              hash = "sha256-1cQq2nM4EJFFRtsnE7mXKJv4ILfJDtZSTX4hG/jNdwM=";
+              vendorHash = "sha256-rD4W2PkRrIQfACm8UWdF0yfZ+Qc5hTjH1lA6U7GJxpE=";
+              spdx = "BSD-3-Clause";
+              homepage = "https://registry.terraform.io/providers/tailscale/tailscale";
+              provider-source-address = "registry.opentofu.org/tailscale/tailscale";
+            })
           ]))
         ];
 
