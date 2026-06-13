@@ -3,7 +3,7 @@ resource "tailscale_oauth_client" "ci" {
   description = "GitHub Actions CI"
   tags        = ["tag:ci"]
   # add auth_keys so the OAuth client can create auth keys for CI nodes
-  scopes      = ["devices:core", "auth_keys"]
+  scopes = ["devices:core", "auth_keys"]
 }
 
 output "ci_client_id" {
