@@ -26,6 +26,18 @@ resource "tailscale_dns_configuration" "main" {
   nameservers {
     address = "2001:4860:4860::8844"
   }
+  nameservers {
+    address = "9.9.9.9"
+  }
+  nameservers {
+    address = "149.112.112.112"
+  }
+  nameservers {
+    address = "2620:fe::fe"
+  }
+  nameservers {
+    address = "2620:fe::9"
+  }
 
   split_dns {
     domain = "home.yutakobayashi.com"
