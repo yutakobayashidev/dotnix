@@ -1404,11 +1404,11 @@
         "qmd": "qmd"
       },
       "locked": {
-        "lastModified": 1780985617,
-        "narHash": "sha256-qUXiscmAPjcjV0yGANh9ZuivOBNBckVEpexb7phihgc=",
+        "lastModified": 1781072789,
+        "narHash": "sha256-/F/4Kg7t7accuaAzc8khMyK+xXReXjpU9Tn4L0LrnyI=",
         "owner": "openclaw",
         "repo": "nix-openclaw",
-        "rev": "22c81f70a5369f9b1f74bda589b3c526db575069",
+        "rev": "a60fb12d461edfdadb6dca65a3b72230e35014ad",
         "type": "github"
       },
       "original": {
