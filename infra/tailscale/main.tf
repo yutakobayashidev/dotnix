@@ -1,5 +1,5 @@
 resource "tailscale_oauth_client" "ci" {
-  depends_on = [tailscale_acl.main]
+  depends_on  = [tailscale_acl.main]
   description = "GitHub Actions CI"
   tags        = ["tag:ci"]
   scopes      = ["devices:core"]

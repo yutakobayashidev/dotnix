@@ -3,8 +3,8 @@ resource "uptimekuma_notification" "discord" {
   type      = "discord"
   is_active = true
   config = jsonencode({
-    discordWebhookUrl  = var.discord_webhook_url
-    discordUsername    = "Uptime Kuma"
+    discordWebhookUrl    = var.discord_webhook_url
+    discordUsername      = "Uptime Kuma"
     discordMessageFormat = "normal"
   })
 }

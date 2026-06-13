@@ -57,7 +57,7 @@ jobs:
   format:
     name: Format
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: read
     steps:
@@ -67,14 +67,14 @@ jobs:
       - uses: ./.github/actions/setup-nix
       - name: OpenTofu fmt
         run: |
-          nix develop --command tofu -chdir=infra/gitea fmt -check
-          nix develop --command tofu -chdir=infra/uptime-kuma fmt -check
-          nix develop --command tofu -chdir=infra/tailscale fmt -check
+          nix develop .#infra-ci --command tofu -chdir=infra/gitea fmt -check
+          nix develop .#infra-ci --command tofu -chdir=infra/uptime-kuma fmt -check
+          nix develop .#infra-ci --command tofu -chdir=infra/tailscale fmt -check
 
   validate:
     name: Validate (${{ matrix.name }})
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     permissions:
       contents: read
     needs: [format]
@@ -95,8 +95,8 @@ jobs:
       - uses: ./.github/actions/setup-nix
       - name: OpenTofu validate
         run: |
-          nix develop --command tofu -chdir=${{ matrix.root }} init -backend=false
-          nix develop --command tofu -chdir=${{ matrix.root }} validate
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init -backend=false
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} validate
 
   plan:
     name: Plan (${{ matrix.name }})
@@ -150,10 +150,10 @@ jobs:
         run: |
           set -euo pipefail
 
-          nix develop --command tofu -chdir=${{ matrix.root }} init \
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init \
             -reconfigure \
             -backend-config="endpoints={s3=\"$R2_ENDPOINT\"}"
-          nix develop --command tofu -chdir=${{ matrix.root }} plan -input=false -no-color
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} plan -input=false -no-color
 
   apply:
     name: Apply (${{ matrix.name }})
@@ -210,16 +210,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          nix develop --command tofu -chdir=${{ matrix.root }} init \
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init \
             -reconfigure \
             -backend-config="endpoints={s3=\"$R2_ENDPOINT\"}"
-          nix develop --command tofu -chdir=${{ matrix.root }} plan -out=tfplan -input=false
-          nix develop --command tofu -chdir=${{ matrix.root }} apply -input=false -auto-approve tfplan
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} plan -out=tfplan -input=false
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} apply -input=false -auto-approve tfplan
 
           {
             echo "## OpenTofu apply completed for ${{ matrix.name }}"
             echo ""
             echo '```'
-            nix develop --command tofu -chdir=${{ matrix.root }} output -no-color
+            nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} output -no-color
             echo '```'
           } >>"$GITHUB_STEP_SUMMARY"
