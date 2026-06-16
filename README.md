@@ -146,12 +146,12 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 
 Agent skills are managed via [agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix).
 
-- **Config**: `modules/home/coding-agents/agent-skills`
+- **Config**: `modules/home/coding-agents/common/agent-skills`
 - **Local skills**: `github:yutakobayashidev/skills` (別リポジトリ)
 - **External skills**: [anthropics/skills](https://github.com/anthropics/skills), [vercel-labs/skills](https://github.com/vercel-labs/skills), [ast-grep/claude-skill](https://github.com/ast-grep/claude-skill), [mattpocock/skills](https://github.com/mattpocock/skills), [fa0311/twitter_api_safe_relay_skills](https://github.com/fa0311/twitter_api_safe_relay_skills), [obra/superpowers](https://github.com/obra/superpowers)
 - **Deploy targets**: `~/.agents/skills`, `~/.config/claude/skills`, `~/.config/codex/skills`, Hermes microVM `/var/lib/hermes/.hermes/skills`, OpenClaw microVM `/persist/openclaw/.openclaw/workspace/skills`
 
-Avoid maintaining a fixed skill list here. Treat `modules/home/coding-agents/agent-skills` as the source of truth.
+Avoid maintaining a fixed skill list here. Treat `modules/home/coding-agents/common/agent-skills` as the source of truth.
 
 ## Topology
 

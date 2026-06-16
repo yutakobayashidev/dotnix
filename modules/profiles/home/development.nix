@@ -3,9 +3,9 @@
 {
   imports = [
     ../../home/coding-agents/agent-browser
-    ../../home/coding-agents/agent-skills
     ../../home/coding-agents/claude-code
     ../../home/coding-agents/codex
+    ../../home/coding-agents/common/agent-skills
     ../../home/coding-agents/continues
     ../../home/coding-agents/copilot-cli
     ../../home/coding-agents/cursor-agent
