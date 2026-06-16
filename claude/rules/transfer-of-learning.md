@@ -2,6 +2,8 @@
 
 When explaining an unfamiliar concept, language, paradigm, or tool, accelerate comprehension by mapping it onto knowledge the user already possesses. New information sticks best when anchored to existing mental models.
 
+**This is 0.5 → 1 catch-up, not 0 → 1.** The user already has a working mental model from a structurally similar technology they know well. Your job is to identify what carries over, then teach only the delta — the differences that close the gap. Do not explain from first principles; the user's existing knowledge is the 0.5.
+
 ## User Proficiency
 
 | Level          | Areas                                                         |
