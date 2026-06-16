@@ -168,4 +168,13 @@
       wt.remover = "trash";
     };
   };
+
+  programs.ssh = {
+    enable = true;
+    settings."git-ssh.yutakobayashi.com" = {
+      proxyCommand = ''
+        ${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h
+      '';
+    };
+  };
 }

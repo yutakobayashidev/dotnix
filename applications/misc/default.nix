@@ -63,6 +63,7 @@ in
       unar
 
       # Network Tools
+      cloudflared
       vt-cli
       tunnelto
       speedtest-cli
