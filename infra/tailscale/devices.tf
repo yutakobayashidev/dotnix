@@ -78,16 +78,6 @@ resource "tailscale_device_key" "x870_steel_legend" {
   key_expiry_disabled = false
 }
 
-resource "tailscale_device_authorization" "yuta_venus_series" {
-  device_id  = "njR9DDGLgt11CNTRL"
-  authorized = true
-}
-
-resource "tailscale_device_key" "yuta_venus_series" {
-  device_id           = "njR9DDGLgt11CNTRL"
-  key_expiry_disabled = false
-}
-
 resource "tailscale_device_tags" "b450m_pro4" {
   device_id = "nWu8AHoCP811CNTRL"
   tags      = ["tag:server"]
