@@ -50,6 +50,7 @@ in
       exiftool
       mat2
       ffmpeg
+      mpv
       apkeep
       ipatool
       stable.yt-dlp
