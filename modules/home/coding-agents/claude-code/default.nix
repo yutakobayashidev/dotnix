@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  inputs,
   dotfilesDir,
   osConfig,
   ...
@@ -15,7 +14,6 @@ let
   inherit (config.home) homeDirectory;
 
   jq = lib.getExe pkgs.jq;
-  jsonFormat = pkgs.formats.json { };
   boolString = value: if value then "1" else "0";
   telemetryResourceAttributes = cfg.telemetry.resourceAttributes // {
     account_name = config.home.username;
@@ -36,17 +34,6 @@ let
 
   terminal-notifier =
     if pkgs.stdenv.isDarwin then lib.getExe' pkgs.terminal-notifier "terminal-notifier" else "";
-
-  mcpServers =
-    (inputs.mcp-servers-nix.lib.evalModule pkgs {
-      programs.context7.enable = true;
-    }).config.settings.servers
-    // {
-      deepwiki = {
-        type = "http";
-        url = "https://mcp.deepwiki.com/mcp";
-      };
-    };
 
   baseSettings = {
     "$schema" = "https://json.schemastore.org/claude-code-settings.json";
@@ -92,8 +79,6 @@ let
     skipDangerousModePermissionPrompt = true;
     enableAllProjectMcpServers = true;
     plansDirectory = "./plans";
-
-    inherit mcpServers;
 
     statusLine = {
       type = "command";
@@ -222,8 +207,6 @@ let
     };
 
   settings = mergeSettings baseSettings darwinSettings;
-
-  claudeSettings = jsonFormat.generate "claude-settings.json" settings;
 in
 {
   options.my.programs.claude-code = {
@@ -261,20 +244,18 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    programs.claude-code = {
+      enable = true;
+      package = pkgs.llm-agents.claude-code;
+      configDir = claudeConfigDir;
+      enableMcpIntegration = true;
+      inherit settings;
+    };
+
     home.packages = with pkgs.llm-agents; [
-      claude-code
       apm
       ccusage
     ];
-
-    home.sessionVariables = {
-      CLAUDE_CONFIG_DIR = claudeConfigDir;
-    };
-
-    home.activation.writeClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p "${claudeConfigDir}"
-      ${pkgs.coreutils}/bin/install -m 644 ${claudeSettings} "${claudeConfigDir}/settings.json"
-    '';
 
     xdg.configFile = {
       "claude/hooks".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/hooks";

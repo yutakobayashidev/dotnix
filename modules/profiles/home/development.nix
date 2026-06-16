@@ -6,6 +6,7 @@
     ../../home/coding-agents/claude-code
     ../../home/coding-agents/codex
     ../../home/coding-agents/common/agent-skills
+    ../../home/coding-agents/common/mcp-servers.nix
     ../../home/coding-agents/continues
     ../../home/coding-agents/copilot-cli
     ../../home/coding-agents/cursor-agent
@@ -21,6 +22,7 @@
   my.programs.agent-skills.enable = true;
   my.programs.claude-code.enable = true;
   my.programs.codex.enable = true;
+  my.programs.mcp.enable = true;
   my.programs.continues.enable = true;
   my.programs.copilot-cli.enable = true;
   my.programs.cursor-agent.enable = true;
