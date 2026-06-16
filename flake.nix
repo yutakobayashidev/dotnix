@@ -230,7 +230,7 @@
       imports = [
         ./flake-module.nix
         ./modules/flake/_registries.nix
-        ./modules/flake/agent-skills
+        ./modules/flake/per-system/agent-skills.nix
         ./modules/flake/per-system/pkgs.nix
         ./modules/flake/per-system/packages.nix
         ./modules/flake/per-system/treefmt.nix
