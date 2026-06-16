@@ -1,7 +1,12 @@
 { mkPkgs, ... }:
 {
   perSystem =
-    { config, pkgs, ... }:
+    {
+      agentSkillsShellHook,
+      config,
+      pkgs,
+      ...
+    }:
     let
       system = pkgs.stdenv.hostPlatform.system;
       localPkgs = mkPkgs system;
@@ -60,6 +65,7 @@
 
         shellHook = ''
           ${config.pre-commit.installationScript}
+          ${agentSkillsShellHook}
         '';
       };
 

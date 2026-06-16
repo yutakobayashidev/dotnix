@@ -121,6 +121,10 @@
       url = "github:fa0311/twitter_api_safe_relay_skills";
       flake = false;
     };
+    hashicorp-agent-skills = {
+      url = "github:hashicorp/agent-skills";
+      flake = false;
+    };
     skills = {
       url = "github:yutakobayashidev/skills";
       flake = false;
@@ -226,6 +230,7 @@
       imports = [
         ./flake-module.nix
         ./modules/flake/_registries.nix
+        ./modules/flake/agent-skills
         ./modules/flake/per-system/pkgs.nix
         ./modules/flake/per-system/packages.nix
         ./modules/flake/per-system/treefmt.nix

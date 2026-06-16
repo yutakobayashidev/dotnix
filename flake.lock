@@ -924,6 +924,22 @@
         "type": "github"
       }
     },
+    "hashicorp-agent-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779983208,
+        "narHash": "sha256-NMelhZRwYpVq39QeK9cAOkhzVgWbPLVOv5Plf5iQ+Lw=",
+        "owner": "hashicorp",
+        "repo": "agent-skills",
+        "rev": "339a113935812ad75c6ff90d418b739a021826d1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hashicorp",
+        "repo": "agent-skills",
+        "type": "github"
+      }
+    },
     "hermes-agent": {
       "inputs": {
         "flake-parts": [
@@ -2113,6 +2129,7 @@
         "gh-nippou": "gh-nippou",
         "ghostty": "ghostty",
         "git-hooks": "git-hooks_2",
+        "hashicorp-agent-skills": "hashicorp-agent-skills",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_3",
         "impermanence": "impermanence",
