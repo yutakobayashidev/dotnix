@@ -120,6 +120,7 @@
     settings = {
       alias = {
         clone = "clone --recursive";
+        ahead = "log --oneline origin/main..HEAD";
         logg = "log --graph --abbrev-commit --pretty=format:\"%C(yellow)%h%C(reset) - %C(cyan)%ad%C(reset) %C(green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%n\"";
         swor = ''!f() { local -r ref=$(git branch -r | fzf); git sw "''${1:-''${ref#*/}}" $ref; }; f'';
         swf = "!git branch -a | fzf | xargs git switch";
