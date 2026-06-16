@@ -1,0 +1,13 @@
+# Allow external movie playback through the CLI.
+prefix_rule(
+    pattern = ["bun", "run", "packages/cli/src/index.ts", "movies", "play"],
+    decision = "allow",
+    justification = "Do you want to allow external video playback? This needs mpv/GUI access outside the sandbox.",
+    match = [
+        "bun run packages/cli/src/index.ts movies play 2478 31742 44234 --external",
+        "bun run packages/cli/src/index.ts movies play 2478 31742 44235 --external",
+    ],
+    not_match = [
+        "bun run packages/cli/src/index.ts movies play 2478 31742 44234 --no-play",
+    ],
+)
