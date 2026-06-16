@@ -65,6 +65,7 @@
 
         shellHook = ''
           ${config.pre-commit.installationScript}
+          ${config.mcp-servers.shellHook}
           ${agentSkillsShellHook}
         '';
       };
