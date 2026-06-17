@@ -26,7 +26,6 @@ in
     };
   };
 
-
   my.services.cloudflared-tunnel.ingress.${domain} = {
     service = "http://localhost:3000";
   };
