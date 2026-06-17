@@ -13,6 +13,7 @@
     ../services/navidrome
     ../services/immich
     ../services/gitea
+    ../services/gitea-actions-runner
     ../services/home-assistant
     ../services/grafana
     ../services/prometheus
