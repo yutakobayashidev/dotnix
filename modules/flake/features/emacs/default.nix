@@ -42,6 +42,7 @@ let
       package = emacs;
       config = ./init.org;
       alwaysTangle = true;
+      alwaysEnsure = true;
       defaultInitFile = tangle pkgs {
         name = "default.el";
         org = ./init.org;
