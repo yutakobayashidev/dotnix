@@ -30,7 +30,7 @@ in
       image = "kasmweb/chrome:1.18.0";
       ports = [
         "127.0.0.1:${toString port}:3000"
-        "127.0.0.1:6901:6901"
+        "6901:6901"
       ];
       volumes = [
         "${profileDir}:/home/kasm-user/chrome-profile"
