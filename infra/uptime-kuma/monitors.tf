@@ -460,24 +460,3 @@ resource "uptimekuma_monitor_http" "uptime_kuma" {
     },
   ]
 }
-
-resource "uptimekuma_monitor_http" "cloudflare_error_page" {
-  name                  = "Cloudflare Error Page"
-  url                   = "http://localhost:5000"
-  accepted_status_codes = ["500-599"]
-  interval              = 60
-  timeout               = 30
-  max_retries           = 0
-  retry_interval        = 60
-  resend_interval       = 300
-  active                = true
-  method                = "GET"
-  max_redirects         = 10
-  parent                = uptimekuma_monitor_group.internal.id
-  notification_ids      = local.default_notification_ids
-  tags = [
-    {
-      tag_id = uptimekuma_tag.service.id
-    },
-  ]
-}

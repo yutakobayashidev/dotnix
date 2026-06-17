@@ -99,10 +99,6 @@ resource "uptimekuma_status_page" "main" {
           id       = uptimekuma_monitor_http.uptime_kuma.id
           send_url = true
         },
-        {
-          id       = uptimekuma_monitor_http.cloudflare_error_page.id
-          send_url = false
-        },
       ]
     },
   ]
