@@ -16,12 +16,10 @@ let
       org,
     }:
     pkgs.runCommand name { nativeBuildInputs = [ (emacsUnwrapped pkgs) ]; } ''
-      cp ${org} tmp.org
       emacs -Q --batch --eval \
         "(progn
           (require 'ob-tangle)
-          (org-babel-tangle-file \"tmp.org\" \"emacs-lisp\"))"
-      install emacs-lisp $out
+          (org-babel-tangle-file \"${org}\" \"$out\"))"
     '';
 
   tangleEl =

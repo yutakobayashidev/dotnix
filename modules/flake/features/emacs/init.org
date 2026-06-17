@@ -1,4 +1,4 @@
-#+PROPERTY: header-args :tangle init.el :comments link
+#+PROPERTY: header-args :comments link
 
 * rainbow-delimiters
 #+begin_src emacs-lisp
