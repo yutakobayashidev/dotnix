@@ -37,7 +37,7 @@ in
 
   virtualisation.containers.containersConf.settings = {
     containers.dns_servers = [
-      "100.111.109.43"
+      "1.1.1.1"
       "8.8.8.8"
     ];
   };
