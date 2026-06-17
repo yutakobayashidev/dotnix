@@ -48,7 +48,7 @@ in
     };
 
     twitter-api-safe-relay = {
-      image = "ghcr.io/fa0311/twitter_api_safe_relay:sha-c6af1d2-dashboard";
+      image = "ghcr.io/fa0311/twitter_api_safe_relay:latest-dashboard-slim";
       volumes = [
         "${./settings.json}:/app/settings.json:ro"
       ];
