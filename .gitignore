@@ -14,6 +14,9 @@ result-*
 # Swap files
 *.swp
 
+# AI agent working files
+z-ai/
+
 # Terraform state
 *.tfstate
 *.tfstate.*

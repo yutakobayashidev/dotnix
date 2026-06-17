@@ -59,12 +59,9 @@ Skip if the change has no doc impact.
 
 ## Task Management
 
-1. **Plan First**: Write plan to `z-ai/todo.md` with checkable items
-2. **Verify Plan**: Check in before starting implementation
-3. **Track Progress**: Mark items complete as you go
-4. **Explain Changes**: High-level summary at each step
-5. **Document Results**: Add review section to `z-ai/todo.md`
-6. **Capture Lessons**: Update `z-ai/lessons.md` after corrections
+1. **Plan First**: Think through the approach before coding
+2. **Explain Changes**: High-level summary at each step
+3. **Capture Lessons**: Update `z-ai/lessons.md` after corrections
 
 ## Link Handling
 
