@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.my.programs.agent-skills;
+  agentLib = inputs.agent-skills.lib.agent-skills;
 in
 {
   options.my.programs.agent-skills.enable = lib.mkEnableOption "agent skills";
@@ -186,11 +187,7 @@ in
         };
       };
 
-      targets = {
-        agents.enable = true;
-        claude.enable = true;
-        codex.enable = true;
-      };
+      targets = builtins.mapAttrs (_: target: target // { enable = true; }) agentLib.defaultTargets;
     };
   };
 }
