@@ -84,15 +84,7 @@ in
           service = "edcb";
           tls.certResolver = "letsencrypt";
         };
-        tw = {
-          entryPoints = [
-            "web"
-            "websecure"
-          ];
-          rule = "Host(`tw.${domain}`)";
-          service = "tw";
-          tls.certResolver = "letsencrypt";
-        };
+
       };
 
       middlewares.error-pages = {
@@ -116,7 +108,6 @@ in
         };
         mirakurun.loadBalancer.servers = [ { url = "http://localhost:40772"; } ];
         edcb.loadBalancer.servers = [ { url = "http://localhost:5510"; } ];
-        tw.loadBalancer.servers = [ { url = "http://localhost:3090"; } ];
         error-pages-service.loadBalancer.servers = [ { url = "http://127.0.0.1:5000"; } ];
       };
     };
