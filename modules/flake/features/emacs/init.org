@@ -7,3 +7,9 @@
     :hook
     (prog-mode-hook . rainbow-delimiters-mode))
 #+end_src
+
+* agent-shell
+#+begin_src emacs-lisp
+  (use-package agent-shell
+    :ensure t)
+#+end_src
