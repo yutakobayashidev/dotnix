@@ -33,7 +33,6 @@ in
     tokenFile = config.sops.secrets.gitea-actions-runner-token.path;
     labels = [
       "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
-      "ubuntu-22.04:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
     ];
   };
 
