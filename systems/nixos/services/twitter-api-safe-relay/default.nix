@@ -3,6 +3,7 @@ let
   port = 3090;
   domain = "tw.home.yutakobayashi.com";
   outputDir = "/var/lib/immich-net-pics";
+  profileDir = "/var/lib/twitter-api-safe-relay/chrome-profile";
 
   bookmark-snap = pkgs.buildNpmPackage {
     pname = "twitter-bookmark-snap";
@@ -24,14 +25,47 @@ let
   };
 in
 {
-  virtualisation.oci-containers.containers.twitter-api-safe-relay = {
-    image = "ghcr.io/fa0311/twitter_api_safe_relay:sha-c6af1d2-dashboard";
-    ports = [ "127.0.0.1:${toString port}:3000" ];
-    volumes = [
-      "${./settings.json}:/app/settings.json:ro"
-    ];
-    extraOptions = [ ];
+  virtualisation.oci-containers.containers = {
+    kasmweb = {
+      image = "kasmweb/chrome:1.18.0";
+      ports = [
+        "127.0.0.1:${toString port}:3000"
+        "127.0.0.1:6901:6901"
+      ];
+      volumes = [
+        "${profileDir}:/home/kasm-user/chrome-profile"
+      ];
+      environment = {
+        VNC_PW = "password";
+        APP_ARGS = "--start-maximized --user-data-dir=/home/kasm-user/chrome-profile --password-store=basic --remote-debugging-port=9222";
+      };
+      extraOptions = [
+        "--shm-size=4g"
+      ];
+    };
+
+    twitter-api-safe-relay = {
+      image = "ghcr.io/fa0311/twitter_api_safe_relay:sha-c6af1d2-dashboard";
+      volumes = [
+        "${./settings.json}:/app/settings.json:ro"
+      ];
+      dependsOn = [ "kasmweb" ];
+      extraOptions = [
+        "--network=container:kasmweb"
+      ];
+    };
   };
+
+  systemd.services.podman-kasmweb.preStart = ''
+    rm -f ${profileDir}/SingletonLock ${profileDir}/SingletonSocket ${profileDir}/SingletonCookie ${profileDir}/DevToolsActivePort
+    chown -R 1000:0 ${profileDir}
+    chmod -R g+rwX ${profileDir}
+  '';
+
+  systemd.tmpfiles.rules = [
+    "d ${outputDir} 0755 yuta users - -"
+    "d ${profileDir} 0755 1000 0 - -"
+  ];
 
   services.traefik.dynamicConfigOptions.http = {
     routers.twitter-api-safe-relay = {
@@ -47,10 +81,6 @@ in
       { url = "http://127.0.0.1:${toString port}"; }
     ];
   };
-
-  systemd.tmpfiles.rules = [
-    "d ${outputDir} 0755 yuta users - -"
-  ];
 
   systemd.services.twitter-bookmark-snap = {
     description = "Fetch and render Twitter bookmarks";
