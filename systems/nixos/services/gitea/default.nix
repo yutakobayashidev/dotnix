@@ -32,7 +32,7 @@ in
     url = "https://${domain}";
     tokenFile = config.sops.secrets.gitea-actions-runner-token.path;
     labels = [
-      "ubuntu-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
+      "ubuntu-24.04":docker://ghcr.io/gitea/runner-images:ubuntu-24.04"
     ];
   };
 
