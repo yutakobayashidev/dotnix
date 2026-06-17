@@ -20,6 +20,7 @@ in
     configFile = pkgs.writeText "cliproxyapi-config.yaml" ''
       host: "127.0.0.1"
       port: ${toString cfg.port}
+      auth-dir: "/var/lib/cliproxyapi/auth"
       api-keys:
         - "sk-proxy"
     '';
