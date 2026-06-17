@@ -30,9 +30,7 @@ in
     volumes = [
       "${./settings.json}:/app/settings.json:ro"
     ];
-    extraOptions = [
-      "--restart=unless-stopped"
-    ];
+    extraOptions = [ ];
   };
 
   services.traefik.dynamicConfigOptions.http = {
