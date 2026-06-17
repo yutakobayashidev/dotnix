@@ -31,7 +31,6 @@
     ../services/atuin
     ../services/couchdb
     ../services/coredns
-    ../services/twitter-bookmark-snap
     ../services/twitter-api-safe-relay
     ../services/s3s
     ../services/headroom
