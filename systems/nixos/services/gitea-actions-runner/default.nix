@@ -15,7 +15,7 @@ in
     url = "https://${domain}";
     tokenFile = config.sops.secrets.gitea-actions-runner-token.path;
     labels = [
-      "ubuntu-24.04:docker://ghcr.io/gitea/runner-images:ubuntu-24.04"
+      "ubuntu-24.04:docker://docker.io/gitea/runner-images:ubuntu-24.04"
       "nix:host"
     ];
     hostPackages = with pkgs; [
