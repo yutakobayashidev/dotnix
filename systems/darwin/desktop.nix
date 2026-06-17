@@ -46,7 +46,8 @@
             inherit (config.home-manager.users.${username}) programs;
           in
           [ "${programs.firefox.package}/Applications/Firefox.app" ]
-          ++ [ "${pkgs.ghostty-bin}/Applications/Ghostty.app" ];
+          ++ [ "${pkgs.ghostty-bin}/Applications/Ghostty.app" ]
+          ++ lib.optional programs.emacs.enable "${programs.emacs.package}/Applications/Emacs.app";
       };
 
       screencapture = {
