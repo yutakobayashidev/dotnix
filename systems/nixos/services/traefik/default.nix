@@ -39,6 +39,11 @@ in
           delayBeforeCheck = 10;
         };
       };
+
+      providers.docker = {
+        endpoint = "unix:///run/podman/podman.sock";
+        exposedByDefault = false;
+      };
     };
 
     dynamicConfigOptions.http = {
@@ -54,7 +59,7 @@ in
           ];
           rule = "HostRegexp(`.+`)";
           priority = 1;
-          service = "error-pages-service";
+          service = "cloudflare-error-page@docker";
           middlewares = [ "error-pages" ];
         };
         tv = {
@@ -95,7 +100,7 @@ in
             "403"
           ];
           query = "/{status}.html";
-          service = "error-pages-service";
+          service = "cloudflare-error-page@docker";
         };
       };
 
@@ -108,11 +113,12 @@ in
         };
         mirakurun.loadBalancer.servers = [ { url = "http://localhost:40772"; } ];
         edcb.loadBalancer.servers = [ { url = "http://localhost:5510"; } ];
-        error-pages-service.loadBalancer.servers = [ { url = "http://127.0.0.1:5000"; } ];
       };
     };
     environmentFiles = [
       config.sops.secrets.cloudflare-api-token.path
     ];
   };
+
+  users.users.traefik.extraGroups = [ "podman" ];
 }

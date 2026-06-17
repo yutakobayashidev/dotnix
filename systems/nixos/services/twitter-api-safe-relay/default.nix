@@ -1,6 +1,5 @@
 { pkgs, lib, ... }:
 let
-  port = 3090;
   domain = "tw.home.yutakobayashi.com";
   outputDir = "/var/lib/immich-net-pics";
   profileDir = "/var/lib/twitter-api-safe-relay/chrome-profile";
@@ -28,10 +27,14 @@ in
   virtualisation.oci-containers.containers = {
     kasmweb = {
       image = "kasmweb/chrome:1.18.0";
-      ports = [
-        "127.0.0.1:${toString port}:3000"
-        "6901:6901"
-      ];
+      ports = [ "6901:6901" ];
+      labels = {
+        "traefik.enable" = "true";
+        "traefik.http.routers.twitter-api-safe-relay.rule" = "Host(`${domain}`)";
+        "traefik.http.routers.twitter-api-safe-relay.entrypoints" = "web,websecure";
+        "traefik.http.routers.twitter-api-safe-relay.tls.certResolver" = "letsencrypt";
+        "traefik.http.services.twitter-api-safe-relay.loadbalancer.server.port" = "3000";
+      };
       volumes = [
         "${profileDir}:/home/kasm-user/chrome-profile"
       ];
@@ -66,21 +69,6 @@ in
     "d ${outputDir} 0755 yuta users - -"
     "d ${profileDir} 0755 1000 0 - -"
   ];
-
-  services.traefik.dynamicConfigOptions.http = {
-    routers.twitter-api-safe-relay = {
-      entryPoints = [
-        "web"
-        "websecure"
-      ];
-      rule = "Host(`${domain}`)";
-      service = "twitter-api-safe-relay";
-      tls.certResolver = "letsencrypt";
-    };
-    services.twitter-api-safe-relay.loadBalancer.servers = [
-      { url = "http://127.0.0.1:${toString port}"; }
-    ];
-  };
 
   systemd.services.twitter-bookmark-snap = {
     description = "Fetch and render Twitter bookmarks";
