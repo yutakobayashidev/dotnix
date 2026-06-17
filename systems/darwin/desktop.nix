@@ -1,4 +1,10 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  ...
+}:
 
 {
   imports = [
@@ -35,6 +41,12 @@
         autohide-time-modifier = 0.0;
         show-recents = false;
         orientation = "bottom";
+        persistent-apps =
+          let
+            inherit (config.home-manager.users.${username}) programs;
+          in
+          [ "${programs.firefox.package}/Applications/Firefox.app" ]
+          ++ [ "${pkgs.ghostty-bin}/Applications/Ghostty.app" ];
       };
 
       screencapture = {
