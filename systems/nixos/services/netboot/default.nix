@@ -19,7 +19,13 @@ let
   };
 
   build = netbootEval.config.system.build;
-  kernelTarget = netbootEval.pkgs.stdenv.hostPlatform.linux-kernel.target;
+  kernelTarget =
+    if netbootEval.pkgs.stdenv.hostPlatform.isx86_64 then
+      "bzImage"
+    else if netbootEval.pkgs.stdenv.hostPlatform.isAarch64 then
+      "Image"
+    else
+      "vmlinuz";
   kernel = "${build.kernel}/${kernelTarget}";
   initrd = "${build.netbootRamdisk}/initrd";
   cmdline = "init=${build.toplevel}/init loglevel=4";
