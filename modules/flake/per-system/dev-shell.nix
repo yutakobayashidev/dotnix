@@ -32,6 +32,10 @@
           localPkgs.pike
           localPkgs.skill-scanner
           localPkgs.skillspector
+          localPkgs.actionlint
+          localPkgs.pinact
+          localPkgs.ghalint
+          localPkgs.zizmor
           (localPkgs.opentofu.withPlugins (p: [
             p.go-gitea_gitea
             p.oracle_oci
