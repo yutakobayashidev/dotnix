@@ -48,6 +48,8 @@ let
       };
       extraEmacsPackages = epkgs': [
         epkgs'.treesit-grammars.with-all-grammars
+        pkgs.beancount
+        pkgs.beancount-language-server
       ];
     };
 in
