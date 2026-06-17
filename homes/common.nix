@@ -27,6 +27,7 @@ in
       inputs.agent-skills.homeManagerModules.default
       inputs.nix-index-database.homeModules.nix-index
       inputs.sops-nix.homeManagerModules.sops
+      inputs.self.homeManagerModules.emacs
     ];
     users.${username} =
       { config, ... }:
