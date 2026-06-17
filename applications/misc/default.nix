@@ -21,6 +21,7 @@ in
       jj-desc
 
       # Development Tools
+      babashka
       bumblebee
       vulnix
       gogcli
