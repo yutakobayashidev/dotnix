@@ -197,6 +197,10 @@
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -239,6 +243,7 @@
         ./modules/flake/per-system/dev-shell.nix
         ./modules/flake/per-system/topology.nix
         inputs.nix-topology.flakeModule
+        ./modules/flake/features/emacs
       ];
 
       hosts = {
