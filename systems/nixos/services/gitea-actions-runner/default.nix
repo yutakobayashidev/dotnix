@@ -34,4 +34,11 @@ in
   };
 
   virtualisation.docker.enable = true;
+
+  virtualisation.containers.containersConf.settings = {
+    containers.dns_servers = [
+      "100.111.109.43"
+      "8.8.8.8"
+    ];
+  };
 }

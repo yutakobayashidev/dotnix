@@ -13,6 +13,7 @@ in
     enable = true;
     config = ''
       .:53 {
+        bind 127.0.0.1 ${b450m}
         forward . 8.8.8.8 1.1.1.1
         log
         errors
