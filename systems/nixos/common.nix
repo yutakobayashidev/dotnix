@@ -68,6 +68,7 @@
     isNormalUser = true;
     description = username;
     shell = pkgs.zsh;
+    linger = true;
     extraGroups = [
       "networkmanager"
       "wheel"
