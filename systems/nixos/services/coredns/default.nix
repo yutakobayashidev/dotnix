@@ -20,12 +20,14 @@ in
       }
 
       ${tailDomain}:53 {
+        bind 127.0.0.1 ${b450m}
         forward . 100.100.100.100
         log
         errors
       }
 
       ${homeDomain}:53 {
+        bind 127.0.0.1 ${b450m}
         template ANY A {
           match "(.*)\.${homeDomain}"
           answer "{{ .Name }} 300 IN A ${b450m}"
@@ -41,6 +43,7 @@ in
       }
 
       ${mitmDomain}:53 {
+        bind 127.0.0.1 ${b450m}
         hosts {
           ${mitmDomain} ${config.networking.hostName}
         }
