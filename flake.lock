@@ -69,6 +69,22 @@
         "type": "github"
       }
     },
+    "before-and-after-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770588754,
+        "narHash": "sha256-P79NHt2qX/wRAvrUmvgBvDjg4aT07Oc3KXeri6Vz5yk=",
+        "owner": "vercel-labs",
+        "repo": "before-and-after",
+        "rev": "178594233450657b198b965635b3bba443bf9129",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vercel-labs",
+        "repo": "before-and-after",
+        "type": "github"
+      }
+    },
     "blueprint": {
       "inputs": {
         "nixpkgs": [
@@ -2154,6 +2170,7 @@
         "agent-skills": "agent-skills",
         "anthropic-skills": "anthropic-skills",
         "ast-grep-skill": "ast-grep-skill",
+        "before-and-after-skill": "before-and-after-skill",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "cliproxyapi": "cliproxyapi",
