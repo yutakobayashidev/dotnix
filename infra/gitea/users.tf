@@ -23,6 +23,11 @@ resource "random_password" "ka1ut" {
   special = true
 }
 
+resource "random_password" "fa0311" {
+  length  = 24
+  special = true
+}
+
 resource "random_password" "yuta" {
   length  = 24
   special = true
@@ -70,6 +75,14 @@ resource "gitea_user" "ka1ut" {
   login_name           = "ka1ut"
   email                = "tka1utjp@gmail.com"
   password             = random_password.ka1ut.result
+  must_change_password = true
+}
+
+resource "gitea_user" "fa0311" {
+  username             = "fa0311"
+  login_name           = "fa0311"
+  email                = "yuki@yuki0311.com"
+  password             = random_password.fa0311.result
   must_change_password = true
 }
 
@@ -136,5 +149,10 @@ output "tak0m0_password" {
 
 output "ka1ut_password" {
   value     = random_password.ka1ut.result
+  sensitive = true
+}
+
+output "fa0311_password" {
+  value     = random_password.fa0311.result
   sensitive = true
 }
