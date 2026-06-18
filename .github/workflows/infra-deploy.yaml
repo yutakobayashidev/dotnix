@@ -1,112 +1,25 @@
-name: 'Infra: OpenTofu'
+name: 'Infra: Approved OpenTofu deploy'
 
 on:
-  workflow_dispatch:
-    inputs:
-      target:
-        description: OpenTofu root to run
-        required: true
-        default: both
-        type: choice
-        options:
-          - gitea
-          - uptime-kuma
-          - tailscale
-          - both
-      mode:
-        description: OpenTofu command mode
-        required: true
-        default: plan
-        type: choice
-        options:
-          - plan
-          - apply
-  pull_request:
-    branches:
-      - main
-    paths:
-      - '.github/actions/setup-nix/**'
-      - '.github/workflows/infra-deploy.yaml'
-      - 'infra/gitea/**'
-      - 'infra/uptime-kuma/**'
-      - 'infra/tailscale/**'
-      - 'modules/flake/per-system/dev-shell.nix'
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/actions/setup-nix/**'
-      - '.github/workflows/infra-deploy.yaml'
-      - 'infra/gitea/**'
-      - 'infra/uptime-kuma/**'
-      - 'infra/tailscale/**'
-      - 'modules/flake/per-system/dev-shell.nix'
+  pull_request_target: # zizmor: ignore[dangerous-triggers] A maintainer-controlled label gates execution at the event's immutable PR SHA.
+    types:
+      - labeled
 
-permissions:
-  contents: read
+permissions: {}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
   cancel-in-progress: false
 
 jobs:
-  format:
-    name: Format
+  deploy:
+    name: ${{ github.event.label.name == 'safe-to-apply' && 'Apply' || 'Plan' }} (${{ matrix.name }})
+    if: ${{ contains(fromJSON('["safe-to-plan", "safe-to-apply"]'), github.event.label.name) }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
       contents: read
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/setup-nix
-      - name: OpenTofu fmt
-        run: |
-          nix develop .#infra-ci --command tofu -chdir=infra/gitea fmt -check
-          nix develop .#infra-ci --command tofu -chdir=infra/uptime-kuma fmt -check
-          nix develop .#infra-ci --command tofu -chdir=infra/tailscale fmt -check
-
-  validate:
-    name: Validate (${{ matrix.name }})
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    permissions:
-      contents: read
-    needs: [format]
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: gitea
-            root: infra/gitea
-          - name: uptime-kuma
-            root: infra/uptime-kuma
-          - name: tailscale
-            root: infra/tailscale
-    # Provide credentials needed by provider plugins during validation
-    env:
-      GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
-      TF_IN_AUTOMATION: 'true'
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/setup-nix
-      - name: OpenTofu validate
-        run: |
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init -backend=false
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} validate
-
-  plan:
-    name: Plan (${{ matrix.name }})
-    if: ${{ github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'plan') }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    permissions:
-      contents: read
-      id-token: write
-    needs: [format, validate]
+      id-token: write # Required by niks3 for short-lived cache authentication.
     strategy:
       fail-fast: false
       matrix:
@@ -121,22 +34,29 @@ jobs:
       AWS_EC2_METADATA_DISABLED: 'true'
       TF_IN_AUTOMATION: 'true'
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
+      - name: Checkout trusted setup action
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
+          path: trusted
           persist-credentials: false
-      - uses: ./.github/actions/setup-nix
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
+      - name: Setup Nix
+        uses: ./trusted/.github/actions/setup-nix
+      - name: Checkout approved pull request revision
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: source
+          persist-credentials: false
       - name: Tailscale
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
         uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
           ping: status.home.yutakobayashi.com
-      - name: OpenTofu plan
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
+      - name: OpenTofu ${{ github.event.label.name == 'safe-to-apply' && 'apply' || 'plan' }}
+        working-directory: source
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
@@ -147,79 +67,17 @@ jobs:
           TF_VAR_uptimekuma_username: ${{ secrets.UPTIME_KUMA_USERNAME }}
           TF_VAR_uptimekuma_password: ${{ secrets.UPTIME_KUMA_PASSWORD }}
           TF_VAR_discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DEPLOY_MODE: ${{ github.event.label.name }}
+          ROOT: ${{ matrix.root }}
         run: |
           set -euo pipefail
 
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init \
+          nix develop .#infra-ci --command tofu -chdir="$ROOT" init \
             -reconfigure \
             -backend-config="endpoints={s3=\"$R2_ENDPOINT\"}"
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} plan -input=false -no-color
-
-  apply:
-    name: Apply (${{ matrix.name }})
-    if: ${{ github.ref == 'refs/heads/main' && (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.mode == 'apply')) }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    permissions:
-      contents: read
-      id-token: write
-    needs: [format, validate]
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: gitea
-            root: infra/gitea
-          - name: uptime-kuma
-            root: infra/uptime-kuma
-          - name: tailscale
-            root: infra/tailscale
-    concurrency:
-      group: opentofu-apply-${{ matrix.name }}
-      cancel-in-progress: false
-    env:
-      AWS_EC2_METADATA_DISABLED: 'true'
-      TF_IN_AUTOMATION: 'true'
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
-        with:
-          persist-credentials: false
-      - uses: ./.github/actions/setup-nix
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
-      - name: Tailscale
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
-        uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
-        with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
-          ping: status.home.yutakobayashi.com
-      - name: OpenTofu apply
-        if: ${{ github.event_name != 'workflow_dispatch' || inputs.target == matrix.name || inputs.target == 'both' }}
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
-          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
-          TF_VAR_tailscale_api_key: ${{ secrets.TAILSCALE_API_KEY }}
-          TF_VAR_uptimekuma_endpoint: https://status.home.yutakobayashi.com
-          TF_VAR_uptimekuma_username: ${{ secrets.UPTIME_KUMA_USERNAME }}
-          TF_VAR_uptimekuma_password: ${{ secrets.UPTIME_KUMA_PASSWORD }}
-          TF_VAR_discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          set -euo pipefail
-
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init \
-            -reconfigure \
-            -backend-config="endpoints={s3=\"$R2_ENDPOINT\"}"
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} plan -out=tfplan -input=false
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} apply -input=false -auto-approve tfplan
-
-          {
-            echo "## OpenTofu apply completed for ${{ matrix.name }}"
-            echo ""
-            echo '```'
-            nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} output -no-color
-            echo '```'
-          } >>"$GITHUB_STEP_SUMMARY"
+          if [[ "$DEPLOY_MODE" == "safe-to-apply" ]]; then
+            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan -out=tfplan -input=false
+            nix develop .#infra-ci --command tofu -chdir="$ROOT" apply -input=false -auto-approve tfplan
+          else
+            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan -input=false -no-color
+          fi

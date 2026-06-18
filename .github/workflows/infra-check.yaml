@@ -1,0 +1,82 @@
+name: 'Infra: OpenTofu check'
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/actions/setup-nix/**'
+      - '.github/workflows/infra-check.yaml'
+      - '.github/workflows/infra-deploy.yaml'
+      - 'infra/gitea/**'
+      - 'infra/uptime-kuma/**'
+      - 'infra/tailscale/**'
+      - 'modules/flake/per-system/dev-shell.nix'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/actions/setup-nix/**'
+      - '.github/workflows/infra-check.yaml'
+      - '.github/workflows/infra-deploy.yaml'
+      - 'infra/gitea/**'
+      - 'infra/uptime-kuma/**'
+      - 'infra/tailscale/**'
+      - 'modules/flake/per-system/dev-shell.nix'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nix
+      - name: OpenTofu fmt
+        run: |
+          nix develop .#infra-ci --command tofu -chdir=infra/gitea fmt -check
+          nix develop .#infra-ci --command tofu -chdir=infra/uptime-kuma fmt -check
+          nix develop .#infra-ci --command tofu -chdir=infra/tailscale fmt -check
+
+  validate:
+    name: Validate (${{ matrix.name }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    needs: [format]
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: gitea
+            root: infra/gitea
+          - name: uptime-kuma
+            root: infra/uptime-kuma
+          - name: tailscale
+            root: infra/tailscale
+    # Provide credentials needed by provider plugins during validation
+    env:
+      GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+      TF_IN_AUTOMATION: 'true'
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-nix
+      - name: OpenTofu validate
+        run: |
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init -backend=false
+          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} validate
