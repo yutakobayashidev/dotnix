@@ -18,7 +18,6 @@ let
     };
   };
   hermesSkillsCatalog = agentSkillsLib.discoverCatalog hermesSkillsSources;
-  dollar = "$";
   hermesSkillsSelection = agentSkillsLib.selectSkills {
     catalog = hermesSkillsCatalog;
     sources = hermesSkillsSources;
@@ -30,18 +29,6 @@ let
       twitter-api-relay = {
         from = "twitter-api-relay";
         path = "twitter-api-relay";
-        transform =
-          { original, ... }:
-          builtins.replaceStrings
-            [
-              "$TWITTER_RELAY_BASE_URL"
-              "${dollar}{TWITTER_RELAY_BASE_URL%/}"
-            ]
-            [
-              "https://tw.home.yutakobayashi.com"
-              "https://tw.home.yutakobayashi.com"
-            ]
-            original;
       };
     };
   };
@@ -139,6 +126,9 @@ in
 
       install -o hermes -g hermes -m 0640 \
         ${credentialsDir}/hermes-agent.env /var/lib/hermes/.hermes/.env
+
+      echo 'TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com' \
+        >> /var/lib/hermes/.hermes/.env
 
       if [ ! -f /var/lib/hermes/.hermes/auth.json ]; then
         install -o hermes -g hermes -m 0600 \

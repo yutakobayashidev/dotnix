@@ -13,6 +13,8 @@ in
   options.my.programs.agent-skills.enable = lib.mkEnableOption "agent skills";
 
   config = lib.mkIf cfg.enable {
+    home.sessionVariables.TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+
     programs.agent-skills = {
       enable = true;
 
@@ -155,26 +157,10 @@ in
               '';
           };
 
-        twitter-api-relay =
-          let
-            dollar = "$";
-          in
-          {
-            from = "twitter-api-relay";
-            path = "twitter-api-relay";
-            transform =
-              { original, ... }:
-              builtins.replaceStrings
-                [
-                  "$TWITTER_RELAY_BASE_URL"
-                  "${dollar}{TWITTER_RELAY_BASE_URL%/}"
-                ]
-                [
-                  "https://tw.home.yutakobayashi.com"
-                  "https://tw.home.yutakobayashi.com"
-                ]
-                original;
-          };
+        twitter-api-relay = {
+          from = "twitter-api-relay";
+          path = "twitter-api-relay";
+        };
 
         prompt-review = {
           from = "prompt-review";
