@@ -1925,11 +1925,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781699709,
-        "narHash": "sha256-UvByt/4q/h4tWab4lvlI3AyTaKHEAtVq2nw5PB9sESI=",
+        "lastModified": 1781753044,
+        "narHash": "sha256-D96hwUa2WbsmAQPnl3l2uhHpOJPWbVw11ltppFwb/js=",
         "owner": "yutakobayashidev",
         "repo": "nur-packages",
-        "rev": "f2c0f333b0a51b7f60ff5690a45763baa45765cf",
+        "rev": "02027c055a125908681de5d293c37249af20546a",
         "type": "github"
       },
       "original": {
@@ -2343,11 +2343,11 @@
     "skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1781239556,
-        "narHash": "sha256-M2W/BQKkgljIyuKSVwCQW6vrHwNut/y14uDDn8ak/LQ=",
+        "lastModified": 1781708464,
+        "narHash": "sha256-ibSOwnqtp/gOFbb34NQbZc3TFhOilBJRgrCqSGIsEV4=",
         "owner": "yutakobayashidev",
         "repo": "skills",
-        "rev": "67b7c972b31ef01a8adce4be0e81dd0661111862",
+        "rev": "2443ca1eb367ff460b16b3175cdc118eb6b6adbb",
         "type": "github"
       },
       "original": {

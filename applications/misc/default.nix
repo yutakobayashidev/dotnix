@@ -23,6 +23,7 @@ in
       # Development Tools
       babashka
       bumblebee
+      gctx
       vulnix
       gogcli
       nil
