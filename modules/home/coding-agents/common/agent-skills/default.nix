@@ -8,6 +8,16 @@
 let
   cfg = config.my.programs.agent-skills;
   agentLib = inputs.agent-skills.lib.agent-skills;
+
+  sofaSkillSrc = pkgs.runCommand "sofa-skill-src" { } ''
+    mkdir "$out"
+    cp ${
+      builtins.fetchurl {
+        url = "https://agents.stackoverflow.com/skill.md";
+        sha256 = "36725578fd3ec37da180240551e9be422d9049a84a499e37941388f773ece5b5";
+      }
+    } "$out/SKILL.md"
+  '';
 in
 {
   options.my.programs.agent-skills.enable = lib.mkEnableOption "agent skills";
@@ -63,6 +73,10 @@ in
           path = inputs.twitter-api-safe-relay-skills;
           subdir = "skills";
         };
+        sofa = {
+          path = sofaSkillSrc;
+          subdir = ".";
+        };
       };
 
       skills.enableAll = [
@@ -74,6 +88,7 @@ in
         "repiq"
         "difit"
         "superpowers"
+        "sofa"
       ];
 
       skills.explicit = {
