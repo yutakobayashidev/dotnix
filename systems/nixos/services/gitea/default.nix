@@ -46,6 +46,6 @@ in
   };
 
   my.services.cloudflared-tunnel.ingress.${sshDomain} = {
-    service = "ssh://localhost:${toString config.services.forgejo.settings.server.SSH_PORT}";
+    service = "ssh://localhost:${toString config.services.gitea.settings.server.SSH_PORT}";
   };
 }
