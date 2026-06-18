@@ -36,6 +36,10 @@ creation_rules:
     key_groups:
       - age:
           - *b450m
+  - path_regex: systems/nixos/services/gitea/secrets\.yaml$
+    key_groups:
+      - age:
+          - *b450m
   - path_regex: systems/nixos/services/s3s/secrets\.yaml$
     key_groups:
       - age:

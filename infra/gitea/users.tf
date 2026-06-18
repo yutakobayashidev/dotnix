@@ -44,6 +44,7 @@ resource "gitea_user" "moons_14" {
   email                = "moons@moons14.com"
   password             = random_password.moons_14.result
   must_change_password = true
+  send_notification    = true
 }
 
 resource "gitea_user" "akazdayo" {
@@ -52,6 +53,7 @@ resource "gitea_user" "akazdayo" {
   email                = "me@odango.app"
   password             = random_password.akazdayo.result
   must_change_password = true
+  send_notification    = true
 }
 
 resource "gitea_user" "nakasyou" {
@@ -60,6 +62,7 @@ resource "gitea_user" "nakasyou" {
   email                = "how@nakasyou.how"
   password             = random_password.nakasyou.result
   must_change_password = true
+  send_notification    = true
 }
 
 resource "gitea_user" "tak0m0" {
@@ -68,6 +71,7 @@ resource "gitea_user" "tak0m0" {
   email                = "taku.mabuchi@idealike.net"
   password             = random_password.tak0m0.result
   must_change_password = true
+  send_notification    = true
 }
 
 resource "gitea_user" "ka1ut" {
@@ -76,6 +80,7 @@ resource "gitea_user" "ka1ut" {
   email                = "tka1utjp@gmail.com"
   password             = random_password.ka1ut.result
   must_change_password = true
+  send_notification    = true
 }
 
 resource "gitea_user" "fa0311" {
@@ -84,6 +89,7 @@ resource "gitea_user" "fa0311" {
   email                = "yuki@yuki0311.com"
   password             = random_password.fa0311.result
   must_change_password = true
+  send_notification    = true
 }
 
 resource "gitea_user" "yuta" {
