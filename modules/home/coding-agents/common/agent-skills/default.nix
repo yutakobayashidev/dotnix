@@ -124,12 +124,13 @@ in
 
         agent-browser =
           let
-            agentBrowserBin = lib.getExe pkgs.llm-agents.agent-browser;
+            agentBrowserBin = "${config.home.homeDirectory}/.agents/skills/agent-browser/agent-browser";
           in
           {
             from = "agent-browser";
             path = "agent-browser";
             packages = [ pkgs.llm-agents.agent-browser ];
+            rewriteCommands = false;
             transform =
               { original, ... }:
               builtins.replaceStrings
@@ -156,6 +157,7 @@ in
             from = "ast-grep";
             path = "ast-grep";
             packages = [ pkgs.ast-grep ];
+            rewriteCommands = false;
             transform =
               { original, dependencies }:
               let
