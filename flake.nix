@@ -113,6 +113,10 @@
       url = "github:vercel-labs/agent-browser";
       flake = false;
     };
+    before-and-after-skill = {
+      url = "github:vercel-labs/before-and-after";
+      flake = false;
+    };
     mattpocock-skills = {
       url = "github:mattpocock/skills";
       flake = false;

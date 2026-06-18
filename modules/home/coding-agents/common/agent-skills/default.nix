@@ -66,6 +66,10 @@ in
           path = inputs.agent-browser-skill;
           subdir = "skills";
         };
+        before-and-after = {
+          path = inputs.before-and-after-skill;
+          subdir = "skill";
+        };
         mattpocock = {
           path = inputs.mattpocock-skills;
           subdir = "skills";
@@ -93,6 +97,31 @@ in
       ];
 
       skills.explicit = {
+        before-and-after =
+          let
+            bnaBin = lib.getExe pkgs.before-and-after;
+          in
+          {
+            from = "before-and-after";
+            path = "before-and-after";
+            packages = [ pkgs.before-and-after ];
+            rewriteCommands = false;
+            transform =
+              { original, ... }:
+              builtins.replaceStrings
+                [
+                  "`which before-and-after || npm install -g @vercel/before-and-after`"
+                  "npm install -g @vercel/before-and-after"
+                  "npx @vercel/before-and-after"
+                ]
+                [
+                  "`which before-and-after`"
+                  "# (installed via Nix)"
+                  bnaBin
+                ]
+                original;
+          };
+
         docx = {
           from = "anthropic";
           path = "docx";
