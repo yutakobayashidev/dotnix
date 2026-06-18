@@ -16,6 +16,7 @@ result-*
 
 # AI agent working files
 z-ai/
+.sofa/
 
 # Terraform state
 *.tfstate
