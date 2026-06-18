@@ -103,7 +103,7 @@ in
           in
           {
             from = "before-and-after";
-            path = "before-and-after";
+            path = ".";
             packages = [ pkgs.before-and-after ];
             rewriteCommands = false;
             transform =
