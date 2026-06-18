@@ -24,6 +24,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables.TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+    home.sessionVariables.SOFA_BASE_URL = "https://agents.stackoverflow.com";
 
     programs.agent-skills = {
       enable = true;
