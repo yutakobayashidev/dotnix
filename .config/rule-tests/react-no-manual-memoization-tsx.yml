@@ -1,0 +1,15 @@
+id: react-no-manual-memoization-tsx
+valid:
+  - |
+    const result = expensive(a, b);
+  - |
+    const result = React.memo(Component);
+invalid:
+  - |
+    const result = useMemo(() => expensive(a, b), [a, b]);
+  - |
+    const result = React.useMemo(() => expensive(a, b), [a, b]);
+  - |
+    const cb = useCallback(() => doThing(a), [a]);
+  - |
+    const cb = React.useCallback(() => doThing(a), [a]);

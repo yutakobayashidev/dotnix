@@ -1,0 +1,30 @@
+id: react-no-manual-memoization-tsx
+snapshots:
+  ? |
+    const cb = React.useCallback(() => doThing(a), [a]);
+  : labels:
+      - source: React.useCallback(() => doThing(a), [a])
+        style: primary
+        start: 11
+        end: 51
+  ? |
+    const cb = useCallback(() => doThing(a), [a]);
+  : labels:
+      - source: useCallback(() => doThing(a), [a])
+        style: primary
+        start: 11
+        end: 45
+  ? |
+    const result = React.useMemo(() => expensive(a, b), [a, b]);
+  : labels:
+      - source: React.useMemo(() => expensive(a, b), [a, b])
+        style: primary
+        start: 15
+        end: 59
+  ? |
+    const result = useMemo(() => expensive(a, b), [a, b]);
+  : labels:
+      - source: useMemo(() => expensive(a, b), [a, b])
+        style: primary
+        start: 15
+        end: 53
