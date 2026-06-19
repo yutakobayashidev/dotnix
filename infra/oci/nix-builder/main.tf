@@ -1,4 +1,32 @@
 terraform {
+  encryption {
+    method "unencrypted" "migrate" {}
+
+    key_provider "pbkdf2" "state_key" {
+      passphrase = var.state_encryption_passphrase
+    }
+
+    method "aes_gcm" "state_method" {
+      keys = key_provider.pbkdf2.state_key
+    }
+
+    state {
+      method = method.aes_gcm.state_method
+      fallback {
+        method = method.unencrypted.migrate
+      }
+      # TODO: add "enforced = true" after first successful apply
+    }
+
+    plan {
+      method = method.aes_gcm.state_method
+      fallback {
+        method = method.unencrypted.migrate
+      }
+      # TODO: add "enforced = true" after first successful apply
+    }
+  }
+
   required_providers {
     oci = {
       source = "oracle/oci"
