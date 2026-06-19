@@ -30,8 +30,6 @@
           global.excludes = [
             ".git/**"
             "*.lock"
-            "secrets/default.yaml"
-            "secrets.yaml"
           ];
 
           formatter.gitleaks = {

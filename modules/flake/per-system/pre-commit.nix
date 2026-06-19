@@ -10,6 +10,8 @@
         settings.hooks = {
           actionlint.enable = true;
           convco.enable = true;
+          deadnix.enable = true;
+          statix.enable = true;
           shellcheck = {
             enable = true;
             args = [ "-x" ];
@@ -25,6 +27,13 @@
               "secrets.yaml"
             ];
             settings.configData = "{rules: {document-start: {present: false}}}";
+          };
+
+          lua-ls = {
+            enable = false;
+          };
+          nil = {
+            enable = true;
           };
 
           treefmt = {
