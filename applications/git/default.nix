@@ -169,7 +169,7 @@
     };
     includes = [
       {
-        condition = "gitdir:${config.home.homeDirectory}/ghq/git.yutakobayashi.com/";
+        condition = "gitdir:${config.programs.git.settings.ghq.root}/git.yutakobayashi.com/";
         contents = {
           user = {
             name = "yuta";
