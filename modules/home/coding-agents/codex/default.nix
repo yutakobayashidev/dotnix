@@ -30,6 +30,7 @@ let
     project_doc_fallback_filenames = [ "CLAUDE.md" ];
     suppress_unstable_features_warning = true;
     web_search_request = true;
+    oss_provider = "lmstudio";
 
     features = {
       remote_connections = true;
