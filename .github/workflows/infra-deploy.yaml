@@ -67,6 +67,7 @@ jobs:
           TF_VAR_uptimekuma_username: ${{ secrets.UPTIME_KUMA_USERNAME }}
           TF_VAR_uptimekuma_password: ${{ secrets.UPTIME_KUMA_PASSWORD }}
           TF_VAR_discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          TF_VAR_state_encryption_passphrase: ${{ secrets.STATE_ENCRYPTION_PASSPHRASE }}
           DEPLOY_MODE: ${{ github.event.label.name }}
           ROOT: ${{ matrix.root }}
         run: |
