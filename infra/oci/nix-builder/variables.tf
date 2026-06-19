@@ -25,3 +25,9 @@ variable "image_id" {
 variable "ssh_public_key" {
   type = string
 }
+
+variable "state_encryption_passphrase" {
+  type        = string
+  sensitive   = true
+  description = "Passphrase for OpenTofu state encryption (min 16 chars)"
+}

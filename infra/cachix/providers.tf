@@ -1,4 +1,24 @@
 terraform {
+  encryption {
+    key_provider "pbkdf2" "state_key" {
+      passphrase = var.state_encryption_passphrase
+    }
+
+    method "aes_gcm" "state_method" {
+      keys = key_provider.pbkdf2.state_key
+    }
+
+    state {
+      method   = method.aes_gcm.state_method
+      enforced = true
+    }
+
+    plan {
+      method   = method.aes_gcm.state_method
+      enforced = true
+    }
+  }
+
   required_providers {
     cachix = {
       source  = "takeokunn/cachix"
@@ -9,4 +29,10 @@ terraform {
 
 provider "cachix" {
   # auth_token = var.cachix_token  # Or set CACHIX_AUTH_TOKEN env var
+}
+
+variable "state_encryption_passphrase" {
+  type        = string
+  sensitive   = true
+  description = "Passphrase for OpenTofu state encryption (min 16 chars)"
 }

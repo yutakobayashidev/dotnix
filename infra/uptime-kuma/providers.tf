@@ -12,6 +12,26 @@ terraform {
     use_lockfile                = true
   }
 
+  encryption {
+    key_provider "pbkdf2" "state_key" {
+      passphrase = var.state_encryption_passphrase
+    }
+
+    method "aes_gcm" "state_method" {
+      keys = key_provider.pbkdf2.state_key
+    }
+
+    state {
+      method   = method.aes_gcm.state_method
+      enforced = true
+    }
+
+    plan {
+      method   = method.aes_gcm.state_method
+      enforced = true
+    }
+  }
+
   required_providers {
     uptimekuma = {
       source  = "breml/uptimekuma"
@@ -47,4 +67,10 @@ variable "discord_webhook_url" {
   type        = string
   description = "Discord webhook URL for notifications"
   sensitive   = true
+}
+
+variable "state_encryption_passphrase" {
+  type        = string
+  sensitive   = true
+  description = "Passphrase for OpenTofu state encryption (min 16 chars)"
 }
