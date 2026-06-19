@@ -9,7 +9,13 @@
         projectRootFile = "flake.nix";
         programs = {
           nixfmt.enable = true;
-          stylua.enable = true;
+          stylua = {
+            enable = true;
+            excludes = [
+              "nvim/init.lua"
+              "nvim/lua/rc/**"
+            ];
+          };
           shfmt.enable = true;
           taplo.enable = true;
           ruff-format.enable = true;
