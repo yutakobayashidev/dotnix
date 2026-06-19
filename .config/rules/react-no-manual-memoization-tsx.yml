@@ -1,0 +1,9 @@
+id: react-no-manual-memoization-tsx
+severity: error
+language: tsx
+rule:
+  any:
+    - pattern: useMemo($$$ARGS)
+    - pattern: React.useMemo($$$ARGS)
+    - pattern: useCallback($$$ARGS)
+    - pattern: React.useCallback($$$ARGS)
