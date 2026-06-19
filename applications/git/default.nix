@@ -167,6 +167,17 @@
       wt.basedir = ".git/worktree";
       wt.remover = "trash";
     };
+    includes = [
+      {
+        condition = "gitdir:${config.home.homeDirectory}/ghq/git.yutakobayashi.com/";
+        contents = {
+          user = {
+            name = "yuta";
+            email = "hi@yutakobayashi.com";
+          };
+        };
+      }
+    ];
   };
 
   programs.ssh = {
