@@ -57,7 +57,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   └── home/            # Home Manager shared modules and optioned feature modules
 ├── overlays/            # Custom packages (overlay)
 ├── agents/                  # Agent skills config docs (skills: github:yutakobayashidev/skills)
-├── nvim/                    # Neovim config (Lua)
+├── nvim/                    # Neovim config (Fennel; generated Lua tracked)
 └── zsh/                     # Zsh config
 ```
 

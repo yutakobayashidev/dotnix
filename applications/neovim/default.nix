@@ -28,6 +28,8 @@ in
       lib.filter (x: x != null) [
         prettierd
         eslint_d
+        fennel-ls
+        luaPackages.fennel
         git
         gcc
         gnumake
@@ -86,7 +88,7 @@ in
         ${./check.sh} \
         "${nvimDotfilesDir}" \
         "$LAZY_DIR" \
-        ${pkgs.neovim}/bin/nvim
+        ${config.programs.neovim.finalPackage}/bin/nvim
     fi
   '';
 }

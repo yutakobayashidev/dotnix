@@ -1,0 +1,5 @@
+(require :rc.core)
+(require :rc.autocmds)
+(require :rc.mapping)
+(require :rc.plugin)
+(require :rc.lsp)
