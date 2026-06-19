@@ -1,0 +1,23 @@
+id: remove-forward-ref
+language: javascript
+rule:
+  pattern: forwardRef(function $M($PROPS, $REF) { $$$BODY })
+rewriters:
+  - id: object
+    rule:
+      pattern:
+        context: ({ $$$ARGS }) => {}
+        selector: object_pattern
+    fix: $$$ARGS
+  - id: identifier
+    rule: { pattern: $P }
+    fix: ...$P
+transform:
+  NEW_ARG:
+    rewrite:
+      rewriters: [object, identifier]
+      source: $PROPS
+fix: |-
+  function $M({ref: $REF, $NEW_ARG}) {
+    $$$BODY
+  }

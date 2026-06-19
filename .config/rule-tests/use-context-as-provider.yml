@@ -1,0 +1,19 @@
+id: use-context-as-provider
+valid:
+  - |
+    const App = () => (
+      <AuthCtx>
+        <Main />
+      </AuthCtx>
+    );
+  - |
+    const Foo = <Bar />;
+invalid:
+  - |
+    const App = () => (
+      <AuthCtx.Provider>
+        <Main />
+      </AuthCtx.Provider>
+    );
+  - |
+    </AuthCtx.Provider>

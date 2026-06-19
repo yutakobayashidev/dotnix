@@ -1,0 +1,36 @@
+id: use-context-as-provider
+snapshots:
+  ? |
+    </AuthCtx.Provider>
+  : fixed: |
+      </AuthCtx>
+    labels:
+      - source: AuthCtx.Provider
+        style: primary
+        start: 2
+        end: 18
+      - source: </AuthCtx.Provider>
+        style: secondary
+        start: 0
+        end: 19
+  ? |
+    const App = () => (
+      <AuthCtx.Provider>
+        <Main />
+      </AuthCtx.Provider>
+    );
+  : fixed: |
+      const App = () => (
+        <AuthCtx>
+          <Main />
+        </AuthCtx.Provider>
+      );
+    labels:
+      - source: AuthCtx.Provider
+        style: primary
+        start: 23
+        end: 39
+      - source: <AuthCtx.Provider>
+        style: secondary
+        start: 22
+        end: 40

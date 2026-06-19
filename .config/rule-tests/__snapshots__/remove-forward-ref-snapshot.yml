@@ -1,0 +1,34 @@
+id: remove-forward-ref
+snapshots:
+  ? |
+    const Component = forwardRef(function Foo(props, ref) {
+      return <div ref={ref} />;
+    });
+  : fixed: |
+      const Component = function Foo({ref: ref, ...props}) {
+        return <div ref={ref} />;
+      };
+    labels:
+      - source: |-
+          forwardRef(function Foo(props, ref) {
+            return <div ref={ref} />;
+          })
+        style: primary
+        start: 18
+        end: 86
+  ? |
+    forwardRef(function Bar({ label }, ref) {
+      return <div ref={ref}>{label}</div>;
+    })
+  : fixed: |
+      function Bar({ref: ref, label}) {
+        return <div ref={ref}>{label}</div>;
+      }
+    labels:
+      - source: |-
+          forwardRef(function Bar({ label }, ref) {
+            return <div ref={ref}>{label}</div>;
+          })
+        style: primary
+        start: 0
+        end: 83

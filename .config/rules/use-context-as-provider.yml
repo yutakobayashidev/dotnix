@@ -1,0 +1,9 @@
+id: use-context-as-provider
+language: javascript
+rule:
+  pattern: $CONTEXT.Provider
+  inside:
+    any:
+      - kind: jsx_opening_element
+      - kind: jsx_closing_element
+fix: $CONTEXT

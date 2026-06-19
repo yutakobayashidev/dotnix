@@ -1,0 +1,19 @@
+id: remove-forward-ref
+valid:
+  - |
+    const Component = function Foo(props) {
+      return <div />;
+    };
+  - |
+    function Bar({ ref, ...rest }) {
+      return <div ref={ref} />;
+    }
+invalid:
+  - |
+    const Component = forwardRef(function Foo(props, ref) {
+      return <div ref={ref} />;
+    });
+  - |
+    forwardRef(function Bar({ label }, ref) {
+      return <div ref={ref}>{label}</div>;
+    })
