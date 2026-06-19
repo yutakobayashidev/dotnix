@@ -9,13 +9,13 @@ terraform {
     }
 
     state {
-      method    = method.aes_gcm.state_method
-      enforced  = true
+      method   = method.aes_gcm.state_method
+      enforced = true
     }
 
     plan {
-      method    = method.aes_gcm.state_method
-      enforced  = true
+      method   = method.aes_gcm.state_method
+      enforced = true
     }
   }
 
