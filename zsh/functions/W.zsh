@@ -5,12 +5,18 @@ function W() {
   local selected
 
   selected=$(
-    git wt \
-      | awk 'NR>1 { path=$1; if ($1 == "*") path=$2; name=path; gsub(/.*\//, "", name); printf "%s\t%s\n", name, path }' \
+    git wt --json \
+      | jq -r '.[] | [
+          (if .current then "*" else " " end),
+          .branch,
+          .path,
+          .head
+        ] | @tsv' \
       | fzf --tmux --reverse \
-          --with-nth=1 --delimiter=$'\t' \
-          --preview 'git -C {2} log --oneline --graph -20' \
-      | cut -f2
+          --with-nth=1,2 \
+          --delimiter=$'\t' \
+          --preview 'git -C {3} log --oneline --graph -20' \
+      | cut -f3
   )
 
   if [[ -n "$selected" ]]; then
