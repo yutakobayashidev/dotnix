@@ -13,8 +13,6 @@ terraform {
   }
 
   encryption {
-    method "unencrypted" "migrate" {}
-
     key_provider "pbkdf2" "state_key" {
       passphrase = var.state_encryption_passphrase
     }
@@ -24,19 +22,13 @@ terraform {
     }
 
     state {
-      method = method.aes_gcm.state_method
-      fallback {
-        method = method.unencrypted.migrate
-      }
-      # TODO: add "enforced = true" after first successful apply
+      method    = method.aes_gcm.state_method
+      enforced  = true
     }
 
     plan {
-      method = method.aes_gcm.state_method
-      fallback {
-        method = method.unencrypted.migrate
-      }
-      # TODO: add "enforced = true" after first successful apply
+      method    = method.aes_gcm.state_method
+      enforced  = true
     }
   }
 
