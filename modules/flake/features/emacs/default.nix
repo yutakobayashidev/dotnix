@@ -66,6 +66,8 @@ in
       options.my.programs.emacs.enable = lib.mkEnableOption "emacs";
 
       config = lib.mkIf config.my.programs.emacs.enable {
+        home.packages = [ pkgs.harper ];
+
         programs.emacs = {
           enable = true;
           package = mkEmacs pkgs;
