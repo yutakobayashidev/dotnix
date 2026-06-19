@@ -5,45 +5,46 @@
       agentSkillsShellHook,
       config,
       pkgs,
+      sgconfig,
       ...
     }:
     let
-      system = pkgs.stdenv.hostPlatform.system;
-      localPkgs = mkPkgs system;
-      mkProvider = localPkgs.opentofu.plugins.mkProvider;
+      p = mkPkgs pkgs.stdenv.hostPlatform.system;
     in
     {
-      devShells.default = localPkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         packages = [
           config.pre-commit.settings.package
         ]
         ++ config.pre-commit.settings.enabledPackages
         ++ [
-          localPkgs.oci-cli
-          localPkgs.terragrunt
-          localPkgs.nix-fast-build
-          localPkgs.ssh-to-age
-          localPkgs.tflint
-          localPkgs.sops
-          localPkgs.packer
-          localPkgs.nomad
-          localPkgs.vault
-          localPkgs.checkov
-          localPkgs.pike
-          localPkgs.skill-scanner
-          localPkgs.skillspector
-          localPkgs.actionlint
-          localPkgs.pinact
-          localPkgs.ghalint
-          localPkgs.zizmor
-          (localPkgs.opentofu.withPlugins (p: [
-            p.go-gitea_gitea
-            p.oracle_oci
-            p.carlpett_sops
-            p.hashicorp_external
-            p.hashicorp_null
-            p.hashicorp_random
-            (mkProvider {
+          p.oci-cli
+          p.terragrunt
+          p.nix-fast-build
+          p.ssh-to-age
+          p.tflint
+          p.sops
+          p.packer
+          p.nomad
+          p.vault
+          p.checkov
+          p.pike
+          p.skill-scanner
+          p.skillspector
+          p.actionlint
+          p.pinact
+          p.ghalint
+          p.zizmor
+          pkgs.ast-grep
+          pkgs.tree-sitter
+          (p.opentofu.withPlugins (pl: [
+            pl.go-gitea_gitea
+            pl.oracle_oci
+            pl.carlpett_sops
+            pl.hashicorp_external
+            pl.hashicorp_null
+            pl.hashicorp_random
+            (p.opentofu.plugins.mkProvider {
               owner = "takeokunn";
               repo = "terraform-provider-cachix";
               rev = "v1.0.1";
@@ -53,7 +54,7 @@
               homepage = "https://registry.terraform.io/providers/takeokunn/cachix";
               provider-source-address = "registry.opentofu.org/takeokunn/cachix";
             })
-            (mkProvider {
+            (p.opentofu.plugins.mkProvider {
               owner = "breml";
               repo = "terraform-provider-uptimekuma";
               rev = "v0.3.2";
@@ -63,7 +64,7 @@
               homepage = "https://registry.terraform.io/providers/breml/uptimekuma";
               provider-source-address = "registry.opentofu.org/breml/uptimekuma";
             })
-            p.tailscale_tailscale
+            pl.tailscale_tailscale
           ]))
         ];
 
@@ -71,19 +72,20 @@
           ${config.pre-commit.installationScript}
           ${config.mcp-servers.shellHook}
           ${agentSkillsShellHook}
+          ln -sf ${sgconfig} sgconfig.yml
         '';
       };
 
-      devShells.infra-ci = localPkgs.mkShell {
+      devShells.infra-ci = pkgs.mkShell {
         packages = [
-          (localPkgs.opentofu.withPlugins (p: [
-            p.go-gitea_gitea
-            p.oracle_oci
-            p.carlpett_sops
-            p.hashicorp_external
-            p.hashicorp_null
-            p.hashicorp_random
-            (mkProvider {
+          (p.opentofu.withPlugins (pl: [
+            pl.go-gitea_gitea
+            pl.oracle_oci
+            pl.carlpett_sops
+            pl.hashicorp_external
+            pl.hashicorp_null
+            pl.hashicorp_random
+            (p.opentofu.plugins.mkProvider {
               owner = "takeokunn";
               repo = "terraform-provider-cachix";
               rev = "v1.0.1";
@@ -93,7 +95,7 @@
               homepage = "https://registry.terraform.io/providers/takeokunn/cachix";
               provider-source-address = "registry.opentofu.org/takeokunn/cachix";
             })
-            (mkProvider {
+            (p.opentofu.plugins.mkProvider {
               owner = "breml";
               repo = "terraform-provider-uptimekuma";
               rev = "v0.3.2";
@@ -103,7 +105,7 @@
               homepage = "https://registry.terraform.io/providers/breml/uptimekuma";
               provider-source-address = "registry.opentofu.org/breml/uptimekuma";
             })
-            p.tailscale_tailscale
+            pl.tailscale_tailscale
           ]))
         ];
       };

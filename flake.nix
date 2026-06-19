@@ -241,6 +241,7 @@
         ./modules/flake/per-system/agent-skills.nix
         ./modules/flake/per-system/pkgs.nix
         ./modules/flake/per-system/packages.nix
+        ./modules/flake/per-system/ast-grep.nix
         ./modules/flake/per-system/treefmt.nix
         ./modules/flake/per-system/pre-commit.nix
         ./modules/flake/per-system/mcp-servers.nix

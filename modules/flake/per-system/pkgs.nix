@@ -1,9 +1,7 @@
 { inputs, ... }:
 let
   inherit (builtins) match;
-in
-{
-  _module.args.mkPkgs =
+  mkPkgs =
     system:
     let
       isDarwin = match ".*-darwin" system != null;
@@ -46,4 +44,7 @@ in
         inputs.brew-nix.overlays.default
       ];
     };
+in
+{
+  _module.args.mkPkgs = mkPkgs;
 }

@@ -10,8 +10,8 @@
     let
       system = pkgs.stdenv.hostPlatform.system;
       isDarwin = builtins.match ".*-darwin" system != null;
-      localPkgs = mkPkgs system;
-      nom = "${localPkgs.nix-output-monitor}/bin/nom";
+      p = mkPkgs system;
+      nom = "${p.nix-output-monitor}/bin/nom";
 
       isAgentCheck = ''
         IS_AI_AGENT=false
@@ -27,19 +27,19 @@
     {
       packages =
         let
-          polycat' = lib.optionalAttrs (!isDarwin) { inherit (localPkgs) polycat; };
-          readout' = lib.optionalAttrs isDarwin { inherit (localPkgs) readout; };
+          polycat' = lib.optionalAttrs (!isDarwin) { inherit (p) polycat; };
+          readout' = lib.optionalAttrs isDarwin { inherit (p) readout; };
 
           nixosMinimalIso' = lib.optionalAttrs (system == "x86_64-linux") {
             nixos-minimal-iso =
               let
-                isoEval = import "${localPkgs.path}/nixos/lib/eval-config.nix" {
+                isoEval = import "${p.path}/nixos/lib/eval-config.nix" {
                   system = "x86_64-linux";
                   modules = [
-                    "${localPkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+                    "${p.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
                     ../../../modules/profiles/nixos/installer.nix
                     {
-                      nixpkgs.pkgs = lib.mkForce localPkgs;
+                      nixpkgs.pkgs = lib.mkForce p;
                     }
                   ];
                 };
@@ -51,7 +51,7 @@
         // readout'
         // nixosMinimalIso'
         // {
-          inherit (localPkgs)
+          inherit (p)
             bumblebee
             difit
             git-now
@@ -70,7 +70,7 @@
           type = "app";
           meta.description = "Build the current host's Nix configuration";
           program = toString (
-            localPkgs.writeShellScript "build" ''
+            p.writeShellScript "build" ''
               set -e
               ${isAgentCheck}
 
@@ -106,7 +106,7 @@
           type = "app";
           meta.description = "Switch to the current host's Nix configuration";
           program = toString (
-            localPkgs.writeShellScript "switch" ''
+            p.writeShellScript "switch" ''
               set -eo pipefail
               ${isAgentCheck}
 
@@ -142,7 +142,7 @@
           type = "app";
           meta.description = "Format all files with treefmt";
           program = toString (
-            localPkgs.writeShellScript "treefmt-wrapper" ''
+            p.writeShellScript "treefmt-wrapper" ''
               exec ${config.treefmt.build.wrapper}/bin/treefmt "$@"
             ''
           );

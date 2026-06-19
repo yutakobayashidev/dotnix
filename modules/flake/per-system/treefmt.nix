@@ -1,13 +1,9 @@
-{ inputs, mkPkgs, ... }:
+{ inputs, ... }:
 {
   imports = [ inputs.treefmt-nix.flakeModule ];
 
   perSystem =
     { pkgs, ... }:
-    let
-      system = pkgs.stdenv.hostPlatform.system;
-      localPkgs = mkPkgs system;
-    in
     {
       treefmt = {
         projectRootFile = "flake.nix";
@@ -33,7 +29,7 @@
           ];
 
           formatter.gitleaks = {
-            command = "${localPkgs.gitleaks}/bin/gitleaks";
+            command = "${pkgs.gitleaks}/bin/gitleaks";
             options = [
               "detect"
               "--no-git"
