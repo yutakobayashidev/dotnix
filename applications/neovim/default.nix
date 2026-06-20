@@ -73,22 +73,28 @@ in
     ];
   };
 
-  home.activation.linkNvimConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${helpers.activation.mkLinkForce}
-    link_force "${nvimDotfilesDir}" "${nvimConfigDir}"
-  '';
+  home.activation = {
+    prepareNvimConfig = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
+      $DRY_RUN_CMD rm -rf "${nvimConfigDir}"
+    '';
 
-  home.activation.restoreNeovimPlugins = lib.hm.dag.entryAfter [ "linkNvimConfig" ] ''
-    LAZY_DIR="$HOME/.local/share/nvim/lazy"
-    LAZY_LOCK="${nvimDotfilesDir}/lazy-lock.json"
-    LAZY_LOCK_TIMESTAMP="$LAZY_DIR/.lazy-lock-timestamp"
+    linkNvimConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      ${helpers.activation.mkLinkForce}
+      link_force "${nvimDotfilesDir}" "${nvimConfigDir}"
+    '';
 
-    if [[ ! -f "$LAZY_LOCK_TIMESTAMP" ]] || [[ "$LAZY_LOCK" -nt "$LAZY_LOCK_TIMESTAMP" ]]; then
-      ${pkgs.bash}/bin/bash \
-        ${./check.sh} \
-        "${nvimDotfilesDir}" \
-        "$LAZY_DIR" \
-        ${config.programs.neovim.finalPackage}/bin/nvim
-    fi
-  '';
+    restoreNeovimPlugins = lib.hm.dag.entryAfter [ "linkNvimConfig" ] ''
+      LAZY_DIR="$HOME/.local/share/nvim/lazy"
+      LAZY_LOCK="${nvimDotfilesDir}/lazy-lock.json"
+      LAZY_LOCK_TIMESTAMP="$LAZY_DIR/.lazy-lock-timestamp"
+
+      if [[ ! -f "$LAZY_LOCK_TIMESTAMP" ]] || [[ "$LAZY_LOCK" -nt "$LAZY_LOCK_TIMESTAMP" ]]; then
+        ${pkgs.bash}/bin/bash \
+          ${./check.sh} \
+          "${nvimDotfilesDir}" \
+          "$LAZY_DIR" \
+          ${config.programs.neovim.finalPackage}/bin/nvim
+      fi
+    '';
+  };
 }
