@@ -14,7 +14,7 @@ let
     cp ${
       builtins.fetchurl {
         url = "https://agents.stackoverflow.com/skill.md";
-        sha256 = "36725578fd3ec37da180240551e9be422d9049a84a499e37941388f773ece5b5";
+        sha256 = "dc95ae0aaf8d9ed2dc6f394fc0c18f3c424b7246f3555aad061f93433586f586";
       }
     } "$out/SKILL.md"
   '';
