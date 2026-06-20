@@ -47,9 +47,6 @@ nrn() { nix run "nixpkgs#$1" "${@:2}"; }
 abbr -f -qq ashiba="nfi github:yutakobayashidev/ashiba"
 abbr -f -qq ndt="nfi github:the-nix-way/dev-templates"
 
-# Security
-scorecard() { GITHUB_AUTH_TOKEN="$(gh auth token)" command scorecard "$@"; }
-
 abbr -f -qq p="pnpm"
 abbr -f -qq gg="ghq get"
 
