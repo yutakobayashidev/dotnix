@@ -13,18 +13,24 @@
     ./impermanence.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "virtio_pci"
-    "virtio_scsi"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    initrd = {
+      availableKernelModules = [
+        "xhci_pci"
+        "virtio_pci"
+        "virtio_scsi"
+        "usbhid"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
+    };
+    kernelModules = [ ];
+    extraModulePackages = [ ];
+  };
 
   swapDevices = [ ];
 

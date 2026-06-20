@@ -113,51 +113,54 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.llm-agents.codex
-      pkgs.session-tts-codex
-    ];
+    home = {
+      packages = [
+        pkgs.llm-agents.codex
+        pkgs.session-tts-codex
+      ];
 
-    home.sessionVariables = {
-      CODEX_HOME = codexConfigDir;
+      sessionVariables = {
+        CODEX_HOME = codexConfigDir;
+      };
+
+      activation = {
+        writeCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          mkdir -p "${codexConfigDir}"
+          mkdir -p "${codexConfigDir}/session-tts"
+          ${pkgs.coreutils}/bin/install -m 644 ${codexConfig} "${codexConfigDir}/config.toml"
+        '';
+
+        # Global plugin: symlink session-tts under ~/plugins/ so Codex
+        # discovers the plugin from the personal marketplace in every repo.
+        installSessionTtsPlugin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          mkdir -p "$HOME/plugins"
+          ln -sfn "${codexDotfilesDir}/session-tts" "$HOME/plugins/session-tts"
+        '';
+      };
+
+      file = {
+        ".codex/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
+        ".agents/plugins/marketplace.json".text = builtins.toJSON {
+          name = "personal";
+          plugins = [
+            {
+              name = "session-tts";
+              source = {
+                source = "local";
+                path = "./plugins/session-tts";
+              };
+              policy = {
+                installation = "AVAILABLE";
+                authentication = "ON_INSTALL";
+              };
+              category = "Productivity";
+            }
+          ];
+        };
+      };
     };
-
-    home.activation.writeCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p "${codexConfigDir}"
-      mkdir -p "${codexConfigDir}/session-tts"
-      ${pkgs.coreutils}/bin/install -m 644 ${codexConfig} "${codexConfigDir}/config.toml"
-    '';
 
     xdg.configFile."codex/AGENTS.md".source =
       config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
-
-    home.file.".codex/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
-
-    # Global plugin: symlink session-tts under ~/plugins/ so Codex
-    # discovers the plugin from the personal marketplace in every repo.
-    home.activation.installSessionTtsPlugin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p "$HOME/plugins"
-      ln -sfn "${codexDotfilesDir}/session-tts" "$HOME/plugins/session-tts"
-    '';
-
-    home.file.".agents/plugins/marketplace.json" = {
-      text = builtins.toJSON {
-        name = "personal";
-        plugins = [
-          {
-            name = "session-tts";
-            source = {
-              source = "local";
-              path = "./plugins/session-tts";
-            };
-            policy = {
-              installation = "AVAILABLE";
-              authentication = "ON_INSTALL";
-            };
-            category = "Productivity";
-          }
-        ];
-      };
-    };
   };
 }

@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   mkLinkForce = ''
     link_force() {
       local src=$1

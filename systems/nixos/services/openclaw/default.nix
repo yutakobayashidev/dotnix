@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   pkgs,
   ...
@@ -10,47 +9,30 @@
     inputs.microvm.nixosModules.host
   ];
 
-  networking.networkmanager.unmanaged = [
-    "interface-name:microbr-oc"
-    "interface-name:microvm-oc"
-  ];
-
-  systemd.network.enable = true;
-  systemd.network.netdevs."20-microbr-oc".netdevConfig = {
-    Kind = "bridge";
-    Name = "microbr-oc";
-  };
-  systemd.network.networks."20-microbr-oc" = {
-    matchConfig.Name = "microbr-oc";
-    addresses = [
-      { Address = "192.168.84.1/24"; }
-    ];
-    networkConfig.ConfigureWithoutCarrier = true;
-  };
-  systemd.network.networks."21-microvm-openclaw" = {
-    matchConfig.Name = "microvm-oc";
-    networkConfig.Bridge = "microbr-oc";
-  };
-
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
-  networking.firewall.interfaces.microbr-oc.allowedUDPPorts = [ 53 ];
+  networking = {
+    networkmanager.unmanaged = [
+      "interface-name:microbr-oc"
+      "interface-name:microvm-oc"
+    ];
+    firewall.interfaces.microbr-oc.allowedUDPPorts = [ 53 ];
+    nftables = {
+      enable = true;
+      tables."openclaw-microvm" = {
+        family = "inet";
+        content = ''
+          chain forward {
+            type filter hook forward priority 10; policy accept;
+            iifname "microbr-oc" ct state new log prefix "openclaw-egress: " accept
+          }
 
-  networking.nftables = {
-    enable = true;
-    tables."openclaw-microvm" = {
-      family = "inet";
-      content = ''
-        chain forward {
-          type filter hook forward priority 10; policy accept;
-          iifname "microbr-oc" ct state new log prefix "openclaw-egress: " accept
-        }
-
-        chain postrouting {
-          type nat hook postrouting priority 100; policy accept;
-          oifname != "microbr-oc" ip saddr 192.168.84.0/24 masquerade
-        }
-      '';
+          chain postrouting {
+            type nat hook postrouting priority 100; policy accept;
+            oifname != "microbr-oc" ip saddr 192.168.84.0/24 masquerade
+          }
+        '';
+      };
     };
   };
 
@@ -66,11 +48,15 @@
     '';
   };
 
-  security.auditd.enable = true;
-  security.audit.enable = true;
-  security.audit.rules = [
-    "-w /var/lib/microvms/openclaw/secrets/ -p rwa -k openclaw-secrets"
-  ];
+  security = {
+    auditd.enable = true;
+    audit = {
+      enable = true;
+      rules = [
+        "-w /var/lib/microvms/openclaw/secrets/ -p rwa -k openclaw-secrets"
+      ];
+    };
+  };
 
   microvm.autostart = [ "openclaw" ];
 
@@ -91,41 +77,64 @@
     };
   };
 
-  systemd.services."microvm@openclaw".serviceConfig.TimeoutStartSec = "300";
+  systemd = {
+    network = {
+      enable = true;
+      netdevs."20-microbr-oc".netdevConfig = {
+        Kind = "bridge";
+        Name = "microbr-oc";
+      };
+      networks = {
+        "20-microbr-oc" = {
+          matchConfig.Name = "microbr-oc";
+          addresses = [
+            { Address = "192.168.84.1/24"; }
+          ];
+          networkConfig.ConfigureWithoutCarrier = true;
+        };
+        "21-microvm-openclaw" = {
+          matchConfig.Name = "microvm-oc";
+          networkConfig.Bridge = "microbr-oc";
+        };
+      };
+    };
+    services = {
+      "microvm@openclaw".serviceConfig.TimeoutStartSec = "300";
+      openclaw-prepare-secrets = {
+        description = "Stage secrets for OpenClaw microVM";
+        wantedBy = [ "microvm@openclaw.service" ];
+        before = [ "microvm@openclaw.service" ];
+        serviceConfig.Type = "oneshot";
 
-  systemd.services.openclaw-prepare-secrets = {
-    description = "Stage secrets for OpenClaw microVM";
-    wantedBy = [ "microvm@openclaw.service" ];
-    before = [ "microvm@openclaw.service" ];
-    serviceConfig.Type = "oneshot";
+        script = ''
+          set -eu
 
-    script = ''
-      set -eu
+          dir=/var/lib/microvms/openclaw/secrets
+          install -d -m 0755 "$dir"
 
-      dir=/var/lib/microvms/openclaw/secrets
-      install -d -m 0755 "$dir"
+          if [ ! -s "$dir/gateway-token" ]; then
+            ${pkgs.openssl}/bin/openssl rand -base64 32 > "$dir/gateway-token"
+          fi
 
-      if [ ! -s "$dir/gateway-token" ]; then
-        ${pkgs.openssl}/bin/openssl rand -base64 32 > "$dir/gateway-token"
-      fi
+          : > "$dir/gateway-env"
 
-      : > "$dir/gateway-env"
+          add_secret_env() {
+            name="$1"
+            file="$2"
+            if [ -s "$dir/$file" ]; then
+              printf '%s=%s\n' "$name" "$(cat "$dir/$file")" >> "$dir/gateway-env"
+            fi
+          }
 
-      add_secret_env() {
-        name="$1"
-        file="$2"
-        if [ -s "$dir/$file" ]; then
-          printf '%s=%s\n' "$name" "$(cat "$dir/$file")" >> "$dir/gateway-env"
-        fi
-      }
+          add_secret_env OPENAI_API_KEY openai-api-key
+          add_secret_env ANTHROPIC_API_KEY anthropic-api-key
+          add_secret_env OPENROUTER_API_KEY openrouter-api-key
+          add_secret_env DISCORD_BOT_TOKEN discord-bot-token
+          add_secret_env TELEGRAM_BOT_TOKEN telegram-bot-token
 
-      add_secret_env OPENAI_API_KEY openai-api-key
-      add_secret_env ANTHROPIC_API_KEY anthropic-api-key
-      add_secret_env OPENROUTER_API_KEY openrouter-api-key
-      add_secret_env DISCORD_BOT_TOKEN discord-bot-token
-      add_secret_env TELEGRAM_BOT_TOKEN telegram-bot-token
-
-      chmod 0444 "$dir/gateway-token" "$dir/gateway-env"
-    '';
+          chmod 0444 "$dir/gateway-token" "$dir/gateway-env"
+        '';
+      };
+    };
   };
 }

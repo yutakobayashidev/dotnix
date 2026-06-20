@@ -47,51 +47,51 @@ in
     "--collector.textfile.directory=${textfileDir}"
   ];
 
-  systemd.tmpfiles.rules = [
-    "d ${textfileDir} 0700 ${nodeExporterUser} ${nodeExporterGroup} -"
-  ];
+  systemd = {
+    tmpfiles.rules = [
+      "d ${textfileDir} 0700 ${nodeExporterUser} ${nodeExporterGroup} -"
+    ];
+    services.comin-expected-commit = {
+      description = "Publish dotnix main HEAD as a Prometheus textfile metric";
+      serviceConfig = {
+        Type = "oneshot";
+        User = nodeExporterUser;
+        Group = nodeExporterGroup;
+        ExecStart =
+          let
+            publishExpectedCommit = pkgs.writeShellApplication {
+              name = "comin-publish-expected-commit";
+              runtimeInputs = [
+                pkgs.coreutils
+                pkgs.git
+              ];
+              text = ''
+                sha=$(git ls-remote ${dotnixUrl} refs/heads/main | cut -f1)
+                if [ -z "$sha" ]; then
+                  echo "git ls-remote returned no SHA for refs/heads/main" >&2
+                  exit 1
+                fi
 
-  systemd.services.comin-expected-commit = {
-    description = "Publish dotnix main HEAD as a Prometheus textfile metric";
-    serviceConfig = {
-      Type = "oneshot";
-      User = nodeExporterUser;
-      Group = nodeExporterGroup;
-      ExecStart =
-        let
-          publishExpectedCommit = pkgs.writeShellApplication {
-            name = "comin-publish-expected-commit";
-            runtimeInputs = [
-              pkgs.coreutils
-              pkgs.git
-            ];
-            text = ''
-              sha=$(git ls-remote ${dotnixUrl} refs/heads/main | cut -f1)
-              if [ -z "$sha" ]; then
-                echo "git ls-remote returned no SHA for refs/heads/main" >&2
-                exit 1
-              fi
-
-              tmp=$(mktemp ${textfileDir}/${expectedCommitMetric}.XXXXXX.tmp)
-              {
-                printf '# HELP ${expectedCommitMetric} Latest commit on the configured branch, polled by systemd timer.\n'
-                printf '# TYPE ${expectedCommitMetric} gauge\n'
-                printf '${expectedCommitMetric}{branch="main",commit_id="%s"} 1\n' "$sha"
-              } > "$tmp"
-              mv "$tmp" ${textfileDir}/${expectedCommitMetric}.prom
-            '';
-          };
-        in
-        lib.getExe publishExpectedCommit;
+                tmp=$(mktemp ${textfileDir}/${expectedCommitMetric}.XXXXXX.tmp)
+                {
+                  printf '# HELP ${expectedCommitMetric} Latest commit on the configured branch, polled by systemd timer.\n'
+                  printf '# TYPE ${expectedCommitMetric} gauge\n'
+                  printf '${expectedCommitMetric}{branch="main",commit_id="%s"} 1\n' "$sha"
+                } > "$tmp"
+                mv "$tmp" ${textfileDir}/${expectedCommitMetric}.prom
+              '';
+            };
+          in
+          lib.getExe publishExpectedCommit;
+      };
     };
-  };
-
-  systemd.timers.comin-expected-commit = {
-    description = "Refresh dotnix main HEAD metric for drift detection";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "1m";
-      OnUnitActiveSec = "1m";
+    timers.comin-expected-commit = {
+      description = "Refresh dotnix main HEAD metric for drift detection";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "1m";
+        OnUnitActiveSec = "1m";
+      };
     };
   };
 }

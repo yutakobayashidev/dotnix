@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   username,
-  lib,
   ...
 }:
 
@@ -80,20 +79,22 @@
 
   users.mutableUsers = false;
 
-  programs.zsh.enable = true;
-
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      stdenv.cc.cc
-    ];
+  programs = {
+    zsh.enable = true;
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        stdenv.cc.cc
+      ];
+    };
+    ssh.startAgent = true;
   };
 
-  programs.ssh.startAgent = true;
-  services.gnome.gcr-ssh-agent.enable = false;
-
-  services.openssh.enable = true;
-  services.pcscd.enable = true;
+  services = {
+    gnome.gcr-ssh-agent.enable = false;
+    openssh.enable = true;
+    pcscd.enable = true;
+  };
   my.services.kubo.enable = true;
 
   security.sudo.extraConfig = ''

@@ -1,6 +1,4 @@
-{
-  ...
-}:
+_:
 let
   domain = "rsshub.home.yutakobayashi.com";
   port = 1200;

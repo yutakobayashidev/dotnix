@@ -29,15 +29,17 @@
     };
   };
 
-  systemd.services.nextcloud-setup.unitConfig.RequiresMountsFor = [
-    config.services.nextcloud.datadir
-  ];
-  systemd.services.phpfpm-nextcloud.unitConfig.RequiresMountsFor = [
-    config.services.nextcloud.datadir
-  ];
-  systemd.services.nextcloud-cron.unitConfig.RequiresMountsFor = [
-    config.services.nextcloud.datadir
-  ];
+  systemd.services = {
+    nextcloud-setup.unitConfig.RequiresMountsFor = [
+      config.services.nextcloud.datadir
+    ];
+    phpfpm-nextcloud.unitConfig.RequiresMountsFor = [
+      config.services.nextcloud.datadir
+    ];
+    nextcloud-cron.unitConfig.RequiresMountsFor = [
+      config.services.nextcloud.datadir
+    ];
+  };
 
   services.traefik.dynamicConfigOptions.http = {
     routers.nextcloud = {

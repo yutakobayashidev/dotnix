@@ -59,42 +59,43 @@ in
     };
   };
 
-  systemd.services.podman-kasmweb.preStart = ''
-    rm -f ${profileDir}/SingletonLock ${profileDir}/SingletonSocket ${profileDir}/SingletonCookie ${profileDir}/DevToolsActivePort
-    chown -R 1000:0 ${profileDir}
-    chmod -R g+rwX ${profileDir}
-  '';
-
-  systemd.tmpfiles.rules = [
-    "d ${outputDir} 0755 yuta users - -"
-    "d ${profileDir} 0755 1000 0 - -"
-  ];
-
-  systemd.services.twitter-bookmark-snap = {
-    description = "Fetch and render Twitter bookmarks";
-    after = [ "network-online.target" ];
-    wants = [ "network-online.target" ];
-    environment = {
-      PUPPETEER_EXECUTABLE_PATH = "${pkgs.chromium}/bin/chromium";
+  systemd = {
+    services = {
+      podman-kasmweb.preStart = ''
+        rm -f ${profileDir}/SingletonLock ${profileDir}/SingletonSocket ${profileDir}/SingletonCookie ${profileDir}/DevToolsActivePort
+        chown -R 1000:0 ${profileDir}
+        chmod -R g+rwX ${profileDir}
+      '';
+      twitter-bookmark-snap = {
+        description = "Fetch and render Twitter bookmarks";
+        after = [ "network-online.target" ];
+        wants = [ "network-online.target" ];
+        environment = {
+          PUPPETEER_EXECUTABLE_PATH = "${pkgs.chromium}/bin/chromium";
+        };
+        serviceConfig = {
+          Type = "oneshot";
+          User = "yuta";
+          WorkingDirectory = "${bookmark-snap}/lib";
+        };
+        script = ''
+          ${lib.getExe pkgs.nodejs} dist/index.js -- --limit 50 --output-dir ${outputDir}
+        '';
+      };
     };
-    serviceConfig = {
-      Type = "oneshot";
-      User = "yuta";
-      WorkingDirectory = "${bookmark-snap}/lib";
-    };
-    script = ''
-      ${lib.getExe pkgs.nodejs} dist/index.js -- --limit 50 --output-dir ${outputDir}
-    '';
-  };
-
-  systemd.timers.twitter-bookmark-snap = {
-    description = "Run twitter-bookmark-snap every 15 minutes";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "5min";
-      OnUnitActiveSec = "15min";
-      RandomizedDelaySec = "2min";
-      Persistent = true;
+    tmpfiles.rules = [
+      "d ${outputDir} 0755 yuta users - -"
+      "d ${profileDir} 0755 1000 0 - -"
+    ];
+    timers.twitter-bookmark-snap = {
+      description = "Run twitter-bookmark-snap every 15 minutes";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "5min";
+        OnUnitActiveSec = "15min";
+        RandomizedDelaySec = "2min";
+        Persistent = true;
+      };
     };
   };
 }

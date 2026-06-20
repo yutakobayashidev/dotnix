@@ -1,9 +1,11 @@
 { username, ... }:
 
 {
-  fileSystems."/persist".neededForBoot = true;
-  fileSystems."/var/log".neededForBoot = true;
-  fileSystems."/home".neededForBoot = true;
+  fileSystems = {
+    "/persist".neededForBoot = true;
+    "/var/log".neededForBoot = true;
+    "/home".neededForBoot = true;
+  };
 
   boot.initrd.systemd.services.rollback = {
     description = "Rollback btrfs root subvolume to a blank snapshot";

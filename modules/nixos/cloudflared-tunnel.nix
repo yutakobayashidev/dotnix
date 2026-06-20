@@ -47,7 +47,7 @@ in
   config = mkIf cfg.enable {
     services.cloudflared.tunnels.${cfg.id} = {
       credentialsFile = toString cfg.credentialsFile;
-      ingress = cfg.ingress;
+      inherit (cfg) ingress;
       # explicit 404 fallback so requests for hostnames without an ingress
       # entry fail loudly instead of being routed to whichever service sorts
       # first in the merged attrset

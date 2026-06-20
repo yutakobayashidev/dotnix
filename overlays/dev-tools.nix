@@ -1,5 +1,5 @@
 # 外部flake input由来の開発ツール
-final: prev:
+_: prev:
 let
   inherit (prev.stdenv.hostPlatform) system;
 in
@@ -38,14 +38,14 @@ in
       '';
     };
   ghostty = prev._ghostty.packages.${system}.default;
-  repiq = prev._repiq.packages.${system}.default.overrideAttrs (old: {
+  repiq = prev._repiq.packages.${system}.default.overrideAttrs (_: {
     doCheck = !prev.stdenv.hostPlatform.isDarwin;
   });
   moonbit-lsp =
     let
       moonbit-overlay = prev._moonbit-overlay;
       versions = import "${moonbit-overlay}/versions.nix" prev.lib;
-      latest = versions.latest;
+      inherit (versions) latest;
       targets = {
         "x86_64-linux" = "linux-x86_64";
         "aarch64-linux" = "linux-aarch64";
@@ -57,7 +57,7 @@ in
     if target != null && builtins.hasAttr hashAttr latest then
       prev.stdenv.mkDerivation {
         pname = "moonbit-lsp";
-        version = latest.version;
+        inherit (latest) version;
         src = prev.fetchurl {
           url = "https://github.com/moonbit-community/moonbit-overlay/releases/download/${prev.lib.escapeURL latest.version}/moonbit-${target}.tar.gz";
           hash = latest.${hashAttr};

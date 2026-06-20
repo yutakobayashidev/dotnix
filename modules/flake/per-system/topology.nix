@@ -1,9 +1,7 @@
 {
-  perSystem =
-    { ... }:
-    {
-      topology.modules = [
-        ../../../topology/default.nix
-      ];
-    };
+  perSystem = _: {
+    topology.modules = [
+      ../../../topology/default.nix
+    ];
+  };
 }
