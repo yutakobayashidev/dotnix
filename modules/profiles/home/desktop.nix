@@ -8,7 +8,6 @@
     ../../../applications/keifu
     ../../../applications/obs-studio
     ../../../applications/ghostty
-    ../../../applications/zaproxy
     ../../../applications/zed-editor
   ];
 

@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   home.packages = with pkgs; [
@@ -132,6 +137,13 @@
       user = {
         name = "yutakobayashidev";
         email = "hi@yutakobayashi.com";
+      };
+      credential = {
+        helper = [
+          ""
+          "!${lib.getExe pkgs.ghtkn} git-credential"
+        ];
+        useHttpPath = true;
       };
       push = {
         default = "simple";
