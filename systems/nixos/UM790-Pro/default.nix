@@ -1,9 +1,7 @@
 {
-  config,
-  inputs,
   lib,
   modulesPath,
-  username,
+  config,
   ...
 }:
 
@@ -19,20 +17,25 @@
     ../../../modules/profiles/nixos/desktop.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "thunderbolt"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "thunderbolt"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+      kernelModules = [ ];
+    };
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/5803da04-93cf-4c24-9777-65d1432d8227";
@@ -50,35 +53,38 @@
 
   swapDevices = [ ];
 
-  networking.hostName = "UM790-Pro";
-  networking.networkmanager.enable = true;
-  networking.useDHCP = lib.mkDefault true;
-  networking.resolvconf.enable = false;
+  networking = {
+    hostName = "UM790-Pro";
+    useDHCP = lib.mkDefault true;
+    resolvconf.enable = false;
+    networkmanager = {
+      enable = true;
+      ensureProfiles.profiles.home-wifi = {
+        connection = {
+          id = "TP-Link_42B4_5G";
+          type = "wifi";
+          autoconnect = true;
+        };
+        wifi = {
+          mode = "infrastructure";
+          ssid = "TP-Link_42B4_5G";
+        };
+        wifi-security = {
+          key-mgmt = "wpa-psk";
+          psk = "1503c6ce57422a89725114cbf0bd291047d6ac3e80e87c7ed015fb98c2b9d428";
+        };
+        ipv4.method = "auto";
+        ipv6 = {
+          method = "auto";
+          addr-gen-mode = "default";
+        };
+      };
+    };
+  };
 
   services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [ "systemd" ];
-  };
-
-  networking.networkmanager.ensureProfiles.profiles.home-wifi = {
-    connection = {
-      id = "TP-Link_42B4_5G";
-      type = "wifi";
-      autoconnect = true;
-    };
-    wifi = {
-      mode = "infrastructure";
-      ssid = "TP-Link_42B4_5G";
-    };
-    wifi-security = {
-      key-mgmt = "wpa-psk";
-      psk = "1503c6ce57422a89725114cbf0bd291047d6ac3e80e87c7ed015fb98c2b9d428";
-    };
-    ipv4.method = "auto";
-    ipv6 = {
-      method = "auto";
-      addr-gen-mode = "default";
-    };
   };
 
   services.logind.settings.Login = {

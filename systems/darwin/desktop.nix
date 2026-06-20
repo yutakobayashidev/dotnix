@@ -110,9 +110,13 @@
     ];
   };
 
-  security.pam.services.sudo_local.touchIdAuth = true;
-  security.pam.services.sudo_local.reattach = true;
-  security.sudo.extraConfig = ''
-    Defaults pwfeedback
-  '';
+  security = {
+    pam.services.sudo_local = {
+      touchIdAuth = true;
+      reattach = true;
+    };
+    sudo.extraConfig = ''
+      Defaults pwfeedback
+    '';
+  };
 }

@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   virtualisation.oci-containers.containers.cloudflare-error-page = {
     image = "ghcr.io/fa0311/cloudflare-error-page-docker:latest";
     labels = {

@@ -13,13 +13,15 @@
     )
   ];
 
-  wsl.enable = true;
-  wsl.defaultUser = "yuta";
-  wsl.wslConf = {
-    automount.options = "metadata";
-    boot.systemd = true;
+  wsl = {
+    enable = true;
+    defaultUser = "yuta";
+    wslConf = {
+      automount.options = "metadata";
+      boot.systemd = true;
+    };
+    useWindowsDriver = true;
   };
-  wsl.useWindowsDriver = true;
 
   networking.hostName = "X870-Steel-Legend-WiFi";
 

@@ -14,49 +14,51 @@ let
   galleryDlConfigDir = "${config.xdg.configHome}/gallery-dl";
 
   fullSettings = lib.recursiveUpdate cfg.settings {
-    extractor.pixiv.refresh-token = config.sops.placeholder."${cfg.sopsSecretName}";
-    extractor.pixiv.user-id = config.sops.placeholder."${cfg.sopsPixivUserId}";
-    extractor.fanbox.cookies.FANBOXSESSID = config.sops.placeholder."${cfg.sopsFanboxSessid}";
+    extractor = {
+      pixiv = {
+        refresh-token = config.sops.placeholder."${cfg.sopsSecretName}";
+        user-id = config.sops.placeholder."${cfg.sopsPixivUserId}";
+      };
+      fanbox.cookies.FANBOXSESSID = config.sops.placeholder."${cfg.sopsFanboxSessid}";
+    };
   };
 
-  jobType =
-    { name, ... }:
-    {
-      options = {
-        urls = lib.mkOption {
-          type = with lib.types; listOf str;
-          default = [ ];
-          description = ''
-            A list of URLs to be downloaded by {command}`gallery-dl`.
-            See `gallery-dl --list-extractors` for supported sites.
-          '';
-        };
+  jobType = _: {
+    options = {
+      urls = lib.mkOption {
+        type = with lib.types; listOf str;
+        default = [ ];
+        description = ''
+          A list of URLs to be downloaded by {command}`gallery-dl`.
+          See `gallery-dl --list-extractors` for supported sites.
+        '';
+      };
 
-        startAt = lib.mkOption {
-          type = lib.types.str;
-          default = "daily";
-          description = ''
-            Schedule for the download job, in {manpage}`systemd.time(7)` format.
-          '';
-        };
+      startAt = lib.mkOption {
+        type = lib.types.str;
+        default = "daily";
+        description = ''
+          Schedule for the download job, in {manpage}`systemd.time(7)` format.
+        '';
+      };
 
-        extraArgs = lib.mkOption {
-          type = with lib.types; listOf str;
-          default = [ ];
-          description = ''
-            Job-specific extra arguments passed to {command}`gallery-dl`.
-          '';
-        };
+      extraArgs = lib.mkOption {
+        type = with lib.types; listOf str;
+        default = [ ];
+        description = ''
+          Job-specific extra arguments passed to {command}`gallery-dl`.
+        '';
+      };
 
-        settings = lib.mkOption {
-          type = jsonFormat.type;
-          default = { };
-          description = ''
-            Job-specific settings overridden on top of the global settings.
-          '';
-        };
+      settings = lib.mkOption {
+        inherit (jsonFormat) type;
+        default = { };
+        description = ''
+          Job-specific settings overridden on top of the global settings.
+        '';
       };
     };
+  };
 in
 {
   options.my.programs.gallery-dl = {
@@ -76,7 +78,7 @@ in
     };
 
     settings = lib.mkOption {
-      type = jsonFormat.type;
+      inherit (jsonFormat) type;
       default = { };
       description = ''
         Global gallery-dl configuration written to `~/.config/gallery-dl/config.json`.
@@ -139,20 +141,21 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
-    sops.secrets.${cfg.sopsSecretName} = {
-      sopsFile = cfg.sopsFile;
-    };
-
-    sops.secrets.${cfg.sopsPixivUserId} = {
-      sopsFile = cfg.sopsFile;
-    };
-
-    sops.secrets.${cfg.sopsFanboxSessid} = {
-      sopsFile = cfg.sopsFile;
-    };
-
-    sops.templates."gallery-dl-config.json" = {
-      content = builtins.toJSON fullSettings;
+    sops = {
+      secrets = {
+        ${cfg.sopsSecretName} = {
+          inherit (cfg) sopsFile;
+        };
+        ${cfg.sopsPixivUserId} = {
+          inherit (cfg) sopsFile;
+        };
+        ${cfg.sopsFanboxSessid} = {
+          inherit (cfg) sopsFile;
+        };
+      };
+      templates."gallery-dl-config.json" = {
+        content = builtins.toJSON fullSettings;
+      };
     };
 
     home.activation.initGalleryDlConfig = lib.hm.dag.entryAfter [ "sops-nix" ] ''

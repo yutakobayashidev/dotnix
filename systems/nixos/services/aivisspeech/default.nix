@@ -1,4 +1,4 @@
-{ ... }:
+_:
 let
   domain = "aivisspeech.home.yutakobayashi.com";
 in

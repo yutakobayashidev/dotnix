@@ -58,59 +58,59 @@ in
     mode = "0400";
   };
 
-  systemd.services.nxapi-token = {
-    description = "Refresh s3s tokens via nxapi";
-    after = [ "sops-nix.service" ];
-    wants = [ "sops-nix.service" ];
-    serviceConfig = {
-      Type = "oneshot";
-      User = username;
-      StateDirectory = "s3s";
-      ExecStartPre = initS3sConfig;
-      ExecStart = nxapiS3sRefresh;
+  systemd = {
+    services = {
+      nxapi-token = {
+        description = "Refresh s3s tokens via nxapi";
+        after = [ "sops-nix.service" ];
+        wants = [ "sops-nix.service" ];
+        serviceConfig = {
+          Type = "oneshot";
+          User = username;
+          StateDirectory = "s3s";
+          ExecStartPre = initS3sConfig;
+          ExecStart = nxapiS3sRefresh;
+        };
+      };
+      s3s = {
+        description = "s3s - Splatoon 3 battle stats uploader to stat.ink";
+        after = [
+          "network-online.target"
+          "nxapi-token.service"
+        ];
+        wants = [
+          "network-online.target"
+          "nxapi-token.service"
+        ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "simple";
+          User = username;
+          StateDirectory = "s3s";
+          Restart = "always";
+          RestartSec = "30min";
+          RuntimeMaxSec = "86400";
+          ExecStartPre = initS3sConfig;
+          ExecStart = "${lib.getExe pkgs.s3s} -M 300 -r";
+          WorkingDirectory = s3sConfigDir;
+        };
+      };
+    };
+    timers.nxapi-token = {
+      description = "Periodic s3s token refresh via nxapi";
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnBootSec = "1min";
+        OnUnitActiveSec = "1h";
+        Persistent = true;
+      };
     };
   };
 
-  systemd.timers.nxapi-token = {
-    description = "Periodic s3s token refresh via nxapi";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnBootSec = "1min";
-      OnUnitActiveSec = "1h";
-      Persistent = true;
-    };
-  };
-
-  systemd.services.s3s = {
-    description = "s3s - Splatoon 3 battle stats uploader to stat.ink";
-    after = [
-      "network-online.target"
-      "nxapi-token.service"
+  home-manager.users.${username} = _: {
+    home.packages = [
+      pkgs.s3s
+      pkgs.nxapi
     ];
-    wants = [
-      "network-online.target"
-      "nxapi-token.service"
-    ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "simple";
-      User = username;
-      StateDirectory = "s3s";
-      Restart = "always";
-      RestartSec = "30min";
-      RuntimeMaxSec = "86400";
-      ExecStartPre = initS3sConfig;
-      ExecStart = "${lib.getExe pkgs.s3s} -M 300 -r";
-      WorkingDirectory = s3sConfigDir;
-    };
   };
-
-  home-manager.users.${username} =
-    { ... }:
-    {
-      home.packages = [
-        pkgs.s3s
-        pkgs.nxapi
-      ];
-    };
 }

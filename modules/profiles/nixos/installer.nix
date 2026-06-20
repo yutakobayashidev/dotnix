@@ -6,12 +6,15 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  services.openssh.enable = true;
-  services.openssh.settings.PermitRootLogin = "yes";
+  services = {
+    openssh = {
+      enable = true;
+      settings.PermitRootLogin = "yes";
+    };
+    getty.autologinUser = lib.mkForce "root";
+  };
   users.users.root.initialPassword = "netboot";
   users.users.root.initialHashedPassword = lib.mkForce null;
-
-  services.getty.autologinUser = lib.mkForce "root";
 
   environment.systemPackages = with pkgs; [
     coreutils

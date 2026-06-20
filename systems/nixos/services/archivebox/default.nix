@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   my.services.archivebox = {
     enable = true;
     jobs = {

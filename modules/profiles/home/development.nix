@@ -18,16 +18,18 @@
     ../../../applications/jj
   ];
 
-  my.programs.agent-browser.enable = true;
-  my.programs.agent-skills.enable = true;
-  my.programs.claude-code.enable = true;
-  my.programs.codex.enable = true;
-  my.programs.mcp.enable = true;
-  my.programs.continues.enable = true;
-  my.programs.copilot-cli.enable = true;
-  my.programs.cursor-agent.enable = true;
-  my.programs.entire.enable = true;
-  my.programs.grok.enable = true;
-  my.programs.opencode.enable = true;
-  my.programs.spec-kit.enable = true;
+  my.programs = {
+    agent-browser.enable = true;
+    agent-skills.enable = true;
+    claude-code.enable = true;
+    codex.enable = true;
+    mcp.enable = true;
+    continues.enable = true;
+    copilot-cli.enable = true;
+    cursor-agent.enable = true;
+    entire.enable = true;
+    grok.enable = true;
+    opencode.enable = true;
+    spec-kit.enable = true;
+  };
 }

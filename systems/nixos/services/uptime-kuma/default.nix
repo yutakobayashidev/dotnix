@@ -1,6 +1,4 @@
-{
-  ...
-}:
+_:
 
 {
   services.uptime-kuma = {

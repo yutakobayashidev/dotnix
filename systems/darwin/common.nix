@@ -39,28 +39,33 @@
 
   users.users.${username}.home = "/Users/${username}";
 
-  nix.settings.trusted-users = [
-    "root"
-    username
-  ];
-
-  system.primaryUser = username;
-  system.stateVersion = 6;
-  system.startup.chime = false;
-
-  my.services.caffeinate = {
-    enable = true;
-    preventSleepOnCharge = true;
+  nix = {
+    settings = {
+      trusted-users = [
+        "root"
+        username
+      ];
+      always-allow-substitutes = true;
+    };
+    gc.interval = {
+      Weekday = 0;
+      Hour = 2;
+      Minute = 0;
+    };
   };
 
-  my.services.newsyslog.enable = true;
-  my.services.spotlight.enableIndex = true;
-
-  nix.gc.interval = {
-    Weekday = 0;
-    Hour = 2;
-    Minute = 0;
+  system = {
+    primaryUser = username;
+    stateVersion = 6;
+    startup.chime = false;
   };
 
-  nix.settings.always-allow-substitutes = true;
+  my.services = {
+    caffeinate = {
+      enable = true;
+      preventSleepOnCharge = true;
+    };
+    newsyslog.enable = true;
+    spotlight.enableIndex = true;
+  };
 }
