@@ -12,6 +12,7 @@
       ../../../applications/waybar
       ../../../applications/swayidle
       ../../../applications/swaylock
+      ../../../applications/zaproxy
     ];
     home.homeDirectory = "/home/${username}";
   };

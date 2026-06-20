@@ -4,6 +4,7 @@
 {
   imports = [
     ../../applications/cmux
+    ../../applications/zaproxy
   ];
 
   my.programs.emacs.enable = true;
