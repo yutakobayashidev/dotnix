@@ -2453,11 +2453,11 @@
     "superpowers": {
       "flake": false,
       "locked": {
-        "lastModified": 1781551102,
-        "narHash": "sha256-sKww11UOOHzZWxcHCprnF2+0pnuuGWIJpDoU7pxzRC4=",
+        "lastModified": 1781674939,
+        "narHash": "sha256-D47uMC80wcIMNzW/rA7VUVGc4hzlmcZJMCrLyp2lbAY=",
         "owner": "obra",
         "repo": "superpowers",
-        "rev": "8cf39006140a743dce31ba4046fceab90cc214e6",
+        "rev": "b62616fc12f6a007c6fd5118146821d748da0d33",
         "type": "github"
       },
       "original": {
