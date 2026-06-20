@@ -2,6 +2,10 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ../../applications/cmux
+  ];
+
   my.programs.emacs.enable = true;
 
   home.packages =
