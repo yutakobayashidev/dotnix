@@ -17,6 +17,7 @@ result-*
 # AI agent working files
 z-ai/
 .sofa/
+sgconfig.yml
 
 # Terraform state
 *.tfstate
