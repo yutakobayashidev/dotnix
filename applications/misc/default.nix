@@ -24,6 +24,7 @@ in
       babashka
       before-and-after
       bumblebee
+      defuddle
       gctx
       vulnix
       gogcli
