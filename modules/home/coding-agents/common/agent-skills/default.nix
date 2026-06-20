@@ -70,6 +70,10 @@ in
           path = inputs.before-and-after-skill;
           subdir = "skill";
         };
+        cmux = {
+          path = inputs.cmux-skills;
+          subdir = "skills";
+        };
         mattpocock = {
           path = inputs.mattpocock-skills;
           subdir = "skills";
@@ -97,6 +101,41 @@ in
       ];
 
       skills.explicit = {
+        cmux = {
+          from = "cmux";
+          path = "cmux";
+        };
+
+        cmux-workspace = {
+          from = "cmux";
+          path = "cmux-workspace";
+        };
+
+        cmux-settings = {
+          from = "cmux";
+          path = "cmux-settings";
+        };
+
+        cmux-customization = {
+          from = "cmux";
+          path = "cmux-customization";
+        };
+
+        cmux-diagnostics = {
+          from = "cmux";
+          path = "cmux-diagnostics";
+        };
+
+        cmux-browser = {
+          from = "cmux";
+          path = "cmux-browser";
+        };
+
+        cmux-markdown = {
+          from = "cmux";
+          path = "cmux-markdown";
+        };
+
         before-and-after =
           let
             bnaBin = lib.getExe pkgs.before-and-after;
