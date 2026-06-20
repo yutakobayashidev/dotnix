@@ -82,6 +82,7 @@ in
 
       # Misc
       sl
+      qrcode
       fastfetch
       ooniprobe-cli
     ]
