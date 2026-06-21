@@ -57,6 +57,7 @@ in
       mpv
       apkeep
       ipatool
+      whichllm
       stable.yt-dlp
       stable.gallery-dl
       halloy
