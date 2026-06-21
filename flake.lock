@@ -1355,11 +1355,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1781506487,
-        "narHash": "sha256-qkbQsgzjdXdxuhZAboX89GbtV3SJm7VOS4ocnvwTEvQ=",
+        "lastModified": 1781761792,
+        "narHash": "sha256-rCPytmKNjctLloB6UgK5CRrHSwV4b0ygxtJLPPp8R14=",
         "owner": "nix-darwin",
         "repo": "nix-darwin",
-        "rev": "08278afff6e71266c162f80d980fe851060e2a4c",
+        "rev": "a1fa429e945becaf60468600daf649be4ba0350c",
         "type": "github"
       },
       "original": {
