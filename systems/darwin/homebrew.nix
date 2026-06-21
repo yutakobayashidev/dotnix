@@ -49,7 +49,7 @@
       "bettertouchtool"
       "elgato-stream-deck"
       "gpg-suite"
-      "orbstack"
+
       "blackhole-2ch"
       "nani"
       "nextcloud"

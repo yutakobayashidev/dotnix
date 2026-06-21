@@ -1,6 +1,7 @@
 {
   inputs,
   lib,
+  pkgs,
   username,
   ...
 }:
@@ -58,6 +59,24 @@
     primaryUser = username;
     stateVersion = 6;
     startup.chime = false;
+  };
+
+  home-manager.users.${username} = {
+    home.packages = with pkgs; [
+      docker-client
+      docker-buildx
+    ];
+    services.colima = {
+      enable = true;
+      profiles.default.settings = {
+        cpu = 8;
+        memory = 8;
+        runtime = "docker";
+        vmType = "vz";
+        mountType = "virtiofs";
+        rosetta = true;
+      };
+    };
   };
 
   my.services = {
