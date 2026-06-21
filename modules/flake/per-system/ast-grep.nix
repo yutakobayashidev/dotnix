@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+_: {
   perSystem =
     { pkgs, ... }:
     let
@@ -14,6 +13,10 @@
           fennel = {
             libraryPath = "${pkgs.vimPlugins.nvim-treesitter-parsers.fennel}/parser/fennel.so";
             extensions = [ "fnl" ];
+          };
+          gleam = {
+            extensions = [ "gleam" ];
+            libraryPath = "${pkgs.vimPlugins.nvim-treesitter-parsers.gleam}/parser/gleam.so";
           };
         };
       };
