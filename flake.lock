@@ -1992,11 +1992,11 @@
         "systems": "systems_5"
       },
       "locked": {
-        "lastModified": 1780613187,
-        "narHash": "sha256-Vo9RgXBdWJ537smbCGIyCdmhqp35z5G6kH1mUhnn5Ag=",
+        "lastModified": 1781754726,
+        "narHash": "sha256-eZ1UJlgoK73/wQzQIbmMe1fV5vkDE1r6KMVJO7uWk6o=",
         "owner": "1Password",
         "repo": "shell-plugins",
-        "rev": "af9327a7375e910219fc910d2c7db0cf54f1f5b0",
+        "rev": "ff98909ab4d361e6af05057a847ca6c001f1b8e8",
         "type": "github"
       },
       "original": {
