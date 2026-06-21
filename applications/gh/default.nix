@@ -13,6 +13,10 @@ let
   '';
 in
 {
+  home.sessionVariables = {
+    GHTKN_ENABLE_DEVICE_FLOW = "false";
+  };
+
   programs.gh = {
     enable = true;
     gitCredentialHelper.enable = false;
