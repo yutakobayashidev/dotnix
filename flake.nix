@@ -150,6 +150,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     simple-nostr-relay.url = "github:yutakobayashidev/simple-nostr-relay";
+    webhashtag-rust-server = {
+      url = "github:yutakobayashidev/webhashtag-rust-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";

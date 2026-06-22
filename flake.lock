@@ -314,6 +314,27 @@
         "type": "github"
       }
     },
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "webhashtag-rust-server",
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1780314950,
+        "narHash": "sha256-1y6LHeumqA2lnUZap2yor+g4jMFtno5mx119LEv+dQQ=",
+        "rev": "8160d67d2693a1f7ea219db159ccdc29ae632918",
+        "revCount": 2677,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/nix-community/fenix/0.1.2677%2Brev-8160d67d2693a1f7ea219db159ccdc29ae632918/019e8362-a4ed-7631-b2a4-06d3f14d5570/source.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://flakehub.com/f/nix-community/fenix/0.1"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "nixpkgs": [
@@ -2237,7 +2258,25 @@
         "superpowers": "superpowers",
         "tree-sitter-moonbit": "tree-sitter-moonbit",
         "treefmt-nix": "treefmt-nix_4",
-        "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills"
+        "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills",
+        "webhashtag-rust-server": "webhashtag-rust-server"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780260465,
+        "narHash": "sha256-yJIyzYb6LhvbVMmj2EH62Mt0JHU3pQefr+oPEgaoaI8=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "c5d30e2331acb2cec913a086ab242591f4f367a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
       }
     },
     "rust-overlay": {
@@ -2715,6 +2754,27 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "webhashtag-rust-server": {
+      "inputs": {
+        "fenix": "fenix",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782153048,
+        "narHash": "sha256-cIrAdZ5TZHbh85V68ltHbcEEXMR2t0JGHBWN8bcPXnQ=",
+        "owner": "yutakobayashidev",
+        "repo": "webhashtag-rust-server",
+        "rev": "b0acdc1bafbfe5d0796216c003e986baf4bac1a6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "webhashtag-rust-server",
         "type": "github"
       }
     },

@@ -19,6 +19,7 @@
     ../services/prometheus
     ../services/rsshub
     ../services/simple-nostr-relay
+    ../services/webhashtag-rust-server
     ../services/loki
     ../services/opentelemetry-collector
     ../services/oura-metrics

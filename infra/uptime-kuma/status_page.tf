@@ -16,6 +16,10 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
+          id       = uptimekuma_monitor_http.webhashtag.id
+          send_url = true
+        },
+        {
           id       = uptimekuma_monitor_http.nextcloud.id
           send_url = true
         },
