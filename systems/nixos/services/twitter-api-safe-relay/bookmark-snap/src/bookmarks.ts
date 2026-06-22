@@ -1,4 +1,4 @@
-const PROXY_URL = 'http://localhost:3090';
+const PROXY_URL = 'https://tw.home.yutakobayashi.com';
 const BOOKMARKS_QUERY_ID = 'R5wixmhMi4oEBUYvBM-44g';
 
 const FEATURES = {

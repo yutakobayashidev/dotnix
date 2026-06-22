@@ -11,11 +11,13 @@
 
   home.packages = with pkgs; [
     curl
+    eza
     fzf
     glow
     gum
     jq
     ripgrep
+    roots
     sshpass
     wget
     xh

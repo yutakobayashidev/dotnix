@@ -43,12 +43,10 @@ in
       jnv
       jolt-tui
       magika
-      eza
       tokei
       cloc
       similarity-ts
       btop
-      roots
       vhs
       yazi
       imagemagick
