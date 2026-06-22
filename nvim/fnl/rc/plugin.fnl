@@ -135,6 +135,9 @@
                      :lsp_doc_border false}}}
    {1 :mfussenegger/nvim-lint
     :config (mod :nvim-lint)}
+   {1 :IogaMaster/neocord
+    :event :VeryLazy
+    :opts {}}
    {1 :stevearc/oil.nvim
     :opts {}
     :dependencies [{1 :echasnovski/mini.icons
