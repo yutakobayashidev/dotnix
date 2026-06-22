@@ -10,5 +10,6 @@
   {:auto_install false
    :sync_install false
    :ensure_installed [:nix]
-   :highlight {:enable true}
+   :highlight {:enable true
+               :disable [:vim]}
    :indent {:enable true}})

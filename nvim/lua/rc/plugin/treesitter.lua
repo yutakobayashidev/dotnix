@@ -8,4 +8,4 @@ if vim.env.TREESITTER_MOONBIT then
 else
 end
 local treesitter = require("nvim-treesitter")
-return treesitter.setup({ensure_installed = {"nix"}, highlight = {enable = true}, indent = {enable = true}, auto_install = false, sync_install = false})
+return treesitter.setup({ensure_installed = {"nix"}, highlight = {enable = true, disable = {"vim"}}, indent = {enable = true}, auto_install = false, sync_install = false})
