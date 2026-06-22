@@ -42,6 +42,14 @@
   # in a loop, which eventually causes DHCP lease renewal to fail after a few days
   networking.dhcpcd.denyInterfaces = [ "veth*" ];
 
+  documentation.dev.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    man-pages
+    man-pages-ja
+    man-pages-posix
+  ];
+
   virtualisation.docker.enable = true;
 
   virtualisation.docker.rootless = {
