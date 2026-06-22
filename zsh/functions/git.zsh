@@ -60,11 +60,13 @@ branch() {
 }
 
 cdg() {
-  cd "$(git rev-parse --show-toplevel)" || return
+  local root
+  root="$(git rev-parse --show-toplevel 2>/dev/null)" || return
+  cd -- "$root"
 }
 
 stash() {
-  git stash save "${1:-$(date +%Y%m%d%H%M%S)}"
+  git stash push -m "${1:-$(date +%Y%m%d%H%M%S)}"
 }
 
 fpull() {

@@ -22,7 +22,7 @@
 | `gh-q`       | GitHub リポジトリを検索・clone                    | `gh-q [-o] [owner]`          |
 | `jb`         | fzf で jj bookmark を選択・new                    | `jb`                         |
 | `nfi`        | nix flake init with fuzzy template selection      | `nfi <flake_ref> [template]` |
-| `stash`      | タイムスタンプ付きで git stash save               | `stash [message]`            |
+| `stash`      | タイムスタンプ付きで git stash push               | `stash [message]`            |
 | `worktree`   | fzf で git worktree を検索・移動                  | `worktree`                   |
 
 `Ctrl+G` でも `g` の引数なしと同じ `ghq + fzf` のリポジトリ選択 UI を開ける。
