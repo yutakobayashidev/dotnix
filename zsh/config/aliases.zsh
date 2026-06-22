@@ -23,6 +23,7 @@ abbr -f -qq clo="claude --dangerously-skip-permissions --model opus"
 abbr -f -qq cls="claude --dangerously-skip-permissions --model sonnet"
 abbr -f -qq oc="opencode"
 abbr -f -qq cx="codex"
+abbr -f -qq cxd="codex --dangerously-bypass-approvals-and-sandbox"
 abbr -f -qq ca="cursor-agent"
 abbr -f -qq ct="continues"
 
