@@ -43,6 +43,7 @@ in
       jnv
       jolt-tui
       magika
+      eza
       tokei
       cloc
       similarity-ts

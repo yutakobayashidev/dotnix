@@ -8,6 +8,18 @@
 {
   home.packages = with pkgs; [
     git
+    (writeShellScriptBin "git-twig" ''
+      if [ "$#" -eq 0 ]; then
+        git home
+        exit 0
+      fi
+
+      git switch "$@" && exit 0
+
+      git fetch --all --prune --tags
+
+      git switch "$@" || git switch --create "$@"
+    '')
     git-now
     git-wt
     git-lfs
@@ -126,6 +138,9 @@
       alias = {
         clone = "clone --recursive";
         ahead = "log --oneline origin/main..HEAD";
+        fetch-head = "!git symbolic-ref --short refs/remotes/origin/HEAD";
+        default-branch = "!git fetch-head | sed 's!.*/!!'";
+        home = "!git switch $(git default-branch)";
         logg = "log --graph --abbrev-commit --pretty=format:\"%C(yellow)%h%C(reset) - %C(cyan)%ad%C(reset) %C(green)(%ar)%C(reset)%C(auto)%d%C(reset)%n          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%n\"";
         swor = ''!f() { local -r ref=$(git branch -r | fzf); git sw "''${1:-''${ref#*/}}" $ref; }; f'';
         swf = "!git branch -a | fzf | xargs git switch";

@@ -55,6 +55,8 @@ alias ls="lsd -1A"
 alias ll="lsd -l"
 alias la="lsd -la"
 alias lt="lsd --tree"
+alias lsf="eza -F -alh --no-user --time-style=long-iso --icons --git"
+alias tree="eza --all --git-ignore --tree --icons --ignore-glob=.git"
 alias cat="bat"
 
 # Git

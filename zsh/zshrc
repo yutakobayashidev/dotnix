@@ -40,6 +40,29 @@ done
 # aliases & abbreviations (must be after functions loop and zsh-abbr)
 source ~/.config/zsh/config/aliases.zsh
 
+nix() {
+  command nix "$@"
+  local exit_code=$?
+  if [[ $exit_code -ne 0 ]]; then
+    echo ""
+    echo "nix command failed!"
+    echo "Did you forget to 'git add' new files?"
+  fi
+  return $exit_code
+}
+
+direnv() {
+  command direnv "$@"
+  local exit_code=$?
+  if [[ $exit_code -ne 0 ]]; then
+    echo ""
+    echo "direnv command failed!"
+    echo "Did you forget to create .envrc?"
+    echo "to use nix direnv, run \"echo 'use flake' > .envrc\""
+  fi
+  return $exit_code
+}
+
 # Highlight abbreviations as valid commands for zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS+=(regexp)
 typeset -gA ZSH_HIGHLIGHT_REGEXP
