@@ -163,6 +163,20 @@
       :filetypes [:yaml :yaml.docker-compose]
       :root_markers [:.git]})
 
+(set vim.lsp.config.cucumber_language_server
+     {:cmd [:cucumber-language-server :--stdio]
+      :filetypes [:cucumber]
+      :root_markers [:cucumber.json
+                     :cucumber.js
+                     :cucumber.ts
+                     :package.json
+                     :.git]})
+
+(set vim.lsp.config.gh_actions_ls
+     {:cmd [:gh-actions-language-server :--stdio]
+      :filetypes [:yaml.github]
+      :root_markers [:.github]})
+
 (set vim.lsp.config.version_lsp
      {:cmd [:version-lsp]
       :filetypes [:json :toml :yaml]
@@ -183,7 +197,9 @@
       :root_markers [:.nfnl.fnl :flsproject.fnl :.git]})
 
 (vim.filetype.add
-  {:extension {:mbt :moonbit}})
+  {:extension {:mbt :moonbit}
+   :pattern {".*%.github/workflows/.*%.yaml" :yaml.github
+             ".*%.github/workflows/.*%.yml" :yaml.github}})
 
 (vim.lsp.enable
   [:vtsls
@@ -199,6 +215,8 @@
    :eslint
    :volar
    :yamlls
+   :cucumber_language_server
+   :gh_actions_ls
    :version_lsp
    :moonbit
    :fennel_ls])

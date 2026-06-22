@@ -43,7 +43,9 @@ in
 
         # Node.js-based language servers
         astro-language-server
+        cucumber-language-server
         emmet-language-server
+        gh-actions-language-server
         prisma-language-server
         stylelint
         stylelint-lsp

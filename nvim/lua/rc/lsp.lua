@@ -61,8 +61,10 @@ vim.lsp.config.cssls = {cmd = {"vscode-css-language-server", "--stdio"}, filetyp
 vim.lsp.config.jsonls = {cmd = {"vscode-json-language-server", "--stdio"}, filetypes = {"json", "jsonc"}, root_markers = {".git"}}
 vim.lsp.config.volar = {cmd = {"vue-language-server", "--stdio"}, filetypes = {"vue"}, root_markers = {"vue.config.js", "nuxt.config.js", "nuxt.config.ts", "package.json", ".git"}}
 vim.lsp.config.yamlls = {cmd = {"yaml-language-server", "--stdio"}, filetypes = {"yaml", "yaml.docker-compose"}, root_markers = {".git"}}
+vim.lsp.config.cucumber_language_server = {cmd = {"cucumber-language-server", "--stdio"}, filetypes = {"cucumber"}, root_markers = {"cucumber.json", "cucumber.js", "cucumber.ts", "package.json", ".git"}}
+vim.lsp.config.gh_actions_ls = {cmd = {"gh-actions-language-server", "--stdio"}, filetypes = {"yaml.github"}, root_markers = {".github"}}
 vim.lsp.config.version_lsp = {cmd = {"version-lsp"}, filetypes = {"json", "toml", "yaml"}, root_markers = {"package.json", "pnpm-workspace.yaml", "Cargo.toml", "go.mod", ".git"}}
 vim.lsp.config.moonbit = {cmd = {"moonbit-lsp"}, filetypes = {"moonbit"}, root_markers = {"moon.mod.json", ".git"}}
 vim.lsp.config.fennel_ls = {cmd = {"fennel-ls"}, filetypes = {"fennel"}, root_markers = {".nfnl.fnl", "flsproject.fnl", ".git"}}
-vim.filetype.add({extension = {mbt = "moonbit"}})
-return vim.lsp.enable({"vtsls", "astro", "emmet_ls", "prismals", "stylelint_lsp", "svelte", "tailwindcss", "html", "cssls", "jsonls", "eslint", "volar", "yamlls", "version_lsp", "moonbit", "fennel_ls"})
+vim.filetype.add({extension = {mbt = "moonbit"}, pattern = {[".*%.github/workflows/.*%.yaml"] = "yaml.github", [".*%.github/workflows/.*%.yml"] = "yaml.github"}})
+return vim.lsp.enable({"vtsls", "astro", "emmet_ls", "prismals", "stylelint_lsp", "svelte", "tailwindcss", "html", "cssls", "jsonls", "eslint", "volar", "yamlls", "cucumber_language_server", "gh_actions_ls", "version_lsp", "moonbit", "fennel_ls"})
