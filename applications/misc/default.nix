@@ -62,6 +62,7 @@ in
       stable.yt-dlp
       stable.gallery-dl
       halloy
+      llm-agents.herdr
       llm-agents.hunk
       immich-go
       luanti
