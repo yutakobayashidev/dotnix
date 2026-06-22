@@ -159,6 +159,7 @@
           "!${lib.getExe pkgs.ghtkn} git-credential"
         ];
         useHttpPath = true;
+        "https://git.yutakobayashi.com".helper = "osxkeychain";
       };
       push = {
         default = "simple";
