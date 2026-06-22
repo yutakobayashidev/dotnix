@@ -12,7 +12,7 @@ cdf() {
     cdr -l 2>/dev/null \
       | sed -E 's/^[[:space:]]*[0-9]+[[:space:]]+//' \
       | fzf --no-multi --exit-0 --query="$*" \
-          --preview 'dir=$(printf "%s" {}); case "$dir" in "~"*) dir="$HOME${dir#~}" ;; esac; eza -F -alh --no-user --time-style=long-iso --icons --git --color=always "$dir" 2>/dev/null || ls -FA1 "$dir"'
+          --preview 'dir=$(printf "%s" {}); case "$dir" in "~/"*) dir="$HOME/${dir#\~/}" ;; "~") dir="$HOME" ;; esac; eza -F -alh --no-user --time-style=long-iso --icons --git --color=always "$dir" 2>/dev/null || ls -FA1 "$dir"'
   )
 
   [[ -n "$dir" ]] || return
