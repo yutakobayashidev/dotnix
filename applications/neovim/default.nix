@@ -72,6 +72,12 @@ in
       "--set"
       "TREESITTER_MOONBIT"
       "${pkgs.tree-sitter-moonbit-grammar}"
+      "--set"
+      "DOTNIX_NVIM_LAZY"
+      "${pkgs.vimPlugins.lazy-nvim}"
+      "--set"
+      "DOTNIX_NVIM_NFNL"
+      "${pkgs.vimPlugins.nfnl}"
     ];
   };
 

@@ -13,6 +13,8 @@
   [{1 :folke/lazy.nvim
     :lazy true}
    {1 :Olical/nfnl
+    :dir vim.env.DOTNIX_NVIM_NFNL
+    :name :nfnl
     :ft [:fennel]
     :cmd :NfnlCompileAllFiles
     :config (mod :nfnl)}
