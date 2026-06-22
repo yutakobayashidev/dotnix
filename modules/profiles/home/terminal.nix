@@ -15,10 +15,8 @@
     glow
     gum
     jq
-    lsd
     ripgrep
     sshpass
-    tree
     wget
     xh
     zoxide

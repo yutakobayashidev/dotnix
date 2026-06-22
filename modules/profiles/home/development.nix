@@ -10,7 +10,6 @@
     ../../home/coding-agents/continues
     ../../home/coding-agents/copilot-cli
     ../../home/coding-agents/cursor-agent
-    ../../home/coding-agents/entire
     ../../home/coding-agents/grok
     ../../home/coding-agents/opencode
     ../../home/coding-agents/spec-kit
@@ -27,7 +26,6 @@
     continues.enable = true;
     copilot-cli.enable = true;
     cursor-agent.enable = true;
-    entire.enable = true;
     grok.enable = true;
     opencode.enable = true;
     spec-kit.enable = true;
