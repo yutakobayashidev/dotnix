@@ -24,6 +24,7 @@
   services = {
     printing.enable = true;
     greetd.enable = true;
+    gnome.gnome-keyring.enable = true;
     pulseaudio.enable = false;
     pipewire = {
       enable = true;
@@ -35,5 +36,11 @@
 
   ext.security.yubikey.enable = true;
 
-  security.rtkit.enable = true;
+  security = {
+    pam.services = {
+      login.enableGnomeKeyring = true;
+      swaylock.enableGnomeKeyring = true;
+    };
+    rtkit.enable = true;
+  };
 }
