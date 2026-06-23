@@ -19,11 +19,10 @@ let
     fi
   '';
   chatgptModels = [
+    "chatgpt/gpt-5.5"
     "chatgpt/gpt-5.4"
     "chatgpt/gpt-5.4-pro"
-    "chatgpt/gpt-5.3-codex"
     "chatgpt/gpt-5.3-codex-spark"
-    "chatgpt/gpt-5.3-instant"
     "chatgpt/gpt-5.3-chat-latest"
   ];
 in
