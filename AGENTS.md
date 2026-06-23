@@ -25,8 +25,8 @@ Skills are managed via the `skills` flake input (`yutakobayashidev/skills`) usin
 When adding a new skill to `yutakobayashidev/skills`, prefer scanning with a GitHub URL to find existing skill implementations:
 
 ```bash
-OPENAI_BASE_URL=https://cliproxy.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>
-OPENAI_BASE_URL=https://cliproxy.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>/tree/main/path/to/skill
+OPENAI_BASE_URL=https://litellm.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>
+OPENAI_BASE_URL=https://litellm.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>/tree/main/path/to/skill
 ```
 
 To test local changes before pushing:

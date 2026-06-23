@@ -171,7 +171,6 @@
       url = "github:BatteredBunny/brew-api";
       flake = false;
     };
-    cliproxyapi.url = "github:benjaminkitt/nix-cliproxyapi";
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
