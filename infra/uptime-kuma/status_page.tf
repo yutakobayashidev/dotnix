@@ -52,6 +52,10 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
+          id       = uptimekuma_monitor_http.birdclaw.id
+          send_url = true
+        },
+        {
           id       = uptimekuma_monitor_http.tw.id
           send_url = true
         },

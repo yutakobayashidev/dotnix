@@ -217,6 +217,26 @@ resource "uptimekuma_monitor_http" "prometheus" {
   ]
 }
 
+resource "uptimekuma_monitor_http" "birdclaw" {
+  name             = "Birdclaw"
+  url              = "https://birdclaw.home.yutakobayashi.com"
+  interval         = 60
+  timeout          = 30
+  max_retries      = 0
+  retry_interval   = 60
+  resend_interval  = 300
+  active           = true
+  method           = "GET"
+  max_redirects    = 10
+  parent           = uptimekuma_monitor_group.internal.id
+  notification_ids = local.default_notification_ids
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
 resource "uptimekuma_monitor_http" "tw" {
   name                  = "Twitter API Safe Proxy"
   url                   = "https://tw.home.yutakobayashi.com"
