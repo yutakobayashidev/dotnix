@@ -8,41 +8,15 @@
 let
   domain = "home.yutakobayashi.com";
   cfg = config.services.litellm;
-  seedChatgptAuth = pkgs.writeShellScript "litellm-seed-chatgpt-auth" ''
+  installChatgptAuth = pkgs.writeShellScript "litellm-install-chatgpt-auth" ''
     set -eu
 
     ${pkgs.coreutils}/bin/install -d -m 0700 ${cfg.stateDir}/chatgpt
-    if [ -s ${cfg.stateDir}/chatgpt/auth.json ]; then
-      exit 0
+    if [ ! -s ${cfg.stateDir}/chatgpt/auth.json ]; then
+      ${pkgs.coreutils}/bin/install -m 0600 \
+        "$CREDENTIALS_DIRECTORY/chatgpt-auth.json" \
+        ${cfg.stateDir}/chatgpt/auth.json
     fi
-
-    umask 077
-    auth_tmp="${cfg.stateDir}/chatgpt/.auth.json.tmp"
-    ${pkgs.coreutils}/bin/rm -f "$auth_tmp"
-    if ${pkgs.jq}/bin/jq -e '
-      def litellm_auth:
-        {
-          access_token,
-          refresh_token,
-          id_token,
-          expires_at,
-          account_id,
-        }
-        | with_entries(select(.value != null));
-
-      if has("access_token") and has("refresh_token") then
-        litellm_auth
-      else
-        [
-          .. | objects
-          | select(has("access_token") and has("refresh_token"))
-          | litellm_auth
-        ][0]
-      end
-    ' "$CREDENTIALS_DIRECTORY/chatgpt-auth.json" > "$auth_tmp"; then
-      ${pkgs.coreutils}/bin/install -m 0600 "$auth_tmp" ${cfg.stateDir}/chatgpt/auth.json
-    fi
-    ${pkgs.coreutils}/bin/rm -f "$auth_tmp"
   '';
   chatgptModels = [
     "chatgpt/gpt-5.4"
@@ -79,7 +53,7 @@ in
       "chatgpt-auth.json:${config.sops.secrets."litellm/chatgpt-auth-json".path}"
     ];
     ExecStartPre = lib.mkAfter [
-      seedChatgptAuth
+      installChatgptAuth
     ];
   };
 
