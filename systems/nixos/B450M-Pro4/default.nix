@@ -41,7 +41,7 @@
     ../services/uptime-kuma
     ../services/netboot
     ../services/continuwuity
-    ../services/cliproxyapi
+    ../services/litellm
     ../services/birdclaw
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence

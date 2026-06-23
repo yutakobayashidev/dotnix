@@ -420,9 +420,9 @@ resource "uptimekuma_monitor_http" "nostr" {
   ]
 }
 
-resource "uptimekuma_monitor_http" "cliproxyapi" {
-  name                  = "Cliproxy API"
-  url                   = "https://cliproxy.home.yutakobayashi.com"
+resource "uptimekuma_monitor_http" "litellm" {
+  name                  = "LiteLLM"
+  url                   = "https://litellm.home.yutakobayashi.com"
   accepted_status_codes = ["200-299", "401", "404"]
   interval              = 60
   timeout               = 30

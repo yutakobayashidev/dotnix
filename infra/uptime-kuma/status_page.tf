@@ -92,7 +92,7 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
-          id       = uptimekuma_monitor_http.cliproxyapi.id
+          id       = uptimekuma_monitor_http.litellm.id
           send_url = true
         },
         {

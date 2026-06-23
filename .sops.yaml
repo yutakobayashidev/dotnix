@@ -17,6 +17,10 @@ creation_rules:
       - age:
           - *um790
           - *b450m
+  - path_regex: systems/nixos/services/litellm/auth\.json$
+    key_groups:
+      - age:
+          - *b450m
   - path_regex: systems/nixos/services/nextcloud/secrets/.*$
     key_groups:
       - age:
