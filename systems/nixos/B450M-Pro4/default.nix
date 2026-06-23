@@ -42,6 +42,7 @@
     ../services/netboot
     ../services/continuwuity
     ../services/cliproxyapi
+    ../services/birdclaw
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
     ./disko.nix

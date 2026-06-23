@@ -369,7 +369,17 @@ Personal Access Token.
 
 ## Token Expiration
 
-`ghtkn` stores tokens and expiration metadata in the OS secret manager.
+`ghtkn` stores tokens and expiration metadata in the configured backend.
+Desktop machines use the OS secret manager. `B450M-Pro4` uses the `agent`
+backend because it has no desktop keyring service; its Home Manager
+configuration is in `homes/nixos/B450M-Pro4/ghtkn-agent.nix`.
+
+After the agent starts or restarts, unlock it once:
+
+```sh
+ghtkn agent unlock
+```
+
 `ghtkn get` reuses a token while it has sufficient remaining lifetime.
 
 Require a minimum remaining lifetime for a single command:

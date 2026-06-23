@@ -1,4 +1,4 @@
-{ lib, username, ... }:
+{ username, ... }:
 
 {
   imports = [ ../common.nix ];
@@ -10,6 +10,7 @@
       ../../../modules/home/gallery-dl
       ../../../applications/whipper
       ../../../applications/beets
+      ./ghtkn-agent.nix
     ];
     my.programs.gallery-dl = {
       enable = true;
