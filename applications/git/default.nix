@@ -153,13 +153,12 @@
         name = "yutakobayashidev";
         email = "hi@yutakobayashi.com";
       };
-      credential = {
+      credential."https://github.com" = {
         helper = [
           ""
           "!${lib.getExe pkgs.ghtkn} git-credential"
         ];
         useHttpPath = true;
-        "https://git.yutakobayashi.com".helper = "osxkeychain";
       };
       push = {
         default = "simple";

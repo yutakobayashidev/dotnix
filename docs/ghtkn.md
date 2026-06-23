@@ -186,18 +186,17 @@ applications/git/default.nix
 The effective configuration is equivalent to:
 
 ```ini
-[credential]
+[credential "https://github.com"]
 	helper =
 	helper = !/nix/store/...-ghtkn/bin/ghtkn git-credential
 	useHttpPath = true
 ```
 
-The empty helper entry resets lower-priority credential helpers. This prevents
-the `gh` credential helper, macOS Keychain helper, or another inherited helper
-from taking precedence.
+The empty helper entry resets lower-priority credential helpers for GitHub
+only. Non-GitHub remotes keep the normal Git credential lookup path.
 
-`credential.useHttpPath = true` ensures that `ghtkn` receives the repository
-path as well as the hostname. This is required for owner-based App selection.
+`useHttpPath = true` ensures that `ghtkn` receives the repository path as well
+as the hostname. This is required for owner-based App selection.
 
 Do not edit `~/.gitconfig` manually. Home Manager generates it from
 `applications/git/default.nix`.
@@ -319,8 +318,8 @@ Home Manager package path and generated Git configuration are current.
 ### Verify the Git credential helper
 
 ```sh
-git config --global --get-all credential.helper
-git config --global --get credential.useHttpPath
+git config --global --get credential.https://github.com.helper
+git config --global --get credential.https://github.com.useHttpPath
 ```
 
 Expected output:
