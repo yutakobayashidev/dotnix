@@ -16,6 +16,7 @@ creation_rules:
     key_groups:
       - age:
           - *um790
+          - *b450m
   - path_regex: systems/nixos/services/nextcloud/secrets/.*$
     key_groups:
       - age:
