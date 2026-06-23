@@ -40,7 +40,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nix
@@ -67,17 +67,17 @@ jobs:
             root: infra/uptime-kuma
           - name: tailscale
             root: infra/tailscale
-    # Provide credentials needed by provider plugins during validation
     env:
-      GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
       TF_IN_AUTOMATION: 'true'
-      TF_VAR_state_encryption_passphrase: ${{ secrets.STATE_ENCRYPTION_PASSPHRASE }}
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
       - uses: ./.github/actions/setup-nix
       - name: OpenTofu validate
+        env:
+          GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+          TF_VAR_state_encryption_passphrase: ${{ secrets.STATE_ENCRYPTION_PASSPHRASE }}
         run: |
           nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init -backend=false
           nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} validate

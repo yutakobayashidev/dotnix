@@ -35,19 +35,20 @@ jobs:
       TF_IN_AUTOMATION: 'true'
     steps:
       - name: Checkout trusted setup action
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           path: trusted
           persist-credentials: false
       - name: Setup Nix
         uses: ./trusted/.github/actions/setup-nix
       - name: Checkout approved pull request revision
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.sha }}
           path: source
           persist-credentials: false
+          allow-unsafe-pr-checkout: true
       - name: Tailscale
         uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
         with:

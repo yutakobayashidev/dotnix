@@ -14,20 +14,28 @@ concurrency:
 jobs:
   rebase-prs:
     runs-on: ubuntu-24.04-arm
+    timeout-minutes: 20
+    permissions:
+      contents: read
     if: github.event_name == 'workflow_dispatch' || github.event.head_commit.committer.name == 'GitHub'
     steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
 
       - id: setup-bot
         uses: ./.github/actions/setup-git-bot
         with:
           app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
           app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: read
 
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           token: ${{ steps.setup-bot.outputs.token }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Rebase open flake update PRs
         shell: bash
@@ -38,6 +46,8 @@ jobs:
             echo "No update-flake PRs found"
             exit 0
           fi
+
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
           for BRANCH in $BRANCHES; do
             echo "--- Processing $BRANCH ---"

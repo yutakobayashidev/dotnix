@@ -359,6 +359,7 @@ runs:
         git add flake.lock
         git checkout -b "$branch"
         git commit -m "$pr_title"
+        git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
         git push --force origin "$branch"
 
         # Create or update PR

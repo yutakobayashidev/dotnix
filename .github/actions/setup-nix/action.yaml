@@ -5,14 +5,14 @@ description: Install Nix and configure caches
 runs:
   using: composite
   steps:
-    - uses: cachix/install-nix-action@2126ae7fc54c9df00dd18f7f18754393182c73cd # v31.9.1
+    - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
       with:
         github_access_token: ${{ github.token }}
-    - uses: cachix/cachix-action@3ba601ff5bbb07c7220846facfa2cd81eeee15a1 # v16
+    - uses: cachix/cachix-action@5f2d7c5294214f71b873db4b969586b980625e71 # v17
       with:
         name: numtide
         skipPush: true
     - name: Setup niks3
-      uses: Mic92/niks3-action@bc010bf9dbc79ec59de6c79b1e7a167977d3978b # v1.0.0
+      uses: Mic92/niks3-action@a3da573cc4d21634990e5f21391abe55ed49ec46 # v1.0.2
       with:
         server-url: https://niks3.yutakobayashi.com

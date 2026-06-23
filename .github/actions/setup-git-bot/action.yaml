@@ -9,6 +9,12 @@ inputs:
   app-private-key:
     description: GitHub App private key
     required: true
+  permission-contents:
+    description: contents permission for the generated token
+    required: true
+  permission-pull-requests:
+    description: pull-requests permission for the generated token
+    required: true
 
 outputs:
   token:
@@ -19,10 +25,12 @@ runs:
   using: composite
   steps:
     - id: token
-      uses: actions/create-github-app-token@bf559f85448f9380bcfa2899dbdc01eb5b37be3a # v3.0.0-beta.2
+      uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
       with:
         app-id: ${{ inputs.app-id }}
         private-key: ${{ inputs.app-private-key }}
+        permission-contents: ${{ inputs.permission-contents }}
+        permission-pull-requests: ${{ inputs.permission-pull-requests }}
 
     - shell: bash
       env:
