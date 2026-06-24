@@ -27,7 +27,7 @@ in
       };
       service = {
         DISABLE_REGISTRATION = true;
-        REQUIRE_SIGNIN_VIEW = true;
+        REQUIRE_SIGNIN_VIEW = false;
       };
       session = {
         COOKIE_SECURE = true;
