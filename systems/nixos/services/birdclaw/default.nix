@@ -1,6 +1,12 @@
-{ inputs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
+  bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
   domain = "birdclaw.home.yutakobayashi.com";
   port = 3005;
 in
@@ -14,6 +20,11 @@ in
     enable = true;
     host = "127.0.0.1";
     inherit port;
+  };
+
+  systemd.services.birdclaw.environment = {
+    BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+    TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
   };
 
   services.traefik.dynamicConfigOptions.http = {
