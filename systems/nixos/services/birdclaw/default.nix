@@ -24,6 +24,10 @@ in
 
   systemd.services.birdclaw.environment = {
     BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+    OPENAI_API_KEY = "sk-proxy";
+    OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
+    BIRDCLAW_AI_MODEL = "chatgpt/gpt-5.4";
+    BIRDCLAW_OPENAI_MODEL = "chatgpt/gpt-5.4";
     TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
   };
 
