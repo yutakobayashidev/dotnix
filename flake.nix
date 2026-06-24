@@ -171,6 +171,10 @@
       url = "github:BatteredBunny/brew-api";
       flake = false;
     };
+    bird = {
+      url = "git+https://git.yutakobayashi.com/yuta/bird";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";

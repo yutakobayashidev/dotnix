@@ -1,7 +1,13 @@
 # home-managerの共通パッケージリスト（Linux/macOS共通）
-{ pkgs, lib, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
+  bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
   immich-go = pkgs.symlinkJoin {
     name = "immich-go-no-docs";
     paths = [ pkgs.immich-go ];
@@ -23,6 +29,7 @@ in
       # Development Tools
       babashka
       before-and-after
+      bird
       bumblebee
       defuddle
       gctx

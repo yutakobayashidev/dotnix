@@ -12,8 +12,8 @@ let
       path = inputs.superpowers;
       subdir = "skills";
     };
-    twitter-api-relay = {
-      path = inputs.twitter-api-safe-relay-skills;
+    skills = {
+      path = inputs.skills;
       subdir = "skills";
     };
   };
@@ -26,9 +26,9 @@ let
         from = "superpowers";
         path = "brainstorming";
       };
-      twitter-api-relay = {
-        from = "twitter-api-relay";
-        path = "twitter-api-relay";
+      bird = {
+        from = "skills";
+        path = "bird";
       };
     };
   };
@@ -52,6 +52,10 @@ let
   credentialsDir = "/run/credentials/@system";
 in
 {
+  environment.systemPackages = [
+    inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird
+  ];
+
   networking.hosts = {
     "100.111.109.43" = [ "tw.home.yutakobayashi.com" ];
   };

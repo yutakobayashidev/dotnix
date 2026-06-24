@@ -85,6 +85,26 @@
         "type": "github"
       }
     },
+    "bird": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782284397,
+        "narHash": "sha256-dXcuvQlNlXdkpAArncEL7Kw4wBtj4MaxfXlWpBZoCEc=",
+        "ref": "refs/heads/main",
+        "rev": "ea7e5191b2bd0090b78921e9d84ef6b554bc281e",
+        "revCount": 295,
+        "type": "git",
+        "url": "https://git.yutakobayashi.com/yuta/bird"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.yutakobayashi.com/yuta/bird"
+      }
+    },
     "blueprint": {
       "inputs": {
         "nixpkgs": [
@@ -2155,6 +2175,7 @@
         "anthropic-skills": "anthropic-skills",
         "ast-grep-skill": "ast-grep-skill",
         "before-and-after-skill": "before-and-after-skill",
+        "bird": "bird",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "cmux-skills": "cmux-skills",
@@ -2362,11 +2383,11 @@
     "skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1781708464,
-        "narHash": "sha256-ibSOwnqtp/gOFbb34NQbZc3TFhOilBJRgrCqSGIsEV4=",
+        "lastModified": 1782285138,
+        "narHash": "sha256-qRdEL+03llLludhzhS+hda9bYIpxWawBXKq1YVnNx+0=",
         "owner": "yutakobayashidev",
         "repo": "skills",
-        "rev": "2443ca1eb367ff460b16b3175cdc118eb6b6adbb",
+        "rev": "b78b7d59c96473cc8909a0a6926fdf0eb0c49a53",
         "type": "github"
       },
       "original": {
