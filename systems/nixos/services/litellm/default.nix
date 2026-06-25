@@ -32,6 +32,10 @@ let
       stream ? false,
       needsMessagesEndpoint ? false,
       context ? 204800,
+      apiBase ? "https://opencode.ai/zen/go/v1/${
+        if needsMessagesEndpoint then "messages" else "chat/completions"
+      }",
+      apiKey ? "os.environ/OPENCODE_GO_KEY",
       ...
     }:
     {
@@ -41,10 +45,8 @@ let
       };
       litellm_params = {
         model = id;
-        api_base = "https://opencode.ai/zen/go/v1/${
-          if needsMessagesEndpoint then "messages" else "chat/completions"
-        }";
-        api_key = "os.environ/OPENCODE_GO_KEY";
+        api_base = apiBase;
+        api_key = apiKey;
         drop_params = true;
         inherit stream;
       };
@@ -179,7 +181,34 @@ in
           litellm_params.model = model;
         }) chatgptModels)
         ++ opencodeModels;
-      litellm_settings.drop_params = true;
+      litellm_settings = {
+        num_retries = 1;
+        drop_params = true;
+        fallbacks = [
+          {
+            deepseek-analyst = [
+              "deepseek-v4-flash"
+              "chatgpt/gpt-5.4"
+            ];
+          }
+          {
+            deepseek-inbox = [
+              "deepseek-v4-pro"
+              "chatgpt/gpt-5.4-pro"
+            ];
+          }
+        ];
+        default_fallbacks = [
+          "deepseek-v4-flash"
+          "chatgpt/gpt-5.4"
+        ];
+      };
+      router_settings = {
+        model_group_alias = {
+          "deepseek-analyst" = "deepseek-v4-pro";
+          "deepseek-inbox" = "deepseek-v4-flash";
+        };
+      };
       general_settings.master_key = "sk-proxy";
     };
   };
