@@ -35,12 +35,12 @@ infra/oci/nix-builder/*.tfvars
 infra/oci/nix-builder/oci_secrets.yaml
 
 # Generated agent skill deployments
-**/.agent/skills/
-**/.agents/skills/
-**/.claude/skills/
-**/.codex/skills/
-**/.cursor/skills/
-**/.gemini/skills/
-**/.github/skills/
-**/.opencode/skills/
-**/.windsurf/skills/
+.agent/skills/
+.agents/skills/
+.claude/
+.codex/skills/
+.cursor/skills/
+.gemini/skills/
+.github/skills/
+.opencode/skills/
+.windsurf/skills/
