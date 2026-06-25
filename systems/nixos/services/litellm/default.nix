@@ -199,6 +199,7 @@ in
           }
         ];
         default_fallbacks = [
+          "deepseek-v4-pro"
           "deepseek-v4-flash"
           "chatgpt/gpt-5.4"
         ];
