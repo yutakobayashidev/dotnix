@@ -141,13 +141,15 @@ let
     # DeepSeek
     (mkModel {
       name = "deepseek-v4-pro";
-      id = "openai/deepseek-v4-pro";
+      id = "deepseek/deepseek-v4-pro";
+      apiBase = "https://opencode.ai/zen/go/v1";
       context = 1048576;
       supportsReasoning = true;
     })
     (mkModel {
       name = "deepseek-v4-flash";
-      id = "openai/deepseek-v4-flash";
+      id = "deepseek/deepseek-v4-flash";
+      apiBase = "https://opencode.ai/zen/go/v1";
       context = 1048576;
       supportsReasoning = true;
     })
