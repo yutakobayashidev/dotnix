@@ -98,6 +98,11 @@ export async function fetchBookmarksPage(
 	});
 	const response = await fetch(
 		`${PROXY_URL}/i/api/graphql/${BOOKMARKS_QUERY_ID}/Bookmarks?${params}`,
+		{
+			headers: {
+				'x-profile-name': 'account2',
+			},
+		},
 	);
 	const data = (await response.json()) as {
 		data: { bookmark_timeline_v2: { timeline: Record<string, unknown> } };
