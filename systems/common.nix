@@ -7,6 +7,8 @@
 
   my.nix.enable = true;
 
+  environment.variables.BIRD_PROFILE_NAME = "account1";
+
   system.activationScripts.extraActivation.text = ''
     profiles=$(find /nix/var/nix/profiles/system-*-link 2>/dev/null | tail -2)
     profile_count=$(echo "$profiles" | wc -l)

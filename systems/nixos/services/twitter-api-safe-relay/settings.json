@@ -7,7 +7,15 @@
 			"browser": {
 				"type": "cdp",
 				"browserType": "chromium",
-				"cdpEndpoint": "http://127.0.0.1:9222"
+				"cdpEndpoint": "http://kasmweb:9222"
+			}
+		},
+		{
+			"name": "account2",
+			"browser": {
+				"type": "cdp",
+				"browserType": "chromium",
+				"cdpEndpoint": "http://kasmweb-account2:9222"
 			}
 		}
 	]
