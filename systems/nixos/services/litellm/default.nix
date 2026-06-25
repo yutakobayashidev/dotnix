@@ -32,6 +32,7 @@ let
       stream ? false,
       needsMessagesEndpoint ? false,
       context ? 204800,
+      supportsReasoning ? false,
       apiBase ? "https://opencode.ai/zen/go/v1/${
         if needsMessagesEndpoint then "messages" else "chat/completions"
       }",
@@ -41,7 +42,8 @@ let
     {
       model_name = name;
       model_info = {
-        context = context;
+        inherit context;
+        inherit supportsReasoning;
       };
       litellm_params = {
         model = id;
@@ -139,13 +141,15 @@ let
     # DeepSeek
     (mkModel {
       name = "deepseek-v4-pro";
-      id = "deepseek/deepseek-v4-pro";
+      id = "openai/deepseek-v4-pro";
       context = 1048576;
+      supportsReasoning = true;
     })
     (mkModel {
       name = "deepseek-v4-flash";
-      id = "deepseek/deepseek-v4-flash";
+      id = "openai/deepseek-v4-flash";
       context = 1048576;
+      supportsReasoning = true;
     })
     # HY3
     (mkModel {
@@ -155,18 +159,20 @@ let
   ];
 in
 {
-  sops.secrets."litellm/chatgpt-auth-json" = {
-    sopsFile = ./auth.json;
-    format = "binary";
-  };
-  sops.secrets."litellm/opencode-go-key" = {
-    sopsFile = ./secrets.yaml;
-  };
-  sops.templates."litellm.env" = {
-    content = ''
-      OPENCODE_GO_KEY=${config.sops.placeholder."litellm/opencode-go-key"}
-    '';
-    mode = "0400";
+  sops = {
+    secrets."litellm/chatgpt-auth-json" = {
+      sopsFile = ./auth.json;
+      format = "binary";
+    };
+    secrets."litellm/opencode-go-key" = {
+      sopsFile = ./secrets.yaml;
+    };
+    templates."litellm.env" = {
+      content = ''
+        OPENCODE_GO_KEY=${config.sops.placeholder."litellm/opencode-go-key"}
+      '';
+      mode = "0400";
+    };
   };
 
   services.litellm = {
@@ -184,6 +190,7 @@ in
       litellm_settings = {
         num_retries = 1;
         drop_params = true;
+        reasoning_auto_summary = true;
         fallbacks = [
           {
             deepseek-analyst = [

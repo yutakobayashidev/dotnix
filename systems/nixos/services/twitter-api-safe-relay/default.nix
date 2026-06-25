@@ -12,7 +12,7 @@ let
   ];
 
   accountConfigs = lib.imap0 (index: name: {
-    name = name;
+    inherit name;
     containerName = if index == 0 then "kasmweb" else "kasmweb-${name}";
     cdpContainerName = if index == 0 then "kasmweb-cdp" else "kasmweb-${name}-cdp";
     profileDir = "${baseProfileDir}/${name}";
