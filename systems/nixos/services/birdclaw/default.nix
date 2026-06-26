@@ -49,6 +49,8 @@ in
     };
   };
 
+  environment.systemPackages = [ bird ];
+
   systemd.user.services = {
     birdclaw.environment = {
       BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
@@ -62,13 +64,11 @@ in
     birdclaw-account-sync.environment = {
       BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
       TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
-      PATH = lib.mkForce "${bird}/bin";
     };
 
     birdclaw-bookmark-sync.environment = {
       BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
       TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
-      PATH = lib.mkForce "${bird}/bin";
     };
   };
 
