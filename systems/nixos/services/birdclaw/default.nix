@@ -20,16 +20,11 @@ in
     owner = "yuta";
   };
 
-  sops.templates."birdclaw-discord.env".content = ''
-    BIRDCLAW_DISCORD_WEBHOOK_URL=${config.sops.placeholder."birdclaw-discord-webhook-url"}
-  '';
-
   services.birdclaw = {
     enable = true;
     host = "127.0.0.1";
     inherit port;
     allowRemoteWeb = true;
-    environmentFiles = [ config.sops.templates."birdclaw-discord.env".path ];
 
     config = {
       mentions = {
@@ -93,6 +88,7 @@ in
       OPENAI_API_KEY = "sk-proxy";
       OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
       BIRDCLAW_AI_MODEL = "deepseek-analyst";
+      BIRDCLAW_DISCORD_WEBHOOK_URL = config.sops.placeholder."birdclaw-discord-webhook-url";
     };
   };
 
