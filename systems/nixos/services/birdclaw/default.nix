@@ -18,6 +18,14 @@ in
   sops.secrets."birdclaw-discord-webhook-url" = {
     sopsFile = ../../B450M-Pro4/secrets.yaml;
     owner = "yuta";
+    mode = "0600";
+  };
+
+  sops.templates."birdclaw-discord.env" = {
+    content = ''
+      BIRDCLAW_DISCORD_WEBHOOK_URL=${config.sops.placeholder."birdclaw-discord-webhook-url"}
+    '';
+    mode = "0600";
   };
 
   services.birdclaw = {
@@ -25,6 +33,7 @@ in
     host = "127.0.0.1";
     inherit port;
     allowRemoteWeb = true;
+    environmentFiles = [ config.sops.templates."birdclaw-discord.env".path ];
 
     config = {
       mentions = {
@@ -88,7 +97,6 @@ in
       OPENAI_API_KEY = "sk-proxy";
       OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
       BIRDCLAW_AI_MODEL = "deepseek-analyst";
-      BIRDCLAW_DISCORD_WEBHOOK_URL = config.sops.placeholder."birdclaw-discord-webhook-url";
     };
   };
 
