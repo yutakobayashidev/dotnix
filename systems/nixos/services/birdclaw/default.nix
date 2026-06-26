@@ -26,26 +26,27 @@ in
       };
     };
 
-    jobs = {
-      accountSync = {
-        enable = true;
-        account = "acct_openclaw";
-        intervalSeconds = 1800;
-        steps = [
-          "timeline"
-          "mentions"
-          "likes"
-        ];
-        maxPages = 3;
-      };
-
-      bookmarkSync = {
-        enable = true;
-        intervalSeconds = 10800;
-        mode = "auto";
-        maxPages = 5;
-      };
-    };
+    # TODO: enable after initial account registration
+    # jobs = {
+    #   accountSync = {
+    #     enable = true;
+    #     account = "acct_openclaw";
+    #     intervalSeconds = 1800;
+    #     steps = [
+    #       "timeline"
+    #       "mentions"
+    #       "likes"
+    #     ];
+    #     maxPages = 3;
+    #   };
+    #
+    #   bookmarkSync = {
+    #     enable = true;
+    #     intervalSeconds = 10800;
+    #     mode = "auto";
+    #     maxPages = 5;
+    #   };
+    # };
   };
 
   systemd.user.services.birdclaw.environment = {
