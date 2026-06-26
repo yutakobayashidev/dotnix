@@ -48,13 +48,27 @@ in
     };
   };
 
-  systemd.user.services.birdclaw.environment = {
-    BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
-    OPENAI_API_KEY = "sk-proxy";
-    OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
-    BIRDCLAW_AI_MODEL = "deepseek-analyst";
-    BIRDCLAW_OPENAI_MODEL = "deepseek-inbox";
-    TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+  systemd.user.services = {
+    birdclaw.environment = {
+      BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+      OPENAI_API_KEY = "sk-proxy";
+      OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
+      BIRDCLAW_AI_MODEL = "deepseek-analyst";
+      BIRDCLAW_OPENAI_MODEL = "deepseek-inbox";
+      TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+    };
+
+    birdclaw-account-sync.environment = {
+      BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+      TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+      PATH = "${lib.getBin bird}/bin";
+    };
+
+    birdclaw-bookmark-sync.environment = {
+      BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+      TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+      PATH = "${lib.getBin bird}/bin";
+    };
   };
 
   services.traefik.dynamicConfigOptions.http = {
