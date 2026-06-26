@@ -23,6 +23,7 @@ in
     config = {
       mentions = {
         dataSource = "bird";
+        birdCommand = lib.getExe bird;
       };
     };
 
@@ -47,8 +48,6 @@ in
       };
     };
   };
-
-  environment.systemPackages = [ bird ];
 
   systemd.user.services = {
     birdclaw.environment = {
