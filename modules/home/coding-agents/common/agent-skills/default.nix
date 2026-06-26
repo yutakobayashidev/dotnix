@@ -90,9 +90,6 @@ in
 
       skills.enableAll = [
         "local"
-        "cloudflare"
-        "hashicorp"
-        "aws"
         "obsidian"
         "repiq"
         "difit"
@@ -253,9 +250,14 @@ in
           path = "prompt-review";
         };
 
-        grill-me = {
+        grilling = {
           from = "mattpocock";
-          path = "productivity/grill-me";
+          path = "productivity/grilling";
+        };
+
+        loop-me = {
+          from = "mattpocock";
+          path = "in-progress/loop-me";
         };
       };
 
