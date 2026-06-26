@@ -24,7 +24,7 @@ let
     pname = "twitter-bookmark-snap";
     version = "0.0.1";
     src = ./bookmark-snap;
-    npmDepsHash = "sha256-6SWm/yoihgX6STzNd+4sazIibpn8qYlO9ll4bFohkUg=";
+    npmDepsHash = "sha256-H2WmmgdWRdVx6fOrTjDtXB8btkAxSsj/pTIu0N66JfQ=";
     PUPPETEER_SKIP_DOWNLOAD = true;
     dontNpmBuild = true;
 

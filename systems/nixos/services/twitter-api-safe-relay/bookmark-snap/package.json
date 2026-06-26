@@ -7,6 +7,7 @@
 		"start": "tsx src/index.ts"
 	},
 	"dependencies": {
+		"@yuta/bird": "^0.9.0",
 		"twitter-snap": "^0.0.81"
 	},
 	"devDependencies": {

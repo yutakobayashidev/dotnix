@@ -24,6 +24,7 @@
             excludes = [
               "nvim/template/**"
               "nvim/lazy-lock.json"
+              "**/.npmrc"
             ];
           };
         };
