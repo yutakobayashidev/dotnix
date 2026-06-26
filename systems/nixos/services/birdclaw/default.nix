@@ -26,13 +26,13 @@ in
     host = "127.0.0.1";
     inherit port;
     allowRemoteWeb = true;
+    environmentFiles = [ config.sops.secrets."birdclaw-discord-webhook-url".path ];
 
     config = {
       mentions = {
         dataSource = "bird";
         birdCommand = lib.getExe bird;
       };
-      discord.webhookUrl = config.sops.placeholder."birdclaw-discord-webhook-url";
     };
 
     jobs = {
