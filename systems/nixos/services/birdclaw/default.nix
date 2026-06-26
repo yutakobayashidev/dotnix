@@ -17,6 +17,7 @@ in
 
   sops.secrets."birdclaw-discord-webhook-url" = {
     sopsFile = ../../B450M-Pro4/secrets.yaml;
+    owner = "yuta";
   };
 
   sops.templates."birdclaw-discord.env".content = ''
