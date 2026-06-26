@@ -49,8 +49,6 @@ in
     };
   };
 
-  environment.systemPackages = [ bird ];
-
   systemd.user.services = {
     birdclaw.environment = {
       BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
