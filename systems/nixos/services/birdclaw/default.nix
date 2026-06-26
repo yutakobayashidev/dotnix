@@ -29,7 +29,7 @@ in
     jobs = {
       accountSync = {
         enable = true;
-        account = "acct_openclaw";
+        account = "acct_primary";
         intervalSeconds = 1800;
         steps = [
           "timeline"
