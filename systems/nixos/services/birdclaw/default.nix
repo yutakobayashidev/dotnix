@@ -31,7 +31,7 @@ in
       accountSync = {
         enable = true;
         account = "acct_primary";
-        intervalSeconds = 1800;
+        intervalSeconds = 900;
         steps = [
           "timeline"
           "mentions"
