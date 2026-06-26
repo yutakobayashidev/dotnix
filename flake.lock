@@ -112,11 +112,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782466145,
-        "narHash": "sha256-yYKNnrL1c3ITWlANxckFZL5Aq/KNIo5sLdegv/2kLb0=",
+        "lastModified": 1782467276,
+        "narHash": "sha256-lF3Kl5k/5rEGRuWx2+9jOqZmvnNbFbGDmbb4cn7QXkY=",
         "owner": "yutakobayashidev",
         "repo": "birdclaw",
-        "rev": "501f9d41b9acd79837b0ef8a994d732098a8b2c8",
+        "rev": "b8482e75adc1f25a188d0fb30dda8e37df8f5b49",
         "type": "github"
       },
       "original": {
