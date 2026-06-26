@@ -1,4 +1,7 @@
+import { existsSync } from 'node:fs';
+
 const PROXY_URL = 'https://tw.home.yutakobayashi.com';
+const CONSECUTIVE_EXISTING_THRESHOLD = 5;
 const BOOKMARKS_QUERY_ID = 'R5wixmhMi4oEBUYvBM-44g';
 
 const FEATURES = {
@@ -135,21 +138,36 @@ async function randomSleep(minMs: number, maxMs: number): Promise<void> {
 	await new Promise((resolve) => setTimeout(resolve, delay));
 }
 
-export async function fetchAllBookmarks(limit?: number): Promise<BookmarkTweet[]> {
+export async function fetchAllBookmarks(
+	outputDir: string,
+	limit?: number,
+): Promise<BookmarkTweet[]> {
 	const all: BookmarkTweet[] = [];
 	let cursor: string | null = null;
 	let page = 0;
+	let consecutiveExisting = 0;
 	while (true) {
 		page++;
 		const result = await fetchBookmarksPage(cursor, 20);
 		for (const tweet of result.tweets) {
+			if (existsSync(`${outputDir}/${tweet.id}.png`)) {
+				consecutiveExisting++;
+				if (consecutiveExisting >= CONSECUTIVE_EXISTING_THRESHOLD) {
+					console.log(
+						`[page ${page}] ${consecutiveExisting} consecutive existing tweets, stopping fetch`,
+					);
+					return all;
+				}
+				continue;
+			}
+			consecutiveExisting = 0;
 			all.push(tweet);
-			if (limit && all.length >= limit) return all.slice(0, limit);
+			if (limit && all.length >= limit) return all;
 		}
-		console.log(`[page ${page}] fetched ${result.tweets.length} tweets (total: ${all.length})`);
+		console.log(`[page ${page}] fetched ${result.tweets.length} tweets (new: ${all.length})`);
 		if (!result.cursor || result.tweets.length === 0) break;
 		cursor = result.cursor;
 		await randomSleep(2000, 5000);
 	}
-	return limit ? all.slice(0, limit) : all;
+	return all;
 }

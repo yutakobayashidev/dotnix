@@ -1,4 +1,3 @@
-import { existsSync } from 'node:fs';
 import { fetchAllBookmarks } from './bookmarks.js';
 import { renderTweet } from './render.js';
 import type { BookmarkTweet } from './bookmarks.js';
@@ -43,8 +42,8 @@ async function main(): Promise<void> {
 	const { limit, outputDir } = parseArgs();
 
 	console.log('Fetching bookmarks via proxy...');
-	const tweets = await fetchAllBookmarks(limit);
-	console.log(`Fetched ${tweets.length} bookmarks`);
+	const tweets = await fetchAllBookmarks(outputDir, limit);
+	console.log(`Fetched ${tweets.length} new bookmarks`);
 
 	const rendered: Array<{ tweetId: string; filePath: string }> = [];
 	for (const tweet of tweets) {
@@ -52,9 +51,7 @@ async function main(): Promise<void> {
 			console.log(`Skipping invalid tweet: ${tweet.url}`);
 			continue;
 		}
-		const filePath = `${outputDir}/${tweet.id}.png`;
-		const skip = existsSync(filePath);
-		console.log(`${skip ? 'Skipping' : 'Rendering'}: ${tweet.id} (${tweet.name})`);
+		console.log(`Rendering: ${tweet.id} (${tweet.name})`);
 		try {
 			const result = await renderTweet(tweet.id, outputDir);
 			rendered.push(result);

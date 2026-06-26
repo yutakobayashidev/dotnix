@@ -1,4 +1,3 @@
-import { existsSync } from 'node:fs';
 import { getSnapAppRenderWithCache } from 'twitter-snap';
 
 export interface RenderResult {
@@ -10,7 +9,6 @@ const snap = getSnapAppRenderWithCache({});
 
 export async function renderTweet(tweetId: string, outputDir: string): Promise<RenderResult> {
 	const filePath = `${outputDir}/${tweetId}.png`;
-	if (existsSync(filePath)) return { tweetId, filePath };
 	const result = await snap({
 		url: `https://x.com/i/status/${tweetId}`,
 		callback: async (run) => {
