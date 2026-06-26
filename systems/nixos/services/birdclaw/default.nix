@@ -21,25 +21,18 @@ in
     mode = "0600";
   };
 
-  sops.templates."birdclaw-discord.env" = {
-    content = ''
-      BIRDCLAW_DISCORD_WEBHOOK_URL=${config.sops.placeholder."birdclaw-discord-webhook-url"}
-    '';
-    mode = "0600";
-  };
-
   services.birdclaw = {
     enable = true;
     host = "127.0.0.1";
     inherit port;
     allowRemoteWeb = true;
-    environmentFiles = [ config.sops.templates."birdclaw-discord.env".path ];
 
     config = {
       mentions = {
         dataSource = "bird";
         birdCommand = lib.getExe bird;
       };
+      discord.webhookUrl = config.sops.placeholder."birdclaw-discord-webhook-url";
     };
 
     jobs = {
