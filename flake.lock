@@ -2717,11 +2717,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782153048,
-        "narHash": "sha256-cIrAdZ5TZHbh85V68ltHbcEEXMR2t0JGHBWN8bcPXnQ=",
+        "lastModified": 1782158023,
+        "narHash": "sha256-U1eWzr6/7lh7/v016NBvCF7IR4vmv6HnO15NS3fmKKQ=",
         "owner": "yutakobayashidev",
         "repo": "webhashtag-rust-server",
-        "rev": "b0acdc1bafbfe5d0796216c003e986baf4bac1a6",
+        "rev": "73f7401dff6758aa88f2c73d6cf66ec3208b413d",
         "type": "github"
       },
       "original": {
