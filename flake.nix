@@ -175,6 +175,10 @@
       url = "git+https://git.yutakobayashi.com/yuta/bird";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    birdclaw = {
+      url = "github:yutakobayashidev/birdclaw";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";

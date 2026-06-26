@@ -105,6 +105,26 @@
         "url": "https://git.yutakobayashi.com/yuta/bird"
       }
     },
+    "birdclaw": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782460444,
+        "narHash": "sha256-VyQN0ShdNHZk4YV3AlXsGv2p3ihS+tdou9V/TFWC0jc=",
+        "owner": "yutakobayashidev",
+        "repo": "birdclaw",
+        "rev": "368ea75485b2e0e81ac171812da92b7f228d90bb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "birdclaw",
+        "type": "github"
+      }
+    },
     "blueprint": {
       "inputs": {
         "nixpkgs": [
@@ -2176,6 +2196,7 @@
         "ast-grep-skill": "ast-grep-skill",
         "before-and-after-skill": "before-and-after-skill",
         "bird": "bird",
+        "birdclaw": "birdclaw",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "cmux-skills": "cmux-skills",

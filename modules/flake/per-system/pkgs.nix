@@ -37,6 +37,7 @@ let
         inputs.rustowl-flake.overlays.default
         inputs.firefox-addons.overlays.default
         inputs.nur-packages.overlays.default
+        inputs.birdclaw.overlays.default
         inputs.nix-topology.overlays.default
         (import ../../../overlays/default.nix)
       ]
