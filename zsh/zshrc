@@ -51,6 +51,13 @@ nix() {
   return $exit_code
 }
 
+npx() {
+  local cutoff
+  cutoff=$(date -I -d '-2 days')
+
+  nix shell nixpkgs#nodejs --command npx --before="$cutoff" "$@"
+}
+
 direnv() {
   command direnv "$@"
   local exit_code=$?
