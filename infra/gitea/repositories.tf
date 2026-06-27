@@ -13,3 +13,19 @@ resource "gitea_repository" "course_cli" {
   private     = true
   auto_init   = false
 }
+
+resource "gitea_repository" "twitter_archive" {
+  username    = "yuta"
+  name        = "twitter-archive"
+  description = "Twitter archive"
+  private     = true
+  auto_init   = false
+}
+
+resource "gitea_repository" "discord_archive" {
+  username    = "yuta"
+  name        = "discord-archive"
+  description = "Discord archive"
+  private     = true
+  auto_init   = false
+}
