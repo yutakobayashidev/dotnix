@@ -9,6 +9,12 @@ let
   cfg = config.my.programs.agent-skills;
   agentLib = inputs.agent-skills.lib.agent-skills;
 
+  agentScriptsSrc = builtins.path {
+    path = inputs.agent-scripts;
+    name = "agent-scripts-no-symlinks";
+    filter = _path: type: type != "symlink";
+  };
+
   sofaSkillSrc = pkgs.runCommand "sofa-skill-src" { } ''
     mkdir "$out"
     cp ${
@@ -67,8 +73,9 @@ in
           subdir = "skills";
         };
         agent-scripts = {
-          path = inputs.agent-scripts;
+          path = agentScriptsSrc;
           subdir = "skills";
+          idPrefix = "agent-scripts";
         };
         before-and-after = {
           path = inputs.before-and-after-skill;
