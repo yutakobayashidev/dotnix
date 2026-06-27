@@ -79,6 +79,12 @@ in
         tag = "ro-store";
         proto = "virtiofs";
       }
+      {
+        source = "/home/yuta/ghq/git.yutakobayashi.com/yuta/llm-wiki";
+        mountPoint = "/var/lib/hermes/workspace/llm-wiki";
+        tag = "llm-wiki";
+        proto = "virtiofs";
+      }
     ];
 
     volumes = [
@@ -104,6 +110,8 @@ in
       };
     };
   };
+
+  users.users.hermes.uid = 1000;
 
   systemd.services.hermes-agent-secrets-seed = {
     description = "Seed hermes-agent config and secrets from systemd credentials";
