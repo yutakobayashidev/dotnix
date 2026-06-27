@@ -61,8 +61,7 @@
       microvm.credentialFiles = {
         "hermes-agent.env" = config.sops.templates."hermes-agent.env".path;
         "hermes-agent.auth.json" = config.sops.secrets."hermes-agent/auth-json".path;
-        "hermes-agent.discrawl-archive-ssh-key" =
-          config.sops.secrets."hermes-agent/discrawl-archive-ssh-key".path;
+        "discrawl.key" = config.sops.secrets."hermes-agent/discrawl-archive-ssh-key".path;
       };
     };
   };

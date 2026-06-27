@@ -247,7 +247,7 @@ in
         ${credentialsDir}/hermes-agent.env /var/lib/hermes/.hermes/.env
 
       install -o hermes -g hermes -m 0600 \
-        ${credentialsDir}/hermes-agent.discrawl-archive-ssh-key \
+        ${credentialsDir}/discrawl.key \
         /var/lib/hermes/.ssh/discrawl_archive_ed25519
 
       install -o hermes -g hermes -m 0644 \
