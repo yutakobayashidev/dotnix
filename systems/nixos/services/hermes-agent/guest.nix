@@ -216,7 +216,13 @@ in
     };
   };
 
-  users.users.hermes.uid = 1000;
+  users.users = {
+    hermes.uid = 1000;
+
+    root.openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINBHugSM9g92mo7bMp4jE2P9TLddbzqhyvRJ9qy/ZkUR hermes microvm root temporary key; rotate to yubikey"
+    ];
+  };
 
   systemd.services.hermes-agent-secrets-seed = {
     description = "Seed hermes-agent config and secrets from systemd credentials";
