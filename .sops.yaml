@@ -63,6 +63,10 @@ creation_rules:
     key_groups:
       - age:
           - *b450m
+  - path_regex: applications/discrawl/secrets\.yaml$
+    key_groups:
+      - age:
+          - *b450m
   - path_regex: systems/nixos/services/niks3/secrets\.yaml$
     key_groups:
       - age:

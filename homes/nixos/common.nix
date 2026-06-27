@@ -40,6 +40,7 @@ in
       {
         imports = [
           ../common.nix
+          ../../applications/discrawl
           ../../modules/profiles/home/base.nix
         ];
         sops.age.keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
