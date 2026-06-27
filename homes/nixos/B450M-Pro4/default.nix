@@ -1,4 +1,4 @@
-{ username, ... }:
+{ username, pkgs, ... }:
 
 {
   imports = [ ../common.nix ];
@@ -12,6 +12,7 @@
       ../../../applications/beets
       ./ghtkn-agent.nix
     ];
+    home.packages = [ pkgs.discrawl ];
     my.programs.gallery-dl = {
       enable = true;
       archivePath = "/srv/bulk/gallery-dl";

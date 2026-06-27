@@ -1528,21 +1528,23 @@
         "type": "github"
       }
     },
-    "nix-steipete-tools": {
+    "nix-openclaw-tools_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1781559572,
-        "narHash": "sha256-AGobEnygen66qSRixqtRHYrK9gvS+abvHxhA30Tr+V0=",
+        "lastModified": 1782460802,
+        "narHash": "sha256-IKFeZj/Pq9OxRI7X/+RN8+JPs6XR+0+k4ipo4iDVvP8=",
         "owner": "openclaw",
-        "repo": "nix-steipete-tools",
-        "rev": "7e04ca1a4d721843007ad7150918199d64a64bb0",
+        "repo": "nix-openclaw-tools",
+        "rev": "1b72ee508cf4ab84727890cea91df2dc8dad0d5c",
         "type": "github"
       },
       "original": {
         "owner": "openclaw",
-        "repo": "nix-steipete-tools",
+        "repo": "nix-openclaw-tools",
         "type": "github"
       }
     },
@@ -2227,7 +2229,7 @@
         "nix-index-database": "nix-index-database",
         "nix-on-droid": "nix-on-droid",
         "nix-openclaw": "nix-openclaw",
-        "nix-steipete-tools": "nix-steipete-tools",
+        "nix-openclaw-tools": "nix-openclaw-tools_2",
         "nix-topology": "nix-topology",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",

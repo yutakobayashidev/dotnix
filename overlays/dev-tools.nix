@@ -4,7 +4,8 @@ let
   inherit (prev.stdenv.hostPlatform) system;
 in
 {
-  gogcli = prev._nix-steipete-tools.packages.${system}.gogcli;
+  gogcli = prev._nix-openclaw-tools.packages.${system}.gogcli;
+  discrawl = prev._nix-openclaw-tools.packages.${system}.discrawl;
   version-lsp =
     let
       version = "0.5.1";

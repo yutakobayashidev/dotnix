@@ -32,6 +32,7 @@ in
       bird
       bumblebee
       defuddle
+      discrawl
       gctx
       vulnix
       gogcli
