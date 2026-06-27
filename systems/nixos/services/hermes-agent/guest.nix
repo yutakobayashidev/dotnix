@@ -164,6 +164,8 @@ in
     vcpu = 2;
     mem = 4096;
 
+    vsock.cid = 48;
+
     interfaces = [
       {
         type = "user";
