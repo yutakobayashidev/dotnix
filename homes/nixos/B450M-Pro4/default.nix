@@ -39,6 +39,10 @@
         startAt = "daily";
       };
     };
+    my.programs.discrawl = {
+      sopsFile = ../../../modules/home/discrawl/secrets.yaml;
+      systemd.enable = true;
+    };
     systemd.user.services.oci-retry = {
       Unit = {
         Description = "OCI nix-builder retry loop";
