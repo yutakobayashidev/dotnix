@@ -20,6 +20,10 @@ let
       path = inputs.obsidian-skills;
       subdir = "skills";
     };
+    openclaw-skills = {
+      path = inputs.openclaw;
+      subdir = ".agents/skills";
+    };
   };
   hermesSkillsCatalog = agentSkillsLib.discoverCatalog hermesSkillsSources;
   hermesSkillsSelection = agentSkillsLib.selectSkills {
@@ -37,6 +41,10 @@ let
       defuddle = {
         from = "obsidian-skills";
         path = "defuddle";
+      };
+      discrawl = {
+        from = "openclaw-skills";
+        path = "discrawl";
       };
     };
   };
