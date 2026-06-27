@@ -55,6 +55,7 @@ in
   environment.systemPackages = [
     inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird
     pkgs.defuddle
+    pkgs.discrawl
   ];
 
   networking.hosts = {
