@@ -134,7 +134,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 
 ## Managed Tools
 
-- **AI Development**: claude-code, codex, grok, opencode, ccusage
+- **AI Development**: claude-code, codex, grok, opencode, pi, ccusage
 - **Version Control**: git, lazygit, jujutsu (jj), git-lfs, git-wt
 - **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, tmux
 - **Communication**: halloy (IRC)

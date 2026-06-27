@@ -12,6 +12,7 @@
     ../../home/coding-agents/cursor-agent
     ../../home/coding-agents/grok
     ../../home/coding-agents/opencode
+    ../../home/coding-agents/pi
     ../../home/coding-agents/spec-kit
     ../../../applications/gh
     ../../../applications/jj
@@ -28,6 +29,7 @@
     cursor-agent.enable = true;
     grok.enable = true;
     opencode.enable = true;
+    pi.enable = true;
     spec-kit.enable = true;
   };
 }
