@@ -88,6 +88,10 @@
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    agent-scripts = {
+      url = "github:steipete/agent-scripts";
+      flake = false;
+    };
     superpowers = {
       url = "github:obra/superpowers";
       flake = false;

@@ -16,6 +16,22 @@
         "type": "github"
       }
     },
+    "agent-scripts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782102916,
+        "narHash": "sha256-vPahBf7iZVbLG5PBTV6nysZZhn+dM9e1754b9gn5Gfw=",
+        "owner": "steipete",
+        "repo": "agent-scripts",
+        "rev": "ea989d661163e16a141b1765e4743909fe2a290b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "steipete",
+        "repo": "agent-scripts",
+        "type": "github"
+      }
+    },
     "agent-skills": {
       "inputs": {
         "home-manager": "home-manager",
@@ -2177,6 +2193,7 @@
     "root": {
       "inputs": {
         "agent-browser-skill": "agent-browser-skill",
+        "agent-scripts": "agent-scripts",
         "agent-skills": "agent-skills",
         "anthropic-skills": "anthropic-skills",
         "ast-grep-skill": "ast-grep-skill",

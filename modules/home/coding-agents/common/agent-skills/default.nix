@@ -66,6 +66,10 @@ in
           path = inputs.agent-browser-skill;
           subdir = "skills";
         };
+        agent-scripts = {
+          path = inputs.agent-scripts;
+          subdir = "skills";
+        };
         before-and-after = {
           path = inputs.before-and-after-skill;
           subdir = "skill";
@@ -181,6 +185,16 @@ in
                 ]
                 original;
           };
+
+        create-cli = {
+          from = "agent-scripts";
+          path = "create-cli";
+        };
+
+        skill-cleaner = {
+          from = "agent-scripts";
+          path = "skill-cleaner";
+        };
 
         ast-grep =
           let
