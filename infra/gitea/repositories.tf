@@ -30,6 +30,13 @@ resource "gitea_repository" "discord_archive" {
   auto_init   = false
 }
 
+resource "gitea_repository_key" "discord_archive_hermes_discrawl" {
+  repository = gitea_repository.discord_archive.id
+  title      = "hermes-discrawl-archive-readonly"
+  key        = file("${path.module}/deploy-keys/hermes-discrawl-archive.pub")
+  read_only  = true
+}
+
 resource "gitea_repository" "llm_wiki" {
   username    = "yuta"
   name        = "llm-wiki"

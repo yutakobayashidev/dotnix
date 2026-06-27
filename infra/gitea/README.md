@@ -10,6 +10,10 @@ configuration.
 This route exposes HTTPS only. SSH clone requires a separate Cloudflare Tunnel
 hostname and client configuration.
 
+Repository-scoped read-only access should use deploy keys. Commit only the
+public key under `deploy-keys/`; keep the private key in the consumer's secret
+store such as sops. Do not put deploy-key private keys in OpenTofu state.
+
 Create an API token in Gitea with these permissions:
 
 - `repository`: Read and Write

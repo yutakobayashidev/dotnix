@@ -7,6 +7,86 @@
 }:
 let
   agentSkillsLib = inputs.agent-skills.lib.agent-skills;
+  tomlFormat = pkgs.formats.toml { };
+  discrawlConfigFile = tomlFormat.generate "discrawl-config.toml" {
+    version = 1;
+    default_guild_id = "895564066922328094";
+    guild_ids = [ "895564066922328094" ];
+    db_path = "/var/lib/hermes/.local/share/discrawl/discrawl.db";
+    cache_dir = "/var/lib/hermes/.cache/discrawl";
+    log_dir = "/var/lib/hermes/.local/state/discrawl/logs";
+
+    discord = {
+      token_source = "none";
+      token_env = "DISCORD_BOT_TOKEN";
+      token_keyring_service = "discrawl";
+      token_keyring_account = "discord_bot_token";
+    };
+
+    desktop = {
+      path = "/var/lib/hermes/.config/discord";
+      max_file_bytes = 67108864;
+      full_cache = false;
+    };
+
+    sync = {
+      source = "both";
+      concurrency = 32;
+      repair_every = "6h";
+      full_history = true;
+      attachment_text = true;
+      attachment_media = false;
+      max_attachment_bytes = 104857600;
+    };
+
+    search = {
+      default_mode = "fts";
+
+      embeddings = {
+        enabled = false;
+        provider = "openai";
+        model = "text-embedding-3-small";
+        base_url = "";
+        api_key_env = "OPENAI_API_KEY";
+        batch_size = 64;
+        max_input_chars = 12000;
+        request_timeout = "2m";
+        vector_backend = "exact";
+      };
+    };
+
+    share = {
+      remote = "git@git-discrawl-archive:yuta/discord-archive.git";
+      repo_path = "/var/lib/hermes/.local/share/discrawl/share";
+      branch = "main";
+      auto_update = true;
+      stale_after = "15m";
+      media = false;
+
+      filter = {
+        public_only = false;
+        include_channel_ids = [ ];
+        exclude_channel_ids = [ ];
+      };
+    };
+
+    remote = {
+      mode = "local";
+      endpoint = "";
+      archive = "";
+      token_env = "DISCRAWL_REMOTE_TOKEN";
+      stale_after = "";
+
+      auth = {
+        token_source = "";
+        keyring_service = "";
+        keyring_account = "";
+      };
+    };
+  };
+  giteaKnownHosts = pkgs.writeText "hermes-gitea-known-hosts" ''
+    git-discrawl-archive,git-ssh.yutakobayashi.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPZl6HOE9OLZQxnK1liKwcFUSNHKVk0YPC49tdyxHO/
+  '';
   hermesSkillsSources = {
     superpowers = {
       path = inputs.superpowers;
@@ -70,8 +150,10 @@ in
 {
   environment.systemPackages = [
     inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird
+    pkgs.cloudflared
     pkgs.defuddle
     pkgs.discrawl
+    pkgs.git
   ];
 
   networking.hosts = {
@@ -145,6 +227,9 @@ in
     script = ''
       install -d -o hermes -g hermes -m 2770 /var/lib/hermes/.hermes
       install -d -o hermes -g hermes -m 2770 /var/lib/hermes/.hermes/skills
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.config
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.config/discrawl
+      install -d -o hermes -g hermes -m 0700 /var/lib/hermes/.ssh
 
       install -o hermes -g hermes -m 0640 \
         ${hermesConfigFile} /var/lib/hermes/.hermes/config.yaml
@@ -156,7 +241,30 @@ in
         ${hermesSoulFile} /var/lib/hermes/.hermes/SOUL.md
 
       install -o hermes -g hermes -m 0640 \
+        ${discrawlConfigFile} /var/lib/hermes/.config/discrawl/config.toml
+
+      install -o hermes -g hermes -m 0640 \
         ${credentialsDir}/hermes-agent.env /var/lib/hermes/.hermes/.env
+
+      install -o hermes -g hermes -m 0600 \
+        ${credentialsDir}/hermes-agent.discrawl-archive-ssh-key \
+        /var/lib/hermes/.ssh/discrawl_archive_ed25519
+
+      install -o hermes -g hermes -m 0644 \
+        ${giteaKnownHosts} /var/lib/hermes/.ssh/known_hosts
+
+      cat > /var/lib/hermes/.ssh/config <<'EOF'
+      Host git-discrawl-archive
+        HostName git-ssh.yutakobayashi.com
+        User git
+        IdentityFile /var/lib/hermes/.ssh/discrawl_archive_ed25519
+        IdentitiesOnly yes
+        ProxyCommand ${lib.getExe pkgs.cloudflared} access ssh --hostname %h
+        StrictHostKeyChecking yes
+        UserKnownHostsFile /var/lib/hermes/.ssh/known_hosts
+      EOF
+      chown hermes:hermes /var/lib/hermes/.ssh/config
+      chmod 0600 /var/lib/hermes/.ssh/config
 
       if [ ! -f /var/lib/hermes/.hermes/auth.json ]; then
         install -o hermes -g hermes -m 0600 \
