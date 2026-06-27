@@ -97,6 +97,7 @@ in
 
     settings = {
       model.provider = "openai-codex";
+      web.search_backend = "searxng";
 
       slack = {
         channel_prompts = { };

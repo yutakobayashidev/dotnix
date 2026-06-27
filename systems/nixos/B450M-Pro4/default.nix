@@ -43,6 +43,7 @@
     ../services/continuwuity
     ../services/litellm
     ../services/birdclaw
+    ../services/searxng
     inputs.disko.nixosModules.disko
     inputs.impermanence.nixosModules.impermanence
     ./disko.nix
