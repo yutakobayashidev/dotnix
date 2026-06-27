@@ -89,6 +89,10 @@ in
           path = inputs.twitter-api-safe-relay-skills;
           subdir = "skills";
         };
+        openclaw-discrawl = {
+          path = inputs.openclaw;
+          subdir = ".agents/skills/discrawl";
+        };
         sofa = {
           path = sofaSkillSrc;
           subdir = ".";
@@ -164,6 +168,10 @@ in
         webapp-testing = {
           from = "anthropic";
           path = "webapp-testing";
+        };
+        discrawl = {
+          from = "openclaw-discrawl";
+          path = ".";
         };
 
         agent-browser =
