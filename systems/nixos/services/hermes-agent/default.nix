@@ -31,6 +31,7 @@
       SLACK_APP_TOKEN=${config.sops.placeholder."hermes-agent/slack-app-token"}
       SLACK_ALLOWED_USERS=${config.sops.placeholder."hermes-agent/slack-allowed-users"}
       SEARXNG_URL=https://search.home.yutakobayashi.com
+      WIKI_PATH=/var/lib/hermes/wiki
     '';
     owner = "microvm";
     group = "kvm";
