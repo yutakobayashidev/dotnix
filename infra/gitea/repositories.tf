@@ -29,3 +29,11 @@ resource "gitea_repository" "discord_archive" {
   private     = true
   auto_init   = false
 }
+
+resource "gitea_repository" "llm_wiki" {
+  username    = "yuta"
+  name        = "llm-wiki"
+  description = "LLM Wiki"
+  private     = false
+  auto_init   = false
+}
