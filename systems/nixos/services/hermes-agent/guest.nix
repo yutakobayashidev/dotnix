@@ -270,6 +270,10 @@ in
         User git
         IdentityFile /var/lib/hermes/.ssh/discrawl_archive_ed25519
         IdentitiesOnly yes
+        IdentityAgent none
+        BatchMode yes
+        PasswordAuthentication no
+        KbdInteractiveAuthentication no
         ProxyCommand ${lib.getExe pkgs.cloudflared} access ssh --hostname %h
         StrictHostKeyChecking yes
         UserKnownHostsFile /var/lib/hermes/.ssh/known_hosts
