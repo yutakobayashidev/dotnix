@@ -164,7 +164,10 @@ in
     vcpu = 2;
     mem = 4096;
 
-    vsock.cid = 48;
+    vsock = {
+      cid = 48;
+      ssh.enable = true;
+    };
 
     interfaces = [
       {
