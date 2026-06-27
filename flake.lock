@@ -1031,11 +1031,11 @@
         "uv2nix": "uv2nix_2"
       },
       "locked": {
-        "lastModified": 1782176030,
-        "narHash": "sha256-Qt3p3DfCvfDRnAQa9QK8vc6nCoCzvP1xfhT4MRQH7Xw=",
+        "lastModified": 1782284395,
+        "narHash": "sha256-AWDPEzb93oKz4Xxs6nLNW/n0kedds8ZYccCPzplOcv8=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "bb7ff7dc302cbcbe41cf6bc09424ffc9fb2d062f",
+        "rev": "47fccc07352b8ab638c500134c45a562feea89e1",
         "type": "github"
       },
       "original": {
