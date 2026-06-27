@@ -198,6 +198,10 @@
       {
         condition = "gitdir:${config.programs.git.settings.ghq.root}/git.yutakobayashi.com/";
         contents = {
+          credential."https://git.yutakobayashi.com" = {
+            helper = "store";
+            username = "yuta";
+          };
           user = {
             name = "yuta";
             email = "hi@yutakobayashi.com";

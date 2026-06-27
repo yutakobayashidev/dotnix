@@ -10,6 +10,18 @@ let
   bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
   domain = "birdclaw.home.yutakobayashi.com";
   port = 3005;
+  birdclawConfig = {
+    mentions = {
+      dataSource = "bird";
+      birdCommand = lib.getExe bird;
+    };
+    backup = {
+      repoPath = "/home/yuta/ghq/git.yutakobayashi.com/yuta/twitter-archive";
+      remote = "https://git.yutakobayashi.com/yuta/twitter-archive";
+      autoSync = true;
+      staleAfterSeconds = 900;
+    };
+  };
 in
 
 {
@@ -28,12 +40,7 @@ in
     allowRemoteWeb = true;
     environmentFiles = [ config.sops.secrets."birdclaw-discord-webhook-url".path ];
 
-    config = {
-      mentions = {
-        dataSource = "bird";
-        birdCommand = lib.getExe bird;
-      };
-    };
+    config = birdclawConfig;
 
     jobs = {
       accountSync = {
@@ -66,31 +73,43 @@ in
   };
 
   systemd.user.services = {
-    birdclaw.environment = {
-      BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
-      OPENAI_API_KEY = "sk-proxy";
-      OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
-      BIRDCLAW_AI_MODEL = "deepseek-analyst";
-      BIRDCLAW_OPENAI_MODEL = "deepseek-inbox";
-      TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+    birdclaw = {
+      path = [ pkgs.git ];
+      environment = {
+        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        OPENAI_API_KEY = "sk-proxy";
+        OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
+        BIRDCLAW_AI_MODEL = "deepseek-analyst";
+        BIRDCLAW_OPENAI_MODEL = "deepseek-inbox";
+        TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+      };
     };
 
-    birdclaw-account-sync.environment = {
-      BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
-      TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+    birdclaw-account-sync = {
+      path = [ pkgs.git ];
+      environment = {
+        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+      };
     };
 
-    birdclaw-bookmark-sync.environment = {
-      BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
-      TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+    birdclaw-bookmark-sync = {
+      path = [ pkgs.git ];
+      environment = {
+        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+      };
     };
 
-    birdclaw-digest.environment = {
-      BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
-      TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
-      OPENAI_API_KEY = "sk-proxy";
-      OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
-      BIRDCLAW_AI_MODEL = "deepseek-analyst";
+    birdclaw-digest = {
+      path = [ pkgs.git ];
+      environment = {
+        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
+        OPENAI_API_KEY = "sk-proxy";
+        OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
+        BIRDCLAW_AI_MODEL = "deepseek-analyst";
+      };
     };
   };
 
