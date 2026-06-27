@@ -16,6 +16,10 @@ let
       path = inputs.skills;
       subdir = "skills";
     };
+    obsidian-skills = {
+      path = inputs.obsidian-skills;
+      subdir = "skills";
+    };
   };
   hermesSkillsCatalog = agentSkillsLib.discoverCatalog hermesSkillsSources;
   hermesSkillsSelection = agentSkillsLib.selectSkills {
@@ -29,6 +33,10 @@ let
       bird = {
         from = "skills";
         path = "bird";
+      };
+      defuddle = {
+        from = "obsidian-skills";
+        path = "defuddle";
       };
     };
   };
