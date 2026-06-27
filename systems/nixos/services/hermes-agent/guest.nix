@@ -82,7 +82,7 @@ in
       }
       {
         source = "/home/yuta/ghq/git.yutakobayashi.com/yuta/llm-wiki";
-        mountPoint = "/var/lib/hermes/workspace/llm-wiki";
+        mountPoint = "/var/lib/hermes/wiki";
         tag = "llm-wiki";
         proto = "virtiofs";
       }
