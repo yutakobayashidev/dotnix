@@ -58,8 +58,9 @@ in
       digest = {
         enable = true;
         intervalSeconds = 3600;
-        windowHours = 6;
+        windowHours = 3;
         language = "ja";
+        maxTweets = 700;
       };
     };
   };

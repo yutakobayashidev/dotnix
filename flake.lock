@@ -112,11 +112,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782532182,
-        "narHash": "sha256-39YBzZsCOVE+sGfqSHFsDixBzZQrhUAjRymIH/w/rH8=",
+        "lastModified": 1782534661,
+        "narHash": "sha256-5RamPpxndlAuxbrqTT6uQvUqY6Y4LhXKgIEb0iOVeYU=",
         "owner": "yutakobayashidev",
         "repo": "birdclaw",
-        "rev": "bebc90d1db29c833c965a5ec398ff1d415487394",
+        "rev": "edabaece75734750a7056186e8264ed2386870f1",
         "type": "github"
       },
       "original": {
@@ -1823,22 +1823,6 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1767364772,
-        "narHash": "sha256-fFUnEYMla8b7UKjijLnMe+oVFOz6HjijGGNS1l7dYaQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "16c7794d0a28b5a37904d55bcca36003b9109aaa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_6": {
-      "locked": {
         "lastModified": 1782175435,
         "narHash": "sha256-EMzXKmnOtBQ2MnvpiNOm7E+kOMvdPrIKaeg52Tip2Uk=",
         "owner": "nixos",
@@ -1853,7 +1837,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_7": {
+    "nixpkgs_6": {
       "locked": {
         "lastModified": 1778124196,
         "narHash": "sha256-pYEytCNic/czazbV9r3tbQ6BZzqRBg/41x2dIC5ymOo=",
@@ -1869,7 +1853,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_8": {
+    "nixpkgs_7": {
       "locked": {
         "lastModified": 1744536153,
         "narHash": "sha256-awS2zRgF4uTwrOKwwiJcByDzDOdo3Q1rPZbiHQg/N38=",
@@ -1885,7 +1869,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_9": {
+    "nixpkgs_8": {
       "locked": {
         "lastModified": 1780749050,
         "narHash": "sha256-3av0pIjlOWQ6rDbNOmpUSvbNnJkGORQKKjb4LtCZsIY=",
@@ -1998,7 +1982,7 @@
     },
     "onepassword-shell-plugins": {
       "inputs": {
-        "nixpkgs": "nixpkgs_7",
+        "nixpkgs": "nixpkgs_6",
         "systems": "systems_4"
       },
       "locked": {
@@ -2233,7 +2217,7 @@
         "nix-topology": "nix-topology",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
-        "nixpkgs": "nixpkgs_6",
+        "nixpkgs": "nixpkgs_5",
         "nixpkgs-stable": "nixpkgs-stable_3",
         "nur-packages": "nur-packages",
         "obsidian-skills": "obsidian-skills",
@@ -2292,7 +2276,7 @@
     },
     "rust-overlay_2": {
       "inputs": {
-        "nixpkgs": "nixpkgs_8"
+        "nixpkgs": "nixpkgs_7"
       },
       "locked": {
         "lastModified": 1781234414,
@@ -2387,7 +2371,7 @@
     },
     "simple-nostr-relay": {
       "inputs": {
-        "nixpkgs": "nixpkgs_9"
+        "nixpkgs": "nixpkgs_8"
       },
       "locked": {
         "lastModified": 1782185964,
