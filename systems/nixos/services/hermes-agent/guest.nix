@@ -204,14 +204,30 @@ in
 
   services.hermes-agent = {
     enable = true;
-    extraDependencyGroups = [ "slack" ];
+    extraDependencyGroups = [ "messaging" ];
 
     settings = {
+      group_sessions_per_user = true;
       model.provider = "openai-codex";
       web.search_backend = "searxng";
       compression = {
         threshold = 0.85;
         codex_gpt55_autoraise = true;
+      };
+
+      discord = {
+        require_mention = true;
+        thread_require_mention = false;
+        auto_thread = true;
+        reactions = true;
+        history_backfill = true;
+        history_backfill_limit = 50;
+        allow_mentions = {
+          everyone = false;
+          roles = false;
+          users = true;
+          replied_user = true;
+        };
       };
 
       slack = {
@@ -242,8 +258,13 @@ in
     script = ''
       install -d -o hermes -g hermes -m 2770 /var/lib/hermes/.hermes
       install -d -o hermes -g hermes -m 2770 /var/lib/hermes/.hermes/skills
+      install -d -o hermes -g hermes -m 2770 /var/lib/hermes/workspace
       install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.config
       install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.config/discrawl
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.cache
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.local
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.local/share
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.local/state
       install -d -o hermes -g hermes -m 0700 /var/lib/hermes/.ssh
 
       install -o hermes -g hermes -m 0640 \
@@ -299,6 +320,14 @@ in
       fi
 
       ${hermesSkillsInstallScript}
+
+      chown -R hermes:hermes \
+        /var/lib/hermes/.hermes \
+        /var/lib/hermes/.cache \
+        /var/lib/hermes/.config \
+        /var/lib/hermes/.local \
+        /var/lib/hermes/.ssh \
+        /var/lib/hermes/workspace
     '';
   };
 

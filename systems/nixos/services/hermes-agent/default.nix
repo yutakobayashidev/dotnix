@@ -14,6 +14,7 @@
     "hermes-agent/slack-bot-token".sopsFile = ./secrets.yaml;
     "hermes-agent/slack-app-token".sopsFile = ./secrets.yaml;
     "hermes-agent/slack-allowed-users".sopsFile = ./secrets.yaml;
+    "hermes-agent/discord-bot-token".sopsFile = ./secrets.yaml;
     "hermes-agent/discrawl-archive-ssh-key" = {
       sopsFile = ./secrets.yaml;
       # microvm@hermes-agent.service runs qemu as microvm:kvm and reads this
@@ -39,6 +40,8 @@
       SLACK_APP_TOKEN=${config.sops.placeholder."hermes-agent/slack-app-token"}
       SLACK_ALLOWED_USERS=${config.sops.placeholder."hermes-agent/slack-allowed-users"}
       SLACK_HOME_CHANNEL=C0B2DC01LJK
+      DISCORD_BOT_TOKEN=${config.sops.placeholder."hermes-agent/discord-bot-token"}
+      DISCORD_ALLOWED_USERS=890908900520505354
       DISCORD_HOME_CHANNEL=1028287639918497822
       BIRD_PROFILE_NAME=account1
       SEARXNG_URL=https://search.home.yutakobayashi.com

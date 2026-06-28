@@ -76,6 +76,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 
 - [docs/B450M-Pro4-HDD-service-storage.md](docs/B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
 - [docs/B450M-Pro4-s3s.md](docs/B450M-Pro4-s3s.md) - s3s (Splatoon 3 stats uploader) workflow
+- [docs/hermes-agent-discord.md](docs/hermes-agent-discord.md) - Discord setup for the UM790-Pro Hermes Agent microVM
 - [docs/Ventoy-NixOS-Minimal.md](docs/Ventoy-NixOS-Minimal.md) - Ventoy USB for NixOS installation
 
 ### Other
@@ -123,7 +124,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android development environment, VirtualBox on UM790-Pro
 - **Self-hosted services**: Nextcloud, Immich, Gitea, Home Assistant, ArchiveBox, n8n, WebHashtag, Grafana, Prometheus, Loki, Claude Code telemetry, and comin on B450M-Pro4
-- **Agent microVMs**: Hermes Agent on UM790-Pro and OpenClaw on B450M-Pro4 via microvm.nix
+- **Agent microVMs**: Hermes Agent on UM790-Pro (Slack and Discord) and OpenClaw on B450M-Pro4 via microvm.nix
 
 ### macOS
 
