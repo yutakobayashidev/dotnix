@@ -199,7 +199,7 @@ in
         image = "nix-overlay.img";
         mountPoint = "/nix/.rw-store";
         size = 8192;
-        label = "hermes-nix-overlay";
+        label = "hermes-nix-rw";
       }
     ];
   };
