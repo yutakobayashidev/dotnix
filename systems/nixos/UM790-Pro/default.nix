@@ -17,11 +17,10 @@
     ../../../modules/profiles/nixos/desktop.nix
   ];
 
+  ext.security.secureboot.enable = true;
+
   boot = {
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
+    loader.efi.canTouchEfiVariables = true;
     initrd = {
       availableKernelModules = [
         "nvme"
