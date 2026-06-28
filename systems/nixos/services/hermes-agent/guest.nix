@@ -148,14 +148,6 @@ let
   credentialsDir = "/run/credentials/@system";
 in
 {
-  environment.systemPackages = [
-    inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird
-    pkgs.cloudflared
-    pkgs.defuddle
-    pkgs.discrawl
-    pkgs.git
-  ];
-
   networking.hosts = {
     "100.111.109.43" = [ "tw.home.yutakobayashi.com" ];
   };
@@ -176,6 +168,10 @@ in
         mac = "02:00:00:00:48:01";
       }
     ];
+
+    # Writable upper for /nix/store so the agent can `nix shell nixpkgs#...`.
+    # microvm.nix requires auto-optimise-store to be disabled with this.
+    writableStoreOverlay = "/nix/.rw-store";
 
     shares = [
       {
@@ -199,12 +195,36 @@ in
         size = 4096;
         label = "hermes-state";
       }
+      {
+        image = "nix-overlay.img";
+        mountPoint = "/nix/.rw-store";
+        size = 8192;
+        label = "hermes-nix-overlay";
+      }
     ];
+  };
+
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    auto-optimise-store = false;
   };
 
   services.hermes-agent = {
     enable = true;
+    addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
+    extraPackages = [
+      inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird
+      pkgs.cloudflared
+      pkgs.defuddle
+      pkgs.discrawl
+      pkgs.git
+      pkgs.jq
+      pkgs.python3
+    ];
 
     settings = {
       group_sessions_per_user = true;

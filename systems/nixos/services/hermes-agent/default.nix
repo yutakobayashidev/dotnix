@@ -63,6 +63,7 @@
     config = {
       imports = [ ./guest.nix ];
       _module.args.inputs = inputs;
+      nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
       microvm.credentialFiles = {
         "hermes-agent.env" = config.sops.templates."hermes-agent.env".path;
