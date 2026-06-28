@@ -72,6 +72,12 @@ in
     };
   };
 
+  systemd.user.timers = {
+    birdclaw-account-sync.timerConfig.OnActiveSec = "1m";
+    birdclaw-bookmark-sync.timerConfig.OnActiveSec = "1m";
+    birdclaw-digest.timerConfig.OnActiveSec = "1m";
+  };
+
   systemd.user.services = {
     birdclaw = {
       path = [ pkgs.git ];
