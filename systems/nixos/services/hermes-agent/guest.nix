@@ -281,9 +281,17 @@ in
       chown hermes:hermes /var/lib/hermes/.ssh/config
       chmod 0600 /var/lib/hermes/.ssh/config
 
-      if [ ! -f /var/lib/hermes/.hermes/auth.json ]; then
+      # Codex refreshes auth.json in-place. Re-seed only when the deployed
+      # sops credential changes, so refreshed tokens survive ordinary rebuilds.
+      cred=${credentialsDir}/hermes-agent.auth.json
+      stamp=/var/lib/hermes/.hermes/.auth.json.seed-hash
+      hash=$(sha256sum "$cred" | cut -d' ' -f1)
+      if [ "$(cat "$stamp" 2>/dev/null)" != "$hash" ]; then
         install -o hermes -g hermes -m 0600 \
-          ${credentialsDir}/hermes-agent.auth.json /var/lib/hermes/.hermes/auth.json
+          "$cred" /var/lib/hermes/.hermes/auth.json
+        printf '%s\n' "$hash" > "$stamp"
+        chown hermes:hermes "$stamp"
+        chmod 0600 "$stamp"
       fi
 
       ${hermesSkillsInstallScript}
