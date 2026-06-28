@@ -56,7 +56,7 @@ let
     };
 
     share = {
-      remote = "git@git-discrawl-archive:yuta/discord-archive.git";
+      remote = "gitea@git-discrawl-archive:yuta/discord-archive.git";
       repo_path = "/var/lib/hermes/.local/share/discrawl/share";
       branch = "main";
       auto_update = true;
@@ -267,7 +267,7 @@ in
       cat > /var/lib/hermes/.ssh/config <<'EOF'
       Host git-discrawl-archive
         HostName git-ssh.yutakobayashi.com
-        User git
+        User gitea
         IdentityFile /var/lib/hermes/.ssh/discrawl_archive_ed25519
         IdentitiesOnly yes
         IdentityAgent none
