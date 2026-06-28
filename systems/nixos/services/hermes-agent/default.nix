@@ -39,6 +39,7 @@
       SLACK_APP_TOKEN=${config.sops.placeholder."hermes-agent/slack-app-token"}
       SLACK_ALLOWED_USERS=${config.sops.placeholder."hermes-agent/slack-allowed-users"}
       SLACK_HOME_CHANNEL=C0B2DC01LJK
+      DISCORD_HOME_CHANNEL=1028287639918497822
       BIRD_PROFILE_NAME=account1
       SEARXNG_URL=https://search.home.yutakobayashi.com
       TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com

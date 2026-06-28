@@ -209,6 +209,10 @@ in
     settings = {
       model.provider = "openai-codex";
       web.search_backend = "searxng";
+      compression = {
+        threshold = 0.85;
+        codex_gpt55_autoraise = true;
+      };
 
       slack = {
         channel_prompts = { };
