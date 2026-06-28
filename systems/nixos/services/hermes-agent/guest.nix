@@ -254,8 +254,13 @@ in
     script = ''
       install -d -o hermes -g hermes -m 2770 /var/lib/hermes/.hermes
       install -d -o hermes -g hermes -m 2770 /var/lib/hermes/.hermes/skills
+      install -d -o hermes -g hermes -m 2770 /var/lib/hermes/workspace
       install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.config
       install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.config/discrawl
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.cache
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.local
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.local/share
+      install -d -o hermes -g hermes -m 0750 /var/lib/hermes/.local/state
       install -d -o hermes -g hermes -m 0700 /var/lib/hermes/.ssh
 
       install -o hermes -g hermes -m 0640 \
@@ -311,6 +316,14 @@ in
       fi
 
       ${hermesSkillsInstallScript}
+
+      chown -R hermes:hermes \
+        /var/lib/hermes/.hermes \
+        /var/lib/hermes/.cache \
+        /var/lib/hermes/.config \
+        /var/lib/hermes/.local \
+        /var/lib/hermes/.ssh \
+        /var/lib/hermes/workspace
     '';
   };
 
