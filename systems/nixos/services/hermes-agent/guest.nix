@@ -204,11 +204,27 @@ in
 
   services.hermes-agent = {
     enable = true;
-    extraDependencyGroups = [ "slack" ];
+    extraDependencyGroups = [ "messaging" ];
 
     settings = {
+      group_sessions_per_user = true;
       model.provider = "openai-codex";
       web.search_backend = "searxng";
+
+      discord = {
+        require_mention = true;
+        thread_require_mention = false;
+        auto_thread = true;
+        reactions = true;
+        history_backfill = true;
+        history_backfill_limit = 50;
+        allow_mentions = {
+          everyone = false;
+          roles = false;
+          users = true;
+          replied_user = true;
+        };
+      };
 
       slack = {
         channel_prompts = { };
