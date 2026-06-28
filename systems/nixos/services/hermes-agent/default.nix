@@ -14,6 +14,14 @@
     "hermes-agent/slack-bot-token".sopsFile = ./secrets.yaml;
     "hermes-agent/slack-app-token".sopsFile = ./secrets.yaml;
     "hermes-agent/slack-allowed-users".sopsFile = ./secrets.yaml;
+    "hermes-agent/discrawl-archive-ssh-key" = {
+      sopsFile = ./secrets.yaml;
+      # microvm@hermes-agent.service runs qemu as microvm:kvm and reads this
+      # via SMBIOS OEM strings (microvm.credentialFiles below).
+      owner = "microvm";
+      group = "kvm";
+      mode = "0400";
+    };
     "hermes-agent/auth-json" = {
       sopsFile = ./auth.json;
       format = "binary";
@@ -31,6 +39,8 @@
       SLACK_APP_TOKEN=${config.sops.placeholder."hermes-agent/slack-app-token"}
       SLACK_ALLOWED_USERS=${config.sops.placeholder."hermes-agent/slack-allowed-users"}
       SEARXNG_URL=https://search.home.yutakobayashi.com
+      TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com
+      WIKI_PATH=/var/lib/hermes/wiki
     '';
     owner = "microvm";
     group = "kvm";
@@ -51,6 +61,7 @@
       microvm.credentialFiles = {
         "hermes-agent.env" = config.sops.templates."hermes-agent.env".path;
         "hermes-agent.auth.json" = config.sops.secrets."hermes-agent/auth-json".path;
+        "discrawl.key" = config.sops.secrets."hermes-agent/discrawl-archive-ssh-key".path;
       };
     };
   };
