@@ -42,6 +42,7 @@
       SLACK_HOME_CHANNEL=C0B2DC01LJK
       DISCORD_BOT_TOKEN=${config.sops.placeholder."hermes-agent/discord-bot-token"}
       DISCORD_ALLOWED_USERS=890908900520505354
+      DISCORD_HOME_CHANNEL=1028287639918497822
       BIRD_PROFILE_NAME=account1
       SEARXNG_URL=https://search.home.yutakobayashi.com
       TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com

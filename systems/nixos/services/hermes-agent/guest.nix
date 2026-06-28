@@ -210,6 +210,10 @@ in
       group_sessions_per_user = true;
       model.provider = "openai-codex";
       web.search_backend = "searxng";
+      compression = {
+        threshold = 0.85;
+        codex_gpt55_autoraise = true;
+      };
 
       discord = {
         require_mention = true;
