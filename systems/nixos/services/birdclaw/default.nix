@@ -64,7 +64,7 @@ in
 
       digest = {
         enable = true;
-        intervalSeconds = 3600;
+        intervalSeconds = 10800;
         windowHours = 3;
         language = "ja";
         maxTweets = 700;
