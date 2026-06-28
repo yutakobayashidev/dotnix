@@ -78,6 +78,7 @@ in
 
       # Network Tools
       cloudflared
+      cloudflare-warp
       vt-cli
       tunnelto
       speedtest-cli

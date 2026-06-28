@@ -53,6 +53,7 @@
       "blackhole-2ch"
       "nani"
       "nextcloud"
+      "nordvpn"
       "telegram"
       "azookey"
 
