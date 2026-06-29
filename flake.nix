@@ -190,6 +190,11 @@
       url = "github:yutakobayashidev/birdclaw";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    edcb-tools = {
+      url = "github:yutakobayashidev/edcb-tools";
+      inputs.fenix.follows = "webhashtag-rust-server/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";

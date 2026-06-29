@@ -14,23 +14,12 @@ let
     name = "agent-scripts-no-symlinks";
     filter = _path: type: type != "symlink";
   };
-
-  sofaSkillSrc = pkgs.runCommand "sofa-skill-src" { } ''
-    mkdir "$out"
-    cp ${
-      builtins.fetchurl {
-        url = "https://agents.stackoverflow.com/skill.md";
-        sha256 = "sha256-gRzir5vXu8c0TnxeJyEjqzbK5m93UUlR6owlqGlJqvY=";
-      }
-    } "$out/SKILL.md"
-  '';
 in
 {
   options.my.programs.agent-skills.enable = lib.mkEnableOption "agent skills";
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables.TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
-    home.sessionVariables.SOFA_BASE_URL = "https://agents.stackoverflow.com";
 
     programs.agent-skills = {
       enable = true;
@@ -93,10 +82,6 @@ in
           path = inputs.openclaw;
           subdir = ".agents/skills/discrawl";
         };
-        sofa = {
-          path = sofaSkillSrc;
-          subdir = ".";
-        };
       }
       // lib.optionalAttrs pkgs.stdenv.isDarwin {
         cmux = {
@@ -111,7 +96,6 @@ in
         "repiq"
         "difit"
         "superpowers"
-        "sofa"
       ];
 
       skills.explicit = {

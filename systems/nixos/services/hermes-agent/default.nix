@@ -44,6 +44,9 @@
       DISCORD_ALLOWED_USERS=890908900520505354
       DISCORD_HOME_CHANNEL=1028287639918497822
       BIRD_PROFILE_NAME=account1
+      EDCB_HOST=100.111.109.43
+      EDCB_PORT=4510
+      EDCB_TIMEOUT_SECONDS=15
       SEARXNG_URL=https://search.home.yutakobayashi.com
       TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com
       WIKI_PATH=/var/lib/hermes/wiki

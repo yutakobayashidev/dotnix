@@ -330,6 +330,30 @@
         "type": "github"
       }
     },
+    "edcb-tools": {
+      "inputs": {
+        "fenix": [
+          "webhashtag-rust-server",
+          "fenix"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1782740444,
+        "narHash": "sha256-K9PTAZQEf8TuUNyFv+b9M6lPTBW7P5897x7N9+1uP94=",
+        "owner": "yutakobayashidev",
+        "repo": "edcb-tools",
+        "rev": "ca36b9abe603c9ac34c72ea41affd7d3226fb746",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "edcb-tools",
+        "type": "github"
+      }
+    },
     "emacs-overlay": {
       "inputs": {
         "nixpkgs": [
@@ -2222,6 +2246,7 @@
         "comin": "comin",
         "difit-skills": "difit-skills",
         "disko": "disko",
+        "edcb-tools": "edcb-tools",
         "emacs-overlay": "emacs-overlay",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",

@@ -7,6 +7,8 @@
 }:
 let
   agentSkillsLib = inputs.agent-skills.lib.agent-skills;
+  system = pkgs.stdenv.hostPlatform.system;
+  edcbToolsPackage = inputs.edcb-tools.packages.${system}.edcb-tools;
   tomlFormat = pkgs.formats.toml { };
   discrawlConfigFile = tomlFormat.generate "discrawl-config.toml" {
     version = 1;
@@ -104,6 +106,10 @@ let
       path = inputs.openclaw;
       subdir = ".agents/skills";
     };
+    edcb-tools = {
+      path = inputs.edcb-tools;
+      subdir = ".agents/skills";
+    };
   };
   hermesSkillsCatalog = agentSkillsLib.discoverCatalog hermesSkillsSources;
   hermesSkillsSelection = agentSkillsLib.selectSkills {
@@ -125,6 +131,11 @@ let
       discrawl = {
         from = "openclaw-skills";
         path = "discrawl";
+      };
+      edcb-tools = {
+        from = "edcb-tools";
+        path = "edcb-tools";
+        packages = [ edcbToolsPackage ];
       };
     };
   };
@@ -217,6 +228,7 @@ in
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
     extraPackages = [
+      edcbToolsPackage
       inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird
       pkgs.cloudflared
       pkgs.defuddle
