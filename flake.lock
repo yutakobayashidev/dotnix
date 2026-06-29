@@ -341,11 +341,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782740444,
-        "narHash": "sha256-K9PTAZQEf8TuUNyFv+b9M6lPTBW7P5897x7N9+1uP94=",
+        "lastModified": 1782750845,
+        "narHash": "sha256-Kulg/4v2lyLp3nEbXY44zT1YqSWv+8nAyzZZj8DvNrs=",
         "owner": "yutakobayashidev",
         "repo": "edcb-tools",
-        "rev": "ca36b9abe603c9ac34c72ea41affd7d3226fb746",
+        "rev": "ff9d686eb5f9102d488e15aae262d77812fd12fe",
         "type": "github"
       },
       "original": {
