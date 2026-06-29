@@ -8,6 +8,7 @@
 let
   cfg = config.my.programs.agent-skills;
   agentLib = inputs.agent-skills.lib.agent-skills;
+  edcbToolsPackage = inputs.edcb-tools.packages.${pkgs.stdenv.hostPlatform.system}.edcb-tools;
 
   agentScriptsSrc = builtins.path {
     path = inputs.agent-scripts;
@@ -81,6 +82,10 @@ in
         openclaw-discrawl = {
           path = inputs.openclaw;
           subdir = ".agents/skills/discrawl";
+        };
+        edcb-tools = {
+          path = inputs.edcb-tools;
+          subdir = ".agents/skills";
         };
       }
       // lib.optionalAttrs pkgs.stdenv.isDarwin {
@@ -156,6 +161,11 @@ in
         discrawl = {
           from = "openclaw-discrawl";
           path = ".";
+        };
+        edcb-tools = {
+          from = "edcb-tools";
+          path = "edcb-tools";
+          packages = [ edcbToolsPackage ];
         };
 
         agent-browser =

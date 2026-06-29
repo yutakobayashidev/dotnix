@@ -75,6 +75,7 @@
       "qmk-toolbox"
 
       # Media
+      "mixxx"
       "obs"
       "krita"
       "spotify"

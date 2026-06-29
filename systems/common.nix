@@ -7,7 +7,12 @@
 
   my.nix.enable = true;
 
-  environment.variables.BIRD_PROFILE_NAME = "account1";
+  environment.variables = {
+    BIRD_PROFILE_NAME = "account1";
+    EDCB_HOST = "100.111.109.43";
+    EDCB_PORT = "4510";
+    EDCB_TIMEOUT_SECONDS = "15";
+  };
 
   system.activationScripts.extraActivation.text = ''
     profiles=$(find /nix/var/nix/profiles/system-*-link 2>/dev/null | tail -2)

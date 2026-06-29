@@ -8,6 +8,7 @@
 
 let
   bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
+  edcb-tools = inputs.edcb-tools.packages.${pkgs.stdenv.hostPlatform.system}.edcb-tools;
   immich-go = pkgs.symlinkJoin {
     name = "immich-go-no-docs";
     paths = [ pkgs.immich-go ];
@@ -33,6 +34,7 @@ in
       bumblebee
       defuddle
       discrawl
+      edcb-tools
       gctx
       vulnix
       gogcli
