@@ -7,16 +7,6 @@
 
 let
   cfg = config.my.programs.gh;
-  ghWrapper = pkgs.writeShellScriptBin "gh" ''
-    set -eu
-
-    if [ -z "''${GH_TOKEN:-}" ] && [ -z "''${GITHUB_TOKEN:-}" ]; then
-      GH_TOKEN="$(${lib.getExe pkgs.ghtkn} get)"
-      export GH_TOKEN
-    fi
-
-    exec ${lib.getExe pkgs.gh} "$@"
-  '';
 in
 {
   options.my.programs.gh.enable = lib.mkEnableOption "GitHub CLI";
@@ -41,7 +31,6 @@ in
     };
 
     home.packages = with pkgs; [
-      (lib.hiPrio ghWrapper)
       ghq
       tea
       ghtkn
