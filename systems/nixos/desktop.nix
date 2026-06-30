@@ -12,7 +12,13 @@
     niri.enable = true;
     obs-studio.enableVirtualCamera = true;
     xwayland.enable = true;
-    regreet.enable = true;
+    regreet = {
+      enable = true;
+      font = {
+        package = pkgs.inter;
+        name = "Inter";
+      };
+    };
   };
 
   environment.systemPackages = with pkgs; [
