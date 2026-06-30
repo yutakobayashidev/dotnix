@@ -74,6 +74,13 @@
     HandlePowerKeyLongPress = "poweroff";
   };
 
+  environment.systemPackages = with pkgs; [
+    beatoraja
+    lutris
+    wineWow64Packages.stable
+    winetricks
+  ];
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
