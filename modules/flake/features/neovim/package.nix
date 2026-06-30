@@ -38,24 +38,12 @@
 }:
 
 let
-  treesitterGrammars = vimPlugins.nvim-treesitter.withAllGrammars;
-  telescopeFzfNative = vimPlugins.telescope-fzf-native-nvim;
-
-  runtimePackages = [
-    prettierd
-    eslint_d
+  languageServers = [
+    # Fennel
     fennel-ls
-    luaPackages.fennel
-    git
-    gcc
-    gnumake
-    vtsls
-    pretty-ts-errors-markdown
-    version-lsp
-    moonbit-lsp
 
-    # Rust
-    rustowl
+    # JavaScript / TypeScript
+    vtsls
 
     # Node.js-based language servers
     astro-language-server
@@ -70,7 +58,53 @@ let
     vscode-langservers-extracted
     vue-language-server
     yaml-language-server
+
+    # MoonBit
+    moonbit-lsp
+
+    # Version files
+    version-lsp
   ];
+
+  tools = [
+    eslint_d
+    gcc
+    git
+    gnumake
+    luaPackages.fennel
+    prettierd
+    pretty-ts-errors-markdown
+
+    # Rust
+    rustowl
+  ];
+
+  pluginPaths = {
+    DOTNIX_NVIM_LAZY = vimPlugins.lazy-nvim;
+    DOTNIX_NVIM_NFNL = vimPlugins.nfnl;
+    RUSTOWL_NVIM = rustowl-nvim;
+    TELESCOPE_FZF_NATIVE = vimPlugins.telescope-fzf-native-nvim;
+    TREESITTER_GRAMMARS = vimPlugins.nvim-treesitter.withAllGrammars;
+    TREESITTER_MOONBIT = tree-sitter-moonbit-grammar;
+  };
+
+  wrapperEnv = pluginPaths // {
+    PRETTY_TS_ERRORS_BIN = "${pretty-ts-errors-markdown}/bin/pretty-ts-errors-markdown";
+  };
+
+  extraWrapperArgs = [
+    "--suffix"
+    "PATH"
+    ":"
+    (lib.makeBinPath (languageServers ++ tools))
+  ]
+  ++ lib.flatten (
+    lib.mapAttrsToList (name: value: [
+      "--set"
+      name
+      (toString value)
+    ]) wrapperEnv
+  );
 in
 wrapNeovimUnstable neovim-unwrapped {
   extraName = "-dotnix";
@@ -85,31 +119,5 @@ wrapNeovimUnstable neovim-unwrapped {
     dofile('${configRoot}/init.lua')
   '';
 
-  wrapperArgs = [
-    "--suffix"
-    "PATH"
-    ":"
-    (lib.makeBinPath runtimePackages)
-    "--set"
-    "TREESITTER_GRAMMARS"
-    "${treesitterGrammars}"
-    "--set"
-    "TELESCOPE_FZF_NATIVE"
-    "${telescopeFzfNative}"
-    "--set"
-    "PRETTY_TS_ERRORS_BIN"
-    "${pretty-ts-errors-markdown}/bin/pretty-ts-errors-markdown"
-    "--set"
-    "RUSTOWL_NVIM"
-    "${rustowl-nvim}"
-    "--set"
-    "TREESITTER_MOONBIT"
-    "${tree-sitter-moonbit-grammar}"
-    "--set"
-    "DOTNIX_NVIM_LAZY"
-    "${vimPlugins.lazy-nvim}"
-    "--set"
-    "DOTNIX_NVIM_NFNL"
-    "${vimPlugins.nfnl}"
-  ];
+  wrapperArgs = extraWrapperArgs;
 }
