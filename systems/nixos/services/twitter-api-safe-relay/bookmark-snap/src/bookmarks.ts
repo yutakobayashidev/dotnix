@@ -24,6 +24,10 @@ function mapTweet(tweet: TweetData): BookmarkTweet {
 	};
 }
 
+function hasRenderedTweet(outputDir: string, tweetId: string): boolean {
+	return existsSync(`${outputDir}/${tweetId}.png`) || existsSync(`${outputDir}/${tweetId}.mp4`);
+}
+
 async function randomSleep(minMs: number, maxMs: number): Promise<void> {
 	const delay = Math.floor(Math.random() * (maxMs - minMs) + minMs);
 	await new Promise((resolve) => setTimeout(resolve, delay));
@@ -53,7 +57,7 @@ export async function fetchAllBookmarks(
 		if (!result.success || !result.tweets || result.tweets.length === 0) break;
 
 		for (const tweet of result.tweets) {
-			if (existsSync(`${outputDir}/${tweet.id}.png`)) {
+			if (hasRenderedTweet(outputDir, tweet.id)) {
 				consecutiveExisting++;
 				if (consecutiveExisting >= CONSECUTIVE_EXISTING_THRESHOLD) {
 					console.log(

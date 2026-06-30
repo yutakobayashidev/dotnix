@@ -149,6 +149,8 @@ in
         wants = [ "network-online.target" ];
         environment = {
           PUPPETEER_EXECUTABLE_PATH = "${pkgs.chromium}/bin/chromium";
+          FFMPEG_PATH = "${pkgs.ffmpeg}/bin/ffmpeg";
+          FFPROBE_PATH = "${pkgs.ffmpeg}/bin/ffprobe";
         };
         serviceConfig = {
           Type = "oneshot";
