@@ -23,23 +23,7 @@
       '';
     in
     {
-      packages = {
-        inherit (pkgs)
-          bumblebee
-          difit
-          git-now
-          jj-desc
-          keifu
-          pretty-ts-errors-markdown
-          roots
-          session-tts-codex
-          similarity-ts
-          tunnelto
-          ;
-      }
-      // lib.optionalAttrs (!isDarwin) { inherit (pkgs) polycat; }
-      // lib.optionalAttrs isDarwin { inherit (pkgs) readout; }
-      // lib.optionalAttrs (system == "x86_64-linux") {
+      packages = lib.optionalAttrs (system == "x86_64-linux") {
         nixos-minimal-iso =
           let
             isoEval = import "${pkgs.path}/nixos/lib/eval-config.nix" {
