@@ -7,13 +7,12 @@
 }:
 
 let
-  bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
   domain = "birdclaw.home.yutakobayashi.com";
   port = 3005;
   birdclawConfig = {
     mentions = {
       dataSource = "bird";
-      birdCommand = lib.getExe bird;
+      birdCommand = lib.getExe pkgs.bird;
     };
     backup = {
       repoPath = "/home/yuta/ghq/git.yutakobayashi.com/yuta/twitter-archive";
@@ -82,7 +81,7 @@ in
     birdclaw = {
       path = [ pkgs.git ];
       environment = {
-        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        BIRDCLAW_BIRD_COMMAND = lib.getExe pkgs.bird;
         OPENAI_API_KEY = "sk-proxy";
         OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
         BIRDCLAW_AI_MODEL = "deepseek-analyst";
@@ -94,7 +93,7 @@ in
     birdclaw-account-sync = {
       path = [ pkgs.git ];
       environment = {
-        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        BIRDCLAW_BIRD_COMMAND = lib.getExe pkgs.bird;
         TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
       };
     };
@@ -102,7 +101,7 @@ in
     birdclaw-bookmark-sync = {
       path = [ pkgs.git ];
       environment = {
-        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        BIRDCLAW_BIRD_COMMAND = lib.getExe pkgs.bird;
         TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
       };
     };
@@ -110,7 +109,7 @@ in
     birdclaw-digest = {
       path = [ pkgs.git ];
       environment = {
-        BIRDCLAW_BIRD_COMMAND = lib.getExe bird;
+        BIRDCLAW_BIRD_COMMAND = lib.getExe pkgs.bird;
         TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
         OPENAI_API_KEY = "sk-proxy";
         OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";

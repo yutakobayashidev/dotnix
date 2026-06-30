@@ -7,8 +7,7 @@
 }:
 let
   agentSkillsLib = inputs.agent-skills.lib.agent-skills;
-  system = pkgs.stdenv.hostPlatform.system;
-  edcbToolsPackage = inputs.edcb-tools.packages.${system}.edcb-tools;
+  edcbToolsPackage = pkgs.edcb-tools;
   tomlFormat = pkgs.formats.toml { };
   discrawlConfigFile = tomlFormat.generate "discrawl-config.toml" {
     version = 1;
@@ -229,7 +228,7 @@ in
     extraDependencyGroups = [ "messaging" ];
     extraPackages = [
       edcbToolsPackage
-      inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird
+      pkgs.bird
       pkgs.cloudflared
       pkgs.defuddle
       pkgs.discrawl

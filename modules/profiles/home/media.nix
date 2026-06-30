@@ -1,21 +1,5 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, pkgs, ... }:
 
-let
-  bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
-  edcb-tools = inputs.edcb-tools.packages.${pkgs.stdenv.hostPlatform.system}.edcb-tools;
-  immich-go = pkgs.symlinkJoin {
-    name = "immich-go-no-docs";
-    paths = [ pkgs.immich-go ];
-    postBuild = ''
-      rm -f $out/bin/docs
-    '';
-  };
-in
 {
   home.packages =
     with pkgs;
@@ -28,7 +12,7 @@ in
       exiftool
       ffmpeg
       imagemagick
-      immich-go
+      immich-go-no-docs
       ipatool
       luanti
       mat2

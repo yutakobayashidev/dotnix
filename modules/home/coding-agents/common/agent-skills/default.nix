@@ -8,7 +8,7 @@
 let
   cfg = config.my.programs.agent-skills;
   agentLib = inputs.agent-skills.lib.agent-skills;
-  edcbToolsPackage = inputs.edcb-tools.packages.${pkgs.stdenv.hostPlatform.system}.edcb-tools;
+  edcbToolsPackage = pkgs.edcb-tools;
 
   agentScriptsSrc = builtins.path {
     path = inputs.agent-scripts;

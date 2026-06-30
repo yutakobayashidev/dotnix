@@ -34,6 +34,23 @@
         _moonbit-overlay = inputs.moonbit-overlay;
         _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
       })
+      (
+        _final: prev:
+        let
+          inherit (prev.stdenv.hostPlatform) system;
+        in
+        {
+          bird = inputs.bird.packages.${system}.bird;
+          edcb-tools = inputs.edcb-tools.packages.${system}.edcb-tools;
+          immich-go-no-docs = prev.symlinkJoin {
+            name = "immich-go-no-docs";
+            paths = [ prev.immich-go ];
+            postBuild = ''
+              rm -f $out/bin/docs
+            '';
+          };
+        }
+      )
       inputs.gh-nippou.overlays.default
       inputs.gh-graph.overlays.default
       inputs.rustowl-flake.overlays.default

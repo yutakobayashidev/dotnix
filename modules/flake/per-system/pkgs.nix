@@ -12,6 +12,7 @@
           ];
         };
         overlays = [
+          inputs.llm-agents.overlays.default
           inputs.nur-packages.overlays.default
         ];
       };

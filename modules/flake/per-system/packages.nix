@@ -8,9 +8,8 @@
     }:
     let
       system = pkgs.stdenv.hostPlatform.system;
-      isDarwin = builtins.match ".*-darwin" system != null;
-      p = pkgs;
-      nom = "${p.nix-output-monitor}/bin/nom";
+      isDarwin = pkgs.stdenv.isDarwin;
+      nom = "${pkgs.nix-output-monitor}/bin/nom";
 
       isAgentCheck = ''
         IS_AI_AGENT=false
@@ -24,52 +23,45 @@
       '';
     in
     {
-      packages =
-        let
-          polycat' = lib.optionalAttrs (!isDarwin) { inherit (p) polycat; };
-          readout' = lib.optionalAttrs isDarwin { inherit (p) readout; };
-
-          nixosMinimalIso' = lib.optionalAttrs (system == "x86_64-linux") {
-            nixos-minimal-iso =
-              let
-                isoEval = import "${p.path}/nixos/lib/eval-config.nix" {
-                  system = "x86_64-linux";
-                  modules = [
-                    "${p.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-                    ../../../modules/profiles/nixos/installer.nix
-                    {
-                      nixpkgs.pkgs = lib.mkForce p;
-                    }
-                  ];
-                };
-              in
-              isoEval.config.system.build.isoImage;
-          };
-        in
-        polycat'
-        // readout'
-        // nixosMinimalIso'
-        // {
-          inherit (p)
-            bumblebee
-            difit
-            git-now
-            jj-desc
-            keifu
-            pretty-ts-errors-markdown
-            roots
-            session-tts-codex
-            similarity-ts
-            tunnelto
-            ;
-        };
+      packages = {
+        inherit (pkgs)
+          bumblebee
+          difit
+          git-now
+          jj-desc
+          keifu
+          pretty-ts-errors-markdown
+          roots
+          session-tts-codex
+          similarity-ts
+          tunnelto
+          ;
+      }
+      // lib.optionalAttrs (!isDarwin) { inherit (pkgs) polycat; }
+      // lib.optionalAttrs isDarwin { inherit (pkgs) readout; }
+      // lib.optionalAttrs (system == "x86_64-linux") {
+        nixos-minimal-iso =
+          let
+            isoEval = import "${pkgs.path}/nixos/lib/eval-config.nix" {
+              system = "x86_64-linux";
+              modules = [
+                "${pkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+                ../../../modules/profiles/nixos/installer.nix
+                {
+                  nixpkgs.pkgs = lib.mkForce pkgs;
+                }
+              ];
+            };
+          in
+          isoEval.config.system.build.isoImage;
+      };
 
       apps = {
         build = {
           type = "app";
           meta.description = "Build the current host's Nix configuration";
           program = toString (
-            p.writeShellScript "build" ''
+            pkgs.writeShellScript "build" ''
               set -e
               ${isAgentCheck}
 
@@ -105,7 +97,7 @@
           type = "app";
           meta.description = "Switch to the current host's Nix configuration";
           program = toString (
-            p.writeShellScript "switch" ''
+            pkgs.writeShellScript "switch" ''
               set -eo pipefail
               ${isAgentCheck}
 
@@ -141,7 +133,7 @@
           type = "app";
           meta.description = "Format all files with treefmt";
           program = toString (
-            p.writeShellScript "treefmt-wrapper" ''
+            pkgs.writeShellScript "treefmt-wrapper" ''
               exec ${config.treefmt.build.wrapper}/bin/treefmt "$@"
             ''
           );
