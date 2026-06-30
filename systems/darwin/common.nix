@@ -1,4 +1,5 @@
 {
+  self,
   inputs,
   lib,
   pkgs,
@@ -11,10 +12,47 @@
     ../common.nix
     ../shared/comin/alloy.nix
     ../../modules/darwin
+    ../../modules/shared/nixpkgs
     inputs.comin.darwinModules.comin
     inputs.sops-nix.darwinModules.sops
     ../../modules/profiles/darwin/base.nix
   ];
+
+  my.nixpkgs = {
+    enable = true;
+    permittedInsecurePackages = [
+      "python3.13-ecdsa-0.19.2"
+    ];
+  };
+
+  nixpkgs = {
+    overlays = [
+      inputs.brew-nix.overlays.default
+      (_final: prev: {
+        stable = import inputs.nixpkgs-stable {
+          inherit (prev.stdenv.hostPlatform) system;
+          config.allowUnfree = true;
+        };
+      })
+      inputs.llm-agents.overlays.default
+      (_final: _prev: {
+        _nix-openclaw-tools = inputs.nix-openclaw-tools;
+        _ghostty = inputs.ghostty;
+        _repiq = inputs.repiq;
+        _moonbit-overlay = inputs.moonbit-overlay;
+        _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
+      })
+      inputs.gh-nippou.overlays.default
+      inputs.gh-graph.overlays.default
+      inputs.rustowl-flake.overlays.default
+      inputs.firefox-addons.overlays.default
+      inputs.nix-cachyos-kernel.overlays.default
+      inputs.nur-packages.overlays.default
+      inputs.birdclaw.overlays.default
+      inputs.nix-topology.overlays.default
+    ]
+    ++ lib.attrValues self.overlays;
+  };
 
   sops = {
     defaultSopsFile = ../../secrets/default.yaml;

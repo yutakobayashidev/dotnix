@@ -1,5 +1,7 @@
 {
+  self,
   inputs,
+  lib,
   pkgs,
   username,
   ...
@@ -15,6 +17,34 @@
     inputs.nix-topology.nixosModules.default
     ../../modules/nixos
   ];
+
+  nixpkgs = {
+    overlays = [
+      (_final: prev: {
+        stable = import inputs.nixpkgs-stable {
+          inherit (prev.stdenv.hostPlatform) system;
+          config.allowUnfree = true;
+        };
+      })
+      inputs.llm-agents.overlays.default
+      (_final: _prev: {
+        _nix-openclaw-tools = inputs.nix-openclaw-tools;
+        _ghostty = inputs.ghostty;
+        _repiq = inputs.repiq;
+        _moonbit-overlay = inputs.moonbit-overlay;
+        _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
+      })
+      inputs.gh-nippou.overlays.default
+      inputs.gh-graph.overlays.default
+      inputs.rustowl-flake.overlays.default
+      inputs.firefox-addons.overlays.default
+      inputs.nix-cachyos-kernel.overlays.default
+      inputs.nur-packages.overlays.default
+      inputs.birdclaw.overlays.default
+      inputs.nix-topology.overlays.default
+    ]
+    ++ lib.attrValues self.overlays;
+  };
 
   sops = {
     defaultSopsFile = ../../secrets/default.yaml;

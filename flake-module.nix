@@ -1,25 +1,26 @@
 {
+  self,
   inputs,
   lib,
   config,
-  mkPkgs,
   ...
 }:
 
 let
-  inherit (builtins) pathExists;
+  inherit (builtins) attrValues pathExists;
   inherit (lib)
     filter
-    foldl'
-    mapAttrsToList
+    last
+    mapAttrs
     mkOption
     optionalAttrs
     optionals
-    recursiveUpdate
+    splitString
     types
     ;
 
-  getDefaultPlatform = system: if lib.hasSuffix "-linux" system then "nixos" else "darwin";
+  getDefaultPlatform =
+    system: if (last (splitString "-" system)) == "linux" then "nixos" else "darwin";
 
   maybePath = path: if pathExists path then path else null;
 
@@ -31,49 +32,13 @@ let
       { darwinConfigurations.${hostname} = inputs.nix-darwin.lib.darwinSystem attrs; }
     else
       { nixOnDroidConfigurations.${hostname} = inputs.nix-on-droid.lib.nixOnDroidConfiguration attrs; };
-
-  mkSystemConfiguration =
-    name: cfg:
-    systemConfigurations cfg.platform name (
-      {
-        modules =
-          filter (x: x != null) [
-            (maybePath ./systems/${cfg.platform}/${name})
-            (maybePath ./homes/${cfg.platform}/${name})
-          ]
-          ++ cfg.modules
-          ++ optionals (cfg.platform != "android") [
-            { nixpkgs.pkgs = mkPkgs cfg.system; }
-          ];
-      }
-      // optionalAttrs (cfg.platform != "android") {
-        inherit (cfg) system;
-        specialArgs = {
-          inherit inputs;
-          inherit (cfg) username;
-        }
-        // cfg.specialArgs;
-      }
-      // optionalAttrs (cfg.platform == "android") {
-        extraSpecialArgs = {
-          inherit inputs;
-          inherit (cfg) username;
-        }
-        // cfg.specialArgs;
-        pkgs = import inputs.nixpkgs {
-          inherit (cfg) system;
-          overlays = [ inputs.nix-on-droid.overlays.default ];
-        };
-        home-manager-path = inputs.home-manager.outPath;
-      }
-    );
 in
 {
   options.hosts = mkOption {
     default = { };
     type = types.attrsOf (
       types.submodule (
-        { name, config, ... }:
+        { name, ... }:
         {
           options = {
             system = mkOption {
@@ -82,7 +47,7 @@ in
             };
 
             platform = mkOption {
-              default = getDefaultPlatform config.system;
+              default = getDefaultPlatform config.hosts.${name}.system;
               type = types.enum [
                 "nixos"
                 "darwin"
@@ -111,7 +76,62 @@ in
   };
 
   config = rec {
-    flake = foldl' recursiveUpdate { } (mapAttrsToList mkSystemConfiguration config.hosts);
+    flake = lib.foldAttrs (host: acc: host // acc) { } (
+      attrValues (
+        mapAttrs (
+          name: cfg:
+          systemConfigurations cfg.platform name (
+            {
+              modules =
+                filter (x: x != null) [
+                  (maybePath ./systems/${cfg.platform}/${name})
+                  (maybePath ./homes/${cfg.platform}/${name})
+                ]
+                ++ cfg.modules;
+              "${if cfg.platform == "android" then "extraS" else "s"}pecialArgs" = {
+                inherit self inputs;
+                inherit (cfg) username;
+              }
+              // cfg.specialArgs;
+            }
+            // optionalAttrs (cfg.platform != "android") { inherit (cfg) system; }
+            // optionalAttrs (cfg.platform == "android") {
+              pkgs = import inputs.nixpkgs {
+                inherit (cfg) system;
+                config.allowUnfree = true;
+                overlays = [
+                  (_final: prev: {
+                    stable = import inputs.nixpkgs-stable {
+                      inherit (prev.stdenv.hostPlatform) system;
+                      config.allowUnfree = true;
+                    };
+                  })
+                  inputs.llm-agents.overlays.default
+                  (_final: _prev: {
+                    _nix-openclaw-tools = inputs.nix-openclaw-tools;
+                    _ghostty = inputs.ghostty;
+                    _repiq = inputs.repiq;
+                    _moonbit-overlay = inputs.moonbit-overlay;
+                    _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
+                  })
+                  inputs.gh-nippou.overlays.default
+                  inputs.gh-graph.overlays.default
+                  inputs.rustowl-flake.overlays.default
+                  inputs.firefox-addons.overlays.default
+                  inputs.nix-cachyos-kernel.overlays.default
+                  inputs.nur-packages.overlays.default
+                  inputs.birdclaw.overlays.default
+                  inputs.nix-topology.overlays.default
+                  inputs.nix-on-droid.overlays.default
+                ]
+                ++ lib.attrValues self.overlays;
+              };
+              home-manager-path = inputs.home-manager.outPath;
+            }
+          )
+        ) config.hosts
+      )
+    );
 
     perSystem =
       { lib, system, ... }:

@@ -1,4 +1,3 @@
-{ mkPkgs, ... }:
 {
   perSystem =
     {
@@ -10,7 +9,7 @@
     let
       system = pkgs.stdenv.hostPlatform.system;
       isDarwin = builtins.match ".*-darwin" system != null;
-      p = mkPkgs system;
+      p = pkgs;
       nom = "${p.nix-output-monitor}/bin/nom";
 
       isAgentCheck = ''

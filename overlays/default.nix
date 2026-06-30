@@ -1,3 +1,5 @@
+_:
+
 let
   overlayFiles = [
     ./dev-tools.nix
@@ -5,8 +7,12 @@ let
     ./speechrecognition.nix
     ./tree-sitter-moonbit.nix
   ];
+
+  local = builtins.foldl' (
+    acc: overlay: final: prev:
+    (acc final prev) // ((import overlay) final prev)
+  ) (_: _: { }) overlayFiles;
 in
-builtins.foldl' (
-  acc: overlay: final: prev:
-  (acc final prev) // ((import overlay) final prev)
-) (_: _: { }) overlayFiles
+{
+  inherit local;
+}

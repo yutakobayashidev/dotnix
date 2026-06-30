@@ -290,6 +290,10 @@
         ./modules/flake/features/emacs
       ];
 
+      flake = {
+        overlays = import ./overlays { inherit inputs; };
+      };
+
       hosts = {
         B450M-Pro4 = {
           system = "x86_64-linux";

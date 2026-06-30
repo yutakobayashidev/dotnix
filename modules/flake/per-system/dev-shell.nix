@@ -1,4 +1,3 @@
-{ mkPkgs, ... }:
 {
   perSystem =
     {
@@ -8,9 +7,6 @@
       sgconfig,
       ...
     }:
-    let
-      p = mkPkgs pkgs.stdenv.hostPlatform.system;
-    in
     {
       devShells.default = pkgs.mkShell {
         packages = [
@@ -18,33 +14,33 @@
         ]
         ++ config.pre-commit.settings.enabledPackages
         ++ [
-          p.oci-cli
-          p.terragrunt
-          p.nix-fast-build
-          p.ssh-to-age
-          p.tflint
-          p.sops
-          p.packer
-          p.nomad
-          p.vault
-          p.checkov
-          p.pike
-          p.skill-scanner
-          p.skillspector
-          p.actionlint
-          p.pinact
-          p.ghalint
-          p.zizmor
+          pkgs.oci-cli
+          pkgs.terragrunt
+          pkgs.nix-fast-build
+          pkgs.ssh-to-age
+          pkgs.tflint
+          pkgs.sops
+          pkgs.packer
+          pkgs.nomad
+          pkgs.vault
+          pkgs.checkov
+          pkgs.pike
+          pkgs.skill-scanner
+          pkgs.skillspector
+          pkgs.actionlint
+          pkgs.pinact
+          pkgs.ghalint
+          pkgs.zizmor
           pkgs.ast-grep
           pkgs.tree-sitter
-          (p.opentofu.withPlugins (pl: [
+          (pkgs.opentofu.withPlugins (pl: [
             pl.go-gitea_gitea
             pl.oracle_oci
             pl.carlpett_sops
             pl.hashicorp_external
             pl.hashicorp_null
             pl.hashicorp_random
-            (p.opentofu.plugins.mkProvider {
+            (pkgs.opentofu.plugins.mkProvider {
               owner = "takeokunn";
               repo = "terraform-provider-cachix";
               rev = "v1.0.1";
@@ -54,7 +50,7 @@
               homepage = "https://registry.terraform.io/providers/takeokunn/cachix";
               provider-source-address = "registry.opentofu.org/takeokunn/cachix";
             })
-            (p.opentofu.plugins.mkProvider {
+            (pkgs.opentofu.plugins.mkProvider {
               owner = "breml";
               repo = "terraform-provider-uptimekuma";
               rev = "v0.3.2";
@@ -78,14 +74,14 @@
 
       devShells.infra-ci = pkgs.mkShell {
         packages = [
-          (p.opentofu.withPlugins (pl: [
+          (pkgs.opentofu.withPlugins (pl: [
             pl.go-gitea_gitea
             pl.oracle_oci
             pl.carlpett_sops
             pl.hashicorp_external
             pl.hashicorp_null
             pl.hashicorp_random
-            (p.opentofu.plugins.mkProvider {
+            (pkgs.opentofu.plugins.mkProvider {
               owner = "takeokunn";
               repo = "terraform-provider-cachix";
               rev = "v1.0.1";
@@ -95,7 +91,7 @@
               homepage = "https://registry.terraform.io/providers/takeokunn/cachix";
               provider-source-address = "registry.opentofu.org/takeokunn/cachix";
             })
-            (p.opentofu.plugins.mkProvider {
+            (pkgs.opentofu.plugins.mkProvider {
               owner = "breml";
               repo = "terraform-provider-uptimekuma";
               rev = "v0.3.2";
