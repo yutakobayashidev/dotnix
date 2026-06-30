@@ -1,14 +1,9 @@
 {
-  inputs,
   lib,
   pkgs,
   ...
 }:
 
-let
-  bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
-  edcb-tools = inputs.edcb-tools.packages.${pkgs.stdenv.hostPlatform.system}.edcb-tools;
-in
 {
   imports = [
     ../../home/coding-agents/agent-browser
@@ -49,13 +44,9 @@ in
     [
       babashka
       before-and-after
-      bird
       bumblebee
       cloc
-      defuddle
       difit
-      discrawl
-      edcb-tools
       gctx
       gogcli
       insomnia
@@ -79,6 +70,8 @@ in
       bit-vcs
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
+      android-studio
+      android-tools
       python313Packages.markitdown
     ];
 }

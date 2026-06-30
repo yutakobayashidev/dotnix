@@ -8,7 +8,7 @@
     {
       imports = [
         ../../../modules/profiles/home/development.nix
-        ../../../modules/profiles/home/desktop/media.nix
+        ../../../modules/profiles/home/media.nix
         ../../../modules/profiles/home/network.nix
         ../../desktop.nix
         ../../../applications/course-cli
