@@ -1,31 +1,72 @@
-{ inputs, lib, ... }:
+{
+  lib,
+  modulesPath,
+  config,
+  ...
+}:
 
 {
   imports = [
-    inputs.nixos-wsl.nixosModules.default
     ../common.nix
+    (modulesPath + "/installer/scan/not-detected.nix")
+    ../desktop.nix
     ../../../modules/profiles/nixos/base.nix
-    (
-      { pkgs, ... }:
-      {
-        environment.systemPackages = [ pkgs.cudatoolkit ];
-      }
-    )
+    ../../../modules/profiles/nixos/desktop.nix
   ];
 
-  wsl = {
-    enable = true;
-    defaultUser = "yuta";
-    wslConf = {
-      automount.options = "metadata";
-      boot.systemd = true;
+  ext.security.secureboot.enable = true;
+
+  boot = {
+    loader.efi.canTouchEfiVariables = true;
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "ahci"
+      ];
+      kernelModules = [ ];
     };
-    useWindowsDriver = true;
+    kernelModules = [ "kvm-amd" ];
+    extraModulePackages = [ ];
   };
 
-  networking.hostName = "X870-Steel-Legend-WiFi";
+  fileSystems."/" = {
+    device = "/dev/disk/by-label/nixos";
+    fsType = "ext4";
+  };
 
-  my.services.tailscale.enable = lib.mkForce false;
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/boot";
+    fsType = "vfat";
+    options = [
+      "fmask=0077"
+      "dmask=0077"
+    ];
+  };
+
+  swapDevices = [ ];
+
+  networking = {
+    hostName = "X870-Steel-Legend-WiFi";
+    useDHCP = lib.mkDefault true;
+    networkmanager.enable = true;
+  };
+
+  services.prometheus.exporters.node = {
+    enable = true;
+    enabledCollectors = [ "systemd" ];
+  };
+
+  services.logind.settings.Login = {
+    HandlePowerKey = "ignore";
+    HandlePowerKeyLongPress = "poweroff";
+  };
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
   system.stateVersion = "25.11";
 }

@@ -4,15 +4,16 @@
 
 ## Target
 
-| Machine                | Name                   | OS                     | System         | Stable |
-| ---------------------- | ---------------------- | ---------------------- | -------------- | ------ |
-| B450M Pro4             | B450M-Pro4             | NixOS                  | x86_64-linux   | ◎      |
-| UM790 Pro              | UM790-Pro              | NixOS                  | x86_64-linux   | ◎      |
-| X870 Steel Legend WiFi | X870-Steel-Legend-WiFi | NixOS (WSL)            | x86_64-linux   | ◎      |
-| Pi 5                   | pi5                    | NixOS                  | aarch64-linux  | △      |
-| OCI Ampere A1 VM       | oci-a1                 | NixOS                  | aarch64-linux  | △      |
-| M2 MacBook Air         | M2-MacBook-Air         | macOS                  | aarch64-darwin | ◎      |
-| Galaxy S23 FE          | Galaxy-S23FE           | Android (nix-on-droid) | aarch64-linux  | △      |
+| Machine                | Name                       | OS                     | System         | Stable |
+| ---------------------- | -------------------------- | ---------------------- | -------------- | ------ |
+| B450M Pro4             | B450M-Pro4                 | NixOS                  | x86_64-linux   | ◎      |
+| UM790 Pro              | UM790-Pro                  | NixOS                  | x86_64-linux   | ◎      |
+| X870 Steel Legend WiFi | X870-Steel-Legend-WiFi     | NixOS                  | x86_64-linux   | △      |
+| X870 Steel Legend WiFi | X870-Steel-Legend-WiFi-WSL | NixOS (WSL)            | x86_64-linux   | ◎      |
+| Pi 5                   | pi5                        | NixOS                  | aarch64-linux  | △      |
+| OCI Ampere A1 VM       | oci-a1                     | NixOS                  | aarch64-linux  | △      |
+| M2 MacBook Air         | M2-MacBook-Air             | macOS                  | aarch64-darwin | ◎      |
+| Galaxy S23 FE          | Galaxy-S23FE               | Android (nix-on-droid) | aarch64-linux  | △      |
 
 ## Module Structure
 
@@ -29,7 +30,8 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── services/            # Host/system service bundles (microVMs, secrets, etc.)
 │   │   ├── B450M-Pro4/           # NixOS host config (services, disko, impermanence)
 │   │   ├── UM790-Pro/           # NixOS host config (boot, network, locale)
-│   │   ├── X870-Steel-Legend-WiFi/   # NixOS-WSL host config (WSL, locale)
+│   │   ├── X870-Steel-Legend-WiFi/   # NixOS desktop host config
+│   │   ├── X870-Steel-Legend-WiFi-WSL/   # NixOS-WSL host config (WSL, locale)
 │   │   ├── pi5/                 # NixOS host config (headless Pi 5)
 │   │   └── oci-a1/              # OCI Ampere A1 NixOS host config (disko, boot, network)
 │   ├── darwin/

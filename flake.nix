@@ -292,6 +292,9 @@
         X870-Steel-Legend-WiFi = {
           system = "x86_64-linux";
         };
+        X870-Steel-Legend-WiFi-WSL = {
+          system = "x86_64-linux";
+        };
         pi5 = {
           system = "aarch64-linux";
         };
