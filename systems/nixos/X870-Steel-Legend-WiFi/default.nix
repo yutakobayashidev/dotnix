@@ -9,6 +9,7 @@
 {
   imports = [
     ../common.nix
+    ../services/comfyui
     (modulesPath + "/installer/scan/not-detected.nix")
     ../desktop.nix
     ../../../modules/profiles/nixos/base.nix
