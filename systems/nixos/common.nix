@@ -176,7 +176,6 @@
     openssh.enable = true;
     pcscd.enable = true;
   };
-  my.services.kubo.enable = true;
 
   security.sudo.extraConfig = ''
     Defaults pwfeedback

@@ -12,6 +12,7 @@
     ../services/nextcloud
     ../services/navidrome
     ../services/immich
+    ../services/kubo
     ../services/gitea
     ../services/gitea-actions-runner
     ../services/home-assistant
