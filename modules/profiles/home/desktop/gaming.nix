@@ -1,10 +1,26 @@
-# VRChat / avatar creation toolchain
-{ pkgs, lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.packages =
     (with pkgs; [
+      beatoraja
+      bs-manager
+      lutris
+      osu-lazer-bin
+      (prismlauncher.override {
+        jdks = [
+          jdk25
+          jdk21
+          jdk17
+          jdk8
+        ];
+      })
+      protonup-qt
+      tetrio-desktop
       vrc-get
+      wayvr
+      wineWow64Packages.stable
+      winetricks
     ])
     ++ lib.optionals pkgs.stdenv.isLinux (
       with pkgs;

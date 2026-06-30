@@ -21,7 +21,6 @@
 
       # macOS CLI tools
       terminal-notifier
-      coreutils
       cocoapods
     ]
     ++ (with pkgs.brewCasks; [

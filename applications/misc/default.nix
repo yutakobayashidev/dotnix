@@ -1,108 +1,42 @@
-# home-managerの共通パッケージリスト（Linux/macOS共通）
-{
-  inputs,
-  pkgs,
-  lib,
-  ...
-}:
-
-let
-  bird = inputs.bird.packages.${pkgs.stdenv.hostPlatform.system}.bird;
-  edcb-tools = inputs.edcb-tools.packages.${pkgs.stdenv.hostPlatform.system}.edcb-tools;
-  immich-go = pkgs.symlinkJoin {
-    name = "immich-go-no-docs";
-    paths = [ pkgs.immich-go ];
-    postBuild = ''
-      rm -f $out/bin/docs
-    '';
-  };
-in
+# Primitive CLI tools installed on every Home Manager host.
+{ lib, pkgs, ... }:
 
 {
   home.packages =
     with pkgs;
     [
-      # Version Control
-      bit-vcs
-      jujutsu
-      jj-desc
-
-      # Development Tools
-      babashka
-      before-and-after
-      bird
-      bumblebee
-      defuddle
-      discrawl
-      edcb-tools
-      gctx
-      vulnix
-      gogcli
-      nil
-      nix-init
-      ni
-      repiq
-      ruff
-      taplo
-      wabt
-
-      # CLI Utilities
-      pueue
-      curl-impersonate
       aria2
+      coreutils
+      curl
+      curl-impersonate
+      eza
+      fzf
+      glow
+      gum
+      jq
       jnv
       jolt-tui
       magika
-      tokei
-      cloc
-      similarity-ts
-      btop
-      vhs
-      yazi
-      imagemagick
-      exiftool
-      mat2
-      ffmpeg
-      mpv
-      apkeep
-      ipatool
-      whichllm
-      stable.yt-dlp
-      stable.gallery-dl
-      halloy
-      llm-agents.herdr
-      llm-agents.hunk
-      immich-go
-      luanti
-      nostui
-      obsidian
-      unar
-
-      # Network Tools
-      cloudflared
-      cloudflare-warp
-      vt-cli
-      tunnelto
-      speedtest-cli
-      bandwhich
-      nmap
-      dnsutils
-      wireguard-tools
-      gping
-
-      # Presentation
-      pdfpc
-
-      # Misc
-      sl
+      pueue
       qrcode
-      fastfetch
-      ooniprobe-cli
+      ripgrep
+      roots
+      sshpass
+      tokei
+      unar
+      wget
+      xh
+      yazi
+      zoxide
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
+      arp-scan
+      binutils
+      brightnessctl
+      kubo
+      nautilus
       psmisc
-      python313Packages.markitdown
-      proton-vpn-cli
+      rpi-imager
     ];
 
   programs.nix-index.enable = true;

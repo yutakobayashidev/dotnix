@@ -76,26 +76,6 @@
     HandlePowerKeyLongPress = "poweroff";
   };
 
-  environment.systemPackages = with pkgs; [
-    beatoraja
-    bs-manager
-    lutris
-    osu-lazer-bin
-    (prismlauncher.override {
-      jdks = [
-        jdk25
-        jdk21
-        jdk17
-        jdk8
-      ];
-    })
-    protonup-qt
-    tetrio-desktop
-    wayvr
-    wineWow64Packages.stable
-    winetricks
-  ];
-
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
@@ -104,6 +84,8 @@
       proton-ge-bin
     ];
   };
+
+  programs.alvr.enable = true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware = {

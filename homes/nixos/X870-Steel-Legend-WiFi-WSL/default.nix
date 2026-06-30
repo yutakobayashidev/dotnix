@@ -5,8 +5,8 @@
 
   home-manager.users.${username} = {
     imports = [
-      ../../../modules/profiles/home/cli.nix
       ../../../modules/profiles/home/development.nix
+      ../../../modules/profiles/home/network.nix
     ];
     home = {
       homeDirectory = "/home/${username}";

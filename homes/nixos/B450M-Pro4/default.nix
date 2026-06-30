@@ -5,8 +5,8 @@
 
   home-manager.users.${username} = {
     imports = [
-      ../../../modules/profiles/home/terminal.nix
       ../../../modules/profiles/home/development.nix
+      ../../../modules/profiles/home/network.nix
       ../../../modules/home/gallery-dl
       ../../../applications/whipper
       ../../../applications/beets

@@ -7,9 +7,10 @@
     { pkgs, ... }:
     {
       imports = [
-        ../../../modules/profiles/home/cli.nix
         ../../../modules/profiles/home/development.nix
-        ../../../modules/profiles/home/desktop.nix
+        ../../../modules/profiles/home/desktop/media.nix
+        ../../../modules/profiles/home/network.nix
+        ../../desktop.nix
         ../../../applications/course-cli
         ../desktop.nix
         inputs.onepassword-shell-plugins.hmModules.default

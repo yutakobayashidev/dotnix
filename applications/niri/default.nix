@@ -58,12 +58,12 @@
 
     # 自動起動
     spawn-at-startup = [
-      { command = [ "swww-daemon" ]; }
+      { command = [ "awww-daemon" ]; }
       {
         command = [
           "sh"
           "-c"
-          "sleep 1 && swww img ~/wallpapers/wp13990714.png --transition-type fade"
+          "sleep 1 && awww img ~/wallpapers/wp13990714.png --transition-type fade"
         ];
       }
       {
@@ -175,7 +175,7 @@
 
   # 必要なパッケージ
   home.packages = with pkgs; [
-    swww
+    awww
     rofi
     grimblast
     cliphist
