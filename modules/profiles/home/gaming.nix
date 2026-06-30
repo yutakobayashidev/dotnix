@@ -6,6 +6,7 @@
       beatoraja
       bs-manager
       lutris
+      modrinth-app
       osu-lazer-bin
       (prismlauncher.override {
         jdks = [

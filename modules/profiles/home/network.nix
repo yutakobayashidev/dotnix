@@ -13,7 +13,6 @@
       nostui
       ooniprobe-cli
       speedtest-cli
-      tunnelto
       vt-cli
       wireguard-tools
     ]
