@@ -108,8 +108,16 @@ in
                     _moonbit-overlay = inputs.moonbit-overlay;
                     _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
                   })
-                  inputs.gh-nippou.overlays.default
-                  inputs.gh-graph.overlays.default
+                  (
+                    _final: prev:
+                    let
+                      inherit (prev.stdenv.hostPlatform) system;
+                    in
+                    {
+                      gh-graph = inputs.gh-graph.packages.${system}.default;
+                      gh-nippou = inputs.gh-nippou.packages.${system}.default;
+                    }
+                  )
                   inputs.rustowl-flake.overlays.default
                   inputs.firefox-addons.overlays.default
                   inputs.nix-cachyos-kernel.overlays.default

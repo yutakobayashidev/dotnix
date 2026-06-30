@@ -213,6 +213,7 @@
 
   programs.ssh = {
     enable = true;
+    enableDefaultConfig = false;
     settings."git-ssh.yutakobayashi.com" = {
       proxyCommand = ''
         ${pkgs.cloudflared}/bin/cloudflared access ssh --hostname %h

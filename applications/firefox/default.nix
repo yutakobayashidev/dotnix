@@ -3,6 +3,7 @@
 {
   programs.firefox = {
     enable = true;
+    configPath = ".mozilla/firefox";
 
     profiles.nix = {
       extensions.packages = with pkgs.firefox-addons; [

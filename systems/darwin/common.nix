@@ -43,6 +43,8 @@
           edcb-tools = inputs.edcb-tools.packages.${system}.edcb-tools;
           ghostty = inputs.ghostty.packages.${system}.default;
           gogcli = inputs.nix-openclaw-tools.packages.${system}.gogcli;
+          gh-graph = inputs.gh-graph.packages.${system}.default;
+          gh-nippou = inputs.gh-nippou.packages.${system}.default;
           immich-go-no-docs = prev.symlinkJoin {
             name = "immich-go-no-docs";
             paths = [ prev.immich-go ];
@@ -85,8 +87,6 @@
           version-lsp = inputs.version-lsp.packages.${system}.default;
         }
       )
-      inputs.gh-nippou.overlays.default
-      inputs.gh-graph.overlays.default
       inputs.rustowl-flake.overlays.default
       inputs.firefox-addons.overlays.default
       inputs.nix-cachyos-kernel.overlays.default
