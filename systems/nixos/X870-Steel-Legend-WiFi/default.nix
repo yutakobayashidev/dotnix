@@ -2,6 +2,7 @@
   lib,
   modulesPath,
   config,
+  pkgs,
   ...
 }:
 
@@ -14,10 +15,13 @@
     ../../../modules/profiles/nixos/desktop.nix
   ];
 
+  dualboot.enable = true;
+
   ext.security.secureboot.enable = true;
 
   boot = {
     loader.efi.canTouchEfiVariables = true;
+    kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest;
     initrd = {
       availableKernelModules = [
         "nvme"
@@ -29,7 +33,10 @@
       ];
       kernelModules = [ ];
     };
-    kernelModules = [ "kvm-amd" ];
+    kernelModules = [
+      "kvm-amd"
+      "nvidia-uvm"
+    ];
     extraModulePackages = [ ];
   };
 
@@ -60,13 +67,29 @@
     enabledCollectors = [ "systemd" ];
   };
 
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   services.logind.settings.Login = {
     HandlePowerKey = "ignore";
     HandlePowerKeyLongPress = "poweroff";
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware = {
+    enableRedistributableFirmware = true;
+    cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    nvidia = {
+      open = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        config.boot.kernelPackages.nvidiaPackages.stable
+      ];
+    };
+    nvidia-container-toolkit.enable = true;
+  };
 
   system.stateVersion = "25.11";
 }

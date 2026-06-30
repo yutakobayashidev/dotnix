@@ -36,6 +36,7 @@ let
         inputs.gh-graph.overlays.default
         inputs.rustowl-flake.overlays.default
         inputs.firefox-addons.overlays.default
+        inputs.nix-cachyos-kernel.overlays.default
         inputs.nur-packages.overlays.default
         inputs.birdclaw.overlays.default
         inputs.nix-topology.overlays.default
