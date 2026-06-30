@@ -64,16 +64,18 @@
     networkmanager.enable = true;
   };
 
-  services.prometheus.exporters.node = {
-    enable = true;
-    enabledCollectors = [ "systemd" ];
-  };
+  services = {
+    prometheus.exporters.node = {
+      enable = true;
+      enabledCollectors = [ "systemd" ];
+    };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+    xserver.videoDrivers = [ "nvidia" ];
 
-  services.logind.settings.Login = {
-    HandlePowerKey = "ignore";
-    HandlePowerKeyLongPress = "poweroff";
+    logind.settings.Login = {
+      HandlePowerKey = "ignore";
+      HandlePowerKeyLongPress = "poweroff";
+    };
   };
 
   programs.steam = {

@@ -24,8 +24,7 @@ in
 
   config = lib.mkIf cfg.enable {
     nixpkgs.config = {
-      allowUnfree = cfg.allowUnfree;
-      inherit (cfg) permittedInsecurePackages;
+      inherit (cfg) allowUnfree permittedInsecurePackages;
     };
   };
 }

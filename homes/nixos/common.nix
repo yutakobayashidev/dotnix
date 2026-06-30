@@ -34,6 +34,7 @@ in
       inputs.nix-index-database.homeModules.nix-index
       inputs.sops-nix.homeManagerModules.sops
       inputs.self.homeManagerModules.emacs
+      inputs.self.homeManagerModules.neovim
     ];
     users.${username} =
       { config, ... }:

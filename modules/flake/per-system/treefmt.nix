@@ -12,8 +12,8 @@
           stylua = {
             enable = true;
             excludes = [
-              "nvim/init.lua"
-              "nvim/lua/rc/**"
+              "modules/flake/features/neovim/init.lua"
+              "modules/flake/features/neovim/lua/rc/**"
             ];
           };
           shfmt.enable = true;
@@ -22,8 +22,8 @@
           oxfmt = {
             enable = true;
             excludes = [
-              "nvim/template/**"
-              "nvim/lazy-lock.json"
+              "modules/flake/features/neovim/template/**"
+              "modules/flake/features/neovim/lazy-lock.json"
               "**/.npmrc"
             ];
           };

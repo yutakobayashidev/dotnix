@@ -6,11 +6,11 @@ _: {
     ../applications/fastfetch
     ../applications/git
     ../applications/misc
-    ../applications/neovim
     ../applications/tmux
   ];
 
   programs.home-manager.enable = true;
+  my.programs.neovim.enable = true;
   home.stateVersion = "25.11";
   home.preferXdgDirectories = true;
 }
