@@ -1,20 +1,22 @@
-_:
+{ inputs }:
 
-let
-  overlayFiles = [
-    ./dev-tools.nix
-    ./session-tts-codex.nix
-    ./speechrecognition.nix
-    ./tree-sitter-moonbit.nix
-  ];
-
-  local = builtins.foldl' (
-    acc: overlay: final: prev:
-    (acc final prev) // ((import overlay) final prev)
-  ) (_: _: { }) overlayFiles;
-in
 {
-  inherit local;
+  stable = _final: prev: {
+    stable = import inputs.nixpkgs-stable {
+      inherit (prev.stdenv.hostPlatform) system;
+      config.allowUnfree = true;
+    };
+  };
+
+  temporary-fix = _final: prev: {
+    python313Packages = prev.python313Packages.overrideScope (
+      _pyFinal: pyPrev: {
+        speechrecognition = pyPrev.speechrecognition.overridePythonAttrs {
+          doCheck = false;
+        };
+      }
+    );
+  };
 
   patches = final: prev: {
     gh = final.writeShellApplication {
@@ -26,6 +28,44 @@ in
         fi
 
         exec ${final.lib.getExe prev.gh} "$@"
+      '';
+    };
+
+    session-tts-codex =
+      let
+        python = prev.python3;
+      in
+      python.pkgs.buildPythonApplication {
+        pname = "session-tts-codex";
+        version = "0.1.0";
+        src = ../codex/session-tts/python;
+        format = "pyproject";
+        nativeBuildInputs = with python.pkgs; [
+          setuptools
+        ];
+        propagatedBuildInputs = with python.pkgs; [
+          httpx
+        ];
+        doCheck = false;
+      };
+
+    tree-sitter-moonbit-grammar = prev.stdenv.mkDerivation {
+      pname = "tree-sitter-moonbit-grammar";
+      version = "0-unstable";
+      src = prev._tree-sitter-moonbit;
+      buildInputs = [ prev.tree-sitter ];
+      buildPhase = ''
+        cd src
+        $CC -shared -fPIC -o parser.so parser.c scanner.c -I .
+      '';
+      installPhase = ''
+        mkdir -p $out/parser
+        cp parser.so $out/parser/moonbit.so
+        cd ..
+        if [ -d queries ]; then
+          mkdir -p $out/queries/moonbit
+          cp queries/*.scm $out/queries/moonbit/
+        fi
       '';
     };
   };

@@ -228,6 +228,10 @@
       url = "github:nix-community/rustowl-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    version-lsp = {
+      url = "github:skanehira/version-lsp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     moonbit-overlay = {
       url = "github:moonbit-community/moonbit-overlay";
       flake = false;

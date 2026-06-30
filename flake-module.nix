@@ -100,12 +100,6 @@ in
                 inherit (cfg) system;
                 config.allowUnfree = true;
                 overlays = [
-                  (_final: prev: {
-                    stable = import inputs.nixpkgs-stable {
-                      inherit (prev.stdenv.hostPlatform) system;
-                      config.allowUnfree = true;
-                    };
-                  })
                   inputs.llm-agents.overlays.default
                   (_final: _prev: {
                     _nix-openclaw-tools = inputs.nix-openclaw-tools;

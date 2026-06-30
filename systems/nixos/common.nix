@@ -20,18 +20,8 @@
 
   nixpkgs = {
     overlays = [
-      (_final: prev: {
-        stable = import inputs.nixpkgs-stable {
-          inherit (prev.stdenv.hostPlatform) system;
-          config.allowUnfree = true;
-        };
-      })
       inputs.llm-agents.overlays.default
       (_final: _prev: {
-        _nix-openclaw-tools = inputs.nix-openclaw-tools;
-        _ghostty = inputs.ghostty;
-        _repiq = inputs.repiq;
-        _moonbit-overlay = inputs.moonbit-overlay;
         _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
       })
       (
@@ -41,7 +31,10 @@
         in
         {
           bird = inputs.bird.packages.${system}.bird;
+          discrawl = inputs.nix-openclaw-tools.packages.${system}.discrawl;
           edcb-tools = inputs.edcb-tools.packages.${system}.edcb-tools;
+          ghostty = inputs.ghostty.packages.${system}.default;
+          gogcli = inputs.nix-openclaw-tools.packages.${system}.gogcli;
           immich-go-no-docs = prev.symlinkJoin {
             name = "immich-go-no-docs";
             paths = [ prev.immich-go ];
@@ -49,6 +42,39 @@
               rm -f $out/bin/docs
             '';
           };
+          moonbit-lsp =
+            let
+              versions = import "${inputs.moonbit-overlay}/versions.nix" prev.lib;
+              inherit (versions) latest;
+              targets = {
+                x86_64-linux = "linux-x86_64";
+                aarch64-linux = "linux-aarch64";
+                aarch64-darwin = "darwin-aarch64";
+              };
+              target = targets.${system} or null;
+              hashAttr = if target != null then "${target}-toolchainsHash" else null;
+            in
+            if target != null && builtins.hasAttr hashAttr latest then
+              prev.stdenv.mkDerivation {
+                pname = "moonbit-lsp";
+                inherit (latest) version;
+                src = prev.fetchurl {
+                  url = "https://github.com/moonbit-community/moonbit-overlay/releases/download/${prev.lib.escapeURL latest.version}/moonbit-${target}.tar.gz";
+                  hash = latest.${hashAttr};
+                };
+                sourceRoot = ".";
+                installPhase = ''
+                  mkdir -p $out/bin
+                  cp bin/moonbit-lsp $out/bin/moonbit-lsp
+                  chmod +x $out/bin/moonbit-lsp
+                '';
+              }
+            else
+              null;
+          repiq = inputs.repiq.packages.${system}.default.overrideAttrs (_: {
+            doCheck = !prev.stdenv.hostPlatform.isDarwin;
+          });
+          version-lsp = inputs.version-lsp.packages.${system}.default;
         }
       )
       inputs.gh-nippou.overlays.default
