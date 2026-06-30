@@ -74,6 +74,15 @@
     HandlePowerKeyLongPress = "poweroff";
   };
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
+  };
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware = {
     enableRedistributableFirmware = true;
