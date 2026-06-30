@@ -10,6 +10,7 @@
   imports = [
     ../common.nix
     ../services/comfyui
+    ../services/wivrn
     (modulesPath + "/installer/scan/not-detected.nix")
     ../desktop.nix
     ../../../modules/profiles/nixos/base.nix
