@@ -65,11 +65,7 @@ Skip if the change has no doc impact.
 
 ## Link Handling
 
-- When the user provides an `x.com` or `twitter.com` status link, you can use `https://api.fxtwitter.com/:screen_name?/status/:id` to fetch tweet/post data.
-
-```
-curl "https://api.fxtwitter.com/jack/status/20"
-```
+- When the user provides an `x.com` or `twitter.com` status link, use the Bird skill to fetch and inspect the tweet/post data.
 
 ## Core Principles
 
