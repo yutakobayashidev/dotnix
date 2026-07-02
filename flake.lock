@@ -689,11 +689,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1778716662,
-        "narHash": "sha256-m1Yf0wZ8j1OHjTc2UwHwyQRSnNeSgLJOd7q5Y45hzi4=",
+        "lastModified": 1780356965,
+        "narHash": "sha256-fQ3Mj5DvlNv4rKXQlJjHk5LD7N/P48llNXJCyM1RVpA=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "f7c1a2d347e4c52d5fb8d10cb4d94b5884e546fb",
+        "rev": "3561d1a4dd05bc51d7dec6c5d0ad339d7a70be4d",
         "type": "github"
       },
       "original": {
