@@ -15,6 +15,7 @@
     ../../home/coding-agents/copilot-cli
     ../../home/coding-agents/cursor-agent
     ../../home/coding-agents/grok
+    ../../home/coding-agents/herdr
     ../../home/coding-agents/opencode
     ../../home/coding-agents/pi
     ../../home/coding-agents/spec-kit
@@ -32,6 +33,7 @@
     copilot-cli.enable = true;
     cursor-agent.enable = true;
     grok.enable = true;
+    herdr.enable = true;
     gh.enable = true;
     jj.enable = true;
     opencode.enable = true;
@@ -52,7 +54,6 @@
       insomnia
       jj-desc
       jujutsu
-      llm-agents.herdr
       llm-agents.hunk
       ni
       nil
