@@ -273,22 +273,6 @@
         "type": "github"
       }
     },
-    "cmux-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1782868680,
-        "narHash": "sha256-QnnJZwxC++RyGFKXP2XDgsOCdOFtEvB2Jf6TkxUy8Lc=",
-        "owner": "manaflow-ai",
-        "repo": "cmux",
-        "rev": "2313855c4988ea20e065a9a9e87413f014777f46",
-        "type": "github"
-      },
-      "original": {
-        "owner": "manaflow-ai",
-        "repo": "cmux",
-        "type": "github"
-      }
-    },
     "comfyui-nix": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -2305,7 +2289,6 @@
         "birdclaw": "birdclaw",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
-        "cmux-skills": "cmux-skills",
         "comfyui-nix": "comfyui-nix",
         "comin": "comin",
         "difit-skills": "difit-skills",

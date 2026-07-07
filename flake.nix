@@ -132,10 +132,6 @@
       url = "github:vercel-labs/before-and-after";
       flake = false;
     };
-    cmux-skills = {
-      url = "github:manaflow-ai/cmux";
-      flake = false;
-    };
     mattpocock-skills = {
       url = "github:mattpocock/skills";
       flake = false;

@@ -87,12 +87,6 @@ in
           path = inputs.edcb-tools;
           subdir = ".agents/skills";
         };
-      }
-      // lib.optionalAttrs pkgs.stdenv.isDarwin {
-        cmux = {
-          path = inputs.cmux-skills;
-          subdir = "skills";
-        };
       };
 
       skills.enableAll = [
@@ -248,36 +242,6 @@ in
         loop-me = {
           from = "mattpocock";
           path = "in-progress/loop-me";
-        };
-      }
-      // lib.optionalAttrs pkgs.stdenv.isDarwin {
-        cmux = {
-          from = "cmux";
-          path = "cmux";
-        };
-        cmux-workspace = {
-          from = "cmux";
-          path = "cmux-workspace";
-        };
-        cmux-settings = {
-          from = "cmux";
-          path = "cmux-settings";
-        };
-        cmux-customization = {
-          from = "cmux";
-          path = "cmux-customization";
-        };
-        cmux-diagnostics = {
-          from = "cmux";
-          path = "cmux-diagnostics";
-        };
-        cmux-browser = {
-          from = "cmux";
-          path = "cmux-browser";
-        };
-        cmux-markdown = {
-          from = "cmux";
-          path = "cmux-markdown";
         };
       };
 

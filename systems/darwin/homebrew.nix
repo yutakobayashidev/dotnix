@@ -9,7 +9,6 @@
     };
     taps = [
       "blacktop/tap"
-      "manaflow-ai/cmux"
       "steipete/tap"
       "trasta298/tap"
       "matthart1983/tap"
@@ -95,7 +94,6 @@
       "modrinth"
 
       # Other
-      "cmux"
       "bitcoin-core"
       "keybase"
       "raycast"
