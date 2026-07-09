@@ -2671,11 +2671,11 @@
     "tree-sitter-moonbit": {
       "flake": false,
       "locked": {
-        "lastModified": 1781243089,
-        "narHash": "sha256-nPESRI3H9imrmHGonCoS/oPH254G4AJruLhA7wpDmNQ=",
+        "lastModified": 1783313302,
+        "narHash": "sha256-8udCI1HLGT5uDq7K9X4FcME100OXxoMSejtFl+HFgzY=",
         "owner": "moonbitlang",
         "repo": "tree-sitter-moonbit",
-        "rev": "c76eb43a7ea35de24eec13dee1fe22fadb2533d7",
+        "rev": "fe025ee46c206a36aa99f0c8444cb730abe5473e",
         "type": "github"
       },
       "original": {
