@@ -20,6 +20,12 @@
         };
       }
     );
+
+    whipper = prev.whipper.overridePythonAttrs (old: {
+      propagatedBuildInputs =
+        (prev.lib.remove prev.python3Packages.setuptools old.propagatedBuildInputs)
+        ++ [ prev.python3Packages.setuptools_80 ];
+    });
   };
 
   patches = final: prev: {
