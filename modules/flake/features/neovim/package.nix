@@ -22,7 +22,6 @@
   rustowl,
   rustowl-nvim,
   stylelint,
-  stylelint-lsp,
   svelte-language-server,
   tailwindcss-language-server,
   tree-sitter-moonbit-grammar,
@@ -52,7 +51,6 @@ let
     gh-actions-language-server
     prisma-language-server
     stylelint
-    stylelint-lsp
     svelte-language-server
     tailwindcss-language-server
     vscode-langservers-extracted

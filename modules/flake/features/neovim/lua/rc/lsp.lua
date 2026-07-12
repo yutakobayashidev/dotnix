@@ -76,11 +76,6 @@ vim.lsp.config.prismals = {
 	filetypes = { "prisma" },
 	root_markers = { "schema.prisma", ".git" },
 }
-vim.lsp.config.stylelint_lsp = {
-	cmd = { "stylelint-lsp", "--stdio" },
-	filetypes = { "css", "scss", "less", "vue", "svelte" },
-	root_markers = { ".stylelintrc", ".stylelintrc.json", "stylelint.config.js", ".git" },
-}
 vim.lsp.config.svelte = {
 	cmd = { "svelteserver", "--stdio" },
 	filetypes = { "svelte" },
@@ -148,7 +143,6 @@ return vim.lsp.enable({
 	"astro",
 	"emmet_ls",
 	"prismals",
-	"stylelint_lsp",
 	"svelte",
 	"tailwindcss",
 	"html",

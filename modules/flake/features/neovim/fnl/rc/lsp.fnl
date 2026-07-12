@@ -103,14 +103,6 @@
       :filetypes [:prisma]
       :root_markers [:schema.prisma :.git]})
 
-(set vim.lsp.config.stylelint_lsp
-     {:cmd [:stylelint-lsp :--stdio]
-      :filetypes [:css :scss :less :vue :svelte]
-      :root_markers [:.stylelintrc
-                     :.stylelintrc.json
-                     :stylelint.config.js
-                     :.git]})
-
 (set vim.lsp.config.svelte
      {:cmd [:svelteserver :--stdio]
       :filetypes [:svelte]
@@ -206,7 +198,6 @@
    :astro
    :emmet_ls
    :prismals
-   :stylelint_lsp
    :svelte
    :tailwindcss
    :html
