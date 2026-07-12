@@ -24,7 +24,7 @@ let
       "none";
   settings = {
     approval_policy = "on-request";
-    model = "gpt-5.5";
+    model = "gpt-5.6-sol";
     model_reasoning_effort = "medium";
     personality = "pragmatic";
     project_doc_fallback_filenames = [ "CLAUDE.md" ];
