@@ -44,4 +44,5 @@ infra/oci/nix-builder/oci_secrets.yaml
 **/.gemini/skills/
 **/.github/skills/
 **/.opencode/skills/
+**/.pi/skills/
 **/.windsurf/skills/
