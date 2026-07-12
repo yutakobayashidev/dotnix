@@ -83,7 +83,7 @@ in
       environment = {
         BIRDCLAW_BIRD_COMMAND = lib.getExe pkgs.bird;
         OPENAI_API_KEY = "sk-proxy";
-        OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
+        BIRDCLAW_OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com/v1";
         BIRDCLAW_AI_MODEL = "deepseek-analyst";
         BIRDCLAW_OPENAI_MODEL = "deepseek-inbox";
         TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
@@ -112,7 +112,7 @@ in
         BIRDCLAW_BIRD_COMMAND = lib.getExe pkgs.bird;
         TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
         OPENAI_API_KEY = "sk-proxy";
-        OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com";
+        BIRDCLAW_OPENAI_BASE_URL = "https://litellm.home.yutakobayashi.com/v1";
         BIRDCLAW_AI_MODEL = "deepseek-analyst";
       };
     };
