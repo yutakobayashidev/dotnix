@@ -38,6 +38,7 @@
     ../services/s3s
     ../services/headroom
     ../services/aivisspeech
+    ../services/voicevox
     ../services/starla
     ../services/uptime-kuma
     ../services/netboot

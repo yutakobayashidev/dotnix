@@ -80,6 +80,10 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
+          id       = uptimekuma_monitor_http.voicevox.id
+          send_url = true
+        },
+        {
           id       = uptimekuma_monitor_http.archivebox.id
           send_url = true
         },
