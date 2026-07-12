@@ -228,10 +228,6 @@
       url = "github:moonbit-community/moonbit-overlay";
       flake = false;
     };
-    tree-sitter-moonbit = {
-      url = "github:moonbitlang/tree-sitter-moonbit";
-      flake = false;
-    };
     nix-topology = {
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";

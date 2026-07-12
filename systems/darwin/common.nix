@@ -28,9 +28,6 @@
   nixpkgs = {
     overlays = [
       inputs.brew-nix.overlays.default
-      (_final: _prev: {
-        _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
-      })
       (
         _final: prev:
         let

@@ -2038,11 +2038,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782575294,
-        "narHash": "sha256-FVVg0qyqnQ8yggyAk13HjzwcNqYd4Ux4k5QdJepZYoM=",
+        "lastModified": 1783887917,
+        "narHash": "sha256-k9zjVVA6b1NP1MV9IxtL2UvczDLB/vM66i6h+1jhcfY=",
         "owner": "yutakobayashidev",
         "repo": "nur-packages",
-        "rev": "b0d08a81792c41ea858d7fde3ac6eecac55ed704",
+        "rev": "f3f131c38fbc13fa99ee74e107ae5bf63f32b802",
         "type": "github"
       },
       "original": {
@@ -2272,7 +2272,6 @@
         "sops-nix": "sops-nix",
         "starla": "starla",
         "superpowers": "superpowers",
-        "tree-sitter-moonbit": "tree-sitter-moonbit",
         "treefmt-nix": "treefmt-nix_4",
         "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills",
         "version-lsp": "version-lsp",
@@ -2600,22 +2599,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "tree-sitter-moonbit": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1783313302,
-        "narHash": "sha256-8udCI1HLGT5uDq7K9X4FcME100OXxoMSejtFl+HFgzY=",
-        "owner": "moonbitlang",
-        "repo": "tree-sitter-moonbit",
-        "rev": "fe025ee46c206a36aa99f0c8444cb730abe5473e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "moonbitlang",
-        "repo": "tree-sitter-moonbit",
         "type": "github"
       }
     },

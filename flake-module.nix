@@ -104,7 +104,6 @@ in
                     _ghostty = inputs.ghostty;
                     _repiq = inputs.repiq;
                     _moonbit-overlay = inputs.moonbit-overlay;
-                    _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
                   })
                   (
                     _final: prev:
