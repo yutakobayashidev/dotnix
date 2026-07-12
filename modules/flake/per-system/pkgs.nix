@@ -1,4 +1,7 @@
 { inputs, ... }:
+let
+  localOverlays = import ../../../overlays { inherit inputs; };
+in
 {
   perSystem =
     { system, ... }:
@@ -12,7 +15,6 @@
           ];
         };
         overlays = [
-          inputs.llm-agents.overlays.default
           (_final: _prev: {
             _tree-sitter-moonbit = inputs.tree-sitter-moonbit;
           })
@@ -56,7 +58,8 @@
           )
           inputs.rustowl-flake.overlays.default
           inputs.nur-packages.overlays.default
-          (import ../../../overlays { inherit inputs; }).patches
+          localOverlays.llm-agents
+          localOverlays.patches
         ];
       };
     };

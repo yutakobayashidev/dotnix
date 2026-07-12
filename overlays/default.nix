@@ -1,6 +1,10 @@
 { inputs }:
 
 {
+  llm-agents = final: _prev: {
+    llm-agents = inputs.llm-agents.packages.${final.stdenv.hostPlatform.system};
+  };
+
   stable = _final: prev: {
     stable = import inputs.nixpkgs-stable {
       inherit (prev.stdenv.hostPlatform) system;

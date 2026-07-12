@@ -14,7 +14,6 @@ let
     mapAttrs
     mkOption
     optionalAttrs
-    optionals
     splitString
     types
     ;
@@ -100,7 +99,6 @@ in
                 inherit (cfg) system;
                 config.allowUnfree = true;
                 overlays = [
-                  inputs.llm-agents.overlays.default
                   (_final: _prev: {
                     _nix-openclaw-tools = inputs.nix-openclaw-tools;
                     _ghostty = inputs.ghostty;
