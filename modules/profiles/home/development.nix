@@ -73,6 +73,6 @@
     ++ lib.optionals pkgs.stdenv.isLinux [
       android-studio
       android-tools
-      python313Packages.markitdown
+      stable.python313Packages.markitdown
     ];
 }

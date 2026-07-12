@@ -17,7 +17,7 @@ let
   whipperConf = pkgs.writeText "whipper.conf" (lib.generators.toINI { } whipperConfAttrs);
 in
 {
-  home.packages = [ pkgs.whipper ];
+  home.packages = [ pkgs.stable.whipper ];
 
   home.activation.writeWhipperConf = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     if [ ! -f "${whipperConfigDir}/whipper.conf" ]; then

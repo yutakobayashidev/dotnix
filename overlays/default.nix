@@ -12,22 +12,6 @@
     };
   };
 
-  temporary-fix = _final: prev: {
-    python313Packages = prev.python313Packages.overrideScope (
-      _pyFinal: pyPrev: {
-        speechrecognition = pyPrev.speechrecognition.overridePythonAttrs {
-          doCheck = false;
-        };
-      }
-    );
-
-    whipper = prev.whipper.overridePythonAttrs (old: {
-      propagatedBuildInputs =
-        (prev.lib.remove prev.python3Packages.setuptools old.propagatedBuildInputs)
-        ++ [ prev.python3Packages.setuptools_80 ];
-    });
-  };
-
   patches = final: prev: {
     gh = final.writeShellApplication {
       name = "gh";
