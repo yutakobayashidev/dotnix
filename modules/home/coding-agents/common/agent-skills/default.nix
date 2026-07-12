@@ -15,6 +15,11 @@ let
     name = "agent-scripts-no-symlinks";
     filter = _path: type: type != "symlink";
   };
+  herdrSkillSrc = builtins.path {
+    path = inputs.herdr-skill;
+    name = "herdr-skill-no-symlinks";
+    filter = _path: type: type != "symlink";
+  };
 in
 {
   options.my.programs.agent-skills.enable = lib.mkEnableOption "agent skills";
@@ -87,6 +92,7 @@ in
           path = inputs.edcb-tools;
           subdir = ".agents/skills";
         };
+        herdr.path = herdrSkillSrc;
       };
 
       skills.enableAll = [
@@ -160,6 +166,10 @@ in
           from = "edcb-tools";
           path = "edcb-tools";
           packages = [ edcbToolsPackage ];
+        };
+        herdr = {
+          from = "herdr";
+          path = ".";
         };
 
         agent-browser =

@@ -144,6 +144,10 @@
       url = "github:hashicorp/agent-skills";
       flake = false;
     };
+    herdr-skill = {
+      url = "github:ogulcancelik/herdr";
+      flake = false;
+    };
     skills = {
       url = "github:yutakobayashidev/skills";
       flake = false;

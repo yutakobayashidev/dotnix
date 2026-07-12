@@ -1114,6 +1114,22 @@
         "type": "github"
       }
     },
+    "herdr-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1783858037,
+        "narHash": "sha256-/Xa0TkKbEoOalummhTmo3kKQu2vITjQKiJyIaWsSEG8=",
+        "owner": "ogulcancelik",
+        "repo": "herdr",
+        "rev": "3661d99c2e4a4247392fc1a1eed5f37453393f8e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ogulcancelik",
+        "repo": "herdr",
+        "type": "github"
+      }
+    },
     "hermes-agent": {
       "inputs": {
         "flake-parts": [
@@ -2238,6 +2254,7 @@
         "ghostty": "ghostty",
         "git-hooks": "git-hooks_2",
         "hashicorp-agent-skills": "hashicorp-agent-skills",
+        "herdr-skill": "herdr-skill",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_3",
         "impermanence": "impermanence",
