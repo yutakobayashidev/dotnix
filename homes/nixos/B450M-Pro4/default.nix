@@ -43,7 +43,11 @@
       sopsFile = ../../../modules/home/discrawl/secrets.yaml;
       systemd.enable = true;
     };
-    home.packages = [ pkgs.discrawl ];
+    home.packages = with pkgs; [
+      bird
+      discrawl
+      edcb-tools
+    ];
     systemd.user.services.oci-retry = {
       Unit = {
         Description = "OCI nix-builder retry loop";

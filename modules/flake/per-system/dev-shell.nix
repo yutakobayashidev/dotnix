@@ -14,7 +14,7 @@
         ]
         ++ config.pre-commit.settings.enabledPackages
         ++ [
-          pkgs.oci-cli
+          pkgs.stable.oci-cli
           pkgs.terragrunt
           pkgs.nix-fast-build
           pkgs.ssh-to-age
@@ -23,7 +23,7 @@
           pkgs.packer
           pkgs.nomad
           pkgs.vault
-          pkgs.checkov
+          pkgs.stable.checkov
           pkgs.pike
           pkgs.skill-scanner
           pkgs.skillspector

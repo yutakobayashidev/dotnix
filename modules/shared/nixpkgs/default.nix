@@ -17,7 +17,7 @@ in
     permittedInsecurePackages = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
-      example = [ "python3.13-ecdsa-0.19.2" ];
+      example = [ "python3.14-ecdsa-0.19.2" ];
       description = "Insecure packages permitted for this host.";
     };
   };

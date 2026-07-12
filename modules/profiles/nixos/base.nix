@@ -9,7 +9,7 @@
     nixpkgs = {
       enable = true;
       permittedInsecurePackages = [
-        "python3.13-ecdsa-0.19.2"
+        "python3.14-ecdsa-0.19.2"
       ];
     };
     services.tailscale.enable = true;

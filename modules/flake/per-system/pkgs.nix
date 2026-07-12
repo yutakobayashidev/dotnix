@@ -11,7 +11,7 @@ in
         config = {
           allowUnfree = true;
           permittedInsecurePackages = [
-            "python3.13-ecdsa-0.19.2"
+            "python3.14-ecdsa-0.19.2"
           ];
         };
         overlays = [
@@ -55,6 +55,7 @@ in
           )
           inputs.rustowl-flake.overlays.default
           inputs.nur-packages.overlays.default
+          localOverlays.stable
           localOverlays.llm-agents
           localOverlays.patches
         ];
