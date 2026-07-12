@@ -58,7 +58,7 @@
   boot = {
     loader.efi.canTouchEfiVariables = true;
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    kernelPackages = pkgs.linuxPackages_7_0;
+    kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
       systemd.enable = true;
       luks.devices.cryptroot = {
