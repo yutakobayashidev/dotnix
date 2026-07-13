@@ -22,6 +22,14 @@ resource "gitea_repository" "twitter_archive" {
   auto_init   = false
 }
 
+resource "gitea_repository" "twitter_lite" {
+  username    = "yuta"
+  name        = "twitter-lite"
+  description = "Twitter Lite"
+  private     = false
+  auto_init   = false
+}
+
 resource "gitea_repository" "discord_archive" {
   username    = "yuta"
   name        = "discord-archive"
