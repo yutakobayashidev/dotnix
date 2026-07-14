@@ -230,11 +230,13 @@ in
       edcbToolsPackage
       pkgs.bird
       pkgs.cloudflared
+      pkgs.course-cli
       pkgs.curl
       pkgs.defuddle
       pkgs.discrawl
       pkgs.git
       pkgs.jq
+      pkgs.nlobby-cli
       pkgs.python3
       pkgs.ripgrep
     ];

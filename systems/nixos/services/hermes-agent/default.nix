@@ -44,6 +44,10 @@
       DISCORD_ALLOWED_USERS=890908900520505354
       DISCORD_HOME_CHANNEL=1028287639918497822
       BIRD_PROFILE_NAME=account1
+      COURSE_API_URL=https://api.nnn.ed.nico/
+      COURSE_PAPI_URL=https://papi.nnn.ed.nico/
+      COURSE_WEB_URL=https://www.nnn.ed.nico/
+      COURSE_COOKIE_NAME=_zane_session
       EDCB_HOST=100.111.109.43
       EDCB_PORT=4510
       EDCB_TIMEOUT_SECONDS=15
