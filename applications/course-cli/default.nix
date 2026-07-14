@@ -1,6 +1,8 @@
-_:
+{ pkgs, ... }:
 
 {
+  home.packages = [ pkgs.course-cli ];
+
   home.sessionVariables = {
     COURSE_API_URL = "https://api.nnn.ed.nico/";
     COURSE_PAPI_URL = "https://papi.nnn.ed.nico/";

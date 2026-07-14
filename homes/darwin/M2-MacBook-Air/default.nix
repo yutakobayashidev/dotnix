@@ -12,6 +12,7 @@
         ../../../modules/profiles/home/network.nix
         ../../desktop.nix
         ../../../applications/course-cli
+        ../../../applications/nlobby-cli
         ../desktop.nix
         inputs.onepassword-shell-plugins.hmModules.default
       ];
