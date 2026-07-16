@@ -1,7 +1,31 @@
-{ pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  course-cli = pkgs.writeShellApplication {
+    name = "nnn";
+    text = ''
+      secret_file=${lib.escapeShellArg config.sops.secrets.course-session.path}
+
+      if [[ ! -r "$secret_file" ]]; then
+        echo "Course CLI session secret is unavailable: $secret_file" >&2
+        exit 1
+      fi
+
+      export COURSE_SESSION="$(<"$secret_file")"
+      exec ${lib.getExe pkgs.course-cli} "$@"
+    '';
+  };
+in
 
 {
-  home.packages = [ pkgs.course-cli ];
+  home.packages = [ course-cli ];
+
+  sops.secrets.course-session.sopsFile = ../../secrets/default.yaml;
 
   home.sessionVariables = {
     COURSE_API_URL = "https://api.nnn.ed.nico/";
