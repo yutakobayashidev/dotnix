@@ -202,7 +202,7 @@ in
       {
         image = "state.img";
         mountPoint = "/var/lib/hermes";
-        size = 4096;
+        size = 16384;
         label = "hermes-state";
       }
       {
