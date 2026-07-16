@@ -164,7 +164,7 @@ in
 
   microvm = {
     vcpu = 2;
-    mem = 4096;
+    mem = 8192;
 
     vsock = {
       cid = 48;
