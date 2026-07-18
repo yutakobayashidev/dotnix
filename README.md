@@ -4,17 +4,17 @@
 
 ## Target
 
-| Machine                | Name                       | Description                      | OS                     | System         | Stable |
-| ---------------------- | -------------------------- | -------------------------------- | ---------------------- | -------------- | ------ |
-| B450M Pro4             | B450M-Pro4                 | Self-hosted services and storage | NixOS                  | x86_64-linux   | ◎      |
-| UM790 Pro              | UM790-Pro                  | Dev mini PC and AI agent host    | NixOS                  | x86_64-linux   | ◎      |
-| ThinkPad X1 Carbon     | ThinkPad-X1-Carbon         | Mobile development workstation   | NixOS                  | x86_64-linux   | △      |
-| X870 Steel Legend WiFi | X870-Steel-Legend-WiFi     | Gaming and GPU server            | NixOS                  | x86_64-linux   | △      |
-| X870 Steel Legend WiFi | X870-Steel-Legend-WiFi-WSL | Windows WSL dev environment      | NixOS (WSL)            | x86_64-linux   | ◎      |
-| Pi 5                   | pi5                        | Headless Raspberry Pi 5          | NixOS                  | aarch64-linux  | △      |
-| OCI Ampere A1 VM       | oci-a1                     | Remote ARM builder VM            | NixOS                  | aarch64-linux  | △      |
-| M2 MacBook Air         | M2-MacBook-Air             | macOS laptop workstation         | macOS                  | aarch64-darwin | ◎      |
-| Galaxy S23 FE          | Galaxy-S23FE               | Android nix-on-droid environment | Android (nix-on-droid) | aarch64-linux  | △      |
+| Machine                   | Name                       | Description                      | OS                     | System         | Stable |
+| ------------------------- | -------------------------- | -------------------------------- | ---------------------- | -------------- | ------ |
+| B450M Pro4                | B450M-Pro4                 | Self-hosted services and storage | NixOS                  | x86_64-linux   | ◎      |
+| UM790 Pro                 | UM790-Pro                  | Dev mini PC and AI agent host    | NixOS                  | x86_64-linux   | ◎      |
+| ThinkPad X1 Carbon Gen 13 | ThinkPad-X1-Carbon-Gen13   | Mobile development workstation   | NixOS                  | x86_64-linux   | △      |
+| X870 Steel Legend WiFi    | X870-Steel-Legend-WiFi     | Gaming and GPU server            | NixOS                  | x86_64-linux   | △      |
+| X870 Steel Legend WiFi    | X870-Steel-Legend-WiFi-WSL | Windows WSL dev environment      | NixOS (WSL)            | x86_64-linux   | ◎      |
+| Pi 5                      | pi5                        | Headless Raspberry Pi 5          | NixOS                  | aarch64-linux  | △      |
+| OCI Ampere A1 VM          | oci-a1                     | Remote ARM builder VM            | NixOS                  | aarch64-linux  | △      |
+| M2 MacBook Air            | M2-MacBook-Air             | macOS laptop workstation         | macOS                  | aarch64-darwin | ◎      |
+| Galaxy S23 FE             | Galaxy-S23FE               | Android nix-on-droid environment | Android (nix-on-droid) | aarch64-linux  | △      |
 
 ## Module Structure
 
@@ -32,7 +32,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── services/            # Host/system service bundles (microVMs, secrets, etc.)
 │   │   ├── B450M-Pro4/           # NixOS host config (services, disko, impermanence)
 │   │   ├── UM790-Pro/           # NixOS host config (boot, network, locale)
-│   │   ├── ThinkPad-X1-Carbon/   # NixOS laptop host config
+│   │   ├── ThinkPad-X1-Carbon-Gen13/   # NixOS laptop host config
 │   │   ├── X870-Steel-Legend-WiFi/   # NixOS desktop host config
 │   │   ├── X870-Steel-Legend-WiFi-WSL/   # NixOS-WSL host config (WSL, locale)
 │   │   ├── pi5/                 # NixOS host config (headless Pi 5)
@@ -72,6 +72,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 
 - [docs/systems/B450M-Pro4.md](docs/systems/B450M-Pro4.md) - NixOS installation guide
 - [docs/systems/UM790Pro.md](docs/systems/UM790Pro.md) - NixOS installation guide
+- [docs/systems/ThinkPad-X1-Carbon-Gen13.md](docs/systems/ThinkPad-X1-Carbon-Gen13.md) - NixOS dual-boot installation guide
 - [docs/systems/X870-Steel-Legend-WiFi.md](docs/systems/X870-Steel-Legend-WiFi.md) - NixOS-WSL installation guide
 - [docs/systems/Pi5.md](docs/systems/Pi5.md) - NixOS installation guide for Raspberry Pi 5
 - [docs/systems/M2-MacBook-Air.md](docs/systems/M2-MacBook-Air.md) - nix-darwin installation guide for macOS

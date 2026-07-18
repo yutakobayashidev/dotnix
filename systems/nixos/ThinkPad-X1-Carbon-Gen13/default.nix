@@ -22,10 +22,14 @@
 
   dualboot.enable = true;
 
-  ext.security.secureboot.enable = true;
+  # Enable after the first successful boot and sbctl key creation.
+  ext.security.secureboot.enable = false;
 
   boot = {
-    loader.efi.canTouchEfiVariables = true;
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot.enable = !config.ext.security.secureboot.enable;
+    };
     initrd = {
       systemd.enable = true;
       availableKernelModules = [
@@ -41,7 +45,7 @@
   };
 
   networking = {
-    hostName = "ThinkPad-X1-Carbon";
+    hostName = "ThinkPad-X1-Carbon-Gen13";
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
   };
