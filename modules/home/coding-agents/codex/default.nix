@@ -24,8 +24,11 @@ let
       "none";
   settings = {
     approval_policy = "on-request";
+    default_mode_request_user_input = true;
     model = "gpt-5.6-sol";
     model_reasoning_effort = "medium";
+    model_reasoning_summary = "concise";
+    model_verbosity = "low";
     personality = "pragmatic";
     project_doc_fallback_filenames = [ "CLAUDE.md" ];
     suppress_unstable_features_warning = true;
