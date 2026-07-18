@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   modulesPath,
   ...
@@ -14,6 +15,10 @@
     ../../../modules/profiles/nixos/base.nix
     ../../../modules/profiles/nixos/desktop.nix
     ../../../modules/profiles/nixos/laptop.nix
+    inputs.disko.nixosModules.disko
+    inputs.impermanence.nixosModules.impermanence
+    ./disko.nix
+    ./impermanence.nix
   ];
 
   dualboot.enable = true;
@@ -22,32 +27,19 @@
 
   boot = {
     loader.efi.canTouchEfiVariables = true;
-    initrd.availableKernelModules = [
-      "nvme"
-      "thunderbolt"
-      "xhci_pci"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-    ];
+    initrd = {
+      systemd.enable = true;
+      availableKernelModules = [
+        "nvme"
+        "thunderbolt"
+        "xhci_pci"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+      ];
+    };
     kernelModules = [ "kvm-intel" ];
   };
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
-
-  swapDevices = [ ];
 
   networking = {
     hostName = "ThinkPad-X1-Carbon";
