@@ -5,15 +5,11 @@ let
   nixosPart = "/dev/disk/by-partuuid/311d0f9c-f35f-42e6-b6fc-a4d67dd21b2e";
 
   btrfsMountOptions = [
-    "compress=zstd"
+    "compress=zstd:1"
     "noatime"
-    "ssd"
-    "space_cache=v2"
   ];
 in
 {
-  disko.enableConfig = true;
-
   disko.devices.disk = {
     esp = {
       type = "disk";
@@ -36,23 +32,15 @@ in
       content = {
         type = "luks";
         name = "cryptroot";
-        askPassword = true;
+        passwordFile = "/tmp/luks-password";
         settings.allowDiscards = true;
-        extraFormatArgs = [
-          "--type"
-          "luks2"
-          "--pbkdf"
-          "argon2id"
-          "--label"
-          "NixOS-LUKS"
-        ];
 
         content = {
           type = "btrfs";
           extraArgs = [
             "-f"
             "-L"
-            "NixOS"
+            "nixos"
           ];
           subvolumes = {
             "@root" = {
@@ -77,7 +65,6 @@ in
             };
             "@swap" = {
               mountpoint = "/.swapvol";
-              mountOptions = [ "noatime" ];
               swap.swapfile.size = "32G";
             };
           };

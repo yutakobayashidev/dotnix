@@ -16,9 +16,8 @@
     ../../../modules/profiles/nixos/desktop.nix
     ../../../modules/profiles/nixos/laptop.nix
     inputs.disko.nixosModules.disko
-    inputs.impermanence.nixosModules.impermanence
     ./disko.nix
-    ./impermanence.nix
+    ../../../modules/profiles/nixos/impermanence.nix
   ];
 
   dualboot.enable = true;

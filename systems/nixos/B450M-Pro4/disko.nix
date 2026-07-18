@@ -32,7 +32,6 @@ in
             name = "cryptroot";
             passwordFile = "/tmp/luks-password";
             extraOpenArgs = [
-              "--allow-discards"
               "--perf-no_read_workqueue"
               "--perf-no_write_workqueue"
             ];

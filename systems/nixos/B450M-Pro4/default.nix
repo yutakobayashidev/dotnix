@@ -48,11 +48,10 @@
     ../services/searxng
     ../services/codex-limit-auto-reset
     inputs.disko.nixosModules.disko
-    inputs.impermanence.nixosModules.impermanence
     ./disko.nix
-    ./impermanence.nix
     inputs.nur-packages.nixosModules.px4_drv
     ../../../modules/profiles/nixos/base.nix
+    ../../../modules/profiles/nixos/impermanence.nix
   ];
 
   ext.security.secureboot.enable = true;
@@ -64,7 +63,6 @@
       systemd.enable = true;
       luks.devices.cryptroot = {
         device = "/dev/disk/by-partlabel/cryptroot";
-        allowDiscards = true;
         bypassWorkqueues = true;
       };
       availableKernelModules = [
