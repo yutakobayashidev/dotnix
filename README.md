@@ -8,6 +8,7 @@
 | ---------------------- | -------------------------- | -------------------------------- | ---------------------- | -------------- | ------ |
 | B450M Pro4             | B450M-Pro4                 | Self-hosted services and storage | NixOS                  | x86_64-linux   | ◎      |
 | UM790 Pro              | UM790-Pro                  | Dev mini PC and AI agent host    | NixOS                  | x86_64-linux   | ◎      |
+| ThinkPad X1 Carbon     | ThinkPad-X1-Carbon         | Mobile development workstation   | NixOS                  | x86_64-linux   | △      |
 | X870 Steel Legend WiFi | X870-Steel-Legend-WiFi     | Gaming and GPU server            | NixOS                  | x86_64-linux   | △      |
 | X870 Steel Legend WiFi | X870-Steel-Legend-WiFi-WSL | Windows WSL dev environment      | NixOS (WSL)            | x86_64-linux   | ◎      |
 | Pi 5                   | pi5                        | Headless Raspberry Pi 5          | NixOS                  | aarch64-linux  | △      |
@@ -30,6 +31,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── services/            # Host/system service bundles (microVMs, secrets, etc.)
 │   │   ├── B450M-Pro4/           # NixOS host config (services, disko, impermanence)
 │   │   ├── UM790-Pro/           # NixOS host config (boot, network, locale)
+│   │   ├── ThinkPad-X1-Carbon/   # NixOS laptop host config
 │   │   ├── X870-Steel-Legend-WiFi/   # NixOS desktop host config
 │   │   ├── X870-Steel-Legend-WiFi-WSL/   # NixOS-WSL host config (WSL, locale)
 │   │   ├── pi5/                 # NixOS host config (headless Pi 5)

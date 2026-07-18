@@ -287,6 +287,9 @@
         UM790-Pro = {
           system = "x86_64-linux";
         };
+        ThinkPad-X1-Carbon = {
+          system = "x86_64-linux";
+        };
         X870-Steel-Legend-WiFi = {
           system = "x86_64-linux";
         };
