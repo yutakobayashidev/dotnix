@@ -12,7 +12,6 @@
       ../../../modules/profiles/home/security.nix
       ../../../modules/profiles/home/network.nix
       ../../desktop.nix
-      ../../../applications/course-cli
       ../desktop.nix
     ];
     home.homeDirectory = "/home/${username}";
