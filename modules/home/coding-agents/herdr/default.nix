@@ -94,8 +94,13 @@ let
       command = [
         {
           key = "prefix+l";
-          type = "pane";
+          type = "popup";
           command = "lazygit";
+        }
+        {
+          key = "prefix+b";
+          type = "popup";
+          command = "btop";
         }
         {
           key = "prefix+shift+u";
