@@ -10,6 +10,7 @@
     ../common.nix
     (modulesPath + "/installer/scan/not-detected.nix")
     ../desktop.nix
+    ../laptop.nix
     ../../../modules/profiles/nixos/base.nix
     ../../../modules/profiles/nixos/desktop.nix
     ../../../modules/profiles/nixos/laptop.nix

@@ -26,6 +26,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   ├── nixos/
 │   │   ├── common.nix           # Shared NixOS host imports
 │   │   ├── desktop.nix          # Shared NixOS desktop system settings
+│   │   ├── laptop.nix           # Shared NixOS laptop system settings
 │   │   ├── fonts.nix            # Shared NixOS font settings
 │   │   ├── input-method.nix     # Shared NixOS input method settings
 │   │   ├── services/            # Host/system service bundles (microVMs, secrets, etc.)
@@ -53,7 +54,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   ├── flake/               # Flake modules (registries, packages, devshell, treefmt, feature modules)
 │   │   └── features/neovim/ # Neovim config (Fennel; generated Lua tracked)
 │   ├── profiles/
-│   │   ├── nixos/       # NixOS profiles (cli, cli-server, gui, laptop)
+│   │   ├── nixos/       # Reusable NixOS profiles (base, desktop, installer, laptop)
 │   │   └── home/        # Home Manager profiles (base, terminal, cli, development, desktop)
 │   ├── nixos/           # Reusable optioned NixOS modules (docker, tailscale, security, kubo)
 │   ├── darwin/          # Reusable optioned nix-darwin modules
