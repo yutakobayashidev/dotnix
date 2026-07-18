@@ -16,7 +16,8 @@ let
         exit 1
       fi
 
-      export COURSE_SESSION="$(<"$secret_file")"
+      COURSE_SESSION="$(<"$secret_file")"
+      export COURSE_SESSION
       exec ${lib.getExe pkgs.course-cli} "$@"
     '';
   };
