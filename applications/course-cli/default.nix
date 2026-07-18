@@ -7,7 +7,7 @@
 
 let
   course-cli = pkgs.writeShellApplication {
-    name = "nnn";
+    name = "course-cli";
     text = ''
       secret_file=${lib.escapeShellArg config.sops.secrets.course-session.path}
 

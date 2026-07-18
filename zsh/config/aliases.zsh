@@ -26,6 +26,7 @@ abbr -f -qq cx="codex"
 abbr -f -qq cxd="codex --dangerously-bypass-approvals-and-sandbox"
 abbr -f -qq ca="cursor-agent"
 abbr -f -qq ct="continues"
+abbr -f -qq nnn="course-cli"
 
 # Docker
 abbr -f -qq do="docker container"

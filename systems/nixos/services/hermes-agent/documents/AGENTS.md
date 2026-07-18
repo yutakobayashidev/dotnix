@@ -6,7 +6,7 @@ Prefer small, reversible actions. Read-only inspection is fine. Ask for explicit
 
 The host manages `~/.hermes` declaratively; do not replace Nix-managed files.
 
-The `nnn` CLI is available for course APIs. Its base URLs and cookie name are
+The `course-cli` CLI is available for course APIs. Its base URLs and cookie name are
 preconfigured, and authenticated commands use the managed `COURSE_SESSION`.
 The `nlobby` CLI is available for N Lobby workflows.
 
