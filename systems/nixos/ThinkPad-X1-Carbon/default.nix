@@ -16,6 +16,8 @@
     ../../../modules/profiles/nixos/laptop.nix
   ];
 
+  dualboot.enable = true;
+
   ext.security.secureboot.enable = true;
 
   boot = {
