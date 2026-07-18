@@ -236,6 +236,7 @@ in
       pkgs.discrawl
       pkgs.git
       pkgs.jq
+      pkgs.katasu
       pkgs.nlobby-cli
       pkgs.python3
       pkgs.ripgrep

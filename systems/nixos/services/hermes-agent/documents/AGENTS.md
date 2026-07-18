@@ -6,10 +6,6 @@ Prefer small, reversible actions. Read-only inspection is fine. Ask for explicit
 
 The host manages `~/.hermes` declaratively; do not replace Nix-managed files.
 
-The `course-cli` CLI is available for course APIs. Its base URLs and cookie name are
-preconfigured, and authenticated commands use the managed `COURSE_SESSION`.
-The `nlobby` CLI is available for N Lobby workflows.
-
 The `edcb` CLI from edcb-tools is available for EDCB CtrlCmd operations. The
 default connection is provided by `EDCB_HOST`, `EDCB_PORT`, and
 `EDCB_TIMEOUT_SECONDS`.
