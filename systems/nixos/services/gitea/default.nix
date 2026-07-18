@@ -7,6 +7,7 @@ in
 {
   services.gitea = {
     enable = true;
+    lfs.enable = true;
     mailerPasswordFile = config.sops.secrets.cloudflare-email-sending-token.path;
     settings = {
       actions = {
