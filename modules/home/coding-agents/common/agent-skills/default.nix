@@ -39,10 +39,6 @@ in
           path = inputs.anthropic-skills;
           subdir = "skills";
         };
-        superpowers = {
-          path = inputs.superpowers;
-          subdir = "skills";
-        };
         ast-grep = {
           path = inputs.ast-grep-skill;
           subdir = "ast-grep/skills";
@@ -100,7 +96,6 @@ in
         "obsidian"
         "repiq"
         "difit"
-        "superpowers"
       ];
 
       skills.explicit = {
