@@ -3,18 +3,28 @@
 ## Prerequisites
 
 - UM790-Pro connected to the LAN (Ethernet)
-- pixiecore netboot service running (see `systems/nixos/services/netboot/`)
+- Installer USB prepared with the [custom NixOS installer ISO](../installer-iso.md)
 
 ## Initial Setup
 
-### 1. PXE Boot
+### 1. Boot the Installer USB
 
-Turn on the UM790-Pro and select PXE / Network Boot from the BIOS boot menu.
+Turn on the UM790-Pro and select the installer USB from the UEFI boot menu.
 The machine will boot into the NixOS installer with:
 
 - NetworkManager auto-started (DHCP)
-- SSH enabled (root password: `netboot`)
 - Root auto-login on console
+
+Continue on the console, or set a temporary root password and find the target address before connecting from another machine:
+
+```sh
+passwd
+ip -brief address
+```
+
+```sh
+ssh root@<TARGET_IP>
+```
 
 ### 2. Partition Disk
 

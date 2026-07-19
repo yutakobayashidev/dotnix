@@ -281,10 +281,16 @@
       };
 
       hosts = {
+        installer = {
+          system = "x86_64-linux";
+        };
         B450M-Pro4 = {
           system = "x86_64-linux";
         };
         UM790-Pro = {
+          system = "x86_64-linux";
+        };
+        ThinkPad-X1-Carbon-Gen13 = {
           system = "x86_64-linux";
         };
         X870-Steel-Legend-WiFi = {

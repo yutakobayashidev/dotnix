@@ -1,6 +1,8 @@
-{ username, ... }:
+{ inputs, username, ... }:
 
 {
+  imports = [ inputs.impermanence.nixosModules.impermanence ];
+
   fileSystems = {
     "/persist".neededForBoot = true;
     "/var/log".neededForBoot = true;
@@ -48,7 +50,6 @@
     directories = [
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
-      "/etc/ssh"
       "/var/lib"
     ];
     files = [ "/etc/machine-id" ];

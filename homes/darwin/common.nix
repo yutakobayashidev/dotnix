@@ -1,15 +1,12 @@
 {
   inputs,
   username,
-  config,
   ...
 }:
 
 let
   helpers = import ../../modules/lib/helpers { lib = inputs.nixpkgs.lib; };
-  dotfilesDir = "${
-    config.home-manager.users.${username}.programs.git.settings.ghq.root
-  }/github.com/yutakobayashidev/dotnix";
+  dotfilesDir = inputs.self.outPath;
 
 in
 

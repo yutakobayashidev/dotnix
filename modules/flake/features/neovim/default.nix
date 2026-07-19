@@ -38,20 +38,6 @@ in
             ${helpers.activation.mkLinkForce}
             link_force "${nvimDotfilesDir}" "${nvimConfigDir}"
           '';
-
-          restoreNeovimPlugins = lib.hm.dag.entryAfter [ "linkNvimConfig" ] ''
-            LAZY_DIR="$HOME/.local/share/nvim/lazy"
-            LAZY_LOCK="${nvimDotfilesDir}/lazy-lock.json"
-            LAZY_LOCK_TIMESTAMP="$LAZY_DIR/.lazy-lock-timestamp"
-
-            if [[ ! -f "$LAZY_LOCK_TIMESTAMP" ]] || [[ "$LAZY_LOCK" -nt "$LAZY_LOCK_TIMESTAMP" ]]; then
-              ${pkgs.bash}/bin/bash \
-                ${./check.sh} \
-                "${nvimDotfilesDir}" \
-                "$LAZY_DIR" \
-                ${neovim}/bin/nvim
-            fi
-          '';
         };
       };
     };

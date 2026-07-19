@@ -41,21 +41,22 @@
     ../services/voicevox
     ../services/starla
     ../services/uptime-kuma
-    ../services/netboot
     ../services/continuwuity
     ../services/litellm
     ../services/birdclaw
     ../services/searxng
     ../services/codex-limit-auto-reset
     inputs.disko.nixosModules.disko
-    inputs.impermanence.nixosModules.impermanence
     ./disko.nix
-    ./impermanence.nix
     inputs.nur-packages.nixosModules.px4_drv
     ../../../modules/profiles/nixos/base.nix
+    ../../../modules/profiles/nixos/impermanence.nix
   ];
 
   ext.security.secureboot.enable = true;
+
+  environment.persistence."/persist".directories = [ "/etc/ssh" ];
+
   boot = {
     loader.efi.canTouchEfiVariables = true;
     binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -64,7 +65,6 @@
       systemd.enable = true;
       luks.devices.cryptroot = {
         device = "/dev/disk/by-partlabel/cryptroot";
-        allowDiscards = true;
         bypassWorkqueues = true;
       };
       availableKernelModules = [

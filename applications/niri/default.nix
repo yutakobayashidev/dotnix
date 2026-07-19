@@ -17,7 +17,6 @@
       keyboard.xkb.layout = "us";
       touchpad = {
         tap = true;
-        natural-scroll = false;
       };
       mouse.accel-speed = 0.0;
     };
@@ -100,6 +99,7 @@
         "-show"
         "drun"
       ];
+      "Mod+F".action.maximize-column = { };
       "Mod+Shift+F".action.toggle-window-floating = { };
 
       # フォーカス移動

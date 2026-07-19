@@ -22,10 +22,13 @@
 
         modules-right = [
           "pulseaudio"
+          "network"
           "bluetooth"
+          "battery"
           "clock"
           "tray"
           "custom/notification"
+          "custom/power"
         ];
 
         # カスタムランチャー
@@ -86,14 +89,37 @@
 
         # Bluetooth
         "bluetooth" = {
-          format = " {status}";
-          format-connected = " {device_alias}";
-          format-connected-battery = " {device_alias} {device_battery_percentage}%";
+          format = "BT {status}";
+          format-connected = "BT {device_alias}";
+          format-connected-battery = "BT {device_alias} {device_battery_percentage}%";
           tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
           tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
           tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
           tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
           on-click = "blueman-manager";
+        };
+
+        # ネットワーク
+        "network" = {
+          format-wifi = "Wi-Fi {signalStrength}%";
+          format-ethernet = "Ethernet";
+          format-disconnected = "Offline";
+          tooltip-format-wifi = "{essid} ({signalStrength}%)\n{ipaddr}";
+          tooltip-format-ethernet = "{ifname}\n{ipaddr}";
+          tooltip-format-disconnected = "Disconnected";
+          on-click = "nm-connection-editor";
+        };
+
+        # バッテリー
+        "battery" = {
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format = "BAT {capacity}%";
+          format-charging = "AC {capacity}%";
+          format-plugged = "AC {capacity}%";
+          tooltip-format = "{timeTo}\nPower: {power:.1f} W";
         };
 
         # 時計
@@ -142,6 +168,13 @@
           on-click-right = "swaync-client -d -sw";
           escape = true;
         };
+
+        # 電源メニュー
+        "custom/power" = {
+          format = "Power";
+          tooltip = false;
+          on-click = "wlogout";
+        };
       };
     };
 
@@ -177,10 +210,13 @@
       #custom-launcher,
       #mpris,
       #pulseaudio,
+      #network,
       #bluetooth,
+      #battery,
       #clock,
       #tray,
-      #custom-notification {
+      #custom-notification,
+      #custom-power {
         padding: 0 10px;
         margin: 0 2px;
       }
@@ -191,6 +227,24 @@
 
       #bluetooth.connected {
         color: #89b4fa;
+      }
+
+      #network.disconnected,
+      #battery.warning {
+        color: #f9e2af;
+      }
+
+      #battery.critical {
+        color: #f38ba8;
+      }
+
+      #battery.charging,
+      #battery.plugged {
+        color: #a6e3a1;
+      }
+
+      #custom-power {
+        color: #f38ba8;
       }
 
       #custom-launcher {
@@ -213,6 +267,8 @@
   # 必要なパッケージ
   home.packages = with pkgs; [
     font-awesome
+    networkmanagerapplet
     swaynotificationcenter
+    wlogout
   ];
 }

@@ -7,17 +7,29 @@ B450M-Pro4 uses LUKS encryption with Btrfs and impermanence. These steps are for
 ### Prerequisites
 
 - B450M-Pro4 connected to the LAN (Ethernet)
-- pixiecore netboot service running (see `systems/nixos/services/netboot/`)
+- Installer USB prepared with the [custom NixOS installer ISO](../installer-iso.md)
 - Strong LUKS passphrase
 
-### 1. PXE Boot
+### 1. Boot the Installer USB
 
-Turn on the B450M-Pro4 and select PXE / Network Boot from the BIOS boot menu.
+Turn on the B450M-Pro4 and select the installer USB from the UEFI boot menu.
 The machine will boot into the NixOS installer with:
 
 - NetworkManager auto-started (DHCP)
-- SSH enabled (root password: `netboot`)
 - Root auto-login on console
+
+Set a temporary root password from the target console, then find its address:
+
+```sh
+passwd
+ip -brief address
+```
+
+The remaining first-installation steps use SSH from another machine. Connect after setting the password:
+
+```sh
+ssh root@<TARGET_IP>
+```
 
 ### 2. Confirm Target Disk
 
