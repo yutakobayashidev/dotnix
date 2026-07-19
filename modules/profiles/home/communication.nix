@@ -9,5 +9,6 @@
       halloy
       signal-desktop
       slack
+      vesktop
     ];
 }
