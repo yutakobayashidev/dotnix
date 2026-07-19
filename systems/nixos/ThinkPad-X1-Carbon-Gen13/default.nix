@@ -61,5 +61,5 @@
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.11";
 }
