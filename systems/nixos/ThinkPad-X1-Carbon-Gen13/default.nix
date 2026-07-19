@@ -29,13 +29,13 @@
     enable = true;
     keyboards.default.settings.main = {
       leftalt = "overload(alt, muhenkan)";
-      rightalt = "overload(altgr, henkan)";
+      rightalt = "overload(altgr, hanja)";
     };
   };
 
   i18n.inputMethod.fcitx5.settings.globalOptions = {
     "Hotkey/DeactivateKeys"."0" = "Muhenkan";
-    "Hotkey/ActivateKeys"."0" = "Henkan";
+    "Hotkey/ActivateKeys"."0" = "Hangul_Hanja";
   };
 
   programs = {
