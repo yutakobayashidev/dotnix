@@ -16,9 +16,13 @@
   services.wallpaper.enable = true;
 
   home.packages = with pkgs; [
+    file-roller
     grimblast
+    pavucontrol
+    sushi
     swappy
     wl-clipboard
     zenity
+    zoom-us
   ];
 }

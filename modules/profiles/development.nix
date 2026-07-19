@@ -61,7 +61,9 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         ++ lib.optionals pkgs.stdenv.isLinux [
           android-studio
           android-tools
+          arduino-ide
           stable.python313Packages.markitdown
+          tableplus
         ];
     };
 }

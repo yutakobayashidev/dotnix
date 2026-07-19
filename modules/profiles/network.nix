@@ -23,6 +23,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           proton-vpn-cli
+          tor-browser
         ];
     };
 }

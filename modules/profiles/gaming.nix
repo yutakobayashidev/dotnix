@@ -33,7 +33,9 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           with pkgs;
           [
             alcom
+            android-tools
             blender
+            sidequest
             unityhub
             vrcx
           ]

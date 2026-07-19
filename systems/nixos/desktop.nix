@@ -9,6 +9,7 @@
   ];
 
   programs = {
+    gnome-disks.enable = true;
     niri.enable = true;
     obs-studio.enableVirtualCamera = true;
     xwayland.enable = true;
@@ -30,6 +31,7 @@
 
   services = {
     blueman.enable = true;
+    gvfs.enable = true;
     printing.enable = true;
     greetd.enable = true;
     gnome.gnome-keyring.enable = true;

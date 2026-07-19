@@ -59,6 +59,9 @@
           "-d"
         ];
       }
+      {
+        command = [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ];
+      }
       { command = [ "waybar" ]; }
       { command = [ "spotify" ]; }
     ];
@@ -68,7 +71,7 @@
       "Mod+Q".action.spawn = [ "ghostty" ];
       "Mod+C".action.close-window = { };
       "Mod+M".action.quit = { };
-      "Mod+E".action.spawn = [ "dolphin" ];
+      "Mod+E".action.spawn = [ "nautilus" ];
       "Mod+V".action.spawn = [
         "vicinae"
         "vicinae://launch/clipboard/history?toggle=true"

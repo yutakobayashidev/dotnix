@@ -8,7 +8,10 @@
       ../../desktop.nix
       ../desktop.nix
     ];
-    home.packages = [ pkgs.lmstudio ];
+    home.packages = with pkgs; [
+      davinci-resolve
+      lmstudio
+    ];
     home.homeDirectory = "/home/${username}";
   };
 }

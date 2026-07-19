@@ -33,6 +33,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           cava
           kooha
           spotify
+          vlc
         ];
     };
 }
