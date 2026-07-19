@@ -159,7 +159,7 @@ Verify that the persistent SSH host key can decrypt the updated secret without w
 
 ```sh
 sudo env \
-  SOPS_AGE_SSH_PRIVATE_KEY_FILE=/mnt/persist/etc/ssh/ssh_host_ed25519_key \
+  SOPS_AGE_KEY_CMD='ssh-to-age -private-key -i /mnt/persist/etc/ssh/ssh_host_ed25519_key' \
   sops --decrypt secrets/default.yaml >/dev/null
 ```
 
