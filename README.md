@@ -53,7 +53,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 ├── applications/                # Directly imported Home Manager app configs (git, tmux, browsers, niri, misc)
 ├── modules/
 │   ├── flake/               # Flake modules (registries, packages, devshell, treefmt, feature modules)
-│   │   └── features/neovim/ # Neovim config (Fennel; generated Lua tracked)
+│   │   └── features/        # Published Home Manager features (Emacs, Neovim, Vicinae)
 │   ├── profiles/
 │   │   ├── nixos/       # Reusable NixOS profiles (base, desktop, laptop)
 │   │   └── home/        # Home Manager profiles (base, terminal, cli, development, desktop)
@@ -129,6 +129,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 ### NixOS
 
 - **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
+- **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae)
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android development environment, VirtualBox on UM790-Pro

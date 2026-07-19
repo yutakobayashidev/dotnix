@@ -4,7 +4,7 @@
 {
   imports = [ inputs.niri.homeModules.niri ];
   # niri パッケージをテストスキップでオーバーライド
-  programs.niri.package = pkgs.niri.overrideAttrs (oldAttrs: {
+  programs.niri.package = pkgs.niri.overrideAttrs (_: {
     doCheck = false;
   });
 
@@ -73,14 +73,6 @@
       }
       { command = [ "waybar" ]; }
       { command = [ "spotify" ]; }
-      {
-        command = [
-          "wl-paste"
-          "--watch"
-          "cliphist"
-          "store"
-        ];
-      }
     ];
 
     # キーバインド
@@ -90,14 +82,12 @@
       "Mod+M".action.quit = { };
       "Mod+E".action.spawn = [ "dolphin" ];
       "Mod+V".action.spawn = [
-        "sh"
-        "-c"
-        "cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+        "vicinae"
+        "vicinae://launch/clipboard/history?toggle=true"
       ];
-      "Mod+R".action.spawn = [
-        "rofi"
-        "-show"
-        "drun"
+      "Mod+D".action.spawn = [
+        "vicinae"
+        "toggle"
       ];
       "Mod+F".action.maximize-column = { };
       "Mod+Shift+F".action.toggle-window-floating = { };
@@ -176,10 +166,7 @@
   # 必要なパッケージ
   home.packages = with pkgs; [
     awww
-    rofi
     grimblast
-    cliphist
-    wl-clipboard
     brightnessctl
     playerctl
     polycat

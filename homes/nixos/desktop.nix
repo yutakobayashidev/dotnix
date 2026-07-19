@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  my.programs.vicinae.enable = true;
+
   imports = [
     ../../applications/niri
     ../../applications/waybar
@@ -10,9 +12,7 @@
   ];
 
   home.packages = with pkgs; [
-    cliphist
     grimblast
-    rofi
     swappy
     awww
     wl-clipboard

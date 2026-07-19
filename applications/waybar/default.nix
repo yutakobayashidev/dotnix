@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   programs.waybar = {
@@ -34,7 +34,7 @@
         # カスタムランチャー
         "custom/launcher" = {
           format = " ";
-          on-click = "rofi -show drun";
+          on-click = "vicinae toggle";
           tooltip = false;
         };
 

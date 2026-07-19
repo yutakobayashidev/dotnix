@@ -32,6 +32,7 @@ in
       inputs.sops-nix.homeManagerModules.sops
       inputs.self.homeManagerModules.emacs
       inputs.self.homeManagerModules.neovim
+      inputs.self.homeManagerModules.vicinae
     ];
     users.${username} =
       { config, ... }:
