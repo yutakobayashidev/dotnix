@@ -7,7 +7,7 @@ This host dual-boots Windows and NixOS. NixOS uses an existing EFI System Partit
 - Back up important Windows data and the BitLocker recovery key.
 - Keep Windows installed and bootable.
 - Temporarily disable Secure Boot in UEFI. It is enabled after the first successful NixOS boot.
-- Prepare a NixOS Minimal installer, for example with [Ventoy](../Ventoy-NixOS-Minimal.md).
+- Prepare the [custom NixOS installer ISO](../installer-iso.md) on a USB drive.
 - Choose a strong LUKS passphrase.
 
 > [!WARNING]
@@ -119,15 +119,7 @@ The expected layout is:
 
 The initial configuration uses systemd-boot and leaves Lanzaboote disabled.
 
-Copy the edited checkout into the persistent backing directory for `/etc/nixos`:
-
-```sh
-sudo mkdir -p /mnt/persist/etc/nixos
-sudo cp -a . /mnt/persist/etc/nixos/dotnix
-cd /mnt/persist/etc/nixos/dotnix
-```
-
-Install from that persistent checkout:
+Install from the current checkout:
 
 ```sh
 sudo nixos-install \
@@ -156,6 +148,15 @@ Check that Setup Mode is enabled:
 sudo nix shell nixpkgs#sbctl -c sbctl status
 ```
 
+Clone the configuration into your normal working directory:
+
+```sh
+nix shell nixpkgs#git -c git clone https://github.com/yutakobayashidev/dotnix.git
+cd dotnix
+```
+
+Set the same real ESP and NixOS PARTUUIDs in `systems/nixos/ThinkPad-X1-Carbon-Gen13/disko.nix` before rebuilding. Do not leave the repository's placeholder values in place.
+
 Create the signing keys directly in their final persistent location:
 
 ```sh
@@ -170,11 +171,7 @@ Back up `/var/lib/sbctl` to an encrypted external volume and record that volume 
 sudo cp -a /var/lib/sbctl /run/media/$USER/<ENCRYPTED_VOLUME>/ThinkPad-X1-Carbon-Gen13-sbctl
 ```
 
-Open the persistent checkout and change the host configuration:
-
-```sh
-cd /etc/nixos/dotnix
-```
+Change the host configuration:
 
 ```nix
 ext.security.secureboot.enable = true;
@@ -210,7 +207,7 @@ If `/var/lib/sbctl` is lost, keep Secure Boot disabled, restore the backup, and 
 sudo mkdir -p /var/lib/sbctl
 sudo cp -a /run/media/$USER/<ENCRYPTED_VOLUME>/ThinkPad-X1-Carbon-Gen13-sbctl/. /var/lib/sbctl/
 sudo chmod -R go-rwx /var/lib/sbctl
-sudo nixos-rebuild switch --flake /etc/nixos/dotnix#ThinkPad-X1-Carbon-Gen13
+sudo nixos-rebuild switch --flake .#ThinkPad-X1-Carbon-Gen13
 ```
 
 ## Impermanence

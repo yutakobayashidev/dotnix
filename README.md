@@ -30,6 +30,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── fonts.nix            # Shared NixOS font settings
 │   │   ├── input-method.nix     # Shared NixOS input method settings
 │   │   ├── services/            # Host/system service bundles (microVMs, secrets, etc.)
+│   │   ├── installer/            # Custom x86_64 NixOS installer ISO
 │   │   ├── B450M-Pro4/           # NixOS host config (services, disko, impermanence)
 │   │   ├── UM790-Pro/           # NixOS host config (boot, network, locale)
 │   │   ├── ThinkPad-X1-Carbon-Gen13/   # NixOS laptop host config
@@ -54,7 +55,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   ├── flake/               # Flake modules (registries, packages, devshell, treefmt, feature modules)
 │   │   └── features/neovim/ # Neovim config (Fennel; generated Lua tracked)
 │   ├── profiles/
-│   │   ├── nixos/       # Reusable NixOS profiles (base, desktop, installer, laptop)
+│   │   ├── nixos/       # Reusable NixOS profiles (base, desktop, laptop)
 │   │   └── home/        # Home Manager profiles (base, terminal, cli, development, desktop)
 │   ├── nixos/           # Reusable optioned NixOS modules (docker, tailscale, security, kubo)
 │   ├── darwin/          # Reusable optioned nix-darwin modules
@@ -70,6 +71,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 
 ### System Installation Guides
 
+- [docs/installer-iso.md](docs/installer-iso.md) - Build and write the custom NixOS installer ISO
 - [docs/systems/B450M-Pro4.md](docs/systems/B450M-Pro4.md) - NixOS installation guide
 - [docs/systems/UM790Pro.md](docs/systems/UM790Pro.md) - NixOS installation guide
 - [docs/systems/ThinkPad-X1-Carbon-Gen13.md](docs/systems/ThinkPad-X1-Carbon-Gen13.md) - NixOS dual-boot installation guide
@@ -83,7 +85,6 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 - [docs/B450M-Pro4-HDD-service-storage.md](docs/B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
 - [docs/B450M-Pro4-s3s.md](docs/B450M-Pro4-s3s.md) - s3s (Splatoon 3 stats uploader) workflow
 - [docs/hermes-agent-discord.md](docs/hermes-agent-discord.md) - Discord setup for the UM790-Pro Hermes Agent microVM
-- [docs/Ventoy-NixOS-Minimal.md](docs/Ventoy-NixOS-Minimal.md) - Ventoy USB for NixOS installation
 
 ### Other
 

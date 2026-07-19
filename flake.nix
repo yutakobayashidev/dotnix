@@ -281,6 +281,9 @@
       };
 
       hosts = {
+        installer = {
+          system = "x86_64-linux";
+        };
         B450M-Pro4 = {
           system = "x86_64-linux";
         };

@@ -41,7 +41,6 @@
     ../services/voicevox
     ../services/starla
     ../services/uptime-kuma
-    ../services/netboot
     ../services/continuwuity
     ../services/litellm
     ../services/birdclaw

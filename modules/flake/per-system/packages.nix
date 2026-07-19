@@ -2,12 +2,10 @@
   perSystem =
     {
       config,
-      lib,
       pkgs,
       ...
     }:
     let
-      system = pkgs.stdenv.hostPlatform.system;
       isDarwin = pkgs.stdenv.isDarwin;
       nom = "${pkgs.nix-output-monitor}/bin/nom";
 
@@ -23,23 +21,6 @@
       '';
     in
     {
-      packages = lib.optionalAttrs (system == "x86_64-linux") {
-        nixos-minimal-iso =
-          let
-            isoEval = import "${pkgs.path}/nixos/lib/eval-config.nix" {
-              system = "x86_64-linux";
-              modules = [
-                "${pkgs.path}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-                ../../../modules/profiles/nixos/installer.nix
-                {
-                  nixpkgs.pkgs = lib.mkForce pkgs;
-                }
-              ];
-            };
-          in
-          isoEval.config.system.build.isoImage;
-      };
-
       apps = {
         build = {
           type = "app";

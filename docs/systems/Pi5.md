@@ -9,20 +9,16 @@
 
 ### 1. Flash Media
 
-Flash a 64-bit NixOS installer image for `aarch64-linux` to an SD card or USB drive.
+Download an official 64-bit `aarch64-linux` image from the [NixOS download page](https://nixos.org/download/#nixos-iso) and flash it to an SD card or USB drive. The custom installer ISO in this repository is x86_64-only and cannot boot the Pi 5.
 
-### 2. PXE Boot (Alternative)
-
-If an aarch64 netboot image is configured on the netboot server (see `systems/nixos/services/netboot/`), the Pi 5 can PXE boot via the `config.txt` option `program_usb_boot_mode=1`. By default only `x86_64-linux` netboot images are served.
-
-### 3. Partition
+### 2. Partition
 
 Partition the SD card with two labels:
 
 - `boot` as `vfat`
 - `nixos` as `ext4`
 
-### 4. Clone and Install
+### 3. Clone and Install
 
 ```sh
 mkdir -p ~/ghq/github.com/yutakobayashidev
