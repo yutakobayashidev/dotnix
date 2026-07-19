@@ -100,6 +100,7 @@
         "-show"
         "drun"
       ];
+      "Mod+F".action.maximize-column = { };
       "Mod+Shift+F".action.toggle-window-floating = { };
 
       # フォーカス移動
