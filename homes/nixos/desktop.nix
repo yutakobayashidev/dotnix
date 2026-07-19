@@ -9,7 +9,10 @@
     ../../applications/zaproxy
   ];
 
-  my.programs.vicinae.enable = true;
+  my.programs = {
+    emacs.enable = true;
+    vicinae.enable = true;
+  };
   services.wallpaper.enable = true;
 
   home.packages = with pkgs; [
