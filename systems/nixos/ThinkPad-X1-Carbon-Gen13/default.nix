@@ -3,6 +3,7 @@
   inputs,
   lib,
   modulesPath,
+  username,
   ...
 }:
 
@@ -21,6 +22,14 @@
   ];
 
   dualboot.enable = true;
+
+  programs = {
+    _1password.enable = true;
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = [ username ];
+    };
+  };
 
   # Enable after the first successful boot and sbctl key creation.
   ext.security.secureboot.enable = false;
