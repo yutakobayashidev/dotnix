@@ -23,7 +23,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           slack
           telegram-desktop
           vesktop
-          wechat
         ];
     };
 }
