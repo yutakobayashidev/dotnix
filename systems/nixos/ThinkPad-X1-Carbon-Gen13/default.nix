@@ -36,6 +36,7 @@
   i18n.inputMethod.fcitx5.settings.globalOptions = {
     "Hotkey/DeactivateKeys"."0" = "Muhenkan";
     "Hotkey/ActivateKeys"."0" = "Hangul_Hanja";
+    Behavior.ShareInputState = "All";
   };
 
   programs = {
