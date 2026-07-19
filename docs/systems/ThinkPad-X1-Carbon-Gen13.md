@@ -9,6 +9,7 @@ This host dual-boots Windows and NixOS. NixOS uses an existing EFI System Partit
 - Temporarily disable Secure Boot in UEFI. It is enabled after the first successful NixOS boot.
 - Prepare the [custom NixOS installer ISO](../installer-iso.md) on a USB drive.
 - Choose a strong LUKS passphrase.
+- Keep an existing machine that can decrypt `secrets/default.yaml` available while installing.
 
 > [!WARNING]
 > `destroy = false` prevents disko from rebuilding the partition table, but it does not make an incorrect NixOS PARTUUID safe. The selected NixOS partition is formatted as LUKS. Verify both PARTUUIDs before running disko.
@@ -115,7 +116,56 @@ The expected layout is:
 - Btrfs subvolumes: `@root`, `@home`, `@nix`, `@persist`, `@log`, and `@swap`
 - 32 GiB swapfile in `@swap`
 
-## 5. Install NixOS
+## 5. Register the ThinkPad SOPS Identity
+
+This host uses its persistent SSH host key as its SOPS identity. The shared NixOS configuration reads `/etc/ssh/ssh_host_ed25519_key`, and impermanence persists that path from `/persist/etc/ssh`.
+
+Generate the key directly in its final persistent location. Do not place the private key in `/tmp` or the repository:
+
+```sh
+sudo install -d -m 700 /mnt/persist/etc/ssh
+sudo ssh-keygen \
+  -t ed25519 \
+  -f /mnt/persist/etc/ssh/ssh_host_ed25519_key \
+  -N ""
+sudo chmod 600 /mnt/persist/etc/ssh/ssh_host_ed25519_key
+```
+
+Convert the public key to its age recipient:
+
+```sh
+sudo cat /mnt/persist/etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age
+```
+
+On an existing machine that can decrypt the repository secrets:
+
+1. Add the resulting `age1...` value to `.sops.yaml` as the ThinkPad key.
+2. Add the ThinkPad key to the `^secrets/.*$` creation rule.
+3. Re-encrypt the shared secret file:
+
+   ```sh
+   sops updatekeys secrets/default.yaml
+   ```
+
+4. Commit and push `.sops.yaml` and `secrets/default.yaml`.
+
+The installer cannot perform `sops updatekeys` using only the new ThinkPad key because that key cannot decrypt the existing file yet. Pull the updated files on the ThinkPad:
+
+```sh
+git pull
+```
+
+Verify that the persistent SSH host key can decrypt the updated secret without writing plaintext to disk:
+
+```sh
+sudo env \
+  SOPS_AGE_SSH_PRIVATE_KEY_FILE=/mnt/persist/etc/ssh/ssh_host_ed25519_key \
+  sops --decrypt secrets/default.yaml >/dev/null
+```
+
+The shared configuration also has `sops.age.generateKey = true`, but a newly generated age key is not automatically added to `.sops.yaml`. Do not rely on it to bootstrap this host.
+
+## 6. Install NixOS
 
 The initial configuration uses systemd-boot and leaves Lanzaboote disabled.
 
@@ -138,7 +188,7 @@ sudo reboot
 
 Confirm that both NixOS and Windows boot while Secure Boot remains disabled.
 
-## 6. Enable Secure Boot After the First Boot
+## 7. Enable Secure Boot After the First Boot
 
 Keep Secure Boot disabled while completing this section. In UEFI, clear the Secure Boot keys or select the option that puts the firmware into Setup Mode. Keep the BitLocker recovery key available because changing Secure Boot keys can trigger recovery.
 
