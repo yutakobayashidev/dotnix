@@ -50,7 +50,6 @@
     directories = [
       "/etc/NetworkManager/system-connections"
       "/etc/nixos"
-      "/etc/ssh"
       "/var/lib"
     ];
     files = [ "/etc/machine-id" ];

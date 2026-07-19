@@ -118,7 +118,7 @@ The expected layout is:
 
 ## 5. Register the ThinkPad SOPS Identity
 
-This host uses its persistent SSH host key as its SOPS identity. The shared NixOS configuration reads `/etc/ssh/ssh_host_ed25519_key`, and impermanence persists that path from `/persist/etc/ssh`.
+This host uses its persistent SSH host key as its bootstrap SOPS identity. OpenSSH reads the key directly from `/persist/etc/ssh/ssh_host_ed25519_key`, so `/etc/ssh` itself remains managed by NixOS instead of being persisted as a directory. SOPS also generates its system age key under `/persist/var/lib/sops-nix/key.txt`; the registered SSH recipient allows the initial activation to decrypt secrets before that generated key is added as a recipient.
 
 Generate the key directly in its final persistent location. Do not place the private key in `/tmp` or the repository:
 

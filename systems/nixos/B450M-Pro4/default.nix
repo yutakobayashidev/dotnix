@@ -54,6 +54,9 @@
   ];
 
   ext.security.secureboot.enable = true;
+
+  environment.persistence."/persist".directories = [ "/etc/ssh" ];
+
   boot = {
     loader.efi.canTouchEfiVariables = true;
     binfmt.emulatedSystems = [ "aarch64-linux" ];

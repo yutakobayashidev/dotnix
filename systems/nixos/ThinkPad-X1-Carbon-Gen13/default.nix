@@ -50,6 +50,19 @@
     networkmanager.enable = true;
   };
 
+  services.openssh.hostKeys = [
+    {
+      path = "/persist/etc/ssh/ssh_host_ed25519_key";
+      type = "ed25519";
+    }
+  ];
+
+  sops.age = {
+    keyFile = lib.mkForce "/persist/var/lib/sops-nix/key.txt";
+    sshKeyPaths = lib.mkForce (map (key: key.path) config.services.openssh.hostKeys);
+    generateKey = true;
+  };
+
   services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [ "systemd" ];
