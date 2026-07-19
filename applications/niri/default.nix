@@ -3,10 +3,6 @@
 
 {
   imports = [ inputs.niri.homeModules.niri ];
-  # niri パッケージをテストスキップでオーバーライド
-  programs.niri.package = pkgs.niri.overrideAttrs (_: {
-    doCheck = false;
-  });
 
   programs.niri.settings = {
     # タイトルバーを非表示
