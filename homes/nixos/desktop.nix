@@ -2,6 +2,7 @@
 
 {
   my.programs.vicinae.enable = true;
+  services.wallpaper.enable = true;
 
   imports = [
     ../../applications/niri
@@ -14,7 +15,6 @@
   home.packages = with pkgs; [
     grimblast
     swappy
-    awww
     wl-clipboard
     zenity
   ];

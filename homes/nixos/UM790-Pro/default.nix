@@ -16,5 +16,6 @@
       ../desktop.nix
     ];
     home.homeDirectory = "/home/${username}";
+    services.wallpaper.imagePath = "/home/${username}/wallpapers/wp13990714.png";
   };
 }

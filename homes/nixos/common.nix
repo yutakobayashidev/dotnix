@@ -33,6 +33,7 @@ in
       inputs.self.homeManagerModules.emacs
       inputs.self.homeManagerModules.neovim
       inputs.self.homeManagerModules.vicinae
+      inputs.self.homeManagerModules.wallpaper
     ];
     users.${username} =
       { config, ... }:

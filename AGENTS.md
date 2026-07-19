@@ -59,6 +59,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 
 - **WM**: Niri (scrollable tiling WM)
 - **Launcher**: Vicinae
+- **Wallpaper**: swaybg via a Home Manager feature module
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, VirtualBox on UM790-Pro

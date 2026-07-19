@@ -57,14 +57,6 @@
 
     # 自動起動
     spawn-at-startup = [
-      { command = [ "awww-daemon" ]; }
-      {
-        command = [
-          "sh"
-          "-c"
-          "sleep 1 && awww img ~/wallpapers/wp13990714.png --transition-type fade"
-        ];
-      }
       {
         command = [
           "fcitx5"
@@ -165,7 +157,6 @@
 
   # 必要なパッケージ
   home.packages = with pkgs; [
-    awww
     grimblast
     brightnessctl
     playerctl
