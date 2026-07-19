@@ -44,6 +44,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   │   ├── homebrew.nix         # Shared macOS Homebrew app set
 │   │   └── M2-MacBook-Air/      # macOS host config
 │   └── android/
+│       ├── common.nix           # Shared nix-on-droid configuration
 │       └── Galaxy-S23FE/        # nix-on-droid host config
 ├── homes/
 │   ├── common.nix               # Shared Home Manager glue
@@ -52,16 +53,10 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   └── android/                 # nix-on-droid home hook
 ├── applications/                # Directly imported Home Manager app configs (git, tmux, browsers, niri, misc)
 ├── modules/
-│   ├── flake/               # Flake modules (registries, packages, devshell, treefmt, feature modules)
-│   │   └── features/        # Published Home Manager features (Emacs, Neovim, Vicinae)
-│   ├── profiles/
-│   │   ├── nixos/       # Reusable NixOS profiles (base, desktop, laptop)
-│   │   └── home/        # Home Manager profiles (base, terminal, cli, development, desktop)
-│   ├── nixos/           # Reusable optioned NixOS modules (docker, tailscale, security, kubo)
-│   ├── darwin/          # Reusable optioned nix-darwin modules
-│   ├── shared/          # Shared system modules across platforms (nix, nixpkgs)
-│   ├── nix-on-droid/    # nix-on-droid shared modules
-│   └── home/            # Home Manager shared modules and optioned feature modules
+│   ├── features/        # Typed NixOS, nix-darwin, and Home Manager feature registries
+│   ├── profiles/        # Typed profile bundles with optional system-to-home cascade
+│   └── per-system/      # Packages, devshell, checks, and formatter configuration
+├── lib/                 # Profile builder and shared evaluation helpers
 ├── overlays/            # Custom packages (overlay)
 ├── agents/                  # Agent skills config docs (skills: github:yutakobayashidev/skills)
 └── zsh/                     # Zsh config

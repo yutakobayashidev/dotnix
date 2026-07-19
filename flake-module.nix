@@ -14,6 +14,7 @@ let
     mapAttrs
     mkOption
     optionalAttrs
+    optionals
     splitString
     types
     ;
@@ -86,6 +87,7 @@ in
                   (maybePath ./systems/${cfg.platform}/${name})
                   (maybePath ./homes/${cfg.platform}/${name})
                 ]
+                ++ optionals (cfg.platform != "android") (attrValues config.flake.modules.${cfg.platform})
                 ++ cfg.modules;
               "${if cfg.platform == "android" then "extraS" else "s"}pecialArgs" = {
                 inherit self inputs;

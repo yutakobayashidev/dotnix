@@ -1,10 +1,9 @@
-{ inputs, lib, ... }:
+{ inputs, ... }:
 
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
     ../common.nix
-    ../../../modules/profiles/nixos/base.nix
     (
       { pkgs, ... }:
       {
@@ -25,7 +24,12 @@
 
   networking.hostName = "X870-Steel-Legend-WiFi-WSL";
 
-  my.services.tailscale.enable = lib.mkForce false;
+  my.profiles = {
+    base.enable = true;
+    development.enable = true;
+    network.enable = true;
+  };
+  my.services.tailscale.enable = false;
 
   system.stateVersion = "25.11";
 }

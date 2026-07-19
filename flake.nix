@@ -278,7 +278,7 @@
 
       imports = [
         ./flake-module.nix
-        ./modules/flake
+        ./modules
         inputs.nix-topology.flakeModule
       ];
 

@@ -8,7 +8,6 @@
   imports = [
     ../common.nix
     inputs.disko.nixosModules.disko
-    inputs.impermanence.nixosModules.impermanence
     ./disko.nix
     ./impermanence.nix
   ];
@@ -36,6 +35,13 @@
 
   networking.hostName = "oci-a1";
   networking.useDHCP = lib.mkDefault true;
+
+  my = {
+    profiles.base.enable = true;
+    services.tailscale.enable = false;
+    nixpkgs.permittedInsecurePackages = [ ];
+  };
+  nixpkgs.config.android_sdk.accept_license = false;
 
   security.sudo.wheelNeedsPassword = false;
 

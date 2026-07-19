@@ -11,19 +11,9 @@
   imports = [
     ../common.nix
     ../shared/comin/alloy.nix
-    ../../modules/darwin
-    ../../modules/shared/nixpkgs
     inputs.comin.darwinModules.comin
     inputs.sops-nix.darwinModules.sops
-    ../../modules/profiles/darwin/base.nix
   ];
-
-  my.nixpkgs = {
-    enable = true;
-    permittedInsecurePackages = [
-      "python3.14-ecdsa-0.19.2"
-    ];
-  };
 
   nixpkgs = {
     overlays = [

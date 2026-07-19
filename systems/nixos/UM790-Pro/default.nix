@@ -13,11 +13,19 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./virtualbox.nix
     ../desktop.nix
-    ../../../modules/profiles/nixos/base.nix
-    ../../../modules/profiles/nixos/desktop.nix
   ];
 
   ext.security.secureboot.enable = true;
+  my.profiles = {
+    base.enable = true;
+    communication.enable = true;
+    desktop.enable = true;
+    development.enable = true;
+    media.enable = true;
+    network.enable = true;
+    productivity.enable = true;
+    security.enable = true;
+  };
 
   boot = {
     loader.efi.canTouchEfiVariables = true;

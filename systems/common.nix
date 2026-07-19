@@ -1,12 +1,6 @@
 { lib, pkgs, ... }:
 
 {
-  imports = [
-    ../modules/shared/nix
-  ];
-
-  my.nix.enable = true;
-
   environment.variables = {
     BIRD_PROFILE_NAME = "account1";
     EDCB_HOST = "100.111.109.43";

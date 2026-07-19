@@ -13,16 +13,26 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ../desktop.nix
     ../laptop.nix
-    ../../../modules/profiles/nixos/base.nix
-    ../../../modules/profiles/nixos/desktop.nix
-    ../../../modules/profiles/nixos/laptop.nix
     inputs.disko.nixosModules.disko
     ./disko.nix
-    ../../../modules/profiles/nixos/impermanence.nix
   ];
 
   dualboot.enable = true;
-  my.fingerprint.enable = true;
+  my = {
+    fingerprint.enable = true;
+    system.impermanence.enable = true;
+    profiles = {
+      base.enable = true;
+      communication.enable = true;
+      desktop.enable = true;
+      development.enable = true;
+      laptop.enable = true;
+      media.enable = true;
+      network.enable = true;
+      productivity.enable = true;
+      security.enable = true;
+    };
+  };
 
   # Tap Alt to select an input mode; holding it keeps the normal modifier behavior.
   services = {

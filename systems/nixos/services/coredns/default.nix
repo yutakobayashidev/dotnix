@@ -1,10 +1,11 @@
-{ config, lib, ... }:
+{ config, ... }:
 
 let
   mitmDomain = "www.mod.gov.cn";
   homeDomain = "home.yutakobayashi.com";
   tailDomain = "tail29d068.ts.net";
   b450m = "100.111.109.43";
+  inherit (config.networking) hostName;
 in
 {
   services.resolved.enable = false;
@@ -45,7 +46,7 @@ in
       ${mitmDomain}:53 {
         bind 127.0.0.1 ${b450m}
         hosts {
-          ${mitmDomain} ${config.networking.hostName}
+          ${mitmDomain} ${hostName}
         }
         log
       }

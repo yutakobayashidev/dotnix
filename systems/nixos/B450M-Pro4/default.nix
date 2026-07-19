@@ -49,11 +49,22 @@
     inputs.disko.nixosModules.disko
     ./disko.nix
     inputs.nur-packages.nixosModules.px4_drv
-    ../../../modules/profiles/nixos/base.nix
-    ../../../modules/profiles/nixos/impermanence.nix
   ];
 
   ext.security.secureboot.enable = true;
+  my = {
+    system.impermanence.enable = true;
+    profiles = {
+      base.enable = true;
+      development.enable = true;
+      network.enable = true;
+    };
+    services.cloudflared-tunnel = {
+      enable = true;
+      id = "3e1ff621-e8bf-47d1-b095-4b5c15eec63c";
+      credentialsFile = config.sops.secrets.cloudflared-tunnel.path;
+    };
+  };
 
   environment.persistence."/persist".directories = [ "/etc/ssh" ];
 
@@ -178,12 +189,6 @@
   };
 
   virtualisation.docker.enable = true;
-
-  my.services.cloudflared-tunnel = {
-    enable = true;
-    id = "3e1ff621-e8bf-47d1-b095-4b5c15eec63c";
-    credentialsFile = config.sops.secrets.cloudflared-tunnel.path;
-  };
 
   sops.secrets.cloudflared-tunnel = {
     sopsFile = ./secrets.yaml;

@@ -30,6 +30,13 @@
   networking.hostName = "pi5";
   networking.useDHCP = lib.mkDefault true;
 
+  my = {
+    profiles.base.enable = true;
+    services.tailscale.enable = false;
+    nixpkgs.permittedInsecurePackages = [ ];
+  };
+  nixpkgs.config.android_sdk.accept_license = false;
+
   services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [ "systemd" ];

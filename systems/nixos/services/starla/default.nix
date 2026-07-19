@@ -1,10 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ inputs, ... }:
 {
   imports = [ inputs.starla.nixosModules.default ];
 

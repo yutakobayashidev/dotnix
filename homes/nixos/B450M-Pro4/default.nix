@@ -5,9 +5,6 @@
 
   home-manager.users.${username} = {
     imports = [
-      ../../../modules/profiles/home/development.nix
-      ../../../modules/profiles/home/network.nix
-      ../../../modules/home/gallery-dl
       ../../../applications/whipper
       ../../../applications/beets
       ./ghtkn-agent.nix
@@ -40,7 +37,7 @@
       };
     };
     my.programs.discrawl = {
-      sopsFile = ../../../modules/home/discrawl/secrets.yaml;
+      sopsFile = ../../../modules/features/discrawl/secrets.yaml;
       systemd.enable = true;
     };
     home.packages = with pkgs; [

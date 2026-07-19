@@ -140,7 +140,7 @@ The `name` field is local to `ghtkn`. This repository uses:
 The GitHub CLI configuration is defined in:
 
 ```txt
-modules/home/development/gh/default.nix
+modules/features/gh/default.nix
 overlays/default.nix
 ```
 
@@ -442,7 +442,7 @@ Do not wrap broad task runners with GH_TOKEN.
 ## Relevant Files
 
 ```txt
-modules/home/development/gh/default.nix - ghtkn package, gh extensions
+modules/features/gh/default.nix - ghtkn package, gh extensions
 overlays/default.nix           - gh wrapper
 applications/git/default.nix   - ghtkn Git credential helper
 .envrc                         - parent direnv inheritance and Nix dev shell

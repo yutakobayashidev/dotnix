@@ -1,9 +1,6 @@
 { pkgs, ... }:
 
 {
-  my.programs.vicinae.enable = true;
-  services.wallpaper.enable = true;
-
   imports = [
     ../../applications/niri
     ../../applications/waybar
@@ -11,6 +8,9 @@
     ../../applications/swaylock
     ../../applications/zaproxy
   ];
+
+  my.programs.vicinae.enable = true;
+  services.wallpaper.enable = true;
 
   home.packages = with pkgs; [
     grimblast

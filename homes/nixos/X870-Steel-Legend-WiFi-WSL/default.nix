@@ -4,10 +4,6 @@
   imports = [ ../common.nix ];
 
   home-manager.users.${username} = {
-    imports = [
-      ../../../modules/profiles/home/development.nix
-      ../../../modules/profiles/home/network.nix
-    ];
     home = {
       homeDirectory = "/home/${username}";
       packages = [ pkgs.xdg-utils ];

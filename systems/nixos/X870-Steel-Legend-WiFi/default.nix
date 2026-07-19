@@ -13,11 +13,19 @@
     ../services/wivrn
     (modulesPath + "/installer/scan/not-detected.nix")
     ../desktop.nix
-    ../../../modules/profiles/nixos/base.nix
-    ../../../modules/profiles/nixos/desktop.nix
   ];
 
   dualboot.enable = true;
+  my.profiles = {
+    base.enable = true;
+    communication.enable = true;
+    desktop.enable = true;
+    gaming.enable = true;
+    media.enable = true;
+    network.enable = true;
+    productivity.enable = true;
+    security.enable = true;
+  };
 
   ext.security.secureboot.enable = true;
 

@@ -1,0 +1,33 @@
+_:
+
+{
+  flake.modules.nixos."fingerprint" =
+    {
+      lib,
+      config,
+      ...
+    }:
+
+    let
+      cfg = config.my.fingerprint;
+    in
+    {
+      options.my.fingerprint = {
+        enable = lib.mkEnableOption "fingerprint authentication";
+      };
+
+      config = lib.mkIf cfg.enable {
+        services.fprintd.enable = true;
+
+        security.polkit.enable = true;
+
+        security.pam.services = {
+          polkit-1.fprintAuth = true;
+          login.fprintAuth = false;
+          sudo.fprintAuth = true;
+          greetd.fprintAuth = lib.mkForce false;
+          ly.fprintAuth = lib.mkForce false;
+        };
+      };
+    };
+}
