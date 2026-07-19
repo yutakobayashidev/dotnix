@@ -26,6 +26,9 @@
           awscli2
         ];
       };
-      programs.niri.settings.input.touchpad.natural-scroll = true;
+      programs.niri.settings.input.touchpad = {
+        accel-speed = -0.2;
+        natural-scroll = true;
+      };
     };
 }
