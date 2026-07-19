@@ -30,10 +30,19 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           stable.yt-dlp
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
+          bitwig-studio
           cava
+          dexed
           kooha
+          lsp-plugins
+          qpwgraph
           spotify
+          surge-xt
+          vital
           vlc
+          wineWow64Packages.staging
+          yabridge
+          yabridgectl
         ];
     };
 }

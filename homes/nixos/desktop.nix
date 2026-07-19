@@ -17,6 +17,7 @@
 
   home.packages = with pkgs; [
     file-roller
+    mpvpaper
     pavucontrol
     sushi
     swappy

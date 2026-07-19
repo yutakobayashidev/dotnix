@@ -61,6 +61,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Launcher**: Vicinae
 - **Wallpaper**: swaybg via a Home Manager feature module
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
+- **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, VirtualBox on UM790-Pro
 - **Observability**: Grafana / Prometheus / Loki on B450M-Pro4, Claude Code OTLP telemetry
