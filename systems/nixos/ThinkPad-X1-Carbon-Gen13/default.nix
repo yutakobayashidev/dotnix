@@ -28,14 +28,14 @@
   services.keyd = {
     enable = true;
     keyboards.default.settings.main = {
-      leftalt = "overload(alt, f13)";
-      rightalt = "overload(altgr, f14)";
+      leftalt = "overload(alt, muhenkan)";
+      rightalt = "overload(altgr, henkan)";
     };
   };
 
   i18n.inputMethod.fcitx5.settings.globalOptions = {
-    "Hotkey/DeactivateKeys"."0" = "F13";
-    "Hotkey/ActivateKeys"."0" = "F14";
+    "Hotkey/DeactivateKeys"."0" = "Muhenkan";
+    "Hotkey/ActivateKeys"."0" = "Henkan";
   };
 
   programs = {
