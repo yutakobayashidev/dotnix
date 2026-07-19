@@ -25,11 +25,23 @@
   my.fingerprint.enable = true;
 
   # Tap Alt to select an input mode; holding it keeps the normal modifier behavior.
-  services.keyd = {
-    enable = true;
-    keyboards.default.settings.main = {
-      leftalt = "overload(alt, muhenkan)";
-      rightalt = "overload(altgr, hanja)";
+  services = {
+    keyd = {
+      enable = true;
+      keyboards.default.settings.main = {
+        leftalt = "overload(alt, muhenkan)";
+        rightalt = "overload(altgr, hanja)";
+      };
+    };
+    openssh.hostKeys = [
+      {
+        path = "/persist/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
+    prometheus.exporters.node = {
+      enable = true;
+      enabledCollectors = [ "systemd" ];
     };
   };
 
@@ -75,22 +87,10 @@
     networkmanager.enable = true;
   };
 
-  services.openssh.hostKeys = [
-    {
-      path = "/persist/etc/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }
-  ];
-
   sops.age = {
     keyFile = lib.mkForce "/persist/var/lib/sops-nix/key.txt";
     sshKeyPaths = lib.mkForce (map (key: key.path) config.services.openssh.hostKeys);
     generateKey = true;
-  };
-
-  services.prometheus.exporters.node = {
-    enable = true;
-    enabledCollectors = [ "systemd" ];
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
