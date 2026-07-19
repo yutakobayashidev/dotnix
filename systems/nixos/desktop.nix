@@ -29,6 +29,7 @@
   hardware.bluetooth.powerOnBoot = true;
 
   services = {
+    blueman.enable = true;
     printing.enable = true;
     greetd.enable = true;
     gnome.gnome-keyring.enable = true;

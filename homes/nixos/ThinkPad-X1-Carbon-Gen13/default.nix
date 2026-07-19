@@ -26,5 +26,6 @@
           awscli2
         ];
       };
+      programs.niri.settings.input.touchpad.natural-scroll = true;
     };
 }

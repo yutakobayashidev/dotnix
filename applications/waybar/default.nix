@@ -266,7 +266,6 @@
 
   # 必要なパッケージ
   home.packages = with pkgs; [
-    blueman
     font-awesome
     networkmanagerapplet
     swaynotificationcenter

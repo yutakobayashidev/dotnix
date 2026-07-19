@@ -332,12 +332,6 @@ fprintd-list <username>
 
 ### Delete fingerprints
 
-Delete one enrolled fingerprint for the current user:
-
-```sh
-fprintd-delete
-```
-
 Delete all enrolled fingerprints for the current user:
 
 ```sh
