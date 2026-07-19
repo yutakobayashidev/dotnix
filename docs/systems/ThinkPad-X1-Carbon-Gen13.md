@@ -62,7 +62,7 @@ lsblk -o NAME,SIZE,FSTYPE,PARTTYPE,PARTUUID,MOUNTPOINTS
 sudo blkid
 ```
 
-Edit `systems/nixos/ThinkPad-X1-Carbon-Gen13/disko.nix` and replace both placeholder values:
+Confirm that `systems/nixos/ThinkPad-X1-Carbon-Gen13/disko.nix` contains the same identifiers. Update them if the disk has been repartitioned:
 
 ```nix
 espPart = "/dev/disk/by-partuuid/<ESP_PARTUUID>";
@@ -205,7 +205,7 @@ nix shell nixpkgs#git -c git clone https://github.com/yutakobayashidev/dotnix.gi
 cd dotnix
 ```
 
-Set the same real ESP and NixOS PARTUUIDs in `systems/nixos/ThinkPad-X1-Carbon-Gen13/disko.nix` before rebuilding. Do not leave the repository's placeholder values in place.
+Confirm the ESP and NixOS PARTUUIDs in `systems/nixos/ThinkPad-X1-Carbon-Gen13/disko.nix` before rebuilding.
 
 Create the signing keys directly in their final persistent location:
 

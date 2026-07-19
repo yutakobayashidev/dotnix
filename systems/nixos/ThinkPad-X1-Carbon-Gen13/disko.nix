@@ -1,8 +1,8 @@
 _:
 
 let
-  espPart = "/dev/disk/by-partuuid/a53e3b19-67de-40de-9ded-3eac3117689a";
-  nixosPart = "/dev/disk/by-partuuid/311d0f9c-f35f-42e6-b6fc-a4d67dd21b2e";
+  espPart = "/dev/disk/by-partuuid/8cb2bef8-44e0-4db0-af89-4412783ec3fb";
+  nixosPart = "/dev/disk/by-partuuid/ac37857a-9a50-48e9-89f2-bd04175d926f";
 
   btrfsMountOptions = [
     "compress=zstd:1"
