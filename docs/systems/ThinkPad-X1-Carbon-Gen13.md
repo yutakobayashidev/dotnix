@@ -281,6 +281,14 @@ The SSH host key is stored directly at `/persist/etc/ssh/ssh_host_ed25519_key`; 
 
 The system installs the 1Password GUI and CLI. Home Manager also enables the same `gh` and `awscli2` shell plugins as the MacBook. After the first rebuild, open 1Password, sign in, and enable its command-line and SSH integrations from the application settings as needed. Account credentials and 1Password state are not stored in this repository.
 
+## Input Method Shortcuts
+
+- `Ctrl+Space`: toggle English/Japanese input
+- Tap left `Alt`: switch to English input
+- Tap right `Alt`: switch to Japanese input
+
+Holding either `Alt` while pressing another key retains its normal modifier behavior.
+
 ## Fingerprint Commands
 
 This note covers the basic `fprintd` commands used by the fingerprint module.

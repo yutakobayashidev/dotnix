@@ -24,6 +24,20 @@
   dualboot.enable = true;
   my.fingerprint.enable = true;
 
+  # Tap Alt to select an input mode; holding it keeps the normal modifier behavior.
+  services.keyd = {
+    enable = true;
+    keyboards.default.settings.main = {
+      leftalt = "overload(alt, f13)";
+      rightalt = "overload(altgr, f14)";
+    };
+  };
+
+  i18n.inputMethod.fcitx5.settings.globalOptions = {
+    "Hotkey/DeactivateKeys"."0" = "F13";
+    "Hotkey/ActivateKeys"."0" = "F14";
+  };
+
   programs = {
     _1password.enable = true;
     _1password-gui = {
