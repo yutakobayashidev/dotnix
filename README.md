@@ -67,6 +67,8 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 └── zsh/                     # Zsh config
 ```
 
+Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
+
 ## Documentation
 
 ### System Installation Guides
