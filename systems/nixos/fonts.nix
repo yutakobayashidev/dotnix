@@ -21,16 +21,13 @@
         monospace = [ "JetBrains Mono" ];
       };
 
-      # macOS-style font rendering.
+      # Avoid color fringing while retaining crisp outlines on lower-DPI displays.
       antialias = true;
       hinting = {
         enable = true;
         style = "slight";
       };
-      subpixel = {
-        rgba = "rgb";
-        lcdfilter = "default";
-      };
+      subpixel.rgba = "none";
     };
   };
 }
