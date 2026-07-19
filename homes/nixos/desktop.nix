@@ -17,7 +17,6 @@
 
   home.packages = with pkgs; [
     file-roller
-    grimblast
     pavucontrol
     sushi
     swappy

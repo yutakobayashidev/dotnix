@@ -114,11 +114,7 @@
       "Mod+Shift+5".action.move-column-to-workspace = 5;
 
       # スクリーンショット
-      "Mod+Shift+S".action.spawn = [
-        "grimblast"
-        "copy"
-        "area"
-      ];
+      "Mod+Shift+S".action.screenshot = { };
 
       # メディアキー
       "XF86AudioRaiseVolume".action.spawn = [
@@ -156,7 +152,6 @@
 
   # 必要なパッケージ
   home.packages = with pkgs; [
-    grimblast
     brightnessctl
     playerctl
     polycat
