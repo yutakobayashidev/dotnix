@@ -22,6 +22,7 @@
   ];
 
   dualboot.enable = true;
+  my.fingerprint.enable = true;
 
   programs = {
     _1password.enable = true;
