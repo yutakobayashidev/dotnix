@@ -2,6 +2,8 @@
 
 The ThinkPad configuration installs Ghidra 11.3.1 with the GhidraMCP 1.1
 extension and registers its stdio bridge with Home Manager's MCP registry.
+The Niri session enables Java's non-reparenting window-manager mode so Ghidra
+and other Java GUI applications render correctly.
 
 ## First-time setup
 

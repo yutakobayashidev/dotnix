@@ -11,6 +11,8 @@
 
   programs.niri.package = pkgs.niri;
 
+  home.sessionVariables._JAVA_AWT_WM_NONREPARENTING = "1";
+
   programs.niri.settings = {
     # タイトルバーを非表示
     prefer-no-csd = true;
