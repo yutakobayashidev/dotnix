@@ -190,13 +190,7 @@ Confirm that both NixOS and Windows boot while Secure Boot remains disabled.
 
 ## 7. Enable Secure Boot After the First Boot
 
-Keep Secure Boot disabled while completing this section. In UEFI, clear the Secure Boot keys or select the option that puts the firmware into Setup Mode. Keep the BitLocker recovery key available because changing Secure Boot keys can trigger recovery.
-
-Check that Setup Mode is enabled:
-
-```sh
-sudo nix shell nixpkgs#sbctl -c sbctl status
-```
+Keep Secure Boot disabled while creating the keys and building the first signed configuration. If BitLocker protection is enabled, back up its recovery key and suspend protection before changing the Secure Boot databases. If `manage-bde -status C:` reports `Protection Off` and no key protectors, there is no recovery key or protector to suspend.
 
 Clone the configuration into your normal working directory:
 
@@ -234,6 +228,14 @@ sudo nixos-rebuild switch --flake .#ThinkPad-X1-Carbon-Gen13
 sudo sbctl verify
 ```
 
+Reboot into the ThinkPad UEFI settings, open **Security > Secure Boot**, set Secure Boot to enabled, and select **Reset to Setup Mode**. Do not select **Clear All Secure Boot Keys**, because that can remove the Forbidden Signature Database (`dbx`). Save the settings and boot back into NixOS.
+
+Confirm that Setup Mode is enabled before enrolling any keys:
+
+```sh
+sudo sbctl status
+```
+
 Enroll the generated keys together with Microsoft's keys so Windows remains bootable:
 
 ```sh
@@ -241,13 +243,32 @@ sudo sbctl enroll-keys --microsoft
 sudo sbctl status
 ```
 
-Reboot into UEFI, enable Secure Boot, and then verify both operating systems. In NixOS:
+If `sbctl` reports that the `KEK` and `db` EFI variables are immutable, clear that attribute and retry:
+
+```sh
+sudo nix shell nixpkgs#e2fsprogs -c chattr -i \
+  /sys/firmware/efi/efivars/KEK-* \
+  /sys/firmware/efi/efivars/db-*
+sudo sbctl enroll-keys --microsoft --ignore-immutable
+```
+
+Reboot and verify both operating systems. In NixOS:
 
 ```sh
 bootctl status
 sudo sbctl status
 sudo sbctl verify
 ```
+
+In an administrator PowerShell session on Windows:
+
+```powershell
+Confirm-SecureBootUEFI
+manage-bde -status C:
+manage-bde -protectors -get C:
+```
+
+If BitLocker was suspended before the firmware changes, resume it after both operating systems boot successfully.
 
 ### Secure Boot Key Recovery
 

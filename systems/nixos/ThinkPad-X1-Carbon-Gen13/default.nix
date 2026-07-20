@@ -69,8 +69,7 @@
     };
   };
 
-  # Enable after the first successful boot and sbctl key creation.
-  ext.security.secureboot.enable = false;
+  ext.security.secureboot.enable = true;
 
   boot = {
     loader = {
