@@ -1,12 +1,22 @@
 # niri home-manager設定
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 {
-  imports = [ inputs.niri.homeModules.niri ];
+  imports = [ inputs.niri-flake.homeModules.niri ];
+
+  programs.niri.package = pkgs.niri;
 
   programs.niri.settings = {
     # タイトルバーを非表示
     prefer-no-csd = true;
+
+    # X11 アプリを Xwayland 経由で表示
+    xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
 
     # 入力設定
     input = {

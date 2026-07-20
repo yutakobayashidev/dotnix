@@ -13,6 +13,10 @@
         metamask
         ipfs-companion
         keepa
+        instapaper-official
+        refined-github
+        wayback-machine
+        zotero-connector
         are-na
         web-clipper-obsidian
       ];

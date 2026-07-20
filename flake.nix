@@ -56,9 +56,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    niri = {
+    niri-flake = {
       url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        niri-stable.follows = "";
+        niri-unstable.follows = "";
+        nixpkgs-stable.follows = "nixpkgs-stable";
+        nixpkgs.follows = "nixpkgs";
+        xwayland-satellite-stable.follows = "";
+        xwayland-satellite-unstable.follows = "";
+      };
     };
     vicinae-extensions = {
       url = "github:vicinaehq/extensions";
