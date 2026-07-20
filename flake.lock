@@ -2070,11 +2070,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784470936,
-        "narHash": "sha256-LGec24y9gy3by5o3rV1WfaHX2MR1+2gqkQ7MF1z7tD0=",
+        "lastModified": 1784515958,
+        "narHash": "sha256-QrHJUPlxXWKkGYWfqRhelaDkCogLe4bvt/Oj5WWAAR4=",
         "owner": "yutakobayashidev",
         "repo": "nur-packages",
-        "rev": "795df7abbd1f2b3381ee5668c1de619ed605acb7",
+        "rev": "29dee840748d2f63ed30c0ed6e4025806ede0e82",
         "type": "github"
       },
       "original": {
@@ -2131,6 +2131,22 @@
       "original": {
         "owner": "openclaw",
         "repo": "openclaw",
+        "type": "github"
+      }
+    },
+    "oracle-skill": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784412365,
+        "narHash": "sha256-Hrww0za4Ze+c5JIxVLXhvYoKlgJE0qW7Ek9aSi92FhU=",
+        "owner": "steipete",
+        "repo": "oracle",
+        "rev": "f13347973bf6e21e6ef45c0088183021dc2c9e20",
+        "type": "github"
+      },
+      "original": {
+        "owner": "steipete",
+        "repo": "oracle",
         "type": "github"
       }
     },
@@ -2297,6 +2313,7 @@
         "obsidian-skills": "obsidian-skills",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
         "openclaw": "openclaw",
+        "oracle-skill": "oracle-skill",
         "prompt-review-skill": "prompt-review-skill",
         "repiq": "repiq",
         "rustowl-flake": "rustowl-flake",

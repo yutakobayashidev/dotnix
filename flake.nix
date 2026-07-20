@@ -120,6 +120,10 @@
       url = "github:kepano/obsidian-skills";
       flake = false;
     };
+    oracle-skill = {
+      url = "github:steipete/oracle";
+      flake = false;
+    };
     prompt-review-skill = {
       url = "github:tokoroten/prompt-review";
       flake = false;

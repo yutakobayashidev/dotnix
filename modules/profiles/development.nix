@@ -25,6 +25,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         gh.enable = lib.mkDefault true;
         jj.enable = lib.mkDefault true;
         opencode.enable = lib.mkDefault true;
+        oracle.enable = lib.mkDefault true;
         pi.enable = lib.mkDefault true;
         spec-kit.enable = lib.mkDefault true;
       };

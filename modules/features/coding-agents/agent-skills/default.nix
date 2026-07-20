@@ -51,6 +51,10 @@ _:
               path = inputs.obsidian-skills;
               subdir = "skills";
             };
+            oracle = {
+              path = inputs.oracle-skill;
+              subdir = "skills/oracle";
+            };
             repiq = {
               path = inputs.repiq;
               subdir = "skills";
@@ -196,6 +200,22 @@ _:
                       "`${agentBrowserBin}`"
                     ]
                     original;
+              };
+
+            oracle =
+              let
+                oracleBin = lib.getExe pkgs.oracle;
+              in
+              {
+                from = "oracle";
+                path = ".";
+                packages = [ pkgs.oracle ];
+                rewriteCommands = false;
+                transform =
+                  { original, dependencies }:
+                  (builtins.replaceStrings [ "npx -y @steipete/oracle " ] [ "${oracleBin} " ] original)
+                  + "\n"
+                  + dependencies;
               };
 
             create-cli = {
