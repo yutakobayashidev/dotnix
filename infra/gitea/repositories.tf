@@ -52,3 +52,10 @@ resource "gitea_repository" "llm_wiki" {
   private     = false
   auto_init   = false
 }
+
+resource "gitea_repository" "nnn" {
+  username  = "yuta"
+  name      = "nnn"
+  private   = true
+  auto_init = false
+}
