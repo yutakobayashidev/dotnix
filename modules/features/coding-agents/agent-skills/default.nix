@@ -84,6 +84,10 @@ _:
               path = inputs.mattpocock-skills;
               subdir = "skills";
             };
+            i-have-adhd = {
+              path = inputs.i-have-adhd-skill;
+              subdir = "skills";
+            };
             twitter-api-relay = {
               path = inputs.twitter-api-safe-relay-skills;
               subdir = "skills";
@@ -104,6 +108,7 @@ _:
             "obsidian"
             "repiq"
             "difit"
+            "i-have-adhd"
           ];
 
           skills.explicit = {

@@ -144,6 +144,10 @@
       url = "github:mattpocock/skills";
       flake = false;
     };
+    i-have-adhd-skill = {
+      url = "github:ayghri/i-have-adhd";
+      flake = false;
+    };
     twitter-api-safe-relay-skills = {
       url = "github:fa0311/twitter_api_safe_relay_skills";
       flake = false;
