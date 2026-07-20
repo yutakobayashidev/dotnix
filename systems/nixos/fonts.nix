@@ -18,7 +18,7 @@
           "Noto Sans CJK JP"
         ];
         serif = [ "Noto Serif CJK JP" ];
-        monospace = [ "JetBrains Mono" ];
+        monospace = [ "Noto Sans Mono CJK JP" ];
       };
 
       # Avoid color fringing while retaining crisp outlines on lower-DPI displays.
