@@ -12,14 +12,6 @@
     gnome-disks.enable = true;
     niri.enable = true;
     obs-studio.enableVirtualCamera = true;
-    uwsm = {
-      enable = true;
-      waylandCompositors.niri = {
-        prettyName = "Niri";
-        comment = "A scrollable-tiling Wayland compositor managed by UWSM";
-        binPath = "/run/current-system/sw/bin/niri";
-      };
-    };
     xwayland.enable = true;
     regreet = {
       enable = true;
