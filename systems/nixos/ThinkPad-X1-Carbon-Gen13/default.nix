@@ -14,6 +14,7 @@
     ../desktop.nix
     ../laptop.nix
     inputs.disko.nixosModules.disko
+    ./capslock-inhibit.nix
     ./disko.nix
   ];
 
