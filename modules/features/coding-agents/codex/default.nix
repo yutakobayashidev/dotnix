@@ -62,13 +62,20 @@ _:
           };
         };
 
-        mcp_servers.deepwiki = {
-          url = "https://mcp.deepwiki.com/mcp";
-        };
+        mcp_servers = {
+          deepwiki = {
+            url = "https://mcp.deepwiki.com/mcp";
+          };
 
-        mcp_servers.junction = {
-          url = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
-          oauth_resource = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
+          junction = {
+            url = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
+            oauth_resource = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
+          };
+        }
+        // lib.optionalAttrs (config.my.programs.mcp.enable && config.my.programs.mcp.ghidra.enable) {
+          ghidra = {
+            inherit (config.programs.mcp.servers.ghidra) command args;
+          };
         };
 
         otel = {

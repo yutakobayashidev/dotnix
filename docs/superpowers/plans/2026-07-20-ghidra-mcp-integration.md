@@ -174,6 +174,7 @@ Expected: only the `nur-packages` lock node changes and evaluation prints
 **Files:**
 
 - Modify: `modules/features/coding-agents/mcp.nix`
+- Modify: `modules/features/coding-agents/codex/default.nix`
 - Modify: `homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix`
 - Create: `docs/ghidra-mcp.md`
 - Modify: `CLAUDE.md`
@@ -265,13 +266,35 @@ _:
           settings.servers = lib.mkIf cfg.ghidra.enable {
             ghidra = {
               command = lib.getExe pkgs.ghidra-mcp-bridge;
-              args = [ "http://${cfg.ghidra.host}:${toString cfg.ghidra.port}/" ];
+              args = [ "http://${cfg.ghidra.host}:${toString cfg.ghidra.port}" ];
             };
           };
         };
       };
     };
 }
+```
+
+Replace the two dotted `mcp_servers` assignments in
+`modules/features/coding-agents/codex/default.nix` with:
+
+```nix
+mcp_servers =
+  {
+    deepwiki = {
+      url = "https://mcp.deepwiki.com/mcp";
+    };
+
+    junction = {
+      url = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
+      oauth_resource = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
+    };
+  }
+  // lib.optionalAttrs (config.my.programs.mcp.enable && config.my.programs.mcp.ghidra.enable) {
+    ghidra = {
+      inherit (config.programs.mcp.servers.ghidra) command args;
+    };
+  };
 ```
 
 - [ ] **Step 3: Enable GhidraMCP on the ThinkPad**
@@ -300,7 +323,7 @@ extension and registers its stdio bridge with Home Manager's MCP registry.
    `38473`.
 4. Reload the plugin or restart Ghidra, then open the program to analyze.
 5. Start an MCP client. Home Manager supplies the bridge command and its
-   `http://127.0.0.1:38473/` endpoint.
+   `http://127.0.0.1:38473` endpoint.
 
 The bridge starts on demand, but tool calls require Ghidra to be running with
 the plugin enabled and a program open.
@@ -324,15 +347,19 @@ Expected JSON contains the Nix store command ending in
 `/bin/ghidra-mcp-bridge` and exactly this argument:
 
 ```json
-["http://127.0.0.1:38473/"]
+["http://127.0.0.1:38473"]
 ```
+
+Evaluate `home.activation.writeCodexConfig.data`, realise the referenced
+`codex-config` store path, and verify it also contains
+`[mcp_servers.ghidra]` with the same command and argument.
 
 - [ ] **Step 6: Build and verify the ThinkPad configuration**
 
 Run:
 
 ```bash
-nix run nixpkgs#nixfmt -- modules/features/coding-agents/mcp.nix homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix
+nix run nixpkgs#nixfmt -- modules/features/coding-agents/mcp.nix modules/features/coding-agents/codex/default.nix homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix
 nix build .#nixosConfigurations.ThinkPad-X1-Carbon-Gen13.config.system.build.toplevel --no-link
 git diff --check
 ```
@@ -343,7 +370,7 @@ errors.
 - [ ] **Step 7: Commit the dotnix integration**
 
 ```bash
-git add CLAUDE.md docs/ghidra-mcp.md flake.lock homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix modules/features/coding-agents/mcp.nix
+git add AGENTS.md docs/ghidra-mcp.md docs/superpowers/plans/2026-07-20-ghidra-mcp-integration.md docs/superpowers/specs/2026-07-20-ghidra-mcp-integration-design.md flake.lock homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix modules/features/coding-agents/codex/default.nix modules/features/coding-agents/mcp.nix
 git commit -m "feat: configure ghidra-mcp"
 ```
 

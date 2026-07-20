@@ -42,7 +42,11 @@ When both `my.programs.mcp.enable` and `my.programs.mcp.ghidra.enable` are true:
 - add Ghidra 11.3.1 composed with `pkgs.ghidra-mcp` to `home.packages`;
 - register `pkgs.ghidra-mcp-bridge` through
   `mcp-servers.settings.servers.ghidra`;
-- pass `http://<host>:<port>/` as the bridge's positional argument.
+- copy the central Ghidra server command and arguments into the repository's
+  custom-generated Codex configuration, while Claude Code consumes the central
+  registry through its Home Manager integration;
+- pass `http://<host>:<port>` as the bridge's positional argument. GhidraMCP
+  1.1 appends `/<endpoint>` directly, so the base URL must not end in `/`.
 
 Enable the integration only in the ThinkPad Home Manager configuration. Other
 development-profile hosts keep their current MCP and package sets.
