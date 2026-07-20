@@ -25,6 +25,7 @@
           "network"
           "bluetooth"
           "battery"
+          "custom/codexbar"
           "clock"
           "tray"
           "custom/notification"
@@ -43,6 +44,16 @@
           exec = "polycat";
           return-type = "";
           tooltip = false;
+        };
+
+        # Codex usage
+        "custom/codexbar" = {
+          exec = "codexbar";
+          return-type = "json";
+          interval = 300;
+          signal = 12;
+          tooltip = true;
+          on-click = "xdg-open https://chatgpt.com/codex/settings/usage";
         };
 
         # niri ワークスペース
@@ -209,6 +220,7 @@
 
       #custom-launcher,
       #mpris,
+      #custom-codexbar,
       #pulseaudio,
       #network,
       #bluetooth,
@@ -266,6 +278,7 @@
 
   # 必要なパッケージ
   home.packages = with pkgs; [
+    codexbar-waybar
     font-awesome
     networkmanagerapplet
     swaynotificationcenter
