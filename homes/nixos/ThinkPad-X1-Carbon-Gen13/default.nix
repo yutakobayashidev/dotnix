@@ -14,6 +14,7 @@
       ];
       home.homeDirectory = "/home/${username}";
       my.programs.mcp.ghidra.enable = true;
+      services.poweralertd.enable = true;
       services.wallpaper.imagePath = "/home/${username}/wallpapers/lycoris-recoil-rain.jpg";
       programs._1password-shell-plugins = {
         enable = true;

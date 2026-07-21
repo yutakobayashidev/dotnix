@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  services.swaync.enable = true;
+
   programs.waybar = {
     enable = true;
     settings = {
@@ -281,7 +283,6 @@
     codexbar-waybar
     font-awesome
     networkmanagerapplet
-    swaynotificationcenter
     wlogout
   ];
 }
