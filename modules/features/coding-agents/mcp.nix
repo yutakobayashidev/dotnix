@@ -65,7 +65,10 @@ _:
           settings.servers = lib.mkIf cfg.ghidra.enable {
             ghidra = {
               command = lib.getExe pkgs.ghidra-mcp-bridge;
-              args = [ "http://${cfg.ghidra.host}:${toString cfg.ghidra.port}" ];
+              args = [
+                "--ghidra-server"
+                "http://${cfg.ghidra.host}:${toString cfg.ghidra.port}"
+              ];
             };
           };
         };
