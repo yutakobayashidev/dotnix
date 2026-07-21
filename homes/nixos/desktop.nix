@@ -23,6 +23,8 @@
     file-roller
     mpvpaper
     pavucontrol
+    screenpipe-app
+    screenpipe-cli
     sushi
     swappy
     wl-clipboard
