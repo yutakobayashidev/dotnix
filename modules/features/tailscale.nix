@@ -34,7 +34,7 @@ _:
               authKeyFile = config.sops.secrets.tailscale-authkey.path;
               extraUpFlags = [
                 "--ssh"
-                "--accept-dns=false"
+                "--accept-dns=${lib.boolToString cfg.configureResolver}"
               ];
             };
 
