@@ -13,6 +13,16 @@
         inputs.onepassword-shell-plugins.hmModules.default
       ];
       home.homeDirectory = "/home/${username}";
+      home.packages = with pkgs; [
+        alcom
+        beatoraja
+        blender
+        osu-lazer-bin
+        tetrio-desktop
+        unityhub
+        vrc-get
+        vrcx
+      ];
       my.programs.mcp.ghidra.enable = true;
       services.poweralertd.enable = true;
       services.wallpaper.imagePath = "/home/${username}/wallpapers/lycoris-recoil-rain.jpg";

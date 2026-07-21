@@ -14,6 +14,10 @@
         inputs.onepassword-shell-plugins.hmModules.default
       ];
       home.homeDirectory = "/Users/${username}";
+      home.packages = with pkgs.brewCasks; [
+        alcom
+        blender
+      ];
       programs._1password-shell-plugins = {
         enable = true;
         plugins = with pkgs; [
