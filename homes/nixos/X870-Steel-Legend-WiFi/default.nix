@@ -16,6 +16,7 @@
       bs-manager
       davinci-resolve
       lmstudio
+      lutris
       modrinth-app
       osu-lazer-bin
       (prismlauncher.override {
@@ -26,12 +27,14 @@
           jdk8
         ];
       })
+      protonup-qt
       sidequest
       tetrio-desktop
       unityhub
       vrc-get
       vrcx
       wayvr
+      winetricks
     ];
     home.homeDirectory = "/home/${username}";
   };

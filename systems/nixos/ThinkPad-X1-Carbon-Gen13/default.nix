@@ -27,7 +27,6 @@
       communication.enable = true;
       desktop.enable = true;
       development.enable = true;
-      gaming.enable = true;
       laptop.enable = true;
       media.enable = true;
       network.enable = true;

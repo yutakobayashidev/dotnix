@@ -20,7 +20,6 @@
     base.enable = true;
     communication.enable = true;
     desktop.enable = true;
-    gaming.enable = true;
     media.enable = true;
     network.enable = true;
     productivity.enable = true;
