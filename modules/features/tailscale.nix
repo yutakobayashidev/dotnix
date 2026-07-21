@@ -32,8 +32,8 @@ _:
               enable = true;
               useRoutingFeatures = "server";
               authKeyFile = config.sops.secrets.tailscale-authkey.path;
-              extraUpFlags = [
-                "--ssh"
+              extraUpFlags = [ "--ssh" ];
+              extraSetFlags = [
                 "--accept-dns=${lib.boolToString cfg.configureResolver}"
               ];
             };
