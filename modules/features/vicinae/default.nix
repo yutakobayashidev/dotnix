@@ -8,6 +8,42 @@
       pkgs,
       ...
     }:
+    let
+      system = pkgs.stdenv.hostPlatform.system;
+      mkLinuxRayCastExtension =
+        {
+          name,
+          rev,
+          hash,
+          apiVersion,
+          cliHash,
+        }:
+        let
+          raycastCli = pkgs.fetchurl {
+            url = "https://cli.raycast.com/${apiVersion}/linux/ray";
+            hash = cliHash;
+            executable = true;
+          };
+        in
+        inputs.vicinae-extensions.inputs.vicinae.lib.${system}.mkRayCastExtension {
+          inherit name rev hash;
+          buildPhase = "${raycastCli} build -e dist";
+        };
+      natureRemo = mkLinuxRayCastExtension {
+        name = "nature-remo";
+        rev = "a03e4c58dd53593042397b412413afda7117790e";
+        hash = "sha256-vU8VUfhbATkoT0ba8j7CiPIn4XDenJsQjKW1VCs2LSM=";
+        apiVersion = "1.40.0";
+        cliHash = "sha256-0YKDMi2se9ghpAeBw43gQMouXusXJxYmKCDYgTpFR6A=";
+      };
+      searchMdn = mkLinuxRayCastExtension {
+        name = "search-mdn";
+        rev = "a03e4c58dd53593042397b412413afda7117790e";
+        hash = "sha256-FNRbJuyBqM+k6SNkEzdMz9vfNsNgiq1kdKRlzPDSMsg=";
+        apiVersion = "1.76.1";
+        cliHash = "sha256-HQvbqCgGzBxuu+BcbhGHUGYi2e5CkhYhu2i86mZwysw=";
+      };
+    in
     {
       options.my.programs.vicinae.enable = lib.mkEnableOption "Vicinae application launcher";
 
@@ -34,12 +70,14 @@
             };
           };
 
-          extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [
+          extensions = with inputs.vicinae-extensions.packages.${system}; [
             nix
             niri
             zoxide-recent-directories
             ssh
             port-killer
+            natureRemo
+            searchMdn
           ];
         };
 
