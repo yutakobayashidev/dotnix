@@ -75,6 +75,7 @@ _:
         // lib.optionalAttrs (config.my.programs.mcp.enable && config.my.programs.mcp.ghidra.enable) {
           ghidra = {
             inherit (config.programs.mcp.servers.ghidra) command args;
+            default_tools_approval_mode = "approve";
             startup_timeout_sec = 300;
           };
         };
