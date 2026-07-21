@@ -15,6 +15,10 @@
   };
   services.wallpaper.enable = true;
 
+  # Unwrapped GTK 3 applications, including Tauri development builds, need
+  # the file chooser schema on the desktop session search path.
+  home.sessionVariables.XDG_DATA_DIRS = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}:$XDG_DATA_DIRS";
+
   home.packages = with pkgs; [
     file-roller
     mpvpaper
