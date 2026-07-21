@@ -37,6 +37,7 @@
       nautilus
       psmisc
       rpi-imager
+      usbutils
     ];
 
   programs.nix-index.enable = true;
