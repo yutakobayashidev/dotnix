@@ -24,6 +24,7 @@
       sshpass
       tokei
       unar
+      unzip
       wget
       xh
       yazi
