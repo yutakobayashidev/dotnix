@@ -89,6 +89,10 @@ let
     git-discrawl-archive,git-ssh.yutakobayashi.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPZl6HOE9OLZQxnK1liKwcFUSNHKVk0YPC49tdyxHO/
   '';
   hermesSkillsSources = {
+    ax = {
+      path = inputs.ax;
+      subdir = "skills";
+    };
     superpowers = {
       path = inputs.superpowers;
       subdir = "skills";
@@ -115,6 +119,10 @@ let
     catalog = hermesSkillsCatalog;
     sources = hermesSkillsSources;
     skills = {
+      ax = {
+        from = "ax";
+        path = "ax";
+      };
       brainstorming = {
         from = "superpowers";
         path = "brainstorming";
@@ -197,9 +205,9 @@ in
         proto = "virtiofs";
       }
       {
-        source = "/home/yuta/ghq/github.com/yutakobayashidev/awsome-adhd";
-        mountPoint = "/var/lib/hermes/awsome-adhd";
-        tag = "awsome-adhd";
+        source = "/home/yuta/ghq/github.com/yutakobayashidev/awesome-adhd";
+        mountPoint = "/var/lib/hermes/awesome-adhd";
+        tag = "awesome-adhd";
         proto = "virtiofs";
       }
     ];
@@ -233,6 +241,7 @@ in
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
     extraPackages = [
+      pkgs.ax
       edcbToolsPackage
       pkgs.bird
       pkgs.cloudflared
