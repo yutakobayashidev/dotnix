@@ -15,7 +15,10 @@ _:
       options.my.programs.pi.enable = lib.mkEnableOption "Pi";
 
       config = lib.mkIf cfg.enable {
-        home.packages = [ pkgs.llm-agents.pi ];
+        home.packages = [
+          pkgs.llm-agents.pi
+          pkgs.pi-acp
+        ];
       };
     };
 }

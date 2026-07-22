@@ -83,6 +83,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     llm-agents.url = "github:numtide/llm-agents.nix";
+    local-mcp = {
+      url = "github:nakasyou/local-mcp";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-openclaw-tools = {
       url = "github:openclaw/nix-openclaw-tools";
       inputs.nixpkgs.follows = "nixpkgs";

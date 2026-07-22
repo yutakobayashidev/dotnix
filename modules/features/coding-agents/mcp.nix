@@ -62,7 +62,13 @@ _:
             };
           };
 
-          settings.servers = lib.mkIf cfg.ghidra.enable {
+          settings.servers = {
+            searxng = {
+              command = lib.getExe pkgs.mcp-searxng;
+              env.SEARXNG_URL = "https://search.home.yutakobayashi.com";
+            };
+          }
+          // lib.optionalAttrs cfg.ghidra.enable {
             ghidra = {
               command = lib.getExe pkgs.ghidra-mcp-bridge;
               args = [

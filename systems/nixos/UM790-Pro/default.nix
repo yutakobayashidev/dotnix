@@ -11,6 +11,7 @@
     ../services/hermes-agent
     ../services/comin
     (modulesPath + "/installer/scan/not-detected.nix")
+    ./local-mcp.nix
     ./virtualbox.nix
     ../desktop.nix
   ];

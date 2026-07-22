@@ -131,6 +131,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android development environment, VirtualBox on UM790-Pro
+- **Remote MCP**: [Sandboxed local tools on UM790-Pro](docs/local-mcp-tunnel.md) through an OpenAI Secure MCP Tunnel
 - **Self-hosted services**: Nextcloud, Immich, Gitea, Home Assistant, ArchiveBox, n8n, WebHashtag, Grafana, Prometheus, Loki, Claude Code telemetry, Twitter API Safe Relay with Secure MCP Tunnel, and comin on B450M-Pro4
 - **Agent microVMs**: Hermes Agent on UM790-Pro (Slack and Discord) and OpenClaw on B450M-Pro4 via microvm.nix
 

@@ -1380,6 +1380,26 @@
         "type": "github"
       }
     },
+    "local-mcp": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784701280,
+        "narHash": "sha256-hdcXCpXU0C+T3bBAPS4oLqqn86ZkyKmovNWDGJYn294=",
+        "owner": "nakasyou",
+        "repo": "local-mcp",
+        "rev": "bbe317e8928a46c7f1f18a7ac5bd35b779584a20",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nakasyou",
+        "repo": "local-mcp",
+        "type": "github"
+      }
+    },
     "mattpocock-skills": {
       "flake": false,
       "locked": {
@@ -2115,11 +2135,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784727664,
-        "narHash": "sha256-lnX3+RezRzg0FO0Oq7IVltXRfPmwMC4DUM1Cm9sDvPc=",
+        "lastModified": 1784729673,
+        "narHash": "sha256-jcl/omZTH+k5BAZ55Zp71EPV5mzG8aeu2r7sptKNKKY=",
         "owner": "yutakobayashidev",
         "repo": "nur-packages",
-        "rev": "021431a7f60eaa8fb98c15cb6630ece8eeb7d253",
+        "rev": "e750efdc91a01e9edc19a9837695dcd73f6225e9",
         "type": "github"
       },
       "original": {
@@ -2360,6 +2380,7 @@
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents",
+        "local-mcp": "local-mcp",
         "mattpocock-skills": "mattpocock-skills",
         "mcp-servers-nix": "mcp-servers-nix",
         "microvm": "microvm",
