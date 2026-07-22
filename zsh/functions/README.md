@@ -12,7 +12,6 @@
 | `claude-zai` | Z.AI API プロキシ経由で Claude Code を実行        | `claude-zai [args]`          |
 | `codex`      | Codex に起動元の Niri window ID を引き継ぐ        | `codex [args]`               |
 | `ct`         | Claude Code を tmux teammate mode で起動          | `ct [args]`                  |
-| `dev`        | tmux ベースのマルチプロジェクト開発セッション管理 | `dev [subcommand]`           |
 | `cdg`        | Git リポジトリのルートへ移動                      | `cdg`                        |
 | `fpull`      | fetch 後に必要なら stash して pull                | `fpull`                      |
 | `g`          | 引数なし: ghq+fzf でリポジトリ移動、引数あり: git | `g [git args]`               |
