@@ -183,6 +183,10 @@
       url = "github:yutakobayashidev/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    openai-secure-tunnel-nix = {
+      url = "github:nakasyou/openai-secure-tunnel-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     starla = {
       url = "github:ananthb/starla/v0.3.1";
       inputs.nixpkgs.follows = "nixpkgs";

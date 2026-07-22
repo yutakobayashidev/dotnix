@@ -1548,6 +1548,28 @@
         "type": "github"
       }
     },
+    "nix-darwin_2": {
+      "inputs": {
+        "nixpkgs": [
+          "openai-secure-tunnel-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784500460,
+        "narHash": "sha256-UvORnAxTRHax7RG74W8Z2t4GvIkX6AjJ5kk0QlwZomo=",
+        "owner": "nix-darwin",
+        "repo": "nix-darwin",
+        "rev": "57a3171f94705599a2499248ca5758d5eb47c0e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-darwin",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "nix-formatter-pack": {
       "inputs": {
         "nixpkgs": [
@@ -2126,6 +2148,27 @@
         "type": "github"
       }
     },
+    "openai-secure-tunnel-nix": {
+      "inputs": {
+        "nix-darwin": "nix-darwin_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784686336,
+        "narHash": "sha256-HEQS+iIleWPGWg35qt7TXhFDSxkXaO+7Nwqx47h6Wj0=",
+        "owner": "nakasyou",
+        "repo": "openai-secure-tunnel-nix",
+        "rev": "ea5858adb01e36e23492af1c2f905f7b7f331176",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nakasyou",
+        "repo": "openai-secure-tunnel-nix",
+        "type": "github"
+      }
+    },
     "openclaw": {
       "flake": false,
       "locked": {
@@ -2322,6 +2365,7 @@
         "nur-packages": "nur-packages",
         "obsidian-skills": "obsidian-skills",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
+        "openai-secure-tunnel-nix": "openai-secure-tunnel-nix",
         "openclaw": "openclaw",
         "oracle-skill": "oracle-skill",
         "prompt-review-skill": "prompt-review-skill",
