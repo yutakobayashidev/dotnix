@@ -1,9 +1,19 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 let
+  relayHostPort = 18788;
+  package = pkgs.twitter-api-safe-relay-mcp;
   domain = "tw.home.yutakobayashi.com";
   outputDir = "/var/lib/immich-net-pics";
   baseProfileDir = "/var/lib/twitter-api-safe-relay/chrome-profile";
   relayNetworkName = "twitter-api-safe-relay";
+  tunnelServiceName = "tunnel-client-twitter-api-safe-relay";
+  tunnelCredentialName = "control-plane-api-key";
   browserDebugPort = 9223;
   relayDebugPort = 9222;
   accounts = [
@@ -40,6 +50,35 @@ let
   };
 in
 {
+  imports = [ inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client ];
+
+  sops.secrets.openai-tunnel-api-key = {
+    sopsFile = ../../B450M-Pro4/secrets.yaml;
+  };
+
+  services.openai-tunnel-client.instances.twitter-api-safe-relay = {
+    enable = true;
+    environment.TWITTER_RELAY_BASE_URL = "http://127.0.0.1:${toString relayHostPort}";
+    settings = {
+      config_version = 1;
+      control_plane = {
+        tunnel_id = "tunnel_6a605119f2bc8191b8aa9ffe352e095c";
+        # The pinned Nix module turns apiKeyFile into an env reference whose
+        # value is another file reference. tunnel-client resolves only one
+        # reference layer, so point it at the systemd credential directly.
+        api_key = "file:/run/credentials/${tunnelServiceName}.service/${tunnelCredentialName}";
+      };
+      health.listen_addr = "127.0.0.1:18789";
+      admin_ui.open_browser = false;
+      mcp.commands = [
+        {
+          channel = "main";
+          command = "${package}/bin/twitter_api_safe_relay_mcp";
+        }
+      ];
+    };
+  };
+
   virtualisation.oci-containers.containers =
     (lib.listToAttrs (
       builtins.map (account: {
@@ -83,6 +122,7 @@ in
     // {
       twitter-api-safe-relay = {
         image = "ghcr.io/fa0311/twitter_api_safe_relay:latest-dashboard-slim";
+        ports = [ "127.0.0.1:${toString relayHostPort}:3000" ];
         labels = {
           "traefik.enable" = "true";
           "traefik.http.routers.twitter-api-safe-relay.rule" = "Host(`${domain}`)";
@@ -143,6 +183,13 @@ in
       }) accountConfigs
     )
     // {
+      tunnel-client-twitter-api-safe-relay = {
+        after = [ "podman-twitter-api-safe-relay.service" ];
+        wants = [ "podman-twitter-api-safe-relay.service" ];
+        serviceConfig.LoadCredential = [
+          "${tunnelCredentialName}:${config.sops.secrets.openai-tunnel-api-key.path}"
+        ];
+      };
       twitter-bookmark-snap = {
         description = "Fetch and render Twitter bookmarks";
         after = [ "network-online.target" ];
