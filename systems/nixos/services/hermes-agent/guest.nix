@@ -196,6 +196,12 @@ in
         tag = "llm-wiki";
         proto = "virtiofs";
       }
+      {
+        source = "/home/yuta/ghq/github.com/yutakobayashidev/awsome-adhd";
+        mountPoint = "/var/lib/hermes/awsome-adhd";
+        tag = "awsome-adhd";
+        proto = "virtiofs";
+      }
     ];
 
     volumes = [
