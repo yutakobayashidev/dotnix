@@ -39,6 +39,10 @@ _:
               path = inputs.skills;
               subdir = "skills";
             };
+            ax = {
+              path = inputs.ax;
+              subdir = "skills";
+            };
             anthropic = {
               path = inputs.anthropic-skills;
               subdir = "skills";
@@ -105,6 +109,7 @@ _:
 
           skills.enableAll = [
             "local"
+            "ax"
             "obsidian"
             "repiq"
             "difit"
