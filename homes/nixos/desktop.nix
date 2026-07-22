@@ -23,10 +23,12 @@
     file-roller
     mpvpaper
     pavucontrol
+    rquickshare
     screenpipe-app
     screenpipe-cli
     sushi
     swappy
+    turbowarp-desktop
     wl-clipboard
     zenity
     zoom-us
