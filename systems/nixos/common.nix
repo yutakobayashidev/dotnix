@@ -113,6 +113,7 @@
   documentation.dev.enable = true;
 
   environment.systemPackages = with pkgs; [
+    inputs.nixtopsy.packages.${stdenv.hostPlatform.system}.default
     man-pages
     man-pages-ja
     man-pages-posix

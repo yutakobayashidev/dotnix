@@ -2034,6 +2034,21 @@
         "type": "github"
       }
     },
+    "nixtopsy": {
+      "locked": {
+        "lastModified": 1784409959,
+        "narHash": "sha256-3FAA1M8iN3yRuQuH2C7CaIHzosHiVw4QbUaMao+U06M=",
+        "owner": "amaanq",
+        "repo": "nixtopsy",
+        "rev": "45dd9cea7e3bfc51266da94da0b9dec2d3c273ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "amaanq",
+        "repo": "nixtopsy",
+        "type": "github"
+      }
+    },
     "nmd": {
       "inputs": {
         "nixpkgs": [
@@ -2362,6 +2377,7 @@
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-stable": "nixpkgs-stable_2",
+        "nixtopsy": "nixtopsy",
         "nur-packages": "nur-packages",
         "obsidian-skills": "obsidian-skills",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
