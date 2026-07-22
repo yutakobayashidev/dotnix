@@ -73,6 +73,13 @@ return lazy.setup({
 		config = mod("git-conflict"),
 	},
 	{ "lewis6991/gitsigns.nvim", config = mod("gitsigns") },
+	{
+		"Julian/lean.nvim",
+		event = { "BufReadPre *.lean", "BufNewFile *.lean" },
+		init = function()
+			vim.g.lean_config = { mappings = true }
+		end,
+	},
 	{ "rebelot/kanagawa.nvim", priority = 1000, config = mod("kanagawa"), lazy = false },
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, config = mod("lualine") },
 	{ "mattn/vim-maketable", cmd = { "MakeTable", "UnmakeTable" } },

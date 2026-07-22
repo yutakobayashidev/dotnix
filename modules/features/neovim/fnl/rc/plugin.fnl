@@ -64,6 +64,10 @@
     :config (mod :git-conflict)}
    {1 :lewis6991/gitsigns.nvim
     :config (mod :gitsigns)}
+   {1 :Julian/lean.nvim
+    :event ["BufReadPre *.lean" "BufNewFile *.lean"]
+    :init (fn []
+            (set vim.g.lean_config {:mappings true}))}
    {1 :rebelot/kanagawa.nvim
     :lazy false
     :priority 1000
