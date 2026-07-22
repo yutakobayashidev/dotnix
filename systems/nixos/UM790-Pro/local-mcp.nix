@@ -18,7 +18,7 @@ in
   environment.systemPackages = [ localMcp ];
 
   sops.secrets.openai-tunnel-api-key = {
-    sopsFile = ../B450M-Pro4/secrets.yaml;
+    sopsFile = ../../../secrets/openai-tunnel.yaml;
   };
 
   services.openai-tunnel-client.instances.local-mcp = {

@@ -53,7 +53,7 @@ in
   imports = [ inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client ];
 
   sops.secrets.openai-tunnel-api-key = {
-    sopsFile = ../../B450M-Pro4/secrets.yaml;
+    sopsFile = ../../../../secrets/openai-tunnel.yaml;
   };
 
   services.openai-tunnel-client.instances.twitter-api-safe-relay = {

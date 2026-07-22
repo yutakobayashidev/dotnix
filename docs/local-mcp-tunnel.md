@@ -13,3 +13,6 @@ XDG_STATE_HOME=/var/lib/local-mcp local-mcp approvals
 
 The systemd service is `tunnel-client-local-mcp`. Its health endpoint listens
 only on `127.0.0.1:18790`.
+
+The OpenAI control-plane key is stored in `secrets/openai-tunnel.yaml`, encrypted
+only for B450M-Pro4 and UM790-Pro so both tunnel clients can consume it.
