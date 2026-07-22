@@ -6,5 +6,5 @@ font-size = 18
 macos-option-as-alt = true
 copy-on-select = clipboard
 unfocused-split-opacity = 0.85
-shell-integration-features = ssh-terminfo,ssh-env
+shell-integration-features = no-ssh-env,no-ssh-terminfo
 bell-features = system,audio,attention,title
