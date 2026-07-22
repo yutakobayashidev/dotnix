@@ -93,11 +93,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784613858,
-        "narHash": "sha256-Qf1EELkBcP9ImGCIqN1YnY7i9sXflqz1WF7fVTjg5LE=",
+        "lastModified": 1784710914,
+        "narHash": "sha256-ztTritzzab14WN8lwhaEfNDeqWDW2mXl7CindIi0mWQ=",
         "owner": "yusukebe",
         "repo": "ax",
-        "rev": "66133a6d61f4a3177a23cee41b71c9486fdf5703",
+        "rev": "e8b4abb62c8f0e7a21c03650b76692a05b387695",
         "type": "github"
       },
       "original": {

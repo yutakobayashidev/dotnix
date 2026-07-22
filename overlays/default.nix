@@ -2,12 +2,7 @@
 
 {
   ax = final: _prev: {
-    # Patching or stripping Bun's standalone binary corrupts its appended payload.
-    ax = inputs.ax.packages.${final.stdenv.hostPlatform.system}.default.overrideAttrs (_old: {
-      nativeBuildInputs = [ ];
-      buildInputs = [ ];
-      dontStrip = true;
-    });
+    ax = inputs.ax.packages.${final.stdenv.hostPlatform.system}.default;
   };
 
   llm-agents = final: _prev: {
