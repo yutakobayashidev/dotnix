@@ -27,6 +27,21 @@ in
         ;
     };
     sharedModules = [
+      {
+        xdg.userDirs = {
+          enable = true;
+          createDirectories = true;
+          desktop = "$HOME/Desktop";
+          documents = "$HOME/Documents";
+          download = "$HOME/Downloads";
+          music = "$HOME/Music";
+          pictures = "$HOME/Pictures";
+          projects = "$HOME/Projects";
+          publicShare = "$HOME/Public";
+          templates = "$HOME/Templates";
+          videos = "$HOME/Videos";
+        };
+      }
       inputs.agent-skills.homeManagerModules.default
       inputs.nix-index-database.homeModules.nix-index
       inputs.sops-nix.homeManagerModules.sops
