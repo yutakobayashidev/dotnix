@@ -16,6 +16,20 @@ _:
       codexConfigDir = "${config.xdg.configHome}/codex";
       codexDotfilesDir = "${dotfilesDir}/codex";
       tomlFormat = pkgs.formats.toml { };
+      codexHooks = {
+        hooks.PermissionRequest = [
+          {
+            matcher = "";
+            hooks = [
+              {
+                type = "command";
+                command = "NIRI_BIN=${lib.getExe pkgs.niri} ${lib.getExe pkgs.bash} ${lib.escapeShellArg "${codexDotfilesDir}/hooks/focus-approval.sh"}";
+                timeout = 5;
+              }
+            ];
+          }
+        ];
+      };
       otelExporter =
         if cfg.telemetry.enable then
           {
@@ -40,6 +54,7 @@ _:
         oss_provider = "lmstudio";
 
         features = {
+          hooks = true;
           remote_connections = true;
           remote_control = true;
           workspace_dependencies = false;
@@ -176,8 +191,12 @@ _:
           };
         };
 
-        xdg.configFile."codex/AGENTS.md".source =
-          config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
+        xdg.configFile = {
+          "codex/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
+        }
+        // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+          "codex/hooks.json".text = builtins.toJSON codexHooks;
+        };
       };
     };
 }
