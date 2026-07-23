@@ -296,6 +296,14 @@ in
     settings = {
       group_sessions_per_user = true;
       model.provider = "openai-codex";
+
+      fallback_providers = [
+        {
+          provider = "opencode-go";
+          model = "deepseek-v4-pro";
+        }
+      ];
+
       web.search_backend = "searxng";
       compression = {
         threshold = 0.85;

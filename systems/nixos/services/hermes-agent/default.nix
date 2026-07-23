@@ -15,6 +15,7 @@
     "hermes-agent/slack-app-token".sopsFile = ./secrets.yaml;
     "hermes-agent/slack-allowed-users".sopsFile = ./secrets.yaml;
     "hermes-agent/discord-bot-token".sopsFile = ./secrets.yaml;
+    "hermes-agent/opencode-go-key".sopsFile = ./secrets.yaml;
     course-session.sopsFile = ../../../../secrets/default.yaml;
     "hermes-agent/discrawl-archive-ssh-key" = {
       sopsFile = ./secrets.yaml;
@@ -43,6 +44,7 @@
       SLACK_HOME_CHANNEL=C0B2DC01LJK
       DISCORD_BOT_TOKEN=${config.sops.placeholder."hermes-agent/discord-bot-token"}
       DISCORD_ALLOWED_USERS=890908900520505354
+      OPENCODE_GO_KEY=${config.sops.placeholder."hermes-agent/opencode-go-key"}
       DISCORD_HOME_CHANNEL=1028287639918497822
       BIRD_PROFILE_NAME=account1
       COURSE_API_URL=https://api.nnn.ed.nico/
