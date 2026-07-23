@@ -213,6 +213,12 @@ in
         proto = "virtiofs";
       }
       {
+        source = "/home/yuta/ghq/git.yutakobayashi.com/yuta/life";
+        mountPoint = "/var/lib/hermes/ghq/git.yutakobayashi.com/yuta/life";
+        tag = "life";
+        proto = "virtiofs";
+      }
+      {
         source = "/home/yuta/ghq/github.com/yutakobayashidev/awesome-adhd";
         mountPoint = "/var/lib/hermes/awesome-adhd";
         tag = "awesome-adhd";
@@ -269,6 +275,7 @@ in
       pkgs.just
       pkgs.katasu
       pkgs.miller
+      pkgs.nature-remo-cli
       pkgs.nlobby-cli
       pkgs.pandoc
       pkgs.poppler-utils
