@@ -2,7 +2,7 @@
 
 let
   domain = "tw-lite.home.yutakobayashi.com";
-  port = 3003;
+  port = 3006;
 in
 {
   imports = [ inputs.twitter-lite.nixosModules.default ];
