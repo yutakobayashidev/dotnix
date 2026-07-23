@@ -262,6 +262,7 @@ in
       pkgs.fd
       pkgs.ffmpeg
       pkgs.gh
+      pkgs.ghq
       pkgs.git
       pkgs.imagemagick
       pkgs.jq
