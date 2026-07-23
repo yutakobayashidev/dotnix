@@ -37,7 +37,7 @@ in
       mcp.commands = [
         {
           channel = "main";
-          command = lib.getExe localMcp;
+          command = "${lib.getExe localMcp} mcp";
         }
       ];
     };

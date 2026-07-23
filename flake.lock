@@ -1387,11 +1387,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784701280,
-        "narHash": "sha256-hdcXCpXU0C+T3bBAPS4oLqqn86ZkyKmovNWDGJYn294=",
+        "lastModified": 1784806263,
+        "narHash": "sha256-iE4G31Iy/3QGOTdaik86d+YLjszYcuYBaXuBUD/Vuls=",
         "owner": "nakasyou",
         "repo": "local-mcp",
-        "rev": "bbe317e8928a46c7f1f18a7ac5bd35b779584a20",
+        "rev": "3a88e503de5871c01682d6f56accd73ccb7b4dc4",
         "type": "github"
       },
       "original": {
