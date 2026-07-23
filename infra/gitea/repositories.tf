@@ -59,3 +59,10 @@ resource "gitea_repository" "nnn" {
   private   = true
   auto_init = false
 }
+
+resource "gitea_repository" "life" {
+  username  = "yuta"
+  name      = "life"
+  private   = true
+  auto_init = false
+}
