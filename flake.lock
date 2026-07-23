@@ -2415,6 +2415,7 @@
         "superpowers": "superpowers",
         "treefmt-nix": "treefmt-nix_4",
         "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills",
+        "twitter-lite": "twitter-lite",
         "version-lsp": "version-lsp",
         "vicinae-extensions": "vicinae-extensions",
         "webhashtag-rust-server": "webhashtag-rust-server"
@@ -2868,6 +2869,26 @@
         "owner": "fa0311",
         "repo": "twitter_api_safe_relay_skills",
         "type": "github"
+      }
+    },
+    "twitter-lite": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784786883,
+        "narHash": "sha256-QcBL1h9u/1jgqcId6JdT3YxLD7sTJ+JnLrKNv2gfB4U=",
+        "ref": "refs/heads/main",
+        "rev": "234f4354f9dc81629ced2a590b47c070893d42df",
+        "revCount": 29,
+        "type": "git",
+        "url": "https://git.yutakobayashi.com/yuta/twitter-lite"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.yutakobayashi.com/yuta/twitter-lite"
       }
     },
     "uv2nix": {

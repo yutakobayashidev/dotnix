@@ -35,6 +35,7 @@
     ../services/couchdb
     ../services/coredns
     ../services/twitter-api-safe-relay
+    ../services/twitter-lite
     ../services/s3s
     ../services/headroom
     ../services/aivisspeech

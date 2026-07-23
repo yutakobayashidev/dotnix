@@ -221,6 +221,10 @@
       url = "git+https://git.yutakobayashi.com/yuta/bird";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    twitter-lite = {
+      url = "git+https://git.yutakobayashi.com/yuta/twitter-lite";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     birdclaw = {
       url = "github:yutakobayashidev/birdclaw";
       inputs.nixpkgs.follows = "nixpkgs";
