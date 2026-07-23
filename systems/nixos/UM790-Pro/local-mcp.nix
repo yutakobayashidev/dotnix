@@ -8,7 +8,11 @@
 }:
 
 let
-  localMcp = inputs.local-mcp.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  localMcpPkg = inputs.local-mcp.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  localMcp = pkgs.writeShellScriptBin "local-mcp" ''
+    export XDG_STATE_HOME=''${XDG_STATE_HOME:-/var/lib/local-mcp}
+    exec ${lib.getExe localMcpPkg} "$@"
+  '';
   tunnelServiceName = "tunnel-client-local-mcp";
   tunnelCredentialName = "control-plane-api-key";
 in
@@ -37,7 +41,7 @@ in
       mcp.commands = [
         {
           channel = "main";
-          command = "${lib.getExe localMcp} mcp";
+          command = "${lib.getExe localMcpPkg} mcp";
         }
       ];
     };
