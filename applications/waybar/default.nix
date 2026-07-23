@@ -10,7 +10,10 @@
         layer = "top";
         position = "top";
         height = 40;
-        spacing = 4;
+        spacing = 6;
+        margin-top = 6;
+        margin-left = 8;
+        margin-right = 8;
 
         modules-left = [
           "custom/launcher"
@@ -28,6 +31,8 @@
           "bluetooth"
           "battery"
           "custom/codexbar"
+          "cpu"
+          "memory"
           "clock"
           "tray"
           "custom/notification"
@@ -44,7 +49,6 @@
         # Polycat (CPU アニメーション)
         "custom/polycat" = {
           exec = "polycat";
-          return-type = "";
           tooltip = false;
         };
 
@@ -135,10 +139,23 @@
           tooltip-format = "{timeTo}\nPower: {power:.1f} W";
         };
 
+        # システムモニター
+        "cpu" = {
+          format = "CPU {usage}%";
+          interval = 2;
+          tooltip = false;
+        };
+
+        "memory" = {
+          format = "MEM {percentage}%";
+          interval = 5;
+          tooltip-format = "{used:0.1f} GiB / {total:0.1f} GiB";
+        };
+
         # 時計
         "clock" = {
-          format = " {:%H:%M}";
-          format-alt = " {:%Y-%m-%d %H:%M:%S}";
+          format = "TIME {:%H:%M}";
+          format-alt = "{:%Y-%m-%d %H:%M:%S}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
           calendar = {
             mode = "year";
@@ -194,45 +211,67 @@
     style = ''
       * {
         border: none;
-        border-radius: 0;
         font-family: "Noto Sans CJK JP", "Font Awesome 6 Free";
-        font-size: 14px;
+        font-size: 13px;
         min-height: 0;
       }
 
       window#waybar {
-        background-color: rgba(30, 30, 46, 0.9);
-        color: #cdd6f4;
+        background-color: transparent;
+        color: #cad3f5;
+      }
+
+      #workspaces {
+        padding: 3px;
+        background-color: rgba(36, 39, 58, 0.88);
+        border: 1px solid rgba(183, 189, 248, 0.18);
+        border-radius: 12px;
       }
 
       #workspaces button {
-        padding: 0 10px;
-        color: #cdd6f4;
+        padding: 0 9px;
+        color: #b8c0e0;
         background-color: transparent;
+        border-radius: 9px;
+        transition: background-color 150ms ease, color 150ms ease;
       }
 
       #workspaces button.active {
-        background-color: rgba(245, 189, 230, 0.3);
-        color: #f5bde6;
+        background-color: #f5bde6;
+        color: #181926;
       }
 
       #workspaces button:hover {
-        background-color: rgba(245, 189, 230, 0.1);
+        background-color: rgba(183, 189, 248, 0.2);
       }
 
       #custom-launcher,
+      #custom-polycat,
       #mpris,
       #custom-codexbar,
       #pulseaudio,
       #network,
       #bluetooth,
       #battery,
+      #cpu,
+      #memory,
       #clock,
       #tray,
       #custom-notification,
       #custom-power {
         padding: 0 10px;
-        margin: 0 2px;
+        background-color: rgba(36, 39, 58, 0.88);
+        border: 1px solid rgba(183, 189, 248, 0.18);
+        border-radius: 12px;
+      }
+
+      #mpris {
+        color: #b7bdf8;
+      }
+
+      #cpu,
+      #memory {
+        color: #8bd5ca;
       }
 
       #pulseaudio.muted {
@@ -267,9 +306,9 @@
       }
 
       tooltip {
-        background-color: rgba(30, 30, 46, 0.95);
-        border: 2px solid #f5bde6;
-        border-radius: 10px;
+        background-color: rgba(36, 39, 58, 0.96);
+        border: 1px solid #b7bdf8;
+        border-radius: 12px;
       }
 
       tooltip label {

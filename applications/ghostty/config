@@ -1,8 +1,14 @@
 theme = Catppuccin Macchiato
-background-opacity = 0.85
+background-opacity = 0.82
+cursor-color = #f5bde6
+cursor-text = #181926
+selection-background = #494d64
+selection-foreground = #cad3f5
 font-family = JetBrains Mono
 font-family = Noto Sans Mono CJK JP
 font-size = 18
+window-padding-x = 14
+window-padding-y = 12
 macos-option-as-alt = true
 copy-on-select = clipboard
 unfocused-split-opacity = 0.85
