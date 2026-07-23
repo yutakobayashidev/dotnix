@@ -31,6 +31,7 @@
         plugins = with pkgs; [
           gh
           awscli2
+          tea
         ];
       };
       programs.niri.settings.input.touchpad = {

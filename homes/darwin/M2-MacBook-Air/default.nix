@@ -23,6 +23,7 @@
         plugins = with pkgs; [
           gh
           awscli2
+          tea
         ];
       };
     };

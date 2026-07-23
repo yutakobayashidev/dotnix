@@ -300,7 +300,7 @@ The SSH host key is stored directly at `/persist/etc/ssh/ssh_host_ed25519_key`; 
 
 ## 1Password
 
-The system installs the 1Password GUI and CLI. Home Manager also enables the same `gh` and `awscli2` shell plugins as the MacBook. After the first rebuild, open 1Password, sign in, and enable its command-line and SSH integrations from the application settings as needed. Account credentials and 1Password state are not stored in this repository.
+The system installs the 1Password GUI and CLI. Home Manager also enables the same `gh`, `awscli2`, and `tea` shell plugins as the MacBook. After the first rebuild, open 1Password, sign in, and enable its command-line and SSH integrations from the application settings as needed. Account credentials and 1Password state are not stored in this repository.
 
 ## Input Method Shortcuts
 

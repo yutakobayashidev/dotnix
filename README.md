@@ -140,7 +140,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **Homebrew**: GUI app management via casks (Ghostty, Chrome, OrbStack, etc.)
 - **brew-nix**: Homebrew cask packages managed as Nix packages (version pinning & rollback)
 - **Touch ID**: sudo authentication support
-- **1Password**: Shell Plugins (gh, awscli2)
+- **1Password**: Shell Plugins (gh, awscli2, tea)
 
 ## Managed Tools
 

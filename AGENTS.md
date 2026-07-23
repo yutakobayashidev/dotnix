@@ -71,7 +71,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 
 - **Homebrew**: GUI app management (Ghostty, Raycast, Chrome, etc.)
 - **Touch ID**: sudo authentication
-- **1Password**: Shell Plugins (gh, awscli2)
+- **1Password**: Shell Plugins (gh, awscli2, tea)
 
 ## Key Shell Shortcuts
 
