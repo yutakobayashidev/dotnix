@@ -113,6 +113,10 @@ let
       path = inputs.edcb-tools;
       subdir = ".agents/skills";
     };
+    i-have-adhd = {
+      path = inputs.i-have-adhd-skill;
+      subdir = "skills";
+    };
   };
   hermesSkillsCatalog = agentSkillsLib.discoverCatalog hermesSkillsSources;
   hermesSkillsSelection = agentSkillsLib.selectSkills {
@@ -143,6 +147,10 @@ let
         from = "edcb-tools";
         path = "edcb-tools";
         packages = [ edcbToolsPackage ];
+      };
+      i-have-adhd = {
+        from = "i-have-adhd";
+        path = "i-have-adhd";
       };
     };
   };
