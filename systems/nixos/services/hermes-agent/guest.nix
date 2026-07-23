@@ -247,14 +247,30 @@ in
       pkgs.cloudflared
       pkgs.course-cli
       pkgs.curl
+      pkgs.curl-impersonate
       pkgs.defuddle
       pkgs.discrawl
+      pkgs.duckdb
+      pkgs.fd
+      pkgs.ffmpeg
+      pkgs.gh
       pkgs.git
+      pkgs.imagemagick
       pkgs.jq
+      pkgs.just
       pkgs.katasu
+      pkgs.miller
       pkgs.nlobby-cli
+      pkgs.pandoc
+      pkgs.poppler-utils
       pkgs.python3
       pkgs.ripgrep
+      pkgs.shellcheck
+      pkgs.shfmt
+      pkgs.sqlite
+      pkgs.uv
+      pkgs.xan
+      pkgs.yq-go
     ];
 
     settings = {
