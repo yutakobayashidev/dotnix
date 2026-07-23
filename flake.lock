@@ -2596,11 +2596,11 @@
     "skills": {
       "flake": false,
       "locked": {
-        "lastModified": 1784808657,
-        "narHash": "sha256-Q14kMt1MICvN1m3/xmFzzKo8xO9YGeXc/719fl6HEUE=",
+        "lastModified": 1784815805,
+        "narHash": "sha256-5tAfLJ8Od4o4FLmWVApc4b4gYGccgAOseDPGiw4FOsk=",
         "owner": "yutakobayashidev",
         "repo": "skills",
-        "rev": "e9c1af243cd4896725c69ca59c2118911aa66485",
+        "rev": "c5d2ca6a1c11e8a5db76acac0c618ed56a3a4ebb",
         "type": "github"
       },
       "original": {
