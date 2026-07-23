@@ -126,6 +126,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
 - **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae)
 - **Wallpaper**: swaybg with a declarative Home Manager feature
+- **Cloud storage**: Optional Cloudflare R2 desktop mount through rclone and sops-nix
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
 - **Personal context**: Screenpipe CLI and desktop app, built from source through the personal NUR
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
