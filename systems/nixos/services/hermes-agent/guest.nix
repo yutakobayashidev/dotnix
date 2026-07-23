@@ -152,6 +152,10 @@ let
         from = "i-have-adhd";
         path = "i-have-adhd";
       };
+      trend-daily = {
+        from = "skills";
+        path = "trend-daily";
+      };
     };
   };
   hermesSkillsBundle = agentSkillsLib.mkBundle {
