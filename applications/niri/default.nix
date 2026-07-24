@@ -78,6 +78,27 @@
       { command = [ "spotify" ]; }
     ];
 
+    # ウィンドウルール
+    window-rules = [
+      {
+        geometry-corner-radius = 10.0;
+        clip-to-geometry = true;
+      }
+
+      # Firefox Picture-in-Picture
+      {
+        matches = [
+          {
+            app-id = "firefox$";
+            title = "^Picture-in-Picture$";
+          }
+        ];
+        open-floating = true;
+        default-column-width.fixed = 480;
+        default-window-height.fixed = 270;
+      }
+    ];
+
     # キーバインド
     binds = {
       "Mod+Q".action.spawn = [ "ghostty" ];
