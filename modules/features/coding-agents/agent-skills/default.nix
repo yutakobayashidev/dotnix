@@ -19,11 +19,6 @@ _:
         name = "agent-scripts-no-symlinks";
         filter = _path: type: type != "symlink";
       };
-      herdrSkillSrc = builtins.path {
-        path = inputs.herdr-skill;
-        name = "herdr-skill-no-symlinks";
-        filter = _path: type: type != "symlink";
-      };
     in
     {
       options.my.programs.agent-skills.enable = lib.mkEnableOption "agent skills";
@@ -55,10 +50,6 @@ _:
               path = inputs.obsidian-skills;
               subdir = "skills";
             };
-            oracle = {
-              path = inputs.oracle-skill;
-              subdir = "skills/oracle";
-            };
             repiq = {
               path = inputs.repiq;
               subdir = "skills";
@@ -69,10 +60,6 @@ _:
             };
             difit = {
               path = inputs.difit-skills;
-              subdir = "skills";
-            };
-            agent-browser = {
-              path = inputs.agent-browser-skill;
               subdir = "skills";
             };
             agent-scripts = {
@@ -104,7 +91,6 @@ _:
               path = inputs.edcb-tools;
               subdir = ".agents/skills";
             };
-            herdr.path = herdrSkillSrc;
           };
 
           skills.enableAll = [
@@ -180,53 +166,6 @@ _:
               path = "edcb-tools";
               packages = [ edcbToolsPackage ];
             };
-            herdr = {
-              from = "herdr";
-              path = ".";
-            };
-
-            agent-browser =
-              let
-                agentBrowserBin = "${config.home.homeDirectory}/.agents/skills/agent-browser/agent-browser";
-              in
-              {
-                from = "agent-browser";
-                path = "agent-browser";
-                packages = [ pkgs.llm-agents.agent-browser ];
-                rewriteCommands = false;
-                transform =
-                  { original, ... }:
-                  builtins.replaceStrings
-                    [
-                      "Bash(agent-browser:*), Bash(npx agent-browser:*)"
-                      "Install: `npm i -g agent-browser && agent-browser install`\n\n"
-                      "agent-browser skills "
-                      "`agent-browser`"
-                    ]
-                    [
-                      "Bash(${agentBrowserBin}:*)"
-                      ""
-                      "${agentBrowserBin} skills "
-                      "`${agentBrowserBin}`"
-                    ]
-                    original;
-              };
-
-            oracle =
-              let
-                oracleBin = lib.getExe pkgs.oracle;
-              in
-              {
-                from = "oracle";
-                path = ".";
-                packages = [ pkgs.oracle ];
-                rewriteCommands = false;
-                transform =
-                  { original, dependencies }:
-                  (builtins.replaceStrings [ "npx -y @steipete/oracle " ] [ "${oracleBin} " ] original)
-                  + "\n"
-                  + dependencies;
-              };
 
             create-cli = {
               from = "agent-scripts";

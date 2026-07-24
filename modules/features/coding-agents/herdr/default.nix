@@ -6,12 +6,19 @@ _:
       config,
       lib,
       pkgs,
+      inputs,
       ...
     }:
 
     let
       cfg = config.my.programs.herdr;
       tomlFormat = pkgs.formats.toml { };
+
+      herdrSkillSrc = builtins.path {
+        path = inputs.herdr-skill;
+        name = "herdr-skill-no-symlinks";
+        filter = _path: type: type != "symlink";
+      };
 
       focusAttentionAgent = pkgs.writeShellApplication {
         name = "herdr-focus-attention-agent";
@@ -152,6 +159,15 @@ _:
         ];
 
         xdg.configFile."herdr/config.toml".source = configFile;
+
+        programs.agent-skills = {
+          sources.herdr.path = herdrSkillSrc;
+
+          skills.explicit.herdr = {
+            from = "herdr";
+            path = ".";
+          };
+        };
       };
     };
 }
