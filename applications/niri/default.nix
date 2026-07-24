@@ -102,6 +102,16 @@
         default-column-width.fixed = 480;
         default-window-height.fixed = 270;
       }
+
+      # mpv
+      {
+        matches = [
+          { app-id = "^mpv$"; }
+        ];
+        open-floating = true;
+        default-column-width.fixed = 640;
+        default-window-height.fixed = 360;
+      }
     ];
 
     # キーバインド
