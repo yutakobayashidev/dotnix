@@ -1510,11 +1510,11 @@
         "xwayland-satellite-unstable": []
       },
       "locked": {
-        "lastModified": 1784541752,
-        "narHash": "sha256-iONvlcXqaIUzEwZHabWLMtE90kqH3/iBmg5lQHZ1StY=",
+        "lastModified": 1784578694,
+        "narHash": "sha256-UQtzks2t8ycyki7NCaSsp3Dy7Hcw5iCzPX5txnU5744=",
         "owner": "sodiboo",
         "repo": "niri-flake",
-        "rev": "85a12e471a13eff3a3c476783a5d1cb0702c9da9",
+        "rev": "4d9088bdc07d20963be29821d5cf491edd9c8d25",
         "type": "github"
       },
       "original": {
