@@ -67,6 +67,66 @@ _:
         '';
       };
 
+      # Adapted from miyagawa's Claude Code session-fork helper:
+      # https://gist.github.com/miyagawa/cb1a9f6c8695d1219efba0c66d5f78f7
+      # Adapted from miyagawa's Claude Code session-fork helper:
+      # https://gist.github.com/miyagawa/cb1a9f6c8695d1219efba0c66d5f78f7
+      forkAgentSession = pkgs.writeShellApplication {
+        name = "herdr-fork-agent-session";
+        runtimeInputs = [
+          cfg.package
+          pkgs.jq
+        ];
+        text = ''
+          set -euo pipefail
+
+          if [ "''${HERDR_ENV:-}" != "1" ]; then
+            echo "herdr-fork-agent-session: not running inside Herdr (HERDR_ENV != 1)" >&2
+            exit 1
+          fi
+
+          direction="''${1:-right}"
+          case "$direction" in
+            right | down) ;;
+            *)
+              echo "herdr-fork-agent-session: direction must be 'right' or 'down', got '$direction'" >&2
+              exit 1
+              ;;
+          esac
+
+          focused="$(herdr agent list | jq -cer '.result.agents[] | select(.focused == true)')" || {
+            echo "herdr-fork-agent-session: no focused Herdr agent found" >&2
+            exit 1
+          }
+
+          agent="$(printf '%s\n' "$focused" | jq -r '.agent')"
+          session_id="$(printf '%s\n' "$focused" | jq -r '.agent_session.value // empty')"
+
+          if [ -z "$session_id" ]; then
+            echo "herdr-fork-agent-session: focused $agent agent has no session ID" >&2
+            exit 1
+          fi
+
+          case "$agent" in
+            claude)
+              session_id="''${CLAUDE_CODE_SESSION_ID:-$session_id}"
+              printf -v agent_command 'claude --resume %q --fork-session' "$session_id"
+              ;;
+            codex)
+              printf -v agent_command 'codex fork %q' "$session_id"
+              ;;
+            *)
+              echo "herdr-fork-agent-session: unsupported focused agent '$agent'" >&2
+              exit 1
+              ;;
+          esac
+
+          pane="$(herdr pane split --current --direction "$direction" --cwd "$PWD" --no-focus | jq -er '.result.pane.pane_id')"
+          herdr pane run "$pane" "$agent_command"
+          echo "forked $agent session $session_id -> pane $pane"
+        '';
+      };
+
       defaultSettings = {
         onboarding = false;
 
@@ -119,6 +179,12 @@ _:
               command = "herdr-focus-attention-agent";
               description = "Focus the next blocked or unread Herdr agent pane";
             }
+            {
+              key = "prefix+f";
+              type = "shell";
+              command = "herdr-fork-agent-session";
+              description = "Fork the focused Claude Code or Codex session to the right";
+            }
           ];
         };
 
@@ -156,6 +222,7 @@ _:
         home.packages = [
           cfg.package
           focusAttentionAgent
+          forkAgentSession
         ];
 
         xdg.configFile."herdr/config.toml".source = configFile;
