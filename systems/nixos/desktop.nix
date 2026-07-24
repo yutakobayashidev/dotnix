@@ -38,6 +38,21 @@
       alsa.support32Bit = true;
       jack.enable = true;
       pulse.enable = true;
+
+      wireplumber.extraConfig."51-bluetooth-profile" = {
+        "wireplumber.settings" = {
+          "bluetooth.autoswitch-to-headset-profile" = false;
+        };
+
+        "monitor.bluez.properties" = {
+          "bluez5.roles" = [
+            "a2dp_sink"
+            "a2dp_source"
+            "bap_sink"
+            "bap_source"
+          ];
+        };
+      };
     };
   };
 
