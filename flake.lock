@@ -53,6 +53,25 @@
         "type": "github"
       }
     },
+    "agent-skills-nix": {
+      "inputs": {
+        "home-manager": "home-manager_5",
+        "nixpkgs": "nixpkgs_8"
+      },
+      "locked": {
+        "lastModified": 1783839654,
+        "narHash": "sha256-rn5DkeQ9PBaJTZl9juBtPnVawyN4B83tyz1VpiinQFo=",
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "rev": "8326df98cf494dc515db99affa9ea9d2bd6666b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Kyure-A",
+        "repo": "agent-skills-nix",
+        "type": "github"
+      }
+    },
     "anthropic-skills": {
       "flake": false,
       "locked": {
@@ -1130,6 +1149,22 @@
         "type": "github"
       }
     },
+    "hallmark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1780605762,
+        "narHash": "sha256-+yPIG1XdI6hhyOH48rd20+YlFrA9Gr416tPt1OoxfwQ=",
+        "owner": "Nutlope",
+        "repo": "hallmark",
+        "rev": "aeb42fb354ff4efa36ab475773a082315a3af2ce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Nutlope",
+        "repo": "hallmark",
+        "type": "github"
+      }
+    },
     "hashicorp-agent-skills": {
       "flake": false,
       "locked": {
@@ -1264,6 +1299,28 @@
         "owner": "nix-community",
         "repo": "home-manager",
         "rev": "dcebe66f958673729896eec2de4abfd86ef22d21",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_5": {
+      "inputs": {
+        "nixpkgs": [
+          "twitter-lite",
+          "agent-skills-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1783222121,
+        "narHash": "sha256-E/ElL373TO8lQ2aMvYyzN+k4xkVaUGoRqoa8AtM71tI=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "a1645f40777620c4bd2b6d854b290c2fc354a266",
         "type": "github"
       },
       "original": {
@@ -2022,6 +2079,22 @@
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "a799d3e3886da994fa307f817a6bc705ae538eeb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_8": {
+      "locked": {
+        "lastModified": 1783224372,
+        "narHash": "sha256-8i/87eeoqiGE4yOTjwSA3Eh/ziJRQEmd/unYU+K27sk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d407951447dcd00442e97087bf374aad70c04cea",
         "type": "github"
       },
       "original": {
@@ -2850,16 +2923,18 @@
     },
     "twitter-lite": {
       "inputs": {
+        "agent-skills-nix": "agent-skills-nix",
+        "hallmark": "hallmark",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1785038315,
-        "narHash": "sha256-S2kUMK7CwfPvIXdwN4tw52nJmnBmLEltY0qJVfX2X98=",
+        "lastModified": 1785047548,
+        "narHash": "sha256-rPsIGoyAlireWecKvqovwD5Ok0e/JOGcNI3SW0egRoU=",
         "ref": "refs/heads/main",
-        "rev": "604c7f16e27e387a8829ce050385667190a43aff",
-        "revCount": 31,
+        "rev": "70cacc2c2dbe4a69f3f13891e2e61b8376a6f9c7",
+        "revCount": 37,
         "type": "git",
         "url": "https://git.yutakobayashi.com/yuta/twitter-lite"
       },
