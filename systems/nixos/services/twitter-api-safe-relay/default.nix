@@ -7,7 +7,7 @@
 }:
 let
   relayHostPort = 18788;
-  package = pkgs.twitter-api-safe-relay-mcp;
+  package = pkgs.twitter-api-safe-mcp;
   domain = "tw.home.yutakobayashi.com";
   outputDir = "/var/lib/immich-net-pics";
   baseProfileDir = "/var/lib/twitter-api-safe-relay/chrome-profile";
@@ -58,7 +58,6 @@ in
 
   services.openai-tunnel-client.instances.twitter-api-safe-relay = {
     enable = true;
-    environment.TWITTER_RELAY_BASE_URL = "http://127.0.0.1:${toString relayHostPort}";
     settings = {
       config_version = 1;
       control_plane = {
@@ -73,7 +72,7 @@ in
       mcp.commands = [
         {
           channel = "main";
-          command = "${package}/bin/twitter_api_safe_relay_mcp";
+          command = "${package}/bin/twitter-api-safe-mcp /run/twitter-api-safe-relay/mcp-settings.json";
         }
       ];
     };
@@ -211,6 +210,7 @@ in
       "podman-twitter-api-safe-relay" = {
         preStart = ''
           settings_file="/run/twitter-api-safe-relay/settings.json"
+          mcp_settings_file="/run/twitter-api-safe-relay/mcp-settings.json"
           mkdir -p /run/twitter-api-safe-relay
 
           settings_profiles=""
@@ -247,6 +247,7 @@ in
           '') accountConfigs}
 
           printf '%s\n' "{\"logger\":{\"level\":\"info\"},\"port\":3000,\"profiles\":[$settings_profiles]}" > "$settings_file"
+          printf '%s\n' "{\"logger\":{\"level\":\"info\",\"output\":{\"type\":\"file\",\"filePath\":\"/dev/stderr\"}},\"port\":3000,\"dashboard\":false,\"mcp\":{\"transport\":\"stdio\"},\"profiles\":[$settings_profiles]}" > "$mcp_settings_file"
         '';
         after = [ "twitter-api-safe-relay-network.service" ];
         wants = [ "twitter-api-safe-relay-network.service" ];
