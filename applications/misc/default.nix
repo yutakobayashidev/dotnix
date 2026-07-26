@@ -6,7 +6,6 @@
     with pkgs;
     [
       aria2
-      ax
       coreutils
       curl
       curl-impersonate

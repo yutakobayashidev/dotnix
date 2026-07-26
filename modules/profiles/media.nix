@@ -7,11 +7,12 @@ import ../../lib/mkProfile.nix { inherit lib; } {
     { lib, pkgs, ... }:
 
     {
+      my.programs.bird.enable = lib.mkDefault true;
+
       home.packages =
         with pkgs;
         [
           apkeep
-          bird
           defuddle
           discrawl
           edcb-tools

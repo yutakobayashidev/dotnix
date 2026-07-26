@@ -94,7 +94,6 @@ _:
           };
 
           skills.enableAll = [
-            "local"
             "ax"
             "obsidian"
             "repiq"
@@ -103,6 +102,67 @@ _:
           ];
 
           skills.explicit = {
+            adr = {
+              from = "local";
+              path = "adr";
+            };
+            create-web-api = {
+              from = "local";
+              path = "create-web-api";
+            };
+            dce = {
+              from = "local";
+              path = "dce";
+            };
+            functional-cohesion-components = {
+              from = "local";
+              path = "functional-cohesion-components";
+            };
+            gha-lint = {
+              from = "local";
+              path = "gha-lint";
+            };
+            good-first-issue-creator = {
+              from = "local";
+              path = "good-first-issue-creator";
+            };
+            grok-search = {
+              from = "local";
+              path = "grok-search";
+            };
+            nextjs-onboarding = {
+              from = "local";
+              path = "nextjs-onboarding";
+            };
+            oura-daily-watch = {
+              from = "local";
+              path = "oura-daily-watch";
+            };
+            repo-creator = {
+              from = "local";
+              path = "repo-creator";
+            };
+            social-digest = {
+              from = "local";
+              path = "social-digest";
+            };
+            speakerdeck = {
+              from = "local";
+              path = "speakerdeck";
+            };
+            terraform-toolchain = {
+              from = "local";
+              path = "terraform-toolchain";
+            };
+            vitest-testing = {
+              from = "local";
+              path = "vitest-testing";
+            };
+            youtube-transcript = {
+              from = "local";
+              path = "youtube-transcript";
+            };
+
             before-and-after =
               let
                 bnaBin = lib.getExe pkgs.before-and-after;
