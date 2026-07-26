@@ -16,19 +16,116 @@ let
   tunnelCredentialName = "control-plane-api-key";
   browserDebugPort = 9223;
   relayDebugPort = 9222;
-  accounts = [
-    "account1"
-    "account2"
-  ];
+  networkUnit = "twitter-api-safe-relay-network.service";
+  chromeImage = "kasmweb/chrome:1.18.0@sha256:ae956514c4d034673423c46317a8c5994fe3517b34662155d467e6648571d195";
+  socatImage = "alpine/socat:1.8.1.3@sha256:f134cb7ebb983f971f5deb44e92bc62c1385b0a3b525393f32dd0722acc30315";
 
-  accountConfigs = lib.imap0 (index: name: {
-    inherit name;
-    containerName = if index == 0 then "kasmweb" else "kasmweb-${name}";
-    cdpContainerName = if index == 0 then "kasmweb-cdp" else "kasmweb-${name}-cdp";
-    profileDir = "${baseProfileDir}/${name}";
-    vncHostPort = 6901 + (index * 2);
-    browserHostPort = 6900 + (index * 2);
-  }) accounts;
+  accountConfigs =
+    lib.imap0
+      (index: name: {
+        inherit name;
+        containerName = if index == 0 then "kasmweb" else "kasmweb-${name}";
+        cdpContainerName = if index == 0 then "kasmweb-cdp" else "kasmweb-${name}-cdp";
+        profileDir = "${baseProfileDir}/${name}";
+        vncHostPort = 6901 + (index * 2);
+        browserHostPort = 6900 + (index * 2);
+        cdpHostPort = 9224 + index;
+      })
+      [
+        "account1"
+        "account2"
+      ];
+
+  mkAccountAttrs =
+    getName: getValue:
+    lib.listToAttrs (
+      map (account: lib.nameValuePair (getName account) (getValue account)) accountConfigs
+    );
+
+  browserUnits = map (account: "podman-${account.containerName}.service") accountConfigs;
+  cdpUnits = map (account: "podman-${account.cdpContainerName}.service") accountConfigs;
+  relayDependencies = [ networkUnit ] ++ cdpUnits;
+
+  browserContainers = mkAccountAttrs (account: account.containerName) (account: {
+    image = chromeImage;
+    ports = [
+      "${toString account.browserHostPort}:3000"
+      "${toString account.vncHostPort}:6901"
+      "127.0.0.1:${toString account.cdpHostPort}:${toString relayDebugPort}"
+    ];
+    volumes = [
+      "${account.profileDir}:/home/kasm-user/chrome-profile"
+    ];
+    environment = {
+      VNC_PW = "password";
+      APP_ARGS = lib.concatStringsSep " " [
+        "--start-maximized"
+        "--user-data-dir=/home/kasm-user/chrome-profile"
+        "--password-store=basic"
+        "--remote-debugging-port=${toString browserDebugPort}"
+      ];
+    };
+    extraOptions = [
+      "--shm-size=4g"
+      "--network=${relayNetworkName}"
+      "--network-alias=${account.containerName}"
+    ];
+  });
+
+  cdpContainers = mkAccountAttrs (account: account.cdpContainerName) (account: {
+    image = socatImage;
+    cmd = [
+      "TCP-LISTEN:${toString relayDebugPort},fork,reuseaddr"
+      "TCP:127.0.0.1:${toString browserDebugPort}"
+    ];
+    extraOptions = [
+      "--network=container:${account.containerName}"
+    ];
+  });
+
+  browserServices = mkAccountAttrs (account: "podman-${account.containerName}") (account: {
+    preStart = ''
+      mkdir -p ${account.profileDir}
+      rm -f ${account.profileDir}/SingletonLock ${account.profileDir}/SingletonSocket ${account.profileDir}/SingletonCookie ${account.profileDir}/DevToolsActivePort
+      chown -R 1000:0 ${account.profileDir}
+      chmod -R g+rwX ${account.profileDir}
+    '';
+    after = [
+      "network-online.target"
+      networkUnit
+    ];
+    requires = [ networkUnit ];
+  });
+
+  cdpServices = mkAccountAttrs (account: "podman-${account.cdpContainerName}") (account: {
+    after = [
+      networkUnit
+      "podman-${account.containerName}.service"
+    ];
+    requires = [
+      networkUnit
+      "podman-${account.containerName}.service"
+    ];
+    partOf = [ "podman-${account.containerName}.service" ];
+  });
+
+  relaySettings = pkgs.writeText "twitter-api-safe-relay-settings.json" (
+    builtins.toJSON {
+      hostname = "127.0.0.1";
+      logger.level = "info";
+      port = relayHostPort;
+      dashboard = true;
+      mcp.transport = "http";
+      profiles = map (account: {
+        inherit (account) name;
+        browser = {
+          type = "cdp";
+          browserType = "chromium";
+          cdpEndpoint = "http://127.0.0.1:${toString account.cdpHostPort}";
+        };
+      }) accountConfigs;
+    }
+  );
 
   bookmark-snap = pkgs.buildNpmPackage {
     pname = "twitter-bookmark-snap";
@@ -78,46 +175,7 @@ in
     };
   };
 
-  virtualisation.oci-containers.containers =
-    (lib.listToAttrs (
-      builtins.map (account: {
-        name = account.containerName;
-        value = {
-          image = "kasmweb/chrome:1.18.0@sha256:ae956514c4d034673423c46317a8c5994fe3517b34662155d467e6648571d195";
-          ports = [
-            "${toString account.browserHostPort}:3000"
-            "${toString account.vncHostPort}:6901"
-          ];
-          volumes = [
-            "${account.profileDir}:/home/kasm-user/chrome-profile"
-          ];
-          environment = {
-            VNC_PW = "password";
-            APP_ARGS = "--start-maximized --user-data-dir=/home/kasm-user/chrome-profile --password-store=basic --remote-debugging-address=0.0.0.0 --remote-debugging-port=${toString browserDebugPort}";
-          };
-          extraOptions = [
-            "--shm-size=4g"
-            "--network=${relayNetworkName}"
-            "--network-alias=${account.containerName}"
-          ];
-        };
-      }) accountConfigs
-    ))
-    // (lib.listToAttrs (
-      builtins.map (account: {
-        name = account.cdpContainerName;
-        value = {
-          image = "alpine/socat:1.8.1.3@sha256:f134cb7ebb983f971f5deb44e92bc62c1385b0a3b525393f32dd0722acc30315";
-          cmd = [
-            "TCP-LISTEN:${toString relayDebugPort},fork,reuseaddr"
-            "TCP:127.0.0.1:${toString browserDebugPort}"
-          ];
-          extraOptions = [
-            "--network=container:${account.containerName}"
-          ];
-        };
-      }) accountConfigs
-    ));
+  virtualisation.oci-containers.containers = browserContainers // cdpContainers;
 
   services.traefik.dynamicConfigOptions.http = {
     routers.twitter-api-safe-relay = {
@@ -139,10 +197,7 @@ in
       twitter-api-safe-relay-network = {
         after = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
-        before =
-          (builtins.map (account: "podman-${account.containerName}.service") accountConfigs)
-          ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs)
-          ++ [ "twitter-api-safe-relay.service" ];
+        before = browserUnits ++ cdpUnits ++ [ "twitter-api-safe-relay.service" ];
         wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "oneshot";
@@ -155,41 +210,8 @@ in
         '';
       };
     }
-    // lib.listToAttrs (
-      builtins.map (account: {
-        name = "podman-${account.containerName}";
-        value = {
-          preStart = ''
-            mkdir -p ${account.profileDir}
-            rm -f ${account.profileDir}/SingletonLock ${account.profileDir}/SingletonSocket ${account.profileDir}/SingletonCookie ${account.profileDir}/DevToolsActivePort
-            chown -R 1000:0 ${account.profileDir}
-            chmod -R g+rwX ${account.profileDir}
-          '';
-          after = [
-            "network-online.target"
-            "twitter-api-safe-relay-network.service"
-          ];
-          wants = [ "twitter-api-safe-relay-network.service" ];
-          requires = [ "twitter-api-safe-relay-network.service" ];
-        };
-      }) accountConfigs
-    )
-    // lib.listToAttrs (
-      builtins.map (account: {
-        name = "podman-${account.cdpContainerName}";
-        value = {
-          after = [
-            "twitter-api-safe-relay-network.service"
-            "podman-${account.containerName}.service"
-          ];
-          requires = [
-            "twitter-api-safe-relay-network.service"
-            "podman-${account.containerName}.service"
-          ];
-          partOf = [ "podman-${account.containerName}.service" ];
-        };
-      }) accountConfigs
-    )
+    // browserServices
+    // cdpServices
     // {
       tunnel-client-twitter-api-safe-relay = {
         after = [ "twitter-api-safe-relay.service" ];
@@ -219,63 +241,14 @@ in
       twitter-api-safe-relay = {
         description = "Twitter API Safe Relay and MCP server";
         wantedBy = [ "multi-user.target" ];
-        preStart = ''
-          settings_file="/run/twitter-api-safe-relay/settings.json"
-          mkdir -p /run/twitter-api-safe-relay
-
-          settings_profiles=""
-
-          ${lib.concatMapStringsSep "\n" (account: ''
-            container=${account.cdpContainerName}
-            echo "Waiting for container $container CDP proxy endpoint on port ${toString relayDebugPort}..."
-            for i in $(seq 1 30); do
-              ip=$(${lib.getExe pkgs.podman} inspect -f '{{range $name, $net := .NetworkSettings.Networks}}{{if eq $name "${relayNetworkName}"}}{{ $net.IPAddress }}{{end}}{{end}}' "$container" 2>/dev/null || true)
-              if [ -z "$ip" ] || [ "$ip" = "<no value>" ]; then
-                ip=""
-              fi
-
-              if [ -n "$ip" ] && ${lib.getExe pkgs.curl} --fail --max-time 2 --silent "http://$ip:${toString relayDebugPort}/json/version" >/dev/null 2>&1; then
-                echo "$container ready at $ip:${toString relayDebugPort}"
-                break
-              fi
-              if [ "$i" -eq 30 ]; then
-                echo "Timed out waiting for $container CDP endpoint on port ${toString relayDebugPort}" >&2
-                exit 1
-              fi
-              sleep 2
-            done
-
-            if [ -z "$ip" ]; then
-              echo "Unable to resolve a usable CDP endpoint IP for $container" >&2
-              exit 1
-            fi
-
-            if [ -n "$settings_profiles" ]; then
-              settings_profiles="$settings_profiles,"
-            fi
-            settings_profiles="$settings_profiles{\"name\":\"${account.name}\",\"browser\":{\"type\":\"cdp\",\"browserType\":\"chromium\",\"cdpEndpoint\":\"http://$ip:${toString relayDebugPort}\"}}"
-          '') accountConfigs}
-
-          printf '%s\n' "{\"hostname\":\"127.0.0.1\",\"logger\":{\"level\":\"info\"},\"port\":${toString relayHostPort},\"dashboard\":true,\"mcp\":{\"transport\":\"http\"},\"profiles\":[$settings_profiles]}" > "$settings_file"
-        '';
-        after = [
-          "twitter-api-safe-relay-network.service"
-        ]
-        ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs);
-        wants = [
-          "twitter-api-safe-relay-network.service"
-        ]
-        ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs);
-        requires = [
-          "twitter-api-safe-relay-network.service"
-        ]
-        ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs);
+        after = relayDependencies;
+        requires = relayDependencies;
         unitConfig = {
           StartLimitIntervalSec = "5m";
           StartLimitBurst = 20;
         };
         serviceConfig = {
-          ExecStart = "${package}/bin/twitter-api-safe-mcp /run/twitter-api-safe-relay/settings.json";
+          ExecStart = "${package}/bin/twitter-api-safe-mcp ${relaySettings}";
           Restart = "on-failure";
           RestartSec = "10s";
         };
