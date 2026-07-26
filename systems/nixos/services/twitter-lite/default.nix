@@ -15,8 +15,8 @@ in
   };
 
   systemd.services.twitter-lite = {
-    after = [ "podman-twitter-api-safe-relay.service" ];
-    wants = [ "podman-twitter-api-safe-relay.service" ];
+    after = [ "twitter-api-safe-relay.service" ];
+    wants = [ "twitter-api-safe-relay.service" ];
   };
 
   services.traefik.dynamicConfigOptions.http = {

@@ -69,10 +69,10 @@ in
       };
       health.listen_addr = "127.0.0.1:18789";
       admin_ui.open_browser = false;
-      mcp.commands = [
+      mcp.server_urls = [
         {
           channel = "main";
-          command = "${package}/bin/twitter-api-safe-mcp /run/twitter-api-safe-relay/mcp-settings.json";
+          url = "http://127.0.0.1:${toString relayHostPort}/mcp";
         }
       ];
     };
@@ -117,29 +117,22 @@ in
           ];
         };
       }) accountConfigs
-    ))
-    // {
-      twitter-api-safe-relay = {
-        image = "ghcr.io/fa0311/twitter_api_safe_relay:0.1.1-relay-slim@sha256:f33013e887a47f48e170a43f28209c7bd5256e553fe1d6f327ebe4f987e3f0e2";
-        ports = [ "127.0.0.1:${toString relayHostPort}:3000" ];
-        labels = {
-          "traefik.enable" = "true";
-          "traefik.http.routers.twitter-api-safe-relay.rule" = "Host(`${domain}`)";
-          "traefik.http.routers.twitter-api-safe-relay.entrypoints" = "web,websecure";
-          "traefik.http.routers.twitter-api-safe-relay.tls.certResolver" = "letsencrypt";
-          "traefik.http.services.twitter-api-safe-relay.loadbalancer.server.port" = "3000";
-        };
-        volumes = [
-          "/run/twitter-api-safe-relay/settings.json:/app/settings.json:ro"
-        ];
-        extraOptions = [
-          "--network=${relayNetworkName}"
-        ];
-        dependsOn =
-          (builtins.map (account: account.containerName) accountConfigs)
-          ++ (builtins.map (account: account.cdpContainerName) accountConfigs);
-      };
+    ));
+
+  services.traefik.dynamicConfigOptions.http = {
+    routers.twitter-api-safe-relay = {
+      entryPoints = [
+        "web"
+        "websecure"
+      ];
+      rule = "Host(`${domain}`)";
+      service = "twitter-api-safe-relay";
+      tls.certResolver = "letsencrypt";
     };
+    services.twitter-api-safe-relay.loadBalancer.servers = [
+      { url = "http://127.0.0.1:${toString relayHostPort}"; }
+    ];
+  };
 
   systemd = {
     services = {
@@ -149,7 +142,7 @@ in
         before =
           (builtins.map (account: "podman-${account.containerName}.service") accountConfigs)
           ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs)
-          ++ [ "podman-twitter-api-safe-relay.service" ];
+          ++ [ "twitter-api-safe-relay.service" ];
         wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "oneshot";
@@ -181,10 +174,26 @@ in
         };
       }) accountConfigs
     )
+    // lib.listToAttrs (
+      builtins.map (account: {
+        name = "podman-${account.cdpContainerName}";
+        value = {
+          after = [
+            "twitter-api-safe-relay-network.service"
+            "podman-${account.containerName}.service"
+          ];
+          requires = [
+            "twitter-api-safe-relay-network.service"
+            "podman-${account.containerName}.service"
+          ];
+          partOf = [ "podman-${account.containerName}.service" ];
+        };
+      }) accountConfigs
+    )
     // {
       tunnel-client-twitter-api-safe-relay = {
-        after = [ "podman-twitter-api-safe-relay.service" ];
-        wants = [ "podman-twitter-api-safe-relay.service" ];
+        after = [ "twitter-api-safe-relay.service" ];
+        wants = [ "twitter-api-safe-relay.service" ];
         serviceConfig.LoadCredential = [
           "${tunnelCredentialName}:${config.sops.secrets.openai-tunnel-api-key.path}"
         ];
@@ -207,10 +216,11 @@ in
           ${lib.getExe pkgs.nodejs} dist/index.js -- --limit 50 --output-dir ${outputDir}
         '';
       };
-      "podman-twitter-api-safe-relay" = {
+      twitter-api-safe-relay = {
+        description = "Twitter API Safe Relay and MCP server";
+        wantedBy = [ "multi-user.target" ];
         preStart = ''
           settings_file="/run/twitter-api-safe-relay/settings.json"
-          mcp_settings_file="/run/twitter-api-safe-relay/mcp-settings.json"
           mkdir -p /run/twitter-api-safe-relay
 
           settings_profiles=""
@@ -246,16 +256,28 @@ in
             settings_profiles="$settings_profiles{\"name\":\"${account.name}\",\"browser\":{\"type\":\"cdp\",\"browserType\":\"chromium\",\"cdpEndpoint\":\"http://$ip:${toString relayDebugPort}\"}}"
           '') accountConfigs}
 
-          printf '%s\n' "{\"hostname\":\"0.0.0.0\",\"logger\":{\"level\":\"info\"},\"port\":3000,\"profiles\":[$settings_profiles]}" > "$settings_file"
-          printf '%s\n' "{\"logger\":{\"level\":\"info\",\"output\":{\"type\":\"file\",\"filePath\":\"/dev/stderr\"}},\"port\":3000,\"dashboard\":false,\"mcp\":{\"transport\":\"stdio\"},\"profiles\":[$settings_profiles]}" > "$mcp_settings_file"
+          printf '%s\n' "{\"hostname\":\"127.0.0.1\",\"logger\":{\"level\":\"info\"},\"port\":${toString relayHostPort},\"dashboard\":true,\"mcp\":{\"transport\":\"http\"},\"profiles\":[$settings_profiles]}" > "$settings_file"
         '';
-        after = [ "twitter-api-safe-relay-network.service" ];
-        wants = [ "twitter-api-safe-relay-network.service" ];
-        requires = [ "twitter-api-safe-relay-network.service" ];
-        serviceConfig = {
-          RestartSec = "10s";
+        after = [
+          "twitter-api-safe-relay-network.service"
+        ]
+        ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs);
+        wants = [
+          "twitter-api-safe-relay-network.service"
+        ]
+        ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs);
+        requires = [
+          "twitter-api-safe-relay-network.service"
+        ]
+        ++ (builtins.map (account: "podman-${account.cdpContainerName}.service") accountConfigs);
+        unitConfig = {
           StartLimitIntervalSec = "5m";
           StartLimitBurst = 20;
+        };
+        serviceConfig = {
+          ExecStart = "${package}/bin/twitter-api-safe-mcp /run/twitter-api-safe-relay/settings.json";
+          Restart = "on-failure";
+          RestartSec = "10s";
         };
       };
     };
