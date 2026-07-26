@@ -222,7 +222,7 @@ _:
                 builtins.replaceStrings
                   [ "session-tts-tts " ]
                   [
-                    "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsSkills}/tts/tts.sh"} "
+                    "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsRoot}/skills/tts/tts.sh"} "
                   ]
                   original;
             };
@@ -236,7 +236,7 @@ _:
                 builtins.replaceStrings
                   [ "session-tts-volume " ]
                   [
-                    "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsSkills}/volume/volume.sh"} "
+                    "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsRoot}/skills/volume/volume.sh"} "
                   ]
                   original;
             };
