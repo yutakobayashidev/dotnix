@@ -7,7 +7,7 @@ prefix_rule(
         "gh pr checks 42 --watch --fail-fast",
     ],
     not_match = [
-        "gh pr checks 42",
+        "gh pr view 42",
     ],
 )
 
@@ -19,6 +19,6 @@ prefix_rule(
         "gh api graphql -f query='mutation { resolveReviewThread(input: {threadId: \"abc\"}) { thread { isResolved } } }'",
     ],
     not_match = [
-        "gh api graphql -f query='{ repository(owner: \"o\", name: \"r\") { pullRequest(number: 1) { reviewThreads { nodes { id } } } } }'",
+        "gh api repos/o/r",
     ],
 )
