@@ -3,6 +3,7 @@ _:
 {
   flake.modules.homeManager."codex" =
     {
+      inputs,
       lib,
       config,
       pkgs,
@@ -13,9 +14,17 @@ _:
 
     let
       cfg = config.my.programs.codex;
-      codexConfigDir = "${config.xdg.configHome}/codex";
+      codexConfigDir =
+        if config.home.preferXdgDirectories then
+          "${lib.removePrefix config.home.homeDirectory config.xdg.configHome}/codex"
+        else
+          ".codex";
+      codexHome =
+        if config.home.preferXdgDirectories then
+          "${config.xdg.configHome}/codex"
+        else
+          "${config.home.homeDirectory}/.codex";
       codexDotfilesDir = "${dotfilesDir}/codex";
-      tomlFormat = pkgs.formats.toml { };
       codexHooks = {
         hooks.PermissionRequest = [
           {
@@ -64,7 +73,7 @@ _:
 
         permissions.project = {
           extends = ":workspace";
-          workspace_roots."${codexConfigDir}/session-tts" = true;
+          workspace_roots."${codexHome}/session-tts" = true;
           network = {
             enabled = true;
             domains = {
@@ -78,28 +87,15 @@ _:
           };
         };
 
-        mcp_servers = {
-          deepwiki = {
-            url = "https://mcp.deepwiki.com/mcp";
-          };
-
-          junction = {
-            url = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
-            oauth_resource = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
-          };
-        }
-        // lib.optionalAttrs config.my.programs.mcp.enable {
-          searxng = {
-            inherit (config.programs.mcp.servers.searxng) command env;
-          };
-        }
-        // lib.optionalAttrs (config.my.programs.mcp.enable && config.my.programs.mcp.ghidra.enable) {
-          ghidra = {
-            inherit (config.programs.mcp.servers.ghidra) command args;
-            default_tools_approval_mode = "approve";
-            startup_timeout_sec = 300;
-          };
-        };
+        mcp_servers =
+          lib.optionalAttrs (config.my.programs.mcp.enable && config.my.programs.mcp.ghidra.enable)
+            {
+              ghidra = {
+                inherit (config.programs.mcp.servers.ghidra) command args;
+                default_tools_approval_mode = "approve";
+                startup_timeout_sec = 300;
+              };
+            };
 
         otel = {
           environment = "${cfg.telemetry.environment}";
@@ -116,7 +112,47 @@ _:
           "session-tts@personal".enabled = true;
         };
       };
-      codexConfig = tomlFormat.generate "codex-config" settings;
+      rawSettings =
+        if config.programs.codex.settings == null then { } else config.programs.codex.settings;
+      baseSettings = lib.removeAttrs rawSettings [ "mcp_servers" ];
+      settingMcpServers = rawSettings.mcp_servers or { };
+      sharedMcpServers = lib.mapAttrs (
+        name: server:
+        lib.hm.mcp.transformMcpServer {
+          inherit server;
+          exclude = [
+            "headers"
+            "type"
+          ];
+          extraTransforms = [
+            (s: s // lib.optionalAttrs (s.headers or { } != { }) { http_headers = s.headers; })
+            lib.hm.mcp.addType
+            (lib.hm.mcp.wrapEnvFilesCommand { inherit pkgs name; })
+          ];
+        }
+      ) config.programs.mcp.servers;
+      inlineConfig = inputs.mcp-servers-nix.lib.mkConfig pkgs {
+        flavor = "codex";
+        format = "toml-inline";
+        fileName = "codex-inline-config.toml";
+        settings = baseSettings // {
+          servers = sharedMcpServers // settingMcpServers;
+        };
+      };
+      codexWrapper =
+        (pkgs.writeShellApplication {
+          name = "codex";
+          text = ''
+            config_args=()
+            while IFS= read -r config; do
+              config_args+=(--config "$config")
+            done < ${inlineConfig}
+            exec ${lib.getExe pkgs.llm-agents.codex} "''${config_args[@]}" "$@"
+          '';
+        }).overrideAttrs
+          {
+            inherit (pkgs.llm-agents.codex) version;
+          };
     in
     {
       options.my.programs.codex = {
@@ -150,21 +186,18 @@ _:
       };
 
       config = lib.mkIf cfg.enable {
+        programs.codex = {
+          enable = true;
+          enableMcpIntegration = true;
+          package = codexWrapper;
+          inherit settings;
+        };
+
         home = {
-          packages = [
-            pkgs.llm-agents.codex
-            pkgs.session-tts-codex
-          ];
-
-          sessionVariables = {
-            CODEX_HOME = codexConfigDir;
-          };
-
+          packages = [ pkgs.session-tts-codex ];
           activation = {
-            writeCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              mkdir -p "${codexConfigDir}"
-              mkdir -p "${codexConfigDir}/session-tts"
-              ${pkgs.coreutils}/bin/install -m 644 ${codexConfig} "${codexConfigDir}/config.toml"
+            prepareCodexState = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              mkdir -p "${codexHome}/session-tts"
             '';
 
             # Global plugin: symlink session-tts under ~/plugins/ so Codex
@@ -176,7 +209,12 @@ _:
           };
 
           file = {
-            ".codex/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
+            # Codex updates its user config at runtime, so only immutable
+            # defaults are injected by the wrapper.
+            "${codexConfigDir}/config.toml".enable = false;
+            "${codexConfigDir}/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
+            "${codexConfigDir}/AGENTS.md".source =
+              config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
             ".agents/plugins/marketplace.json".text = builtins.toJSON {
               name = "personal";
               plugins = [
@@ -194,14 +232,10 @@ _:
                 }
               ];
             };
+          }
+          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+            "${codexConfigDir}/hooks.json".text = builtins.toJSON codexHooks;
           };
-        };
-
-        xdg.configFile = {
-          "codex/AGENTS.md".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
-        }
-        // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
-          "codex/hooks.json".text = builtins.toJSON codexHooks;
         };
       };
     };
