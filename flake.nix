@@ -183,6 +183,11 @@
       url = "github:yutakobayashidev/repiq";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    temari = {
+      url = "github:yutakobayashidev/temari";
+      inputs.agent-skills-nix.follows = "agent-skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nur-packages = {
       url = "github:yutakobayashidev/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";

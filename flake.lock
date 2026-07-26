@@ -442,6 +442,22 @@
         "type": "github"
       }
     },
+    "emil-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784634297,
+        "narHash": "sha256-7leCez3jlKRxIuMMtQiY0wjn+xPz8E7WmZYII+s/Dxg=",
+        "owner": "emilkowalski",
+        "repo": "skills",
+        "rev": "f6f79ca1d8e9e2d82c8b90d7481b70ca66f4adfb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emilkowalski",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "fenix": {
       "inputs": {
         "nixpkgs": [
@@ -2463,6 +2479,7 @@
         "sops-nix": "sops-nix",
         "starla": "starla",
         "superpowers": "superpowers",
+        "temari": "temari",
         "treefmt-nix": "treefmt-nix_4",
         "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills",
         "twitter-lite": "twitter-lite",
@@ -2822,6 +2839,30 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "temari": {
+      "inputs": {
+        "agent-skills-nix": [
+          "agent-skills"
+        ],
+        "emil-skills": "emil-skills",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785071473,
+        "narHash": "sha256-k0kyppBYCLtEfbV/ISdm1lFCB57JLywy6SyA04ShTrk=",
+        "owner": "yutakobayashidev",
+        "repo": "temari",
+        "rev": "2d1367e15deca53ef4b06f6ecf24493441505b30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "temari",
         "type": "github"
       }
     },

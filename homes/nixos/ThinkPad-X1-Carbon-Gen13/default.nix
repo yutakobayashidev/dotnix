@@ -11,6 +11,7 @@
         ../../../applications/course-cli
         ../desktop.nix
         inputs.onepassword-shell-plugins.hmModules.default
+        inputs.temari.homeManagerModules.default
       ];
       home.homeDirectory = "/home/${username}";
       home.packages = with pkgs; [
@@ -24,8 +25,20 @@
         vrcx
       ];
       my.programs.mcp.ghidra.enable = true;
-      services.poweralertd.enable = true;
-      services.wallpaper.imagePath = "/home/${username}/wallpapers/lycoris-recoil-rain.jpg";
+      services = {
+        poweralertd.enable = true;
+        temari = {
+          enable = true;
+          workspaces.downloads = {
+            workspaceId = "workspace-1785071330865-1131974-0";
+            configFile = "/home/yuta/.config/temari/config.toml";
+            stateFile = "/home/yuta/.local/state/temari/managed.sqlite3";
+            source = "/home/yuta/Downloads";
+            interval = "1h";
+          };
+        };
+        wallpaper.imagePath = "/home/${username}/wallpapers/lycoris-recoil-rain.jpg";
+      };
       programs._1password-shell-plugins = {
         enable = true;
         plugins = with pkgs; [
