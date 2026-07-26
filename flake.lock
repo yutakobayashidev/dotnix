@@ -129,11 +129,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783964126,
-        "narHash": "sha256-7CynqsqtXTfgIVF27mKoQFoCig2gFEjS/0QqW1QVzJI=",
+        "lastModified": 1785036893,
+        "narHash": "sha256-hXp5U1LeNbJSi5e7ucH/46teWdiBWHovC8nMC/397vk=",
         "ref": "refs/heads/main",
-        "rev": "b8400469ca7b435b4f956a00223621cda0f74ce6",
-        "revCount": 332,
+        "rev": "45657a171e7ddab9d74346abcd9a8ff931657eee",
+        "revCount": 333,
         "type": "git",
         "url": "https://git.yutakobayashi.com/yuta/bird"
       },
@@ -2855,11 +2855,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1784786883,
-        "narHash": "sha256-QcBL1h9u/1jgqcId6JdT3YxLD7sTJ+JnLrKNv2gfB4U=",
+        "lastModified": 1785038315,
+        "narHash": "sha256-S2kUMK7CwfPvIXdwN4tw52nJmnBmLEltY0qJVfX2X98=",
         "ref": "refs/heads/main",
-        "rev": "234f4354f9dc81629ced2a590b47c070893d42df",
-        "revCount": 29,
+        "rev": "604c7f16e27e387a8829ce050385667190a43aff",
+        "revCount": 31,
         "type": "git",
         "url": "https://git.yutakobayashi.com/yuta/twitter-lite"
       },
