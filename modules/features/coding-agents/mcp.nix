@@ -44,11 +44,6 @@ _:
             deepwiki = {
               url = "https://mcp.deepwiki.com/mcp";
             };
-
-            junction = {
-              url = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
-              oauth_resource = "https://junction-mcp-up7swxs6gq-an.a.run.app/mcp";
-            };
           };
         };
 
