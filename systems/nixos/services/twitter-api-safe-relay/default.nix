@@ -246,7 +246,7 @@ in
             settings_profiles="$settings_profiles{\"name\":\"${account.name}\",\"browser\":{\"type\":\"cdp\",\"browserType\":\"chromium\",\"cdpEndpoint\":\"http://$ip:${toString relayDebugPort}\"}}"
           '') accountConfigs}
 
-          printf '%s\n' "{\"logLevel\":\"info\",\"port\":3000,\"profiles\":[$settings_profiles]}" > "$settings_file"
+          printf '%s\n' "{\"logger\":{\"level\":\"info\"},\"port\":3000,\"profiles\":[$settings_profiles]}" > "$settings_file"
         '';
         after = [ "twitter-api-safe-relay-network.service" ];
         wants = [ "twitter-api-safe-relay-network.service" ];
