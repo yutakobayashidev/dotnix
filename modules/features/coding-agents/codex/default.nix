@@ -159,6 +159,18 @@ _:
           name = "codex";
           text = ''
             export SESSION_TTS_HOME=${lib.escapeShellArg sessionTtsHome}
+            export CODEX_NIRI_WINDOW_ID=
+            ${lib.optionalString isLinux ''
+              if [[ ''${HERDR_ENV:-} != 1 && -n ''${NIRI_SOCKET:-} ]]; then
+                if window_id=$(${lib.getExe pkgs.niri} msg -j focused-window 2>/dev/null \
+                  | ${lib.getExe pkgs.jq} -r \
+                    'select(.app_id == "com.mitchellh.ghostty") | .id // empty') \
+                  && [[ $window_id =~ ^[0-9]+$ ]]; then
+                  export CODEX_NIRI_WINDOW_ID=$window_id
+                fi
+              fi
+            ''}
+
             config_args=()
             while IFS= read -r config; do
               config_args+=(--config "$config")
