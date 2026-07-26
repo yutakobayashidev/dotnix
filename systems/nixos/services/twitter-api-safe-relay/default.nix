@@ -7,7 +7,6 @@
 }:
 let
   relayHostPort = 18788;
-  package = pkgs.twitter-api-safe-mcp;
   domain = "tw.home.yutakobayashi.com";
   outputDir = "/var/lib/immich-net-pics";
   baseProfileDir = "/var/lib/twitter-api-safe-relay/chrome-profile";
@@ -109,24 +108,6 @@ let
     partOf = [ "podman-${account.containerName}.service" ];
   });
 
-  relaySettings = pkgs.writeText "twitter-api-safe-relay-settings.json" (
-    builtins.toJSON {
-      hostname = "127.0.0.1";
-      logger.level = "info";
-      port = relayHostPort;
-      dashboard = true;
-      mcp.transport = "http";
-      profiles = map (account: {
-        inherit (account) name;
-        browser = {
-          type = "cdp";
-          browserType = "chromium";
-          cdpEndpoint = "http://127.0.0.1:${toString account.cdpHostPort}";
-        };
-      }) accountConfigs;
-    }
-  );
-
   bookmark-snap = pkgs.buildNpmPackage {
     pname = "twitter-bookmark-snap";
     version = "0.0.1";
@@ -147,57 +128,77 @@ let
   };
 in
 {
-  imports = [ inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client ];
+  imports = [
+    inputs.nur-packages.nixosModules.twitter-api-safe-mcp
+    inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client
+  ];
 
   sops.secrets.openai-tunnel-api-key = {
     sopsFile = ../../../../secrets/openai-tunnel.yaml;
   };
 
-  services.openai-tunnel-client.instances.twitter-api-safe-relay = {
-    enable = true;
-    settings = {
-      config_version = 1;
-      control_plane = {
-        tunnel_id = "tunnel_6a605119f2bc8191b8aa9ffe352e095c";
-        # The pinned Nix module turns apiKeyFile into an env reference whose
-        # value is another file reference. tunnel-client resolves only one
-        # reference layer, so point it at the systemd credential directly.
-        api_key = "file:/run/credentials/${tunnelServiceName}.service/${tunnelCredentialName}";
+  services = {
+    twitter-api-safe-mcp = {
+      enable = true;
+      settings = {
+        port = relayHostPort;
+        profiles = map (account: {
+          inherit (account) name;
+          browser = {
+            type = "cdp";
+            browserType = "chromium";
+            cdpEndpoint = "http://127.0.0.1:${toString account.cdpHostPort}";
+          };
+        }) accountConfigs;
       };
-      health.listen_addr = "127.0.0.1:18789";
-      admin_ui.open_browser = false;
-      mcp.server_urls = [
-        {
-          channel = "main";
-          url = "http://127.0.0.1:${toString relayHostPort}/mcp";
-        }
+    };
+
+    openai-tunnel-client.instances.twitter-api-safe-relay = {
+      enable = true;
+      settings = {
+        config_version = 1;
+        control_plane = {
+          tunnel_id = "tunnel_6a605119f2bc8191b8aa9ffe352e095c";
+          # The pinned Nix module turns apiKeyFile into an env reference whose
+          # value is another file reference. tunnel-client resolves only one
+          # reference layer, so point it at the systemd credential directly.
+          api_key = "file:/run/credentials/${tunnelServiceName}.service/${tunnelCredentialName}";
+        };
+        health.listen_addr = "127.0.0.1:18789";
+        admin_ui.open_browser = false;
+        mcp.server_urls = [
+          {
+            channel = "main";
+            url = "http://127.0.0.1:${toString relayHostPort}/mcp";
+          }
+        ];
+      };
+    };
+
+    traefik.dynamicConfigOptions.http = {
+      routers.twitter-api-safe-relay = {
+        entryPoints = [
+          "web"
+          "websecure"
+        ];
+        rule = "Host(`${domain}`)";
+        service = "twitter-api-safe-relay";
+        tls.certResolver = "letsencrypt";
+      };
+      services.twitter-api-safe-relay.loadBalancer.servers = [
+        { url = "http://127.0.0.1:${toString relayHostPort}"; }
       ];
     };
   };
 
   virtualisation.oci-containers.containers = browserContainers // cdpContainers;
 
-  services.traefik.dynamicConfigOptions.http = {
-    routers.twitter-api-safe-relay = {
-      entryPoints = [
-        "web"
-        "websecure"
-      ];
-      rule = "Host(`${domain}`)";
-      service = "twitter-api-safe-relay";
-      tls.certResolver = "letsencrypt";
-    };
-    services.twitter-api-safe-relay.loadBalancer.servers = [
-      { url = "http://127.0.0.1:${toString relayHostPort}"; }
-    ];
-  };
-
   systemd = {
     services = {
       twitter-api-safe-relay-network = {
         after = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
-        before = browserUnits ++ cdpUnits ++ [ "twitter-api-safe-relay.service" ];
+        before = browserUnits ++ cdpUnits ++ [ "twitter-api-safe-mcp.service" ];
         wants = [ "network-online.target" ];
         serviceConfig = {
           Type = "oneshot";
@@ -214,8 +215,8 @@ in
     // cdpServices
     // {
       tunnel-client-twitter-api-safe-relay = {
-        after = [ "twitter-api-safe-relay.service" ];
-        wants = [ "twitter-api-safe-relay.service" ];
+        after = [ "twitter-api-safe-mcp.service" ];
+        wants = [ "twitter-api-safe-mcp.service" ];
         serviceConfig.LoadCredential = [
           "${tunnelCredentialName}:${config.sops.secrets.openai-tunnel-api-key.path}"
         ];
@@ -238,20 +239,9 @@ in
           ${lib.getExe pkgs.nodejs} dist/index.js -- --limit 50 --output-dir ${outputDir}
         '';
       };
-      twitter-api-safe-relay = {
-        description = "Twitter API Safe Relay and MCP server";
-        wantedBy = [ "multi-user.target" ];
+      twitter-api-safe-mcp = {
         after = relayDependencies;
         requires = relayDependencies;
-        unitConfig = {
-          StartLimitIntervalSec = "5m";
-          StartLimitBurst = 20;
-        };
-        serviceConfig = {
-          ExecStart = "${package}/bin/twitter-api-safe-mcp ${relaySettings}";
-          Restart = "on-failure";
-          RestartSec = "10s";
-        };
       };
     };
     tmpfiles.rules = [

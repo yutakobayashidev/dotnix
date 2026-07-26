@@ -8,11 +8,11 @@ runtime API key in the Nix store.
 
 ## Architecture
 
-The NUR-packaged `twitter-api-safe-mcp` process runs as a native NixOS systemd
-service on `127.0.0.1:18788`. It embeds the HTTP relay, dashboard, and
-Streamable HTTP MCP endpoint in one process. That process is the single owner
-of the generated browser profiles and connects to the CDP proxies through
-fixed loopback ports.
+The NUR-packaged `twitter-api-safe-mcp` process runs through its exported NixOS
+module as a native systemd service on `127.0.0.1:18788`. It embeds the HTTP
+relay, dashboard, and Streamable HTTP MCP endpoint in one process. That process
+is the single owner of the generated browser profiles and connects to the CDP
+proxies through fixed loopback ports.
 The previous relay container and separate stdio MCP process were removed to
 avoid two Playwright clients concurrently controlling the same browser page.
 
@@ -43,21 +43,21 @@ The existing Traefik route and Twitter Lite use the same process's HTTP relay.
 
 - Add `github:nakasyou/openai-secure-tunnel-nix` as a flake input following the
   repository's `nixpkgs` input.
-- Import its `nixosModules.tunnel-client` module from the existing
-  `twitter-api-safe-relay` service module.
+- Import the NUR package's `nixosModules.twitter-api-safe-mcp` module and the
+  tunnel input's `nixosModules.tunnel-client` module from the existing host
+  service module.
 - Configure one tunnel instance named `twitter-api-safe-relay` with tunnel ID
   `tunnel_6a605119f2bc8191b8aa9ffe352e095c` and health listener
   `127.0.0.1:18789`.
-- Run `pkgs.twitter-api-safe-mcp` as `twitter-api-safe-relay.service` with one
-  Nix-generated settings file, loopback hostname, port 18788, dashboard
-  enabled, `"mcp": { "transport": "http" }`, and fixed CDP endpoints on
-  `127.0.0.1:9224` and `127.0.0.1:9225`.
+- Configure `services.twitter-api-safe-mcp` with port 18788 and fixed CDP
+  endpoints on `127.0.0.1:9224` and `127.0.0.1:9225`. The NUR module generates
+  the settings file and owns `twitter-api-safe-mcp.service`.
 - Route `tw.home.yutakobayashi.com` through native Traefik dynamic
   configuration to `http://127.0.0.1:18788`.
 - Configure the tunnel's `main` MCP server URL as
   `http://127.0.0.1:18788/mcp`.
 - Order the tunnel and Twitter Lite services after
-  `twitter-api-safe-relay.service`.
+  `twitter-api-safe-mcp.service`.
 
 ## Secret Handling
 

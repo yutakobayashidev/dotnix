@@ -15,8 +15,8 @@ in
   };
 
   systemd.services.twitter-lite = {
-    after = [ "twitter-api-safe-relay.service" ];
-    wants = [ "twitter-api-safe-relay.service" ];
+    after = [ "twitter-api-safe-mcp.service" ];
+    wants = [ "twitter-api-safe-mcp.service" ];
   };
 
   services.traefik.dynamicConfigOptions.http = {
