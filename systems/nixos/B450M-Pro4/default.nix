@@ -35,6 +35,7 @@
     ../services/couchdb
     ../services/coredns
     ../services/twitter-api-safe-relay
+    ../services/twitter-bookmark-snap
     ../services/twitter-lite
     ../services/s3s
     ../services/headroom
@@ -149,10 +150,6 @@
       ];
     };
   };
-
-  systemd.tmpfiles.rules = [
-    "d /var/lib/immich-net-pics 0755 yuta users - -"
-  ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware = {

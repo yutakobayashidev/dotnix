@@ -8,7 +8,6 @@
 let
   relayHostPort = 18788;
   domain = "tw.home.yutakobayashi.com";
-  outputDir = "/var/lib/immich-net-pics";
   baseProfileDir = "/var/lib/twitter-api-safe-relay/chrome-profile";
   relayNetworkName = "twitter-api-safe-relay";
   tunnelServiceName = "tunnel-client-twitter-api-safe-relay";
@@ -108,24 +107,6 @@ let
     partOf = [ "podman-${account.containerName}.service" ];
   });
 
-  bookmark-snap = pkgs.buildNpmPackage {
-    pname = "twitter-bookmark-snap";
-    version = "0.0.1";
-    src = ./bookmark-snap;
-    npmDepsHash = "sha256-H2WmmgdWRdVx6fOrTjDtXB8btkAxSsj/pTIu0N66JfQ=";
-    PUPPETEER_SKIP_DOWNLOAD = true;
-    dontNpmBuild = true;
-
-    buildPhase = ''
-      ${lib.getExe pkgs.nodejs} node_modules/typescript/bin/tsc
-    '';
-
-    installPhase = ''
-      mkdir -p $out/lib
-      cp -r dist $out/lib/
-      cp -r node_modules $out/lib/
-    '';
-  };
 in
 {
   imports = [
@@ -221,42 +202,11 @@ in
           "${tunnelCredentialName}:${config.sops.secrets.openai-tunnel-api-key.path}"
         ];
       };
-      twitter-bookmark-snap = {
-        description = "Fetch and render Twitter bookmarks";
-        after = [ "network-online.target" ];
-        wants = [ "network-online.target" ];
-        environment = {
-          PUPPETEER_EXECUTABLE_PATH = "${pkgs.chromium}/bin/chromium";
-          FFMPEG_PATH = "${pkgs.ffmpeg}/bin/ffmpeg";
-          FFPROBE_PATH = "${pkgs.ffmpeg}/bin/ffprobe";
-        };
-        serviceConfig = {
-          Type = "oneshot";
-          User = "yuta";
-          WorkingDirectory = "${bookmark-snap}/lib";
-        };
-        script = ''
-          ${lib.getExe pkgs.nodejs} dist/index.js -- --limit 50 --output-dir ${outputDir}
-        '';
-      };
       twitter-api-safe-mcp = {
         after = relayDependencies;
         requires = relayDependencies;
       };
     };
-    tmpfiles.rules = [
-      "d ${outputDir} 0755 yuta users - -"
-    ]
-    ++ (builtins.map (account: "d ${account.profileDir} 0755 1000 0 - -") accountConfigs);
-    timers.twitter-bookmark-snap = {
-      description = "Run twitter-bookmark-snap every 15 minutes";
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnBootSec = "5min";
-        OnUnitActiveSec = "15min";
-        RandomizedDelaySec = "2min";
-        Persistent = true;
-      };
-    };
+    tmpfiles.rules = builtins.map (account: "d ${account.profileDir} 0755 1000 0 - -") accountConfigs;
   };
 }
