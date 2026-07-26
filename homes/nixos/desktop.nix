@@ -13,6 +13,7 @@
     emacs.enable = true;
     vicinae.enable = true;
   };
+  ext.xdg.enable = true;
   services.wallpaper.enable = true;
 
   # Unwrapped GTK 3 applications, including Tauri development builds, need
