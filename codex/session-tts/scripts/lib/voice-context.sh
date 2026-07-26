@@ -11,9 +11,13 @@
 #   Forwards the given text to session-tts-say-response (a Nix-wrapped
 #   Python binary) with the speaker and session id injected via env.
 #
+# shellcheck source=codex/session-tts/scripts/lib/runtime.sh
+. "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/runtime.sh"
+
 resolve_speaker() {
   local session_id="$1"
-  local data_dir="${CODEX_HOME:?}/session-tts"
+  local data_dir
+  data_dir=$(session_tts_data_dir)
   local session_file="$data_dir/sessions/$session_id"
   local silenced_file="$data_dir/silenced/$session_id"
 

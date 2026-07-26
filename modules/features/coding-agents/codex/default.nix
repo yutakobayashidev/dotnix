@@ -19,15 +19,11 @@ _:
           "${lib.removePrefix config.home.homeDirectory config.xdg.configHome}/codex"
         else
           ".codex";
-      codexHome =
-        if config.home.preferXdgDirectories then
-          "${config.xdg.configHome}/codex"
-        else
-          "${config.home.homeDirectory}/.codex";
       codexDotfilesDir = "${dotfilesDir}/codex";
-      inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
+      inherit (pkgs.stdenv.hostPlatform) isLinux;
       sessionTtsRoot = "${codexDotfilesDir}/session-tts";
       sessionTtsSkills = ../../../../codex/session-tts/skills;
+      sessionTtsHome = "${config.xdg.stateHome}/session-tts";
       mkCommandHook = command: {
         type = "command";
         inherit command;
@@ -35,7 +31,8 @@ _:
       mkSessionTtsHook =
         script: args:
         mkCommandHook (
-          "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsRoot}/scripts/${script}"}"
+          "SESSION_TTS_HOME=${lib.escapeShellArg sessionTtsHome} "
+          + "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsRoot}/scripts/${script}"}"
           + lib.optionalString (args != [ ]) " ${lib.escapeShellArgs args}"
         );
       mkHookGroup = hooks: [
@@ -45,23 +42,20 @@ _:
         }
       ];
       codexHooks = {
-        hooks =
-          lib.optionalAttrs isDarwin {
-            SessionStart = mkHookGroup [ (mkSessionTtsHook "session-on.sh" [ ]) ];
-            Stop = mkHookGroup [ (mkSessionTtsHook "dispatch.sh" [ ]) ];
-            PermissionRequest = mkHookGroup [ (mkSessionTtsHook "notify-permission.sh" [ ]) ];
-            UserPromptSubmit = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "prompt" ]) ];
-            SubagentStart = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "subagent" ]) ];
-          }
-          // lib.optionalAttrs isLinux {
-            PermissionRequest = mkHookGroup [
-              {
-                type = "command";
-                command = "NIRI_BIN=${lib.getExe pkgs.niri} ${lib.getExe pkgs.bash} ${lib.escapeShellArg "${codexDotfilesDir}/hooks/focus-approval.sh"}";
-                timeout = 5;
-              }
-            ];
-          };
+        hooks = {
+          SessionStart = mkHookGroup [ (mkSessionTtsHook "session-on.sh" [ ]) ];
+          Stop = mkHookGroup [ (mkSessionTtsHook "dispatch.sh" [ ]) ];
+          PermissionRequest = mkHookGroup (
+            lib.optional isLinux {
+              type = "command";
+              command = "NIRI_BIN=${lib.getExe pkgs.niri} ${lib.getExe pkgs.bash} ${lib.escapeShellArg "${codexDotfilesDir}/hooks/focus-approval.sh"}";
+              timeout = 5;
+            }
+            ++ [ (mkSessionTtsHook "notify-permission.sh" [ ]) ]
+          );
+          UserPromptSubmit = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "prompt" ]) ];
+          SubagentStart = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "subagent" ]) ];
+        };
       };
       otelExporter =
         if cfg.telemetry.enable then
@@ -97,7 +91,7 @@ _:
 
         permissions.project = {
           extends = ":workspace";
-          workspace_roots."${codexHome}/session-tts" = true;
+          workspace_roots."${sessionTtsHome}" = true;
           network = {
             enabled = true;
             domains = {
@@ -166,6 +160,7 @@ _:
         (pkgs.writeShellApplication {
           name = "codex";
           text = ''
+            export SESSION_TTS_HOME=${lib.escapeShellArg sessionTtsHome}
             config_args=()
             while IFS= read -r config; do
               config_args+=(--config "$config")
@@ -216,7 +211,7 @@ _:
           inherit settings;
         };
 
-        programs.agent-skills = lib.mkIf isDarwin {
+        programs.agent-skills = {
           sources.session-tts.path = sessionTtsSkills;
 
           skills.explicit = {
@@ -251,12 +246,7 @@ _:
         };
 
         home = {
-          packages = lib.optional isDarwin pkgs.session-tts-codex;
-          activation = lib.optionalAttrs isDarwin {
-            prepareCodexState = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              mkdir -p "${codexHome}/session-tts"
-            '';
-          };
+          packages = [ pkgs.session-tts ];
 
           file = {
             # Codex updates its user config at runtime, so only immutable

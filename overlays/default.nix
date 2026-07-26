@@ -29,12 +29,12 @@
       '';
     };
 
-    session-tts-codex =
+    session-tts =
       let
         python = prev.python3;
       in
       python.pkgs.buildPythonApplication {
-        pname = "session-tts-codex";
+        pname = "session-tts";
         version = "0.1.0";
         src = ../codex/session-tts/python;
         format = "pyproject";
@@ -43,6 +43,16 @@
         ];
         propagatedBuildInputs = with python.pkgs; [
           httpx
+        ];
+        makeWrapperArgs = [
+          "--set"
+          "SESSION_TTS_PLAYER"
+          (
+            if final.stdenv.hostPlatform.isDarwin then
+              "/usr/bin/afplay"
+            else
+              final.lib.getExe' final.pipewire "pw-play"
+          )
         ];
         doCheck = false;
       };

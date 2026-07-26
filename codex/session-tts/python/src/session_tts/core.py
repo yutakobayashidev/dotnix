@@ -20,6 +20,7 @@ import httpx
 ENGINE_BASE_URL = os.environ.get("SESSION_TTS_ENGINE_URL", "http://127.0.0.1:10101")
 SPEAKER_ID = int(os.environ.get("SESSION_TTS_SPEAKER_ID", "0"))
 SESSION_ID = os.environ.get("SESSION_TTS_SESSION_ID", "")
+PLAYER = os.environ.get("SESSION_TTS_PLAYER", "session-tts-player")
 
 MAX_TEXT_LENGTH = 2000
 FIRST_CHUNK_MAX = 60
@@ -32,7 +33,18 @@ MAX_CHUNKS = 8
 TRUNCATION_NOTICE = "以下、省略します。"
 
 DEFAULT_PLAYBACK_VOLUME = 0.8
-DATA_DIR = os.path.join(os.environ["CODEX_HOME"], "session-tts")
+
+
+def resolve_data_dir() -> str:
+    if configured := os.environ.get("SESSION_TTS_HOME"):
+        return configured
+    state_home = os.environ.get("XDG_STATE_HOME")
+    if not state_home:
+        state_home = os.path.join(os.path.expanduser("~"), ".local", "state")
+    return os.path.join(state_home, "session-tts")
+
+
+DATA_DIR = resolve_data_dir()
 VOLUME_FILE = os.path.join(DATA_DIR, "volume")
 
 
@@ -257,7 +269,7 @@ def player_worker(play_queue: "queue.Queue[str | None]") -> None:
         if path is None:
             return
         subprocess.run(
-            ["afplay", "--volume", resolve_playback_volume(), path], check=False
+            [PLAYER, "--volume", resolve_playback_volume(), path], check=False
         )
         try:
             os.unlink(path)

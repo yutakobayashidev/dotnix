@@ -18,7 +18,7 @@ if [ -z "$session_id" ]; then
   exit 0
 fi
 
-data_dir="${CODEX_HOME:?}/session-tts"
+data_dir=$(session_tts_data_dir)
 sessions_dir="$data_dir/sessions"
 index_file="$data_dir/index"
 session_file="$sessions_dir/$session_id"

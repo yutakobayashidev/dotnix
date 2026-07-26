@@ -14,7 +14,7 @@ session_tts_root="$(cd "$script_dir/.." && pwd)"
 . "$session_tts_root/scripts/lib/voice-context.sh"
 
 text="${1:-}"
-session_id="${CODEX_THREAD_ID:-}"
+session_id=$(session_tts_session_id)
 
 [ -z "$text" ] && exit 0
 

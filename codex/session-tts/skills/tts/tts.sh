@@ -6,14 +6,18 @@ set -e
 
 action="${1:-status}"
 
-session_id="${CODEX_THREAD_ID:-}"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=codex/session-tts/scripts/lib/runtime.sh
+. "$script_dir/../../scripts/lib/runtime.sh"
+
+session_id=$(session_tts_session_id)
 
 if [ -z "$session_id" ]; then
-  echo "session-tts: CODEX_THREAD_ID is not set" >&2
+  echo "session-tts: SESSION_TTS_SESSION_ID is not set" >&2
   exit 1
 fi
 
-data_dir="${CODEX_HOME:?}/session-tts"
+data_dir=$(session_tts_data_dir)
 silenced_dir="$data_dir/silenced"
 pidfile_dir="$data_dir/playback"
 silenced_file="$silenced_dir/$session_id"
@@ -33,12 +37,12 @@ silence_on() {
   mkdir -p "$silenced_dir"
   touch "$silenced_file"
   kill_current_playback
-  echo "Codex TTS (this session): OFF"
+  echo "Session TTS (this session): OFF"
 }
 
 silence_off() {
   rm -f "$silenced_file"
-  echo "Codex TTS (this session): ON"
+  echo "Session TTS (this session): ON"
 }
 
 case "$action" in
@@ -57,9 +61,9 @@ toggle)
   ;;
 status)
   if [ -e "$silenced_file" ]; then
-    echo "Codex TTS (this session): OFF"
+    echo "Session TTS (this session): OFF"
   else
-    echo "Codex TTS (this session): ON"
+    echo "Session TTS (this session): ON"
   fi
   ;;
 *)

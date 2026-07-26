@@ -20,7 +20,10 @@ input=$(cat)
 session_id=$(printf '%s' "$input" | jq -r '.session_id // empty')
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-data_dir="${CODEX_HOME:?}/session-tts"
+# shellcheck source=codex/session-tts/scripts/lib/voice-context.sh
+. "$script_dir/lib/voice-context.sh"
+
+data_dir=$(session_tts_data_dir)
 if [ -z "$session_id" ] || [ ! -e "$data_dir/sessions/$session_id" ] || [ -e "$data_dir/silenced/$session_id" ]; then
   exit 0
 fi

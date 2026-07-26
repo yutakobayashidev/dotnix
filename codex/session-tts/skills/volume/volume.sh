@@ -5,7 +5,11 @@
 set -e
 
 action="${1:-status}"
-data_dir="${CODEX_HOME:?}/session-tts"
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=codex/session-tts/scripts/lib/runtime.sh
+. "$script_dir/../../scripts/lib/runtime.sh"
+
+data_dir=$(session_tts_data_dir)
 volume_file="$data_dir/volume"
 default_volume="0.8"
 
@@ -14,11 +18,11 @@ show_status() {
     local current
     current=$(cat "$volume_file" 2>/dev/null || echo "")
     if [ -n "$current" ]; then
-      echo "Codex TTS volume: $current (default: $default_volume)"
+      echo "Session TTS volume: $current (default: $default_volume)"
       return
     fi
   fi
-  echo "Codex TTS volume: $default_volume (default)"
+  echo "Session TTS volume: $default_volume (default)"
 }
 
 set_volume() {
@@ -33,12 +37,12 @@ set_volume() {
   fi
   mkdir -p "$data_dir"
   printf '%s\n' "$value" >"$volume_file"
-  echo "Codex TTS volume: $value"
+  echo "Session TTS volume: $value"
 }
 
 reset_volume() {
   rm -f "$volume_file"
-  echo "Codex TTS volume: $default_volume (default)"
+  echo "Session TTS volume: $default_volume (default)"
 }
 
 case "$action" in
