@@ -7,8 +7,10 @@
 
 set -e
 
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # shellcheck source=codex/session-tts/scripts/lib/voice-context.sh
-. "${PLUGIN_ROOT}/scripts/lib/voice-context.sh"
+. "$script_dir/lib/voice-context.sh"
 
 input=$(cat)
 session_id=$(printf '%s' "$input" | jq -r '.session_id // empty')

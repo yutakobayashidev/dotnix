@@ -7,8 +7,11 @@
 
 set -e
 
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+session_tts_root="$(cd "$script_dir/.." && pwd)"
+
 # shellcheck source=codex/session-tts/scripts/lib/voice-context.sh
-. "${PLUGIN_ROOT}/scripts/lib/voice-context.sh"
+. "$script_dir/lib/voice-context.sh"
 
 session_id=$(jq -r '.session_id // empty')
 if [ -z "$session_id" ]; then
@@ -23,7 +26,7 @@ session_file="$sessions_dir/$session_id"
 mkdir -p "$sessions_dir"
 
 # --- inject mid-turn narration guidance into Codex's context ---
-plugin_root_for_instr="${PLUGIN_ROOT}"
+session_tts_root_for_instr="$session_tts_root"
 instructions=$(
   cat <<EOF
 [session-tts] TTS is enabled for this session.
@@ -36,7 +39,7 @@ message.
 
 \`\`\`
 Bash(
-  command: bash "${plugin_root_for_instr}/scripts/say.sh" "<lead-in + body, one short Japanese phrase>",
+  command: bash "${session_tts_root_for_instr}/scripts/say.sh" "<lead-in + body, one short Japanese phrase>",
   description: "TTS report"
 )
 \`\`\`
@@ -77,7 +80,7 @@ Avoid:
 - The final response of a turn (Stop hook narrates the final assistant
   message automatically)
 
-say.sh itself is a no-op if TTS has been silenced via /session-tts:tts off,
+say.sh itself is a no-op if TTS has been silenced via the session-tts skill,
 so it's safe to call it without checking silence status.
 EOF
 )

@@ -7,7 +7,7 @@
 # Reads the hook payload from stdin (for the session_id) and, when the
 # session has a voice and is not silenced, outputs a trigger-specific
 # reminder so Codex is nudged to narrate progress via the Bash tool +
-# `${PLUGIN_ROOT}/scripts/say.sh`.
+# the repository-managed say adapter.
 
 set -e
 
@@ -18,14 +18,14 @@ fi
 
 input=$(cat)
 session_id=$(printf '%s' "$input" | jq -r '.session_id // empty')
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 data_dir="${CODEX_HOME:?}/session-tts"
 if [ -z "$session_id" ] || [ ! -e "$data_dir/sessions/$session_id" ] || [ -e "$data_dir/silenced/$session_id" ]; then
   exit 0
 fi
 
-plugin_root="${PLUGIN_ROOT:?}"
-cmd="bash \"$plugin_root/scripts/say.sh\" \"<phrase>\""
+cmd="bash \"$script_dir/say.sh\" \"<phrase>\""
 
 # Tail of every reminder — kept short and identical so the model
 # pattern-matches it as boilerplate it can compress.

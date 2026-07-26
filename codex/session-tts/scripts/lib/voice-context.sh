@@ -5,17 +5,12 @@
 #
 # resolve_speaker <session_id>
 #   Prints the assigned speaker id on stdout. Returns 1 if the session has
-#   no voice assigned or has been silenced via /session-tts:tts off.
+#   no voice assigned or has been silenced via the session-tts skill.
 #
 # speak_text <speaker_id> <text> <session_id>
 #   Forwards the given text to session-tts-say-response (a Nix-wrapped
 #   Python binary) with the speaker and session id injected via env.
 #
-# Plugin root resolution:
-#   Codex sets PLUGIN_ROOT for hook invocations and also sets CLAUDE_PLUGIN_ROOT
-#   for backward compatibility. For Bash tool calls (skill adapters), PLUGIN_ROOT
-#   may not be set, so we fall back to resolving from this file's own location.
-
 resolve_speaker() {
   local session_id="$1"
   local data_dir="${CODEX_HOME:?}/session-tts"

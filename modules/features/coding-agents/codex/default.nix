@@ -25,19 +25,43 @@ _:
         else
           "${config.home.homeDirectory}/.codex";
       codexDotfilesDir = "${dotfilesDir}/codex";
+      inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
+      sessionTtsRoot = "${codexDotfilesDir}/session-tts";
+      sessionTtsSkills = ../../../../codex/session-tts/skills;
+      mkCommandHook = command: {
+        type = "command";
+        inherit command;
+      };
+      mkSessionTtsHook =
+        script: args:
+        mkCommandHook (
+          "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsRoot}/scripts/${script}"}"
+          + lib.optionalString (args != [ ]) " ${lib.escapeShellArgs args}"
+        );
+      mkHookGroup = hooks: [
+        {
+          matcher = "";
+          inherit hooks;
+        }
+      ];
       codexHooks = {
-        hooks.PermissionRequest = [
-          {
-            matcher = "";
-            hooks = [
+        hooks =
+          lib.optionalAttrs isDarwin {
+            SessionStart = mkHookGroup [ (mkSessionTtsHook "session-on.sh" [ ]) ];
+            Stop = mkHookGroup [ (mkSessionTtsHook "dispatch.sh" [ ]) ];
+            PermissionRequest = mkHookGroup [ (mkSessionTtsHook "notify-permission.sh" [ ]) ];
+            UserPromptSubmit = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "prompt" ]) ];
+            SubagentStart = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "subagent" ]) ];
+          }
+          // lib.optionalAttrs isLinux {
+            PermissionRequest = mkHookGroup [
               {
                 type = "command";
                 command = "NIRI_BIN=${lib.getExe pkgs.niri} ${lib.getExe pkgs.bash} ${lib.escapeShellArg "${codexDotfilesDir}/hooks/focus-approval.sh"}";
                 timeout = 5;
               }
             ];
-          }
-        ];
+          };
       };
       otelExporter =
         if cfg.telemetry.enable then
@@ -109,7 +133,6 @@ _:
           "documents@openai-primary-runtime".enabled = true;
           "spreadsheets@openai-primary-runtime".enabled = true;
           "presentations@openai-primary-runtime".enabled = true;
-          "session-tts@personal".enabled = true;
         };
       };
       rawSettings =
@@ -193,18 +216,45 @@ _:
           inherit settings;
         };
 
+        programs.agent-skills = lib.mkIf isDarwin {
+          sources.session-tts.path = sessionTtsSkills;
+
+          skills.explicit = {
+            session-tts = {
+              from = "session-tts";
+              path = "tts";
+              rewriteCommands = false;
+              transform =
+                { original, ... }:
+                builtins.replaceStrings
+                  [ "session-tts-tts " ]
+                  [
+                    "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsSkills}/tts/tts.sh"} "
+                  ]
+                  original;
+            };
+
+            session-tts-volume = {
+              from = "session-tts";
+              path = "volume";
+              rewriteCommands = false;
+              transform =
+                { original, ... }:
+                builtins.replaceStrings
+                  [ "session-tts-volume " ]
+                  [
+                    "${lib.getExe pkgs.bash} ${lib.escapeShellArg "${sessionTtsSkills}/volume/volume.sh"} "
+                  ]
+                  original;
+            };
+          };
+        };
+
         home = {
-          packages = [ pkgs.session-tts-codex ];
-          activation = {
+          packages = lib.optional isDarwin pkgs.session-tts-codex;
+          activation = lib.optionalAttrs isDarwin {
             prepareCodexState = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
               mkdir -p "${codexHome}/session-tts"
-            '';
-
-            # Global plugin: symlink session-tts under ~/plugins/ so Codex
-            # discovers the plugin from the personal marketplace in every repo.
-            installSessionTtsPlugin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              mkdir -p "$HOME/plugins"
-              ln -sfn "${codexDotfilesDir}/session-tts" "$HOME/plugins/session-tts"
             '';
           };
 
@@ -215,25 +265,6 @@ _:
             "${codexConfigDir}/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
             "${codexConfigDir}/AGENTS.md".source =
               config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
-            ".agents/plugins/marketplace.json".text = builtins.toJSON {
-              name = "personal";
-              plugins = [
-                {
-                  name = "session-tts";
-                  source = {
-                    source = "local";
-                    path = "./plugins/session-tts";
-                  };
-                  policy = {
-                    installation = "AVAILABLE";
-                    authentication = "ON_INSTALL";
-                  };
-                  category = "Productivity";
-                }
-              ];
-            };
-          }
-          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
             "${codexConfigDir}/hooks.json".text = builtins.toJSON codexHooks;
           };
         };

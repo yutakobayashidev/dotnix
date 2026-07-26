@@ -3,16 +3,15 @@
 #
 # Usage: say.sh "<short Japanese text>"
 #
-# session_id is resolved from environment (PLUGIN_ROOT set by hooks,
-# or from script location for Bash tool calls).
+# session_id is resolved from the Codex environment.
 
 set -e
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-plugin_root="$(cd "$script_dir/.." && pwd)"
+session_tts_root="$(cd "$script_dir/.." && pwd)"
 
 # shellcheck source=codex/session-tts/scripts/lib/voice-context.sh
-. "$plugin_root/scripts/lib/voice-context.sh"
+. "$session_tts_root/scripts/lib/voice-context.sh"
 
 text="${1:-}"
 session_id="${CODEX_THREAD_ID:-}"

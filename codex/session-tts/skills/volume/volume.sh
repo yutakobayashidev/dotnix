@@ -1,5 +1,5 @@
 #!/bin/bash
-# /session-tts:volume skill entry point.
+# session-tts-volume skill entry point.
 # Usage: volume.sh <0.0-1.0> | status | reset
 
 set -e
@@ -24,11 +24,11 @@ show_status() {
 set_volume() {
   local value="$1"
   if ! [[ $value =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
-    echo "session-tts:volume: value must be a decimal in [0.0, 1.0]" >&2
+    echo "session-tts-volume: value must be a decimal in [0.0, 1.0]" >&2
     exit 1
   fi
   if ! awk -v v="$value" 'BEGIN { exit (v >= 0.0 && v <= 1.0) ? 0 : 1 }' </dev/null; then
-    echo "session-tts:volume: value must be a decimal in [0.0, 1.0]" >&2
+    echo "session-tts-volume: value must be a decimal in [0.0, 1.0]" >&2
     exit 1
   fi
   mkdir -p "$data_dir"

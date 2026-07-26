@@ -1,5 +1,5 @@
 #!/bin/bash
-# /session-tts:tts skill entry point.
+# session-tts skill entry point.
 # Usage: tts.sh on|off|toggle|status
 
 set -e
@@ -9,7 +9,7 @@ action="${1:-status}"
 session_id="${CODEX_THREAD_ID:-}"
 
 if [ -z "$session_id" ]; then
-  echo "session-tts:tts: CODEX_THREAD_ID is not set" >&2
+  echo "session-tts: CODEX_THREAD_ID is not set" >&2
   exit 1
 fi
 
