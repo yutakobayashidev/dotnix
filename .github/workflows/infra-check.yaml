@@ -12,7 +12,7 @@ on:
       - 'infra/gitea/**'
       - 'infra/uptime-kuma/**'
       - 'infra/tailscale/**'
-      - 'modules/flake/per-system/dev-shell.nix'
+      - 'modules/per-system/dev-shell.nix'
   push:
     branches:
       - main
@@ -23,7 +23,7 @@ on:
       - 'infra/gitea/**'
       - 'infra/uptime-kuma/**'
       - 'infra/tailscale/**'
-      - 'modules/flake/per-system/dev-shell.nix'
+      - 'modules/per-system/dev-shell.nix'
 
 permissions:
   contents: read
