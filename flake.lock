@@ -1332,11 +1332,11 @@
     "i-have-adhd-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1784702450,
-        "narHash": "sha256-EqIPgt0FFw6g2pN7txf+4xtdD6zndMjpD6G365KQMCY=",
+        "lastModified": 1784758487,
+        "narHash": "sha256-ho4DyS0XK+jrz4hMDW58Od7jwR14YoVK4Lwx53IjjbU=",
         "owner": "ayghri",
         "repo": "i-have-adhd",
-        "rev": "ccce9e793a0d9fa008e9fb42199c39463f73a70a",
+        "rev": "d94521dbfd53019b016891859c9d26af45c8ee16",
         "type": "github"
       },
       "original": {
