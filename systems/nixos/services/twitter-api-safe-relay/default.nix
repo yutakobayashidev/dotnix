@@ -84,7 +84,7 @@ in
       builtins.map (account: {
         name = account.containerName;
         value = {
-          image = "kasmweb/chrome:1.18.0";
+          image = "kasmweb/chrome:1.18.0@sha256:ae956514c4d034673423c46317a8c5994fe3517b34662155d467e6648571d195";
           ports = [
             "${toString account.browserHostPort}:3000"
             "${toString account.vncHostPort}:6901"
@@ -108,7 +108,7 @@ in
       builtins.map (account: {
         name = account.cdpContainerName;
         value = {
-          image = "alpine/socat:latest";
+          image = "alpine/socat:1.8.1.3@sha256:f134cb7ebb983f971f5deb44e92bc62c1385b0a3b525393f32dd0722acc30315";
           cmd = [
             "TCP-LISTEN:${toString relayDebugPort},fork,reuseaddr"
             "TCP:127.0.0.1:${toString browserDebugPort}"
@@ -121,7 +121,7 @@ in
     ))
     // {
       twitter-api-safe-relay = {
-        image = "ghcr.io/fa0311/twitter_api_safe_relay:latest-dashboard-slim";
+        image = "ghcr.io/fa0311/twitter_api_safe_relay:0.1.1-relay-slim@sha256:f33013e887a47f48e170a43f28209c7bd5256e553fe1d6f327ebe4f987e3f0e2";
         ports = [ "127.0.0.1:${toString relayHostPort}:3000" ];
         labels = {
           "traefik.enable" = "true";

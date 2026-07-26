@@ -16,7 +16,7 @@ _: {
   };
 
   virtualisation.oci-containers.containers.archivebox = {
-    image = "ghcr.io/archivebox/archivebox:main";
+    image = "ghcr.io/archivebox/archivebox:0.7.3@sha256:fdf2936192aa1e909b0c3f286f60174efa24078555be4b6b90a07f2cef1d4909";
     labels = {
       "traefik.enable" = "true";
       "traefik.http.routers.archivebox.rule" = "Host(`archive.home.yutakobayashi.com`)";
