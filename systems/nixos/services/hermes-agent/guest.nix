@@ -295,7 +295,10 @@ in
 
     settings = {
       group_sessions_per_user = true;
-      model.provider = "openai-codex";
+      model = {
+        provider = "openai-codex";
+        default = "gpt-5.6-terra";
+      };
 
       fallback_providers = [
         {
