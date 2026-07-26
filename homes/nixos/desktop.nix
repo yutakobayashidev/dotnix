@@ -21,6 +21,7 @@
   home.sessionVariables.XDG_DATA_DIRS = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}:$XDG_DATA_DIRS";
 
   home.packages = with pkgs; [
+    buzz
     file-roller
     mpvpaper
     pavucontrol
