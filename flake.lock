@@ -2289,11 +2289,11 @@
     "oracle-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1784778247,
-        "narHash": "sha256-AiVxSaN203KQog+NAYdhj5e6nGBSOnWc5QJ+CGTT3nw=",
+        "lastModified": 1784817436,
+        "narHash": "sha256-AEeu0zI1N6z8HQMfTRkH7vfLDKUyNMrUZRVCHxTjDE0=",
         "owner": "steipete",
         "repo": "oracle",
-        "rev": "19a0b79b31b27f4a6b6c739396496d21a729d195",
+        "rev": "6009d4ad167b4f09c050ad22f19de5dfaf71504a",
         "type": "github"
       },
       "original": {
