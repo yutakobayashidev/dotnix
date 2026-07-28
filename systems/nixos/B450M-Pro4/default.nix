@@ -47,8 +47,8 @@
     ../services/litellm
     ../services/birdclaw
     ../services/searxng
-    ../services/codex-limit-auto-reset
     inputs.disko.nixosModules.disko
+    inputs.nur-packages.nixosModules.codex-limit-auto-reset
     ./disko.nix
     inputs.nur-packages.nixosModules.px4_drv
   ];
@@ -170,6 +170,12 @@
   };
 
   services = {
+    codex-limit-auto-reset = {
+      enable = true;
+      codexPackage = pkgs.llm-agents.codex;
+      user = "yuta";
+      codexHome = "/home/yuta/.config/codex";
+    };
     prometheus.exporters.node = {
       enable = true;
       enabledCollectors = [ "systemd" ];

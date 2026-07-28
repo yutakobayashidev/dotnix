@@ -2,40 +2,39 @@
 
 ## Goal
 
-Run `ghcr.io/fa0311/codex-limit-auto-reset` continuously on `B450M-Pro4`
-through the declarative NixOS OCI Containers module.
+Run `codex-limit-auto-reset` continuously as a native systemd service on
+`B450M-Pro4`.
 
 ## Architecture
 
-Add a focused service module at
-`systems/nixos/services/codex-limit-auto-reset/default.nix` and import it from
-`systems/nixos/B450M-Pro4/default.nix`. The module defines one
-`virtualisation.oci-containers.containers.codex-limit-auto-reset` container and
-uses the host's existing default Podman backend.
+Package the application in `yutakobayashidev/nur-packages` and export its
+reusable NixOS module as `nixosModules.codex-limit-auto-reset`. Import that
+module from `systems/nixos/B450M-Pro4/default.nix` and enable
+`services.codex-limit-auto-reset`.
 
-The container uses the upstream image without additional configuration. It
-mounts `/home/yuta/.config/codex` at `/data/codex`, matching this repository's
-`CODEX_HOME` configuration rather than upstream's default `~/.codex` path.
+The service runs as `yuta` and sets `CODEX_HOME` to
+`/home/yuta/.config/codex`, so Codex can refresh the existing ChatGPT
+authentication directly. The Nix package supplies Node.js, the built
+application, its dependencies, and the Codex CLI without a container runtime.
 
 ## Lifecycle and Failure Handling
 
-The OCI Containers module starts the container at `multi-user.target` and
-manages it as a systemd service. The generated unit restarts on failure. No
-container-level restart option is added, avoiding overlapping Podman and
-systemd restart policies.
+The NixOS module starts `codex-limit-auto-reset.service` at
+`multi-user.target`, after `network-online.target`, and restarts it on failure.
 
-Image download, authentication, or runtime failures remain visible through the
-generated `podman-codex-limit-auto-reset.service` logs.
+Authentication or runtime failures remain visible through
+`codex-limit-auto-reset.service` logs.
 
 ## Verification
 
-- Evaluate the configured image and volume attributes for `B450M-Pro4`.
-- Build the `B450M-Pro4` NixOS toplevel.
-- Inspect the diff to confirm only the new service module and its host import
-  are part of the implementation.
+- Build the package from the local `nur-packages` checkout.
+- Evaluate the generated systemd unit for `B450M-Pro4` with the local
+  `nur-packages` input override.
+- Build the configured package and generated systemd unit.
+- Inspect the diff to confirm the OCI container definition was removed.
 
 ## Documentation Impact
 
-The service does not change repository architecture, user-facing commands, or
-agent instructions, so no README, AGENTS, CLAUDE, or additional docs update is
-required beyond this design record.
+The migration changes this service's deployment architecture, so this design
+record is updated. It does not change repository-wide commands or agent
+instructions, so README, AGENTS, and CLAUDE need no changes.
