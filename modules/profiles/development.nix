@@ -65,7 +65,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           android-studio
           android-tools
           arduino-ide
-          freecad
+          stable.freecad
           (kicad.override { stable = true; })
           tableplus
         ];
