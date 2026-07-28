@@ -4,6 +4,7 @@ _:
   flake.modules.homeManager."ax" =
     {
       config,
+      inputs,
       lib,
       pkgs,
       ...
@@ -17,10 +18,21 @@ _:
       config = lib.mkIf cfg.enable {
         home.packages = [ pkgs.ax ];
 
-        programs.agent-skills.skills.explicit.trend-daily = {
-          from = "local";
-          path = "trend-daily";
-          packages = [ pkgs.ax ];
+        programs.agent-skills = {
+          sources.ax = {
+            path = inputs.ax;
+            subdir = "skills";
+          };
+
+          skills = {
+            enableAll = [ "ax" ];
+
+            explicit.trend-daily = {
+              from = "local";
+              path = "trend-daily";
+              packages = [ pkgs.ax ];
+            };
+          };
         };
       };
     };

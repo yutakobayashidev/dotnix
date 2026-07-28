@@ -18,6 +18,7 @@
         alcom
         beatoraja
         blender
+        nordvpn.cli
         osu-lazer-bin
         tetrio-desktop
         unityhub
