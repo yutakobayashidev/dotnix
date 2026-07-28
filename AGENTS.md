@@ -61,6 +61,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Launcher**: Vicinae
 - **Wallpaper**: swaybg via a Home Manager feature module
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
+- **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: Screenpipe CLI and desktop app, built from source through the personal NUR
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
@@ -70,6 +71,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 ### macOS
 
 - **Homebrew**: GUI app management (Ghostty, Raycast, Chrome, etc.)
+- **Speech-to-text**: Handy with launchd automatic startup
 - **Touch ID**: sudo authentication
 - **1Password**: Shell Plugins (gh, awscli2, tea)
 

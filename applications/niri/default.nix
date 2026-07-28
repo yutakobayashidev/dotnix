@@ -128,6 +128,20 @@
         "vicinae"
         "toggle"
       ];
+      # niri does not deliver Handy's own global hotkey, so drive it via signals.
+      # Match by "bin/handy" because the Nix wrapper renames the process to .handy-wrapped.
+      "Mod+Space".action.spawn = [
+        "pkill"
+        "-USR2"
+        "-f"
+        "bin/handy"
+      ];
+      "Mod+Ctrl+Space".action.spawn = [
+        "pkill"
+        "-USR1"
+        "-f"
+        "bin/handy"
+      ];
       "Mod+F".action.maximize-column = { };
       "Mod+Shift+F".action.toggle-window-floating = { };
 

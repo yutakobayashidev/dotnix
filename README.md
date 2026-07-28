@@ -127,6 +127,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae)
 - **Wallpaper**: swaybg with a declarative Home Manager feature
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
+- **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: Screenpipe CLI and desktop app, built from source through the personal NUR
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
@@ -139,6 +140,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 
 - **Homebrew**: GUI app management via casks (Ghostty, Chrome, OrbStack, etc.)
 - **brew-nix**: Homebrew cask packages managed as Nix packages (version pinning & rollback)
+- **Speech-to-text**: Handy with launchd automatic startup
 - **Touch ID**: sudo authentication support
 - **1Password**: Shell Plugins (gh, awscli2, tea)
 
