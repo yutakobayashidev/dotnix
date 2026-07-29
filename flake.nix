@@ -204,6 +204,10 @@
       url = "github:nakasyou/openai-secure-tunnel-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    openbrief = {
+      url = "github:yutakobayashidev/open-brief";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     starla = {
       url = "github:ananthb/starla/v0.3.1";
       inputs.nixpkgs.follows = "nixpkgs";

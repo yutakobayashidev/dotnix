@@ -62,7 +62,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Wallpaper**: swaybg via a Home Manager feature module
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
-- **Personal context**: Screenpipe CLI and desktop app, built from source through the personal NUR
+- **Personal context**: Screenpipe CLI/desktop app plus OpenBrief context recall on the ThinkPad
 - **AI development**: Codex Desktop for Linux on graphical hosts
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)

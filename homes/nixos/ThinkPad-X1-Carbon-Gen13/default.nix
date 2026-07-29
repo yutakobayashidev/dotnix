@@ -10,6 +10,7 @@
         ../../desktop.nix
         ../../../applications/course-cli
         ../desktop.nix
+        inputs.openbrief.homeManagerModules.default
         inputs.onepassword-shell-plugins.hmModules.default
         inputs.temari.homeManagerModules.default
       ];
@@ -27,6 +28,7 @@
       ];
       my.programs.mcp.ghidra.enable = true;
       services = {
+        openbrief.enable = true;
         poweralertd.enable = true;
         temari = {
           enable = true;
