@@ -66,7 +66,10 @@ in
       options.my.programs.emacs.enable = lib.mkEnableOption "emacs";
 
       config = lib.mkIf config.my.programs.emacs.enable {
-        home.packages = [ pkgs.harper ];
+        home.packages = [
+          pkgs.harper
+          pkgs.skkDictionaries.l
+        ];
 
         programs.emacs = {
           enable = true;
@@ -79,6 +82,9 @@ in
         };
 
         xdg.configFile."emacs/init.el".source = tangleEl pkgs ./init.org;
+        xdg.configFile."emacs/skk.el".text = ''
+          (setq skk-large-jisyo "${pkgs.skkDictionaries.l}/share/skk/SKK-JISYO.L")
+        '';
 
         home.shellAliases = lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
           emacs = "${config.programs.emacs.package}/Applications/Emacs.app/Contents/MacOS/Emacs";

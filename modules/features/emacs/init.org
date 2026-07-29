@@ -28,3 +28,16 @@
                 '(:harper-ls (:linters (:SpellCheck :json-false
                                         :SentenceCapitalization :json-false))))
 #+end_src
+
+* DDSKK
+#+begin_src emacs-lisp
+  (use-package skk
+    :ensure ddskk
+    :bind
+    (("C-x C-j" . skk-mode)
+     ("C-x j" . skk-auto-fill-mode))
+    :init
+    (setq default-input-method "japanese-skk")
+    :config
+    (load (locate-user-emacs-file "skk.el") nil t))
+#+end_src
