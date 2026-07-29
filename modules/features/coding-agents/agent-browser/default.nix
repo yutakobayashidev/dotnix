@@ -11,7 +11,7 @@ _:
     }:
     let
       cfg = config.my.programs.agent-browser;
-      agentBrowserBin = "${config.home.homeDirectory}/.agents/skills/agent-browser/agent-browser";
+      agentBrowserBin = lib.getExe pkgs.llm-agents.agent-browser;
     in
     {
       options.my.programs.agent-browser.enable = lib.mkEnableOption "agent-browser";
@@ -28,7 +28,6 @@ _:
           skills.explicit.agent-browser = {
             from = "agent-browser";
             path = "agent-browser";
-            packages = [ pkgs.llm-agents.agent-browser ];
             rewriteCommands = false;
             transform =
               { original, ... }:
