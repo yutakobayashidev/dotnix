@@ -418,6 +418,26 @@
         "type": "github"
       }
     },
+    "droidperm": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785325551,
+        "narHash": "sha256-8iH92qBDHnp97yFkljB14lu5UaNIEecGwyzByHKVpeU=",
+        "owner": "yutakobayashidev",
+        "repo": "droidperm",
+        "rev": "50fb47b4a3d2ae3f6a73d51d8deb74be1f20c2bc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "droidperm",
+        "type": "github"
+      }
+    },
     "edcb-tools": {
       "inputs": {
         "fenix": [
@@ -2470,6 +2490,7 @@
         "comin": "comin",
         "difit-skills": "difit-skills",
         "disko": "disko",
+        "droidperm": "droidperm",
         "edcb-tools": "edcb-tools",
         "emacs-overlay": "emacs-overlay",
         "firefox-addons": "firefox-addons",

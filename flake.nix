@@ -151,6 +151,10 @@
       url = "github:yoshiko-pg/difit";
       flake = false;
     };
+    droidperm = {
+      url = "github:yutakobayashidev/droidperm";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     agent-browser-skill = {
       url = "github:vercel-labs/agent-browser";
       flake = false;

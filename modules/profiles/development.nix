@@ -5,6 +5,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
   home =
     {
+      inputs,
       lib,
       pkgs,
       ...
@@ -42,6 +43,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           bumblebee
           cloc
           difit
+          inputs.droidperm.packages.${stdenv.hostPlatform.system}.default
           gctx
           insomnia
           jj-desc
