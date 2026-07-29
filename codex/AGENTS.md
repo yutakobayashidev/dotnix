@@ -72,3 +72,7 @@ Skip if the change has no doc impact.
 - **Simplicity First**: Make every change as simple as possible. Impact minimal code.
 - **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
 - **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
+
+## Oracle Firefox
+
+- Use the Firefox profile named `nix` for Oracle browser runs: `--browser-type firefox --browser-firefox-profile nix`.

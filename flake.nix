@@ -140,7 +140,7 @@
       flake = false;
     };
     oracle-skill = {
-      url = "github:steipete/oracle";
+      url = "github:yutakobayashidev/oracle";
       flake = false;
     };
     prompt-review-skill = {

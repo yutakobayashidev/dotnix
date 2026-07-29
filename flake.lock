@@ -2328,15 +2328,15 @@
     "oracle-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1784817436,
-        "narHash": "sha256-AEeu0zI1N6z8HQMfTRkH7vfLDKUyNMrUZRVCHxTjDE0=",
-        "owner": "steipete",
+        "lastModified": 1785322323,
+        "narHash": "sha256-zSIsK0h/Yp/ju4nj6k0IcUaAEjFCG2Ea34PmadrpXpI=",
+        "owner": "yutakobayashidev",
         "repo": "oracle",
-        "rev": "6009d4ad167b4f09c050ad22f19de5dfaf71504a",
+        "rev": "722b058add0253cfdfda0179922cc9f2a9bd470b",
         "type": "github"
       },
       "original": {
-        "owner": "steipete",
+        "owner": "yutakobayashidev",
         "repo": "oracle",
         "type": "github"
       }
