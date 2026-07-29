@@ -63,6 +63,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: Screenpipe CLI and desktop app, built from source through the personal NUR
+- **AI development**: Codex Desktop for Linux on graphical hosts
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, VirtualBox on UM790-Pro, and [GhidraMCP integration](docs/ghidra-mcp.md)

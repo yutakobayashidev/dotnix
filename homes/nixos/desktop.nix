@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports = [
+    inputs.codex-desktop-linux.homeManagerModules.default
     ../../applications/niri
     ../../applications/waybar
     ../../applications/swayidle
@@ -12,6 +13,11 @@
   my.programs = {
     emacs.enable = true;
     vicinae.enable = true;
+  };
+  programs.codexDesktopLinux = {
+    enable = true;
+    package = inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.codex-desktop;
+    cliPackage = pkgs.llm-agents.codex;
   };
   ext.xdg.enable = true;
   services.wallpaper.enable = true;
