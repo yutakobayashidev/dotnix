@@ -7546,7 +7546,7 @@ packages:
       RECEIVE_WAP_PUSH: ignore
       RECORD_AUDIO: ignore
       SEND_SMS: ignore
-      USE_BIOMETRIC: ignore
+      USE_BIOMETRIC: allow
       USE_SIP: ignore
       UWB_RANGING: ignore
       VIBRATE: ignore
@@ -14046,7 +14046,7 @@ packages:
       RECEIVE_WAP_PUSH: ignore
       RECORD_AUDIO: ignore
       SEND_SMS: ignore
-      USE_BIOMETRIC: ignore
+      USE_BIOMETRIC: allow
       USE_SIP: ignore
       UWB_RANGING: ignore
       VIBRATE: ignore
@@ -14705,7 +14705,7 @@ packages:
       RECEIVE_WAP_PUSH: ignore
       RECORD_AUDIO: ignore
       SEND_SMS: ignore
-      USE_BIOMETRIC: ignore
+      USE_BIOMETRIC: allow
       USE_SIP: ignore
       UWB_RANGING: ignore
       VIBRATE: ignore
