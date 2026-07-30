@@ -3203,11 +3203,11 @@
         "vicinae": "vicinae"
       },
       "locked": {
-        "lastModified": 1784504910,
-        "narHash": "sha256-fzPBEJZiRvc/FNMdpbdcfaZzF01U4IQenHW9IQFzhos=",
+        "lastModified": 1785084836,
+        "narHash": "sha256-iww/OcxGK8isAgNh8k4E1IJkR5bGUvEK/K+q86g2ISk=",
         "owner": "vicinaehq",
         "repo": "extensions",
-        "rev": "ca74eede9a778a9373c8f5fd221b0a5026dcd1ef",
+        "rev": "2d5176bcb19498ff862ca1caa5eb97f03f60faac",
         "type": "github"
       },
       "original": {
