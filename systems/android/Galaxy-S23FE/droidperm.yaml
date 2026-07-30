@@ -10706,7 +10706,6 @@ packages:
       android.permission.POST_NOTIFICATIONS: allow
       android.permission.READ_CONTACTS: deny
       android.permission.READ_EXTERNAL_STORAGE: deny
-      android.permission.READ_MEDIA_AUDIO: deny
       android.permission.READ_MEDIA_IMAGES: deny
       android.permission.READ_MEDIA_VIDEO: deny
       android.permission.READ_MEDIA_VISUAL_USER_SELECTED: allow
