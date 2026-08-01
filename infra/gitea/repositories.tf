@@ -71,6 +71,6 @@ resource "gitea_repository" "nani_translate_linux" {
   username    = "yuta"
   name        = "nani-translate-linux"
   description = "Nani Translate Linux compatibility wrapper"
-  private     = true
+  private     = false
   auto_init   = false
 }
