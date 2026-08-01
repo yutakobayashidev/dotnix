@@ -41,6 +41,7 @@ in
 {
   imports = [
     inputs.codex-desktop-linux.homeManagerModules.default
+    inputs.nani-translate-linux.homeManagerModules.default
     ../../applications/niri
     ../../applications/waybar
     ../../applications/swayidle
@@ -57,6 +58,7 @@ in
     package = patchedCodexDesktop;
     cliPackage = pkgs.llm-agents.codex;
   };
+  programs.naniTranslateLinux.enable = true;
   ext.xdg.enable = true;
   services.wallpaper.enable = true;
 
