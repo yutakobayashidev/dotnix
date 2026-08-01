@@ -4,7 +4,7 @@
   imports = [ ../common.nix ];
 
   home-manager.users.${username} =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
       imports = [
         ../../desktop.nix
@@ -79,14 +79,6 @@
           ];
         };
       };
-      programs.niri.settings.window-rules = lib.mkAfter [
-        {
-          matches = [ { app-id = "^nani$"; } ];
-          open-floating = true;
-          default-column-width.fixed = 1100;
-          default-window-height.fixed = 800;
-        }
-      ];
       xdg.mimeApps.defaultApplications."x-scheme-handler/naniapp" = "nani.desktop";
     };
 }
