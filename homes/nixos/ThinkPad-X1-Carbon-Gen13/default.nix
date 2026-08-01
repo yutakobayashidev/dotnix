@@ -57,5 +57,28 @@
         accel-speed = -0.2;
         natural-scroll = true;
       };
+      programs.niri.settings.binds = {
+        "Ctrl+J" = {
+          repeat = false;
+          action.spawn = [
+            "${pkgs.bash}/bin/bash"
+            "-c"
+            ''
+              selected_text="$(${pkgs.wl-clipboard}/bin/wl-paste --primary --no-newline)" || exit 0
+              [ -n "$selected_text" ] || exit 0
+              encoded_text="$(printf '%s' "$selected_text" | ${pkgs.jq}/bin/jq -sRr @uri)"
+              exec ${pkgs.xdg-utils}/bin/xdg-open "naniapp://translate?source=$encoded_text"
+            ''
+          ];
+        };
+        "Mod+Ctrl+J" = {
+          repeat = false;
+          action.spawn = [
+            "${pkgs.xdg-utils}/bin/xdg-open"
+            "naniapp://translate"
+          ];
+        };
+      };
+      xdg.mimeApps.defaultApplications."x-scheme-handler/naniapp" = "nani.desktop";
     };
 }

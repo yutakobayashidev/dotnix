@@ -1603,6 +1603,26 @@
         "type": "github"
       }
     },
+    "nani-translate-linux": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785586565,
+        "narHash": "sha256-906PnTa5W8qZTjFMHpbtB0Eog+tWQJFCSGx6/2q+Jhs=",
+        "ref": "refs/heads/main",
+        "rev": "82f29f0bd21c86c7654ed0ca06c1af10f3b6b0b0",
+        "revCount": 2,
+        "type": "git",
+        "url": "https://git.yutakobayashi.com/yuta/nani-translate-linux"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.yutakobayashi.com/yuta/nani-translate-linux"
+      }
+    },
     "niks3": {
       "inputs": {
         "nixpkgs": [
@@ -2554,6 +2574,7 @@
         "mcp-servers-nix": "mcp-servers-nix",
         "microvm": "microvm",
         "moonbit-overlay": "moonbit-overlay",
+        "nani-translate-linux": "nani-translate-linux",
         "niks3": "niks3",
         "niri-flake": "niri-flake",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
