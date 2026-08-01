@@ -78,6 +78,22 @@
             port-killer
             natureRemo
             searchMdn
+            (inputs.vicinae-extensions.inputs.vicinae.lib.${system}.mkVicinaeExtension (finalAttrs: {
+              pname = "ietf-rfc";
+              version = "0-unstable-2026-08-01";
+              src = pkgs.fetchFromGitea {
+                domain = "git.yutakobayashi.com";
+                owner = "yuta";
+                repo = "vicinae-extension-ietf-rfc";
+                rev = "f1183e1095dcfeb888a9c014489912545d70e50b";
+                hash = "sha256-gqXGj+lGwr3HpzTe3/OaFI3yP0zttXC8tPrImgIXcqw=";
+              };
+              npmDeps = pkgs.fetchNpmDeps {
+                inherit (finalAttrs) src;
+                hash = "sha256-wquw08dKL/PsMcR460Ksf4sjl07jS4ZG/S3Bhe67FAs=";
+              };
+              npmConfigHook = pkgs.npmHooks.npmConfigHook;
+            }))
           ];
         };
 
