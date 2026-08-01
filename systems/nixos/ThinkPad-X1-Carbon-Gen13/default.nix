@@ -3,6 +3,7 @@
   inputs,
   lib,
   modulesPath,
+  pkgs,
   username,
   ...
 }:
@@ -96,6 +97,10 @@
     useDHCP = lib.mkDefault true;
     networkmanager.enable = true;
   };
+
+  environment.systemPackages = [ pkgs.mitmproxy ];
+
+  security.pki.certificateFiles = [ ./certs/mitmproxy-ca-cert.pem ];
 
   sops.age = {
     keyFile = lib.mkForce "/persist/var/lib/sops-nix/key.txt";

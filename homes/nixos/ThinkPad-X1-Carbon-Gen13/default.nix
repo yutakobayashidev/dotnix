@@ -42,13 +42,16 @@
         };
         wallpaper.imagePath = "/home/${username}/wallpapers/lycoris-recoil-rain.jpg";
       };
-      programs._1password-shell-plugins = {
-        enable = true;
-        plugins = with pkgs; [
-          gh
-          awscli2
-          tea
-        ];
+      programs = {
+        _1password-shell-plugins = {
+          enable = true;
+          plugins = with pkgs; [
+            gh
+            awscli2
+            tea
+          ];
+        };
+        firefox.profiles.nix.settings."security.enterprise_roots.enabled" = true;
       };
       programs.niri.settings.input.touchpad = {
         accel-speed = -0.2;
