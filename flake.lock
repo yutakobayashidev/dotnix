@@ -1610,11 +1610,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785583297,
-        "narHash": "sha256-0Bbs4jz2ulZZvzN94aPBwCjK30w0ALxo2jSJt4iSWn4=",
+        "lastModified": 1785586565,
+        "narHash": "sha256-906PnTa5W8qZTjFMHpbtB0Eog+tWQJFCSGx6/2q+Jhs=",
         "ref": "refs/heads/main",
-        "rev": "845dde50ad08b0ec6e2e6b7dbf942b3ef9f9142d",
-        "revCount": 1,
+        "rev": "82f29f0bd21c86c7654ed0ca06c1af10f3b6b0b0",
+        "revCount": 2,
         "type": "git",
         "url": "https://git.yutakobayashi.com/yuta/nani-translate-linux"
       },
