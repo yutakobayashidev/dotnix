@@ -66,3 +66,11 @@ resource "gitea_repository" "life" {
   private   = true
   auto_init = false
 }
+
+resource "gitea_repository" "nani_translate_linux" {
+  username    = "yuta"
+  name        = "nani-translate-linux"
+  description = "Nani Translate Linux compatibility wrapper"
+  private     = true
+  auto_init   = false
+}
