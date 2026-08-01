@@ -74,3 +74,11 @@ resource "gitea_repository" "nani_translate_linux" {
   private     = false
   auto_init   = false
 }
+
+resource "gitea_repository" "vicinae_extension_ietf_rfc" {
+  username    = "yuta"
+  name        = "vicinae-extension-ietf-rfc"
+  description = "Search and inspect the complete RFC Editor index"
+  private     = false
+  auto_init   = false
+}
