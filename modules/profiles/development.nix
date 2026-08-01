@@ -53,6 +53,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           nil
           nix-init
           repiq
+          rinkaku
           ruff
           taplo
           vhs
