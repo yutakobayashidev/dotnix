@@ -42,6 +42,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           before-and-after
           bumblebee
           cloc
+          codex-security
           difit
           inputs.droidperm.packages.${stdenv.hostPlatform.system}.default
           gctx
