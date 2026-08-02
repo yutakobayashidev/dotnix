@@ -2394,11 +2394,11 @@
     "openclaw": {
       "flake": false,
       "locked": {
-        "lastModified": 1785312656,
-        "narHash": "sha256-8093nsCL04g/8YIg5X+/jeEFZLDRiGlP5U0QhTNWaos=",
+        "lastModified": 1785398682,
+        "narHash": "sha256-08R8cIIq35F/IjdhhcuLa0bQdvPz97N2tNdyXln+47Q=",
         "owner": "openclaw",
         "repo": "openclaw",
-        "rev": "d885f9175db0c200328bc59d3654b6d4f9682093",
+        "rev": "cc570a74532e4907e5f1f8090dd05fc7a1ddfc27",
         "type": "github"
       },
       "original": {
