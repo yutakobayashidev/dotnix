@@ -63,7 +63,7 @@
       # Complex installers
       "adobe-acrobat-reader"
       "adobe-creative-cloud"
-      "android-studio"
+      # "android-studio"
       "google-drive"
       "maxon"
       "microsoft-auto-update"

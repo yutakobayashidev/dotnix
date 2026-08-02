@@ -66,7 +66,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           bit-vcs
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
-          android-studio
+          # android-studio
           android-tools
           arduino-ide
           stable.freecad

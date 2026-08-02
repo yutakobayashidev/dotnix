@@ -13,13 +13,6 @@
     niri.enable = true;
     obs-studio.enableVirtualCamera = true;
     xwayland.enable = true;
-    regreet = {
-      enable = true;
-      font = {
-        package = pkgs.inter;
-        name = "Inter";
-      };
-    };
   };
 
   hardware.bluetooth.enable = true;
@@ -27,6 +20,13 @@
 
   services = {
     blueman.enable = true;
+    displayManager.regreet = {
+      enable = true;
+      font = {
+        package = pkgs.inter;
+        name = "Inter";
+      };
+    };
     gvfs.enable = true;
     printing.enable = true;
     greetd.enable = true;

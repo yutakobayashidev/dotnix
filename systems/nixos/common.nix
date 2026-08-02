@@ -98,6 +98,8 @@
   nix.settings = {
     keep-outputs = true;
     keep-derivations = true;
+    min-free = 10 * 1024 * 1024 * 1024;
+    max-free = 20 * 1024 * 1024 * 1024;
     connect-timeout = 5;
     allowed-users = [ username ];
     trusted-users = [
