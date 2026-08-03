@@ -137,16 +137,6 @@ resource "gitea_user" "t4ko0522" {
   send_notification    = true
 }
 
-import {
-  to = gitea_user.yuta
-  id = "1"
-}
-
-import {
-  to = gitea_user.tokuzou0829
-  id = "2"
-}
-
 output "moons_14_password" {
   value     = random_password.moons_14.result
   sensitive = true
