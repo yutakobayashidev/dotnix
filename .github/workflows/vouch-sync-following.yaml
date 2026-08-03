@@ -47,6 +47,7 @@ jobs:
           BRANCH="vouch/sync-following-$(date +%s)"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git checkout -b "$BRANCH"
           git add .github/VOUCHED.td
           git commit -m "vouch: sync following list"
