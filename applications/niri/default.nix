@@ -107,9 +107,19 @@
     # キーバインド
     binds = {
       "Mod+Q".action.spawn = [ "ghostty" ];
+      "Mod+T" = {
+        action.spawn = "ghostty";
+        hotkey-overlay.title = "Open a Terminal: ghostty";
+      };
       "Mod+C".action.close-window = { };
       "Mod+M".action.quit = { };
-      "Mod+E".action.spawn = [ "nautilus" ];
+      "Mod+E" = {
+        action.spawn = [
+          "nautilus"
+          "--new-window"
+        ];
+        hotkey-overlay.title = "Open File Manager: nautilus";
+      };
       "Mod+V".action.spawn = [
         "vicinae"
         "vicinae://launch/clipboard/history?toggle=true"
@@ -118,14 +128,13 @@
         "vicinae"
         "toggle"
       ];
-      # niri does not deliver Handy's own global hotkey, so drive it via signals.
-      # Match by "bin/handy" because the Nix wrapper renames the process to .handy-wrapped.
-      "Mod+Space".action.spawn = [
-        "pkill"
-        "-USR2"
-        "-f"
-        "bin/handy"
-      ];
+      "Mod+Space" = {
+        action.spawn = [
+          "ghostty"
+          "+toggle-quick-terminal"
+        ];
+        hotkey-overlay.title = "Toggle Quick Terminal: ghostty";
+      };
       "Mod+Ctrl+Space".action.spawn = [
         "pkill"
         "-USR1"
@@ -139,13 +148,51 @@
       "Mod+Left".action.focus-column-left = { };
       "Mod+Right".action.focus-column-right = { };
       "Mod+H".action.focus-column-left = { };
-      "Mod+L".action.focus-column-right = { };
+      "Mod+L" = {
+        action.spawn = [
+          (lib.getExe' pkgs.systemd "loginctl")
+          "lock-session"
+        ];
+        hotkey-overlay.title = "Lock the Screen";
+      };
+
+      # モニターフォーカス移動
+      "Mod+Shift+Left" = {
+        action.focus-monitor-left = [ ];
+        hotkey-overlay.title = "Focus Monitor Left";
+      };
+      "Mod+Shift+Right" = {
+        action.focus-monitor-right = [ ];
+        hotkey-overlay.title = "Focus Monitor Right";
+      };
+      "Mod+Shift+Up" = {
+        action.focus-monitor-up = [ ];
+        hotkey-overlay.title = "Focus Monitor Up";
+      };
+      "Mod+Shift+Down" = {
+        action.focus-monitor-down = [ ];
+        hotkey-overlay.title = "Focus Monitor Down";
+      };
 
       # ウィンドウ移動
-      "Mod+Shift+Left".action.move-column-left = { };
-      "Mod+Shift+Right".action.move-column-right = { };
       "Mod+Shift+H".action.move-column-left = { };
       "Mod+Shift+L".action.move-column-right = { };
+      "Mod+Shift+Ctrl+Left" = {
+        action.move-window-to-monitor-left = [ ];
+        hotkey-overlay.title = "Move Window to Monitor Left";
+      };
+      "Mod+Shift+Ctrl+Right" = {
+        action.move-window-to-monitor-right = [ ];
+        hotkey-overlay.title = "Move Window to Monitor Right";
+      };
+      "Mod+Shift+Ctrl+Up" = {
+        action.move-window-to-monitor-up = [ ];
+        hotkey-overlay.title = "Move Window to Monitor Up";
+      };
+      "Mod+Shift+Ctrl+Down" = {
+        action.move-window-to-monitor-down = [ ];
+        hotkey-overlay.title = "Move Window to Monitor Down";
+      };
 
       # ウィンドウサイズ調整
       "Mod+Ctrl+Left".action.set-column-width = "-10%";
