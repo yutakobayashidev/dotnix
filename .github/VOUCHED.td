@@ -1,6 +1,7 @@
 # Users vouched for this project.
 # Only vouched users may open pull requests.
 # Sourced from yutakobayashidev's GitHub following.
+# Auto-updated by Vouch: Sync Following workflow.
 # Add or remove entries as trust relationships evolve.
 github:35d
 github:3b1b
@@ -50,6 +51,7 @@ github:Safecast
 github:SakanaAI
 github:SaltyAom
 github:SuteraVR
+github:T4ko0522
 github:TanStack
 github:TheTorProject
 github:Vedal987
@@ -60,6 +62,7 @@ github:Yukiya105
 github:Yuppymam
 github:aidenybai
 github:aiji42
+github:akazdayo
 github:amalsony
 github:antfu
 github:anthropics
@@ -76,6 +79,7 @@ github:benjitaylor
 github:biomejs
 github:bluesky-social
 github:bobzhang
+github:bot-rucachan
 github:bot-uichan
 github:bytedance
 github:callebtc
@@ -105,6 +109,7 @@ github:elk-zone
 github:ematipico
 github:emilkowalski
 github:ensan-hcl
+github:espeon
 github:explainers-by-googlers
 github:fa0311
 github:facebookresearch
