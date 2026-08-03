@@ -3224,11 +3224,11 @@
         "vicinae": "vicinae"
       },
       "locked": {
-        "lastModified": 1785160991,
-        "narHash": "sha256-7kyqXXQyRVy41vWled33nJZFbtrGaBJlO4+uSE0Ct18=",
+        "lastModified": 1785471197,
+        "narHash": "sha256-RXGxE40hVOBzVj2YsB6nZcvRtQfXazVlr05W4YXRwo8=",
         "owner": "vicinaehq",
         "repo": "extensions",
-        "rev": "3ac7d25baa16ad5f1a6227c3e4b4b21a7c3e452b",
+        "rev": "ee5c776aac1cda0a8a6bf7346fdc2c10f512ddef",
         "type": "github"
       },
       "original": {
