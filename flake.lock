@@ -425,11 +425,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785326526,
-        "narHash": "sha256-Yhg6lc00/pY3BDNM1SD54yvi5X3Tlub+Z1G6HCGr19c=",
+        "lastModified": 1785403817,
+        "narHash": "sha256-wxkNYIpKah+g2I4MHiYbXKgJxJZcVxkFk5fw7QV55vQ=",
         "owner": "yutakobayashidev",
         "repo": "droidperm",
-        "rev": "77ef6a2eb91aa1c2112244a595d7170e64a1b35e",
+        "rev": "1659fb10ef5dae0ff7fc868c1e2eafb2f42a54f3",
         "type": "github"
       },
       "original": {
