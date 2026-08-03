@@ -128,7 +128,18 @@
         "vicinae"
         "toggle"
       ];
+      # niri does not deliver Handy's own global hotkey, so drive it via signals.
+      # Match by "bin/handy" because the Nix wrapper renames the process to .handy-wrapped.
       "Mod+Space" = {
+        action.spawn = [
+          "pkill"
+          "-USR2"
+          "-f"
+          "bin/handy"
+        ];
+        hotkey-overlay.title = "Toggle Handy Recording";
+      };
+      "Mod+Grave" = {
         action.spawn = [
           "ghostty"
           "+toggle-quick-terminal"
