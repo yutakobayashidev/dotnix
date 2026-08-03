@@ -38,6 +38,11 @@ resource "random_password" "tokuzou0829" {
   special = true
 }
 
+resource "random_password" "t4ko0522" {
+  length  = 24
+  special = true
+}
+
 resource "gitea_user" "moons_14" {
   username             = "moons-14"
   login_name           = "moons-14"
@@ -121,6 +126,15 @@ resource "gitea_user" "tokuzou0829" {
   must_change_password      = false
   send_notification         = false
   force_password_change     = false
+}
+
+resource "gitea_user" "t4ko0522" {
+  username             = "t4ko0522"
+  login_name           = "t4ko0522"
+  email                = "tako.work.contact@gmail.com"
+  password             = random_password.akazdayo.result
+  must_change_password = true
+  send_notification    = true
 }
 
 import {
