@@ -132,7 +132,7 @@ resource "gitea_user" "t4ko0522" {
   username             = "t4ko0522"
   login_name           = "t4ko0522"
   email                = "tako.work.contact@gmail.com"
-  password             = random_password.akazdayo.result
+  password             = random_password.t4ko0522.result
   must_change_password = true
   send_notification    = true
 }
