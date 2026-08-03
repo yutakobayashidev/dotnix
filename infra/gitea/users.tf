@@ -38,6 +38,11 @@ resource "random_password" "tokuzou0829" {
   special = true
 }
 
+resource "random_password" "t4ko0522" {
+  length  = 24
+  special = true
+}
+
 resource "gitea_user" "moons_14" {
   username             = "moons-14"
   login_name           = "moons-14"
@@ -123,14 +128,13 @@ resource "gitea_user" "tokuzou0829" {
   force_password_change     = false
 }
 
-import {
-  to = gitea_user.yuta
-  id = "1"
-}
-
-import {
-  to = gitea_user.tokuzou0829
-  id = "2"
+resource "gitea_user" "t4ko0522" {
+  username             = "t4ko0522"
+  login_name           = "t4ko0522"
+  email                = "tako.work.contact@gmail.com"
+  password             = random_password.t4ko0522.result
+  must_change_password = true
+  send_notification    = true
 }
 
 output "moons_14_password" {
@@ -160,5 +164,10 @@ output "ka1ut_password" {
 
 output "fa0311_password" {
   value     = random_password.fa0311.result
+  sensitive = true
+}
+
+output "t4ko0522_password" {
+  value     = random_password.t4ko0522.result
   sensitive = true
 }
