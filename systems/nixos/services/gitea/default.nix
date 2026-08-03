@@ -28,6 +28,7 @@ in
       };
       service = {
         DISABLE_REGISTRATION = true;
+        ENABLE_NOTIFY_MAIL = true;
         REQUIRE_SIGNIN_VIEW = false;
       };
       session = {
