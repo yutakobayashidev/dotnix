@@ -176,3 +176,8 @@ output "fa0311_password" {
   value     = random_password.fa0311.result
   sensitive = true
 }
+
+output "t4ko0522_password" {
+  value     = random_password.t4ko0522.result
+  sensitive = true
+}
