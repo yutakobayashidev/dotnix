@@ -12,7 +12,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
       home.packages =
         with pkgs;
         lib.optionals pkgs.stdenv.isLinux [
-          discord
           element-desktop
           google-chrome
           halloy
@@ -22,7 +21,50 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           simplex-chat-desktop
           slack
           telegram-desktop
-          vesktop
         ];
+
+      programs.vesktop = {
+        enable = true;
+
+        settings = {
+          discordBranch = "stable";
+
+          hardwareAcceleration = true;
+          hardwareVideoAcceleration = true;
+
+          tray = true;
+          minimizeToTray = true;
+
+          # Discord Rich Presence
+          arRPC = true;
+
+          openLinksWithElectron = false;
+
+          spellCheckLanguages = [
+            "ja-JP"
+            "en-US"
+          ];
+        };
+
+        vencord = {
+          useSystem = false;
+
+          settings = {
+            autoUpdate = true;
+            autoUpdateNotification = false;
+
+            useQuickCss = false;
+
+            cloud.settingsSync = false;
+
+            notifications = {
+              position = "bottom-right";
+              useNative = "not-focused";
+              timeout = 5000;
+              logLimit = 50;
+            };
+          };
+        };
+      };
     };
 }
