@@ -1517,11 +1517,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785546867,
-        "narHash": "sha256-tO43kyKVJVjYB2nkMSJoctQq7Jml0IhrcxgyffWz1YE=",
+        "lastModified": 1785656952,
+        "narHash": "sha256-0L/sn23CdYY9Prcw7o/41dX2RtStKvx3ELMJw3bqwMc=",
         "owner": "nakasyou",
         "repo": "local-mcp",
-        "rev": "efd47e71b4fe111fda9b0887abddd37eb0b0446b",
+        "rev": "c478f2fd3c8fd348c1f7fe27ef867cfb8f61c10c",
         "type": "github"
       },
       "original": {
