@@ -3263,11 +3263,11 @@
         "vicinae": "vicinae"
       },
       "locked": {
-        "lastModified": 1785650543,
-        "narHash": "sha256-u2VtHkzueezRNZIfn0HVA2WCZtSt3VKusAjhaPWvDl4=",
+        "lastModified": 1785689597,
+        "narHash": "sha256-WF3eenopWI9tvwcEhDsgEp2T46QFWw7ttEGefokLEZ0=",
         "owner": "vicinaehq",
         "repo": "extensions",
-        "rev": "7b5905d08a2c9fda456b2e66894ba3e17997a6cb",
+        "rev": "37724bc3f2bcdf9f273bb160359cf22f453b5ef6",
         "type": "github"
       },
       "original": {
