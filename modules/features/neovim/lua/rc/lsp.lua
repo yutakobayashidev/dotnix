@@ -55,6 +55,12 @@ local function _7_()
 end
 vim.api.nvim_create_autocmd("CursorHold", { callback = _7_ })
 vim.opt.updatetime = 300
+vim.lsp.config.elmls = {
+	cmd = { "elm-language-server", "--stdio" },
+	filetypes = { "elm" },
+	root_markers = { "elm.json" },
+	settings = { elmLS = { elmReviewDiagnostics = "warning" } },
+}
 vim.lsp.config.vtsls = {
 	cmd = { "vtsls", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
@@ -139,6 +145,7 @@ vim.filetype.add({
 	pattern = { [".*%.github/workflows/.*%.yaml"] = "yaml.github", [".*%.github/workflows/.*%.yml"] = "yaml.github" },
 })
 return vim.lsp.enable({
+	"elmls",
 	"vtsls",
 	"astro",
 	"emmet_ls",

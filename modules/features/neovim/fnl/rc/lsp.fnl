@@ -67,6 +67,12 @@
 
 (set vim.opt.updatetime 300)
 
+(set vim.lsp.config.elmls
+     {:cmd [:elm-language-server :--stdio]
+      :filetypes [:elm]
+      :root_markers [:elm.json]
+      :settings {:elmLS {:elmReviewDiagnostics :warning}}})
+
 (set vim.lsp.config.vtsls
      {:cmd [:vtsls :--stdio]
       :filetypes [:javascript
@@ -194,7 +200,8 @@
              ".*%.github/workflows/.*%.yml" :yaml.github}})
 
 (vim.lsp.enable
-  [:vtsls
+  [:elmls
+   :vtsls
    :astro
    :emmet_ls
    :prismals

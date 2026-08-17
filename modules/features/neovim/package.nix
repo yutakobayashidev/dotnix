@@ -7,6 +7,7 @@
   # Runtime dependencies
   astro-language-server,
   cucumber-language-server,
+  elmPackages,
   emmet-language-server,
   eslint_d,
   fennel-ls,
@@ -38,6 +39,9 @@
 
 let
   languageServers = [
+    # Elm
+    elmPackages.elm-language-server
+
     # Fennel
     fennel-ls
 
@@ -72,6 +76,12 @@ let
     luaPackages.fennel
     prettierd
     pretty-ts-errors-markdown
+
+    # Elm
+    elmPackages.elm
+    elmPackages.elm-format
+    elmPackages.elm-review
+    elmPackages.elm-test
 
     # Rust
     rustowl
