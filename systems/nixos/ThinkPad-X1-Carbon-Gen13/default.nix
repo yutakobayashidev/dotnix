@@ -98,7 +98,10 @@
     networkmanager.enable = true;
   };
 
-  environment.systemPackages = [ pkgs.mitmproxy ];
+  environment.systemPackages = with pkgs; [
+    mitmproxy
+    saleae-logic-2
+  ];
 
   security.pki.certificateFiles = [ ./certs/mitmproxy-ca-cert.pem ];
 
@@ -112,6 +115,7 @@
   hardware = {
     enableRedistributableFirmware = true;
     cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    saleae-logic.enable = true;
   };
 
   system.stateVersion = "26.11";
