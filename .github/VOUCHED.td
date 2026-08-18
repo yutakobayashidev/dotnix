@@ -90,6 +90,7 @@ github:chenglou
 github:ci7lus
 github:cisagov
 github:claude
+github:clavia-inc
 github:codeforjapan
 github:colinhacks
 github:crusoecloud
@@ -226,7 +227,6 @@ github:shiumano
 github:shuding
 github:sifue
 github:sindresorhus
-github:smithery-ai
 github:snakajima
 github:soartec-lab
 github:sony
