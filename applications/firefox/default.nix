@@ -57,6 +57,16 @@
             icon = "https://duckduckgo.com/favicon.ico";
           };
 
+          tw-lite = {
+            name = "tw-lite Latest";
+            urls = [
+              {
+                template = "https://tw-lite.home.yutakobayashi.com/search?q={searchTerms}&product=Latest&following=true";
+              }
+            ];
+            definedAliases = [ "@tw" ];
+          };
+
           nix-packages = {
             name = "Nix Packages";
             urls = [
