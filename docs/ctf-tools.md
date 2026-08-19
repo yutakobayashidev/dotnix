@@ -18,18 +18,19 @@ ThinkPad. The profile also enables Wireshark packet capture and the existing
 
 ## Installed toolkit
 
-| Area                         | Tools                                                                                        | Primary use                                                                             |
-| ---------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Recon and OSINT              | `amass`, `nmap`, `masscan`, `arp-scan`                                                       | Discover domains, hosts, and exposed services                                           |
-| Active Directory and Windows | `netexec` (`nxc`), Impacket                                                                  | Enumerate and interact with Windows, SMB, LDAP, Kerberos, and related services          |
-| Web                          | `ffuf`, `feroxbuster`, `nuclei`, `sqlmap`, `mitmproxy`, OWASP ZAP, `curl-impersonate`        | Discover content, test known patterns, inspect HTTP traffic, and validate SQL injection |
-| Pwn and reverse engineering  | Ghidra, GDB, `gef`, radare2, `pwntools`, ptrlib, `ROPgadget`, `checksec`, `binutils`, `wabt` | Inspect, debug, and script against native and WebAssembly binaries                      |
-| Password testing             | John the Ripper, Hashcat, THC Hydra                                                          | Analyze captured hashes and test authorized online authentication                       |
-| Forensics and file analysis  | `binwalk`, ExifTool, Sleuth Kit, Volatility 3, `magika`, `yara`                              | Identify, extract, and classify files, disks, memory, and firmware                      |
-| Mobile                       | `apktool`, `jadx`, `droidperm`                                                               | Inspect Android packages, resources, bytecode, and permissions                          |
-| Vulnerability research       | `codex-security`, `vulnix`, Trivy, Syft, `vt`                                                | Review source, packages, SBOMs, containers, and known file intelligence                 |
-| Traffic analysis             | Wireshark, `tcpdump`, `socat`                                                                | Capture, inspect, and relay network traffic                                             |
-| Wordlists                    | SecLists                                                                                     | Supply discovery, fuzzing, username, and password lists                                 |
+| Area                         | Tools                                                                                                                        | Primary use                                                                             |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Recon and OSINT              | `amass`, `subfinder`, `httpx`, `nmap`, `masscan`, `arp-scan`                                                                 | Discover domains, hosts, and exposed services                                           |
+| Active Directory and Windows | `netexec` (`nxc`), Impacket, `enum4linux-ng`, Evil-WinRM, Responder                                                          | Enumerate and interact with Windows, SMB, LDAP, Kerberos, and related services          |
+| Web                          | `ffuf`, `feroxbuster`, `nuclei`, `sqlmap`, `mitmproxy`, OWASP ZAP, `curl-impersonate`                                        | Discover content, test known patterns, inspect HTTP traffic, and validate SQL injection |
+| Certificates and TLS         | Cert Spotter, `tlsx`, Certigo                                                                                                | Monitor CT logs and collect, inspect, and validate TLS certificates                     |
+| Pwn and reverse engineering  | Ghidra, GDB, `gef`, radare2, `pwntools`, ptrlib, `ROPgadget`, `checksec`, `binutils`, `patchelf`, `strace`, `ltrace`, `wabt` | Inspect, debug, and script against native and WebAssembly binaries                      |
+| Password testing             | John the Ripper, Hashcat, THC Hydra                                                                                          | Analyze captured hashes and test authorized online authentication                       |
+| Forensics and file analysis  | `binwalk`, ExifTool, Sleuth Kit, Volatility 3, `magika`, `yara`, `foremost`, `steghide`, `zsteg`                             | Identify, extract, and classify files, disks, memory, and firmware                      |
+| Mobile                       | `apktool`, `jadx`, `droidperm`                                                                                               | Inspect Android packages, resources, bytecode, and permissions                          |
+| Vulnerability research       | `codex-security`, `osv-scanner`, `vulnix`, Trivy, Syft, `vt`                                                                 | Review source, packages, SBOMs, containers, and known file intelligence                 |
+| Traffic analysis             | Wireshark, `tcpdump`, `socat`                                                                                                | Capture, inspect, and relay network traffic                                             |
+| Wordlists                    | SecLists                                                                                                                     | Supply discovery, fuzzing, username, and password lists                                 |
 
 Impacket installs a suite of commands rather than one `impacket` executable.
 Likewise, the Nix package named `ropgadget` provides the `ROPgadget` command.
@@ -39,6 +40,9 @@ capabilities. Hashcat needs a working vendor OpenCL, CUDA, or ROCm runtime for
 GPU acceleration. Trivy downloads its vulnerability database at runtime.
 Volatility 3 is distributed under the non-free Volatility Software License and
 provides the `vol` and `volshell` commands.
+Responder performs active name-resolution poisoning and needs appropriate
+privileges; use it only on an authorized network. Cert Spotter requires a
+watchlist before it can monitor domains continuously.
 
 ## Recommended resources
 
