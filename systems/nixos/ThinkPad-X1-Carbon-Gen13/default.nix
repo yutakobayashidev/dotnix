@@ -31,6 +31,7 @@
       laptop.enable = true;
       media.enable = true;
       network.enable = true;
+      pentest.enable = true;
       productivity.enable = true;
       security.enable = true;
     };
@@ -99,7 +100,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    mitmproxy
     saleae-logic-2
   ];
 

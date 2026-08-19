@@ -46,7 +46,6 @@ in
     ../../applications/waybar
     ../../applications/swayidle
     ../../applications/swaylock
-    ../../applications/zaproxy
   ];
 
   my.programs = {

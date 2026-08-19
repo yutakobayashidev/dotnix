@@ -8,7 +8,6 @@
       aria2
       coreutils
       curl
-      curl-impersonate
       eza
       fzf
       glow
@@ -16,12 +15,10 @@
       jq
       jnv
       jolt-tui
-      magika
       pueue
       qrcode
       ripgrep
       roots
-      sshpass
       tokei
       unar
       unzip
@@ -31,8 +28,6 @@
       zoxide
     ]
     ++ lib.optionals pkgs.stdenv.isLinux [
-      arp-scan
-      binutils
       brightnessctl
       kubo
       nautilus

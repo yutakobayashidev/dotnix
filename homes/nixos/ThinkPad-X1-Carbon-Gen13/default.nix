@@ -26,7 +26,6 @@
         vrc-get
         vrcx
       ];
-      my.programs.mcp.ghidra.enable = true;
       services = {
         openbrief.enable = true;
         poweralertd.enable = true;

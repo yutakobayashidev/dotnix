@@ -5,7 +5,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
   home =
     {
-      inputs,
       lib,
       pkgs,
       ...
@@ -42,9 +41,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           before-and-after
           bumblebee
           cloc
-          codex-security
           difit
-          inputs.droidperm.packages.${stdenv.hostPlatform.system}.default
           gctx
           insomnia
           jj-desc
@@ -58,8 +55,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           ruff
           taplo
           vhs
-          vulnix
-          wabt
           whichllm
         ]
         ++ lib.optionals (pkgs.stdenv.isx86_64 || pkgs.stdenv.isDarwin) [

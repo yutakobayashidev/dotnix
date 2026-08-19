@@ -5,7 +5,6 @@
   imports = [
     ./fonts.nix
     ./input-method.nix
-    ../../applications/wireshark
   ];
 
   programs = {

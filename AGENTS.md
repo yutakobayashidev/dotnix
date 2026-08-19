@@ -66,7 +66,8 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **AI development**: Codex Desktop for Linux on graphical hosts
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
-- **Development**: Docker, Tailscale, Android dev environment, VirtualBox on UM790-Pro, and [GhidraMCP integration](docs/ghidra-mcp.md)
+- **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
+- **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [GhidraMCP](docs/ghidra-mcp.md), on the ThinkPad
 - **Observability**: Grafana / Prometheus / Loki on B450M-Pro4, Claude Code OTLP telemetry
 
 ### macOS
