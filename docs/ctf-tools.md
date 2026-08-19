@@ -76,6 +76,70 @@ and are intended for authorized directory assessments.
 - [jq cheat sheet](https://qiita.com/tj2222/items/dd880b1cc5c476fa49bd)
   is a Japanese quick reference for querying and transforming JSON.
 
+## Future tooling TODO
+
+Evaluate package availability, platform support, closure size, licensing, and
+whether each tool belongs on the host or in a Kali/lab VM before enabling it.
+Tools already listed in the installed toolkit above are intentionally omitted.
+
+### Highest-priority gaps
+
+- [ ] Add SageMath and Z3 for number theory, finite fields, constraint solving,
+      and Crypto CTF challenges.
+- [ ] Add angr for symbolic execution and automated path exploration; use its
+      Claripy dependency rather than packaging Claripy separately.
+- [ ] Add Frida tools for dynamic mobile instrumentation.
+
+### Mobile dynamic analysis
+
+- [ ] Evaluate Frida, Objection, scrcpy, and apk-mitm.
+- [ ] Decide whether ADB should remain supplied by the development profile or
+      also be available when the pentest profile is enabled independently.
+
+### Crypto and symbolic execution
+
+- [ ] Evaluate Triton alongside angr and Z3.
+- [ ] Build a focused Python environment with PyCryptodome, SymPy, and gmpy2.
+- [ ] Evaluate RsaCtfTool for common RSA challenge workflows.
+
+### Malware analysis
+
+- [ ] Evaluate capa and FLOSS for executable capability and string analysis.
+- [ ] Evaluate pefile, oletools, and Vivisect for PE, Office document, and
+      program analysis workflows.
+
+### Firmware and embedded systems
+
+- [ ] Evaluate unblob and UBI Reader for recursive firmware extraction.
+- [ ] Evaluate DTC, flashrom, OpenOCD, and minicom for device trees, flash
+      access, hardware debugging, and serial consoles.
+
+### Cloud and Kubernetes
+
+- [ ] Evaluate Pacu and the AWS, Google Cloud, and Azure CLIs for isolated
+      cloud assessment environments.
+- [ ] Evaluate kube-hunter and Cosign to complement the installed Kubernetes
+      audit and software supply-chain tools.
+
+### Active Directory and web
+
+- [ ] Evaluate the BloodHound GUI/backend separately from the installed Python
+      ingestor.
+- [ ] Evaluate ldapsearch and Kerbrute for focused LDAP and Kerberos work.
+- [ ] Evaluate Burp Suite, jwt-tool, and Arjun for manual web and API testing;
+      prefer Burp in a Kali/lab VM because it is stateful and heavyweight.
+
+### Native reverse engineering
+
+- [ ] Evaluate Rizin, Cutter, rr, Valgrind, and dwarfdump.
+- [ ] Keep objdump and readelf supplied by the installed Binutils package.
+
+References: [Frida](https://frida.re/docs/home/),
+[angr](https://docs.angr.io/en/latest/),
+[SageMath cryptography](https://doc.sagemath.org/html/en/reference/cryptography/index.html),
+[capa](https://github.com/mandiant/capa), and
+[unblob](https://github.com/onekey-sec/unblob).
+
 ## A practical workflow
 
 1. Identify unknown files with `magika`, `file`, `binwalk`, and `checksec`.
