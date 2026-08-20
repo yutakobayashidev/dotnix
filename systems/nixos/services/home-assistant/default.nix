@@ -3,7 +3,6 @@
 {
   services.home-assistant = {
     enable = true;
-    openFirewall = true;
 
     config = {
       default_config = { };
@@ -25,6 +24,8 @@
       };
     };
   };
+
+  networking.firewall.allowedTCPPorts = [ config.services.home-assistant.config.http.server_port ];
 
   services.traefik.dynamicConfigOptions.http = {
     routers.home-assistant = {

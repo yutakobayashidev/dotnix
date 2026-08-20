@@ -12,10 +12,6 @@
       url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    comfyui-nix = {
-      url = "github:utensils/comfyui-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     codex-desktop-linux = {
       url = "github:ilysenko/codex-desktop-linux";
       inputs.nixpkgs.follows = "nixpkgs";

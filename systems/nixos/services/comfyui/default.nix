@@ -1,15 +1,12 @@
-{ inputs, ... }:
+{ pkgs, ... }:
 
 {
-  imports = [
-    inputs.comfyui-nix.nixosModules.default
-  ];
-
   services.comfyui = {
     enable = true;
-    gpuSupport = "cuda";
-    enableManager = true;
-    listenAddress = "0.0.0.0";
-    openFirewall = true;
+    package = pkgs.comfyui.override { withManager = true; };
+    listen = [ "0.0.0.0" ];
   };
+
+  networking.firewall.allowedTCPPorts = [ 8188 ];
+  nixpkgs.config.cudaSupport = true;
 }
