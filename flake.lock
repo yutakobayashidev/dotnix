@@ -1662,11 +1662,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787248950,
-        "narHash": "sha256-eq5FwprGyjytM68pitTTFT3fi0cSsF1M6v7h3rdcqj0=",
+        "lastModified": 1787421204,
+        "narHash": "sha256-8Tlb8D07EvNJ37S7wPYn/+lZ/eBRIvfLvrne3pvjd2A=",
         "owner": "xddxdd",
         "repo": "nix-cachyos-kernel",
-        "rev": "c69c33c24148defbcc34ab25456cc460bc33fdbb",
+        "rev": "8b175fd266e94395ee7b1edc4578f7c8ecc74626",
         "type": "github"
       },
       "original": {
