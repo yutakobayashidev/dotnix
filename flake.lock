@@ -129,11 +129,11 @@
     "before-and-after-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1785945963,
-        "narHash": "sha256-V6L0ysgtoiZUE/OdDcgfhx0s9luTM5zTFwLFbTTizxA=",
+        "lastModified": 1788383445,
+        "narHash": "sha256-fgOaDgO3LRYsZzP7JNZI5olUitUMZGSBXI+UsxLhZf8=",
         "owner": "vercel-labs",
         "repo": "before-and-after",
-        "rev": "fdc797385c95c8431e40c57ff5c572110f890960",
+        "rev": "8306d34f459b6704e08e6adb5829fcddb0dc3557",
         "type": "github"
       },
       "original": {
