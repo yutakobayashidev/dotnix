@@ -56,7 +56,7 @@
     },
     "agent-skills-nix": {
       "inputs": {
-        "home-manager": "home-manager_5",
+        "home-manager": "home-manager_6",
         "nixpkgs": "nixpkgs_8"
       },
       "locked": {
@@ -1257,6 +1257,7 @@
         "flake-parts": [
           "flake-parts"
         ],
+        "home-manager": "home-manager_3",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -1266,11 +1267,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1786689410,
-        "narHash": "sha256-fq6K2JeKXa9+CzqXun8t9mxazBWEJroZmox2rPzjNUc=",
+        "lastModified": 1788429365,
+        "narHash": "sha256-DK4ncaO31mlSdquwk1t04ZiHQJWIXxnHHP5AdICjAi8=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "ad9e8c9b574ec6937cc09d8901ca83a769225963",
+        "rev": "110292b73356e59c2de45ec605fa1f7d0539966c",
         "type": "github"
       },
       "original": {
@@ -1324,6 +1325,27 @@
     "home-manager_3": {
       "inputs": {
         "nixpkgs": [
+          "hermes-agent",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786487128,
+        "narHash": "sha256-ad60hrRVhH/bo3Jl1YLzO+QcS3mUNZr9LNJdzhMO2P4=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "f404edbfa4117810c96b97048299242fc50e5362",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_4": {
+      "inputs": {
+        "nixpkgs": [
           "nixpkgs"
         ]
       },
@@ -1341,7 +1363,7 @@
         "type": "github"
       }
     },
-    "home-manager_4": {
+    "home-manager_5": {
       "inputs": {
         "nixpkgs": [
           "nix-hazkey",
@@ -1362,7 +1384,7 @@
         "type": "github"
       }
     },
-    "home-manager_5": {
+    "home-manager_6": {
       "inputs": {
         "nixpkgs": [
           "twitter-lite",
@@ -1725,7 +1747,7 @@
     },
     "nix-hazkey": {
       "inputs": {
-        "home-manager": "home-manager_4",
+        "home-manager": "home-manager_5",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -2504,7 +2526,7 @@
         "hashicorp-agent-skills": "hashicorp-agent-skills",
         "herdr-skill": "herdr-skill",
         "hermes-agent": "hermes-agent",
-        "home-manager": "home-manager_3",
+        "home-manager": "home-manager_4",
         "i-have-adhd-skill": "i-have-adhd-skill",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
