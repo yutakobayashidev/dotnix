@@ -19,11 +19,11 @@
     "agent-scripts": {
       "flake": false,
       "locked": {
-        "lastModified": 1782668294,
-        "narHash": "sha256-6HUjB621cKPOUBf8QS9exOKm3YqbCiy87Tno7+Y7Bos=",
+        "lastModified": 1788399158,
+        "narHash": "sha256-JXYPalMGPa2a243i6XQYGmiWmZgy8DJScrzqDzeg9Eg=",
         "owner": "steipete",
         "repo": "agent-scripts",
-        "rev": "761e0fbbaa77d9b3ffbeb0dd80c6c45be3cb50e6",
+        "rev": "ef94376ca4ad52be8637b09428a900415b0ed072",
         "type": "github"
       },
       "original": {
