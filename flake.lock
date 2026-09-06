@@ -1239,11 +1239,11 @@
     "herdr-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1788211360,
-        "narHash": "sha256-8wrp7NLYPRaZ9hL7QiqSDQFRme/1UrVwoEDs278aOUA=",
+        "lastModified": 1788392868,
+        "narHash": "sha256-Sp4H0E/QnQJoCVKgYg588QxNwFfUfV4AeU1HLuoBI7U=",
         "owner": "ogulcancelik",
         "repo": "herdr",
-        "rev": "5158adab10b6dcfea9370782043392f80fa0643c",
+        "rev": "94f6d9c0d9bb9cf9ffae99d8bbfb09e9bf2fc9e0",
         "type": "github"
       },
       "original": {
