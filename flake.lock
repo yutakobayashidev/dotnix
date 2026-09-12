@@ -967,11 +967,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1767343519,
-        "narHash": "sha256-YN531o7DQizReE4O5naHLzMSWxllCtxg2p6GJiw7qb0=",
+        "lastModified": 1788873067,
+        "narHash": "sha256-vJJUmwcaKO90TWywfomOb5B1wV1tzxnli71MSLzOkzU=",
         "owner": "kawarimidoll",
         "repo": "gh-graph",
-        "rev": "bf453bad04b994e91fb7a4c220f1924f631b4755",
+        "rev": "aa48340653403e137671349ceb22e38125930a04",
         "type": "github"
       },
       "original": {
