@@ -1526,11 +1526,11 @@
     "moonbit-overlay": {
       "flake": false,
       "locked": {
-        "lastModified": 1787993198,
-        "narHash": "sha256-05Rd+DSv+7O687JienBanL/6VahaJvUiq74JFb6vVPc=",
+        "lastModified": 1789283956,
+        "narHash": "sha256-70UEdrwxlslrZusOBuDsRaSQJquiLaWgAvN+oF72N18=",
         "owner": "moonbit-community",
         "repo": "moonbit-overlay",
-        "rev": "1d9d346329b1b69a43cd17a35294a5c6098c805b",
+        "rev": "5d493760040a52fed7fbdd0fc3e95f2da796c9fb",
         "type": "github"
       },
       "original": {
