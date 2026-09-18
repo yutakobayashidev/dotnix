@@ -43,7 +43,7 @@ in
     inputs.codex-desktop-linux.homeManagerModules.default
     inputs.nani-translate-linux.homeManagerModules.default
     ../../applications/niri
-    ../../applications/waybar
+    ../../applications/noctalia
     ../../applications/swayidle
     ../../applications/swaylock
   ];

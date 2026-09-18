@@ -1,0 +1,13 @@
+id = "yuta/codexbar-usage"
+name = "CodexBar Usage"
+version = "1.0.0"
+plugin_api = 3
+min_noctalia = "5.0.0"
+author = "yuta"
+license = "MIT"
+icon = "ai"
+description = "Codex usage limits from codexbar."
+
+[[widget]]
+id = "usage"
+entry = "usage.luau"

@@ -125,6 +125,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 ### NixOS
 
 - **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
+- **Desktop shell**: [Noctalia](https://noctalia.dev/) (bar, notifications, OSD, and control center)
 - **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae)
 - **Wallpaper**: swaybg with a declarative Home Manager feature
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
