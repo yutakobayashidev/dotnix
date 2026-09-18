@@ -12,6 +12,8 @@ import ../../lib/mkProfile.nix { inherit lib; } {
       home.packages =
         with pkgs;
         lib.optionals pkgs.stdenv.isLinux [
+          beeper
+          beeper-cli
           element-desktop
           google-chrome
           halloy
@@ -65,6 +67,10 @@ import ../../lib/mkProfile.nix { inherit lib; } {
             };
           };
         };
+      };
+
+      programs.mcp.servers = lib.optionalAttrs pkgs.stdenv.isLinux {
+        beeper.url = "http://localhost:23373/v0/mcp";
       };
     };
 }

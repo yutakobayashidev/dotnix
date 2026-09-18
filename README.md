@@ -152,7 +152,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **AI Development**: claude-code, codex, grok, opencode, pi, ccusage
 - **Version Control**: git, lazygit, jujutsu (jj), git-lfs, git-wt
 - **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, tmux
-- **Communication**: halloy (IRC)
+- **Communication**: Beeper Desktop, CLI, and local MCP; halloy (IRC)
 - **Editors**: Neovim, VSCode
 - **Terminal**: Ghostty, Zsh + Oh My Zsh
 - **Network**: bandwhich, speedtest-cli, WireGuard
