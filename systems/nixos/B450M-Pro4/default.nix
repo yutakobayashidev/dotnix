@@ -47,6 +47,7 @@
     ../services/litellm
     ../services/birdclaw
     ../services/searxng
+    ../services/linkding
     inputs.disko.nixosModules.disko
     inputs.nur-packages.nixosModules.codex-limit-auto-reset
     ./disko.nix
