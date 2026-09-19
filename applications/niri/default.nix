@@ -74,7 +74,6 @@
       {
         command = [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ];
       }
-      { command = [ "waybar" ]; }
       { command = [ "spotify" ]; }
     ];
 
@@ -228,34 +227,34 @@
 
       # メディアキー
       "XF86AudioRaiseVolume".action.spawn = [
-        "wpctl"
-        "set-volume"
-        "-l"
-        "1"
-        "@DEFAULT_AUDIO_SINK@"
-        "5%+"
+        "noctalia"
+        "msg"
+        "volume-up"
       ];
       "XF86AudioLowerVolume".action.spawn = [
-        "wpctl"
-        "set-volume"
-        "@DEFAULT_AUDIO_SINK@"
-        "5%-"
+        "noctalia"
+        "msg"
+        "volume-down"
       ];
       "XF86AudioMute".action.spawn = [
-        "wpctl"
-        "set-mute"
-        "@DEFAULT_AUDIO_SINK@"
-        "toggle"
+        "noctalia"
+        "msg"
+        "volume-mute"
+      ];
+      "XF86AudioMicMute".action.spawn = [
+        "noctalia"
+        "msg"
+        "mic-mute"
       ];
       "XF86MonBrightnessUp".action.spawn = [
-        "brightnessctl"
-        "set"
-        "5%+"
+        "noctalia"
+        "msg"
+        "brightness-up"
       ];
       "XF86MonBrightnessDown".action.spawn = [
-        "brightnessctl"
-        "set"
-        "5%-"
+        "noctalia"
+        "msg"
+        "brightness-down"
       ];
     };
   };
@@ -264,6 +263,5 @@
   home.packages = with pkgs; [
     brightnessctl
     playerctl
-    polycat
   ];
 }
