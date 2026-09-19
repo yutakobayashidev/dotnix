@@ -23,6 +23,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           simplex-chat-desktop
           slack
           telegram-desktop
+          thunderbird
         ];
 
       programs.vesktop = {
