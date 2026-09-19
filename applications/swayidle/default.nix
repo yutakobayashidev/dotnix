@@ -5,9 +5,15 @@
     enable = true;
     events = {
       # スリープ前にロック
-      before-sleep = "${pkgs.systemd}/bin/loginctl lock-session";
+      before-sleep = ''
+        ${pkgs.playerctl}/bin/playerctl --all-players pause
+        ${pkgs.swaylock-effects}/bin/swaylock -f
+      '';
       # ロック時に画面オン
-      lock = "${pkgs.swaylock-effects}/bin/swaylock";
+      lock = ''
+        ${pkgs.playerctl}/bin/playerctl --all-players pause
+        ${pkgs.swaylock-effects}/bin/swaylock -f
+      '';
     };
     timeouts = [
       # 5分後: 画面を暗くする
