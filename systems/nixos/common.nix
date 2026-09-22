@@ -62,7 +62,7 @@
                 sourceRoot = ".";
                 installPhase = ''
                   mkdir -p $out/bin
-                  cp bin/moonbit-lsp $out/bin/moonbit-lsp
+                  cp bin/moon-lsp $out/bin/moonbit-lsp
                   chmod +x $out/bin/moonbit-lsp
                 '';
               }
