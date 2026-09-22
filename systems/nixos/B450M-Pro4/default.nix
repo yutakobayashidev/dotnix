@@ -122,6 +122,15 @@
         "noatime"
       ];
     };
+    "/var/lib/gitea" = {
+      device = "/dev/disk/by-label/bulk";
+      fsType = "btrfs";
+      options = [
+        "subvol=@bulk/gitea"
+        "compress=zstd:1"
+        "noatime"
+      ];
+    };
     "/var/lib/immich" = {
       device = "/dev/disk/by-label/bulk";
       fsType = "btrfs";

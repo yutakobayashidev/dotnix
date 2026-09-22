@@ -1,7 +1,7 @@
 # B450M-Pro4 HDD Service Storage Notes
 
-These notes record the May 2026 migration for using the 3TB HDD as bulk storage
-for Nextcloud while preserving the existing NTFS data.
+These notes record the May 2026 bulk-storage setup and later service migrations
+for using the 3TB HDD while preserving the existing NTFS data.
 
 ## Goal
 
@@ -11,12 +11,12 @@ for Nextcloud while preserving the existing NTFS data.
 - Put service data under separate directories:
 
   ```text
+  /srv/bulk/gitea
   /srv/bulk/nextcloud/data
   ```
 
-Do not put active Nextcloud data directly on the NTFS partition. NTFS is useful
-as a temporary migration source, but Linux-native service data should live on
-btrfs.
+Do not put active service data directly on the NTFS partition. NTFS is useful as
+a temporary migration source, but Linux-native service data should live on btrfs.
 
 ## Observed Disk State
 
@@ -268,10 +268,20 @@ fileSystems."/srv/bulk" = {
 };
 ```
 
-Nextcloud and Immich keep the NixOS module default state locations and mount
-dedicated bulk subvolumes there:
+Gitea, Nextcloud, and Immich keep the NixOS module default state locations and
+mount dedicated bulk subvolumes there:
 
 ```nix
+fileSystems."/var/lib/gitea" = {
+  device = "/dev/disk/by-label/bulk";
+  fsType = "btrfs";
+  options = [
+    "subvol=@bulk/gitea"
+    "compress=zstd:1"
+    "noatime"
+  ];
+};
+
 fileSystems."/var/lib/nextcloud" = {
   device = "/dev/disk/by-label/bulk";
   fsType = "btrfs";
@@ -297,13 +307,20 @@ Create the subvolumes before switching:
 
 ```sh
 sudo mount /dev/disk/by-label/bulk /mnt/bulk
+sudo btrfs subvolume create /mnt/bulk/@bulk/gitea
 sudo btrfs subvolume create /mnt/bulk/@bulk/nextcloud
 sudo btrfs subvolume create /mnt/bulk/@bulk/immich
 sudo umount /mnt/bulk
 ```
 
-If `/mnt/bulk/@bulk/nextcloud` or `/mnt/bulk/@bulk/immich` already exists as a
-regular directory, move or remove it before creating the subvolume.
+If a target path already exists as a regular directory, move or remove it before
+creating the subvolume.
+
+Gitea uses:
+
+```text
+/var/lib/gitea
+```
 
 Nextcloud uses:
 
