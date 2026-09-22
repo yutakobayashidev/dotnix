@@ -15,7 +15,7 @@ _:
       tomlFormat = pkgs.formats.toml { };
 
       herdrSkillSrc = builtins.path {
-        path = inputs.herdr-skill;
+        path = inputs.herdr-skill + "/skills/herdr";
         name = "herdr-skill-no-symlinks";
         filter = _path: type: type != "symlink";
       };
