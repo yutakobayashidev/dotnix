@@ -1,7 +1,7 @@
 # B450M-Pro4 HDD Service Storage Notes
 
 These notes record the May 2026 migration for using the 3TB HDD as bulk storage
-for Nextcloud and ArchiveBox while preserving the existing NTFS data.
+for Nextcloud while preserving the existing NTFS data.
 
 ## Goal
 
@@ -12,12 +12,11 @@ for Nextcloud and ArchiveBox while preserving the existing NTFS data.
 
   ```text
   /srv/bulk/nextcloud/data
-  /srv/bulk/archivebox/data
   ```
 
-Do not put active Nextcloud or ArchiveBox data directly on the NTFS partition.
-NTFS is useful as a temporary migration source, but Linux-native service data
-should live on btrfs.
+Do not put active Nextcloud data directly on the NTFS partition. NTFS is useful
+as a temporary migration source, but Linux-native service data should live on
+btrfs.
 
 ## Observed Disk State
 
@@ -36,14 +35,6 @@ Partition layout before changes:
 
 `/dev/sda2` was mounted read-only at `/tmp/hdd-sda2`. It contained about 485GB
 of existing Windows-era data, with about 2.3TB free.
-
-`ArchiveBox` binds this path into the Docker container:
-
-```nix
-"/mnt/usb/services/archivebox/data:/data"
-```
-
-There was no declarative `/mnt/usb` mount in this repository.
 
 ## Completed Safety Checks
 
@@ -238,7 +229,7 @@ sudo btrfs subvolume create /mnt/bulk/@bulk
 sudo umount /mnt/bulk
 
 sudo mount -o subvol=@bulk,compress=zstd:1,noatime /dev/disk/by-label/bulk /mnt/bulk
-sudo mkdir -p /mnt/bulk/nextcloud/data /mnt/bulk/archivebox/data
+sudo mkdir -p /mnt/bulk/nextcloud/data
 sudo umount /mnt/bulk
 ```
 
@@ -324,10 +315,4 @@ Immich uses:
 
 ```text
 /var/lib/immich
-```
-
-ArchiveBox uses:
-
-```text
-/srv/bulk/archivebox/data
 ```

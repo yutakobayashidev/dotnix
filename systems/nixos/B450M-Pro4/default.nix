@@ -24,7 +24,6 @@
     ../services/loki
     ../services/opentelemetry-collector
     ../services/oura-metrics
-    ../services/archivebox
     ../services/n8n
     ../services/niks3
     ../services/comin
