@@ -3,6 +3,7 @@ resource "gitea_repository" "kaikei" {
   name        = "kaikei"
   description = "確定申告・請求書管理"
   private     = true
+  archived    = true
   auto_init   = false
 }
 
@@ -62,7 +63,7 @@ resource "gitea_repository" "nnn" {
 
 resource "gitea_repository" "life" {
   username  = "yuta"
-  name      = "life"
+  name      = "rensheng"
   private   = true
   auto_init = false
 }
