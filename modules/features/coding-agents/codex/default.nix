@@ -70,7 +70,7 @@ _:
       settings = {
         approval_policy = "on-request";
         default_mode_request_user_input = true;
-        model = "gpt-5.6-sol";
+        model = "gpt-6-astra";
         model_reasoning_effort = "medium";
         model_reasoning_summary = "concise";
         model_verbosity = "low";
