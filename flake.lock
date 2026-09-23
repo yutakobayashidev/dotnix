@@ -167,11 +167,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783895979,
-        "narHash": "sha256-5BCTuXDgPKCGdGkQZk8cTZUUDzkJXQoO0c/zbLMxU/s=",
+        "lastModified": 1790142737,
+        "narHash": "sha256-RDQGaz23AvfwQYT4bFCbY1pI5TBEaQLItYwZuRuvONo=",
         "owner": "yutakobayashidev",
         "repo": "birdclaw",
-        "rev": "d529115533e2c2339268fc189869ae7534d5890c",
+        "rev": "61cf898858a91d10a05b3e20cbe5dd8cf8f7a458",
         "type": "github"
       },
       "original": {
@@ -2077,11 +2077,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1789899325,
-        "narHash": "sha256-uehwyZIV1AVZqevQRPU1AfjJmo3pL4g4ttJmVgeo19w=",
+        "lastModified": 1789370336,
+        "narHash": "sha256-6RSEDHIWQtesQKWSu5qRai8L2h4KgCgMEfJHstW99G4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "9e75c5bdcee82081a2c0d7620bce0d776533109b",
+        "rev": "c7def046b9a883d46974757852106483d741586f",
         "type": "github"
       },
       "original": {
