@@ -53,6 +53,11 @@ in
     '';
   };
 
+  systemd.services.coredns = {
+    after = [ "tailscaled-set.service" ];
+    wants = [ "tailscaled-set.service" ];
+  };
+
   networking.firewall.allowedTCPPorts = [ 53 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 }
