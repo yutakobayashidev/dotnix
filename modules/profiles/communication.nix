@@ -3,6 +3,8 @@
 import ../../lib/mkProfile.nix { inherit lib; } {
   name = "communication";
 
+  system.my.nixpkgs.permittedInsecurePackages = [ "keybase-gui-6.5.1" ];
+
   nixos.services.kbfs.enable = true;
 
   home =
