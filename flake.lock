@@ -1364,11 +1364,11 @@
     "i-have-adhd-skill": {
       "flake": false,
       "locked": {
-        "lastModified": 1789771094,
-        "narHash": "sha256-W6DAAG1o0l4ouM4cxDCm0L1bcBbKjmldNlu1OjvyXLw=",
+        "lastModified": 1789836285,
+        "narHash": "sha256-UExi0k71MOtLwqVaFRGhgvqq6+jxwbQxZZVZxceHGrw=",
         "owner": "ayghri",
         "repo": "i-have-adhd",
-        "rev": "3880291c4aa8cab50d234002b8ea2c48305efe98",
+        "rev": "839872f9d1cd634fed642b4589ce7226199cc15f",
         "type": "github"
       },
       "original": {
