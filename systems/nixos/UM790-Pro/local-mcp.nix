@@ -8,7 +8,14 @@
 }:
 
 let
-  localMcpPkg = inputs.local-mcp.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  localMcpPkg =
+    inputs.local-mcp.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
+      (oldAttrs: {
+        cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+          inherit (oldAttrs) src;
+          hash = "sha256-q1hHXNkI5BSGGgUiRq/P0JA8gjrkho2ae52PtF22frg=";
+        };
+      });
   localMcp = pkgs.writeShellScriptBin "local-mcp" ''
     export XDG_STATE_HOME=''${XDG_STATE_HOME:-/var/lib/local-mcp}
     exec ${lib.getExe localMcpPkg} "$@"
