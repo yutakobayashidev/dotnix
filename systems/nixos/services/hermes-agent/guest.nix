@@ -429,10 +429,10 @@ in
     '';
   };
 
-  services.journald.extraConfig = ''
-    ForwardToConsole=yes
-    MaxLevelConsole=info
-  '';
+  services.journald.settings.Journal = {
+    ForwardToConsole = true;
+    MaxLevelConsole = "info";
+  };
 
   system.stateVersion = "25.11";
 }
