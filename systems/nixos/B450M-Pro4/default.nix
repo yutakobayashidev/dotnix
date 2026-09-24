@@ -55,6 +55,7 @@
 
   ext.security.secureboot.enable = true;
   my = {
+    nix.remoteBuild.client.enable = true;
     system.impermanence.enable = true;
     profiles = {
       base.enable = true;

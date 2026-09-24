@@ -67,6 +67,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
+- **Remote builds**: B450M-Pro4 and ThinkPad offload to UM790-Pro over Tailscale; see [rollout and offline build commands](docs/remote-build.md)
 - **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [GhidraMCP](docs/ghidra-mcp.md), on the ThinkPad
 - **Observability**: Grafana / Prometheus / Loki on B450M-Pro4, Claude Code OTLP telemetry
 

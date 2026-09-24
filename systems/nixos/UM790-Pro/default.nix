@@ -17,6 +17,11 @@
   ];
 
   ext.security.secureboot.enable = true;
+  my.nix.remoteBuild.builder.enable = true;
+  nix.settings = {
+    max-jobs = 4;
+    cores = 4;
+  };
   my.profiles = {
     base.enable = true;
     communication.enable = true;

@@ -79,6 +79,7 @@ Home Manager deploys repository-backed configuration from the flake source in th
 
 ### Operations
 
+- [docs/remote-build.md](docs/remote-build.md) - Build B450M and ThinkPad packages on UM790 over Tailscale
 - [docs/B450M-Pro4-HDD-service-storage.md](docs/B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
 - [docs/B450M-Pro4-s3s.md](docs/B450M-Pro4-s3s.md) - s3s (Splatoon 3 stats uploader) workflow
 - [docs/hermes-agent-discord.md](docs/hermes-agent-discord.md) - Discord setup for the UM790-Pro Hermes Agent microVM
