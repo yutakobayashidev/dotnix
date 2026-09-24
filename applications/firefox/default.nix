@@ -40,7 +40,10 @@
       settings = {
         "browser.toolbars.bookmarks.visibility" = "always";
         "extensions.autoDisableScopes" = 0;
+        "sidebar.position_start" = true;
+        "sidebar.revamp" = true;
         "sidebar.verticalTabs" = true;
+        "sidebar.visibility" = "always-show";
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
 
