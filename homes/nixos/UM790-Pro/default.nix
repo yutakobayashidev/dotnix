@@ -9,6 +9,7 @@
       ../../../applications/course-cli
       ../desktop.nix
       ./twitter-lite.nix
+      ./beeper.nix
     ];
     home.homeDirectory = "/home/${username}";
     services.wallpaper.imagePath = "/home/${username}/wallpapers/wp13990714.png";

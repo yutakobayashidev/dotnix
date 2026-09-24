@@ -15,7 +15,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         with pkgs;
         lib.optionals pkgs.stdenv.isLinux [
           beeper
-          beeper-cli
           element-desktop
           google-chrome
           halloy
