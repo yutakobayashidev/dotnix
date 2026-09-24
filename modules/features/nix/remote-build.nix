@@ -32,7 +32,7 @@ _:
 
         (lib.mkIf cfg.client.enable {
           sops.secrets.remote-build-key = {
-            sopsFile = ../../secrets + "/remote-build-${config.networking.hostName}.yaml";
+            sopsFile = ../../../secrets + "/remote-build-${config.networking.hostName}.yaml";
             owner = "root";
             mode = "0400";
           };

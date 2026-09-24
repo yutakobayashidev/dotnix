@@ -7,7 +7,7 @@ daemon's builder configuration without separate deployment commands.
 
 ## Configuration
 
-`modules/features/remote-build.nix` defines two opt-in features:
+`modules/features/nix/remote-build.nix` defines two opt-in features:
 
 - `my.nix.remoteBuild.builder.enable`: enabled on UM790-Pro.
 - `my.nix.remoteBuild.client.enable`: enabled on B450M-Pro4 and the ThinkPad.
