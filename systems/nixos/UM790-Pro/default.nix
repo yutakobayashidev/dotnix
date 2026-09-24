@@ -2,6 +2,8 @@
   lib,
   modulesPath,
   config,
+  inputs,
+  pkgs,
   ...
 }:
 
@@ -10,6 +12,7 @@
     ../common.nix
     ../services/hermes-agent
     ../services/comin
+    inputs.nur-packages.nixosModules.codex-limit-auto-reset
     (modulesPath + "/installer/scan/not-detected.nix")
     ./local-mcp.nix
     ./virtualbox.nix
@@ -95,14 +98,21 @@
     };
   };
 
-  services.prometheus.exporters.node = {
-    enable = true;
-    enabledCollectors = [ "systemd" ];
-  };
-
-  services.logind.settings.Login = {
-    HandlePowerKey = "ignore";
-    HandlePowerKeyLongPress = "poweroff";
+  services = {
+    codex-limit-auto-reset = {
+      enable = true;
+      codexPackage = pkgs.llm-agents.codex;
+      user = "yuta";
+      codexHome = "/home/yuta/.config/codex";
+    };
+    prometheus.exporters.node = {
+      enable = true;
+      enabledCollectors = [ "systemd" ];
+    };
+    logind.settings.Login = {
+      HandlePowerKey = "ignore";
+      HandlePowerKeyLongPress = "poweroff";
+    };
   };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
