@@ -33,11 +33,8 @@ _:
           zoxide
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
-          brightnessctl
           kubo
-          nautilus
           psmisc
-          rpi-imager
           usbutils
         ];
 

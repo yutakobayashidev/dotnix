@@ -5,6 +5,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
   home =
     {
+      config,
       lib,
       pkgs,
       ...
@@ -43,7 +44,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           cloc
           difit
           gctx
-          insomnia
           jj-desc
           jujutsu
           llm-agents.hunk
@@ -60,9 +60,14 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         ++ lib.optionals (pkgs.stdenv.isx86_64 || pkgs.stdenv.isDarwin) [
           bit-vcs
         ]
+        ++ lib.optionals config.my.profiles.desktop.enable [
+          insomnia
+        ]
         ++ lib.optionals pkgs.stdenv.isLinux [
-          # android-studio
           android-tools
+        ]
+        ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.isLinux) [
+          # android-studio
           arduino-ide
           stable.freecad
           (kicad.override { stable = true; })
