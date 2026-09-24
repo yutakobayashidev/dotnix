@@ -1,24 +1,11 @@
-{ inputs, ... }:
+_:
 
 let
   domain = "tw-lite.home.yutakobayashi.com";
   port = 3006;
 in
 {
-  imports = [ inputs.twitter-lite.nixosModules.default ];
-
-  services.twitter-lite = {
-    enable = true;
-    relayBaseUrl = "http://127.0.0.1:18788";
-    profileName = "account1";
-    inherit port;
-  };
-
-  systemd.services.twitter-lite = {
-    after = [ "twitter-api-safe-mcp.service" ];
-    wants = [ "twitter-api-safe-mcp.service" ];
-  };
-
+  # The app and Codex run as yuta's user services on UM790-Pro.
   services.traefik.dynamicConfigOptions.http = {
     routers.twitter-lite = {
       entryPoints = [
@@ -27,10 +14,16 @@ in
       ];
       rule = "Host(`${domain}`)";
       service = "twitter-lite";
+      middlewares = [ "twitter-lite-tailnet" ];
       tls.certResolver = "letsencrypt";
     };
     services.twitter-lite.loadBalancer.servers = [
-      { url = "http://127.0.0.1:${toString port}"; }
+      { url = "http://um790-pro.tail29d068.ts.net:${toString port}"; }
+    ];
+    # Use the TCP peer address, not client-supplied forwarded headers.
+    middlewares.twitter-lite-tailnet.ipAllowList.sourceRange = [
+      "100.64.0.0/10"
+      "fd7a:115c:a1e0::/48"
     ];
   };
 }
