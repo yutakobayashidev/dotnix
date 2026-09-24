@@ -1,19 +1,18 @@
 { pkgs, ... }:
-
+let
+  lockScreen = pkgs.writeShellScript "swayidle-lock" ''
+    ${pkgs.playerctl}/bin/playerctl --all-players pause
+    ${pkgs.swaylock-effects}/bin/swaylock -f
+  '';
+in
 {
   services.swayidle = {
     enable = true;
     events = {
       # スリープ前にロック
-      before-sleep = ''
-        ${pkgs.playerctl}/bin/playerctl --all-players pause
-        ${pkgs.swaylock-effects}/bin/swaylock -f
-      '';
+      before-sleep = "${lockScreen}";
       # ロック時に画面オン
-      lock = ''
-        ${pkgs.playerctl}/bin/playerctl --all-players pause
-        ${pkgs.swaylock-effects}/bin/swaylock -f
-      '';
+      lock = "${lockScreen}";
     };
     timeouts = [
       # 5分後: 画面を暗くする
