@@ -81,6 +81,7 @@ _:
 
         features = {
           hooks = true;
+          reasoning_effort_override = true;
           remote_control = true;
           workspace_dependencies = false;
         };
