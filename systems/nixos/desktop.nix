@@ -10,6 +10,10 @@
   programs = {
     gnome-disks.enable = true;
     niri.enable = true;
+    noctalia = {
+      enable = true;
+      recommendedServices.enable = true;
+    };
     obs-studio.enableVirtualCamera = true;
     xwayland.enable = true;
   };
