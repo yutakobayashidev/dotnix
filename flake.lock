@@ -1243,11 +1243,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1790508628,
-        "narHash": "sha256-vhT70NUpdGj0xFCFEYMxmsxNGVEifo3lk//t12yj3dQ=",
+        "lastModified": 1790595869,
+        "narHash": "sha256-hTV36msUJZiMe+vOy2eWIsafsvMJEQlrNgHRbGIDYLs=",
         "owner": "NousResearch",
         "repo": "hermes-agent",
-        "rev": "f039f028f2bd5c6e2131b4ffaa4b200c81db68a3",
+        "rev": "dd3ba4b4b8d6dd8cd85d1ba64d42d7e5f516a068",
         "type": "github"
       },
       "original": {
