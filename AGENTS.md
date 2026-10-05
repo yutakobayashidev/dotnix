@@ -20,7 +20,7 @@ nix flake update
 
 ## Agent Skills
 
-Skills are managed via the `skills` flake input (`yutakobayashidev/skills`) using `agent-skills-nix`.
+Skills are managed using `agent-skills-nix`. Skill-only repositories, including `yutakobayashidev/skills`, are declared in `registry/sources/*.nix` and pinned in `registry/sources.lock.json`. Shared source loading lives in `lib/skill-sources.nix`; package-providing repositories remain flake inputs.
 
 When adding a new skill to `yutakobayashidev/skills`, prefer scanning with a GitHub URL to find existing skill implementations:
 
@@ -29,13 +29,15 @@ OPENAI_BASE_URL=https://litellm.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy s
 OPENAI_BASE_URL=https://litellm.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>/tree/main/path/to/skill
 ```
 
-To test local changes before pushing:
+Update skill sources from the repository root:
 
 ```bash
-nix run .#switch --override-input skills path:../skills
+nix run .#skills-sources-lock
 ```
 
-Do not list individual skill names or file layout here — the source of truth is the skills repo configuration and its documentation.
+Review and commit both manifests and the generated lock file. `nix flake update` does not update these skill sources. See [skill source maintenance](docs/agent-skills.md) for testing local changes before pushing.
+
+Do not list individual skill names here — the source of truth is the skill selection modules and the skills repo documentation.
 
 ## Secret Handling
 

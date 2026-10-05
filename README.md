@@ -57,7 +57,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   └── per-system/      # Packages, devshell, checks, and formatter configuration
 ├── lib/                 # Profile builder and shared evaluation helpers
 ├── overlays/            # Custom packages (overlay)
-├── agents/                  # Agent skills config docs (skills: github:yutakobayashidev/skills)
+├── registry/                # Agent skill source manifests and lock file
 └── zsh/                     # Zsh config
 ```
 
@@ -163,6 +163,18 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 ## Agent Skills
 
 Agent skills are managed via [agent-skills-nix](https://github.com/Kyure-A/agent-skills-nix).
+Skill-only repositories are declared in `registry/sources/*.nix` and pinned in
+`registry/sources.lock.json`, following the upstream
+[source registry example](https://github.com/Kyure-A/agent-skills-nix/tree/dc122af897ab9a685c20ae54c639021619dbbb52/examples/source-registry).
+Update them independently of flake inputs:
+
+```bash
+nix run .#skills-sources-lock
+```
+
+Review and commit the manifests and lock file together. Package-providing
+repositories remain flake inputs. See [skill source maintenance](docs/agent-skills.md)
+for local development and migration details.
 
 Avoid maintaining a fixed skill list here. Treat the agent-skills Nix modules as the source of truth.
 

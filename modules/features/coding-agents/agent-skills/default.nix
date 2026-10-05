@@ -12,10 +12,11 @@ _:
     let
       cfg = config.my.programs.agent-skills;
       agentLib = inputs.agent-skills.lib.agent-skills;
+      registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
       edcbToolsPackage = pkgs.edcb-tools;
 
       agentScriptsSrc = builtins.path {
-        path = inputs.agent-scripts;
+        path = registrySources.agent-scripts.path;
         name = "agent-scripts-no-symlinks";
         filter = _path: type: type != "symlink";
       };
@@ -30,57 +31,26 @@ _:
           enable = true;
 
           sources = {
-            local = {
-              path = inputs.skills;
-              subdir = "skills";
-            };
-            anthropic = {
-              path = inputs.anthropic-skills;
-              subdir = "skills";
-            };
-            ast-grep = {
-              path = inputs.ast-grep-skill;
-              subdir = "ast-grep/skills";
-            };
-            obsidian = {
-              path = inputs.obsidian-skills;
-              subdir = "skills";
-            };
+            inherit (registrySources)
+              local
+              anthropic
+              ast-grep
+              obsidian
+              prompt-review
+              difit
+              before-and-after
+              mattpocock
+              i-have-adhd
+              twitter-api-relay
+              ;
             repiq = {
               path = inputs.repiq;
               subdir = "skills";
             };
-            prompt-review = {
-              path = inputs.prompt-review-skill;
-              subdir = ".claude/skills";
-            };
-            difit = {
-              path = inputs.difit-skills;
-              subdir = "skills";
-            };
-            agent-scripts = {
+            agent-scripts = registrySources.agent-scripts // {
               path = agentScriptsSrc;
-              subdir = "skills";
-              idPrefix = "agent-scripts";
             };
-            before-and-after = {
-              path = inputs.before-and-after-skill;
-              subdir = "skill";
-            };
-            mattpocock = {
-              path = inputs.mattpocock-skills;
-              subdir = "skills";
-            };
-            i-have-adhd = {
-              path = inputs.i-have-adhd-skill;
-              subdir = "skills";
-            };
-            twitter-api-relay = {
-              path = inputs.twitter-api-safe-relay-skills;
-              subdir = "skills";
-            };
-            openclaw-discrawl = {
-              path = inputs.openclaw;
+            openclaw-discrawl = registrySources.openclaw // {
               subdir = ".agents/skills/discrawl";
             };
             edcb-tools = {

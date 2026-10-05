@@ -1,37 +1,5 @@
 {
   "nodes": {
-    "agent-browser-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789769921,
-        "narHash": "sha256-eizpqhV2AVAOl5uaihkWEdNNeGaMxrYGaLMR4fXYYZQ=",
-        "owner": "vercel-labs",
-        "repo": "agent-browser",
-        "rev": "44583ac8385d814ab98cbf40feec97620376b50e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vercel-labs",
-        "repo": "agent-browser",
-        "type": "github"
-      }
-    },
-    "agent-scripts": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790551801,
-        "narHash": "sha256-r7e8tcX6iRegxSnQ79ZOqowZXC8XLgTdu+LjjwQtZs0=",
-        "owner": "steipete",
-        "repo": "agent-scripts",
-        "rev": "3f8c6a33f911818b72936248384e7a71b4f1d971",
-        "type": "github"
-      },
-      "original": {
-        "owner": "steipete",
-        "repo": "agent-scripts",
-        "type": "github"
-      }
-    },
     "agent-skills": {
       "inputs": {
         "nixpkgs": [
@@ -71,38 +39,6 @@
         "type": "github"
       }
     },
-    "anthropic-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790266835,
-        "narHash": "sha256-xUs7UX8pOcZwR0okaSbI/f8EE5F4Zi/BUd+nIZNafPc=",
-        "owner": "anthropics",
-        "repo": "skills",
-        "rev": "33375500bcea98d610eb30ce10ac4e59b89c390d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anthropics",
-        "repo": "skills",
-        "type": "github"
-      }
-    },
-    "ast-grep-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789268336,
-        "narHash": "sha256-dORqiMdFOUQVEF6wn1IZiTIcslzO+441A0GZP4KNcOQ=",
-        "owner": "ast-grep",
-        "repo": "claude-skill",
-        "rev": "f2175aff21f20cfb8e2db30c28febeb3a2d42b61",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ast-grep",
-        "repo": "claude-skill",
-        "type": "github"
-      }
-    },
     "ax": {
       "inputs": {
         "bun2nix": "bun2nix",
@@ -121,22 +57,6 @@
       "original": {
         "owner": "yusukebe",
         "repo": "ax",
-        "type": "github"
-      }
-    },
-    "before-and-after-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1788383445,
-        "narHash": "sha256-fgOaDgO3LRYsZzP7JNZI5olUitUMZGSBXI+UsxLhZf8=",
-        "owner": "vercel-labs",
-        "repo": "before-and-after",
-        "rev": "8306d34f459b6704e08e6adb5829fcddb0dc3557",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vercel-labs",
-        "repo": "before-and-after",
         "type": "github"
       }
     },
@@ -350,22 +270,6 @@
       "original": {
         "owner": "ipetkov",
         "repo": "crane",
-        "type": "github"
-      }
-    },
-    "difit-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1787931182,
-        "narHash": "sha256-1EoC5t+8KjNmwKg5lFLig26tzCnp2byhkeGjctVdRls=",
-        "owner": "yoshiko-pg",
-        "repo": "difit",
-        "rev": "82a765c037ec28fe7fe90ab2f1e4b5748032b4fa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "yoshiko-pg",
-        "repo": "difit",
         "type": "github"
       }
     },
@@ -1196,38 +1100,6 @@
         "type": "github"
       }
     },
-    "hashicorp-agent-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1788450606,
-        "narHash": "sha256-rkF9+21kcLSsl96ZpM43R7QBp8/eDG/VCEa1fEJwukA=",
-        "owner": "hashicorp",
-        "repo": "agent-skills",
-        "rev": "c2d65dfe492f74d360d35b859b88932222470bd8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hashicorp",
-        "repo": "agent-skills",
-        "type": "github"
-      }
-    },
-    "herdr-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790166377,
-        "narHash": "sha256-Vb8538c3F+J0tktxTWZY9s/jkBfnKrLFXYHzSivNARk=",
-        "owner": "ogulcancelik",
-        "repo": "herdr",
-        "rev": "9903007e5c4407ded451cac0b8164e3d69deb891",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ogulcancelik",
-        "repo": "herdr",
-        "type": "github"
-      }
-    },
     "hermes-agent": {
       "inputs": {
         "flake-parts": [
@@ -1361,22 +1233,6 @@
         "type": "github"
       }
     },
-    "i-have-adhd-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789836285,
-        "narHash": "sha256-UExi0k71MOtLwqVaFRGhgvqq6+jxwbQxZZVZxceHGrw=",
-        "owner": "ayghri",
-        "repo": "i-have-adhd",
-        "rev": "839872f9d1cd634fed642b4589ce7226199cc15f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "ayghri",
-        "repo": "i-have-adhd",
-        "type": "github"
-      }
-    },
     "impermanence": {
       "inputs": {
         "home-manager": [
@@ -1463,22 +1319,6 @@
       "original": {
         "owner": "nakasyou",
         "repo": "local-mcp",
-        "type": "github"
-      }
-    },
-    "mattpocock-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790685516,
-        "narHash": "sha256-C0Ghop0jg7xmtU82UN1GtogUpNYdw5iJnbxQhijRWds=",
-        "owner": "mattpocock",
-        "repo": "skills",
-        "rev": "984a2c023c9fb42bb6ea40c70a652284a109dc05",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mattpocock",
-        "repo": "skills",
         "type": "github"
       }
     },
@@ -2249,22 +2089,6 @@
         "type": "github"
       }
     },
-    "obsidian-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789483437,
-        "narHash": "sha256-kyH07EVmwIEC/q6i91Kz8mPE78j9ITga2NZUpU1+nHU=",
-        "owner": "kepano",
-        "repo": "obsidian-skills",
-        "rev": "3ccff5338ea700537839b21900aa5358a0402c98",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kepano",
-        "repo": "obsidian-skills",
-        "type": "github"
-      }
-    },
     "onepassword-shell-plugins": {
       "inputs": {
         "nixpkgs": "nixpkgs_6",
@@ -2326,38 +2150,6 @@
         "type": "github"
       }
     },
-    "openclaw": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790945678,
-        "narHash": "sha256-Zl2Fzlj0bwAlBDj9VqqIzH7qB3Duk+4BaaE5kDJEaJc=",
-        "owner": "openclaw",
-        "repo": "openclaw",
-        "rev": "643ea6556e792432f0fde8d94b8fb01e1c8e7d0c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "openclaw",
-        "repo": "openclaw",
-        "type": "github"
-      }
-    },
-    "oracle-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1785322323,
-        "narHash": "sha256-zSIsK0h/Yp/ju4nj6k0IcUaAEjFCG2Ea34PmadrpXpI=",
-        "owner": "yutakobayashidev",
-        "repo": "oracle",
-        "rev": "722b058add0253cfdfda0179922cc9f2a9bd470b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "yutakobayashidev",
-        "repo": "oracle",
-        "type": "github"
-      }
-    },
     "pre-commit": {
       "inputs": {
         "flake-compat": "flake-compat_5",
@@ -2377,22 +2169,6 @@
       "original": {
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "type": "github"
-      }
-    },
-    "prompt-review-skill": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1776165326,
-        "narHash": "sha256-Ma9qm0aggx+F0FDNd0DMXsuZLZz/Ei3o1oid8ljWGfA=",
-        "owner": "tokoroten",
-        "repo": "prompt-review",
-        "rev": "0a83fd9eeead58fe92d0b04522da9e6840a71940",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tokoroten",
-        "repo": "prompt-review",
         "type": "github"
       }
     },
@@ -2470,20 +2246,14 @@
     },
     "root": {
       "inputs": {
-        "agent-browser-skill": "agent-browser-skill",
-        "agent-scripts": "agent-scripts",
         "agent-skills": "agent-skills",
-        "anthropic-skills": "anthropic-skills",
-        "ast-grep-skill": "ast-grep-skill",
         "ax": "ax",
-        "before-and-after-skill": "before-and-after-skill",
         "bird": "bird",
         "birdclaw": "birdclaw",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "codex-desktop-linux": "codex-desktop-linux",
         "comin": "comin",
-        "difit-skills": "difit-skills",
         "disko": "disko",
         "droidperm": "droidperm",
         "edcb-tools": "edcb-tools",
@@ -2494,16 +2264,12 @@
         "gh-nippou": "gh-nippou",
         "ghostty": "ghostty",
         "git-hooks": "git-hooks_2",
-        "hashicorp-agent-skills": "hashicorp-agent-skills",
-        "herdr-skill": "herdr-skill",
         "hermes-agent": "hermes-agent",
         "home-manager": "home-manager_3",
-        "i-have-adhd-skill": "i-have-adhd-skill",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
         "llm-agents": "llm-agents",
         "local-mcp": "local-mcp",
-        "mattpocock-skills": "mattpocock-skills",
         "mcp-servers-nix": "mcp-servers-nix",
         "microvm": "microvm",
         "moonbit-overlay": "moonbit-overlay",
@@ -2523,23 +2289,16 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixtopsy": "nixtopsy",
         "nur-packages": "nur-packages",
-        "obsidian-skills": "obsidian-skills",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
         "openai-secure-tunnel-nix": "openai-secure-tunnel-nix",
         "openbrief": "openbrief",
-        "openclaw": "openclaw",
-        "oracle-skill": "oracle-skill",
-        "prompt-review-skill": "prompt-review-skill",
         "repiq": "repiq",
         "rustowl-flake": "rustowl-flake",
         "simple-nostr-relay": "simple-nostr-relay",
-        "skills": "skills",
         "sops-nix": "sops-nix",
         "starla": "starla",
-        "superpowers": "superpowers",
         "temari": "temari",
         "treefmt-nix": "treefmt-nix_5",
-        "twitter-api-safe-relay-skills": "twitter-api-safe-relay-skills",
         "twitter-lite": "twitter-lite",
         "version-lsp": "version-lsp",
         "vicinae-extensions": "vicinae-extensions",
@@ -2735,22 +2494,6 @@
         "type": "github"
       }
     },
-    "skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789909161,
-        "narHash": "sha256-52/6dSCngIvG/PGENG8ZlMCuOq3rS3f1T5XICd0TSPs=",
-        "owner": "yutakobayashidev",
-        "repo": "skills",
-        "rev": "dfd1d1e4192abeb561f2a5ee4609d1807c77c5a6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "yutakobayashidev",
-        "repo": "skills",
-        "type": "github"
-      }
-    },
     "sops-nix": {
       "inputs": {
         "nixpkgs": [
@@ -2808,22 +2551,6 @@
         "owner": "ananthb",
         "ref": "v0.3.1",
         "repo": "starla",
-        "type": "github"
-      }
-    },
-    "superpowers": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1790359587,
-        "narHash": "sha256-BWPiXoXV+jePP+wn/Z+Af4iehIL7oei00plaWaTzq8s=",
-        "owner": "obra",
-        "repo": "superpowers",
-        "rev": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "obra",
-        "repo": "superpowers",
         "type": "github"
       }
     },
@@ -3056,22 +2783,6 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "twitter-api-safe-relay-skills": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1781022801,
-        "narHash": "sha256-gU8gTnoXyWepSTbQCSXX+1fXcViN64K8JjEhytAeGjk=",
-        "owner": "fa0311",
-        "repo": "twitter_api_safe_relay_skills",
-        "rev": "a4d8b5f92874f593272e3c61427c61754cde6103",
-        "type": "github"
-      },
-      "original": {
-        "owner": "fa0311",
-        "repo": "twitter_api_safe_relay_skills",
         "type": "github"
       }
     },

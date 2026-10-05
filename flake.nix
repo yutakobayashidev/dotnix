@@ -95,10 +95,6 @@
       url = "github:openclaw/nix-openclaw-tools";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    openclaw = {
-      url = "github:openclaw/openclaw";
-      flake = false;
-    };
     gh-nippou = {
       url = "github:ryoppippi/gh-nippou";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -119,73 +115,9 @@
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agent-scripts = {
-      url = "github:steipete/agent-scripts";
-      flake = false;
-    };
-    superpowers = {
-      url = "github:obra/superpowers";
-      flake = false;
-    };
-    anthropic-skills = {
-      url = "github:anthropics/skills";
-      flake = false;
-    };
-    ast-grep-skill = {
-      url = "github:ast-grep/claude-skill";
-      flake = false;
-    };
-    obsidian-skills = {
-      url = "github:kepano/obsidian-skills";
-      flake = false;
-    };
-    oracle-skill = {
-      url = "github:yutakobayashidev/oracle";
-      flake = false;
-    };
-    prompt-review-skill = {
-      url = "github:tokoroten/prompt-review";
-      flake = false;
-    };
-    difit-skills = {
-      url = "github:yoshiko-pg/difit";
-      flake = false;
-    };
     droidperm = {
       url = "github:yutakobayashidev/droidperm";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    agent-browser-skill = {
-      url = "github:vercel-labs/agent-browser";
-      flake = false;
-    };
-    before-and-after-skill = {
-      url = "github:vercel-labs/before-and-after";
-      flake = false;
-    };
-    mattpocock-skills = {
-      url = "github:mattpocock/skills";
-      flake = false;
-    };
-    i-have-adhd-skill = {
-      url = "github:ayghri/i-have-adhd";
-      flake = false;
-    };
-    twitter-api-safe-relay-skills = {
-      url = "github:fa0311/twitter_api_safe_relay_skills";
-      flake = false;
-    };
-    hashicorp-agent-skills = {
-      url = "github:hashicorp/agent-skills";
-      flake = false;
-    };
-    herdr-skill = {
-      url = "github:ogulcancelik/herdr";
-      flake = false;
-    };
-    skills = {
-      url = "github:yutakobayashidev/skills";
-      flake = false;
     };
     repiq = {
       url = "github:yutakobayashidev/repiq";

@@ -10,6 +10,7 @@ _:
       ...
     }:
     let
+      registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
       cfg = config.my.programs.agent-browser;
       agentBrowserBin = lib.getExe pkgs.llm-agents.agent-browser;
     in
@@ -20,10 +21,7 @@ _:
         home.packages = [ pkgs.llm-agents.agent-browser ];
 
         programs.agent-skills = {
-          sources.agent-browser = {
-            path = inputs.agent-browser-skill;
-            subdir = "skills";
-          };
+          sources.agent-browser = registrySources.agent-browser;
 
           skills.explicit.agent-browser = {
             from = "agent-browser";

@@ -11,11 +11,12 @@ _:
     }:
 
     let
+      registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
       cfg = config.my.programs.herdr;
       tomlFormat = pkgs.formats.toml { };
 
       herdrSkillSrc = builtins.path {
-        path = inputs.herdr-skill + "/skills/herdr";
+        path = registrySources.herdr.path + "/${registrySources.herdr.subdir}";
         name = "herdr-skill-no-symlinks";
         filter = _path: type: type != "symlink";
       };

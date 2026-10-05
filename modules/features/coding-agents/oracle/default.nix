@@ -10,6 +10,7 @@ _:
       ...
     }:
     let
+      registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
       cfg = config.my.programs.oracle;
       oracleBin = lib.getExe pkgs.oracle;
     in
@@ -20,10 +21,7 @@ _:
         home.packages = [ pkgs.oracle ];
 
         programs.agent-skills = {
-          sources.oracle = {
-            path = inputs.oracle-skill;
-            subdir = "skills/oracle";
-          };
+          sources.oracle = registrySources.oracle;
 
           skills.explicit.oracle = {
             from = "oracle";
