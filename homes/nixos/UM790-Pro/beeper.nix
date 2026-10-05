@@ -1,7 +1,7 @@
-{ inputs, pkgs, ... }:
+{ pkgs, ... }:
 
 let
-  server = inputs.nur-packages.packages.${pkgs.stdenv.hostPlatform.system}.beeper-server;
+  server = pkgs.beeper-server;
 in
 {
   home.packages = [ pkgs.beeper-cli ];

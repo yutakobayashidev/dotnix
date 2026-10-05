@@ -8,9 +8,9 @@ and systemd service, not the CLI installer.
 
 ## Initial deployment
 
-The new `beeper-server` package must first be published in nur-packages and the
-dotnix input updated. Until then, test with
-`--override-input nur-packages path:../nur-packages` from dotnix.
+The dotnix lock file pins nur-packages with the `beeper-server` package
+(nightly `4.3.149`). For local package changes, test with
+`--override-input nur-packages path:../nur-packages` before publishing.
 UM790's user must have linger enabled for operation without a GUI login.
 
 ## One-time login
@@ -37,7 +37,7 @@ systemctl --user restart beeper-server
 ```
 
 The initial test uses a transient systemd unit; it is not a reboot-persistent
-deployment. Apply the Home Manager service after publishing the package.
+deployment. Apply the Home Manager service with `nix run .#switch` or comin.
 Before applying it, stop the transient unit and reload the user manager.
 
 The binary is a nightly distribution; check actual chat retrieval, not only
