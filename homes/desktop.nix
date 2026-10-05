@@ -1,11 +1,11 @@
 {
-  imports = [
-    ../applications/chromium
-    ../applications/firefox
-    ../applications/ghostty
-    ../applications/keifu
-    ../applications/obs-studio
-    ../applications/zed-editor
-    ../applications/zotero
-  ];
+  my.programs = {
+    chromium.enable = true;
+    firefox.enable = true;
+    ghostty.enable = true;
+    keifu.enable = true;
+    obs-studio.enable = true;
+    zed-editor.enable = true;
+    zotero.enable = true;
+  };
 }

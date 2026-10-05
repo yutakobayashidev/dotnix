@@ -4,16 +4,17 @@
   imports = [
     inputs.codex-desktop-linux.homeManagerModules.default
     inputs.nani-translate-linux.homeManagerModules.default
-    ../../applications/niri
-    ../../applications/waybar
-    ../../applications/swayidle
-    ../../applications/swaylock
   ];
 
   my.programs = {
     emacs.enable = true;
+    niri.enable = true;
+    swaylock.enable = true;
+    waybar.enable = true;
     vicinae.enable = true;
   };
+  my.services.swayidle.enable = true;
+
   programs.codexDesktopLinux = {
     enable = true;
     cliPackage = pkgs.llm-agents.codex;

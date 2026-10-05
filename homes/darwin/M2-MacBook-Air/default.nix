@@ -8,11 +8,11 @@
     {
       imports = [
         ../../desktop.nix
-        ../../../applications/course-cli
-        ../../../applications/nlobby-cli
         ../desktop.nix
         inputs.onepassword-shell-plugins.hmModules.default
       ];
+      my.programs.course-cli.enable = true;
+      my.programs.nlobby-cli.enable = true;
       home.homeDirectory = "/Users/${username}";
       home.packages = with pkgs.brewCasks; [
         alcom

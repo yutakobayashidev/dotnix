@@ -181,7 +181,7 @@ Git authentication is handled separately by `ghtkn`.
 Git configuration is defined in:
 
 ```txt
-applications/git/default.nix
+modules/features/version-control/git/default.nix
 ```
 
 The effective configuration is equivalent to:
@@ -200,7 +200,7 @@ only. Non-GitHub remotes keep the normal Git credential lookup path.
 as the hostname. This is required for owner-based App selection.
 
 Do not edit `~/.gitconfig` manually. Home Manager generates it from
-`applications/git/default.nix`.
+`modules/features/version-control/git/default.nix`.
 
 ## App Selection
 
@@ -444,7 +444,7 @@ Do not wrap broad task runners with GH_TOKEN.
 ```txt
 modules/features/gh/default.nix - ghtkn package, gh extensions
 overlays/default.nix           - gh wrapper
-applications/git/default.nix   - ghtkn Git credential helper
+modules/features/version-control/git/default.nix   - ghtkn Git credential helper
 .envrc                         - parent direnv inheritance and Nix dev shell
 docs/ghtkn.md                  - this document
 ```

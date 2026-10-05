@@ -51,9 +51,8 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   ├── nixos/                   # NixOS Home Manager host config
 │   ├── darwin/                  # macOS Home Manager host config
 │   └── android/                 # nix-on-droid home hook
-├── applications/                # Directly imported Home Manager app configs (git, tmux, browsers, niri, misc)
 ├── modules/
-│   ├── features/        # Typed NixOS, nix-darwin, and Home Manager feature registries
+│   ├── features/        # Feature registries, with app configs grouped by purpose
 │   ├── profiles/        # Typed profile bundles with optional system-to-home cascade
 │   └── per-system/      # Packages, devshell, checks, and formatter configuration
 ├── lib/                 # Profile builder and shared evaluation helpers
@@ -61,6 +60,8 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 ├── agents/                  # Agent skills config docs (skills: github:yutakobayashidev/skills)
 └── zsh/                     # Zsh config
 ```
+
+Application settings live in `modules/features/`, grouped into `browser/`, `coding-agents/`, `editor/`, `media/`, `productivity/`, `shell/`, `terminal/`, `version-control/`, and `window-manager/`. Feature modules register through `flake.modules.homeManager` and are discovered automatically. Shared CLI modules apply to every Home Manager host; desktop and host-specific apps are enabled with `my.programs.<name>.enable` (or `my.services.swayidle.enable`) in the corresponding home configuration or profile.
 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 

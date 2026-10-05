@@ -5,40 +5,42 @@
 
   home-manager.users.${username} = {
     imports = [
-      ../../../applications/whipper
-      ../../../applications/beets
       ./ghtkn-agent.nix
     ];
-    my.programs.gallery-dl = {
-      enable = true;
-      archivePath = "/srv/bulk/gallery-dl";
-      extraArgs = [ ];
-      settings = {
-        extractor = {
-          base-directory = "/srv/bulk/gallery-dl";
-          archive = "/srv/bulk/gallery-dl/archive.sqlite3";
-          pixiv = {
-            filename = "{id}_p{num}.{extension}";
-            directory = [
-              "pixiv"
-              "bookmarks"
-              "{user[id]}_{user[account]}"
-            ];
+    my.programs = {
+      beets.enable = true;
+      whipper.enable = true;
+      gallery-dl = {
+        enable = true;
+        archivePath = "/srv/bulk/gallery-dl";
+        extraArgs = [ ];
+        settings = {
+          extractor = {
+            base-directory = "/srv/bulk/gallery-dl";
+            archive = "/srv/bulk/gallery-dl/archive.sqlite3";
+            pixiv = {
+              filename = "{id}_p{num}.{extension}";
+              directory = [
+                "pixiv"
+                "bookmarks"
+                "{user[id]}_{user[account]}"
+              ];
+            };
           };
         };
+        jobs.pixiv-bookmarks = {
+          urls = [ "https://www.pixiv.net/users/{PIXIV_USER_ID}/bookmarks/artworks" ];
+          startAt = "daily";
+        };
+        jobs.fanbox-supporting = {
+          urls = [ "https://fanbox.cc/home/supporting" ];
+          startAt = "daily";
+        };
       };
-      jobs.pixiv-bookmarks = {
-        urls = [ "https://www.pixiv.net/users/{PIXIV_USER_ID}/bookmarks/artworks" ];
-        startAt = "daily";
+      discrawl = {
+        sopsFile = ../../../modules/features/discrawl/secrets.yaml;
+        systemd.enable = true;
       };
-      jobs.fanbox-supporting = {
-        urls = [ "https://fanbox.cc/home/supporting" ];
-        startAt = "daily";
-      };
-    };
-    my.programs.discrawl = {
-      sopsFile = ../../../modules/features/discrawl/secrets.yaml;
-      systemd.enable = true;
     };
     home.packages = with pkgs; [
       bird
