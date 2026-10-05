@@ -63,7 +63,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: Screenpipe CLI/desktop app plus OpenBrief context recall on the ThinkPad
-- **AI development**: Codex Desktop for Linux on graphical hosts
+- **AI development**: Codex Desktop for Linux and Orca on graphical hosts
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
@@ -74,6 +74,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 ### macOS
 
 - **Homebrew**: GUI app management (Ghostty, Raycast, Chrome, etc.)
+- **AI development**: Orca via the desktop profile
 - **Speech-to-text**: Handy with launchd automatic startup
 - **Touch ID**: sudo authentication
 - **1Password**: Shell Plugins (gh, awscli2, tea)

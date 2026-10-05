@@ -10,5 +10,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
   home = {
     my.programs.handy.enable = lib.mkDefault true;
+    my.programs.orca.enable = lib.mkDefault true;
   };
 }
