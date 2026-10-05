@@ -42,6 +42,7 @@ _:
               mattpocock
               i-have-adhd
               twitter-api-relay
+              japanese-tech-writing
               ;
             repiq = {
               path = inputs.repiq;
@@ -67,6 +68,10 @@ _:
           ];
 
           skills.explicit = {
+            japanese-tech-writing = {
+              from = "japanese-tech-writing";
+              path = ".";
+            };
             adr = {
               from = "local";
               path = "adr";

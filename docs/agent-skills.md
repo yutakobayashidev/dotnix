@@ -25,7 +25,9 @@ Changing a manifest without regenerating the lock causes evaluation to fail.
 
 The initial migration preserves the revisions and hashes from `flake.lock`;
 it does not update skill content. Subsequent source-lock runs follow the
-branches declared in the manifests.
+branches declared in the manifests, except sources with `pin.at` set to an
+explicit revision. For those sources, update `pin.at` manually and regenerate
+the lock file. Gists use `pin.type = "git"` with `pin.forge = "none"`.
 
 ## Testing a local skills checkout
 

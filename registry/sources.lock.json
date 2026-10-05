@@ -171,6 +171,25 @@
 			},
 			"subdir": "skills"
 		},
+		"japanese-tech-writing": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "8f2d57610a73efc97d743c9b0b0ecb1002e09fa4",
+				"branch": "main",
+				"forge": "none",
+				"preReleases": false,
+				"releasePrefix": null,
+				"submodules": false,
+				"type": "git",
+				"url": "https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
 		"local": {
 			"filter": {
 				"maxDepth": null,
@@ -442,6 +461,18 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/ayghri/i-have-adhd/archive/839872f9d1cd634fed642b4589ce7226199cc15f.tar.gz"
+			},
+			"japanese-tech-writing": {
+				"branch": "main",
+				"hash": "sha256-jo1DvsAVIAKzurutp+T66kctgaFEe+sVbY9bf7wlCLM=",
+				"repository": {
+					"type": "Git",
+					"url": "https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git"
+				},
+				"revision": "8f2d57610a73efc97d743c9b0b0ecb1002e09fa4",
+				"submodules": false,
+				"type": "Git",
+				"url": null
 			},
 			"local": {
 				"branch": "main",
