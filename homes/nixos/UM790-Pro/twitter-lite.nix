@@ -7,12 +7,7 @@
 }:
 
 let
-  app = inputs.twitter-lite.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
-    # Hash for the nixpkgs/pnpm version followed by dotnix.
-    pnpmDeps = old.pnpmDeps.overrideAttrs {
-      outputHash = "sha256-Rb6im7siGqmP7woz/kHalfPygY3dpmLbFfyOcOx9/+w=";
-    };
-  });
+  app = inputs.twitter-lite.packages.${pkgs.stdenv.hostPlatform.system}.default;
   node = lib.getExe pkgs.nodejs_22;
   stateDir = "${config.xdg.stateHome}/twitter-lite";
   reportDir = "${stateDir}/research";
