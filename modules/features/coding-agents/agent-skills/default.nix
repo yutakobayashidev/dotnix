@@ -25,8 +25,6 @@ _:
       options.my.programs.agent-skills.enable = lib.mkEnableOption "agent skills";
 
       config = lib.mkIf cfg.enable {
-        home.sessionVariables.TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
-
         programs.agent-skills = {
           enable = true;
 

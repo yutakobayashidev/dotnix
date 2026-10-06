@@ -16,6 +16,7 @@ _:
 
       config = lib.mkIf cfg.enable {
         home.packages = [ pkgs.bird ];
+        home.sessionVariables.TWITTER_RELAY_BASE_URL = "https://tw.home.yutakobayashi.com";
 
         programs.agent-skills.skills.explicit = {
           bird = {

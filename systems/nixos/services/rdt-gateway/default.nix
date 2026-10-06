@@ -16,9 +16,6 @@ in
     inputs.rdt-gateway.nixosModules.default
   ];
 
-  environment.systemPackages = [ packages.rdt-cli ];
-  environment.variables.RDT_GATEWAY_URL = gatewayUrl;
-
   sops.secrets.openai-tunnel-api-key = {
     sopsFile = ../../../../secrets/openai-tunnel.yaml;
   };
