@@ -111,7 +111,6 @@ in
 {
   imports = [
     inputs.nur-packages.nixosModules.twitter-api-safe-mcp
-    inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client
   ];
 
   sops.secrets.openai-tunnel-api-key = {

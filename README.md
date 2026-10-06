@@ -137,8 +137,9 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android development environment, VirtualBox on UM790-Pro
 - **Pentesting**: GhidraMCP, Wireshark, OWASP ZAP, mitmproxy, and security analysis tools on the ThinkPad
+- **Reddit**: rdt-gateway on B450M-Pro4 at `https://rdt.home.yutakobayashi.com`, with its stdio MCP server exposed through OpenAI Secure MCP Tunnel. Add the tunnel as a custom MCP server in ChatGPT; running the tunnel does not automatically install the plugin.
 - **Remote MCP**: [Sandboxed local tools on UM790-Pro](docs/local-mcp-tunnel.md) through an OpenAI Secure MCP Tunnel
-- **Self-hosted services**: Nextcloud, Immich, Gitea, Home Assistant, linkding, n8n, WebHashtag, Grafana, Prometheus, Loki, Claude Code telemetry, Twitter API Safe Relay with Secure MCP Tunnel, Twitter Lite, and comin on B450M-Pro4
+- **Self-hosted services**: Nextcloud, Immich, Gitea, Home Assistant, linkding, n8n, WebHashtag, Grafana, Prometheus, Loki, Claude Code telemetry, Twitter API Safe Relay and rdt-gateway with Secure MCP Tunnel, Twitter Lite, and comin on B450M-Pro4
 - **Agent microVMs**: Hermes Agent on UM790-Pro (Slack and Discord) and OpenClaw on B450M-Pro4 via microvm.nix
 
 ### macOS

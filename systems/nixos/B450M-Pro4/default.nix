@@ -34,6 +34,7 @@
     ../services/couchdb
     ../services/coredns
     ../services/twitter-api-safe-relay
+    ../services/rdt-gateway
     ../services/twitter-bookmark-snap
     ../services/twitter-lite
     ../services/s3s
@@ -47,6 +48,7 @@
     ../services/birdclaw
     ../services/searxng
     ../services/linkding
+    inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client
     inputs.disko.nixosModules.disko
     ./disko.nix
     inputs.nur-packages.nixosModules.px4_drv
