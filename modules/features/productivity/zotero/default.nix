@@ -44,7 +44,17 @@ _:
       options.my.programs.zotero.enable = lib.mkEnableOption "zotero";
 
       config = lib.mkIf config.my.programs.zotero.enable {
-        home.packages = [ pkgs.zotero ];
+        home.packages = [
+          (
+            if stdenv.hostPlatform.isLinux then
+              # Zotero 10.0.4's build scripts require Gecko 140.
+              pkgs.zotero.override {
+                firefox-esr-153-unwrapped = pkgs.stable.firefox-esr-140-unwrapped;
+              }
+            else
+              pkgs.zotero
+          )
+        ];
 
         home.file = {
           "${configPath}/profiles.ini" = {
