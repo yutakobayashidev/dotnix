@@ -58,7 +58,7 @@ in
         service = "rdt-gateway";
         tls.certResolver = "letsencrypt";
       };
-      rdt-gateway.loadBalancer.servers = [
+      services.rdt-gateway.loadBalancer.servers = [
         { url = gatewayUrl; }
       ];
     };
