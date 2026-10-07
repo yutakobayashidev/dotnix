@@ -164,7 +164,10 @@ let
 in
 {
   networking.hosts = {
-    "100.111.109.43" = [ "tw.home.yutakobayashi.com" ];
+    "100.111.109.43" = [
+      "tw.home.yutakobayashi.com"
+      "rdt.home.yutakobayashi.com"
+    ];
   };
 
   microvm = {
@@ -244,6 +247,7 @@ in
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
     extraPackages = [
+      inputs.rdt-gateway.packages.${pkgs.stdenv.hostPlatform.system}.rdt-cli
       pkgs.ax
       edcbToolsPackage
       pkgs.bird
