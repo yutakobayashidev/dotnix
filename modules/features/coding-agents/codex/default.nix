@@ -69,6 +69,7 @@ _:
           "none";
       settings = {
         approval_policy = "on-request";
+        approvals_reviewer = "auto_review";
         model = "gpt-6-astra";
         model_reasoning_effort = "medium";
         model_reasoning_summary = "concise";
