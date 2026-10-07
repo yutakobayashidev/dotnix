@@ -16,7 +16,7 @@ in
     }:
 
     let
-      nvimDotfilesDir = "${dotfilesDir}/modules/features/neovim";
+      nvimDotfilesDir = "${dotfilesDir}/modules/features/editor/neovim";
       nvimConfigDir = "${config.xdg.configHome}/nvim";
       neovim = mkNeovim pkgs { configRoot = nvimConfigDir; };
     in

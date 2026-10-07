@@ -52,7 +52,7 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 │   ├── darwin/                  # macOS Home Manager host config
 │   └── android/                 # nix-on-droid home hook
 ├── modules/
-│   ├── features/        # Feature registries, with app configs grouped by purpose
+│   ├── features/        # Application and system features grouped by purpose
 │   ├── profiles/        # Typed profile bundles with optional system-to-home cascade
 │   └── per-system/      # Packages, devshell, checks, and formatter configuration
 ├── lib/                 # Profile builder and shared evaluation helpers
@@ -61,7 +61,28 @@ flake-module.nix             # Generates nixos/darwin/nix-on-droid outputs from 
 └── zsh/                     # Zsh config
 ```
 
-Application settings live in `modules/features/`, grouped into `browser/`, `coding-agents/`, `editor/`, `media/`, `productivity/`, `shell/`, `terminal/`, `version-control/`, and `window-manager/`. Feature modules register through `flake.modules.homeManager` and are discovered automatically. Shared CLI modules apply to every Home Manager host; desktop and host-specific apps are enabled with `my.programs.<name>.enable` (or `my.services.swayidle.enable`) in the corresponding home configuration or profile.
+Application and system features live in purpose-based namespaces under `modules/features/`:
+
+| Namespace          | Contents                                                                      |
+| ------------------ | ----------------------------------------------------------------------------- |
+| `browser/`         | Firefox and Chromium                                                          |
+| `coding-agents/`   | Coding agents, agent skills, and MCP integration                              |
+| `desktop/`         | Launcher, wallpaper, desktop search, and sleep prevention                     |
+| `development/`     | API tools, scripting, and code analysis                                       |
+| `editor/`          | Emacs, Neovim, and Zed                                                        |
+| `input/`           | Input methods and speech-to-text                                              |
+| `media/`           | Media capture, downloads, and music library tools                             |
+| `network/`         | Tailscale and Cloudflare tunnels                                              |
+| `nix/`             | Nix daemon, nixpkgs policy, and remote builds                                 |
+| `observability/`   | Log shipping and rotation                                                     |
+| `productivity/`    | Personal workflows, information retrieval, and document tools                 |
+| `shell/`           | Zsh and general command-line utilities                                        |
+| `system/`          | Boot, persistence, authentication, hardware, and home environment foundations |
+| `terminal/`        | Terminal emulator and multiplexer                                             |
+| `version-control/` | Git, GitHub CLI, Jujutsu, and repository tools                                |
+| `window-manager/`  | Niri, status bar, idle handling, and screen lock                              |
+
+Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and are discovered automatically. Namespace directories have no `default.nix`; a directory with `default.nix` is one feature, so its helper files are not imported separately. Keep application assets alongside their feature. Shared CLI modules apply to every Home Manager host; desktop and host-specific apps are enabled with `my.programs.<name>.enable` (or `my.services.swayidle.enable`) in the corresponding home configuration or profile.
 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 

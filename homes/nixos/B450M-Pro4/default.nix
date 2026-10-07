@@ -38,7 +38,7 @@
         };
       };
       discrawl = {
-        sopsFile = ../../../modules/features/discrawl/secrets.yaml;
+        sopsFile = ../../../modules/features/productivity/discrawl/secrets.yaml;
         systemd.enable = true;
       };
     };

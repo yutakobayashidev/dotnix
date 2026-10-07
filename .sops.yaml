@@ -82,11 +82,11 @@ creation_rules:
     key_groups:
       - age:
           - *b450m
-  - path_regex: modules/features/gallery-dl/secrets\.yaml$
+  - path_regex: modules/features/media/gallery-dl/secrets\.yaml$
     key_groups:
       - age:
           - *b450m
-  - path_regex: modules/features/discrawl/secrets\.yaml$
+  - path_regex: modules/features/productivity/discrawl/secrets\.yaml$
     key_groups:
       - age:
           - *b450m
