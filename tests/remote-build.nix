@@ -4,7 +4,8 @@
 
 let
   pkgs = import nixpkgs { system = "x86_64-linux"; };
-  remoteBuild = (import ../modules/features/remote-build.nix { }).flake.modules.nixos.remote-build;
+  remoteBuild =
+    (import ../modules/features/nix/remote-build.nix { }).flake.modules.nixos.remote-build;
 in
 pkgs.testers.runNixOSTest {
   name = "remote-build";
