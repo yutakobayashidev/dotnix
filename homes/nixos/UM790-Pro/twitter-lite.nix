@@ -58,6 +58,7 @@ in
           "HOST=100.91.91.87"
           "PORT=3006"
           "TWITTER_LITE_AUTH_MODE=none"
+          "TWITTER_LITE_MCP_URL=http://100.91.91.87:3006/mcp"
           "TWITTER_LITE_ORIGIN=https://tw-lite.home.yutakobayashi.com"
           "TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com"
           "TWITTER_LITE_DB_PATH=${stateDir}/workspace.sqlite"

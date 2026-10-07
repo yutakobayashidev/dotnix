@@ -15,6 +15,7 @@
     inputs.nur-packages.nixosModules.codex-limit-auto-reset
     (modulesPath + "/installer/scan/not-detected.nix")
     ./local-mcp.nix
+    ./personal-workspace-tunnel.nix
     ./virtualbox.nix
     ../desktop.nix
   ];
