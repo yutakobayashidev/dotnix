@@ -2260,11 +2260,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1791256431,
-        "narHash": "sha256-bsKkCznGiBSiK0SvWSEH30hyPE4RnXmD6bG9aRY2ncw=",
+        "lastModified": 1791366292,
+        "narHash": "sha256-uWveDHtoVpVhSJkpfRSGLXB5r4j4JtqwYolURbEMe5M=",
         "owner": "yutakobayashidev",
         "repo": "rdt-gateway",
-        "rev": "b5cdb08fd1e87ba050f24cdda277eb70273fc3d3",
+        "rev": "d9f626e19c1ef603698a287b0cf2a064911e4ba1",
         "type": "github"
       },
       "original": {
