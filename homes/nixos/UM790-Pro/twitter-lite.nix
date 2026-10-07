@@ -12,7 +12,6 @@ let
   stateDir = "${config.xdg.stateHome}/twitter-lite";
   reportDir = "${stateDir}/research";
   credentialKey = "${stateDir}/credential-key";
-  codexUrl = "ws://127.0.0.1:4501";
   initializeState = pkgs.writeText "twitter-lite-initialize.mjs" ''
     import { mkdirSync, writeFileSync } from 'node:fs';
     import { randomBytes } from 'node:crypto';
@@ -28,7 +27,7 @@ let
     }
   '';
   environment = [
-    "TWITTER_LITE_CODEX_URL=${codexUrl}"
+    "TWITTER_LITE_CODEX_PATH=${lib.getExe config.programs.codex.package}"
     "TWITTER_LITE_REPORT_ROOT=${reportDir}"
     "CODEX_HOME=${config.xdg.configHome}/codex"
     "PATH=${
@@ -46,8 +45,6 @@ in
     twitter-lite = {
       Unit = {
         Description = "Twitter Lite research decks";
-        Wants = [ "twitter-lite-codex.service" ];
-        After = [ "twitter-lite-codex.service" ];
       };
       Service = {
         ExecStartPre = "${node} ${initializeState}";
@@ -66,19 +63,6 @@ in
           "TWITTER_LITE_MASTODON_ORIGINS=https://fedi.yutakobayashi.com"
           "TWITTER_LITE_CODEX_MODEL=gpt-6-astra"
         ];
-        UMask = "0077";
-        Restart = "on-failure";
-        RestartSec = 5;
-      };
-      Install.WantedBy = [ "default.target" ];
-    };
-
-    twitter-lite-codex = {
-      Unit.Description = "Codex app-server for Twitter Lite";
-      Service = {
-        ExecStart = "${node} ${inputs.twitter-lite}/scripts/serve-codex.mjs";
-        WorkingDirectory = config.home.homeDirectory;
-        Environment = environment;
         UMask = "0077";
         Restart = "on-failure";
         RestartSec = 5;
