@@ -93,8 +93,6 @@
     };
   };
 
-  nix.gc.dates = "weekly";
-
   nix.settings = {
     allowed-users = [ username ];
     trusted-users = [
