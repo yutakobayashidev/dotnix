@@ -2847,11 +2847,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791534639,
-        "narHash": "sha256-m8guVjBisNOEQMtuyqaPLUi0his7m3+UN18FQcss3S8=",
+        "lastModified": 1791535403,
+        "narHash": "sha256-RA7Pyd4yI8IaEIUC0pnsT2yXqRsU98QMf72jqZggxKA=",
         "ref": "refs/heads/main",
-        "rev": "a2048097ac7e0309c09a9846e0749d143e12836f",
-        "revCount": 95,
+        "rev": "a10ba1921a1f54b3d614665ce40f95898aff051e",
+        "revCount": 96,
         "type": "git",
         "url": "https://git.yutakobayashi.com/yuta/twitter-lite"
       },
