@@ -221,6 +221,26 @@
         "type": "github"
       }
     },
+    "codex-transcribe": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791377638,
+        "narHash": "sha256-77sbbJ1vX4cuJQSnyeMU+RQWlMD06skqDIkvTLN7bxA=",
+        "owner": "nakasyou",
+        "repo": "codex-transcribe",
+        "rev": "f5cd33d89eaab101f260fb37a1669671f190daa0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nakasyou",
+        "repo": "codex-transcribe",
+        "type": "github"
+      }
+    },
     "comin": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -2304,6 +2324,7 @@
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
         "codex-desktop-linux": "codex-desktop-linux",
+        "codex-transcribe": "codex-transcribe",
         "comin": "comin",
         "disko": "disko",
         "droidperm": "droidperm",

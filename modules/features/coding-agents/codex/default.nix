@@ -256,7 +256,10 @@ _:
         };
 
         home = {
-          packages = [ pkgs.session-tts ];
+          packages = [
+            pkgs.session-tts
+            inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
+          ];
 
           file = {
             # Codex updates its user config at runtime, so only immutable
