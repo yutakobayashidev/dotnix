@@ -3,6 +3,7 @@
   packages = with pkgs.firefox-addons; [
     onepassword-password-manager
     containerise
+    new-tab-override
     wappalyzer
     nos2x-fox
     metamask

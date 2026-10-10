@@ -27,7 +27,15 @@ _:
             inherit (containerConfig) containers containersForce;
 
             extensions = import ./extensions.nix { inherit pkgs; } // {
-              settings = containerConfig.extensionSettings;
+              settings = containerConfig.extensionSettings // {
+                "newtaboverride@agenedia.com" = {
+                  force = true;
+                  settings = {
+                    type = "custom_url";
+                    url = "https://home.yutakobayashi.com/";
+                  };
+                };
+              };
             };
 
             isDefault = true;
