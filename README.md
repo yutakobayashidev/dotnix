@@ -36,6 +36,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [Hosts and module architecture](docs/configuration.md)
 - [Remote builds](docs/remote-build.md)
 - [Agent skills](docs/agent-skills.md)
+- [Hermes Quantified Self wiki share](docs/hermes-qs-wiki.md)
 - [Firefox](docs/firefox.md)
 - [Network topology](docs/README.md#network-topology)
 

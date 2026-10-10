@@ -2,6 +2,7 @@
 {
   config,
   inputs,
+  lib,
   ...
 }:
 {
@@ -59,6 +60,7 @@
       RDT_GATEWAY_URL=https://rdt.home.yutakobayashi.com
       TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com
       WIKI_PATH=/var/lib/hermes/wiki
+      QS_WIKI_PATH=/var/lib/hermes/quantified-self-wiki
     '';
     owner = "microvm";
     group = "kvm";
@@ -66,6 +68,14 @@
   };
 
   microvm.autostart = [ "hermes-agent" ];
+
+  # Override microvm.nix's default microvm:kvm ownership for this writable wiki.
+  systemd.tmpfiles.settings."10-microvm"."/home/yuta/ghq/git.yutakobayashi.com/yuta/quantified-self-wiki".d =
+    lib.mkForce {
+      user = "yuta";
+      group = config.users.users.yuta.group;
+      mode = "0750";
+    };
 
   microvm.vms.hermes-agent = {
     extraModules = [

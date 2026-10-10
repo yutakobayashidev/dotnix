@@ -6,6 +6,11 @@ Prefer small, reversible actions. Read-only inspection is fine. Ask for explicit
 
 The host manages `~/.hermes` declaratively; do not replace Nix-managed files.
 
+The Quantified Self wiki is available at `$QS_WIKI_PATH`
+(`/var/lib/hermes/quantified-self-wiki`). It is a writable virtiofs share of the
+UM790-Pro host directory, so edits persist on the host. Use it for authorized
+QS research and notes; the existing `$WIKI_PATH` is a separate wiki.
+
 The `edcb` CLI from edcb-tools is available for EDCB CtrlCmd operations. The
 default connection is provided by `EDCB_HOST`, `EDCB_PORT`, and
 `EDCB_TIMEOUT_SECONDS`.

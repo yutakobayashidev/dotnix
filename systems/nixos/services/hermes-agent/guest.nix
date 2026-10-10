@@ -205,6 +205,12 @@ in
         proto = "virtiofs";
       }
       {
+        source = "/home/yuta/ghq/git.yutakobayashi.com/yuta/quantified-self-wiki";
+        mountPoint = "/var/lib/hermes/quantified-self-wiki";
+        tag = "quantified-self-wiki";
+        proto = "virtiofs";
+      }
+      {
         source = "/home/yuta/ghq/git.yutakobayashi.com/yuta/life";
         mountPoint = "/var/lib/hermes/ghq/git.yutakobayashi.com/yuta/life";
         tag = "life";
