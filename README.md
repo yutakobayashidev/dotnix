@@ -175,7 +175,7 @@ Both use [nix-output-monitor](https://github.com/maralorn/nix-output-monitor) fo
 
 ## Managed Tools
 
-- **AI Development**: claude-code, codex, grok, opencode, pi, ccusage; Codex-enabled environments include [codex-transcribe](https://github.com/nakasyou/codex-transcribe) for audio transcription using the existing Codex login (`codex-transcribe recording.wav --language ja`)
+- **AI Development**: claude-code, codex, dsh (DeepSeek Harness), grok, opencode, pi, ccusage; Codex-enabled environments include [codex-transcribe](https://github.com/nakasyou/codex-transcribe) for audio transcription using the existing Codex login (`codex-transcribe recording.wav --language ja`)
 - **Version Control**: git, lazygit, jujutsu (jj), git-lfs, git-wt
 - **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, tmux
 - **Communication**: Beeper Desktop and local MCP; Beeper CLI on UM790-Pro only; halloy (IRC)
