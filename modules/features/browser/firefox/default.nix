@@ -10,6 +10,7 @@ _:
     }:
     let
       cfg = config.my.programs.firefox;
+      parfait = pkgs.callPackage ./parfait.nix { };
       bookmarkConfig = import ./bookmarks.nix { inherit lib; };
     in
     {
@@ -27,20 +28,51 @@ _:
 
             isDefault = true;
 
-            settings = {
-              "browser.toolbars.bookmarks.visibility" = "always";
-              "extensions.autoDisableScopes" = 0;
-              "sidebar.position_start" = true;
-              "sidebar.revamp" = true;
-              "sidebar.verticalTabs" = true;
-              "sidebar.visibility" = "always-show";
-              "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-            }
-            // bookmarkConfig.settings;
+            settings =
+              let
+                parfaitSrc = fetchTarball {
+                  inherit (parfait) url;
+                  sha256 = parfait.outputHash;
+                };
+                parfaitDefaults = lib.pipe "${parfaitSrc}/user.js" [
+                  builtins.readFile
+                  (lib.splitString "\n")
+                  (map (builtins.match ''user_pref\("([^"]+)", (.*)\);''))
+                  (lib.filter (m: m != null))
+                  (map (m: lib.nameValuePair (lib.elemAt m 0) (builtins.fromJSON (lib.elemAt m 1))))
+                  lib.listToAttrs
+                ];
+                parfaitOverrides = {
+                  "parfait.theme.blur.enabled" = true;
+                };
+                staleOverrides = lib.attrNames (removeAttrs parfaitOverrides (lib.attrNames parfaitDefaults));
+              in
+              lib.throwIf (staleOverrides != [ ])
+                "parfait's user.js no longer defines ${lib.concatStringsSep ", " staleOverrides}"
+                (
+                  parfaitDefaults
+                  // parfaitOverrides
+                  // {
+                    "extensions.autoDisableScopes" = 0;
+
+                    "sidebar.verticalTabs" = true;
+                    "sidebar.visibility" = "hide-sidebar";
+
+                    "browser.translations.automaticallyPopup" = false;
+                    "layout.spellcheckDefault" = 0;
+                    "signon.rememberSignons" = false;
+
+                    "browser.toolbars.bookmarks.visibility" = "always";
+                  }
+                  // bookmarkConfig.settings
+                );
 
             search = import ./search.nix { inherit pkgs; };
           };
         };
+
+        home.file."${config.programs.firefox.profilesPath}/${config.programs.firefox.profiles.nix.path}/chrome".source =
+          parfait;
       };
     };
 }

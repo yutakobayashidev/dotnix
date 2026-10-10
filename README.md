@@ -86,6 +86,8 @@ Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and 
 
 Firefox's `nix` profile keeps extensions, search engines, and bookmarks in `modules/features/browser/firefox/{extensions,search,bookmarks}.nix`. Edit the `tree` in `bookmarks.nix` to manage bookmarks, folders, and bookmarklets. Applying the configuration replaces existing bookmarks (`bookmarks.force = true`). Entries tagged `shortcut` also become pinned new-tab tiles; optional `icon` and `iconSize` fields customize their icons. Bookmarklets without that tag remain bookmarks only.
 
+The profile uses [Parfait](https://github.com/reizumii/parfait), pinned in `modules/features/browser/firefox/parfait.nix`, following [natsukium's Firefox configuration](https://github.com/natsukium/dotfiles/tree/main/modules/features/browser/firefox). Home Manager deploys its CSS and assets to the profile's `chrome/` directory and merges upstream `user.js` defaults with local preferences. Blur and vertical tabs are enabled, with the sidebar hidden by default. Automatic translation prompts, spellchecking, and Firefox password saving are disabled. The bookmarks toolbar remains visible. Restart Firefox after applying theme changes.
+
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 
 ## Documentation
