@@ -89,7 +89,7 @@ Home Manager deploys repository-backed configuration from the flake source in th
 Zsh uses Powerlevel10k with a transparent, two-line prompt and pastel colors.
 `zsh/config/p10k.zsh` controls the OS, directory, and Git icons on the left;
 the right shows failures, commands taking at least three seconds, background jobs,
-active development environments, and remote/root context. Node.js and Rust versions
+active development environments, and the hostname (user@host for remote/root sessions). Node.js and Rust versions
 appear only in matching projects. Oh My Zsh still supplies shell plugins, with its
 theme disabled. Ghostty uses JetBrainsMono Nerd Font for the icons.
 
