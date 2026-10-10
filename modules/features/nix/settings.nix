@@ -62,7 +62,6 @@ let
                   "https://codex-desktop-linux.cachix.org"
                   "https://ghostty.cachix.org"
                   "https://niri.cachix.org"
-                  "https://cuda-maintainers.cachix.org"
                   "https://cache.nixos-cuda.org"
                 ];
                 trusted-public-keys = [
@@ -75,7 +74,6 @@ let
                   "codex-desktop-linux.cachix.org-1:nX/xy6AdK9hQE24A8ALGjkCKj2ObFmcnemiL5Cid4nk="
                   "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
                   "niri.cachix.org-1:Wv0UzwLBOfMIiQRtEPf50VzM2g0R0u1uJj59y/v68cM="
-                  "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
                   "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
                 ];
               };
