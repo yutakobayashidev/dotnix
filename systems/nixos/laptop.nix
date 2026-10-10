@@ -1,6 +1,8 @@
 {
   services = {
     tlp.enable = true;
+    # TLP owns power management; override Noctalia's recommended default.
+    power-profiles-daemon.enable = false;
 
     upower = {
       enable = true;

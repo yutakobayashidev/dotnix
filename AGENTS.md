@@ -62,8 +62,9 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 ### NixOS
 
 - **WM**: Niri (scrollable tiling WM)
+- **Desktop shell**: Noctalia (bar, notifications, OSD, and control center)
 - **Launcher**: Vicinae
-- **Wallpaper**: swaybg via a Home Manager feature module
+- **Wallpaper**: Noctalia via a Home Manager feature module
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: Screenpipe CLI/desktop app plus OpenBrief context recall on the ThinkPad

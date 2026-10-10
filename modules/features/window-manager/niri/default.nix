@@ -1,5 +1,8 @@
 { inputs, ... }:
 
+let
+  palette = import ../../../../lib/desktop-palette.nix;
+in
 {
   flake.modules.homeManager.niri =
     {
@@ -42,7 +45,7 @@
 
           # レイアウト設定
           layout = {
-            gaps = 16;
+            gaps = 12;
             center-focused-column = "never";
             preset-column-widths = [
               { proportion = 0.33333; }
@@ -56,16 +59,12 @@
             # フォーカスリング（アクティブウィンドウを強調）
             focus-ring = {
               width = 2;
-              active.color = "#f5bde6"; # Catppuccin ピンク
-              inactive.color = "#5b6078"; # Catppuccin グレー
+              active.color = "#${palette.mauve}";
+              inactive.color = "#${palette.surface1}";
             };
 
             # ボーダー
-            border = {
-              width = 2;
-              active.color = "#f5bde6";
-              inactive.color = "#5b6078";
-            };
+            border.enable = false;
           };
 
           # 環境変数
@@ -82,7 +81,6 @@
             {
               command = [ "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1" ];
             }
-            { command = [ "waybar" ]; }
             { command = [ "spotify" ]; }
           ];
 
@@ -90,10 +88,10 @@
           window-rules = [
             {
               geometry-corner-radius = {
-                top-left = 10.0;
-                top-right = 10.0;
-                bottom-right = 10.0;
-                bottom-left = 10.0;
+                top-left = 12.0;
+                top-right = 12.0;
+                bottom-right = 12.0;
+                bottom-left = 12.0;
               };
               clip-to-geometry = true;
             }
@@ -236,34 +234,34 @@
 
             # メディアキー
             "XF86AudioRaiseVolume".action.spawn = [
-              "wpctl"
-              "set-volume"
-              "-l"
-              "1"
-              "@DEFAULT_AUDIO_SINK@"
-              "5%+"
+              "noctalia"
+              "msg"
+              "volume-up"
             ];
             "XF86AudioLowerVolume".action.spawn = [
-              "wpctl"
-              "set-volume"
-              "@DEFAULT_AUDIO_SINK@"
-              "5%-"
+              "noctalia"
+              "msg"
+              "volume-down"
             ];
             "XF86AudioMute".action.spawn = [
-              "wpctl"
-              "set-mute"
-              "@DEFAULT_AUDIO_SINK@"
-              "toggle"
+              "noctalia"
+              "msg"
+              "volume-mute"
+            ];
+            "XF86AudioMicMute".action.spawn = [
+              "noctalia"
+              "msg"
+              "mic-mute"
             ];
             "XF86MonBrightnessUp".action.spawn = [
-              "brightnessctl"
-              "set"
-              "5%+"
+              "noctalia"
+              "msg"
+              "brightness-up"
             ];
             "XF86MonBrightnessDown".action.spawn = [
-              "brightnessctl"
-              "set"
-              "5%-"
+              "noctalia"
+              "msg"
+              "brightness-down"
             ];
           };
         };
@@ -272,7 +270,6 @@
         home.packages = with pkgs; [
           brightnessctl
           playerctl
-          polycat
         ];
       };
     };

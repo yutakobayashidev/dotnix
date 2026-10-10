@@ -10,6 +10,7 @@ _:
     }:
     let
       cfg = config.my.programs.ghostty;
+      palette = import ../../../../lib/desktop-palette.nix;
     in
     {
       options.my.programs.ghostty.enable = lib.mkEnableOption "Ghostty";
@@ -45,6 +46,14 @@ _:
             quick-terminal-keyboard-interactivity = "on-demand";
             gtk-quick-terminal-layer = "top";
             quit-after-last-window-closed = false;
+          }
+          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+            theme = "Catppuccin Mocha";
+            background-opacity = 0.92;
+            cursor-color = "#${palette.mauve}";
+            cursor-text = "#${palette.crust}";
+            selection-background = "#${palette.surface1}";
+            selection-foreground = "#${palette.text}";
           };
         };
       };
