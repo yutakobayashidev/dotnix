@@ -114,6 +114,25 @@
 			},
 			"subdir": "skills"
 		},
+		"explain-diff": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "126e7fe9eecaafadfe1ac8bb183d135812b608f2",
+				"branch": "main",
+				"forge": "none",
+				"preReleases": false,
+				"releasePrefix": null,
+				"submodules": false,
+				"type": "git",
+				"url": "https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524.git",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
 		"hashicorp": {
 			"filter": {
 				"maxDepth": null,
@@ -422,6 +441,18 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/yoshiko-pg/difit/archive/82a765c037ec28fe7fe90ab2f1e4b5748032b4fa.tar.gz"
+			},
+			"explain-diff": {
+				"branch": "main",
+				"hash": "sha256-MN/QZMqU4i4EpXfR13CL+LELGiVuQ92NSq4B96zaS5E=",
+				"repository": {
+					"type": "Git",
+					"url": "https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524.git"
+				},
+				"revision": "126e7fe9eecaafadfe1ac8bb183d135812b608f2",
+				"submodules": false,
+				"type": "Git",
+				"url": null
 			},
 			"hashicorp": {
 				"branch": "main",

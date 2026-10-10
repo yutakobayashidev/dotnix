@@ -46,6 +46,12 @@ _:
               path = inputs.repiq;
               subdir = "skills";
             };
+            explain-diff = {
+              # The Gist contains standalone Markdown files rather than skill directories.
+              path = pkgs.writeTextDir "SKILL.md" (
+                builtins.readFile "${registrySources.explain-diff.path}/explain-diff-html.md"
+              );
+            };
             agent-scripts = registrySources.agent-scripts // {
               path = agentScriptsSrc;
             };
@@ -66,6 +72,10 @@ _:
           ];
 
           skills.explicit = {
+            explain-diff-html = {
+              from = "explain-diff";
+              path = ".";
+            };
             japanese-tech-writing = {
               from = "japanese-tech-writing";
               path = ".";
