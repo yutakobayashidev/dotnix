@@ -18,6 +18,18 @@ let
         }
         {
           name = "";
+          url = "https://search.nixos.org/packages";
+        }
+        {
+          name = "";
+          url = "https://wiki.nixos.org/";
+        }
+        {
+          name = "";
+          url = "https://noogle.dev/";
+        }
+        {
+          name = "";
           url = "https://atcoder.jp/";
         }
         {
