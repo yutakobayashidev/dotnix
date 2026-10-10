@@ -201,6 +201,18 @@ let
           name = "OG Image";
           url = ''javascript:(function(){const url=document.querySelector('meta[property="og:image"]')?.content;if(!url)return alert("No og:image on this page.");document.body.insertAdjacentHTML('beforeend',`<img src="''${url}" width="300" style="position:fixed;top:10px;left: 10px;z-index:9999;border:solid 2px #000;" onClick="this.remove()" >`);})();'';
         }
+        {
+          name = "Copy Markdown Link";
+          url = ''javascript:(async()=>{const t=document.title.trim().replace(/\n/g,"");const u=document.URL;await navigator.clipboard.writeText(`[''${t}](''${u})`);})();'';
+        }
+        {
+          name = "Show Passwords";
+          url = "javascript:(()=>{document.querySelectorAll('input[type=password]').forEach(i=>i.type='text');})();";
+        }
+        {
+          name = "Enable Selection";
+          url = "javascript:(()=>{document.onselectstart=document.oncopy=document.oncontextmenu=null;document.querySelectorAll('*').forEach(e=>e.style.userSelect='auto');})();";
+        }
       ];
     }
   ];
