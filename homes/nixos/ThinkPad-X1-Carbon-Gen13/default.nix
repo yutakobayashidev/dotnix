@@ -13,8 +13,13 @@
         inputs.onepassword-shell-plugins.hmModules.default
         inputs.temari.homeManagerModules.default
       ];
-      my.programs.course-cli.enable = true;
-      my.services.activitywatch.enable = true;
+      my = {
+        programs.course-cli.enable = true;
+        services = {
+          activitywatch.enable = true;
+          mpris-collector.enable = true;
+        };
+      };
       home.homeDirectory = "/home/${username}";
       home.packages = with pkgs; [
         alcom

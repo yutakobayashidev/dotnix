@@ -1,0 +1,36 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "MPRIS media play v1 (Aurboda MediaPlayInput compatible)",
+	"type": "object",
+	"additionalProperties": false,
+	"required": [
+		"id",
+		"device",
+		"player",
+		"url",
+		"title",
+		"artist",
+		"album",
+		"started_at",
+		"ended_at",
+		"played_secs",
+		"track_secs",
+		"max_position_secs",
+		"seek_count"
+	],
+	"properties": {
+		"id": { "type": "string", "minLength": 1, "maxLength": 64 },
+		"device": { "type": "string" },
+		"player": { "type": "string" },
+		"url": { "type": "string" },
+		"title": { "type": "string" },
+		"artist": { "type": "string" },
+		"album": { "type": "string" },
+		"started_at": { "type": "string", "format": "date-time" },
+		"ended_at": { "type": "string", "format": "date-time" },
+		"played_secs": { "type": "number", "minimum": 0 },
+		"track_secs": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+		"max_position_secs": { "type": "number", "minimum": 0 },
+		"seek_count": { "type": "integer", "minimum": 0 }
+	}
+}

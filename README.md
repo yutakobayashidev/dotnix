@@ -39,6 +39,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [Hermes Quantified Self wiki share](docs/hermes-qs-wiki.md)
 - [Firefox](docs/firefox.md)
 - [ActivityWatch on ThinkPad](docs/activitywatch.md)
+- [MPRIS media history on ThinkPad](docs/mpris-collector.md)
 - [Network topology](docs/README.md#network-topology)
 
 Project templates live in [ashiba](https://github.com/yutakobayashidev/ashiba).
