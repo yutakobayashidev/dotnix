@@ -48,6 +48,16 @@ _:
             lockscreen.enabled = false;
             dock.enabled = false;
 
+            # Connect accounts through Settings → Calendar; credentials stay in Secret Service.
+            calendar = {
+              enabled = true;
+              reminders = {
+                enabled = true;
+                use_event_reminders = true;
+                default_lead_minutes = 10;
+              };
+            };
+
             bar.main = {
               margin_ends = 12;
               margin_edge = 8;
@@ -103,7 +113,7 @@ _:
                 type = "media";
                 hide_when_no_media = true;
                 max_length = 180;
-                title_scroll = "on_hover";
+                title_scroll = "always";
               };
               output-volume = {
                 type = "volume";
