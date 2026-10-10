@@ -10,6 +10,26 @@ Skill-only repositories use the [upstream source registry](https://github.com/Ky
 Package-providing repositories continue to use flake inputs so their skills and
 packages share a revision. Repository-local skills continue to use local paths.
 
+## Global mizchi skills
+
+`registry/sources/mizchi.nix` pins the reviewed revision of `mizchi/skills`.
+The Home Manager feature selects seven skills in
+`modules/features/coding-agents/agent-skills/mizchi.nix`: maintainer-persona,
+extract-glossary, stryker-js, natural-writing-ja, natural-writing-en, ai-index,
+and formal-methods-reconciler. They use the existing enabled global targets.
+
+The transforms keep scripts at immutable source paths and use Nix-provided
+Node.js, Python, Git, and GitHub CLI binaries. Writing skills share ai-index's
+local Python prose lint; it needs no API key and does not determine whether an
+author used AI. Maintainer analysis works without drafting or publishing, and
+its local policy reuses existing authorization instead of repeating approval
+requests at each draft stage. A request for analysis does not authorize posting.
+
+Stryker configuration remains project-local, and formal verification tools are
+chosen per task. These skills do not install a test runner or every solver into
+all projects. When updating the source pin, check the replacement strings and
+upstream scripts as well as the generated skill content.
+
 ## Updating sources
 
 From the repository root:

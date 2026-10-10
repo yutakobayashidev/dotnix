@@ -41,6 +41,7 @@ _:
               i-have-adhd
               twitter-api-relay
               japanese-tech-writing
+              mizchi
               ;
             repiq = {
               path = inputs.repiq;
@@ -71,7 +72,7 @@ _:
             "i-have-adhd"
           ];
 
-          skills.explicit = {
+          skills.explicit = (import ./mizchi.nix { inherit pkgs lib registrySources; }) // {
             explain-diff-html = {
               from = "explain-diff";
               path = ".";

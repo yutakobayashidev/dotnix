@@ -247,6 +247,25 @@
 			},
 			"subdir": "skills"
 		},
+		"mizchi": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "62f580819410cb1d398e4d7f234bbd0aad1c1a15",
+				"branch": "main",
+				"owner": "mizchi",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
 		"obsidian": {
 			"filter": {
 				"maxDepth": null,
@@ -530,6 +549,19 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/mattpocock/skills/archive/984a2c023c9fb42bb6ea40c70a652284a109dc05.tar.gz"
+			},
+			"mizchi": {
+				"branch": "main",
+				"hash": "sha256-td6husEnA0cqdgfyROdjFpVOhWv44EfJIvi+gGY13YU=",
+				"repository": {
+					"owner": "mizchi",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "62f580819410cb1d398e4d7f234bbd0aad1c1a15",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/mizchi/skills/archive/62f580819410cb1d398e4d7f234bbd0aad1c1a15.tar.gz"
 			},
 			"obsidian": {
 				"branch": "main",
