@@ -19,6 +19,7 @@
 
   nixpkgs = {
     overlays = [
+      inputs.ghostty.overlays.default
       (
         _final: prev:
         let
@@ -28,7 +29,6 @@
           bird = inputs.bird.packages.${system}.bird;
           discrawl = inputs.nix-openclaw-tools.packages.${system}.discrawl;
           edcb-tools = inputs.edcb-tools.packages.${system}.edcb-tools;
-          ghostty = inputs.ghostty.packages.${system}.default;
           gogcli = inputs.nix-openclaw-tools.packages.${system}.gogcli;
           gh-graph = inputs.gh-graph.packages.${system}.default;
           gh-nippou = inputs.gh-nippou.packages.${system}.default;
