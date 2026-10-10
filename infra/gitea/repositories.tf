@@ -54,6 +54,14 @@ resource "gitea_repository" "llm_wiki" {
   auto_init   = false
 }
 
+resource "gitea_repository" "quantified_self_wiki" {
+  username    = "yuta"
+  name        = "quantified-self-wiki"
+  description = "Quantified Self tools, data sources, and integration research"
+  private     = false
+  auto_init   = false
+}
+
 resource "gitea_repository" "nnn" {
   username  = "yuta"
   name      = "nnn"
