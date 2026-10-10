@@ -10,6 +10,7 @@ _:
     }:
     let
       cfg = config.my.programs.firefox;
+      bookmarkConfig = import ./bookmarks.nix { inherit lib; };
     in
     {
       options.my.programs.firefox.enable = lib.mkEnableOption "Firefox";
@@ -20,7 +21,7 @@ _:
           configPath = ".mozilla/firefox";
 
           profiles.nix = {
-            imports = [ ./bookmarks.nix ];
+            inherit (bookmarkConfig) bookmarks;
 
             extensions = import ./extensions.nix { inherit pkgs; };
 
@@ -34,7 +35,8 @@ _:
               "sidebar.verticalTabs" = true;
               "sidebar.visibility" = "always-show";
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-            };
+            }
+            // bookmarkConfig.settings;
 
             search = import ./search.nix { inherit pkgs; };
           };
