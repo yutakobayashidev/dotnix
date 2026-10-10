@@ -8,12 +8,12 @@
     {
       imports = [
         ../../desktop.nix
-        ../../../applications/course-cli
         ../desktop.nix
         inputs.openbrief.homeManagerModules.default
         inputs.onepassword-shell-plugins.hmModules.default
         inputs.temari.homeManagerModules.default
       ];
+      my.programs.course-cli.enable = true;
       home.homeDirectory = "/home/${username}";
       home.packages = with pkgs; [
         alcom

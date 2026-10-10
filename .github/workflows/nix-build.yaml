@@ -10,7 +10,6 @@ on:
     paths:
       - '.github/actions/setup-nix/**'
       - '.github/workflows/nix-build.yaml'
-      - 'applications/**'
       - 'flake-module.nix'
       - 'flake.lock'
       - 'flake.nix'
@@ -43,7 +42,6 @@ jobs:
             nix:
               - '.github/actions/setup-nix/**'
               - '.github/workflows/nix-build.yaml'
-              - 'applications/**'
               - 'flake-module.nix'
               - 'flake.lock'
               - 'flake.nix'

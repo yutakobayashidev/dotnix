@@ -56,6 +56,7 @@
       EDCB_PORT=4510
       EDCB_TIMEOUT_SECONDS=15
       SEARXNG_URL=https://search.home.yutakobayashi.com
+      RDT_GATEWAY_URL=https://rdt.home.yutakobayashi.com
       TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com
       WIKI_PATH=/var/lib/hermes/wiki
     '';

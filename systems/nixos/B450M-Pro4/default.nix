@@ -24,7 +24,6 @@
     ../services/loki
     ../services/opentelemetry-collector
     ../services/oura-metrics
-    ../services/archivebox
     ../services/n8n
     ../services/niks3
     ../services/comin
@@ -35,6 +34,7 @@
     ../services/couchdb
     ../services/coredns
     ../services/twitter-api-safe-relay
+    ../services/rdt-gateway
     ../services/twitter-bookmark-snap
     ../services/twitter-lite
     ../services/s3s
@@ -48,14 +48,15 @@
     ../services/birdclaw
     ../services/searxng
     ../services/linkding
+    inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client
     inputs.disko.nixosModules.disko
-    inputs.nur-packages.nixosModules.codex-limit-auto-reset
     ./disko.nix
     inputs.nur-packages.nixosModules.px4_drv
   ];
 
   ext.security.secureboot.enable = true;
   my = {
+    nix.remoteBuild.client.enable = true;
     system.impermanence.enable = true;
     profiles = {
       base.enable = true;
@@ -123,6 +124,15 @@
         "noatime"
       ];
     };
+    "/var/lib/gitea" = {
+      device = "/dev/disk/by-label/bulk";
+      fsType = "btrfs";
+      options = [
+        "subvol=@bulk/gitea"
+        "compress=zstd:1"
+        "noatime"
+      ];
+    };
     "/var/lib/immich" = {
       device = "/dev/disk/by-label/bulk";
       fsType = "btrfs";
@@ -171,12 +181,6 @@
   };
 
   services = {
-    codex-limit-auto-reset = {
-      enable = true;
-      codexPackage = pkgs.llm-agents.codex;
-      user = "yuta";
-      codexHome = "/home/yuta/.config/codex";
-    };
     prometheus.exporters.node = {
       enable = true;
       enabledCollectors = [ "systemd" ];

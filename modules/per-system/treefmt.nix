@@ -12,8 +12,8 @@
           stylua = {
             enable = true;
             excludes = [
-              "modules/features/neovim/init.lua"
-              "modules/features/neovim/lua/rc/**"
+              "modules/features/editor/neovim/init.lua"
+              "modules/features/editor/neovim/lua/rc/**"
             ];
           };
           shfmt.enable = true;
@@ -22,8 +22,8 @@
           oxfmt = {
             enable = true;
             excludes = [
-              "modules/features/neovim/template/**"
-              "modules/features/neovim/lazy-lock.json"
+              "modules/features/editor/neovim/template/**"
+              "modules/features/editor/neovim/lazy-lock.json"
               "**/.npmrc"
               "**/secrets.yaml"
               "secrets/default.yaml"

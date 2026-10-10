@@ -3,6 +3,8 @@
 import ../../lib/mkProfile.nix { inherit lib; } {
   name = "communication";
 
+  system.my.nixpkgs.permittedInsecurePackages = [ "keybase-gui-6.5.1" ];
+
   nixos.services.kbfs.enable = true;
 
   home =
@@ -12,6 +14,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
       home.packages =
         with pkgs;
         lib.optionals pkgs.stdenv.isLinux [
+          beeper
           element-desktop
           google-chrome
           halloy
@@ -21,6 +24,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           simplex-chat-desktop
           slack
           telegram-desktop
+          thunderbird
         ];
 
       programs.vesktop = {
@@ -65,6 +69,10 @@ import ../../lib/mkProfile.nix { inherit lib; } {
             };
           };
         };
+      };
+
+      programs.mcp.servers = lib.optionalAttrs pkgs.stdenv.isLinux {
+        beeper.url = "http://localhost:23373/v0/mcp";
       };
     };
 }

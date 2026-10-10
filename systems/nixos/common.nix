@@ -19,6 +19,7 @@
 
   nixpkgs = {
     overlays = [
+      inputs.ghostty.overlays.default
       (
         _final: prev:
         let
@@ -28,7 +29,6 @@
           bird = inputs.bird.packages.${system}.bird;
           discrawl = inputs.nix-openclaw-tools.packages.${system}.discrawl;
           edcb-tools = inputs.edcb-tools.packages.${system}.edcb-tools;
-          ghostty = inputs.ghostty.packages.${system}.default;
           gogcli = inputs.nix-openclaw-tools.packages.${system}.gogcli;
           gh-graph = inputs.gh-graph.packages.${system}.default;
           gh-nippou = inputs.gh-nippou.packages.${system}.default;
@@ -62,7 +62,7 @@
                 sourceRoot = ".";
                 installPhase = ''
                   mkdir -p $out/bin
-                  cp bin/moonbit-lsp $out/bin/moonbit-lsp
+                  cp bin/moon-lsp $out/bin/moonbit-lsp
                   chmod +x $out/bin/moonbit-lsp
                 '';
               }
@@ -93,14 +93,7 @@
     };
   };
 
-  nix.gc.dates = "weekly";
-
   nix.settings = {
-    keep-outputs = true;
-    keep-derivations = true;
-    min-free = 10 * 1024 * 1024 * 1024;
-    max-free = 20 * 1024 * 1024 * 1024;
-    connect-timeout = 5;
     allowed-users = [ username ];
     trusted-users = [
       "root"

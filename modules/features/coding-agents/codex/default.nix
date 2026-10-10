@@ -69,20 +69,20 @@ _:
           "none";
       settings = {
         approval_policy = "on-request";
-        default_mode_request_user_input = true;
-        model = "gpt-5.6-sol";
+        approvals_reviewer = "auto_review";
+        model = "gpt-6-astra";
         model_reasoning_effort = "medium";
         model_reasoning_summary = "concise";
         model_verbosity = "low";
         personality = "pragmatic";
         project_doc_fallback_filenames = [ "CLAUDE.md" ];
         suppress_unstable_features_warning = true;
-        web_search_request = true;
+        web_search = "live";
         oss_provider = "lmstudio";
 
         features = {
           hooks = true;
-          remote_connections = true;
+          reasoning_effort_override = true;
           remote_control = true;
           workspace_dependencies = false;
         };
@@ -256,7 +256,10 @@ _:
         };
 
         home = {
-          packages = [ pkgs.session-tts ];
+          packages = [
+            pkgs.session-tts
+            inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
+          ];
 
           file = {
             # Codex updates its user config at runtime, so only immutable

@@ -16,6 +16,10 @@
       url = "github:ilysenko/codex-desktop-linux";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    codex-transcribe = {
+      url = "github:nakasyou/codex-transcribe";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nani-translate-linux = {
       url = "git+https://git.yutakobayashi.com/yuta/nani-translate-linux";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -95,10 +99,6 @@
       url = "github:openclaw/nix-openclaw-tools";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    openclaw = {
-      url = "github:openclaw/openclaw";
-      flake = false;
-    };
     gh-nippou = {
       url = "github:ryoppippi/gh-nippou";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -119,74 +119,12 @@
       url = "github:Kyure-A/agent-skills-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agent-scripts = {
-      url = "github:steipete/agent-scripts";
-      flake = false;
-    };
-    superpowers = {
-      url = "github:obra/superpowers";
-      flake = false;
-    };
-    anthropic-skills = {
-      url = "github:anthropics/skills";
-      flake = false;
-    };
-    ast-grep-skill = {
-      url = "github:ast-grep/claude-skill";
-      flake = false;
-    };
-    obsidian-skills = {
-      url = "github:kepano/obsidian-skills";
-      flake = false;
-    };
-    oracle-skill = {
-      url = "github:yutakobayashidev/oracle";
-      flake = false;
-    };
-    prompt-review-skill = {
-      url = "github:tokoroten/prompt-review";
-      flake = false;
-    };
-    difit-skills = {
-      url = "github:yoshiko-pg/difit";
-      flake = false;
-    };
     droidperm = {
       url = "github:yutakobayashidev/droidperm";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    agent-browser-skill = {
-      url = "github:vercel-labs/agent-browser";
-      flake = false;
-    };
-    before-and-after-skill = {
-      url = "github:vercel-labs/before-and-after";
-      flake = false;
-    };
-    mattpocock-skills = {
-      url = "github:mattpocock/skills";
-      flake = false;
-    };
-    i-have-adhd-skill = {
-      url = "github:ayghri/i-have-adhd";
-      flake = false;
-    };
-    twitter-api-safe-relay-skills = {
-      url = "github:fa0311/twitter_api_safe_relay_skills";
-      flake = false;
-    };
-    hashicorp-agent-skills = {
-      url = "github:hashicorp/agent-skills";
-      flake = false;
-    };
-    herdr-skill = {
-      url = "github:ogulcancelik/herdr";
-      flake = false;
-    };
-    skills = {
-      url = "github:yutakobayashidev/skills";
-      flake = false;
-    };
+    # Keep the gateway's tested Rust/native toolchain pinned independently.
+    rdt-gateway.url = "github:yutakobayashidev/rdt-gateway";
     repiq = {
       url = "github:yutakobayashidev/repiq";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -305,6 +243,9 @@
       "https://nix-community.cachix.org"
       "https://vicinae.cachix.org"
       "https://codex-desktop-linux.cachix.org"
+      "https://ghostty.cachix.org"
+      "https://niri.cachix.org"
+      "https://cache.nixos-cuda.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -315,6 +256,9 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
       "codex-desktop-linux.cachix.org-1:nX/xy6AdK9hQE24A8ALGjkCKj2ObFmcnemiL5Cid4nk="
+      "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
+      "niri.cachix.org-1:Wv0UzwLBOfMIiQRtEPf50VzM2g0R0u1uJj59y/v68cM="
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
     ];
   };
 

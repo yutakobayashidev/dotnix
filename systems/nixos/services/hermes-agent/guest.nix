@@ -6,6 +6,7 @@
   ...
 }:
 let
+  registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
   agentSkillsLib = inputs.agent-skills.lib.agent-skills;
   edcbToolsPackage = pkgs.edcb-tools;
   tomlFormat = pkgs.formats.toml { };
@@ -89,33 +90,17 @@ let
     git-discrawl-archive,git-ssh.yutakobayashi.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPZl6HOE9OLZQxnK1liKwcFUSNHKVk0YPC49tdyxHO/
   '';
   hermesSkillsSources = {
+    inherit (registrySources) superpowers i-have-adhd;
     ax = {
       path = inputs.ax;
       subdir = "skills";
     };
-    superpowers = {
-      path = inputs.superpowers;
-      subdir = "skills";
-    };
-    skills = {
-      path = inputs.skills;
-      subdir = "skills";
-    };
-    obsidian-skills = {
-      path = inputs.obsidian-skills;
-      subdir = "skills";
-    };
-    openclaw-skills = {
-      path = inputs.openclaw;
-      subdir = ".agents/skills";
-    };
+    skills = registrySources.local;
+    obsidian-skills = registrySources.obsidian;
+    openclaw-skills = registrySources.openclaw;
     edcb-tools = {
       path = inputs.edcb-tools;
       subdir = ".agents/skills";
-    };
-    i-have-adhd = {
-      path = inputs.i-have-adhd-skill;
-      subdir = "skills";
     };
   };
   hermesSkillsCatalog = agentSkillsLib.discoverCatalog hermesSkillsSources;
@@ -179,7 +164,10 @@ let
 in
 {
   networking.hosts = {
-    "100.111.109.43" = [ "tw.home.yutakobayashi.com" ];
+    "100.111.109.43" = [
+      "tw.home.yutakobayashi.com"
+      "rdt.home.yutakobayashi.com"
+    ];
   };
 
   microvm = {
@@ -259,6 +247,7 @@ in
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
     extraPackages = [
+      inputs.rdt-gateway.packages.${pkgs.stdenv.hostPlatform.system}.rdt-cli
       pkgs.ax
       edcbToolsPackage
       pkgs.bird
@@ -429,10 +418,10 @@ in
     '';
   };
 
-  services.journald.extraConfig = ''
-    ForwardToConsole=yes
-    MaxLevelConsole=info
-  '';
+  services.journald.settings.Journal = {
+    ForwardToConsole = true;
+    MaxLevelConsole = "info";
+  };
 
   system.stateVersion = "25.11";
 }

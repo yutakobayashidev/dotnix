@@ -1,7 +1,7 @@
 # B450M-Pro4 HDD Service Storage Notes
 
-These notes record the May 2026 migration for using the 3TB HDD as bulk storage
-for Nextcloud and ArchiveBox while preserving the existing NTFS data.
+These notes record the May 2026 bulk-storage setup and later service migrations
+for using the 3TB HDD while preserving the existing NTFS data.
 
 ## Goal
 
@@ -11,13 +11,12 @@ for Nextcloud and ArchiveBox while preserving the existing NTFS data.
 - Put service data under separate directories:
 
   ```text
+  /srv/bulk/gitea
   /srv/bulk/nextcloud/data
-  /srv/bulk/archivebox/data
   ```
 
-Do not put active Nextcloud or ArchiveBox data directly on the NTFS partition.
-NTFS is useful as a temporary migration source, but Linux-native service data
-should live on btrfs.
+Do not put active service data directly on the NTFS partition. NTFS is useful as
+a temporary migration source, but Linux-native service data should live on btrfs.
 
 ## Observed Disk State
 
@@ -36,14 +35,6 @@ Partition layout before changes:
 
 `/dev/sda2` was mounted read-only at `/tmp/hdd-sda2`. It contained about 485GB
 of existing Windows-era data, with about 2.3TB free.
-
-`ArchiveBox` binds this path into the Docker container:
-
-```nix
-"/mnt/usb/services/archivebox/data:/data"
-```
-
-There was no declarative `/mnt/usb` mount in this repository.
 
 ## Completed Safety Checks
 
@@ -238,7 +229,7 @@ sudo btrfs subvolume create /mnt/bulk/@bulk
 sudo umount /mnt/bulk
 
 sudo mount -o subvol=@bulk,compress=zstd:1,noatime /dev/disk/by-label/bulk /mnt/bulk
-sudo mkdir -p /mnt/bulk/nextcloud/data /mnt/bulk/archivebox/data
+sudo mkdir -p /mnt/bulk/nextcloud/data
 sudo umount /mnt/bulk
 ```
 
@@ -277,10 +268,20 @@ fileSystems."/srv/bulk" = {
 };
 ```
 
-Nextcloud and Immich keep the NixOS module default state locations and mount
-dedicated bulk subvolumes there:
+Gitea, Nextcloud, and Immich keep the NixOS module default state locations and
+mount dedicated bulk subvolumes there:
 
 ```nix
+fileSystems."/var/lib/gitea" = {
+  device = "/dev/disk/by-label/bulk";
+  fsType = "btrfs";
+  options = [
+    "subvol=@bulk/gitea"
+    "compress=zstd:1"
+    "noatime"
+  ];
+};
+
 fileSystems."/var/lib/nextcloud" = {
   device = "/dev/disk/by-label/bulk";
   fsType = "btrfs";
@@ -306,13 +307,20 @@ Create the subvolumes before switching:
 
 ```sh
 sudo mount /dev/disk/by-label/bulk /mnt/bulk
+sudo btrfs subvolume create /mnt/bulk/@bulk/gitea
 sudo btrfs subvolume create /mnt/bulk/@bulk/nextcloud
 sudo btrfs subvolume create /mnt/bulk/@bulk/immich
 sudo umount /mnt/bulk
 ```
 
-If `/mnt/bulk/@bulk/nextcloud` or `/mnt/bulk/@bulk/immich` already exists as a
-regular directory, move or remove it before creating the subvolume.
+If a target path already exists as a regular directory, move or remove it before
+creating the subvolume.
+
+Gitea uses:
+
+```text
+/var/lib/gitea
+```
 
 Nextcloud uses:
 
@@ -324,10 +332,4 @@ Immich uses:
 
 ```text
 /var/lib/immich
-```
-
-ArchiveBox uses:
-
-```text
-/srv/bulk/archivebox/data
 ```

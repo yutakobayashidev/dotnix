@@ -4,13 +4,17 @@ import ../../lib/mkProfile.nix { inherit lib; } {
   name = "network";
 
   home =
-    { lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       home.packages =
         with pkgs;
         [
           bandwhich
-          cloudflare-warp
           cloudflared
           dnsutils
           gping
@@ -21,6 +25,9 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           proton-vpn-cli
+          (cloudflare-warp.override { headless = !config.my.profiles.desktop.enable; })
+        ]
+        ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.isLinux) [
           tor-browser
         ];
     };

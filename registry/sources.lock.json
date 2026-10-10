@@ -1,0 +1,648 @@
+{
+	"manifests": {
+		"agent-browser": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "vercel-labs",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "agent-browser",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"agent-scripts": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": "agent-scripts",
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "steipete",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "agent-scripts",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"anthropic": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "anthropics",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"ast-grep": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "ast-grep",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "claude-skill",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "ast-grep/skills"
+		},
+		"before-and-after": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "vercel-labs",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "before-and-after",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skill"
+		},
+		"difit": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "yoshiko-pg",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "difit",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"explain-diff": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "126e7fe9eecaafadfe1ac8bb183d135812b608f2",
+				"branch": "main",
+				"forge": "none",
+				"preReleases": false,
+				"releasePrefix": null,
+				"submodules": false,
+				"type": "git",
+				"url": "https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524.git",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
+		"hashicorp": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "hashicorp",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "agent-skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
+		"herdr": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "master",
+				"owner": "ogulcancelik",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "herdr",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills/herdr"
+		},
+		"i-have-adhd": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "ayghri",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "i-have-adhd",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"japanese-tech-writing": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "8f2d57610a73efc97d743c9b0b0ecb1002e09fa4",
+				"branch": "main",
+				"forge": "none",
+				"preReleases": false,
+				"releasePrefix": null,
+				"submodules": false,
+				"type": "git",
+				"url": "https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
+		"local": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "yutakobayashidev",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"mattpocock": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "mattpocock",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"mizchi": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "62f580819410cb1d398e4d7f234bbd0aad1c1a15",
+				"branch": "main",
+				"owner": "mizchi",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
+		"obsidian": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "kepano",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "obsidian-skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"openclaw": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "openclaw",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "openclaw",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": ".agents/skills"
+		},
+		"oracle": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "yutakobayashidev",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "oracle",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills/oracle"
+		},
+		"prompt-review": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "tokoroten",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "prompt-review",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": ".claude/skills"
+		},
+		"superpowers": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "obra",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "superpowers",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		},
+		"twitter-api-relay": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "fa0311",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "twitter_api_safe_relay_skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "skills"
+		}
+	},
+	"npins": {
+		"pins": {
+			"agent-browser": {
+				"branch": "main",
+				"hash": "sha256-eizpqhV2AVAOl5uaihkWEdNNeGaMxrYGaLMR4fXYYZQ=",
+				"repository": {
+					"owner": "vercel-labs",
+					"repo": "agent-browser",
+					"type": "GitHub"
+				},
+				"revision": "44583ac8385d814ab98cbf40feec97620376b50e",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/vercel-labs/agent-browser/archive/44583ac8385d814ab98cbf40feec97620376b50e.tar.gz"
+			},
+			"agent-scripts": {
+				"branch": "main",
+				"hash": "sha256-r7e8tcX6iRegxSnQ79ZOqowZXC8XLgTdu+LjjwQtZs0=",
+				"repository": {
+					"owner": "steipete",
+					"repo": "agent-scripts",
+					"type": "GitHub"
+				},
+				"revision": "3f8c6a33f911818b72936248384e7a71b4f1d971",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/steipete/agent-scripts/archive/3f8c6a33f911818b72936248384e7a71b4f1d971.tar.gz"
+			},
+			"anthropic": {
+				"branch": "main",
+				"hash": "sha256-xUs7UX8pOcZwR0okaSbI/f8EE5F4Zi/BUd+nIZNafPc=",
+				"repository": {
+					"owner": "anthropics",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "33375500bcea98d610eb30ce10ac4e59b89c390d",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/anthropics/skills/archive/33375500bcea98d610eb30ce10ac4e59b89c390d.tar.gz"
+			},
+			"ast-grep": {
+				"branch": "main",
+				"hash": "sha256-dORqiMdFOUQVEF6wn1IZiTIcslzO+441A0GZP4KNcOQ=",
+				"repository": {
+					"owner": "ast-grep",
+					"repo": "claude-skill",
+					"type": "GitHub"
+				},
+				"revision": "f2175aff21f20cfb8e2db30c28febeb3a2d42b61",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/ast-grep/claude-skill/archive/f2175aff21f20cfb8e2db30c28febeb3a2d42b61.tar.gz"
+			},
+			"before-and-after": {
+				"branch": "main",
+				"hash": "sha256-fgOaDgO3LRYsZzP7JNZI5olUitUMZGSBXI+UsxLhZf8=",
+				"repository": {
+					"owner": "vercel-labs",
+					"repo": "before-and-after",
+					"type": "GitHub"
+				},
+				"revision": "8306d34f459b6704e08e6adb5829fcddb0dc3557",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/vercel-labs/before-and-after/archive/8306d34f459b6704e08e6adb5829fcddb0dc3557.tar.gz"
+			},
+			"difit": {
+				"branch": "main",
+				"hash": "sha256-1EoC5t+8KjNmwKg5lFLig26tzCnp2byhkeGjctVdRls=",
+				"repository": {
+					"owner": "yoshiko-pg",
+					"repo": "difit",
+					"type": "GitHub"
+				},
+				"revision": "82a765c037ec28fe7fe90ab2f1e4b5748032b4fa",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/yoshiko-pg/difit/archive/82a765c037ec28fe7fe90ab2f1e4b5748032b4fa.tar.gz"
+			},
+			"explain-diff": {
+				"branch": "main",
+				"hash": "sha256-MN/QZMqU4i4EpXfR13CL+LELGiVuQ92NSq4B96zaS5E=",
+				"repository": {
+					"type": "Git",
+					"url": "https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524.git"
+				},
+				"revision": "126e7fe9eecaafadfe1ac8bb183d135812b608f2",
+				"submodules": false,
+				"type": "Git",
+				"url": null
+			},
+			"hashicorp": {
+				"branch": "main",
+				"hash": "sha256-rkF9+21kcLSsl96ZpM43R7QBp8/eDG/VCEa1fEJwukA=",
+				"repository": {
+					"owner": "hashicorp",
+					"repo": "agent-skills",
+					"type": "GitHub"
+				},
+				"revision": "c2d65dfe492f74d360d35b859b88932222470bd8",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/hashicorp/agent-skills/archive/c2d65dfe492f74d360d35b859b88932222470bd8.tar.gz"
+			},
+			"herdr": {
+				"branch": "master",
+				"hash": "sha256-Vb8538c3F+J0tktxTWZY9s/jkBfnKrLFXYHzSivNARk=",
+				"repository": {
+					"owner": "ogulcancelik",
+					"repo": "herdr",
+					"type": "GitHub"
+				},
+				"revision": "9903007e5c4407ded451cac0b8164e3d69deb891",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/ogulcancelik/herdr/archive/9903007e5c4407ded451cac0b8164e3d69deb891.tar.gz"
+			},
+			"i-have-adhd": {
+				"branch": "main",
+				"hash": "sha256-UExi0k71MOtLwqVaFRGhgvqq6+jxwbQxZZVZxceHGrw=",
+				"repository": {
+					"owner": "ayghri",
+					"repo": "i-have-adhd",
+					"type": "GitHub"
+				},
+				"revision": "839872f9d1cd634fed642b4589ce7226199cc15f",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/ayghri/i-have-adhd/archive/839872f9d1cd634fed642b4589ce7226199cc15f.tar.gz"
+			},
+			"japanese-tech-writing": {
+				"branch": "main",
+				"hash": "sha256-jo1DvsAVIAKzurutp+T66kctgaFEe+sVbY9bf7wlCLM=",
+				"repository": {
+					"type": "Git",
+					"url": "https://gist.github.com/k16shikano/fd287c3133457c4fd8f5601d34aa817d.git"
+				},
+				"revision": "8f2d57610a73efc97d743c9b0b0ecb1002e09fa4",
+				"submodules": false,
+				"type": "Git",
+				"url": null
+			},
+			"local": {
+				"branch": "main",
+				"hash": "sha256-52/6dSCngIvG/PGENG8ZlMCuOq3rS3f1T5XICd0TSPs=",
+				"repository": {
+					"owner": "yutakobayashidev",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "dfd1d1e4192abeb561f2a5ee4609d1807c77c5a6",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/yutakobayashidev/skills/archive/dfd1d1e4192abeb561f2a5ee4609d1807c77c5a6.tar.gz"
+			},
+			"mattpocock": {
+				"branch": "main",
+				"hash": "sha256-C0Ghop0jg7xmtU82UN1GtogUpNYdw5iJnbxQhijRWds=",
+				"repository": {
+					"owner": "mattpocock",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "984a2c023c9fb42bb6ea40c70a652284a109dc05",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/mattpocock/skills/archive/984a2c023c9fb42bb6ea40c70a652284a109dc05.tar.gz"
+			},
+			"mizchi": {
+				"branch": "main",
+				"hash": "sha256-td6husEnA0cqdgfyROdjFpVOhWv44EfJIvi+gGY13YU=",
+				"repository": {
+					"owner": "mizchi",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "62f580819410cb1d398e4d7f234bbd0aad1c1a15",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/mizchi/skills/archive/62f580819410cb1d398e4d7f234bbd0aad1c1a15.tar.gz"
+			},
+			"obsidian": {
+				"branch": "main",
+				"hash": "sha256-kyH07EVmwIEC/q6i91Kz8mPE78j9ITga2NZUpU1+nHU=",
+				"repository": {
+					"owner": "kepano",
+					"repo": "obsidian-skills",
+					"type": "GitHub"
+				},
+				"revision": "3ccff5338ea700537839b21900aa5358a0402c98",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/kepano/obsidian-skills/archive/3ccff5338ea700537839b21900aa5358a0402c98.tar.gz"
+			},
+			"openclaw": {
+				"branch": "main",
+				"hash": "sha256-Zl2Fzlj0bwAlBDj9VqqIzH7qB3Duk+4BaaE5kDJEaJc=",
+				"repository": {
+					"owner": "openclaw",
+					"repo": "openclaw",
+					"type": "GitHub"
+				},
+				"revision": "643ea6556e792432f0fde8d94b8fb01e1c8e7d0c",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/openclaw/openclaw/archive/643ea6556e792432f0fde8d94b8fb01e1c8e7d0c.tar.gz"
+			},
+			"oracle": {
+				"branch": "main",
+				"hash": "sha256-zSIsK0h/Yp/ju4nj6k0IcUaAEjFCG2Ea34PmadrpXpI=",
+				"repository": {
+					"owner": "yutakobayashidev",
+					"repo": "oracle",
+					"type": "GitHub"
+				},
+				"revision": "722b058add0253cfdfda0179922cc9f2a9bd470b",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/yutakobayashidev/oracle/archive/722b058add0253cfdfda0179922cc9f2a9bd470b.tar.gz"
+			},
+			"prompt-review": {
+				"branch": "main",
+				"hash": "sha256-Ma9qm0aggx+F0FDNd0DMXsuZLZz/Ei3o1oid8ljWGfA=",
+				"repository": {
+					"owner": "tokoroten",
+					"repo": "prompt-review",
+					"type": "GitHub"
+				},
+				"revision": "0a83fd9eeead58fe92d0b04522da9e6840a71940",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/tokoroten/prompt-review/archive/0a83fd9eeead58fe92d0b04522da9e6840a71940.tar.gz"
+			},
+			"superpowers": {
+				"branch": "main",
+				"hash": "sha256-BWPiXoXV+jePP+wn/Z+Af4iehIL7oei00plaWaTzq8s=",
+				"repository": {
+					"owner": "obra",
+					"repo": "superpowers",
+					"type": "GitHub"
+				},
+				"revision": "8ca22dba9a94f28898bbce59f2537ff4d87c747d",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/obra/superpowers/archive/8ca22dba9a94f28898bbce59f2537ff4d87c747d.tar.gz"
+			},
+			"twitter-api-relay": {
+				"branch": "main",
+				"hash": "sha256-gU8gTnoXyWepSTbQCSXX+1fXcViN64K8JjEhytAeGjk=",
+				"repository": {
+					"owner": "fa0311",
+					"repo": "twitter_api_safe_relay_skills",
+					"type": "GitHub"
+				},
+				"revision": "a4d8b5f92874f593272e3c61427c61754cde6103",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/fa0311/twitter_api_safe_relay_skills/archive/a4d8b5f92874f593272e3c61427c61754cde6103.tar.gz"
+			}
+		},
+		"version": 8
+	},
+	"schemaVersion": 1
+}

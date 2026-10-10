@@ -21,6 +21,7 @@
 
   dualboot.enable = true;
   my = {
+    nix.remoteBuild.client.enable = true;
     fingerprint.enable = true;
     system.impermanence.enable = true;
     profiles = {
