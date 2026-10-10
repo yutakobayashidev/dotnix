@@ -34,7 +34,7 @@
       name = "tw-lite Latest";
       urls = [
         {
-          template = "https://tw-lite.home.yutakobayashi.com/search?q={searchTerms}&product=Latest&following=true";
+          template = "https://home.yutakobayashi.com/search?q={searchTerms}&product=Latest&following=true";
         }
       ];
       definedAliases = [ "@tw" ];

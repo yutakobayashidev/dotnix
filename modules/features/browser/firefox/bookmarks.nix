@@ -187,7 +187,7 @@ let
         }
         {
           name = "";
-          url = "https://tw-lite.home.yutakobayashi.com/";
+          url = "https://home.yutakobayashi.com/";
           tags = [ "shortcut" ];
         }
         {

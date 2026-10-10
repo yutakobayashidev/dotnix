@@ -29,14 +29,12 @@ in
 
       ${homeDomain}:53 {
         bind 127.0.0.1 ${b450m}
+        # Cover the zone apex and all subdomains on the Tailnet.
         template ANY A {
-          match "(.*)\.${homeDomain}"
           answer "{{ .Name }} 300 IN A ${b450m}"
-          fallthrough
         }
         template ANY AAAA {
-          match "(.*)\.${homeDomain}"
-          fallthrough
+          rcode NOERROR
         }
         forward . 8.8.8.8 1.1.1.1
         log

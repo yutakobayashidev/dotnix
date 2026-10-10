@@ -1,7 +1,7 @@
 _:
 
 let
-  domain = "tw-lite.home.yutakobayashi.com";
+  domain = "home.yutakobayashi.com";
   port = 3006;
 in
 {
