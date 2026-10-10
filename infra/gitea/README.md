@@ -2,6 +2,12 @@
 
 OpenTofu manages repositories on `https://git.yutakobayashi.com`.
 
+`yuta/quantified-self-wiki` is a public research wiki for Quantified Self tools,
+data sources, and integrations. It is created without initial files. Its host
+checkout is shared with the Hermes VM; see the
+[wiki share configuration](../../docs/hermes-qs-wiki.md). Personal measurements
+and medication logs belong outside this public research repository.
+
 The hostname is exposed through the shared Cloudflare Tunnel. Create a public
 hostname route for `git.yutakobayashi.com` on tunnel
 `3e1ff621-e8bf-47d1-b095-4b5c15eec63c` before applying the NixOS
