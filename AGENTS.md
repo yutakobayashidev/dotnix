@@ -68,6 +68,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: Screenpipe CLI/desktop app plus OpenBrief context recall on the ThinkPad
+- **Activity recording**: ActivityWatch with a Niri-compatible window/AFK watcher and Firefox web watcher on ThinkPad only; see [setup and verification](docs/activitywatch.md).
 - **AI development**: Codex Desktop for Linux and Orca on graphical hosts
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)

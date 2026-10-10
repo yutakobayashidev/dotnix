@@ -38,6 +38,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [Agent skills](docs/agent-skills.md)
 - [Hermes Quantified Self wiki share](docs/hermes-qs-wiki.md)
 - [Firefox](docs/firefox.md)
+- [ActivityWatch on ThinkPad](docs/activitywatch.md)
 - [Network topology](docs/README.md#network-topology)
 
 Project templates live in [ashiba](https://github.com/yutakobayashidev/ashiba).

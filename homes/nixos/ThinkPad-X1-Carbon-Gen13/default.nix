@@ -14,6 +14,7 @@
         inputs.temari.homeManagerModules.default
       ];
       my.programs.course-cli.enable = true;
+      my.services.activitywatch.enable = true;
       home.homeDirectory = "/home/${username}";
       home.packages = with pkgs; [
         alcom
