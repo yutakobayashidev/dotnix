@@ -1,5 +1,7 @@
 # Firefox
 
+The `nix` profile includes [ChatGPT Markdown Exporter](https://github.com/devcxl/chatgpt-markdown-exporter) for exporting individual or multiple ChatGPT conversations as Markdown. Its Mozilla Add-ons XPI is pinned by version and SHA-256 in `modules/features/browser/firefox/extensions.nix`. Apply with `nix run .#switch`, then restart Firefox and open ChatGPT to use the export button or the extension's popup.
+
 New tabs open `https://home.yutakobayashi.com/` through New Tab Override. The extension and its settings are managed by Home Manager; edit the URL in `modules/features/browser/firefox/default.nix` to change it. Apply with `nix run .#switch`, then restart Firefox.
 
 Containers are defined in `modules/features/browser/firefox/containers.nix`, following natsukium's Containerise setup. The blue `school` container automatically opens `nlobby.nnn.ed.jp` and `www.nnn.ed.nico`; the red `work` container automatically opens GitHub's `Litela-HQ` organization and its repositories (`github.com/orgs/Litela-HQ` and `github.com/Litela-HQ`). Cookies and logins are separate from ordinary tabs. Navigating to an unmatched URL does not automatically leave the current container. Container definitions and Containerise rules are replaced on activation (`containersForce` and extension `force`); edit the Nix file to make persistent changes. Keep container IDs stable to preserve their association with stored site data.

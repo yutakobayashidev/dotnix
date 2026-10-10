@@ -16,6 +16,19 @@
     are-na
     web-clipper-obsidian
     (buildFirefoxXpiAddon {
+      pname = "chatgpt-markdown-exporter";
+      version = "0.3.2";
+      addonId = "chatgpt-markdown-exporter@devcxl.cn";
+      url = "https://addons.mozilla.org/firefox/downloads/file/5072774/chatgpt_markdown_exporter1-0.3.2.xpi";
+      sha256 = "8443aa6ebff5811b7cb38ab199dbebf816136851a419bb4d21de30b0f300ef4b";
+      meta = {
+        homepage = "https://github.com/devcxl/chatgpt-markdown-exporter";
+        description = "Export ChatGPT conversations as Markdown files";
+        license = pkgs.lib.licenses.mit;
+        platforms = pkgs.lib.platforms.all;
+      };
+    })
+    (buildFirefoxXpiAddon {
       pname = "librezam";
       version = "5.9";
       addonId = "Librezam@Librezam";
