@@ -18,6 +18,14 @@ let
         }
         {
           name = "";
+          url = "https://codeberg.org/";
+        }
+        {
+          name = "";
+          url = "https://sourcehut.org/";
+        }
+        {
+          name = "";
           url = "https://search.nixos.org/packages";
         }
         {
@@ -133,6 +141,10 @@ let
           name = "";
           url = "https://tw-lite.home.yutakobayashi.com/";
           tags = [ "shortcut" ];
+        }
+        {
+          name = "";
+          url = "https://fedi.yutakobayashi.com/";
         }
         {
           name = "";
