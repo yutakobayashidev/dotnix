@@ -99,6 +99,12 @@ inherit Ghostty's existing opacity (92% on Linux and 75% on macOS).
 
 ## Desktop appearance
 
+NixOS desktops use swayidle to dim the display after 5 minutes and lock after
+15 minutes. Automatic suspend after 30 minutes is opt-in through the Home Manager
+option `my.services.swayidle.suspend.enable`; the `laptop` profile enables it by
+default. Desktop machines, including UM790-Pro, stay awake for SSH and remote builds.
+Hosts can override the laptop default by setting the option to `false`.
+
 NixOS desktops use Catppuccin Mocha. `lib/desktop-palette.nix` supplies the Niri,
 Ghostty, and swaylock colors matching Noctalia's built-in dark palette. The bar
 keeps Vicinae, Cat, Codexbar, and now-playing media on the left, workspaces in the center, and essential

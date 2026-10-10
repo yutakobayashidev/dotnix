@@ -17,7 +17,10 @@ _:
       '';
     in
     {
-      options.my.services.swayidle.enable = lib.mkEnableOption "Swayidle";
+      options.my.services.swayidle = {
+        enable = lib.mkEnableOption "Swayidle";
+        suspend.enable = lib.mkEnableOption "automatic suspend after 30 minutes of inactivity";
+      };
 
       config = lib.mkIf cfg.enable {
         services.swayidle = {
@@ -40,12 +43,12 @@ _:
               timeout = 900;
               command = "${pkgs.systemd}/bin/loginctl lock-session";
             }
-            # 30分後: サスペンド
-            {
-              timeout = 1800;
-              command = "${pkgs.systemd}/bin/systemctl suspend";
-            }
-          ];
+          ]
+          ++ lib.optional cfg.suspend.enable {
+            # 30分後: サスペンド（ノートPCなどで明示的に有効化）
+            timeout = 1800;
+            command = "${pkgs.systemd}/bin/systemctl suspend";
+          };
         };
       };
     };
