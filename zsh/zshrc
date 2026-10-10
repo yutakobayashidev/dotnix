@@ -23,6 +23,10 @@ eval "$(git wt --init zsh)"
 # oh-my-zsh configuration (must be loaded first)
 source ~/.config/zsh/config/oh-my-zsh.zsh
 
+# Prompt settings live in the dotfiles instead of the interactive p10k wizard.
+source ~/.config/zsh/config/p10k.zsh
+source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
+
 # zsh plugins
 source ~/.zsh/plugins/zsh-abbr/zsh-abbr.plugin.zsh
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
