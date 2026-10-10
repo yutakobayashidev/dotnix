@@ -30,6 +30,10 @@ let
         }
         {
           name = "";
+          url = "https://home-manager-options.extranix.com/";
+        }
+        {
+          name = "";
           url = "https://wiki.nixos.org/";
         }
         {
@@ -38,7 +42,31 @@ let
         }
         {
           name = "";
+          url = "https://distrowatch.com/";
+        }
+        {
+          name = "";
+          url = "https://awesome-selfhosted.net/";
+        }
+        {
+          name = "";
+          url = "https://excalidraw.com/";
+        }
+        {
+          name = "";
           url = "https://atcoder.jp/";
+        }
+        {
+          name = "";
+          url = "https://kenkoooo.com/atcoder/";
+        }
+        {
+          name = "";
+          url = "https://cp-algorithms.com/";
+        }
+        {
+          name = "";
+          url = "https://godbolt.org/";
         }
         {
           name = "";
@@ -126,8 +154,24 @@ let
           name = "";
           url = "https://www.zotero.org/";
         }
+        {
+          name = "";
+          url = "https://scholar.google.co.jp/";
+        }
+        {
+          name = "";
+          url = "https://arxiv.org/";
+        }
 
         # Daily use and media
+        {
+          name = "";
+          url = "https://news.ycombinator.com/";
+        }
+        {
+          name = "";
+          url = "https://lobste.rs/";
+        }
         {
           name = "";
           url = "https://search.home.yutakobayashi.com/";
@@ -173,6 +217,18 @@ let
         # Cloud and operations
         {
           name = "";
+          url = "https://login.tailscale.com/admin/machines";
+        }
+        {
+          name = "";
+          url = "https://www.ssllabs.com/ssltest/";
+        }
+        {
+          name = "";
+          url = "https://dnschecker.org/";
+        }
+        {
+          name = "";
           url = "https://dash.cloudflare.com/";
         }
         {
@@ -193,6 +249,14 @@ let
         }
 
         # Bookmarklets
+        {
+          name = "Wayback Machine: Save";
+          url = "javascript:(()=>{window.open('https://web.archive.org/save/'+location.href,'_blank','noopener,noreferrer');})();";
+        }
+        {
+          name = "Wayback Machine: Check";
+          url = "javascript:(()=>{window.open('https://web.archive.org/web/*/'+location.href,'_blank','noopener,noreferrer');})();";
+        }
         {
           name = "WhatFont";
           url = "javascript:(function(){var d=document,s=d.createElement('scr'+'ipt'),b=d.body,l=d.location;s.setAttribute('src','http://chengyinliu.com/wf.js?o='+encodeURIComponent(l.href)+'&t='+(new Date().getTime()));b.appendChild(s)})();";
