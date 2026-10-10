@@ -46,7 +46,6 @@ _:
 
             desktop_widgets.enabled = false;
             lockscreen.enabled = false;
-            wallpaper.enabled = false;
             dock.enabled = false;
 
             bar.main = {

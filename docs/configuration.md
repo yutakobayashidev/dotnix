@@ -91,7 +91,7 @@ Home Manager deploys repository-backed configuration from the flake source in th
 - **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
 - **Desktop shell**: [Noctalia](https://noctalia.dev/) (bar, notifications, OSD, and control center)
 - **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae)
-- **Wallpaper**: swaybg with a declarative Home Manager feature
+- **Wallpaper**: Noctalia with per-host initial images set through `services.wallpaper.imagePath`; later selections are managed by Noctalia
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: Screenpipe CLI/desktop app plus OpenBrief context recall on the ThinkPad
