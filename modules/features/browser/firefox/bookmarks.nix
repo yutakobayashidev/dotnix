@@ -174,6 +174,10 @@ let
         }
         {
           name = "";
+          url = "https://www.reddit.com/";
+        }
+        {
+          name = "";
           url = "https://search.home.yutakobayashi.com/";
         }
         {
