@@ -7,8 +7,8 @@
 # oh-my-zshのパス（Home Managerで管理されている）
 export ZSH="$HOME/.oh-my-zsh"
 
-# テーマ
-ZSH_THEME="agnoster"
+# Powerlevel10k is loaded separately by zshrc; keep Oh My Zsh for plugins.
+ZSH_THEME=""
 
 # プラグイン
 plugins=(

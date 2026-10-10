@@ -29,7 +29,7 @@ _:
             selection-background = "#494d64";
             selection-foreground = "#cad3f5";
             font-family = [
-              "JetBrains Mono"
+              "JetBrainsMono Nerd Font"
               "Noto Sans Mono CJK JP"
             ];
             font-size = 14;

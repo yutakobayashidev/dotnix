@@ -74,7 +74,7 @@ Application and system features live in purpose-based namespaces under `modules/
 | `nix/`             | Nix daemon, nixpkgs policy, and remote builds                                 |
 | `observability/`   | Log shipping and rotation                                                     |
 | `productivity/`    | Personal workflows, information retrieval, and document tools                 |
-| `shell/`           | Zsh and general command-line utilities                                        |
+| `shell/`           | Zsh with Powerlevel10k and general command-line utilities                     |
 | `system/`          | Boot, persistence, authentication, hardware, and home environment foundations |
 | `terminal/`        | Terminal emulator and multiplexer                                             |
 | `version-control/` | Git, GitHub CLI, Jujutsu, and repository tools                                |
@@ -83,6 +83,19 @@ Application and system features live in purpose-based namespaces under `modules/
 Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and are discovered automatically. Namespace directories have no `default.nix`; a directory with `default.nix` is one feature, so its helper files are not imported separately. Keep application assets alongside their feature. Shared CLI modules apply to every Home Manager host; desktop and host-specific apps are enabled with `my.programs.<name>.enable` (or `my.services.swayidle.enable`) in the corresponding home configuration or profile.
 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
+
+## Shell prompt
+
+Zsh uses Powerlevel10k with a transparent, two-line prompt and pastel colors.
+`zsh/config/p10k.zsh` controls the OS, directory, and Git icons on the left;
+the right shows failures, commands taking at least three seconds, background jobs,
+active development environments, and remote/root context. Node.js and Rust versions
+appear only in matching projects. Oh My Zsh still supplies shell plugins, with its
+theme disabled. Ghostty uses JetBrainsMono Nerd Font for the icons.
+
+Edit the tracked prompt configuration instead of running `p10k configure`.
+Apply with `nix run .#switch`, then open a new terminal. Empty prompt backgrounds
+inherit Ghostty's existing opacity (92% on Linux and 75% on macOS).
 
 ## Desktop appearance
 

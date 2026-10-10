@@ -30,10 +30,12 @@ _:
             zsh-syntax-highlighting
             zsh-fzf-tab
             oh-my-zsh
+            zsh-powerlevel10k
           ];
 
           file = {
             ".oh-my-zsh".source = "${pkgs.oh-my-zsh}/share/oh-my-zsh";
+            ".zsh/plugins/powerlevel10k".source = "${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k";
             ".zsh/plugins/zsh-autosuggestions".source = "${pkgs.zsh-autosuggestions}/share/zsh-autosuggestions";
             ".zsh/plugins/zsh-syntax-highlighting".source =
               "${pkgs.zsh-syntax-highlighting}/share/zsh-syntax-highlighting";
