@@ -1445,11 +1445,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791285430,
-        "narHash": "sha256-v7g+LinnPIhxq+/wazF5KcIvpSgMWTiNweLIWnSXJcI=",
+        "lastModified": 1791365690,
+        "narHash": "sha256-R3epbW1azDyac2Z5aNFOftgI9Y/qDLliO42eKgB54W0=",
         "owner": "Mic92",
         "repo": "niks3",
-        "rev": "7b8780aa210aebe143db75e0533ee5228e9a8451",
+        "rev": "a79dc58832332ebd953974e71160ab69e2371d62",
         "type": "github"
       },
       "original": {
