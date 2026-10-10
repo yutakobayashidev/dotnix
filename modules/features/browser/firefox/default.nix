@@ -12,6 +12,7 @@ _:
       cfg = config.my.programs.firefox;
       parfait = pkgs.callPackage ./parfait.nix { };
       bookmarkConfig = import ./bookmarks.nix { inherit lib; };
+      containerConfig = import ./containers.nix { inherit lib; };
     in
     {
       options.my.programs.firefox.enable = lib.mkEnableOption "Firefox";
@@ -23,8 +24,11 @@ _:
 
           profiles.nix = {
             inherit (bookmarkConfig) bookmarks;
+            inherit (containerConfig) containers containersForce;
 
-            extensions = import ./extensions.nix { inherit pkgs; };
+            extensions = import ./extensions.nix { inherit pkgs; } // {
+              settings = containerConfig.extensionSettings;
+            };
 
             isDefault = true;
 

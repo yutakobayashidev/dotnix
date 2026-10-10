@@ -2,6 +2,7 @@
 {
   packages = with pkgs.firefox-addons; [
     onepassword-password-manager
+    containerise
     wappalyzer
     nos2x-fox
     metamask
