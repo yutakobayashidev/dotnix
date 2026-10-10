@@ -84,6 +84,8 @@ Application and system features live in purpose-based namespaces under `modules/
 
 Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and are discovered automatically. Namespace directories have no `default.nix`; a directory with `default.nix` is one feature, so its helper files are not imported separately. Keep application assets alongside their feature. Shared CLI modules apply to every Home Manager host; desktop and host-specific apps are enabled with `my.programs.<name>.enable` (or `my.services.swayidle.enable`) in the corresponding home configuration or profile.
 
+Firefox's `nix` profile keeps extensions, search engines, and bookmarks in `modules/features/browser/firefox/{extensions,search,bookmarks}.nix`. Edit the `tree` in `bookmarks.nix` to manage bookmarks, folders, and bookmarklets. Applying the configuration replaces existing bookmarks (`bookmarks.force = true`). Entries tagged `shortcut` also become pinned new-tab tiles; optional `icon` and `iconSize` fields customize their icons. Bookmarklets without that tag remain bookmarks only.
+
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 
 ## Documentation
