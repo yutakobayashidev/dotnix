@@ -1,5 +1,8 @@
 _:
 
+let
+  palette = import ../../../../lib/desktop-palette.nix;
+in
 {
   flake.modules.homeManager.swaylock =
     {
@@ -37,24 +40,24 @@ _:
             indicator-radius = 100;
             indicator-thickness = 7;
 
-            # カラー設定（Catppuccin風）
-            ring-color = "494d64";
-            ring-ver-color = "f5bde6";
-            ring-wrong-color = "ed8796";
-            ring-clear-color = "8aadf4";
+            # カラー設定（Catppuccin Mocha）
+            ring-color = palette.surface1;
+            ring-ver-color = palette.mauve;
+            ring-wrong-color = palette.red;
+            ring-clear-color = palette.blue;
 
-            key-hl-color = "f5bde6";
+            key-hl-color = palette.mauve;
             separator-color = "00000000";
 
-            inside-color = "24273a99";
-            inside-ver-color = "24273a99";
-            inside-wrong-color = "24273a99";
-            inside-clear-color = "24273a99";
+            inside-color = "${palette.base}99";
+            inside-ver-color = "${palette.base}99";
+            inside-wrong-color = "${palette.base}99";
+            inside-clear-color = "${palette.base}99";
 
-            text-color = "cad3f5";
-            text-ver-color = "cad3f5";
-            text-wrong-color = "ed8796";
-            text-clear-color = "8aadf4";
+            text-color = palette.text;
+            text-ver-color = palette.text;
+            text-wrong-color = palette.red;
+            text-clear-color = palette.blue;
 
             # テキスト設定
             font = "Noto Sans CJK JP";
@@ -68,8 +71,8 @@ _:
             clock = true;
             timestr = "%H:%M";
             datestr = "%Y.%m.%d";
-            time-color = "cad3f5";
-            date-color = "b7bdf8";
+            time-color = palette.text;
+            date-color = palette.lavender;
             time-size = 48;
             date-size = 16;
 
@@ -77,7 +80,7 @@ _:
             hide-keyboard-layout = false;
             show-failed-attempts = true;
 
-            text-caps-lock-color = "eed49f";
+            text-caps-lock-color = palette.yellow;
           };
         };
       };

@@ -5,11 +5,19 @@ local refreshIntervalMs = 60000
 local refreshing = false
 local lastSuccessfulUsage = nil
 
+local function plainText(markup)
+    -- codexbar emits Pango markup for Waybar; Noctalia displays plain text.
+    -- Strip tags before decoding so escaped literal angle brackets survive.
+    local text = markup:gsub("<[^>]*>", "")
+    local entities = { amp = "&", lt = "<", gt = ">", quot = '"', apos = "'" }
+    return (text:gsub("&(%a+);", entities))
+end
+
 local function showUsage(usage, refreshError)
     barWidget.setGlyph("ai")
-    barWidget.setText(usage.text or "Codex")
+    barWidget.setText(plainText(usage.text or "Codex"))
 
-    local tooltip = usage.tooltip or "Codex usage"
+    local tooltip = plainText(usage.tooltip or "Codex usage")
     if refreshError ~= nil then
         tooltip = tooltip .. "\n\nRefresh failed: " .. refreshError
     end

@@ -1,5 +1,8 @@
 { inputs, ... }:
 
+let
+  palette = import ../../../../lib/desktop-palette.nix;
+in
 {
   flake.modules.homeManager.niri =
     {
@@ -42,7 +45,7 @@
 
           # レイアウト設定
           layout = {
-            gaps = 16;
+            gaps = 12;
             center-focused-column = "never";
             preset-column-widths = [
               { proportion = 0.33333; }
@@ -56,16 +59,12 @@
             # フォーカスリング（アクティブウィンドウを強調）
             focus-ring = {
               width = 2;
-              active.color = "#f5bde6"; # Catppuccin ピンク
-              inactive.color = "#5b6078"; # Catppuccin グレー
+              active.color = "#${palette.mauve}";
+              inactive.color = "#${palette.surface1}";
             };
 
             # ボーダー
-            border = {
-              width = 2;
-              active.color = "#f5bde6";
-              inactive.color = "#5b6078";
-            };
+            border.enable = false;
           };
 
           # 環境変数
@@ -89,10 +88,10 @@
           window-rules = [
             {
               geometry-corner-radius = {
-                top-left = 10.0;
-                top-right = 10.0;
-                bottom-right = 10.0;
-                bottom-left = 10.0;
+                top-left = 12.0;
+                top-right = 12.0;
+                bottom-right = 12.0;
+                bottom-left = 12.0;
               };
               clip-to-geometry = true;
             }

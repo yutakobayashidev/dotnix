@@ -23,6 +23,24 @@
   ext.xdg.enable = true;
   services.wallpaper.enable = true;
 
+  gtk = {
+    enable = true;
+    gtk4.theme = null;
+    theme = {
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
+    };
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+    font = {
+      name = "Inter";
+      size = 11;
+    };
+  };
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
   # Unwrapped GTK 3 applications, including Tauri development builds, need
   # the file chooser schema on the desktop session search path.
   home.sessionVariables.XDG_DATA_DIRS = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}:$XDG_DATA_DIRS";

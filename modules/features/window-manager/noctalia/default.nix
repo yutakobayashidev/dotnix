@@ -49,34 +49,37 @@ _:
             dock.enabled = false;
 
             bar.main = {
-              margin_ends = 8;
+              margin_ends = 12;
+              margin_edge = 8;
+              thickness = 34;
+              radius = 12;
+              background_opacity = 0.95;
+              widget_spacing = 6;
+              padding = 12;
               position = "top";
               start = [
                 "app-launcher"
-                "workspaces"
-              ];
-              center = [ "media" ];
-              end = [
+                "dotnetrob/cat:cat"
                 "yuta/codexbar-usage:usage"
-                "spacer"
-                "notifications"
+                "media"
+              ];
+              center = [ "workspaces" ];
+              end = [
                 "tray"
-                "spacer"
-                "network"
-                "bluetooth"
-                "battery"
-                "input-volume"
-                "output-volume"
+                "notifications"
                 "privacy"
-                "brightness"
-                "cpu"
-                "ram"
+                "network"
+                "battery"
+                "output-volume"
                 "clock"
                 "control-center"
               ];
             };
 
-            plugins.enabled = [ "yuta/codexbar-usage" ];
+            plugins.enabled = [
+              "yuta/codexbar-usage"
+              "dotnetrob/cat"
+            ];
 
             widget = {
               app-launcher = {
@@ -87,41 +90,29 @@ _:
               };
               workspaces = {
                 type = "workspaces";
+                style = "focus_hint";
+                show_labels = false;
+                show_icons = false;
                 hide_when_empty = true;
-              };
-              media = {
-                type = "media";
-                hide_when_no_media = true;
-                title_scroll = "always";
               };
               battery = {
                 type = "battery";
                 display_mode = "graphic";
               };
-              brightness = {
-                type = "brightness";
-                show_label = false;
-              };
-              input-volume = {
-                type = "volume";
-                device = "input";
-                show_label = false;
+              media = {
+                type = "media";
+                hide_when_no_media = true;
+                max_length = 180;
+                title_scroll = "on_hover";
               };
               output-volume = {
                 type = "volume";
                 device = "output";
-              };
-              cpu = {
-                type = "sysmon";
-                stat = "cpu_usage";
-              };
-              ram = {
-                type = "sysmon";
-                stat = "ram_used";
+                show_label = false;
               };
               clock = {
                 type = "clock";
-                format = "{:%Y/%m/%d %H:%M}";
+                format = "{:%m/%d %H:%M}";
                 vertical_format = "{:%Y/%m/%d\n%H:%M}";
                 tooltip_format = "{:%Y/%m/%d %H:%M (%a)}";
               };
@@ -132,17 +123,20 @@ _:
             };
 
             shell = {
-              corner_radius_scale = 0.2;
+              corner_radius_scale = 1.0;
+              font_family = "Inter";
               clipboard_enabled = false;
               launch_apps_as_systemd_services = true;
             };
 
+            control_center.sidebar = "compact";
             control_center.shortcuts = [
               { type = "wifi"; }
               { type = "bluetooth"; }
-              { type = "screen_recorder"; }
-              { type = "notifications"; }
+              { type = "media"; }
+              { type = "notification"; }
               { type = "nightlight"; }
+              { type = "wallpaper"; }
             ];
           };
         };

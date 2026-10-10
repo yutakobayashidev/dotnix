@@ -84,12 +84,38 @@ Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and 
 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 
+## Desktop appearance
+
+NixOS desktops use Catppuccin Mocha. `lib/desktop-palette.nix` supplies the Niri,
+Ghostty, and swaylock colors matching Noctalia's built-in dark palette. The bar
+keeps Vicinae, Cat, Codexbar, and now-playing media on the left, workspaces in the center, and essential
+status indicators on the right. Long media titles scroll on hover; Codexbar labels
+and tooltips convert Waybar markup to plain text. Media controls, CPU/RAM, microphone volume, and
+brightness remain available in Control Center; its shortcuts include media and
+wallpaper selection. The wallpaper picker browses `~/wallpapers`.
+
+[Cat](https://github.com/noctalia-dev/community-plugins/tree/main/cat)
+(`dotnetrob/cat`) is enabled declaratively through `programs.noctalia.settings.plugins.enabled`.
+Noctalia fetches it from its built-in community source and manages its runtime
+files and updates; its version is not pinned by Nix. Initial acquisition requires
+network access. The custom Codexbar adapter remains locally deployed.
+Cat follows the shell theme and animates using CPU usage from Noctalia's system
+monitor: it sleeps below 15%, walks from 15%, and runs from 60% by default.
+Clicking the cat opens its CPU panel. The default size is 24px, with no permanent
+CPU percentage label.
+
+Niri uses 12px gaps and rounded corners with a 2px focus ring. Linux Ghostty uses
+92% background opacity; macOS keeps its existing settings. GTK 3 uses
+adw-gtk3-dark with Papirus-Dark icons, while GTK 4 retains its native theme and
+receives the dark color preference. The design rationale and reference settings
+are in the [desktop style report](noctalia-style-report.md).
+
 ## Key features
 
 ### NixOS
 
 - **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
-- **Desktop shell**: [Noctalia](https://noctalia.dev/) (bar, notifications, OSD, and control center)
+- **Desktop shell**: [Noctalia](https://noctalia.dev/) with Catppuccin Mocha, a floating bar, centered workspaces, notifications, OSD, and control center
 - **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae)
 - **Wallpaper**: Noctalia with per-host initial images set through `services.wallpaper.imagePath`; later selections are managed by Noctalia
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)

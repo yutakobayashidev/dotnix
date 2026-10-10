@@ -24,6 +24,7 @@ _:
       config = lib.mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
         programs.noctalia.settings.wallpaper = {
           enabled = true;
+          directory = "${config.home.homeDirectory}/wallpapers";
           default.path = toString cfg.imagePath;
         };
       };
