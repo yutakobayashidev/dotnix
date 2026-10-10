@@ -65,6 +65,60 @@ let
           url = "https://grok.com/";
         }
 
+        # Learning
+        {
+          name = "";
+          url = "https://nlobby.nnn.ed.jp/home";
+        }
+        {
+          name = "";
+          url = "https://www.nnn.ed.nico/home";
+        }
+        {
+          name = "";
+          url = "https://www.eboard.jp/list/";
+        }
+        {
+          name = "";
+          url = "https://www.try-it.jp/";
+        }
+        {
+          name = "";
+          url = "https://ja.khanacademy.org/math";
+        }
+        {
+          name = "";
+          url = "https://www.geogebra.org/math?lang=ja";
+        }
+        {
+          name = "";
+          url = "https://www.wolframalpha.com/";
+        }
+        {
+          name = "";
+          url = "https://phet.colorado.edu/ja/";
+        }
+        {
+          name = "";
+          url = "https://www.duolingo.com/learn";
+        }
+        {
+          name = "";
+          url = "https://youglish.com/?lang=en";
+        }
+        {
+          name = "";
+          url = "https://apps.ankiweb.net/";
+        }
+        {
+          name = "";
+          url = "https://notebooklm.google.com/";
+        }
+        {
+          name = "";
+          url = "https://www.zotero.org/";
+        }
+
         # Daily use and media
         {
           name = "";

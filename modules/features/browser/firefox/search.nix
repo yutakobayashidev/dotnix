@@ -18,6 +18,18 @@
       definedAliases = [ "@chatgpt" ];
     };
 
+    claude = {
+      name = "Claude";
+      urls = [ { template = "https://claude.ai/new?q={searchTerms}"; } ];
+      definedAliases = [ "@claude" ];
+    };
+
+    perplexity = {
+      name = "Perplexity";
+      urls = [ { template = "https://www.perplexity.ai/search?q={searchTerms}"; } ];
+      definedAliases = [ "@perplexity" ];
+    };
+
     tw-lite = {
       name = "tw-lite Latest";
       urls = [
