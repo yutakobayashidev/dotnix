@@ -14,11 +14,23 @@ let
   reportDir = "${stateDir}/research";
   credentialKey = "${stateDir}/credential-key";
   runtimeToken = "${stateDir}/runtime-token";
+  ownTracksArchive = "${stateDir}/owntracks";
+  ownTracksCredential = "${stateDir}/owntracks-credentials.json";
   initializeState = pkgs.writeText "twitter-lite-initialize.mjs" ''
     import { mkdirSync, writeFileSync } from 'node:fs';
     import { randomBytes } from 'node:crypto';
 
     mkdirSync(${builtins.toJSON reportDir}, { recursive: true, mode: 0o700 });
+    mkdirSync(${builtins.toJSON ownTracksArchive}, { recursive: true, mode: 0o700 });
+    try {
+      writeFileSync(${builtins.toJSON ownTracksCredential}, JSON.stringify({
+        username: 'owntracks-phone',
+        password: randomBytes(32).toString('hex'),
+        deviceId: 'android-main',
+      }) + '\n', { flag: 'wx', mode: 0o600 });
+    } catch (error) {
+      if (error.code !== 'EEXIST') throw error;
+    }
     for (const file of [${builtins.toJSON credentialKey}, ${builtins.toJSON runtimeToken}]) {
     try {
       writeFileSync(file, randomBytes(32).toString('base64') + '\n', {
@@ -38,6 +50,8 @@ let
     "TWITTER_LITE_BEEPER_TARGET=um790"
   ];
   environment = sharedEnvironment ++ [
+    "WORKSPACE_OWNTRACKS_ARCHIVE_DIR=${ownTracksArchive}"
+    "WORKSPACE_OWNTRACKS_CREDENTIAL_FILE=${ownTracksCredential}"
     "WORKSPACE_RUNTIME_URL=http://127.0.0.1:4318"
     "WORKSPACE_RUNTIME_TOKEN_FILE=${runtimeToken}"
     "TWITTER_LITE_REPORT_ROOT=${reportDir}"

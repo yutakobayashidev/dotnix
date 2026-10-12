@@ -170,3 +170,7 @@ are in the [desktop style report](noctalia-style-report.md).
 - **Terminal**: Ghostty, Zsh + Oh My Zsh
 - **Network**: bandwhich, speedtest-cli, WireGuard
 - **Pentesting**: Ghidra, Wireshark, OWASP ZAP, mitmproxy, nmap, codex-security, vulnix
+
+### OwnTracks collection on UM790-Pro
+
+The Workspace endpoint `https://home.yutakobayashi.com/api/collect/owntracks` accepts HTTP-mode OwnTracks messages over the tailnet. The service initializer creates `~/.local/state/twitter-lite/owntracks/` (0700) and `owntracks-credentials.json` (0600) with a random password on first start; existing credentials survive rebuilds. Android needs Tailscale, HTTP mode, and the username/password from that file. Records are daily raw JSONL, separate from SQLite; back up this directory and the credential file privately.
