@@ -70,7 +70,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Personal context**: Screenpipe CLI/desktop app plus OpenBrief context recall on the ThinkPad
 - **Activity recording**: ActivityWatch with a Niri-compatible window/AFK watcher and Firefox web watcher on ThinkPad only; see [setup and verification](docs/activitywatch.md).
 - **Media history**: ThinkPad-only MPRIS JSONL collector with Aurboda-compatible records; see [format and verification](docs/mpris-collector.md).
-- **AI development**: Codex Desktop for Linux and Orca on graphical hosts
+- **AI development**: Codex Desktop for Linux and Orca on graphical hosts; [Orca headless server](docs/orca.md) on UM790-Pro
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro

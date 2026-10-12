@@ -9,6 +9,7 @@
       ../desktop.nix
       ./twitter-lite.nix
       ./beeper.nix
+      ./orca.nix
     ];
     my.programs.course-cli.enable = true;
     home.homeDirectory = "/home/${username}";

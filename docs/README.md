@@ -17,6 +17,7 @@
 - [B450M-Pro4-HDD-service-storage.md](B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
 - [B450M-Pro4-s3s.md](B450M-Pro4-s3s.md) - s3s (Splatoon 3 stats uploader) workflow
 - [hermes-agent-discord.md](hermes-agent-discord.md) - Discord setup for the UM790-Pro Hermes Agent microVM
+- [orca.md](orca.md) - Orca headless server on UM790-Pro
 
 ### Other
 
