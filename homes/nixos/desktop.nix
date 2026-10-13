@@ -2,7 +2,6 @@
 
 {
   imports = [
-    inputs.codex-desktop-linux.homeManagerModules.default
     inputs.nani-translate-linux.homeManagerModules.default
   ];
 
@@ -15,10 +14,6 @@
   };
   my.services.swayidle.enable = true;
 
-  programs.codexDesktopLinux = {
-    enable = true;
-    cliPackage = pkgs.llm-agents.codex;
-  };
   programs.naniTranslateLinux.enable = true;
   ext.xdg.enable = true;
   services.wallpaper.enable = true;

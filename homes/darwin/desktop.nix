@@ -29,9 +29,6 @@
       slack
       wechat
 
-      # AI / LLM
-      chatgpt
-
       # Productivity
       anki
       figma

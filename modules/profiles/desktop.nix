@@ -12,6 +12,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
     { lib, pkgs, ... }:
     {
       my.programs = {
+        chatgpt.enable = lib.mkDefault true;
         grok-bot.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
         handy.enable = lib.mkDefault true;
         hermes-desktop.enable = lib.mkDefault true;
