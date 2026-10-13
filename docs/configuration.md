@@ -135,7 +135,7 @@ are in the [desktop style report](noctalia-style-report.md).
 
 - **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
 - **Desktop shell**: [Noctalia](https://noctalia.dev/) with Catppuccin Mocha, a floating bar, centered workspaces, notifications, OSD, and control center
-- **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae)
+- **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae), including [AI Sessions](https://github.com/yutakobayashidev/vicinae-extension-ai-session) for Codex/Claude Code history search and resume; see [configuration and updates](vicinae.md)
 - **Wallpaper**: Noctalia with per-host initial images set through `services.wallpaper.imagePath`; later selections are managed by Noctalia
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts

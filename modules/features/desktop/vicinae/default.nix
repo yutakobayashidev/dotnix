@@ -79,6 +79,23 @@
             natureRemo
             searchMdn
             (inputs.vicinae-extensions.inputs.vicinae.lib.${system}.mkVicinaeExtension (finalAttrs: {
+              pname = "ai-sessions";
+              version = "0-unstable-2026-10-13";
+              src = pkgs.fetchFromGitHub {
+                owner = "yutakobayashidev";
+                repo = "vicinae-extension-ai-session";
+                rev = "eca5d64739cbedac1846f03d2ec78ef0c4620c0f";
+                hash = "sha256-grRzsdjORAjdsAbiRflJNMz7mIN9Od4BxRi9eSvG3bI=";
+              };
+              npmDeps = pkgs.fetchNpmDeps {
+                inherit (finalAttrs) src;
+                hash = "sha256-3yNk6L+BZ2MPECW//rZ260mC2IOBZY59HSSWnWwGBwU=";
+              };
+              # esbuild needs its platform binary present during the offline npm rebuild.
+              npmFlags = [ "--include=optional" ];
+              npmConfigHook = pkgs.npmHooks.npmConfigHook;
+            }))
+            (inputs.vicinae-extensions.inputs.vicinae.lib.${system}.mkVicinaeExtension (finalAttrs: {
               pname = "ietf-rfc";
               version = "0-unstable-2026-08-01";
               src = pkgs.fetchFromGitea {
@@ -99,7 +116,16 @@
 
         systemd.user.services.vicinae.Service.Environment = [
           "_JAVA_AWT_WM_NONREPARENTING=1"
-        ];
+        ]
+        ++ lib.mapAttrsToList (name: value: "${name}=${value}") (
+          lib.filterAttrs (
+            name: _:
+            builtins.elem name [
+              "CODEX_HOME"
+              "CLAUDE_CONFIG_DIR"
+            ]
+          ) config.home.sessionVariables
+        );
       };
     };
 }
