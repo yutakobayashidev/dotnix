@@ -67,7 +67,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Wallpaper**: Noctalia via a Home Manager feature module
 - **IME**: fcitx5 + hazkey (LLM-based conversion)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
-- **Personal context**: Screenpipe CLI/desktop app plus OpenBrief context recall on the ThinkPad
+- **Personal context**: OpenBrief context recall on the ThinkPad
 - **Activity recording**: ActivityWatch with a Niri-compatible window/AFK watcher and Firefox web watcher on ThinkPad only; see [setup and verification](docs/activitywatch.md).
 - **Media history**: ThinkPad-only MPRIS JSONL collector with Aurboda-compatible records; see [format and verification](docs/mpris-collector.md).
 - **AI development**: ChatGPT Desktop (ChatGPT and Codex) via llm-agents.nix, Grok Bot, Hermes Desktop, and Orca on graphical hosts; [Orca headless server](docs/orca.md) on UM790-Pro

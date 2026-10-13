@@ -46,8 +46,6 @@
     mpvpaper
     pavucontrol
     rquickshare
-    screenpipe-app
-    screenpipe-cli
     sushi
     swappy
     turbowarp-desktop
