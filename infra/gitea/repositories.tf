@@ -28,6 +28,7 @@ resource "gitea_repository" "twitter_lite" {
   name        = "twitter-lite"
   description = "Twitter Lite"
   private     = false
+  archived    = true
   auto_init   = false
 }
 
