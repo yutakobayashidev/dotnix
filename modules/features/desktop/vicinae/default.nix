@@ -50,13 +50,13 @@
       config = lib.mkIf config.my.programs.vicinae.enable {
         programs.vicinae = {
           enable = true;
-          useLayerShell = true;
           systemd = {
             enable = true;
             autoStart = true;
           };
 
           settings = {
+            launcher_window.layer_shell.enabled = true;
             font.size = 11;
             close_on_focus_loss = true;
             consider_preedit = true;
