@@ -17,7 +17,6 @@
     "hermes-agent/slack-allowed-users".sopsFile = ./secrets.yaml;
     "hermes-agent/discord-bot-token".sopsFile = ./secrets.yaml;
     "hermes-agent/opencode-go-key".sopsFile = ./secrets.yaml;
-    course-session.sopsFile = ../../../../secrets/default.yaml;
     "hermes-agent/discrawl-archive-ssh-key" = {
       sopsFile = ./secrets.yaml;
       # microvm@hermes-agent.service runs qemu as microvm:kvm and reads this
@@ -52,7 +51,6 @@
       COURSE_PAPI_URL=https://papi.nnn.ed.nico/
       COURSE_WEB_URL=https://www.nnn.ed.nico/
       COURSE_COOKIE_NAME=_zane_session
-      COURSE_SESSION=${config.sops.placeholder.course-session}
       EDCB_HOST=100.111.109.43
       EDCB_PORT=4510
       EDCB_TIMEOUT_SECONDS=15
