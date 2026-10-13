@@ -70,7 +70,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Personal context**: OpenBrief context recall on the ThinkPad
 - **Activity recording**: ActivityWatch with a Niri-compatible window/AFK watcher and Firefox web watcher on ThinkPad only; see [setup and verification](docs/activitywatch.md).
 - **Media history**: ThinkPad-only MPRIS JSONL collector with Aurboda-compatible records; see [format and verification](docs/mpris-collector.md).
-- **AI development**: ChatGPT Desktop (ChatGPT and Codex) via llm-agents.nix, Grok Bot, Hermes Desktop, and Orca on graphical hosts; [Orca headless server](docs/orca.md) on UM790-Pro
+- **AI development**: ChatGPT Desktop (ChatGPT and Codex) and Claude Desktop via llm-agents.nix, Grok Bot, Hermes Desktop, and Orca on graphical hosts; [Orca headless server](docs/orca.md) on UM790-Pro
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
@@ -81,7 +81,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 ### macOS
 
 - **Homebrew**: GUI app management (Ghostty, Raycast, Chrome, etc.)
-- **AI development**: ChatGPT Desktop via llm-agents.nix, Hermes Desktop, and Orca via the desktop profile
+- **AI development**: ChatGPT Desktop and Claude Desktop via llm-agents.nix, Hermes Desktop, and Orca via the desktop profile
 - **Speech-to-text**: Handy with launchd automatic startup
 - **Touch ID**: sudo authentication
 - **1Password**: Shell Plugins (gh, awscli2, tea)
