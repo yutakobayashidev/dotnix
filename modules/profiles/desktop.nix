@@ -11,8 +11,12 @@ import ../../lib/mkProfile.nix { inherit lib; } {
   home =
     { lib, pkgs, ... }:
     {
-      my.programs.handy.enable = lib.mkDefault true;
-      my.programs.orca.enable = lib.mkDefault true;
+      my.programs = {
+        grok-bot.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
+        handy.enable = lib.mkDefault true;
+        hermes-desktop.enable = lib.mkDefault true;
+        orca.enable = lib.mkDefault true;
+      };
 
       home.packages = lib.optionals pkgs.stdenv.isLinux (
         with pkgs;
