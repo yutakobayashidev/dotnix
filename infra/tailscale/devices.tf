@@ -65,7 +65,7 @@ resource "tailscale_device_authorization" "um790_pro" {
 
 resource "tailscale_device_key" "um790_pro" {
   device_id           = "n1ACQ1LDqz11CNTRL"
-  key_expiry_disabled = false
+  key_expiry_disabled = true
 }
 
 resource "tailscale_device_authorization" "x870_steel_legend" {
@@ -83,13 +83,7 @@ resource "tailscale_device_tags" "b450m_pro4" {
   tags      = ["tag:server"]
 }
 
-resource "tailscale_device_tags" "um790_pro" {
-  device_id = "n1ACQ1LDqz11CNTRL"
-  tags      = ["tag:server"]
-}
-
 resource "tailscale_device_tags" "x870_steel_legend" {
   device_id = "nxDBJ83LM811CNTRL"
   tags      = ["tag:server"]
 }
-
