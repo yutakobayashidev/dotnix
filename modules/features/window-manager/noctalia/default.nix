@@ -109,6 +109,10 @@ _:
                 type = "battery";
                 display_mode = "graphic";
               };
+              network = {
+                type = "network";
+                show_label = false;
+              };
               media = {
                 type = "media";
                 hide_when_no_media = true;
