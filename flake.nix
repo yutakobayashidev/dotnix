@@ -173,7 +173,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     twitter-lite = {
-      url = "git+https://git.yutakobayashi.com/yuta/twitter-lite";
+      url = "github:yutakobayashidev/ori";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     birdclaw = {
