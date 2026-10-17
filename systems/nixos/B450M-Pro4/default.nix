@@ -12,6 +12,7 @@
     ../services/nextcloud
     ../services/navidrome
     ../services/immich
+    ../services/moe
     ../services/kubo
     ../services/gitea
     ../services/gitea-actions-runner

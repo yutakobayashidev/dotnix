@@ -1,0 +1,33 @@
+--- a/node_modules/twitter-snap/dist/service/twitter/app.js
++++ b/node_modules/twitter-snap/dist/service/twitter/app.js
+@@ -1,4 +1,5 @@
+ import { TwitterOpenApi } from 'twitter-openapi-typescript';
++import { Configuration } from 'twitter-openapi-typescript-generated';
+ import { URLPath } from '../../utils/path.js';
+ import { sleepLoop } from '../../utils/sleep.js';
+ import { Session, SnapApp, SnapRender } from './../../app.js';
+@@ -20,6 +21,24 @@
+             return new Session(await twitter.getClientFromCookies(file.get(allowDomains).toKeyValues()));
+         }
+         case 'guest': {
++            const relayUrl = process.env.TWITTER_SNAP_RELAY_URL;
++            const profile = process.env.TWITTER_SNAP_RELAY_PROFILE;
++            if (relayUrl) {
++                const base = new URL(relayUrl);
++                if (!['http:', 'https:'].includes(base.protocol) || base.username || base.password) {
++                    throw new Error('TWITTER_SNAP_RELAY_URL must be an HTTP(S) URL without credentials');
++                }
++                return new Session(await twitter.getClient(new Configuration({
++                    basePath: new URL('/i/api', base).toString(),
++                    // Use TweetResultByRestId; the relay supplies authentication.
++                    apiKey: () => undefined,
++                    fetchApi: (url, init) => fetch(url, {
++                        ...init,
++                        // Do not override relay authentication with generated headers.
++                        headers: profile ? { 'x-profile-name': profile } : {},
++                    }),
++                })));
++            }
+             return new Session(await twitter.getGuestClient());
+         }
+     }

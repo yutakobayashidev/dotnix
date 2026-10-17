@@ -14,8 +14,18 @@ let
     PUPPETEER_SKIP_DOWNLOAD = true;
     dontNpmBuild = true;
 
+    postConfigure = ''
+      patch -p1 < ${./twitter-snap-safe-relay.patch}
+    '';
+
     buildPhase = ''
       ${lib.getExe pkgs.nodejs} node_modules/typescript/bin/tsc
+    '';
+
+    doCheck = true;
+    checkPhase = ''
+      FFMPEG_PATH=${pkgs.ffmpeg}/bin/ffmpeg ${lib.getExe pkgs.nodejs} test/storage.mjs
+      ${lib.getExe pkgs.nodejs} test/relay.mjs
     '';
 
     installPhase = ''
@@ -31,7 +41,9 @@ in
       description = "Fetch and render Twitter bookmarks";
       after = [ "network-online.target" ];
       wants = [ "network-online.target" ];
+      unitConfig.RequiresMountsFor = [ outputDir ];
       environment = {
+        TWITTER_SNAP_RELAY_URL = "https://tw.home.yutakobayashi.com";
         PUPPETEER_EXECUTABLE_PATH = "${pkgs.chromium}/bin/chromium";
         FFMPEG_PATH = "${pkgs.ffmpeg}/bin/ffmpeg";
         FFPROBE_PATH = "${pkgs.ffmpeg}/bin/ffprobe";

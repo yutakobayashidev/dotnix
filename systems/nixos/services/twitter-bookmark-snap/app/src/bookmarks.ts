@@ -1,4 +1,4 @@
-import { existsSync } from 'node:fs';
+import { hasRenderedTweet } from './storage.js';
 import { TwitterClient } from '@yuta/bird';
 import type { TweetData } from '@yuta/bird';
 
@@ -22,10 +22,6 @@ function mapTweet(tweet: TweetData): BookmarkTweet {
 		screenName: tweet.author?.username ?? 'unknown',
 		text: tweet.text.slice(0, 100),
 	};
-}
-
-function hasRenderedTweet(outputDir: string, tweetId: string): boolean {
-	return existsSync(`${outputDir}/${tweetId}.png`) || existsSync(`${outputDir}/${tweetId}.mp4`);
 }
 
 async function randomSleep(minMs: number, maxMs: number): Promise<void> {
@@ -54,10 +50,11 @@ export async function fetchAllBookmarks(
 			maxPages: 1,
 		});
 
-		if (!result.success || !result.tweets || result.tweets.length === 0) break;
+		if (!result.success) throw new Error('Bookmark fetch failed');
+		if (!result.tweets || result.tweets.length === 0) break;
 
 		for (const tweet of result.tweets) {
-			if (hasRenderedTweet(outputDir, tweet.id)) {
+			if (await hasRenderedTweet(outputDir, tweet.id)) {
 				consecutiveExisting++;
 				if (consecutiveExisting >= CONSECUTIVE_EXISTING_THRESHOLD) {
 					console.log(

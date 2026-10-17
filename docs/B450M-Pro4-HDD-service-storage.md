@@ -1,5 +1,9 @@
 # B450M-Pro4 HDD Service Storage Notes
 
+For the dedicated net pics Immich instance, see [moe](moe.md). Its application
+data lives under `/srv/bulk/moe`; bookmark originals remain in the separate
+`/var/lib/immich-net-pics` HDD mount.
+
 These notes record the May 2026 bulk-storage setup and later service migrations
 for using the 3TB HDD while preserving the existing NTFS data.
 

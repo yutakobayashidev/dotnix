@@ -1,8 +1,10 @@
 import { fetchAllBookmarks } from './bookmarks.js';
 import { renderTweet } from './render.js';
 import type { BookmarkTweet } from './bookmarks.js';
+import { findDamagedTweets } from './storage.js';
+import { setTimeout } from 'node:timers/promises';
 
-function parseArgs(): { limit?: number; outputDir: string } {
+function parseArgs(): { limit?: number; outputDir: string; repair: boolean } {
 	const args = process.argv.slice(2);
 	const parsed: Record<string, string> = {};
 	for (let i = 0; i < args.length; i++) {
@@ -17,9 +19,14 @@ function parseArgs(): { limit?: number; outputDir: string } {
 			}
 		}
 	}
+	const limit = parsed.limit === undefined ? undefined : Number(parsed.limit);
+	if (limit !== undefined && (!Number.isSafeInteger(limit) || limit < 1)) {
+		throw new Error('--limit must be a positive integer');
+	}
 	return {
-		limit: parsed.limit ? Number.parseInt(parsed.limit, 10) : undefined,
+		limit,
 		outputDir: parsed['output-dir'] ?? 'output',
+		repair: parsed.repair === 'true',
 	};
 }
 
@@ -39,29 +46,43 @@ function printSummary(
 }
 
 async function main(): Promise<void> {
-	const { limit, outputDir } = parseArgs();
+	const { limit, outputDir, repair } = parseArgs();
 
-	console.log('Fetching bookmarks via proxy...');
-	const tweets = await fetchAllBookmarks(outputDir, limit);
-	console.log(`Fetched ${tweets.length} new bookmarks`);
+	console.log(repair ? 'Finding damaged media...' : 'Fetching bookmarks via proxy...');
+	const tweets = repair
+		? (await findDamagedTweets(outputDir, limit)).map((id): BookmarkTweet => ({
+				id,
+				url: `https://x.com/i/status/${id}`,
+				name: 'repair',
+				screenName: '',
+				text: '',
+			}))
+		: await fetchAllBookmarks(outputDir, limit);
+	console.log(`Selected ${tweets.length} tweets`);
 
 	const rendered: Array<{ tweetId: string; filePath: string }> = [];
+	let failures = 0;
 	for (const tweet of tweets) {
 		if (!tweet.id) {
 			console.log(`Skipping invalid tweet: ${tweet.url}`);
 			continue;
 		}
 		console.log(`Rendering: ${tweet.id} (${tweet.name})`);
+		if (repair) await setTimeout(2000);
 		try {
 			const result = await renderTweet(tweet.id, outputDir);
 			rendered.push(result);
+			console.log(`Rendered: ${result.filePath}`);
 		} catch (err) {
+			if ((err as NodeJS.ErrnoException).code === 'ENOSPC') throw err;
+			failures++;
 			console.log(`Failed to render ${tweet.id}: ${(err as Error).message}`);
 		}
 	}
 
 	printSummary(tweets, rendered);
-	process.exit(0);
+	console.log(`Total failed: ${failures}`);
+	process.exitCode = failures > 0 ? 1 : 0;
 }
 
 main().catch((err) => {
