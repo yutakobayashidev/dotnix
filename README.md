@@ -35,7 +35,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [All guides](docs/README.md)
 - [Hosts and module architecture](docs/configuration.md)
 - [Remote builds](docs/remote-build.md)
-- [moe: net pics Immich on HDD](docs/moe.md)
+- [moe: net pics and gallery-dl Immich on HDD](docs/moe.md)
 - [Agent skills](docs/agent-skills.md)
 - [Orca headless server on UM790-Pro](docs/orca.md)
 - [Hermes Quantified Self wiki share](docs/hermes-qs-wiki.md)

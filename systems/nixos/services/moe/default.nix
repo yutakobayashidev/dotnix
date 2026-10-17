@@ -45,6 +45,7 @@ in
       volumes = [
         "${stateDir}/library:/data"
         "/var/lib/immich-net-pics:/external/net-pics:ro"
+        "/srv/bulk/gallery-dl:/external/gallery-dl:ro"
       ];
     };
     moe-machine-learning = (container "immich-machine-learning") // {

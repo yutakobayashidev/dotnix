@@ -1,6 +1,6 @@
-# moe: net pics Immich
+# moe: net pics and gallery-dl Immich
 
-`moe.home.yutakobayashi.com` is the dedicated net pics Immich instance on
+`moe.home.yutakobayashi.com` is the dedicated net pics and gallery-dl Immich instance on
 B450M-Pro4. Personal photos remain in `photos.home.yutakobayashi.com`.
 
 The NixOS OCI module runs four Podman containers: `moe-server`,
@@ -18,6 +18,7 @@ and follow the [Immich v3.3.3 release compose file](https://github.com/immich-ap
 | `/srv/bulk/moe/redis`        | Valkey data                                     |
 | `/srv/bulk/moe/database.env` | Generated DB credentials, root-only mode 0600   |
 | `/var/lib/immich-net-pics`   | Existing HDD originals written by bookmark snap |
+| `/srv/bulk/gallery-dl`       | Existing HDD originals downloaded by gallery-dl |
 
 Credentials are generated once, directly in their persistent location. Back up
 `database.env` with the database and library, and restore them together. Deleting
@@ -37,6 +38,11 @@ creating directories or starting containers. PostgreSQL uses `DB_STORAGE_TYPE=HD
    temporary render frames and staging directories, then scan the library.
 4. Configure periodic library scans in Administration. Verify that a newly saved
    bookmark image appears after a scan.
+   Create a separate gallery-dl library with import path
+   `/external/gallery-dl/pixiv/bookmarks` to match the existing photos collection.
+   The entire `/srv/bulk/gallery-dl` tree is mounted read-only at
+   `/external/gallery-dl`; add other subdirectories only when they should also
+   appear in moe. Exclude `**/*.part` and scan the library.
 5. Compare asset counts and open representative images and videos. Albums,
    favorites, descriptions, and other metadata stored only in the old database
    are not transferred by this scan.
@@ -46,13 +52,17 @@ creating directories or starting containers. PostgreSQL uses `DB_STORAGE_TYPE=HD
    and personal photos remain visible. If that library contains other paths, or
    net pics were uploaded rather than registered as an external library, inspect
    that arrangement before removal.
+   Repeat the verification and removal for the library containing
+   `/srv/bulk/gallery-dl/pixiv/bookmarks`. Remove only these external library
+   registrations; uploaded personal photos stay in photos.
 
 “External library” describes how Immich accesses originals managed by another
 program. These assets appear in the main timeline; net pics is the main
 collection in `moe`. Bookmark snap keeps writing the same directory. See
 [Immich external libraries](https://docs.immich.app/features/libraries/).
 
-Do not delete `/var/lib/immich-net-pics` when removing the old registration.
+Do not delete `/var/lib/immich-net-pics` or `/srv/bulk/gallery-dl` when removing
+the old registrations.
 
 ## Repairing bookmark snapshots
 
