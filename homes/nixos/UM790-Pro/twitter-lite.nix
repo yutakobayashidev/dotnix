@@ -55,6 +55,7 @@ let
     "WORKSPACE_RUNTIME_URL=http://127.0.0.1:4318"
     "WORKSPACE_RUNTIME_TOKEN_FILE=${runtimeToken}"
     "TWITTER_LITE_REPORT_ROOT=${reportDir}"
+    "TWITTER_LITE_JOURNAL_DIR=${stateDir}/journal"
     "CODEX_HOME=${config.xdg.configHome}/codex"
     "PATH=${
       lib.makeBinPath [

@@ -176,6 +176,10 @@ are in the [desktop style report](noctalia-style-report.md).
 
 The Workspace endpoint `https://home.yutakobayashi.com/api/collect/owntracks` accepts HTTP-mode OwnTracks messages over the tailnet. The service initializer creates `~/.local/state/twitter-lite/owntracks/` (0700) and `owntracks-credentials.json` (0600) with a random password on first start; existing credentials survive rebuilds. Android needs Tailscale, HTTP mode, and the username/password from that file. Records are daily raw JSONL, separate from SQLite; back up this directory and the credential file privately.
 
+### Workspace Journal persistence
+
+The web service sets `TWITTER_LITE_JOURNAL_DIR` to `~/.local/state/twitter-lite/journal` for persistent Journal entries. Entries append to `YYYY-MM-DD.md` files using Japan Standard Time (Asia/Tokyo), with timestamp headings. Corrections append another entry rather than rewriting existing content. Back up this directory alongside the SQLite database; database-only backups do not include Journal files. Rebuilds preserve the state directory.
+
 ### Workspace TypeSafe credentials
 
 `secrets/ori-typesafe.env` stores the Home composer TypeSafe API key encrypted with sops for UM790-Pro. Home Manager decrypts it as `ori-typesafe-env`; the web service reads that secret through `EnvironmentFile` after `sops-nix.service`. Edit it with `sops secrets/ori-typesafe.env`, keeping `TYPESAFE_API_KEY` as the dotenv variable, and rebuild. Recovery requires the UM790-Pro age key or a replacement API key. Never commit plaintext credentials.
