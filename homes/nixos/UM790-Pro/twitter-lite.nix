@@ -56,6 +56,7 @@ let
     "WORKSPACE_RUNTIME_TOKEN_FILE=${runtimeToken}"
     "TWITTER_LITE_REPORT_ROOT=${reportDir}"
     "TWITTER_LITE_JOURNAL_DIR=${stateDir}/journal"
+    "TWITTER_LITE_ROUTINE_DIR=${stateDir}/routines"
     "CODEX_HOME=${config.xdg.configHome}/codex"
     "PATH=${
       lib.makeBinPath [

@@ -180,6 +180,10 @@ The Workspace endpoint `https://home.yutakobayashi.com/api/collect/owntracks` ac
 
 The web service sets `TWITTER_LITE_JOURNAL_DIR` to `~/.local/state/twitter-lite/journal` for persistent Journal entries. Entries append to `YYYY-MM-DD.md` files using Japan Standard Time (Asia/Tokyo), with timestamp headings. Corrections append another entry rather than rewriting existing content. Back up this directory alongside the SQLite database; database-only backups do not include Journal files. Rebuilds preserve the state directory.
 
+### Workspace routine builder
+
+The web service sets `TWITTER_LITE_ROUTINE_DIR` to `~/.local/state/twitter-lite/routines`. Back up `definitions.jsonl` (immutable form versions) and daily `YYYY-MM-DD.jsonl` execution records together. Creation and editing use the existing Codex runtime and its login with structured output; saved routines can execute without inference. The routine schedule controls Home display, not external notifications.
+
 ### Workspace TypeSafe credentials
 
 `secrets/ori-typesafe.env` stores the Home composer TypeSafe API key encrypted with sops for UM790-Pro. Home Manager decrypts it as `ori-typesafe-env`; the web service reads that secret through `EnvironmentFile` after `sops-nix.service`. Edit it with `sops secrets/ori-typesafe.env`, keeping `TYPESAFE_API_KEY` as the dotenv variable, and rebuild. Recovery requires the UM790-Pro age key or a replacement API key. Never commit plaintext credentials.
