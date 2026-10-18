@@ -7,6 +7,10 @@ keys:
   - &thinkpad-home age18vhwvn7ra09rhdc3ex5scd6n96w3lvpv54sa2gvky7559exdhyus6gjmln
 
 creation_rules:
+  - path_regex: ^secrets/ori-typesafe\.env$
+    key_groups:
+      - age:
+          - *um790
   - path_regex: ^secrets/remote-build-B450M-Pro4\.yaml$
     key_groups:
       - age:

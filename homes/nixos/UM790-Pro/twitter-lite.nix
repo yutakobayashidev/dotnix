@@ -67,6 +67,12 @@ let
   ];
 in
 {
+  sops.secrets.ori-typesafe-env = {
+    sopsFile = ../../../secrets/ori-typesafe.env;
+    format = "dotenv";
+    key = "";
+  };
+
   systemd.user.services = {
     twitter-lite-runtime = {
       Unit.Description = "Personal Workspace AI execution runtime";
@@ -121,13 +127,14 @@ in
       Unit = {
         Description = "Personal Workspace";
         Wants = [ "twitter-lite-runtime.service" ];
-        After = [ "twitter-lite-runtime.service" ];
+        Requires = [ "sops-nix.service" ];
+        After = [ "twitter-lite-runtime.service" "sops-nix.service" ];
       };
       Service = {
         ExecStartPre = "${node} ${initializeState}";
         ExecStart = lib.getExe app;
         WorkingDirectory = config.home.homeDirectory;
-        EnvironmentFile = "${stateDir}/typesafe.env";
+        EnvironmentFile = config.sops.secrets.ori-typesafe-env.path;
         Environment = environment ++ [
           "HOST=100.91.91.87"
           "PORT=3006"

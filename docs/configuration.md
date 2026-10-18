@@ -178,4 +178,4 @@ The Workspace endpoint `https://home.yutakobayashi.com/api/collect/owntracks` ac
 
 ### Workspace TypeSafe credentials
 
-The UM790-Pro web service reads `TYPESAFE_API_KEY` from `~/.local/state/twitter-lite/typesafe.env` (mode 0600). Provision this file before activation; keep it outside Git and the Nix store. Restore it from a private backup or issue a replacement key in TypeSafe, then restart `twitter-lite.service`. It enables Japanese task intent recognition in the Home composer.
+`secrets/ori-typesafe.env` stores the Home composer TypeSafe API key encrypted with sops for UM790-Pro. Home Manager decrypts it as `ori-typesafe-env`; the web service reads that secret through `EnvironmentFile` after `sops-nix.service`. Edit it with `sops secrets/ori-typesafe.env`, keeping `TYPESAFE_API_KEY` as the dotenv variable, and rebuild. Recovery requires the UM790-Pro age key or a replacement API key. Never commit plaintext credentials.
