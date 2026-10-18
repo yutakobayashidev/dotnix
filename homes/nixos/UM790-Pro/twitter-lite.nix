@@ -127,6 +127,7 @@ in
         ExecStartPre = "${node} ${initializeState}";
         ExecStart = lib.getExe app;
         WorkingDirectory = config.home.homeDirectory;
+        EnvironmentFile = "${stateDir}/typesafe.env";
         Environment = environment ++ [
           "HOST=100.91.91.87"
           "PORT=3006"

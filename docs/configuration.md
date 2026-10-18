@@ -175,3 +175,7 @@ are in the [desktop style report](noctalia-style-report.md).
 ### OwnTracks collection on UM790-Pro
 
 The Workspace endpoint `https://home.yutakobayashi.com/api/collect/owntracks` accepts HTTP-mode OwnTracks messages over the tailnet. The service initializer creates `~/.local/state/twitter-lite/owntracks/` (0700) and `owntracks-credentials.json` (0600) with a random password on first start; existing credentials survive rebuilds. Android needs Tailscale, HTTP mode, and the username/password from that file. Records are daily raw JSONL, separate from SQLite; back up this directory and the credential file privately.
+
+### Workspace TypeSafe credentials
+
+The UM790-Pro web service reads `TYPESAFE_API_KEY` from `~/.local/state/twitter-lite/typesafe.env` (mode 0600). Provision this file before activation; keep it outside Git and the Nix store. Restore it from a private backup or issue a replacement key in TypeSafe, then restart `twitter-lite.service`. It enables Japanese task intent recognition in the Home composer.
