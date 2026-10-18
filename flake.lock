@@ -2813,11 +2813,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792337027,
-        "narHash": "sha256-Tv5iTWWyeUn38Bk3kEmJU/2bwjeQAz7dJH9Q4XiUfRk=",
+        "lastModified": 1792337814,
+        "narHash": "sha256-e3lmjEGfJXgnkdM7/sneHHsFBLBX80rOpWc7trtYs6E=",
         "owner": "yutakobayashidev",
         "repo": "ori",
-        "rev": "05daa043b05d31352ebd507367517bf78072823d",
+        "rev": "cb4e72f6acf8c337449163082cb7a3636122b836",
         "type": "github"
       },
       "original": {
