@@ -77,6 +77,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Remote builds**: B450M-Pro4 and ThinkPad offload to UM790-Pro over Tailscale; see [rollout and offline build commands](docs/remote-build.md)
 - **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [GhidraMCP](docs/ghidra-mcp.md), on the ThinkPad
 - **Observability**: Grafana / Prometheus / Loki on B450M-Pro4, Claude Code OTLP telemetry
+- **Home automation**: Home Assistant / Matter.js for Lapis on B450M-Pro4, VictoriaMetrics history and local Restic backups; see [setup and restore](docs/home-assistant.md).
 
 ### macOS
 

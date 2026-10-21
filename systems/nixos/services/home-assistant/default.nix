@@ -1,11 +1,21 @@
-{ config, ... }:
+_:
 
 {
+  imports = [
+    ./matter.nix
+    ./metrics.nix
+    ./backup.nix
+  ];
+
   services.home-assistant = {
     enable = true;
+    extraComponents = [ "matter" ];
 
     config = {
       default_config = { };
+      recorder.purge_keep_days = 14;
+      history = { };
+      logbook = { };
 
       homeassistant = {
         name = "Home";
@@ -13,19 +23,11 @@
         time_zone = "Asia/Tokyo";
       };
 
-      http = {
-        server_host = [ "0.0.0.0" ];
-        server_port = 8123;
-        use_x_forwarded_for = true;
-        trusted_proxies = [
-          "127.0.0.1"
-          "::1"
-        ];
-      };
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ config.services.home-assistant.config.http.server_port ];
+  # Since HA 2026.8, the HTTP port is managed in the UI (default: 8123).
+  networking.firewall.allowedTCPPorts = [ 8123 ];
 
   services.traefik.dynamicConfigOptions.http = {
     routers.home-assistant = {
@@ -38,7 +40,7 @@
       tls.certResolver = "letsencrypt";
     };
     services.home-assistant.loadBalancer.servers = [
-      { url = "http://localhost:${toString config.services.home-assistant.config.http.server_port}"; }
+      { url = "http://127.0.0.1:8123"; }
     ];
   };
 }
