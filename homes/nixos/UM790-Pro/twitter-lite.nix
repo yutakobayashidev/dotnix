@@ -9,6 +9,7 @@
 let
   app = inputs.twitter-lite.packages.${pkgs.stdenv.hostPlatform.system}.default;
   runtime = inputs.twitter-lite.packages.${pkgs.stdenv.hostPlatform.system}.workspace-runtime;
+  scaleCollector = inputs.twitter-lite.packages.${pkgs.stdenv.hostPlatform.system}.xiaomi-s200;
   node = lib.getExe pkgs.nodejs_22;
   stateDir = "${config.xdg.stateHome}/twitter-lite";
   reportDir = "${stateDir}/research";
@@ -16,6 +17,7 @@ let
   runtimeToken = "${stateDir}/runtime-token";
   ownTracksArchive = "${stateDir}/owntracks";
   ownTracksCredential = "${stateDir}/owntracks-credentials.json";
+  scaleState = "${stateDir}/xiaomi-s200";
   initializeState = pkgs.writeText "twitter-lite-initialize.mjs" ''
     import { mkdirSync, writeFileSync } from 'node:fs';
     import { randomBytes } from 'node:crypto';
@@ -52,6 +54,8 @@ let
   environment = sharedEnvironment ++ [
     "WORKSPACE_OWNTRACKS_ARCHIVE_DIR=${ownTracksArchive}"
     "WORKSPACE_OWNTRACKS_CREDENTIAL_FILE=${ownTracksCredential}"
+    "WORKSPACE_XIAOMI_SCALE_ARCHIVE_DIR=${scaleState}/archive"
+    "WORKSPACE_XIAOMI_SCALE_CREDENTIAL_FILE=${scaleState}/ingest.json"
     "WORKSPACE_RUNTIME_URL=http://127.0.0.1:4318"
     "WORKSPACE_RUNTIME_TOKEN_FILE=${runtimeToken}"
     "TWITTER_LITE_REPORT_ROOT=${reportDir}"
@@ -76,6 +80,23 @@ in
   };
 
   systemd.user.services = {
+    ori-xiaomi-s200 = {
+      Unit = {
+        Description = "Ori Xiaomi S200 collector";
+        After = [ "twitter-lite.service" ];
+        Wants = [ "twitter-lite.service" ];
+        ConditionPathExists = "${scaleState}/collector.json";
+      };
+      Service = {
+        ExecStart = "${lib.getExe scaleCollector} run --config ${scaleState}/collector.json";
+        Environment = [ "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt" ];
+        Restart = "on-failure";
+        RestartSec = 10;
+        UMask = "0077";
+        NoNewPrivileges = true;
+      };
+      Install.WantedBy = [ "default.target" ];
+    };
     twitter-lite-runtime = {
       Unit.Description = "Personal Workspace AI execution runtime";
       Service = {
@@ -130,7 +151,10 @@ in
         Description = "Personal Workspace";
         Wants = [ "twitter-lite-runtime.service" ];
         Requires = [ "sops-nix.service" ];
-        After = [ "twitter-lite-runtime.service" "sops-nix.service" ];
+        After = [
+          "twitter-lite-runtime.service"
+          "sops-nix.service"
+        ];
       };
       Service = {
         ExecStartPre = "${node} ${initializeState}";
