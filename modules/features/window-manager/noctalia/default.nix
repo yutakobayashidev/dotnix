@@ -126,7 +126,7 @@ _:
               };
               clock = {
                 type = "clock";
-                format = "{:%m/%d %H:%M}";
+                format = "{:%m/%d (%a) %H:%M}";
                 vertical_format = "{:%Y/%m/%d\n%H:%M}";
                 tooltip_format = "{:%Y/%m/%d %H:%M (%a)}";
               };
