@@ -67,10 +67,12 @@ After applying the Nix configuration:
    expose only the entities ChatGPT should access. The default configuration
    requires an administrator account; either use an appropriate dedicated
    account or explicitly change that integration option for a non-admin user.
-2. Create a long-lived access token for that HA account. With `sudoedit`, save
-   the complete single-line value `Bearer <HA token>` in
-   `/var/lib/home-assistant-secrets/mcp-authorization`. The `Bearer ` prefix
-   is required. This token is attached locally to MCP requests and probes.
+2. Create a long-lived access token for that HA account. Encrypt the complete
+   value `Bearer <HA token>` as `home-assistant-mcp-authorization` in
+   `systems/nixos/services/home-assistant/secrets.yaml` using sops. Only B450M-Pro4
+   can decrypt this file. sops-nix provisions the root-only runtime secret and
+   restarts the tunnel when it changes; systemd passes it via `LoadCredential`.
+   The `Bearer ` prefix is required for MCP requests and probes.
 3. Create the `openai_mcp_tunnel.home_assistant` resource in
    `tofu-configuration/infra/services/openai` after reviewing its plan. Read
    its ID with `tofu -chdir=infra/services/openai output -raw home_assistant_tunnel_id`
@@ -82,7 +84,7 @@ After applying the Nix configuration:
    `OPENAI_ADMIN_KEY`. Then start it:
 
    ```sh
-   sudo chmod 600 /var/lib/home-assistant-secrets/mcp-authorization /var/lib/home-assistant-secrets/mcp-tunnel.env
+   sudo chmod 600 /var/lib/home-assistant-secrets/mcp-tunnel.env
    sudo systemctl start tunnel-client-home-assistant
    systemctl status tunnel-client-home-assistant
    curl --fail http://127.0.0.1:18793/readyz
@@ -95,12 +97,12 @@ After applying the Nix configuration:
    Verify tools are listed, read one exposed entity, then test an intended
    device operation. The ChatGPT user also needs Tunnels Read + Use access.
 
-The service is skipped until both local files exist. The root-only secrets
-folder is created by the metrics module and survives reboots because `/var/lib`
-is persistent on this host. `LoadCredential` exposes the HA token and existing
-OpenAI runtime key only at runtime; neither belongs in Nix expressions, Git,
-shell arguments, or `/tmp`. Keep a recovery copy of the HA token in your password
-manager: this directory is not included in the HA Restic backup.
+The service is skipped until the sops secret and tunnel environment file exist.
+The root-only environment folder survives reboots because `/var/lib` is persistent.
+The encrypted HA token is tracked in Git; plaintext credentials are passed through
+`LoadCredential` at runtime and never belong in Nix expressions, shell arguments,
+or temporary files. To rotate the token, issue a replacement in HA, update the
+sops value and deploy, then revoke the old token in HA.
 
 For troubleshooting, use `journalctl -u tunnel-client-home-assistant --since today`.
 A successful Nix evaluation verifies the configuration, not HA setup, runtime

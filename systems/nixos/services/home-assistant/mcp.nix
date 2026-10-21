@@ -2,12 +2,17 @@
 let
   serviceName = "tunnel-client-home-assistant";
   secretsDir = "/var/lib/home-assistant-secrets";
-  authorizationFile = "${secretsDir}/mcp-authorization";
+  authorizationFile = config.sops.secrets.home-assistant-mcp-authorization.path;
   environmentFile = "${secretsDir}/mcp-tunnel.env";
   credentialDir = "/run/credentials/${serviceName}.service";
   authorization = "file:${credentialDir}/ha-authorization";
 in
 {
+  sops.secrets.home-assistant-mcp-authorization = {
+    sopsFile = ./secrets.yaml;
+    restartUnits = [ "${serviceName}.service" ];
+  };
+
   services.openai-tunnel-client.instances.home-assistant = {
     enable = true;
     settings = {
