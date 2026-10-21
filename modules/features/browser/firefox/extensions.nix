@@ -10,6 +10,7 @@
     ipfs-companion
     keepa
     instapaper-official
+    linkding-extension
     refined-github
     wayback-machine
     zotero-connector

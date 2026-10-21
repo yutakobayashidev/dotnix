@@ -1,5 +1,7 @@
 # Firefox
 
+The `nix` profile includes the [linkding extension](https://addons.mozilla.org/en-US/firefox/addon/linkding-extension/), managed in `modules/features/browser/firefox/extensions.nix`.
+
 The `nix` profile includes [ChatGPT Markdown Exporter](https://github.com/devcxl/chatgpt-markdown-exporter) for exporting individual or multiple ChatGPT conversations as Markdown. Its Mozilla Add-ons XPI is pinned by version and SHA-256 in `modules/features/browser/firefox/extensions.nix`. Apply with `nix run .#switch`, then restart Firefox and open ChatGPT to use the export button or the extension's popup.
 
 New tabs open `https://home.yutakobayashi.com/` through New Tab Override. The extension and its settings are managed by Home Manager; edit the URL in `modules/features/browser/firefox/default.nix` to change it. Apply with `nix run .#switch`, then restart Firefox.
