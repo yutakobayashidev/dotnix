@@ -51,6 +51,61 @@ No server Bluetooth adapter or Thread border router is needed for normal Lapis
 Wi-Fi operation. NixOS native Matter is outside HA's officially supported HA OS
 server installation.
 
+## ChatGPT through Secure MCP Tunnel
+
+Nix includes HA's `mcp_server` component and the
+`tunnel-client-home-assistant` service on B450M-Pro4. The service forwards the
+`main` channel to `http://127.0.0.1:8123/api/mcp` over an outbound OpenAI tunnel.
+It does not require another router port or public HA endpoint. The health/admin
+listener is loopback-only at `127.0.0.1:18793`.
+
+After applying the Nix configuration:
+
+1. In HA, add **Model Context Protocol Server** under Settings → Devices &
+   services (or enable MCP under Settings → System → AI). Configure the
+   integration to disable **Expose all LLM APIs** and select **Assist**, then
+   expose only the entities ChatGPT should access. The default configuration
+   requires an administrator account; either use an appropriate dedicated
+   account or explicitly change that integration option for a non-admin user.
+2. Create a long-lived access token for that HA account. With `sudoedit`, save
+   the complete single-line value `Bearer <HA token>` in
+   `/var/lib/home-assistant-secrets/mcp-authorization`. The `Bearer ` prefix
+   is required. This token is attached locally to MCP requests and probes.
+3. Create the `openai_mcp_tunnel.home_assistant` resource in
+   `tofu-configuration/infra/services/openai` after reviewing its plan. Read
+   its ID with `tofu -chdir=infra/services/openai output -raw home_assistant_tunnel_id`
+   from that repository. On B450M-Pro4 use `sudoedit` to create
+   `/var/lib/home-assistant-secrets/mcp-tunnel.env` containing
+   `CONTROL_PLANE_TUNNEL_ID=<the output ID>`.
+4. Confirm the existing sops `openai-tunnel-api-key` is an OpenAI **runtime**
+   key with Tunnels Read + Use access to this tunnel. The daemon must not use
+   `OPENAI_ADMIN_KEY`. Then start it:
+
+   ```sh
+   sudo chmod 600 /var/lib/home-assistant-secrets/mcp-authorization /var/lib/home-assistant-secrets/mcp-tunnel.env
+   sudo systemctl start tunnel-client-home-assistant
+   systemctl status tunnel-client-home-assistant
+   curl --fail http://127.0.0.1:18793/readyz
+   ```
+
+5. In OpenAI Platform, associate the tunnel with the intended ChatGPT workspace.
+   In ChatGPT, add a custom MCP server, select **Connection → Tunnel**, choose
+   the new Home Assistant tunnel, and select **Authentication → None**. HA
+   authentication is supplied by the local daemon; OAuth is not configured.
+   Verify tools are listed, read one exposed entity, then test an intended
+   device operation. The ChatGPT user also needs Tunnels Read + Use access.
+
+The service is skipped until both local files exist. The root-only secrets
+folder is created by the metrics module and survives reboots because `/var/lib`
+is persistent on this host. `LoadCredential` exposes the HA token and existing
+OpenAI runtime key only at runtime; neither belongs in Nix expressions, Git,
+shell arguments, or `/tmp`. Keep a recovery copy of the HA token in your password
+manager: this directory is not included in the HA Restic backup.
+
+For troubleshooting, use `journalctl -u tunnel-client-home-assistant --since today`.
+A successful Nix evaluation verifies the configuration, not HA setup, runtime
+key permissions, or the end-to-end ChatGPT connection.
+
 ## Enable metrics collection
 
 Create a dedicated HA user and a long-lived access token from that user's
@@ -152,3 +207,6 @@ journalctl -u restic-backups-home-assistant --since today
 - [Recorder](https://www.home-assistant.io/integrations/recorder/)
 - [Prometheus integration](https://www.home-assistant.io/integrations/prometheus/)
 - [Reference Restic module](https://github.com/natsukium/dotfiles/blob/6cebb564ec31f4072db323b36a3b8455c9004322/modules/features/backup/restic/default.nix)
+
+- [HA MCP Server](https://www.home-assistant.io/integrations/mcp_server/)
+- [Secure tunnel configuration](https://github.com/openai/tunnel-client/blob/main/docs/configuration.md)

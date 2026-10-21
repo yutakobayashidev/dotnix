@@ -2,6 +2,7 @@ _:
 
 {
   imports = [
+    ./mcp.nix
     ./matter.nix
     ./metrics.nix
     ./backup.nix
@@ -9,7 +10,10 @@ _:
 
   services.home-assistant = {
     enable = true;
-    extraComponents = [ "matter" ];
+    extraComponents = [
+      "matter"
+      "mcp_server"
+    ];
 
     config = {
       default_config = { };
