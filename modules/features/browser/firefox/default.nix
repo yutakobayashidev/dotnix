@@ -80,10 +80,25 @@ _:
                     "browser.tabs.insertAfterCurrent" = true;
                     "browser.tabs.loadBookmarksInTabs" = true;
 
+                    "mousewheel.with_control.action" = 1;
+                    "full-screen-api.transition-duration.enter" = "0 0";
+                    "full-screen-api.transition-duration.leave" = "0 0";
+
+                    "pdfjs.scrollModeOnLoad" = 1;
+                    "pdfjs.spreadModeOnLoad" = 1;
+                    "pdfjs.externalLinkTarget" = 2;
+
+                    "reader.content_width" = 9;
+                    "reader.line_height" = 5;
+                    "reader.font_type" = "sans-serif";
+                    "media.autoplay.default" = 5;
+
+                    "browser.search.separatePrivateDefault.enabled" = true;
+                    "browser.search.separatePrivateDefault.featureGate" = true;
+
                     "permissions.default.camera" = 2;
                     "permissions.default.microphone" = 2;
                     "media.getusermedia.screensharing.enabled" = false;
-                    "canvas.capturestream.enabled" = false;
 
                     "privacy.query_stripping.enabled" = true;
                     "privacy.query_stripping.enabled.pbmode" = true;

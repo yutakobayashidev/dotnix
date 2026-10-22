@@ -1,8 +1,13 @@
 { pkgs }:
 {
-  default = "DuckDuckGo Lite";
+  default = "google";
+  privateDefault = "ddg";
 
   engines = {
+    ddg = {
+      definedAliases = [ "@ddg" ];
+    };
+
     "DuckDuckGo Lite" = {
       urls = [
         {
