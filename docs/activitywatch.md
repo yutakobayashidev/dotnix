@@ -13,8 +13,9 @@ collector is configured. The pinned nixpkgs currently supplies ActivityWatch
 
 ## Browser recording
 
-Firefox policy installs ActivityWatch Web Watcher from Mozilla Add-ons, with
-Mozilla-managed updates. It is removable/disableable by the user. Restart Firefox
+Home Manager installs ActivityWatch Web Watcher from `pkgs.firefox-addons` only
+in Firefox's `nix` profile, with its version pinned by the Nix inputs. The dedicated
+`wallet` profile does not receive this extension. Restart Firefox
 after activation and check the extension is enabled. It records active-tab URLs
 and titles, which add context beyond the window title. Do not grant private-window
 access unless you intend to record those sessions. Other browsers are not configured.

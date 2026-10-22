@@ -1,5 +1,17 @@
 # Firefox
 
+## Wallet profile
+
+The separate `wallet` profile is defined in `modules/features/browser/firefox/wallet.nix` and installs only MetaMask. It has its own extension data, cookies, history, and bookmarks. Firefox Sync and password saving are disabled; startup and new tabs are blank. The ordinary `nix` profile remains the default and retains its existing MetaMask installation until wallet migration has been verified. Chrome and Chromium are unchanged.
+
+Apply with `nix run .#switch`, then open **Firefox Wallet** from the Linux launcher or run `firefox-wallet`. The command uses `-P wallet`; Firefox routes launches to the selected profile, independently of the ordinary profile. The obsolete `-no-remote` option is unnecessary ([Mozilla explanation](https://bugzilla.mozilla.org/show_bug.cgi?id=1906260)). This is a normal persistent profile, not private browsing. Its native Firefox appearance is separate from the `nix` profile's Parfait theme.
+
+The bookmarks toolbar contains [Uniswap](https://app.uniswap.org/), [Aave](https://app.aave.com/), [Safe](https://app.safe.global/), [ENS](https://app.ens.domains/), [OpenSea](https://opensea.io/), and [Revoke.cash](https://revoke.cash/). Official links were checked on 2026-10-22. Bookmark names are empty, matching the existing toolbar convention. `bookmarks.force = true` replaces bookmarks in this dedicated profile on activation; edit `wallet.nix` for persistent changes.
+
+Set up MetaMask interactively in Wallet and verify the expected accounts before removing it from the ordinary profile. Do not put recovery phrases, private keys, or wallet data in Nix or copy the ordinary profile wholesale. ActivityWatch's browser extension is limited to `nix`; the system window watcher can still record Wallet's window titles. Browser profiles do not isolate files from other programs running as the same OS user.
+
+## Everyday profile
+
 The `nix` profile includes the [linkding extension](https://addons.mozilla.org/en-US/firefox/addon/linkding-extension/), managed in `modules/features/browser/firefox/extensions.nix`.
 
 The `nix` profile includes [ChatGPT Markdown Exporter](https://github.com/devcxl/chatgpt-markdown-exporter) for exporting individual or multiple ChatGPT conversations as Markdown. Its Mozilla Add-ons XPI is pinned by version and SHA-256 in `modules/features/browser/firefox/extensions.nix`. Apply with `nix run .#switch`, then restart Firefox and open ChatGPT to use the export button or the extension's popup.

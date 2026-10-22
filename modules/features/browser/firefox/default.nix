@@ -13,6 +13,9 @@ _:
       parfait = pkgs.callPackage ./parfait.nix { };
       bookmarkConfig = import ./bookmarks.nix { inherit lib; };
       containerConfig = import ./containers.nix { inherit lib; };
+      walletLauncher = pkgs.writeShellScriptBin "firefox-wallet" ''
+        exec ${lib.getExe config.programs.firefox.finalPackage} -P wallet "$@"
+      '';
     in
     {
       options.my.programs.firefox.enable = lib.mkEnableOption "Firefox";
@@ -21,6 +24,8 @@ _:
         programs.firefox = {
           enable = true;
           configPath = ".mozilla/firefox";
+
+          profiles.wallet = import ./wallet.nix { inherit pkgs; };
 
           profiles.nix = {
             inherit (bookmarkConfig) bookmarks;
@@ -109,6 +114,17 @@ _:
 
             search = import ./search.nix { inherit pkgs; };
           };
+        };
+
+        home.packages = [ walletLauncher ];
+
+        xdg.desktopEntries.firefox-wallet = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+          name = "Firefox Wallet";
+          comment = "Dedicated MetaMask and dApp profile";
+          exec = "${walletLauncher}/bin/firefox-wallet";
+          icon = "wallet";
+          terminal = false;
+          categories = [ "Network" ];
         };
 
         home.file."${config.programs.firefox.profilesPath}/${config.programs.firefox.profiles.nix.path}/chrome".source =
