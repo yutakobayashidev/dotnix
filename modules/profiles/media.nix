@@ -29,6 +29,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           sl
           stable.gallery-dl
           stable.yt-dlp
+          xurl
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           bitwig-studio
