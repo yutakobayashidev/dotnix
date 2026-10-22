@@ -260,6 +260,16 @@ _:
               from = "mattpocock";
               path = "in-progress/loop-me";
             };
+
+            retro = {
+              from = "mattpocock";
+              path = "engineering/retro";
+            };
+
+            writing-for-agents = {
+              from = "mattpocock";
+              path = "productivity/writing-for-agents";
+            };
           };
 
           targets = builtins.mapAttrs (_: target: target // { enable = true; }) agentLib.defaultTargets;
