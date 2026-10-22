@@ -19,6 +19,8 @@ _:
           enable = true;
           package = if pkgs.stdenv.isDarwin then null else pkgs.chromium;
           extensions = [
+            { id = "hoombieeljmmljlkjmnheibnpciblicm"; } # Language Reactor
+            { id = "bhdngeocokoeblnnlhjibojcadefimpi"; } # Mazelingo
             { id = "gppongmhjkpfnbhagpmjfkannfbllamg"; } # Wappalyzer
             { id = "hkgfoiooedgoejojocmhlaklaeopbecg"; } # Picture-in-Picture
             { id = "dbepggeogbaibhgnhhndojpepiihcmeb"; } # Vimium
