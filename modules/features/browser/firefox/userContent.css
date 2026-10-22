@@ -1,0 +1,199 @@
+/* Adapted from https://github.com/nyanshiba/firefox-profile-settings
+ * SPDX-License-Identifier: MPL-2.0
+ * Site selectors follow upstream and may need updating as sites change.
+ */
+
+/* https://superuser.com/questions/318912/how-can-i-override-the-css-of-a-site-in-firefox-with-usercontent-css */
+/* YouTube banner ads */
+@-moz-document domain(youtube.com) {
+	.ytp-ad-overlay-container, /* 動画内バナー */
+    #YtKevlarVisibilityIdentifier, /* 関連動画上 */
+    #player-ads {
+		display: none !important;
+	}
+}
+
+@-moz-document domain(x.com), domain(twitter.com) {
+	/* Twitterの幅を広げる */
+	.r-rthrr5 {
+		width: 1150px !important; /* default: 990px */
+	}
+	.r-1ye8kvj {
+		max-width: 760px !important; /* default: 600px */
+	}
+
+	/* WCAG */
+	.r-16dba41 span.r-1tl8opc {
+		line-height: 1.7 !important;
+	}
+
+	/* hide trends */
+	.r-1pi2tsx section .r-1adg3ll:nth-child(n + 5) {
+		visibility: hidden;
+	}
+
+	/* コンテンツ設定に関係なくsensitive contentを表示 */
+	.r-yfv4eo {
+		filter: none !important;
+	}
+	.r-drfeu3 {
+		background-color: transparent !important;
+	}
+	.r-edyy15,
+	.r-1kihuf0.r-3o4zer {
+		display: none !important;
+	}
+
+	/* Tabフォーカスを分かりやすくする */
+	.r-1cvl2hr {
+		margin: auto;
+	}
+	a,
+	input {
+		border-bottom: none !important;
+		border: none !important;
+		border-radius: 4px;
+	}
+	a:focus,
+	a:hover,
+	input:focus,
+	input:hover,
+	.r-1cvl2hr:focus,
+	.r-1cvl2hr:hover {
+		border-bottom: none !important;
+		outline: 4px solid rgb(142, 205, 248) !important;
+	}
+
+	/* Spaces Caption*/
+	.r-vmopo1 {
+		height: 300px !important;
+	}
+	.r-im4jzf {
+		height: calc(64px + env(safe-area-inset-bottom)) !important;
+	}
+	.r-7e3msg {
+		margin-bottom: 10px !important;
+		width: 500px !important;
+	}
+}
+
+/* amazon.co.jp 住所を隠す */
+@-moz-document domain(amazon.co.jp) {
+	#glow-ingress-block > span {
+		background-color: #232f3e !important;
+		color: #232f3e !important;
+	}
+	#contextualIngressPtLabel {
+		display: none !important;
+	}
+}
+
+/* *.tradingview.com バナーを隠す */
+@-moz-document domain(tradingview.com) {
+	#overlap-manager-root {
+		display: none;
+	}
+}
+
+/* *.wikipedia.org バナーを隠す */
+@-moz-document domain(wikipedia.org) {
+	#siteNotice {
+		display: none;
+	}
+	.frb-nag {
+		display: none;
+	}
+}
+
+/* *.nature.com GDPRバナーを隠す */
+@-moz-document domain(nature.com), domain(biomedcentral.com) {
+	.c-ad,
+	.cc-banner,
+	.c-site-messages {
+		display: none !important;
+	}
+}
+
+/* Oura Dashboard */
+@-moz-document domain(cloud.ouraring.com) {
+	/* Trendの項目の見切れを軽減 */
+	.css-1olvldc {
+		width: auto !important;
+	}
+	/* Trendの表示領域を広げる */
+	.css-1ih0y3u {
+		padding: 0 !important;
+	}
+}
+
+/* *.ovice.in マイクの催促を隠す */
+@-moz-document domain(ovice.in) {
+	#micPermissionModal {
+		display: none !important;
+	}
+}
+
+/* IPinfo.io ポップアップを隠す */
+@-moz-document domain(ipinfo.io) {
+	.ipinfo-modal {
+		display: none !important;
+	}
+}
+
+/* IPアドレスを隠す */
+@-moz-document domain(fast.com) {
+	.test-info-group {
+		background-color: black !important;
+		color: black !important;
+	}
+}
+@-moz-document domain(speedtest.net) {
+	.ispComponent .result-data,
+	.js-data-ip {
+		visibility: hidden !important;
+	}
+}
+@-moz-document domain(inonius.net) {
+	.select-all {
+		visibility: hidden;
+	}
+	span#ip {
+		background: #202020 !important;
+	}
+}
+@-moz-document url-prefix("https://www.google") {
+	#Wprf1b {
+		display: none !important;
+	}
+}
+@-moz-document domain(opendns.com) {
+	#top-bar-container * {
+		color: #424549 !important;
+	}
+	#navigation-select,
+	.inner h2 {
+		background: #2c3034 !important;
+	}
+	.center.slim b {
+		background: #4c555a !important;
+	}
+	.logo-ip p #userIP {
+		background: #818789 !important;
+	}
+}
+
+@-moz-document domain(login.tailscale.com) {
+	.tb td > div > div > div span {
+		background: rgb(68 67 66/var(--tw-text-opacity));
+	}
+	#app-root header div h1 {
+		background: #232222;
+	}
+}
+
+/*WLX 見える化ツール SSIDを隠す */
+@-moz-document url-prefix("http://192.168.100.21/") {
+	.ssid_tag {
+		visibility: hidden !important;
+	}
+}

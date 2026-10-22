@@ -75,6 +75,19 @@ _:
                     "signon.rememberSignons" = false;
 
                     "browser.toolbars.bookmarks.visibility" = "always";
+
+                    "browser.urlbar.decodeURLsOnCopy" = true;
+                    "browser.tabs.insertAfterCurrent" = true;
+                    "browser.tabs.loadBookmarksInTabs" = true;
+
+                    "permissions.default.camera" = 2;
+                    "permissions.default.microphone" = 2;
+                    "media.getusermedia.screensharing.enabled" = false;
+                    "canvas.capturestream.enabled" = false;
+
+                    "privacy.query_stripping.enabled" = true;
+                    "privacy.query_stripping.enabled.pbmode" = true;
+                    "privacy.query_stripping.strip_list" = "s t";
                   }
                   // bookmarkConfig.settings
                 );
@@ -84,7 +97,23 @@ _:
         };
 
         home.file."${config.programs.firefox.profilesPath}/${config.programs.firefox.profiles.nix.path}/chrome".source =
-          parfait;
+          pkgs.runCommand "firefox-chrome" { } ''
+            cp -r ${parfait} "$out"
+            chmod u+w "$out/userChrome.css"
+            cat >> "$out/userChrome.css" <<'EOF'
+
+            /* Keep long selections readable in Firefox's translation panel. */
+            .translations-panel-view {
+              width: 48em !important;
+            }
+            #select-translations-panel-text-area {
+              height: 16em !important;
+            }
+            EOF
+            chmod u+w "$out/userContent.css"
+            printf '\n' >> "$out/userContent.css"
+            cat ${./userContent.css} >> "$out/userContent.css"
+          '';
       };
     };
 }
