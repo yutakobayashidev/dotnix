@@ -166,6 +166,10 @@ let
         # Daily use and media
         {
           name = "";
+          url = "https://muse.ai/";
+        }
+        {
+          name = "";
           url = "https://news.ycombinator.com/";
         }
         {
