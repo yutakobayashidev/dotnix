@@ -2010,11 +2010,11 @@
     },
     "nixtopsy": {
       "locked": {
-        "lastModified": 1791939646,
-        "narHash": "sha256-+6zEDl/8iq7RI8YxHBFCOd8hqr9u2N5vcSrfiTD8M8Q=",
+        "lastModified": 1792517187,
+        "narHash": "sha256-gsL01pXMcFLlEVOOSa1YfZSX+AYqj1sj4G31afGLBaQ=",
         "owner": "amaanq",
         "repo": "nixtopsy",
-        "rev": "8d098df432fcda6cc9da0003f1b1762a715dfd32",
+        "rev": "6c3fe834bdf7991699e15de27822ef5c04bfbe5c",
         "type": "github"
       },
       "original": {
