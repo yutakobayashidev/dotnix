@@ -207,11 +207,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791377638,
-        "narHash": "sha256-77sbbJ1vX4cuJQSnyeMU+RQWlMD06skqDIkvTLN7bxA=",
+        "lastModified": 1792651230,
+        "narHash": "sha256-t3KBVqLuBxxLhz1DkcJXBXIyFZ+gsgymnzXr9ToD6p0=",
         "owner": "nakasyou",
         "repo": "codex-transcribe",
-        "rev": "f5cd33d89eaab101f260fb37a1669671f190daa0",
+        "rev": "7b15b53b216163dcb2c49556c99f9b7716b0baad",
         "type": "github"
       },
       "original": {
