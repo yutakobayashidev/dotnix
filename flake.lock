@@ -1363,11 +1363,11 @@
     "moonbit-overlay": {
       "flake": false,
       "locked": {
-        "lastModified": 1790320880,
-        "narHash": "sha256-+P1gS958jU2vuTq90ucYbtW6fnhRvNitct4BqJveGLc=",
+        "lastModified": 1792653535,
+        "narHash": "sha256-YWyC6v5kDeQJKIHmTovsS3V85eihRfy1YHX2kag25uo=",
         "owner": "moonbit-community",
         "repo": "moonbit-overlay",
-        "rev": "22b5ec8059db26d86cb6c42208f7ce480e1fab24",
+        "rev": "5cd9fad5d4936295a9908e4aaf3f7667eb95ca3c",
         "type": "github"
       },
       "original": {
