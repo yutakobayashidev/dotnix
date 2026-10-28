@@ -31,7 +31,7 @@
 - [Firefox](firefox.md) — bookmarks, search engines, and Parfait
 - [Agent skills](agent-skills.md) — source maintenance and local development
 - [Beeper Server](beeper-server.md)
-- [GitHub authentication](ghtkn.md)
+- [GitHub authentication](github-auth.md)
 - [GhidraMCP](ghidra-mcp.md)
 - [Local MCP tunnel](local-mcp-tunnel.md)
 

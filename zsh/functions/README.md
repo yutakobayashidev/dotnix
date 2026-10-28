@@ -15,7 +15,6 @@
 | `fpull`      | fetch 後に必要なら stash して pull                | `fpull`                      |
 | `g`          | 引数なし: ghq+fzf でリポジトリ移動、引数あり: git | `g [git args]`               |
 | `gb`         | fzf でブランチを検索・チェックアウト              | `gb`                         |
-| `ghauth`     | ghtkn の認証コードをクリップボードへコピー        | `ghauth [args]`              |
 | `gifit`      | fzf でコミット範囲を選んで `difit` を実行         | `gifit`                      |
 | `gip`        | グローバルIPアドレスを表示                        | `gip`                        |
 | `gh-q`       | GitHub リポジトリを検索・clone                    | `gh-q [-o] [owner]`          |

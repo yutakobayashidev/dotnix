@@ -4,9 +4,6 @@
   imports = [ ../common.nix ];
 
   home-manager.users.${username} = {
-    imports = [
-      ./ghtkn-agent.nix
-    ];
     my.programs = {
       beets.enable = true;
       whipper.enable = true;

@@ -85,7 +85,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **AI development**: ChatGPT Desktop and Claude Desktop via llm-agents.nix, Hermes Desktop, and Orca via the desktop profile
 - **Speech-to-text**: Handy with launchd automatic startup
 - **Touch ID**: sudo authentication
-- **1Password**: Shell Plugins (gh, awscli2, tea)
+- **1Password**: Shell Plugins (awscli2, tea)
 
 ## Key Shell Shortcuts
 

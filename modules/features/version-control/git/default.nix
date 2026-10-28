@@ -157,13 +157,6 @@ _:
             name = "yutakobayashidev";
             email = "hi@yutakobayashi.com";
           };
-          credential."https://github.com" = {
-            helper = [
-              ""
-              "!${lib.getExe pkgs.ghtkn} git-credential"
-            ];
-            useHttpPath = true;
-          };
           push = {
             default = "simple";
             autoSetupRemote = true;
