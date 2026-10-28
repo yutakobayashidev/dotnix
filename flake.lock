@@ -1946,11 +1946,11 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1792057456,
-        "narHash": "sha256-SPNJsN5iBfOgxbokJ6Datt5zALRaeyaX9UBOkPyt/d8=",
+        "lastModified": 1792506237,
+        "narHash": "sha256-Q/8KLB6jNfpaUN1HAedE/u/Et9feE/zYSsutBLKrCFk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "95b2dd0e78e6642fa7fd8fe5bb673daf4cebb924",
+        "rev": "5adc50831c259f87faeb09ddf930d43597197473",
         "type": "github"
       },
       "original": {
@@ -2108,11 +2108,11 @@
         "systems": "systems_4"
       },
       "locked": {
-        "lastModified": 1792614499,
-        "narHash": "sha256-SYNwMwrzBCeIr9h8xbbSlJqbJq3Eos8/vOrX0odynq0=",
+        "lastModified": 1792860496,
+        "narHash": "sha256-dzl36Gn7k/IQZpDL4BSX3vyfoZlcDeXA8N7/bZezSBs=",
         "owner": "1Password",
         "repo": "shell-plugins",
-        "rev": "93ebf31ae5778c974554a0ca4661b541f60d7c24",
+        "rev": "04dc8b0b7671b1d60aa2986fa6f466e55b76867e",
         "type": "github"
       },
       "original": {
