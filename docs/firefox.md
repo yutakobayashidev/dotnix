@@ -12,6 +12,24 @@ Set up MetaMask interactively in Wallet and verify the expected accounts before 
 
 ## Everyday profile
 
+### Privacy and history
+
+The `nix` profile's privacy preferences in `modules/features/browser/firefox/default.nix` follow [nyanshiba's user.js at 7e0216b](https://github.com/nyanshiba/firefox-profile-settings/blob/7e0216b218764be55340119e941488224bb26fda/user.js), with current Firefox preference names:
+
+- Strict Enhanced Tracking Protection, SameSite cookie protections, query stripping, and no automatic Storage Access API grants.
+- No new browsing/download history or history suggestions. Form history remains available during a session, as in the reference, and is cleared on exit alongside browsing/download history and cache. Disk cache is disabled.
+- Cookies, site storage, and site permissions survive exit. Back/forward history is not serialized. In-session undo is limited to five closed tabs and two closed windows. Normal exit clears session recovery files along with browsing history; browser-initiated restarts may preserve session data. This differs from the reference, prioritizing removal of existing history over restoring tabs after a normal exit.
+- Add-on, history, and form Sync engines are disabled explicitly as well as listed in `declinedEngines`; bookmarks and other Sync categories are unaffected.
+- Camera, microphone, location, notifications, shortcut overrides, and XR default to blocked; screen sharing and PDF scripting are disabled.
+- HTTPS-Only, mixed-content blocking/upgrading, and insecure-download blocking follow the reference. OCSP requests are disabled in favor of enforced CRLite checks. DNS uses the system resolver (`network.trr.mode = 5`), so this configuration does not enable Firefox DNS-over-HTTPS.
+- Address-bar search suggestions and sponsored top sites are disabled. Ordinary search-bar suggestions remain enabled and private-window suggestions disabled, matching the reference. Telemetry and Studies are not disabled by this configuration.
+
+The modern `privacy.clearOnShutdown_v2` schema combines browsing and download history, so both are cleared rather than reproducing the old separate switches. The reference's standalone authenticated-session clearing switch has no equivalent selection in the modern shutdown schema and is not copied. The migration marker prevents old preferences from overwriting the declared selections. Obsolete TCP rollout flags, third-party session-only/lifetime preferences, DNT, and canvas-capture switches are omitted. Network partitioning is provided by modern Firefox. Historical fingerprinting font exceptions, TLS cipher tuning, and unrelated appearance/performance preferences are not copied.
+
+Apply with `nix run .#switch`, then restart Firefox. Existing history is removed by the configured cleanup on a subsequent clean exit; configuration evaluation alone does not erase it. In Settings → Privacy & Security, verify Strict protection and the shutdown cleanup selections; visit a test page, quit normally, and confirm after reopening that history is empty while a chosen site's login survives. Open-tab and closed-tab recovery during a session, crash recovery, and browser-initiated restarts can still retain URLs. ActivityWatch and other external activity collectors keep separate records; these Firefox preferences do not erase or disable them. The `wallet` profile is unchanged.
+
+### Extensions and appearance
+
 The `nix` profile includes the [linkding extension](https://addons.mozilla.org/en-US/firefox/addon/linkding-extension/), managed in `modules/features/browser/firefox/extensions.nix`.
 
 The `nix` profile includes [ChatGPT Markdown Exporter](https://github.com/devcxl/chatgpt-markdown-exporter) for exporting individual or multiple ChatGPT conversations as Markdown. Its Mozilla Add-ons XPI is pinned by version and SHA-256 in `modules/features/browser/firefox/extensions.nix`. Apply with `nix run .#switch`, then restart Firefox and open ChatGPT to use the export button or the extension's popup.

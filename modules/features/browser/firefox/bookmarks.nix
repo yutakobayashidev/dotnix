@@ -166,6 +166,10 @@ let
         # Daily use and media
         {
           name = "";
+          url = "https://pro.x.com/";
+        }
+        {
+          name = "";
           url = "https://muse.ai/";
         }
         {
