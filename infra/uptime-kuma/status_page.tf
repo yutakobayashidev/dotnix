@@ -48,10 +48,6 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
-          id       = uptimekuma_monitor_http.prometheus.id
-          send_url = true
-        },
-        {
           id       = uptimekuma_monitor_http.birdclaw.id
           send_url = true
         },

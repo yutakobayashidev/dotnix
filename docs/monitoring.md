@@ -9,7 +9,7 @@ with infrastructure/room routing and environmental thresholds adapted from
 
 ## Data flow
 
-- Node exporters, Comin, Starla, HTTP probes and Home Assistant → VictoriaMetrics.
+- Node exporters, Comin, Starla and Home Assistant → VictoriaMetrics.
 - B450M SMART/NVMe health and NVIDIA GPU exporter → VictoriaMetrics.
 - Claude Code and Codex → OTLP HTTP collector → VictoriaMetrics (metrics), Loki
   (logs), Tempo (traces).
@@ -33,6 +33,14 @@ and `my.services.tempo`. Service-specific Comin rules remain beside Comin's
 scrape configuration. B450M, UM790-Pro (the shared builder and agent server), and pi5 default to
 `always_on=true`; sleeping laptops and the desktop are not treated as outages. Change
 `my.services.monitoring.alwaysOnHosts` when a host's operating schedule changes.
+
+## Service availability
+
+Uptime Kuma owns HTTP availability checks and their notifications. Its monitors
+and status page are managed under `infra/uptime-kuma/`. Infrastructure Overview
+links to its status page rather than duplicating HTTP checks in Blackbox.
+VictoriaMetrics and vmalert handle host metrics, exporter availability, Comin
+and room sensor thresholds. The retired Prometheus URL is not monitored.
 
 ## Discord notifications
 
@@ -105,14 +113,24 @@ Codex metrics are not interchangeable with Claude's cost metrics. Desktop apps
 that do not inherit the managed CLI configuration must be verified separately.
 
 Claude uses cumulative metrics and opt-in beta tracing. Codex configures
-separate logs, metrics and traces exporters under `otel`; its endpoint option
-is the base URL (`http://B450M-Pro4.tail29d068.ts.net:4318`), without `/v1/logs`.
+separate logs, metrics and traces exporters under `otel`. The Nix telemetry
+endpoint option is the base URL (`http://B450M-Pro4.tail29d068.ts.net:4318`);
+the generated Codex configuration appends `/v1/logs`, `/v1/metrics`, and
+`/v1/traces` for the respective exporters.
 The collector converts delta metrics to cumulative when necessary and pushes
 remote write samples directly, so short sessions do not depend on a scrape.
 Metric names use underscore escaping without additional unit/type suffixes.
 Keep per-session identities on cumulative metrics to distinguish concurrent
 clients; session/trace IDs should not become Loki index labels.
+Codex 0.165.0's native metrics observed during verification do not include a
+session identity. Short sessions can export only one sample, so `increase`
+panels may show zero and `rate`-based latency panels may be empty despite
+successful ingestion. These panels are not exact per-session accounting.
 
+Apply the Home Manager configuration on each client host, including the
+ThinkPad; deploying the collector on B450M does not update client settings.
+The managed Codex wrapper also passes settings as command-line overrides, so
+updating only `config.toml` is insufficient if the wrapper is still old.
 Use a new CLI session after changing configuration. Confirm data arrives for
 both clients rather than interpreting an empty panel as zero usage. An explicit
 `analytics.enabled = false` in a Codex version that gates all metrics can stop
@@ -136,8 +154,8 @@ and [Codex exporter configuration](https://learn.chatgpt.com/docs/config-file/co
    `victoriametrics`, `vmalert-main`, `alertmanager`, `opentelemetry-collector`,
    `tempo` and `alloy` are active. Check journal errors and `/targets` on
    `http://127.0.0.1:8428` locally.
-4. In Grafana, verify `up` for node, Comin, Starla, HA and probe jobs; verify
-   `probe_success` for each local service. The Comin dashboard must still show
+4. In Grafana, verify `up` for node, Comin, Starla and HA. Check service
+   availability in Uptime Kuma. The Comin dashboard must still show
    deployments. Verify fresh Claude and Codex telemetry and a log→trace link.
 5. Add the observed room entities, check that rules match real series, and
    verify that an intentionally absent test entity raises the missing-data

@@ -1,667 +1,520 @@
 {
-  "schemaVersion": 42,
-  "version": 1,
-  "editable": false,
-  "timezone": "browser",
-  "refresh": "1m",
-  "time": {
-    "from": "now-24h",
-    "to": "now"
-  },
-  "links": [
-    {
-      "title": "Room environment",
-      "url": "/d/dotnix-room-environment"
-    },
-    {
-      "title": "Hardware",
-      "url": "/d/dotnix-hardware-overview"
-    }
-  ],
-  "annotations": {
-    "list": []
-  },
-  "uid": "dotnix-infra-overview",
-  "title": "Infrastructure Overview",
-  "description": "VictoriaMetrics infrastructure metrics. Filter always_on to distinguish expected outages from sleeping clients. Alerts and service probes use their own host labels.",
-  "tags": [
-    "dotnix",
-    "infrastructure"
-  ],
-  "templating": {
-    "list": [
-      {
-        "name": "host",
-        "label": "Host",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
-        },
-        "query": {
-          "query": "label_values(up{job=\"node\"}, host)",
-          "refId": "StandardVariableQuery"
-        },
-        "definition": "label_values(up{job=\"node\"}, host)",
-        "refresh": 1,
-        "sort": 1,
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
-        "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "options": []
-      },
-      {
-        "name": "always_on",
-        "label": "Always on",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
-        },
-        "query": {
-          "query": "label_values(up{job=\"node\"}, always_on)",
-          "refId": "StandardVariableQuery"
-        },
-        "definition": "label_values(up{job=\"node\"}, always_on)",
-        "refresh": 1,
-        "sort": 1,
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
-        "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "options": []
-      }
-    ]
-  },
-  "panels": [
-    {
-      "id": 20,
-      "title": "Firing alerts",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 0,
-        "w": 6,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "count(ALERTS{alertstate=\"firing\",category!=\"room\",host=~\"$host\"}) or vector(0)",
-          "instant": true
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "value"
-      }
-    },
-    {
-      "id": 21,
-      "title": "Pending alerts",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 6,
-        "y": 0,
-        "w": 6,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "count(ALERTS{alertstate=\"pending\",category!=\"room\",host=~\"$host\"}) or vector(0)",
-          "instant": true
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "value"
-      }
-    },
-    {
-      "id": 22,
-      "title": "Failed service probes",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 6,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "count(probe_success{host=~\"$host\"} == 0) or vector(0)",
-          "instant": true
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "value"
-      }
-    },
-    {
-      "id": 23,
-      "title": "Always-on hosts down",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 18,
-        "y": 0,
-        "w": 6,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "count(up{job=\"node\",always_on=\"true\",host=~\"$host\"} == 0) or vector(0)",
-          "instant": true
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "value"
-      }
-    },
-    {
-      "id": 1,
-      "title": "Node exporter availability (1 = up)",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 4,
-        "w": 24,
-        "h": 6
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "up{job=\"node\",host=~\"$host\",always_on=~\"$always_on\"}",
-          "legendFormat": "{{host}} (always on: {{always_on}})",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 2,
-      "title": "CPU busy",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 10,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "100 * (1 - avg by (host) (rate(node_cpu_seconds_total{mode=\"idle\",host=~\"$host\"}[$__rate_interval])))",
-          "legendFormat": "{{host}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 3,
-      "title": "Memory used",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 10,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "(100 * (1 - node_memory_MemAvailable_bytes{host=~\"$host\"} / node_memory_MemTotal_bytes)) or (100 * ((node_memory_active_bytes{host=~\"$host\"} + node_memory_wired_bytes + node_memory_compressed_bytes) / node_memory_total_bytes))",
-          "legendFormat": "{{host}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 4,
-      "title": "Filesystem free",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 18,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "min by (host, device) (100 * node_filesystem_avail_bytes{host=~\"$host\",fstype!~\"tmpfs|ramfs|overlay\"} / node_filesystem_size_bytes)",
-          "legendFormat": "{{host}} {{device}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 5,
-      "title": "HTTP health (1 = healthy)",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 18,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "probe_success{job=\"blackbox\",host=~\"$host\"}",
-          "legendFormat": "{{host}} {{service}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 6,
-      "title": "Firing infrastructure alerts",
-      "type": "table",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 26,
-        "w": 24,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "ALERTS{alertstate=\"firing\",category!=\"room\",host=~\"$host\"}",
-          "legendFormat": "__auto",
-          "range": false,
-          "instant": true,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm"
-      }
-    },
-    {
-      "id": 24,
-      "title": "Service probe duration",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 34,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "probe_duration_seconds{job=\"blackbox\",host=~\"$host\"}",
-          "legendFormat": "{{service}}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "s",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 25,
-      "title": "Failed systemd units",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 34,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "node_systemd_unit_state{state=\"failed\",host=~\"$host\"} == 1",
-          "legendFormat": "{{host}} {{name}}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 26,
-      "title": "Recent service warnings and errors",
-      "type": "logs",
-      "datasource": {
-        "type": "loki",
-        "uid": "loki"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 41,
-        "w": 24,
-        "h": 9
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "{job=\"infrastructure\",host=~\"$host\",level=~\"warning|err|crit|alert|emerg\"}"
-        }
-      ],
-      "options": {
-        "showTime": true,
-        "wrapLogMessage": true,
-        "sortOrder": "Descending"
-      }
-    }
-  ]
+	"schemaVersion": 42,
+	"version": 1,
+	"editable": false,
+	"timezone": "browser",
+	"refresh": "1m",
+	"time": {
+		"from": "now-24h",
+		"to": "now"
+	},
+	"links": [
+		{
+			"title": "Room environment",
+			"url": "/d/dotnix-room-environment"
+		},
+		{
+			"title": "Hardware",
+			"url": "/d/dotnix-hardware-overview"
+		},
+		{
+			"title": "Service availability (Uptime Kuma)",
+			"url": "https://status.home.yutakobayashi.com",
+			"targetBlank": true
+		}
+	],
+	"annotations": {
+		"list": []
+	},
+	"uid": "dotnix-infra-overview",
+	"title": "Infrastructure Overview",
+	"description": "VictoriaMetrics infrastructure metrics. Filter always_on to distinguish expected outages from sleeping clients. Service availability and its notifications are managed by Uptime Kuma.",
+	"tags": ["dotnix", "infrastructure"],
+	"templating": {
+		"list": [
+			{
+				"name": "host",
+				"label": "Host",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "PBFA97CFB590B2093"
+				},
+				"query": {
+					"query": "label_values(up{job=\"node\"}, host)",
+					"refId": "StandardVariableQuery"
+				},
+				"definition": "label_values(up{job=\"node\"}, host)",
+				"refresh": 1,
+				"sort": 1,
+				"multi": true,
+				"includeAll": true,
+				"allValue": ".*",
+				"current": {
+					"text": ["All"],
+					"value": ["$__all"]
+				},
+				"options": []
+			},
+			{
+				"name": "always_on",
+				"label": "Always on",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "PBFA97CFB590B2093"
+				},
+				"query": {
+					"query": "label_values(up{job=\"node\"}, always_on)",
+					"refId": "StandardVariableQuery"
+				},
+				"definition": "label_values(up{job=\"node\"}, always_on)",
+				"refresh": 1,
+				"sort": 1,
+				"multi": true,
+				"includeAll": true,
+				"allValue": ".*",
+				"current": {
+					"text": ["All"],
+					"value": ["$__all"]
+				},
+				"options": []
+			}
+		]
+	},
+	"panels": [
+		{
+			"id": 20,
+			"title": "Firing alerts",
+			"type": "stat",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 8,
+				"h": 4
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "count(ALERTS{alertstate=\"firing\",category!=\"room\",host=~\"$host\"}) or vector(0)",
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 1
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value"
+			}
+		},
+		{
+			"id": 21,
+			"title": "Pending alerts",
+			"type": "stat",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 8,
+				"y": 0,
+				"w": 8,
+				"h": 4
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "count(ALERTS{alertstate=\"pending\",category!=\"room\",host=~\"$host\"}) or vector(0)",
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 1
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value"
+			}
+		},
+		{
+			"id": 23,
+			"title": "Always-on hosts down",
+			"type": "stat",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 16,
+				"y": 0,
+				"w": 8,
+				"h": 4
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "count(up{job=\"node\",always_on=\"true\",host=~\"$host\"} == 0) or vector(0)",
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							},
+							{
+								"color": "red",
+								"value": 1
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value"
+			}
+		},
+		{
+			"id": 1,
+			"title": "Node exporter availability (1 = up)",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 4,
+				"w": 24,
+				"h": 6
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "up{job=\"node\",host=~\"$host\",always_on=~\"$always_on\"}",
+					"legendFormat": "{{host}} (always on: {{always_on}})",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 2,
+			"title": "CPU busy",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 10,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "100 * (1 - avg by (host) (rate(node_cpu_seconds_total{mode=\"idle\",host=~\"$host\"}[$__rate_interval])))",
+					"legendFormat": "{{host}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 3,
+			"title": "Memory used",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 10,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "(100 * (1 - node_memory_MemAvailable_bytes{host=~\"$host\"} / node_memory_MemTotal_bytes)) or (100 * ((node_memory_active_bytes{host=~\"$host\"} + node_memory_wired_bytes + node_memory_compressed_bytes) / node_memory_total_bytes))",
+					"legendFormat": "{{host}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 4,
+			"title": "Filesystem free",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 18,
+				"w": 24,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "min by (host, device) (100 * node_filesystem_avail_bytes{host=~\"$host\",fstype!~\"tmpfs|ramfs|overlay\"} / node_filesystem_size_bytes)",
+					"legendFormat": "{{host}} {{device}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 6,
+			"title": "Firing infrastructure alerts",
+			"type": "table",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 26,
+				"w": 24,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "ALERTS{alertstate=\"firing\",category!=\"room\",host=~\"$host\"}",
+					"legendFormat": "__auto",
+					"range": false,
+					"instant": true,
+					"format": "table"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm"
+			}
+		},
+		{
+			"id": 25,
+			"title": "Failed systemd units",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 34,
+				"w": 24,
+				"h": 7
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "node_systemd_unit_state{state=\"failed\",host=~\"$host\"} == 1",
+					"legendFormat": "{{host}} {{name}}"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 26,
+			"title": "Recent service warnings and errors",
+			"type": "logs",
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 41,
+				"w": 24,
+				"h": 9
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "{job=\"infrastructure\",host=~\"$host\",level=~\"warning|err|crit|alert|emerg\"}"
+				}
+			],
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": true,
+				"sortOrder": "Descending"
+			}
+		}
+	]
 }
