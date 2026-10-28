@@ -26,6 +26,13 @@ _:
       telemetryEnv = lib.optionalAttrs cfg.telemetry.enable {
         OTEL_METRICS_EXPORTER = "otlp";
         OTEL_LOGS_EXPORTER = "otlp";
+        OTEL_TRACES_EXPORTER = "otlp";
+        CLAUDE_CODE_ENHANCED_TELEMETRY_BETA = "1";
+        OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE = "cumulative";
+        OTEL_LOG_TOOL_DETAILS = "0";
+        OTEL_LOG_TOOL_CONTENT = "0";
+        OTEL_LOG_RAW_API_BODIES = "0";
+        OTEL_LOG_ASSISTANT_RESPONSES = "0";
         OTEL_EXPORTER_OTLP_PROTOCOL = "http/protobuf";
         OTEL_EXPORTER_OTLP_ENDPOINT = cfg.telemetry.endpoint;
         OTEL_METRIC_EXPORT_INTERVAL = "10000";

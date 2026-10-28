@@ -13,8 +13,10 @@ with Matter added, Traefik retained, and Restic initially stored locally.
 | Service diagnostics                          | systemd journal                   | Existing host journal policy   |
 | HA configuration, Recorder and Matter fabric | Restic                            | 14 daily, 8 weekly, 12 monthly |
 
-Existing Prometheus remains responsible for machine monitoring. Grafana has a
-separate **Home Assistant** data source for VictoriaMetrics. Start with
+VictoriaMetrics stores both machine and Home Assistant metrics. Grafana retains
+the **Home Assistant** data source alongside the existing **Prometheus** data
+source name; both query VictoriaMetrics. See [monitoring](monitoring.md) for
+alert rules and notification setup. Start with
 `{__name__=~"homeassistant_.*"}` in Explore, then select the actual temperature
 and humidity metrics and entity labels; entity IDs are assigned after pairing.
 
@@ -110,23 +112,21 @@ key permissions, or the end-to-end ChatGPT connection.
 
 ## Enable metrics collection
 
-Create a dedicated HA user and a long-lived access token from that user's
-profile. On B450M-Pro4, save it as the sole line in
-`/var/lib/home-assistant-secrets/prometheus-token` using `sudoedit`, then:
-
-```sh
-sudo chmod 600 /var/lib/home-assistant-secrets/prometheus-token
-sudo systemctl start victoriametrics
-```
+Metrics reuse the encrypted `home-assistant-mcp-authorization` secret described
+above. No separate plaintext token needs provisioning. A root oneshot reads the
+secret through systemd credentials, verifies and removes the `Bearer ` prefix,
+and writes `/run/home-assistant-metrics/token` (mode 0640, dedicated group).
+VictoriaMetrics reads that runtime token through a supplementary group.
+Secret rotation restarts the helper and VictoriaMetrics as well as the MCP tunnel.
 
 Do not put tokens in Nix expressions, shell command arguments, Git, or `/tmp`.
-The parent directory is root-only, and systemd passes the token with
-`LoadCredential`. VictoriaMetrics is skipped until this file exists. Its API
-binds only to `127.0.0.1:8428`; HA's metrics endpoint still requires authentication.
+A failed token helper does not stop infrastructure metrics: the HA scrape and
+its availability alert report the missing data. The metrics API binds only to
+`127.0.0.1:8428`; HA's metrics endpoint still requires authentication.
 
 Check `http://127.0.0.1:8428/targets` on the server, or query
 `up{job="home-assistant"}` through Grafana; it must become 1. The filter exports
-sensors, binary sensors, climates, lights and switches. Narrow it to observed
+sensors, binary sensors, climates, lights, switches and locks. Narrow it to observed
 entity IDs if unrelated sensors are added later.
 
 ## Local backup

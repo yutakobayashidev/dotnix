@@ -58,10 +58,11 @@ _:
         };
       };
       otelExporter =
+        signal:
         if cfg.telemetry.enable then
           {
             "otlp-http" = {
-              endpoint = cfg.telemetry.endpoint;
+              endpoint = "${cfg.telemetry.endpoint}/v1/${signal}";
               protocol = "binary";
             };
           }
@@ -115,7 +116,9 @@ _:
 
         otel = {
           environment = "${cfg.telemetry.environment}";
-          exporter = otelExporter;
+          exporter = otelExporter "logs";
+          metrics_exporter = otelExporter "metrics";
+          trace_exporter = otelExporter "traces";
           log_user_prompt = cfg.telemetry.logUserPrompts;
         };
 
@@ -195,8 +198,8 @@ _:
 
           endpoint = lib.mkOption {
             type = lib.types.str;
-            default = "http://B450M-Pro4.tail29d068.ts.net:4318/v1/logs";
-            description = "OTLP HTTP endpoint for Codex telemetry.";
+            default = "http://B450M-Pro4.tail29d068.ts.net:4318";
+            description = "OTLP HTTP base endpoint for Codex logs, metrics, and traces.";
           };
 
           environment = lib.mkOption {

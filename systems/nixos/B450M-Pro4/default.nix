@@ -18,7 +18,6 @@
     ../services/gitea-actions-runner
     ../services/home-assistant
     ../services/grafana
-    ../services/prometheus
     ../services/rsshub
     ../services/simple-nostr-relay
     ../services/webhashtag-rust-server
@@ -28,7 +27,7 @@
     ../services/n8n
     ../services/niks3
     ../services/comin
-    ../services/comin/prometheus.nix
+    ../services/comin/monitoring.nix
     ../services/cloudflare-error-page
     ../services/traefik
     ../services/atuin
@@ -180,6 +179,23 @@
     };
     nvidia-container-toolkit.enable = true;
   };
+
+  my.services.monitoring.enable = true;
+  my.services.alertmanager.enable = true;
+  my.services.roomAlerts = {
+    enable = true;
+    sensors = {
+      "sensor.temperature_sensor_temperature" = {
+        kind = "temperature";
+        name = "Bedroom temperature";
+      };
+      "sensor.humidity_sensor_humidity" = {
+        kind = "humidity";
+        name = "Bedroom humidity";
+      };
+    };
+  };
+  my.services.tempo.enable = true;
 
   services = {
     prometheus.exporters.node = {

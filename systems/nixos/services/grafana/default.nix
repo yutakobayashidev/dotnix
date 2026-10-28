@@ -18,12 +18,25 @@
         {
           name = "Prometheus";
           type = "prometheus";
-          url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+          uid = "PBFA97CFB590B2093";
+          url = "http://127.0.0.1:8428";
+          isDefault = true;
+          jsonData.timeInterval = "1m";
         }
         {
           name = "Loki";
           type = "loki";
           uid = "loki";
+          jsonData.derivedFields = [
+            {
+              name = "trace_id";
+              matcherType = "label";
+              matcherRegex = "trace_id";
+              datasourceUid = "tempo";
+              url = "\${__value.raw}";
+              urlDisplayLabel = "View trace";
+            }
+          ];
           url = "http://127.0.0.1:${toString config.services.loki.configuration.server.http_listen_port}";
         }
       ];

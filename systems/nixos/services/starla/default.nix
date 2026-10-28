@@ -7,7 +7,7 @@
     metrics.listenAddr = "127.0.0.1:9695";
   };
 
-  services.prometheus.scrapeConfigs = [
+  services.victoriametrics.prometheusConfig.scrape_configs = [
     {
       job_name = "starla";
       static_configs = [

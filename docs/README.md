@@ -45,3 +45,5 @@ Generate the diagrams with [nix-topology](https://github.com/oddlama/nix-topolog
 ```sh
 nix build .#topology.x86_64-linux.config.output --out-link result
 ```
+
+- [Monitoring](monitoring.md) — unified metrics, infrastructure and room alerts, Claude/Codex telemetry, and migration.
