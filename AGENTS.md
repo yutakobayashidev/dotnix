@@ -76,7 +76,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
 - **Remote builds**: B450M-Pro4 and ThinkPad offload to UM790-Pro over Tailscale; see [rollout and offline build commands](docs/remote-build.md)
 - **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [GhidraMCP](docs/ghidra-mcp.md), on the ThinkPad
-- **Observability**: Grafana / VictoriaMetrics / vmalert / Alertmanager / Loki / Tempo on B450M-Pro4, Claude Code and Codex OTLP telemetry; see [monitoring setup and migration](docs/monitoring.md)
+- **Observability**: Grafana / VictoriaMetrics / vmalert / Alertmanager / Loki / Tempo on B450M-Pro4, Claude Code and Codex OTLP telemetry, Grafana MCP via Secure Tunnel; see [monitoring setup and migration](docs/monitoring.md)
 - **Home automation**: Home Assistant / Matter.js for Lapis on B450M-Pro4, VictoriaMetrics history, ChatGPT MCP via Secure Tunnel, and local Restic backups; see [setup and restore](docs/home-assistant.md).
 
 ### macOS

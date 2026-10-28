@@ -4,8 +4,7 @@ B450M-Pro4 runs single-node VictoriaMetrics, vmalert, Alertmanager, Grafana,
 Loki and Tempo. VictoriaMetrics replaces the Prometheus **server**; Prometheus
 exporters and the Prometheus query API remain in use. Configuration follows
 [natsukium's monitoring modules](https://github.com/natsukium/dotfiles/tree/main/modules/features/monitoring),
-with infrastructure/room routing and environmental thresholds adapted from
-[fa0311's monitoring](https://github.com/fa0311/home-server-compose/tree/main/monitoring).
+with separate infrastructure and room alert routing and configurable environmental thresholds.
 
 ## Data flow
 
@@ -34,6 +33,37 @@ scrape configuration. B450M, UM790-Pro (the shared builder and agent server), an
 `always_on=true`; sleeping laptops and the desktop are not treated as outages. Change
 `my.services.monitoring.alwaysOnHosts` when a host's operating schedule changes.
 
+## Hardware and clock warnings
+
+Additional rules use the existing SMART and node exporters:
+
+| Alert                              | Condition                                                                              | Duration  | Severity |
+| ---------------------------------- | -------------------------------------------------------------------------------------- | --------- | -------- |
+| `DiskBadSectors`                   | Raw SMART attribute 5, 197 or 198 is non-zero                                          | 15 min    | warning  |
+| `DiskSmartAttributeBelowThreshold` | Normalized SMART value is at or below its non-zero vendor threshold                    | 30 min    | critical |
+| `HostClockNotSynchronised`         | Unsynchronised status observed in the last 5 min and maximum clock error at least 16 s | 15 min    | warning  |
+| `CpuTemperatureHigh`               | CPU temperature above 80°C or within 15°C of its critical threshold                    | 15 min    | warning  |
+| `DiskIoBusy`                       | Five-minute disk busy time above 95%                                                   | 30 min    | warning  |
+| `MemorySwapUsageHigh`              | Used swap above 80%, excluding hosts with no swap                                      | 15 min    | warning  |
+| `MemoryEccCorrectableErrors`       | EDAC corrected-error counter increases within one hour                                 | 5 min     | warning  |
+| `MemoryEccUncorrectableErrors`     | EDAC uncorrected-error counter increases within one hour                               | immediate | critical |
+
+SMART comparisons match the same exporter, device and attribute. A vendor
+threshold of zero is ignored. CPU warnings select `coretemp`, `k10temp`,
+`zenpower` and `cpu_thermal` chip names, excluding GPU, NVMe and board sensors.
+CPUs without an exported critical threshold still use the 80°C condition.
+Clock and CPU rules cover reporting node exporters; missing metrics from a
+sleeping client do not themselves trigger these rules.
+
+Disk busy time excludes loop, RAM, floppy and device-mapper devices to avoid
+virtual-device noise and counting both a mapped device and its backing disk.
+A busy disk is not necessarily saturated, especially with parallel NVMe I/O.
+High swap occupancy alone does not prove current memory pressure; correlate
+it with available memory and swapping activity. EDAC alerts use counter
+increases rather than lifetime totals and only cover hosts exposing those
+counters. They report kernel observations, not a diagnosis of failed DIMMs;
+inspect the affected host's kernel logs before deciding on hardware repair.
+
 ## Service availability
 
 Uptime Kuma owns HTTP availability checks and their notifications. Its monitors
@@ -47,6 +77,53 @@ Deploy Kuma changes with the `Infra: Approved OpenTofu deploy` workflow on
 run `mode=apply` at the same main commit. If main has moved, review a new plan
 first. The manual run only touches the selected infrastructure; the existing
 PR approval labels still run all infrastructure roots.
+
+## Grafana MCP
+
+The shared Home Manager MCP module supports Grafana through
+`mcp-servers-nix`, following [natsukium's configuration](https://github.com/natsukium/dotfiles/blob/main/modules/per-system/mcp-servers.nix).
+It uses a dedicated Grafana service account token instead of the admin login.
+Store the token as `grafana-mcp-token` in `secrets/grafana-mcp.yaml`, encrypted
+with sops, then set this in the client Home Manager configuration:
+
+```nix
+my.programs.mcp.grafana.sopsFile = ../../../secrets/grafana-mcp.yaml;
+```
+
+The example path is relative to `homes/<platform>/<hostname>/default.nix`.
+ThinkPad enables this integration with the encrypted token for the
+`codex-mcp` Viewer service account. Other client hosts can opt in with the
+same option if their Home Manager age key can decrypt the secret.
+The MCP connects through `https://grafana.home.yutakobayashi.com`.
+Use a Viewer service account for dashboard, metric and log queries. The MCP
+wrapper reads the decrypted secret at startup through `passwordCommand` and
+passes it as `GRAFANA_SERVICE_ACCOUNT_TOKEN`; the token is not embedded in
+the Nix store or client configuration. Without a `sopsFile`, this integration
+stays disabled. Apply the client configuration and restart the MCP client,
+then verify dashboard discovery and a query against datasource
+`PBFA97CFB590B2093` before considering the connection ready.
+
+### ChatGPT through Secure Tunnel
+
+B450M runs `tunnel-client-grafana`, which starts the Grafana MCP process on
+the `main` channel over stdio with `--disable-write`. No new inbound MCP port
+is opened. The Viewer token and OpenAI runtime key are supplied through
+systemd `LoadCredential`; the health listener is `127.0.0.1:18794`.
+
+Create the Grafana tunnel with OpenTofu in the separate
+`tofu-configuration/infra/services/openai` repository. Put its output ID in
+the root-only `/var/lib/grafana-mcp/mcp-tunnel.env` on B450M as
+`CONTROL_PLANE_TUNNEL_ID=<tunnel ID>` (mode `0600`). The service stays skipped
+until this file exists. Apply NixOS, start `tunnel-client-grafana`, and check
+its journal and `/readyz` endpoint. The runtime API key needs Tunnels Read
+and Use permissions for this tunnel; the organization admin key is only for
+provisioning and must not be given to the daemon.
+
+Associate the tunnel with the intended ChatGPT workspace in OpenAI Platform,
+then add a custom MCP app in ChatGPT using **Connection → Tunnel** and
+**Authentication → None**. Grafana authentication happens on B450M. Verify
+tool discovery and a dashboard query from ChatGPT: local readiness alone
+does not prove workspace association or end-to-end connectivity.
 
 ## Discord notifications
 

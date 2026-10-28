@@ -24,97 +24,100 @@ let
   nodeExporterGroup = config.services.prometheus.exporters.node.group;
 in
 {
-  services.victoriametrics.prometheusConfig.scrape_configs = [
-    {
-      job_name = "comin";
-      static_configs = lib.mapAttrsToList (
-        name: value:
-        let
-          inherit (value.config.services.comin.exporter) listen_address port;
-          listenAddress = if listen_address == "" then "localhost" else listen_address;
-          host = if name == config.networking.hostName then listenAddress else name;
-        in
-        {
-          targets = [ "${host}:${toString port}" ];
-          labels = {
-            host = name;
-            always_on = lib.boolToString (lib.elem name config.my.services.monitoring.alwaysOnHosts);
-          };
-        }
-      ) (lib.filterAttrs (name: _: lib.elem name monitoredHosts) (linuxMachines // darwinMachines));
-    }
-  ];
+  services = {
+    victoriametrics.prometheusConfig.scrape_configs = [
+      {
+        job_name = "comin";
+        static_configs = lib.mapAttrsToList (
+          name: value:
+          let
+            inherit (value.config.services.comin.exporter) listen_address port;
+            listenAddress = if listen_address == "" then "localhost" else listen_address;
+            host = if name == config.networking.hostName then listenAddress else name;
+          in
+          {
+            targets = [ "${host}:${toString port}" ];
+            labels = {
+              host = name;
+              always_on = lib.boolToString (lib.elem name config.my.services.monitoring.alwaysOnHosts);
+            };
+          }
+        ) (lib.filterAttrs (name: _: lib.elem name monitoredHosts) (linuxMachines // darwinMachines));
+      }
+    ];
 
-  services.vmalert.instances.main.rules.groups = [
-    {
-      name = "comin";
-      rules = [
-        {
-          alert = "CominDown";
-          expr = ''up{job="comin",always_on="true"} == 0'';
-          for = "15m";
-          labels.severity = "warning";
-          annotations.summary = "Comin on {{ $labels.host }} is not responding";
-        }
-        {
-          alert = "CominDeploymentFailed";
-          expr = ''comin_deployment_info{status="failed"} == 1'';
-          for = "5m";
-          labels.severity = "warning";
-          annotations.summary = "Comin deployment failed on {{ $labels.host }} ({{ $labels.commit_id }})";
-        }
-        {
-          alert = "CominEvalFailed";
-          expr = "comin_last_eval_failed == 1";
-          for = "15m";
-          labels.severity = "warning";
-          annotations.summary = "Comin cannot evaluate the configuration on {{ $labels.host }}";
-        }
-        {
-          alert = "CominBuildFailed";
-          expr = "comin_last_build_failed == 1";
-          for = "15m";
-          labels.severity = "warning";
-          annotations.summary = "Comin cannot build the configuration on {{ $labels.host }}";
-        }
-        {
-          alert = "CominFetchFailed";
-          expr = ''comin_last_fetch_failed{always_on="true"} == 1'';
-          for = "1h";
-          labels.severity = "warning";
-          annotations.summary = "Comin on {{ $labels.host }} cannot fetch {{ $labels.remote_name }}";
-        }
-        {
-          alert = "CominSuspended";
-          expr = ''comin_is_suspended{always_on="true"} == 1'';
-          for = "15m";
-          labels.severity = "warning";
-          annotations.summary = "Comin on {{ $labels.host }} is suspended";
-        }
-        {
-          alert = "CominStalled";
-          # Preserve host for notification routing and host-down inhibition.
-          expr = ''sum by (host, instance) (increase(comin_fetch_count{always_on="true"}[6h])) == 0 unless on (instance) comin_is_suspended == 1'';
-          for = "30m";
-          labels.severity = "warning";
-          annotations.summary = "Comin on {{ $labels.host }} has not fetched for six hours";
-        }
-        {
-          alert = "CominRebootRequired";
-          expr = "comin_need_to_reboot == 1";
-          for = "7d";
-          labels.severity = "warning";
-          annotations.summary = "{{ $labels.host }} has needed a reboot for seven days";
-        }
-      ];
-    }
-  ];
+    vmalert.instances.main.rules.groups = [
+      {
+        name = "comin";
+        rules = [
+          {
+            alert = "CominDown";
+            expr = ''up{job="comin",always_on="true"} == 0'';
+            for = "15m";
+            labels.severity = "warning";
+            annotations.summary = "Comin on {{ $labels.host }} is not responding";
+          }
+          {
+            alert = "CominDeploymentFailed";
+            expr = ''comin_deployment_info{status="failed"} == 1'';
+            for = "5m";
+            labels.severity = "warning";
+            annotations.summary = "Comin deployment failed on {{ $labels.host }} ({{ $labels.commit_id }})";
+          }
+          {
+            alert = "CominEvalFailed";
+            expr = "comin_last_eval_failed == 1";
+            for = "15m";
+            labels.severity = "warning";
+            annotations.summary = "Comin cannot evaluate the configuration on {{ $labels.host }}";
+          }
+          {
+            alert = "CominBuildFailed";
+            expr = "comin_last_build_failed == 1";
+            for = "15m";
+            labels.severity = "warning";
+            annotations.summary = "Comin cannot build the configuration on {{ $labels.host }}";
+          }
+          {
+            alert = "CominFetchFailed";
+            expr = ''comin_last_fetch_failed{always_on="true"} == 1'';
+            for = "1h";
+            labels.severity = "warning";
+            annotations.summary = "Comin on {{ $labels.host }} cannot fetch {{ $labels.remote_name }}";
+          }
+          {
+            alert = "CominSuspended";
+            expr = ''comin_is_suspended{always_on="true"} == 1'';
+            for = "15m";
+            labels.severity = "warning";
+            annotations.summary = "Comin on {{ $labels.host }} is suspended";
+          }
+          {
+            alert = "CominStalled";
+            # Preserve host for notification routing and host-down inhibition.
+            expr = ''sum by (host, instance) (increase(comin_fetch_count{always_on="true"}[6h])) == 0 unless on (instance) comin_is_suspended == 1'';
+            for = "30m";
+            labels.severity = "warning";
+            annotations.summary = "Comin on {{ $labels.host }} has not fetched for six hours";
+          }
+          {
+            alert = "CominRebootRequired";
+            expr = "comin_need_to_reboot == 1";
+            for = "7d";
+            labels.severity = "warning";
+            annotations.summary = "{{ $labels.host }} has needed a reboot for seven days";
+          }
+        ];
+      }
+    ];
 
-  # Keep the existing dashboard's commit comparison. Do not page on commit
-  # differences: a new commit may evaluate to the same system for this host.
-  services.prometheus.exporters.node.extraFlags = [
-    "--collector.textfile.directory=${textfileDir}"
-  ];
+    # Keep the existing dashboard's commit comparison. Do not page on commit
+    # differences: a new commit may evaluate to the same system for this host.
+    prometheus.exporters.node.extraFlags = [
+      "--collector.textfile.directory=${textfileDir}"
+    ];
+
+  };
 
   systemd = {
     tmpfiles.rules = [

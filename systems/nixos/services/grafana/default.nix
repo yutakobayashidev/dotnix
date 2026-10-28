@@ -1,6 +1,8 @@
 { config, ... }:
 
 {
+  imports = [ ./mcp.nix ];
+
   services.grafana = {
     enable = true;
     settings = {

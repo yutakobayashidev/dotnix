@@ -1,0 +1,633 @@
+{
+	"rule_files": ["infra-alerts-rules.json"],
+	"evaluation_interval": "1m",
+	"tests": [
+		{
+			"name": "Bad sector counters wait 15 minutes and ignore normalized values and unrelated attributes",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sda\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"raw\"}",
+					"values": "1+0x35"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sdb\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"value\"}",
+					"values": "100+0x35"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sdc\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"raw\"}",
+					"values": "0+0x35"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sdd\",attribute_id=\"9\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"raw\"}",
+					"values": "10000+0x35"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "14m",
+					"alertname": "DiskBadSectors",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "16m",
+					"alertname": "DiskBadSectors",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "smartctl",
+								"instance": "localhost:9633",
+								"host": "server",
+								"device": "sda",
+								"attribute_id": "197",
+								"attribute_name": "Current_Pending_Sector",
+								"attribute_value_type": "raw",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server sda: Current_Pending_Sector is non-zero",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SMART equality triggers after 30 minutes but zero thresholds and healthy attributes do not",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sda\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"value\"}",
+					"values": "10+0x40"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sda\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"thresh\"}",
+					"values": "10+0x40"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sdb\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"value\"}",
+					"values": "0+0x40"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sdb\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"thresh\"}",
+					"values": "0+0x40"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sdc\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"value\"}",
+					"values": "11+0x40"
+				},
+				{
+					"series": "smartctl_device_attribute{job=\"smartctl\",instance=\"localhost:9633\",host=\"server\",device=\"sdc\",attribute_id=\"197\",attribute_name=\"Current_Pending_Sector\",attribute_value_type=\"thresh\"}",
+					"values": "10+0x40"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "29m",
+					"alertname": "DiskSmartAttributeBelowThreshold",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "31m",
+					"alertname": "DiskSmartAttributeBelowThreshold",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "smartctl",
+								"instance": "localhost:9633",
+								"host": "server",
+								"device": "sda",
+								"attribute_id": "197",
+								"attribute_name": "Current_Pending_Sector",
+								"attribute_value_type": "value",
+								"category": "infra",
+								"severity": "critical"
+							},
+							"exp_annotations": {
+								"summary": "server sda: Current_Pending_Sector reached its SMART failure threshold",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CPU absolute limit works without critical metric and excludes non-CPU chips and the 80 C boundary",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"cpu\",sensor=\"temp1\"}",
+					"values": "81+0x30"
+				},
+				{
+					"series": "node_hwmon_chip_names{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"cpu\",chip_name=\"k10temp\"}",
+					"values": "1+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"wifi\",sensor=\"temp1\"}",
+					"values": "99+0x30"
+				},
+				{
+					"series": "node_hwmon_chip_names{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"wifi\",chip_name=\"iwlwifi_1\"}",
+					"values": "1+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_crit_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"wifi\",sensor=\"temp1\"}",
+					"values": "100+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"disk\",sensor=\"temp1\"}",
+					"values": "90+0x30"
+				},
+				{
+					"series": "node_hwmon_chip_names{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"disk\",chip_name=\"nvme\"}",
+					"values": "1+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_crit_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"disk\",sensor=\"temp1\"}",
+					"values": "95+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"gpu\",sensor=\"temp1\"}",
+					"values": "99+0x30"
+				},
+				{
+					"series": "node_hwmon_chip_names{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"gpu\",chip_name=\"amdgpu\"}",
+					"values": "1+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_crit_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"gpu\",sensor=\"temp1\"}",
+					"values": "100+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"coolcpu\",sensor=\"temp1\"}",
+					"values": "80+0x30"
+				},
+				{
+					"series": "node_hwmon_chip_names{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"coolcpu\",chip_name=\"coretemp\"}",
+					"values": "1+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"unknown\",sensor=\"temp1\"}",
+					"values": "99+0x30"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "14m",
+					"alertname": "CpuTemperatureHigh",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "16m",
+					"alertname": "CpuTemperatureHigh",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"chip": "cpu",
+								"sensor": "temp1",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server CPU cpu/temp1 is above 80 C or within 15 C of its critical temperature",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CPU warning also covers the 15 C margin below the fixed threshold",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"cpu\",sensor=\"temp1\"}",
+					"values": "75+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_crit_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"cpu\",sensor=\"temp1\"}",
+					"values": "90+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"cpu\",sensor=\"temp2\"}",
+					"values": "74+0x30"
+				},
+				{
+					"series": "node_hwmon_temp_crit_celsius{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"cpu\",sensor=\"temp2\"}",
+					"values": "90+0x30"
+				},
+				{
+					"series": "node_hwmon_chip_names{job=\"node\",instance=\"server:9100\",host=\"server\",chip=\"cpu\",chip_name=\"coretemp\"}",
+					"values": "1+0x30"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "16m",
+					"alertname": "CpuTemperatureHigh",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"chip": "cpu",
+								"sensor": "temp1",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server CPU cpu/temp1 is above 80 C or within 15 C of its critical temperature",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Clock warning requires both unsynchronised state and 16 second max error for 15 minutes",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_timex_sync_status{job=\"node\",instance=\"server:9100\",host=\"server\"}",
+					"values": "0+0x30"
+				},
+				{
+					"series": "node_timex_maxerror_seconds{job=\"node\",instance=\"server:9100\",host=\"server\"}",
+					"values": "16+0x30"
+				},
+				{
+					"series": "node_timex_sync_status{job=\"node\",instance=\"synced:9100\",host=\"synced\"}",
+					"values": "1+0x30"
+				},
+				{
+					"series": "node_timex_maxerror_seconds{job=\"node\",instance=\"synced:9100\",host=\"synced\"}",
+					"values": "20+0x30"
+				},
+				{
+					"series": "node_timex_sync_status{job=\"node\",instance=\"lowerror:9100\",host=\"lowerror\"}",
+					"values": "0+0x30"
+				},
+				{
+					"series": "node_timex_maxerror_seconds{job=\"node\",instance=\"lowerror:9100\",host=\"lowerror\"}",
+					"values": "15+0x30"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "14m",
+					"alertname": "HostClockNotSynchronised",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "16m",
+					"alertname": "HostClockNotSynchronised",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server clock is not synchronised and its estimated maximum error is at least 16 seconds"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Clock warning does not fire for a short synchronisation loss",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_timex_sync_status{job=\"node\",instance=\"server:9100\",host=\"server\"}",
+					"values": "0+0x2 1+0x30"
+				},
+				{
+					"series": "node_timex_maxerror_seconds{job=\"node\",instance=\"server:9100\",host=\"server\"}",
+					"values": "16+0x35"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "16m",
+					"alertname": "HostClockNotSynchronised",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "30m",
+					"alertname": "HostClockNotSynchronised",
+					"exp_alerts": []
+				}
+			]
+		},
+		{
+			"name": "Disk I/O requires sustained physical-device load and excludes brief bursts and virtual devices",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_disk_io_time_seconds_total{job=\"node\",instance=\"server:9100\",host=\"server\",device=\"sda\"}",
+					"values": "0+60x45"
+				},
+				{
+					"series": "node_disk_io_time_seconds_total{job=\"node\",instance=\"server:9100\",host=\"server\",device=\"sdb\"}",
+					"values": "0+60x10 600+0x35"
+				},
+				{
+					"series": "node_disk_io_time_seconds_total{job=\"node\",instance=\"server:9100\",host=\"server\",device=\"sdc\"}",
+					"values": "0+57x45"
+				},
+				{
+					"series": "node_disk_io_time_seconds_total{job=\"node\",instance=\"server:9100\",host=\"server\",device=\"loop0\"}",
+					"values": "0+60x45"
+				},
+				{
+					"series": "node_disk_io_time_seconds_total{job=\"node\",instance=\"server:9100\",host=\"server\",device=\"ram0\"}",
+					"values": "0+60x45"
+				},
+				{
+					"series": "node_disk_io_time_seconds_total{job=\"node\",instance=\"server:9100\",host=\"server\",device=\"fd0\"}",
+					"values": "0+60x45"
+				},
+				{
+					"series": "node_disk_io_time_seconds_total{job=\"node\",instance=\"server:9100\",host=\"server\",device=\"dm-0\"}",
+					"values": "0+60x45"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "29m",
+					"alertname": "DiskIoBusy",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "32m",
+					"alertname": "DiskIoBusy",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"device": "sda",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server sda has been busy with I/O more than 95% of the time for 30 minutes"
+							}
+						}
+					]
+				},
+				{
+					"eval_time": "40m",
+					"alertname": "DiskIoBusy",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"device": "sda",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server sda has been busy with I/O more than 95% of the time for 30 minutes"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Swap usage requires 15 minutes above 80 percent and ignores zero capacity and temporary spikes",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_memory_SwapTotal_bytes{job=\"node\",instance=\"server:9100\",host=\"server\"}",
+					"values": "100+0x35"
+				},
+				{
+					"series": "node_memory_SwapFree_bytes{job=\"node\",instance=\"server:9100\",host=\"server\"}",
+					"values": "19+0x35"
+				},
+				{
+					"series": "node_memory_SwapTotal_bytes{job=\"node\",instance=\"boundary:9100\",host=\"boundary\"}",
+					"values": "100+0x35"
+				},
+				{
+					"series": "node_memory_SwapFree_bytes{job=\"node\",instance=\"boundary:9100\",host=\"boundary\"}",
+					"values": "20+0x35"
+				},
+				{
+					"series": "node_memory_SwapTotal_bytes{job=\"node\",instance=\"disabled:9100\",host=\"disabled\"}",
+					"values": "0+0x35"
+				},
+				{
+					"series": "node_memory_SwapFree_bytes{job=\"node\",instance=\"disabled:9100\",host=\"disabled\"}",
+					"values": "0+0x35"
+				},
+				{
+					"series": "node_memory_SwapTotal_bytes{job=\"node\",instance=\"brief:9100\",host=\"brief\"}",
+					"values": "100+0x35"
+				},
+				{
+					"series": "node_memory_SwapFree_bytes{job=\"node\",instance=\"brief:9100\",host=\"brief\"}",
+					"values": "19+0x10 30+0x24"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "14m",
+					"alertname": "MemorySwapUsageHigh",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "16m",
+					"alertname": "MemorySwapUsageHigh",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server swap usage has exceeded 80% for 15 minutes; check available memory and swapping activity"
+							}
+						}
+					]
+				},
+				{
+					"eval_time": "30m",
+					"alertname": "MemorySwapUsageHigh",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server swap usage has exceeded 80% for 15 minutes; check available memory and swapping activity"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "MemoryEccCorrectableErrors detects new errors with the intended delay but not historical totals or reset-only counters",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_edac_correctable_errors_total{job=\"node\",instance=\"server:9100\",host=\"server\",controller=\"mc0\"}",
+					"values": "0+0x10 1+0x50"
+				},
+				{
+					"series": "node_edac_correctable_errors_total{job=\"node\",instance=\"static:9100\",host=\"static\",controller=\"mc0\"}",
+					"values": "10+0x61"
+				},
+				{
+					"series": "node_edac_correctable_errors_total{job=\"node\",instance=\"reset:9100\",host=\"reset\",controller=\"mc0\"}",
+					"values": "10+0x10 0+0x50"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "10m",
+					"alertname": "MemoryEccCorrectableErrors",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "14m",
+					"alertname": "MemoryEccCorrectableErrors",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "17m",
+					"alertname": "MemoryEccCorrectableErrors",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"controller": "mc0",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server EDAC reported new corrected memory errors in the last hour; inspect kernel logs",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				},
+				{
+					"eval_time": "30m",
+					"alertname": "MemoryEccCorrectableErrors",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"controller": "mc0",
+								"category": "infra",
+								"severity": "warning"
+							},
+							"exp_annotations": {
+								"summary": "server EDAC reported new corrected memory errors in the last hour; inspect kernel logs",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "MemoryEccUncorrectableErrors detects new errors with the intended delay but not historical totals or reset-only counters",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "node_edac_uncorrectable_errors_total{job=\"node\",instance=\"server:9100\",host=\"server\",controller=\"mc0\"}",
+					"values": "0+0x10 1+0x50"
+				},
+				{
+					"series": "node_edac_uncorrectable_errors_total{job=\"node\",instance=\"static:9100\",host=\"static\",controller=\"mc0\"}",
+					"values": "10+0x61"
+				},
+				{
+					"series": "node_edac_uncorrectable_errors_total{job=\"node\",instance=\"reset:9100\",host=\"reset\",controller=\"mc0\"}",
+					"values": "10+0x10 0+0x50"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "10m",
+					"alertname": "MemoryEccUncorrectableErrors",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "11m",
+					"alertname": "MemoryEccUncorrectableErrors",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"controller": "mc0",
+								"category": "infra",
+								"severity": "critical"
+							},
+							"exp_annotations": {
+								"summary": "server EDAC reported new uncorrected memory errors in the last hour; inspect kernel logs immediately",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				},
+				{
+					"eval_time": "30m",
+					"alertname": "MemoryEccUncorrectableErrors",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"job": "node",
+								"instance": "server:9100",
+								"host": "server",
+								"controller": "mc0",
+								"category": "infra",
+								"severity": "critical"
+							},
+							"exp_annotations": {
+								"summary": "server EDAC reported new uncorrected memory errors in the last hour; inspect kernel logs immediately",
+								"dashboard_url": "https://grafana.home.yutakobayashi.com/d/dotnix-hardware-overview"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

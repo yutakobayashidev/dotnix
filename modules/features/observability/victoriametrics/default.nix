@@ -147,6 +147,24 @@ _: {
                 (rule "OOMKillDetected" "increase(node_vmstat_oom_kill[10m]) > 0" "0m" "warning"
                   "{{ $labels.host }} OOM killer active"
                 )
+                (rule "DiskIoBusy"
+                  ''rate(node_disk_io_time_seconds_total{job="node",device!~"loop.*|ram.*|fd.*|dm-.*"}[5m]) > 0.95''
+                  "30m"
+                  "warning"
+                  "{{ $labels.host }} {{ $labels.device }} has been busy with I/O more than 95% of the time for 30 minutes"
+                )
+                (rule "MemorySwapUsageHigh"
+                  ''(100 * (node_memory_SwapTotal_bytes{job="node"} - node_memory_SwapFree_bytes{job="node"}) / node_memory_SwapTotal_bytes{job="node"} > 80) and (node_memory_SwapTotal_bytes{job="node"} > 0)''
+                  "15m"
+                  "warning"
+                  "{{ $labels.host }} swap usage has exceeded 80% for 15 minutes; check available memory and swapping activity"
+                )
+                (rule "HostClockNotSynchronised"
+                  ''min_over_time(node_timex_sync_status{job="node"}[5m]) == 0 and node_timex_maxerror_seconds{job="node"} >= 16''
+                  "15m"
+                  "warning"
+                  "{{ $labels.host }} clock is not synchronised and its estimated maximum error is at least 16 seconds"
+                )
                 (rule "MonitoringTargetDown" ''up{job="monitoring"} == 0'' "5m" "critical"
                   "Monitoring component {{ $labels.instance }} is unreachable"
                 )
@@ -222,6 +240,12 @@ _: {
             } room-alerts-rules.json
             cp ${../../../../tests/room-alerts.json} room-alerts-tests.json
             ${lib.getExe' config.services.vmalert.package "vmalert-tool"} unittest -disableAlertgroupLabel -files=room-alerts-tests.json
+            touch $out
+          '')
+          (pkgs.runCommand "infra-alerts-test" { } ''
+            cp ${yaml.generate "infra-alerts-rules.json" config.services.vmalert.instances.main.rules} infra-alerts-rules.json
+            cp ${../../../../tests/infra-alerts.json} infra-alerts-tests.json
+            ${lib.getExe' config.services.vmalert.package "vmalert-tool"} unittest -disableAlertgroupLabel -files=infra-alerts-tests.json
             touch $out
           '')
         ];

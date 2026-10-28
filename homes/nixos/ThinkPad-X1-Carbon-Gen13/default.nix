@@ -15,6 +15,7 @@
       ];
       my = {
         programs.course-cli.enable = true;
+        programs.mcp.grafana.sopsFile = ../../../secrets/grafana-mcp.yaml;
         services = {
           activitywatch.enable = true;
           mpris-collector.enable = true;

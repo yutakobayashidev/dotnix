@@ -19,6 +19,12 @@ _:
       options.my.programs.mcp = {
         enable = lib.mkEnableOption "Model Context Protocol Servers";
 
+        grafana.sopsFile = lib.mkOption {
+          type = lib.types.nullOr lib.types.path;
+          default = null;
+          description = "Sops file containing grafana-mcp-token; setting it enables Grafana MCP.";
+        };
+
         ghidra = {
           enable = lib.mkEnableOption "GhidraMCP integration";
           host = lib.mkOption {
@@ -37,6 +43,10 @@ _:
       config = lib.mkIf cfg.enable {
         home.packages = lib.optional cfg.ghidra.enable ghidraWithMcp;
 
+        sops.secrets = lib.optionalAttrs (cfg.grafana.sopsFile != null) {
+          grafana-mcp-token.sopsFile = cfg.grafana.sopsFile;
+        };
+
         programs.mcp = {
           enable = true;
 
@@ -49,6 +59,14 @@ _:
 
         mcp-servers = {
           programs = {
+            grafana = lib.mkIf (cfg.grafana.sopsFile != null) {
+              enable = true;
+              env.GRAFANA_URL = "https://grafana.home.yutakobayashi.com";
+              passwordCommand.GRAFANA_SERVICE_ACCOUNT_TOKEN = [
+                "${pkgs.coreutils}/bin/cat"
+                config.sops.secrets.grafana-mcp-token.path
+              ];
+            };
             context7.enable = true;
             playwright.enable = true;
             time = {
