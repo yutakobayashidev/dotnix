@@ -1,6 +1,24 @@
 name: 'Infra: Approved OpenTofu deploy'
 
 on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Infrastructure to deploy
+        type: choice
+        required: true
+        options:
+          - uptime-kuma
+          - gitea
+          - tailscale
+      mode:
+        description: Review a plan before applying the same main revision
+        type: choice
+        required: true
+        default: plan
+        options:
+          - plan
+          - apply
   pull_request_target: # zizmor: ignore[dangerous-triggers] A maintainer-controlled label gates execution at the event's immutable PR SHA.
     types:
       - labeled
@@ -8,13 +26,13 @@ on:
 permissions: {}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || inputs.target }}-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: false
 
 jobs:
   deploy:
-    name: ${{ github.event.label.name == 'safe-to-apply' && 'Apply' || 'Plan' }} (${{ matrix.name }})
-    if: ${{ contains(fromJSON('["safe-to-plan", "safe-to-apply"]'), github.event.label.name) }}
+    name: ${{ (github.event.label.name == 'safe-to-apply' || inputs.mode == 'apply') && 'Apply' || 'Plan' }} (${{ matrix.name }})
+    if: ${{ (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(fromJSON('["safe-to-plan", "safe-to-apply"]'), github.event.label.name) }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -23,13 +41,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: gitea
-            root: infra/gitea
-          - name: uptime-kuma
-            root: infra/uptime-kuma
-          - name: tailscale
-            root: infra/tailscale
+        name: ${{ github.event_name == 'workflow_dispatch' && fromJSON(format('["{0}"]', inputs.target)) || fromJSON('["gitea", "uptime-kuma", "tailscale"]') }}
     env:
       AWS_EC2_METADATA_DISABLED: 'true'
       TF_IN_AUTOMATION: 'true'
@@ -41,11 +53,11 @@ jobs:
           persist-credentials: false
       - name: Setup Nix
         uses: ./trusted/.github/actions/setup-nix
-      - name: Checkout approved pull request revision
+      - name: Checkout approved revision
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-          ref: ${{ github.event.pull_request.head.sha }}
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           path: source
           persist-credentials: false
           allow-unsafe-pr-checkout: true
@@ -56,7 +68,7 @@ jobs:
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
           tags: tag:ci
           ping: status.home.yutakobayashi.com
-      - name: OpenTofu ${{ github.event.label.name == 'safe-to-apply' && 'apply' || 'plan' }}
+      - name: OpenTofu ${{ (github.event.label.name == 'safe-to-apply' || inputs.mode == 'apply') && 'apply' || 'plan' }}
         working-directory: source
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
@@ -69,15 +81,15 @@ jobs:
           TF_VAR_uptimekuma_password: ${{ secrets.UPTIME_KUMA_PASSWORD }}
           TF_VAR_discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           TF_VAR_state_encryption_passphrase: ${{ secrets.STATE_ENCRYPTION_PASSPHRASE }}
-          DEPLOY_MODE: ${{ github.event.label.name }}
-          ROOT: ${{ matrix.root }}
+          DEPLOY_MODE: ${{ (github.event.label.name == 'safe-to-apply' || inputs.mode == 'apply') && 'apply' || 'plan' }}
+          ROOT: infra/${{ matrix.name }}
         run: |
           set -euo pipefail
 
           nix develop .#infra-ci --command tofu -chdir="$ROOT" init \
             -reconfigure \
             -backend-config="endpoints={s3=\"$R2_ENDPOINT\"}"
-          if [[ "$DEPLOY_MODE" == "safe-to-apply" ]]; then
+          if [[ "$DEPLOY_MODE" == "apply" ]]; then
             nix develop .#infra-ci --command tofu -chdir="$ROOT" plan -out=tfplan -input=false
             nix develop .#infra-ci --command tofu -chdir="$ROOT" apply -input=false -auto-approve tfplan
           else

@@ -42,6 +42,12 @@ links to its status page rather than duplicating HTTP checks in Blackbox.
 VictoriaMetrics and vmalert handle host metrics, exporter availability, Comin
 and room sensor thresholds. The retired Prometheus URL is not monitored.
 
+Deploy Kuma changes with the `Infra: Approved OpenTofu deploy` workflow on
+`main`, selecting `target=uptime-kuma` and `mode=plan`. Review its plan, then
+run `mode=apply` at the same main commit. If main has moved, review a new plan
+first. The manual run only touches the selected infrastructure; the existing
+PR approval labels still run all infrastructure roots.
+
 ## Discord notifications
 
 Delivery is deliberately disabled until webhooks are prepared. Alertmanager
