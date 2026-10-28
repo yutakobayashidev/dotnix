@@ -127,25 +127,53 @@ does not prove workspace association or end-to-end connectivity.
 
 ## Discord notifications
 
-Delivery is deliberately disabled until webhooks are prepared. Alertmanager
-still accepts alerts and Grafana can display their firing/pending state.
+B450M enables Discord delivery using four sops-encrypted webhooks. Alertmanager
+routes infrastructure and home alerts to the channels below.
 
-On B450M, create these final files with `sudoedit`, each containing only its
-Discord webhook URL:
+Create one Discord webhook for each channel:
 
-- `/var/lib/monitoring-secrets/discord-infrastructure`
-- `/var/lib/monitoring-secrets/discord-room`
+| Channel          | Routed alerts                                      | Repeat    | Recovery messages |
+| ---------------- | -------------------------------------------------- | --------- | ----------------- |
+| `infra-critical` | Infrastructure `critical`                          | 1 hour    | yes               |
+| `infra-warning`  | Infrastructure `warning` and the default route     | 24 hours  | yes               |
+| `infra-info`     | Infrastructure `info`                              | 120 hours | no                |
+| `home`           | All `category=room` alerts, regardless of severity | 12 hours  | yes               |
 
-The directory must be root-owned mode 0700 and files mode 0600. Never put
-webhook URLs in Git, shell arguments, chat, or temporary files. Set `my.services.alertmanager.notifications.enable = true` after provisioning.
-Systemd loads the files as credentials. Rotate by editing the files and
-restarting Alertmanager; revoke the old webhook in Discord.
+Room events (`kind=event`) use the same `home` webhook, with a 10-second group
+wait, a 120-hour repeat interval and no recovery message. This is four Discord
+channels; the event route does not require a fifth webhook. Comin failure
+alerts go to `infra-warning`; its full logs remain in Loki.
 
-Infrastructure critical alerts repeat hourly; warnings repeat daily. Room
-alerts repeat every 12 hours. Event receivers suppress resolved messages.
+From the repository root, register the URLs with hidden terminal input:
+
+```sh
+nix shell --inputs-from . nixpkgs#sops --command python3 modules/features/observability/alertmanager/register-webhooks.py
+```
+
+The command encrypts the four URLs directly into `secrets/alertmanager.yaml`.
+Plaintext stays in process memory and a pipe; it is not written to temporary
+files, command arguments or the Nix store. The sops rule grants decryption to
+B450M and the ThinkPad Home Manager age key. The command sends no Discord
+messages. Re-run it to replace all four URLs when rotating webhooks.
+
+B450M's system configuration enables the registered webhooks:
+
+```nix
+my.services.alertmanager.notifications = {
+  enable = true;
+  sopsFile = ../../../secrets/alertmanager.yaml;
+};
+```
+
+Track the encrypted YAML with Git before Nix flake evaluation. sops-nix
+provides root-only runtime secrets, and systemd passes them to Alertmanager
+through `LoadCredential`. Secret changes restart Alertmanager. Revoke old
+webhooks in Discord after deploying replacements. Do not paste URLs into
+chat or put plaintext URLs in Git.
+
 Grouping includes host and entity so different rooms are not conflated.
-Critical and warning levels of the same condition are inhibited together.
-Alertmanager HTTP and gossip are not exposed to the LAN.
+Critical alerts inhibit warnings of the same condition. Alertmanager HTTP
+and gossip are not exposed to the LAN.
 
 ## Home Assistant sensors
 

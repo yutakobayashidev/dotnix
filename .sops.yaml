@@ -7,6 +7,11 @@ keys:
   - &thinkpad-home age18vhwvn7ra09rhdc3ex5scd6n96w3lvpv54sa2gvky7559exdhyus6gjmln
 
 creation_rules:
+  - path_regex: ^secrets/alertmanager\.yaml$
+    key_groups:
+      - age:
+          - *b450m
+          - *thinkpad-home
   - path_regex: ^secrets/ori-typesafe\.env$
     key_groups:
       - age:

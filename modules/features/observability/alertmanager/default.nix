@@ -3,6 +3,13 @@ _: {
     { config, lib, ... }:
     let
       cfg = config.my.services.alertmanager;
+      channels = [
+        "infra-critical"
+        "infra-warning"
+        "infra-info"
+        "home"
+      ];
+      secretsReady = cfg.notifications.enable && cfg.notifications.sopsFile != null;
       receiver = name: credential: resolved: {
         inherit name;
         discord_configs = [
@@ -26,16 +33,13 @@ _: {
     {
       options.my.services.alertmanager = {
         enable = lib.mkEnableOption "Discord notifications for infrastructure and room alerts";
-        notifications.enable = lib.mkEnableOption "Discord delivery after both webhook credential files are provisioned";
-        infrastructureWebhookFile = lib.mkOption {
-          type = lib.types.str;
-          default = "/var/lib/monitoring-secrets/discord-infrastructure";
-          description = "Runtime file containing the infrastructure Discord webhook URL; never put the URL in Nix.";
-        };
-        roomWebhookFile = lib.mkOption {
-          type = lib.types.str;
-          default = "/var/lib/monitoring-secrets/discord-room";
-          description = "Runtime file containing the room Discord webhook URL.";
+        notifications = {
+          enable = lib.mkEnableOption "Discord delivery to four channels";
+          sopsFile = lib.mkOption {
+            type = lib.types.nullOr lib.types.path;
+            default = null;
+            description = "Sops-encrypted YAML containing discord-infra-critical, discord-infra-warning, discord-infra-info and discord-home.";
+          };
         };
       };
       config = lib.mkIf cfg.enable {
@@ -47,7 +51,7 @@ _: {
             extraFlags = [ "--cluster.listen-address=" ];
             configuration = {
               route = {
-                receiver = if cfg.notifications.enable then "infrastructure" else "null";
+                receiver = if cfg.notifications.enable then "infra-warning" else "null";
                 group_by = [
                   "alertname"
                   "host"
@@ -60,12 +64,12 @@ _: {
                 routes = lib.optionals cfg.notifications.enable [
                   {
                     matchers = [ ''category="room"'' ];
-                    receiver = "room";
+                    receiver = "home";
                     repeat_interval = "12h";
                     routes = [
                       {
                         matchers = [ ''kind="event"'' ];
-                        receiver = "room-event";
+                        receiver = "home-event";
                         group_wait = "10s";
                         repeat_interval = "120h";
                       }
@@ -73,13 +77,13 @@ _: {
                   }
                   {
                     matchers = [ ''severity="critical"'' ];
-                    receiver = "infrastructure";
+                    receiver = "infra-critical";
                     group_wait = "10s";
                     repeat_interval = "1h";
                   }
                   {
                     matchers = [ ''severity="info"'' ];
-                    receiver = "infrastructure-event";
+                    receiver = "infra-info";
                     repeat_interval = "120h";
                   }
                 ];
@@ -87,10 +91,11 @@ _: {
               receivers =
                 lib.optional (!cfg.notifications.enable) { name = "null"; }
                 ++ lib.optionals cfg.notifications.enable [
-                  (receiver "infrastructure" "discord-infrastructure" true)
-                  (receiver "infrastructure-event" "discord-infrastructure" false)
-                  (receiver "room" "discord-room" true)
-                  (receiver "room-event" "discord-room" false)
+                  (receiver "infra-critical" "discord-infra-critical" true)
+                  (receiver "infra-warning" "discord-infra-warning" true)
+                  (receiver "infra-info" "discord-infra-info" false)
+                  (receiver "home" "discord-home" true)
+                  (receiver "home-event" "discord-home" false)
                 ];
               inhibit_rules = [
                 {
@@ -155,13 +160,21 @@ _: {
             }
           ];
         };
-        systemd.tmpfiles.rules = lib.optional cfg.notifications.enable "d /var/lib/monitoring-secrets 0700 root root -";
-        systemd.services.alertmanager.serviceConfig.LoadCredential =
-          lib.optionals cfg.notifications.enable
-            [
-              "discord-infrastructure:${cfg.infrastructureWebhookFile}"
-              "discord-room:${cfg.roomWebhookFile}"
-            ];
+        assertions = [
+          {
+            assertion = !cfg.notifications.enable || cfg.notifications.sopsFile != null;
+            message = "Discord notifications require my.services.alertmanager.notifications.sopsFile.";
+          }
+        ];
+        sops.secrets = lib.optionalAttrs secretsReady (
+          lib.genAttrs (map (channel: "discord-${channel}") channels) (_: {
+            sopsFile = cfg.notifications.sopsFile;
+            restartUnits = [ "alertmanager.service" ];
+          })
+        );
+        systemd.services.alertmanager.serviceConfig.LoadCredential = lib.optionals secretsReady (
+          map (channel: "discord-${channel}:${config.sops.secrets."discord-${channel}".path}") channels
+        );
       };
     };
 }

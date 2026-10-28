@@ -184,7 +184,13 @@
   };
 
   my.services.monitoring.enable = true;
-  my.services.alertmanager.enable = true;
+  my.services.alertmanager = {
+    enable = true;
+    notifications = {
+      enable = true;
+      sopsFile = ../../../secrets/alertmanager.yaml;
+    };
+  };
   my.services.roomAlerts = {
     enable = true;
     sensors = {
