@@ -114,6 +114,9 @@
     group = "wpa_supplicant";
   };
 
+  # Loki throttles WAL writes when its filesystem exceeds 90% usage.
+  services.loki.dataDir = "/srv/bulk/loki";
+
   fileSystems = {
     "/srv/bulk" = {
       device = "/dev/disk/by-label/bulk";

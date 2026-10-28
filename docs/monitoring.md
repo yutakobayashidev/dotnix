@@ -18,6 +18,10 @@ with infrastructure/room routing and environmental thresholds adapted from
 - System service journals and Comin logs → Alloy → Loki.
 
 Metrics retain one year, Loki logs 30 days and Tempo traces 30 days.
+Loki stores its data on B450M's bulk filesystem at `/srv/bulk/loki` so the
+crowded root filesystem does not trigger its WAL disk-usage protection.
+The deployment migration preserves the old `/var/lib/loki` as a rollback copy;
+stop Loki before copying data, and never merge two actively written databases.
 The pre-existing Grafana datasource name **Prometheus** and UID are retained so
 existing dashboards continue to work; it now queries VictoriaMetrics. The
 **Home Assistant** datasource also points at this database. No Prometheus
