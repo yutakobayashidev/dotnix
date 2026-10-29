@@ -166,6 +166,10 @@ let
         # Daily use and media
         {
           name = "";
+          url = "https://calendar.google.com/";
+        }
+        {
+          name = "";
           url = "https://pro.x.com/";
         }
         {
