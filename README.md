@@ -1,7 +1,7 @@
 # dotnix
 
 Personal NixOS, macOS (nix-darwin), and Android (nix-on-droid) configurations,
-with Home Manager for user environments.
+with Home Manager for user environments, including the standalone Grok Bot cloud VM.
 
 ## Usage
 
@@ -37,6 +37,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [Remote builds](docs/remote-build.md)
 - [Home Assistant, Lapis, ChatGPT MCP and backups](docs/home-assistant.md)
 - [moe: net pics and gallery-dl Immich on HDD](docs/moe.md)
+- [Grok Bot VM environment](docs/grok-bot.md)
 - [Agent skills](docs/agent-skills.md)
 - [Orca headless server on UM790-Pro](docs/orca.md)
 - [Hermes Quantified Self wiki share](docs/hermes-qs-wiki.md)

@@ -80,6 +80,8 @@ Application and system features live in purpose-based namespaces under `modules/
 | `version-control/` | Git, GitHub CLI, Jujutsu, and repository tools                                |
 | `window-manager/`  | Niri, status bar, idle handling, and screen lock                              |
 
+The Grok Bot cloud VM is a standalone Home Manager target (`homeConfigurations.grok-bot`) declared in `modules/standalone.nix`, with settings in `homes/standalone/grok-bot/`. It reuses the `base` and `development` profiles without their NixOS halves. See [setup and recovery](grok-bot.md).
+
 Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and are discovered automatically. Namespace directories have no `default.nix`; a directory with `default.nix` is one feature, so its helper files are not imported separately. Keep application assets alongside their feature. Shared CLI modules apply to every Home Manager host; desktop and host-specific apps are enabled with `my.programs.<name>.enable` (or `my.services.swayidle.enable`) in the corresponding home configuration or profile.
 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.

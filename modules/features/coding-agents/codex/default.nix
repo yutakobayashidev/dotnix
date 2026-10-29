@@ -92,7 +92,9 @@ _:
 
         permissions.project = {
           extends = ":workspace";
-          workspace_roots."${sessionTtsHome}" = true;
+          workspace_roots = lib.optionalAttrs cfg.desktopIntegration {
+            "${sessionTtsHome}" = true;
+          };
           network = {
             enabled = true;
             domains = {
@@ -161,9 +163,11 @@ _:
         (pkgs.writeShellApplication {
           name = "codex";
           text = ''
-            export SESSION_TTS_HOME=${lib.escapeShellArg sessionTtsHome}
-            export CODEX_NIRI_WINDOW_ID=
-            ${lib.optionalString isLinux ''
+            ${lib.optionalString cfg.desktopIntegration ''
+              export SESSION_TTS_HOME=${lib.escapeShellArg sessionTtsHome}
+              export CODEX_NIRI_WINDOW_ID=
+            ''}
+            ${lib.optionalString (cfg.desktopIntegration && isLinux) ''
               if [[ ''${HERDR_ENV:-} != 1 && -n ''${NIRI_SOCKET:-} ]]; then
                 if window_id=$(${lib.getExe pkgs.niri} msg -j focused-window 2>/dev/null \
                   | ${lib.getExe pkgs.jq} -r \
@@ -188,6 +192,12 @@ _:
     {
       options.my.programs.codex = {
         enable = lib.mkEnableOption "Codex";
+
+        desktopIntegration = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Enable desktop attention hooks, speech playback, and transcription tools.";
+        };
 
         telemetry = {
           enable = lib.mkOption {
@@ -224,7 +234,7 @@ _:
           inherit settings;
         };
 
-        programs.agent-skills = {
+        programs.agent-skills = lib.mkIf cfg.desktopIntegration {
           sources.session-tts.path = sessionTtsSkills;
 
           skills.explicit = {
@@ -259,7 +269,7 @@ _:
         };
 
         home = {
-          packages = [
+          packages = lib.optionals cfg.desktopIntegration [
             pkgs.session-tts
             inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
           ];
@@ -271,7 +281,9 @@ _:
             "${codexConfigDir}/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
             "${codexConfigDir}/AGENTS.md".source =
               config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
-            "${codexConfigDir}/hooks.json".text = builtins.toJSON codexHooks;
+            "${codexConfigDir}/hooks.json" = lib.mkIf cfg.desktopIntegration {
+              text = builtins.toJSON codexHooks;
+            };
           };
         };
       };

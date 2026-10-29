@@ -11,6 +11,8 @@
 - [systems/M2-MacBook-Air.md](systems/M2-MacBook-Air.md) - nix-darwin installation guide for macOS
 - [systems/Galaxy-S23FE.md](systems/Galaxy-S23FE.md) - nix-on-droid installation guide for Android
 
+- [grok-bot.md](grok-bot.md) - Standalone Home Manager on the Grok Bot cloud VM
+
 ### Operations
 
 - [home-assistant.md](home-assistant.md) - Lapis Matter pairing, history, metrics and Restic backups
