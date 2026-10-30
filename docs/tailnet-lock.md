@@ -28,6 +28,7 @@ pre-signed, reusable, ephemeral, pre-approved auth keys tagged `tag:ci` for:
 | --- | --- | --- |
 | `yutakobayashidev/dotnix` | `infra-deploy.yaml` | Repository `TS_AUTHKEY` |
 | `zunoser/kasumilog` | `archive-collection-live.yml` | Environment `archive-collection-live`, `TS_AUTHKEY` |
+| `zunoser/299792457_` | `snapshot.yml` | Repository `TS_AUTHKEY` (Terraform instance `snapshots`) |
 
 The Action's `statedir` is a sibling of the checkout, outside the repository and
 temporary directories. It lives only for the hosted runner's lifetime. Never
@@ -55,7 +56,7 @@ pipes the sensitive output directly into age and uploads only ciphertext as
 signing operator's machine. Never provide the age private identity to GitHub.
 The default empty recipient produces no export.
 
-The `tailscale-ci` target uses fixed resource targets for the two CI enrollment
+The `tailscale-ci` target uses fixed resource targets for the three CI enrollment
 keys and their existing OAuth clients, including their ACL dependency. Review
 its plan before applying. It avoids rotating the unrelated NixOS enrollment
 key during cutover or CI credential retirement; use the ordinary `tailscale`
@@ -66,9 +67,9 @@ target for a complete infrastructure plan.
 1. Check all tailnet clients meet Tailscale's minimum version (1.46.1), verify
    both signing nodes are accessible, and confirm device approval is disabled.
    Verify recovery-secret storage is writable before initialization.
-2. Prepare both workflow changes and validate them. Apply the Terraform CI key
+2. Prepare all three workflow changes and validate them. Apply the Terraform CI key
    resources using the existing OAuth workflow, then export the keys encrypted
-   to the operator. Record current workflow enablement states; disable the two affected workflows and let active runs
+   to the operator. Record current workflow enablement states; disable the three affected workflows and let active runs
    finish before changing the tailnet.
 3. Collect the two `tlpub:` public keys with `tailscale lock status`. Initialize
    from one of those nodes with both keys and `--gen-disablements=3`. Capture
@@ -79,8 +80,8 @@ target for a complete infrastructure plan.
    key on a trusted node with
    `tailscale lock sign file:<private-auth-key-path>`, and save the signed output
    privately. Upload it via stdin to the correct GitHub Secret scope. Deploy
-   both workflow changes, restore the recorded workflow enablement states,
-   then run dotnix plans and a bounded kasumilog live collection.
+   all three workflow changes, restore the recorded workflow enablement states,
+   then run dotnix plans and a bounded kasumilog live collection and the snapshot workflow.
 
 Confirm the Tailscale connection/ping steps succeed and no intended peer is
 locked out. Distinguish pre-existing application failures from connectivity
@@ -90,9 +91,10 @@ Terraform resources and remove their unused GitHub Secrets.
 ## Rotation and recovery
 
 Before each CI auth key expires, use OpenTofu's `-replace` for the appropriate
-`tailscale_tailnet_key.ci["dotnix"]` or `["kasumilog"]` instance and sign the replacement, update its
-GitHub Secret, and verify a fresh runner connects. Then revoke the old auth key
-and remove its corresponding trusted signing key with `tailscale lock remove`.
+`tailscale_tailnet_key.ci` instance (`dotnix`, `kasumilog`, or `snapshots`).
+Terraform revokes the previous auth key as part of replacement. Sign the new
+key, update its GitHub Secret, and verify a fresh runner connects. Then remove
+the previous key's trusted signing key with `tailscale lock remove`.
 Track the signing key separately for each CI credential; do not remove a host's
 signing key by mistake.
 

@@ -6,7 +6,7 @@ resource "tailscale_tailnet_key" "nixos" {
 }
 
 resource "tailscale_tailnet_key" "ci" {
-  for_each = toset(["dotnix", "kasumilog"])
+  for_each = toset(["dotnix", "kasumilog", "snapshots"])
 
   reusable      = true
   ephemeral     = true
