@@ -5,6 +5,15 @@
 The workflow migration is prepared; Tailnet Lock has not yet been enabled.
 Do not deploy the auth-key workflow until its `TS_AUTHKEY` secret is provisioned.
 Signing nodes are planned to be ThinkPad-X1-Carbon-Gen13 and UM790-Pro.
+Both report Tailscale 1.102.5.
+
+The bootstrap configuration was published in `00be146f`. The first
+[CI plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41085762764)
+failed because the existing `TAILSCALE_API_KEY` returned HTTP 401. No apply
+or Lock initialization has run. Refresh the provider credential before retrying.
+The dedicated export identity is stored in
+`~/.local/state/tailnet-lock/2026-10-31/ci-export.agekey` (0600) and in the
+Personal vault item `Tailnet Lock recovery 2026-10-31` in 1Password.
 
 ## CI credentials
 
@@ -48,16 +57,17 @@ The default empty recipient produces no export.
 1. Check all tailnet clients meet Tailscale's minimum version (1.46.1), verify
    both signing nodes are accessible, and confirm device approval is disabled.
    Verify recovery-secret storage is writable before initialization.
-2. Prepare both workflow changes and validate them. Record current workflow
-   enablement states; disable the two affected workflows and let active runs
+2. Prepare both workflow changes and validate them. Apply the Terraform CI key
+   resources using the existing OAuth workflow, then export the keys encrypted
+   to the operator. Record current workflow enablement states; disable the two affected workflows and let active runs
    finish before changing the tailnet.
 3. Collect the two `tlpub:` public keys with `tailscale lock status`. Initialize
    from one of those nodes with both keys and `--gen-disablements=3`. Capture
    the output directly in a mode-0600 persistent file outside the repository,
    and store the disablement secrets in 1Password. Never print them in agent
    logs. Verify both nodes report the same trusted keys.
-4. Apply the Terraform CI key resources before cutover, then retrieve the
-   sensitive output privately (never print it in Actions logs). Sign each key on a trusted node with
+4. Decrypt the exported keys privately (never print them in logs). Sign each
+   key on a trusted node with
    `tailscale lock sign file:<private-auth-key-path>`, and save the signed output
    privately. Upload it via stdin to the correct GitHub Secret scope. Deploy
    both workflow changes, restore the recorded workflow enablement states,
