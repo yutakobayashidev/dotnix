@@ -20,12 +20,13 @@ After changing the pilot's action dependencies, regenerate its lockfile:
 gh actions-lock .github/workflows/pinact.yaml
 ```
 
-The generator rewrites recognized SHA references as version tags. Keep the
-existing SHA-pinning policy: restore the corresponding exact SHA references
-and version comments in the workflow, then rerun `--verify`. Both SHA pins
-and lockfile coverage are checked in CI. Review changed commits in the
-lockfile before merging. Repository-wide lockfile enforcement is not enabled
-by this pilot.
+The pilot uses release tags in its workflow and exact commits in the lockfile.
+Pinact excludes this one workflow; `actions-lock --verify` checks it instead.
+Other workflows retain SHA pins. Keep workflow references identical to the
+lockfile keys: the GitHub runner rejects a SHA reference when only its tag is
+locked, even if the extension's local verification succeeds. Review changed
+commits in the lockfile before merging. Repository-wide lockfile enforcement
+is not enabled by this pilot.
 
 The extension and lockfile format are maintained by GitHub:
 https://github.com/github/gh-actions-lock
