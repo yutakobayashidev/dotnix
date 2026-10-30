@@ -29,6 +29,8 @@ sudo nixos-rebuild switch --flake .#pi5
 
 ## Notes
 
+- NixOS has not yet been deployed to this machine; this configuration is for a future installation. The host is excluded from central node-exporter and Comin monitoring until deployment.
 - The host is configured for Ethernet + DHCP and SSH only.
 - The machine name is `pi5`.
+- Comin is disabled; apply configuration updates manually with `nixos-rebuild switch --flake .#pi5`.
 - The configuration expects the root filesystem from `/dev/disk/by-label/nixos` and the boot partition from `/dev/disk/by-label/boot`.

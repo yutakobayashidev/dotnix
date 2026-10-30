@@ -10,7 +10,6 @@ let
   monitoredHosts = [
     "UM790-Pro"
     "B450M-Pro4"
-    "pi5"
     "M2-MacBook-Air"
   ];
   linuxMachines = inputs.self.outputs.nixosConfigurations;

@@ -29,9 +29,11 @@ server or separate HA metrics database is started.
 Features live under `modules/features/observability/`. B450M enables
 `my.services.monitoring`, `my.services.alertmanager`, `my.services.roomAlerts`
 and `my.services.tempo`. Service-specific Comin rules remain beside Comin's
-scrape configuration. B450M, UM790-Pro (the shared builder and agent server), and pi5 default to
+scrape configuration. B450M and UM790-Pro (the shared builder and agent server) default to
 `always_on=true`; sleeping laptops and the desktop are not treated as outages. Change
 `my.services.monitoring.alwaysOnHosts` when a host's operating schedule changes.
+pi5 is not yet running NixOS and is excluded from both node-exporter and Comin
+scrape targets. Add it only after the corresponding services are deployed.
 
 ## Hardware and clock warnings
 

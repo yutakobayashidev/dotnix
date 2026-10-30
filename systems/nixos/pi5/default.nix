@@ -7,7 +7,6 @@
 {
   imports = [
     ../common.nix
-    ../services/comin
     inputs.nixos-hardware.nixosModules.raspberry-pi-5
   ];
 

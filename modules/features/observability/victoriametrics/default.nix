@@ -59,7 +59,6 @@ _: {
           default = [
             "B450M-Pro4"
             "UM790-Pro"
-            "pi5"
           ];
           description = "Hosts whose absence is an outage; builders and laptops may be offline.";
         };
@@ -67,7 +66,6 @@ _: {
           type = lib.types.listOf lib.types.str;
           default = [
             "B450M-Pro4"
-            "pi5"
             "UM790-Pro"
             "M2-MacBook-Air"
             "ThinkPad-X1-Carbon-Gen13"
