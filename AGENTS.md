@@ -63,7 +63,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 
 ### NixOS
 
-- **WM**: Niri (scrollable tiling WM)
+- **WM**: Niri by default; optional [Hyprland session](docs/hyprland.md) on UM790-Pro and X870-Steel-Legend-WiFi only (not laptops)
 - **Desktop shell**: Noctalia (bar, notifications, OSD, and control center)
 - **Launcher**: Vicinae
 - **Wallpaper**: Noctalia via a Home Manager feature module
