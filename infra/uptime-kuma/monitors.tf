@@ -359,26 +359,6 @@ resource "uptimekuma_monitor_http" "voicevox" {
   ]
 }
 
-resource "uptimekuma_monitor_http" "archivebox" {
-  name             = "ArchiveBox"
-  url              = "https://archive.home.yutakobayashi.com"
-  interval         = 60
-  timeout          = 30
-  max_retries      = 0
-  retry_interval   = 60
-  resend_interval  = 300
-  active           = true
-  method           = "GET"
-  max_redirects    = 10
-  parent           = uptimekuma_monitor_group.internal.id
-  notification_ids = local.default_notification_ids
-  tags = [
-    {
-      tag_id = uptimekuma_tag.service.id
-    },
-  ]
-}
-
 resource "uptimekuma_monitor_http" "couchdb" {
   name                  = "CouchDB"
   url                   = "https://sync.home.yutakobayashi.com"
@@ -484,6 +464,66 @@ resource "uptimekuma_monitor_http" "nix_cache" {
 resource "uptimekuma_monitor_http" "uptime_kuma" {
   name             = "Uptime Kuma"
   url              = "https://status.home.yutakobayashi.com"
+  interval         = 60
+  timeout          = 30
+  max_retries      = 0
+  retry_interval   = 60
+  resend_interval  = 300
+  active           = true
+  method           = "GET"
+  max_redirects    = 10
+  parent           = uptimekuma_monitor_group.internal.id
+  notification_ids = local.default_notification_ids
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "linkding" {
+  name             = "Linkding"
+  url              = "https://linkding.home.yutakobayashi.com"
+  interval         = 60
+  timeout          = 30
+  max_retries      = 0
+  retry_interval   = 60
+  resend_interval  = 300
+  active           = true
+  method           = "GET"
+  max_redirects    = 10
+  parent           = uptimekuma_monitor_group.internal.id
+  notification_ids = local.default_notification_ids
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "searxng" {
+  name             = "SearXNG"
+  url              = "https://search.home.yutakobayashi.com"
+  interval         = 60
+  timeout          = 30
+  max_retries      = 0
+  retry_interval   = 60
+  resend_interval  = 300
+  active           = true
+  method           = "GET"
+  max_redirects    = 10
+  parent           = uptimekuma_monitor_group.internal.id
+  notification_ids = local.default_notification_ids
+  tags = [
+    {
+      tag_id = uptimekuma_tag.service.id
+    },
+  ]
+}
+
+resource "uptimekuma_monitor_http" "moe" {
+  name             = "Moe"
+  url              = "https://moe.home.yutakobayashi.com"
   interval         = 60
   timeout          = 30
   max_retries      = 0

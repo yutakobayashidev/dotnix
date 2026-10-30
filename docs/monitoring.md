@@ -72,7 +72,9 @@ Uptime Kuma owns HTTP availability checks and their notifications. Its monitors
 and status page are managed under `infra/uptime-kuma/`. Infrastructure Overview
 links to its status page rather than duplicating HTTP checks in Blackbox.
 VictoriaMetrics and vmalert handle host metrics, exporter availability, Comin
-and room sensor thresholds. The retired Prometheus URL is not monitored.
+and room sensor thresholds. The retired Prometheus URL and ArchiveBox are not
+monitored. Linkding, SearXNG, and Moe are included in HTTP monitoring and the
+status page.
 
 Deploy Kuma changes with the `Infra: Approved OpenTofu deploy` workflow on
 `main`, selecting `target=uptime-kuma` and `mode=plan`. Review its plan, then

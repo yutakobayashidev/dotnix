@@ -80,10 +80,6 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
-          id       = uptimekuma_monitor_http.archivebox.id
-          send_url = true
-        },
-        {
           id       = uptimekuma_monitor_http.couchdb.id
           send_url = true
         },
@@ -105,6 +101,18 @@ resource "uptimekuma_status_page" "main" {
         },
         {
           id       = uptimekuma_monitor_http.uptime_kuma.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.linkding.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.searxng.id
+          send_url = true
+        },
+        {
+          id       = uptimekuma_monitor_http.moe.id
           send_url = true
         },
       ]
