@@ -17,6 +17,22 @@ The CI enrollment keys expire on **2027-01-29 around 01:18–01:21 JST**; rotate
 and re-sign them before that date. The provider's API token has its own expiry
 and is independent of the CI enrollment keys.
 
+## Verification
+
+Post-cutover checks on 2026-10-31:
+
+- [Tailscale CI plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41089503231): connection succeeds, no changes.
+- [Uptime Kuma plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41089513574): connection succeeds, no changes.
+- [Gitea plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41089508850): connection and plan succeed; unrelated drift was not applied.
+- [kasumilog](https://github.com/zunoser/kasumilog/actions/runs/41089518268): join/ping succeeds; the existing collection failure (exit 1 without diagnostics) remains.
+- [Snapshots](https://github.com/zunoser/299792457_/actions/runs/41089523586): join/ping succeeds; the existing Relay HTTP 502 during rendering remains.
+
+[OAuth retirement](https://github.com/yutakobayashidev/dotnix/actions/runs/41089950064)
+removed exactly the two unused clients without changing keys or ACLs.
+
+Both signing nodes report the same five trusted keys and no filtered peers.
+ThinkPad can still reach B450M-Pro4 directly. All three workflows are enabled.
+
 ## CI credentials
 
 GitHub-hosted runners create new ephemeral nodes on every run. Under Tailnet
@@ -55,44 +71,19 @@ pipes the sensitive output directly into age and uploads only ciphertext as
 signing operator's machine. Never provide the age private identity to GitHub.
 The default empty recipient produces no export.
 
-The `tailscale-ci` target uses fixed resource targets for the three CI enrollment
-keys and their existing OAuth clients, including their ACL dependency. Review
+The `tailscale-ci` target covers the three CI enrollment keys and their ACL
+dependency. The previous OAuth clients and GitHub OAuth Secrets are retired. Review
 its plan before applying. It avoids rotating the unrelated NixOS enrollment
-key during cutover or CI credential retirement; use the ordinary `tailscale`
+key during CI key maintenance; use the ordinary `tailscale`
 target for a complete infrastructure plan.
-
-## Initial cutover procedure
-
-1. Check all tailnet clients meet Tailscale's minimum version (1.46.1), verify
-   both signing nodes are accessible, and confirm device approval is disabled.
-   Verify recovery-secret storage is writable before initialization.
-2. Prepare all three workflow changes and validate them. Apply the Terraform CI key
-   resources using the existing OAuth workflow, then export the keys encrypted
-   to the operator. Record current workflow enablement states; disable the three affected workflows and let active runs
-   finish before changing the tailnet.
-3. Collect the two `tlpub:` public keys with `tailscale lock status`. Initialize
-   from one of those nodes with both keys and `--gen-disablements=3`. Capture
-   the output directly in a mode-0600 persistent file outside the repository,
-   and store the disablement secrets in 1Password. Never print them in agent
-   logs. Verify both nodes report the same trusted keys.
-4. Decrypt the exported keys privately (never print them in logs). Sign each
-   key on a trusted node with
-   `tailscale lock sign file:<private-auth-key-path>`, and save the signed output
-   privately. Upload it via stdin to the correct GitHub Secret scope. Deploy
-   all three workflow changes, restore the recorded workflow enablement states,
-   then run dotnix plans and a bounded kasumilog live collection and the snapshot workflow.
-
-Confirm the Tailscale connection/ping steps succeed and no intended peer is
-locked out. Distinguish pre-existing application failures from connectivity
-failures. Once validated, retire unused OAuth credentials through the existing
-Terraform resources and remove their unused GitHub Secrets.
 
 ## Rotation and recovery
 
 Before each CI auth key expires, use OpenTofu's `-replace` for the appropriate
 `tailscale_tailnet_key.ci` instance (`dotnix`, `kasumilog`, or `snapshots`).
 Terraform revokes the previous auth key as part of replacement. Sign the new
-key, update its GitHub Secret, and verify a fresh runner connects. Then remove
+key on a trusted signing node using `tailscale lock sign file:<private-key-path>`,
+update its GitHub Secret via stdin, and verify a fresh runner connects. Then remove
 the previous key's trusted signing key with `tailscale lock remove`.
 Track the signing key separately for each CI credential; do not remove a host's
 signing key by mistake.
@@ -101,8 +92,9 @@ Automatic recreation of expired keys is disabled: replacing an unsigned key
 without updating its signature and GitHub Secret would leave CI broken.
 Coordinate each Terraform replacement with the affected workflow paused.
 
-The existing SOPS `tailscale-authkey` expired on 2026-09-11. Updating it is a
-separate task: a full `tailscale` plan proposes recreating the Terraform key but
+The Terraform-managed NixOS enrollment key expired on 2026-09-11. The SOPS
+`tailscale-authkey` has not changed since June 14 and is also beyond the maximum
+90-day lifetime. Updating enrollment credentials is a separate task: a full `tailscale` plan proposes recreating the Terraform key but
 does not distribute the replacement to SOPS. Newly provisioned NixOS machines
 need a valid enrollment method and then a node-key signature. A normal rebuild with existing Tailscale state does
 not create a new node. Preserve signing-node state during reinstalls.

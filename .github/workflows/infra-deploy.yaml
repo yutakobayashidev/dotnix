@@ -97,8 +97,6 @@ jobs:
           if [[ "$CI_KEYS_ONLY" == "true" ]]; then
             plan_args+=(
               -target=tailscale_tailnet_key.ci
-              -target=tailscale_oauth_client.ci
-              -target=tailscale_oauth_client.kasumilog_archive
             )
           fi
 
