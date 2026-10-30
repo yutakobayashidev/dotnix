@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   update:
-    uses: ./.github/workflows/_update-flake-reusable.yaml
+    uses: $/.github/workflows/_update-flake-reusable.yaml
     with:
       inputs: 'llm-agents'
       skip-delay: true

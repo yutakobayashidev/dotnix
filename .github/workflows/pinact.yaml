@@ -1,4 +1,4 @@
-name: 'CI: Pinact check'
+name: 'CI: Actions dependency checks'
 
 on:
   pull_request:
@@ -22,3 +22,11 @@ jobs:
         with:
           skip_push: 'true'
           fix: 'false'
+      - name: Install actions-lock
+        run: gh extension install github/gh-actions-lock --pin v0.4.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Verify pilot workflow lockfile
+        run: gh actions-lock --verify .github/workflows/pinact.yaml
+        env:
+          GH_TOKEN: ${{ github.token }}

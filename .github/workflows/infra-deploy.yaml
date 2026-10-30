@@ -51,13 +51,8 @@ jobs:
       AWS_EC2_METADATA_DISABLED: 'true'
       TF_IN_AUTOMATION: 'true'
     steps:
-      - name: Checkout trusted setup action
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-        with:
-          path: trusted
-          persist-credentials: false
       - name: Setup Nix
-        uses: ./trusted/.github/actions/setup-nix
+        uses: $/.github/actions/setup-nix
       - name: Checkout approved revision
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
