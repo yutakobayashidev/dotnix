@@ -1,257 +1,255 @@
 {
-  "rule_files": [
-    "room-alerts-rules.json"
-  ],
-  "evaluation_interval": "1m",
-  "tests": [
-    {
-      "name": "Indoor high temperature waits 30 minutes and ignores outdoor entities",
-      "interval": "1m",
-      "input_series": [
-        {
-          "series": "homeassistant_sensor_temperature_celsius{job=\"home-assistant\",entity=\"sensor.indoor_temperature\"}",
-          "values": "31+0x35"
-        },
-        {
-          "series": "homeassistant_sensor_temperature_celsius{job=\"home-assistant\",entity=\"sensor.outdoor_temperature\"}",
-          "values": "45+0x35"
-        },
-        {
-          "series": "up{job=\"home-assistant\"}",
-          "values": "1+0x35"
-        }
-      ],
-      "alert_rule_test": [
-        {
-          "eval_time": "29m",
-          "alertname": "RoomSensorHigh",
-          "exp_alerts": []
-        },
-        {
-          "eval_time": "31m",
-          "alertname": "RoomSensorHigh",
-          "exp_alerts": [
-            {
-              "exp_labels": {
-                "category": "room",
-                "entity": "sensor.indoor_temperature",
-                "host": "test-host",
-                "severity": "warning",
-                "job": "home-assistant"
-              },
-              "exp_annotations": {
-                "summary": "Indoor temperature: temperature high",
-                "description": "Current value 31.0 °C; threshold > 30 °C for 30m."
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Only the expected missing entity alerts while HA is available",
-      "interval": "1m",
-      "input_series": [
-        {
-          "series": "homeassistant_binary_sensor_state{job=\"home-assistant\",entity=\"binary_sensor.front_door\"}",
-          "values": "0+0x30"
-        },
-        {
-          "series": "homeassistant_lock_state{job=\"home-assistant\",entity=\"lock.front_door\"}",
-          "values": "1+0x30"
-        },
-        {
-          "series": "up{job=\"home-assistant\"}",
-          "values": "1+0x30"
-        }
-      ],
-      "alert_rule_test": [
-        {
-          "eval_time": "20m",
-          "alertname": "RoomSensorUnavailable",
-          "exp_alerts": [
-            {
-              "exp_labels": {
-                "category": "room",
-                "entity": "sensor.indoor_temperature",
-                "host": "test-host",
-                "severity": "warning",
-                "job": "home-assistant"
-              },
-              "exp_annotations": {
-                "summary": "Indoor temperature: sensor data unavailable",
-                "description": "Home Assistant responds, but sensor.indoor_temperature is unavailable or has exported no homeassistant_sensor_temperature_celsius samples for at least 15 minutes."
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "HA outage suppresses individual missing-sensor notifications",
-      "interval": "1m",
-      "input_series": [
-        {
-          "series": "up{job=\"home-assistant\"}",
-          "values": "0+0x30"
-        }
-      ],
-      "alert_rule_test": [
-        {
-          "eval_time": "20m",
-          "alertname": "RoomSensorUnavailable",
-          "exp_alerts": []
-        }
-      ]
-    },
-    {
-      "name": "Open door and unlocked lock use opposite binary states and different durations",
-      "interval": "1m",
-      "input_series": [
-        {
-          "series": "homeassistant_binary_sensor_state{job=\"home-assistant\",entity=\"binary_sensor.front_door\"}",
-          "values": "1+0x35"
-        },
-        {
-          "series": "homeassistant_lock_state{job=\"home-assistant\",entity=\"lock.front_door\"}",
-          "values": "0+0x35"
-        }
-      ],
-      "alert_rule_test": [
-        {
-          "eval_time": "9m",
-          "alertname": "RoomSensorState",
-          "exp_alerts": []
-        },
-        {
-          "eval_time": "11m",
-          "alertname": "RoomSensorState",
-          "exp_alerts": [
-            {
-              "exp_labels": {
-                "category": "room",
-                "entity": "binary_sensor.front_door",
-                "host": "test-host",
-                "severity": "warning",
-                "job": "home-assistant"
-              },
-              "exp_annotations": {
-                "summary": "Front door: door-open state",
-                "description": "Current value 1.0; threshold == 1 for 10m."
-              }
-            }
-          ]
-        },
-        {
-          "eval_time": "31m",
-          "alertname": "RoomSensorState",
-          "exp_alerts": [
-            {
-              "exp_labels": {
-                "category": "room",
-                "entity": "binary_sensor.front_door",
-                "host": "test-host",
-                "severity": "warning",
-                "job": "home-assistant"
-              },
-              "exp_annotations": {
-                "summary": "Front door: door-open state",
-                "description": "Current value 1.0; threshold == 1 for 10m."
-              }
-            },
-            {
-              "exp_labels": {
-                "category": "room",
-                "entity": "lock.front_door",
-                "host": "test-host",
-                "severity": "warning",
-                "job": "home-assistant"
-              },
-              "exp_annotations": {
-                "summary": "Front door lock: unlocked state",
-                "description": "Current value 0.0; threshold == 0 for 30m."
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "Missing HA scrape job raises a metrics alert",
-      "interval": "1m",
-      "input_series": [],
-      "alert_rule_test": [
-        {
-          "eval_time": "6m",
-          "alertname": "HomeAssistantMetricsUnavailable",
-          "exp_alerts": [
-            {
-              "exp_labels": {
-                "category": "room",
-                "host": "test-host",
-                "severity": "warning",
-                "job": "home-assistant"
-              },
-              "exp_annotations": {
-                "summary": "Home Assistant metrics unavailable",
-                "description": "Room alerts cannot evaluate current sensor values. Check Home Assistant, its metrics token, and the scrape configuration."
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "name": "HA unavailable state overrides a retained numeric reading",
-      "interval": "1m",
-      "input_series": [
-        {
-          "series": "homeassistant_sensor_temperature_celsius{job=\"home-assistant\",entity=\"sensor.indoor_temperature\"}",
-          "values": "31+0x35"
-        },
-        {
-          "series": "homeassistant_entity_available{job=\"home-assistant\",entity=\"sensor.indoor_temperature\",instance=\"ha:8123\"}",
-          "values": "0+0x35"
-        },
-        {
-          "series": "homeassistant_binary_sensor_state{job=\"home-assistant\",entity=\"binary_sensor.front_door\"}",
-          "values": "0+0x35"
-        },
-        {
-          "series": "homeassistant_lock_state{job=\"home-assistant\",entity=\"lock.front_door\"}",
-          "values": "1+0x35"
-        },
-        {
-          "series": "up{job=\"home-assistant\"}",
-          "values": "1+0x35"
-        }
-      ],
-      "alert_rule_test": [
-        {
-          "eval_time": "31m",
-          "alertname": "RoomSensorHigh",
-          "exp_alerts": []
-        },
-        {
-          "eval_time": "6m",
-          "alertname": "RoomSensorUnavailable",
-          "exp_alerts": [
-            {
-              "exp_labels": {
-                "category": "room",
-                "entity": "sensor.indoor_temperature",
-                "host": "test-host",
-                "severity": "warning",
-                "job": "home-assistant"
-              },
-              "exp_annotations": {
-                "summary": "Indoor temperature: sensor data unavailable",
-                "description": "Home Assistant responds, but sensor.indoor_temperature is unavailable or has exported no homeassistant_sensor_temperature_celsius samples for at least 15 minutes."
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
+	"rule_files": ["room-alerts-rules.json"],
+	"evaluation_interval": "1m",
+	"tests": [
+		{
+			"name": "Indoor high temperature waits 30 minutes and ignores outdoor entities",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "homeassistant_sensor_temperature_celsius{job=\"home-assistant\",entity=\"sensor.indoor_temperature\"}",
+					"values": "31+0x35"
+				},
+				{
+					"series": "homeassistant_sensor_temperature_celsius{job=\"home-assistant\",entity=\"sensor.outdoor_temperature\"}",
+					"values": "45+0x35"
+				},
+				{
+					"series": "up{job=\"home-assistant\"}",
+					"values": "1+0x35"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "29m",
+					"alertname": "RoomSensorHigh",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "31m",
+					"alertname": "RoomSensorHigh",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"category": "room",
+								"entity": "sensor.indoor_temperature",
+								"host": "test-host",
+								"severity": "warning",
+								"job": "home-assistant"
+							},
+							"exp_annotations": {
+								"summary": "Indoor temperature: temperature high",
+								"description": "Current value 31.0 °C; threshold > 30 °C for 30m."
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Only the expected missing entity alerts while HA is available",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "homeassistant_binary_sensor_state{job=\"home-assistant\",entity=\"binary_sensor.front_door\"}",
+					"values": "0+0x30"
+				},
+				{
+					"series": "homeassistant_lock_state{job=\"home-assistant\",entity=\"lock.front_door\"}",
+					"values": "1+0x30"
+				},
+				{
+					"series": "up{job=\"home-assistant\"}",
+					"values": "1+0x30"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "20m",
+					"alertname": "RoomSensorUnavailable",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"category": "room",
+								"entity": "sensor.indoor_temperature",
+								"host": "test-host",
+								"severity": "warning",
+								"job": "home-assistant"
+							},
+							"exp_annotations": {
+								"summary": "Indoor temperature: sensor data unavailable",
+								"description": "Home Assistant responds, but sensor.indoor_temperature is unavailable or has exported no homeassistant_sensor_temperature_celsius samples for at least 15 minutes."
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "HA outage suppresses individual missing-sensor notifications",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "up{job=\"home-assistant\"}",
+					"values": "0+0x30"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "20m",
+					"alertname": "RoomSensorUnavailable",
+					"exp_alerts": []
+				}
+			]
+		},
+		{
+			"name": "Open door and unlocked lock use opposite binary states and different durations",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "homeassistant_binary_sensor_state{job=\"home-assistant\",entity=\"binary_sensor.front_door\"}",
+					"values": "1+0x35"
+				},
+				{
+					"series": "homeassistant_lock_state{job=\"home-assistant\",entity=\"lock.front_door\"}",
+					"values": "0+0x35"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "9m",
+					"alertname": "RoomSensorState",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "11m",
+					"alertname": "RoomSensorState",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"category": "room",
+								"entity": "binary_sensor.front_door",
+								"host": "test-host",
+								"severity": "warning",
+								"job": "home-assistant"
+							},
+							"exp_annotations": {
+								"summary": "Front door: door-open state",
+								"description": "Current value 1.0; threshold == 1 for 10m."
+							}
+						}
+					]
+				},
+				{
+					"eval_time": "31m",
+					"alertname": "RoomSensorState",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"category": "room",
+								"entity": "binary_sensor.front_door",
+								"host": "test-host",
+								"severity": "warning",
+								"job": "home-assistant"
+							},
+							"exp_annotations": {
+								"summary": "Front door: door-open state",
+								"description": "Current value 1.0; threshold == 1 for 10m."
+							}
+						},
+						{
+							"exp_labels": {
+								"category": "room",
+								"entity": "lock.front_door",
+								"host": "test-host",
+								"severity": "warning",
+								"job": "home-assistant"
+							},
+							"exp_annotations": {
+								"summary": "Front door lock: unlocked state",
+								"description": "Current value 0.0; threshold == 0 for 30m."
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Missing HA scrape job raises a metrics alert",
+			"interval": "1m",
+			"input_series": [],
+			"alert_rule_test": [
+				{
+					"eval_time": "6m",
+					"alertname": "HomeAssistantMetricsUnavailable",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"category": "room",
+								"host": "test-host",
+								"severity": "warning",
+								"job": "home-assistant"
+							},
+							"exp_annotations": {
+								"summary": "Home Assistant metrics unavailable",
+								"description": "Room alerts cannot evaluate current sensor values. Check Home Assistant, its metrics token, and the scrape configuration."
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "HA unavailable state overrides a retained numeric reading",
+			"interval": "1m",
+			"input_series": [
+				{
+					"series": "homeassistant_sensor_temperature_celsius{job=\"home-assistant\",entity=\"sensor.indoor_temperature\"}",
+					"values": "31+0x35"
+				},
+				{
+					"series": "homeassistant_entity_available{job=\"home-assistant\",entity=\"sensor.indoor_temperature\",instance=\"ha:8123\"}",
+					"values": "0+0x35"
+				},
+				{
+					"series": "homeassistant_binary_sensor_state{job=\"home-assistant\",entity=\"binary_sensor.front_door\"}",
+					"values": "0+0x35"
+				},
+				{
+					"series": "homeassistant_lock_state{job=\"home-assistant\",entity=\"lock.front_door\"}",
+					"values": "1+0x35"
+				},
+				{
+					"series": "up{job=\"home-assistant\"}",
+					"values": "1+0x35"
+				}
+			],
+			"alert_rule_test": [
+				{
+					"eval_time": "31m",
+					"alertname": "RoomSensorHigh",
+					"exp_alerts": []
+				},
+				{
+					"eval_time": "6m",
+					"alertname": "RoomSensorUnavailable",
+					"exp_alerts": [
+						{
+							"exp_labels": {
+								"category": "room",
+								"entity": "sensor.indoor_temperature",
+								"host": "test-host",
+								"severity": "warning",
+								"job": "home-assistant"
+							},
+							"exp_annotations": {
+								"summary": "Indoor temperature: sensor data unavailable",
+								"description": "Home Assistant responds, but sensor.indoor_temperature is unavailable or has exported no homeassistant_sensor_temperature_celsius samples for at least 15 minutes."
+							}
+						}
+					]
+				}
+			]
+		}
+	]
 }
