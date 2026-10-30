@@ -19,6 +19,10 @@ on:
         options:
           - plan
           - apply
+      ci_key_recipient:
+        description: Optional age public recipient for exporting unsigned CI keys (tailscale apply only)
+        type: string
+        default: ''
   pull_request_target: # zizmor: ignore[dangerous-triggers] A maintainer-controlled label gates execution at the event's immutable PR SHA.
     types:
       - labeled
@@ -83,6 +87,7 @@ jobs:
           TF_VAR_state_encryption_passphrase: ${{ secrets.STATE_ENCRYPTION_PASSPHRASE }}
           DEPLOY_MODE: ${{ (github.event.label.name == 'safe-to-apply' || inputs.mode == 'apply') && 'apply' || 'plan' }}
           ROOT: infra/${{ matrix.name }}
+          CI_KEY_RECIPIENT: ${{ inputs.ci_key_recipient }}
         run: |
           set -euo pipefail
 
@@ -92,6 +97,19 @@ jobs:
           if [[ "$DEPLOY_MODE" == "apply" ]]; then
             nix develop .#infra-ci --command tofu -chdir="$ROOT" plan -out=tfplan -input=false
             nix develop .#infra-ci --command tofu -chdir="$ROOT" apply -input=false -auto-approve tfplan
+            if [[ "$ROOT" == "infra/tailscale" && -n "$CI_KEY_RECIPIENT" ]]; then
+              nix develop .#infra-ci --command tofu -chdir="$ROOT" output -json ci_auth_keys \
+                | nix develop .#infra-ci --command age -r "$CI_KEY_RECIPIENT" \
+                    -o "$RUNNER_TEMP/tailscale-ci-keys.age"
+            fi
           else
             nix develop .#infra-ci --command tofu -chdir="$ROOT" plan -input=false -no-color
           fi
+      - name: Upload encrypted CI enrollment keys
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.target == 'tailscale' && inputs.mode == 'apply' && inputs.ci_key_recipient != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: tailscale-ci-keys
+          path: ${{ runner.temp }}/tailscale-ci-keys.age
+          if-no-files-found: error
+          retention-days: 1

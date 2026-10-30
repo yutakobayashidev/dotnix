@@ -74,6 +74,7 @@
 
       devShells.infra-ci = pkgs.mkShell {
         packages = [
+          pkgs.age
           (pkgs.opentofu.withPlugins (pl: [
             pl.go-gitea_gitea
             pl.oracle_oci

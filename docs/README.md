@@ -15,6 +15,7 @@
 
 ### Operations
 
+- [tailnet-lock.md](tailnet-lock.md) - Tailnet Lock rollout, CI credentials and recovery
 - [home-assistant.md](home-assistant.md) - Lapis Matter pairing, history, metrics and Restic backups
 - [remote-build.md](remote-build.md) - Build B450M and ThinkPad packages on UM790 over Tailscale
 - [B450M-Pro4-HDD-service-storage.md](B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
