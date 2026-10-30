@@ -1,4 +1,4 @@
-name: 'CI: Pinact check'
+name: 'CI: Actions dependency checks'
 
 on:
   pull_request:
@@ -15,10 +15,33 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@v7.0.0 # zizmor: ignore[unpinned-uses] Exact commit enforced by this workflow's actions.lock entry.
         with:
           persist-credentials: false
-      - uses: suzuki-shunsuke/pinact-action@896d595f299e71d65b9d28349d6956abe144390a # v3.0.0
+      - name: Select SHA-pinned workflows and actions
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+          pilot = Path(".github/workflows/pinact.yaml")
+          files = set(Path(".github/workflows").glob("*.y*ml"))
+          files.update(Path(".github/actions").rglob("action.y*ml"))
+          config = {"version": 3, "files": [{"pattern": str(p)} for p in sorted(files - {pilot})]}
+          (Path(os.environ["RUNNER_TEMP"]) / "pinact.json").write_text(json.dumps(config))
+          PYTHON
+      - uses: suzuki-shunsuke/pinact-action@v3.0.0 # zizmor: ignore[unpinned-uses] Exact commit enforced by this workflow's actions.lock entry.
         with:
           skip_push: 'true'
           fix: 'false'
+          # This pilot is pinned by actions.lock and checked by actions-lock below.
+          config: ${{ runner.temp }}/pinact.json
+      - name: Install actions-lock
+        run: gh extension install github/gh-actions-lock --pin v0.4.0
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Verify pilot workflow lockfile
+        run: gh actions-lock --verify .github/workflows/pinact.yaml
+        env:
+          GH_TOKEN: ${{ github.token }}

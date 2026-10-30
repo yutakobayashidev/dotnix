@@ -63,7 +63,7 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: ./.github/actions/setup-nix
+      - uses: $/.github/actions/setup-nix
       - name: Evaluate flake outputs (host platform)
         run: |
           for output in checks packages devShells apps; do
@@ -107,7 +107,7 @@ jobs:
             /usr/local/lib/node_modules \
             /usr/local/share/powershell || true
           df -h
-      - uses: ./.github/actions/setup-nix
+      - uses: $/.github/actions/setup-nix
         if: needs.check.result == 'success'
       - name: Create /run for darwin
         if: needs.check.result == 'success' && matrix.os == 'macos-latest'

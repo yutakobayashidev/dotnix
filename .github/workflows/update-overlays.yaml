@@ -19,7 +19,7 @@ jobs:
           persist-credentials: false
 
       - id: setup-bot
-        uses: ./.github/actions/setup-git-bot
+        uses: $/.github/actions/setup-git-bot
         with:
           app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
           app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
@@ -31,7 +31,7 @@ jobs:
           token: ${{ steps.setup-bot.outputs.token }}
           persist-credentials: false
 
-      - uses: ./.github/actions/setup-nix
+      - uses: $/.github/actions/setup-nix
 
       - name: Update overlay packages
         run: |
