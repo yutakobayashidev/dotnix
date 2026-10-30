@@ -9,8 +9,11 @@ Both report Tailscale 1.102.5.
 
 The bootstrap configuration was published in `00be146f`. The first
 [CI plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41085762764)
-failed because the existing `TAILSCALE_API_KEY` returned HTTP 401. No apply
-or Lock initialization has run. Refresh the provider credential before retrying.
+failed because the existing `TAILSCALE_API_KEY` returned HTTP 401. After the
+credential was refreshed, [the next plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41087287567)
+succeeded. It also proposed replacing the unrelated expired NixOS enrollment
+key, so the CI cutover uses the scoped `tailscale-ci` target. No Lock
+initialization has run yet.
 The dedicated export identity is stored in
 `~/.local/state/tailnet-lock/2026-10-31/ci-export.agekey` (0600) and in the
 Personal vault item `Tailnet Lock recovery 2026-10-31` in 1Password.
@@ -44,13 +47,19 @@ state. The provider's API token is a separate bootstrap credential, already
 configured in the deployment workflow as `TAILSCALE_API_KEY`.
 
 For local signing without copying CI's provider credentials, dispatch the
-existing deployment workflow with `target=tailscale`, `mode=apply`, and
+existing deployment workflow with `target=tailscale-ci`, `mode=apply`, and
 `ci_key_recipient` set to an age public recipient whose private identity is
 stored outside the repository in mode-0600 persistent storage. The workflow
 pipes the sensitive output directly into age and uploads only ciphertext as
 `tailscale-ci-keys` (one-day retention). Download and decrypt privately on the
 signing operator's machine. Never provide the age private identity to GitHub.
 The default empty recipient produces no export.
+
+The `tailscale-ci` target uses fixed resource targets for the two CI enrollment
+keys and their existing OAuth clients, including their ACL dependency. Review
+its plan before applying. It avoids rotating the unrelated NixOS enrollment
+key during cutover or CI credential retirement; use the ordinary `tailscale`
+target for a complete infrastructure plan.
 
 ## Cutover
 

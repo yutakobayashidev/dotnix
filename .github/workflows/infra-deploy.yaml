@@ -11,6 +11,7 @@ on:
           - uptime-kuma
           - gitea
           - tailscale
+          - tailscale-ci
       mode:
         description: Review a plan before applying the same main revision
         type: choice
@@ -20,7 +21,7 @@ on:
           - plan
           - apply
       ci_key_recipient:
-        description: Optional age public recipient for exporting unsigned CI keys (tailscale apply only)
+        description: Optional age public recipient for exporting unsigned CI keys (Tailscale apply only)
         type: string
         default: ''
   pull_request_target: # zizmor: ignore[dangerous-triggers] A maintainer-controlled label gates execution at the event's immutable PR SHA.
@@ -86,16 +87,26 @@ jobs:
           TF_VAR_discord_webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           TF_VAR_state_encryption_passphrase: ${{ secrets.STATE_ENCRYPTION_PASSPHRASE }}
           DEPLOY_MODE: ${{ (github.event.label.name == 'safe-to-apply' || inputs.mode == 'apply') && 'apply' || 'plan' }}
-          ROOT: infra/${{ matrix.name }}
+          ROOT: infra/${{ matrix.name == 'tailscale-ci' && 'tailscale' || matrix.name }}
+          CI_KEYS_ONLY: ${{ matrix.name == 'tailscale-ci' }}
           CI_KEY_RECIPIENT: ${{ inputs.ci_key_recipient }}
         run: |
           set -euo pipefail
+
+          plan_args=()
+          if [[ "$CI_KEYS_ONLY" == "true" ]]; then
+            plan_args+=(
+              -target=tailscale_tailnet_key.ci
+              -target=tailscale_oauth_client.ci
+              -target=tailscale_oauth_client.kasumilog_archive
+            )
+          fi
 
           nix develop .#infra-ci --command tofu -chdir="$ROOT" init \
             -reconfigure \
             -backend-config="endpoints={s3=\"$R2_ENDPOINT\"}"
           if [[ "$DEPLOY_MODE" == "apply" ]]; then
-            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan -out=tfplan -input=false
+            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan "${plan_args[@]}" -out=tfplan -input=false
             nix develop .#infra-ci --command tofu -chdir="$ROOT" apply -input=false -auto-approve tfplan
             if [[ "$ROOT" == "infra/tailscale" && -n "$CI_KEY_RECIPIENT" ]]; then
               nix develop .#infra-ci --command tofu -chdir="$ROOT" output -json ci_auth_keys \
@@ -103,10 +114,10 @@ jobs:
                     -o "$RUNNER_TEMP/tailscale-ci-keys.age"
             fi
           else
-            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan -input=false -no-color
+            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan "${plan_args[@]}" -input=false -no-color
           fi
       - name: Upload encrypted CI enrollment keys
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.target == 'tailscale' && inputs.mode == 'apply' && inputs.ci_key_recipient != '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && contains(fromJSON('["tailscale", "tailscale-ci"]'), inputs.target) && inputs.mode == 'apply' && inputs.ci_key_recipient != '' }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: tailscale-ci-keys
