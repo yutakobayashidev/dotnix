@@ -41,3 +41,12 @@ this syntax ([upstream issue](https://github.com/rhysd/actionlint/issues/732)), 
 `.github/actionlint.yaml` excludes only the missing-ref diagnostics for the
 specific self-repository paths used here. Remove those exceptions once
 Actionlint supports `$/`; other syntax and script checks remain enabled.
+
+Pinact's `--exclude` option matches action names, not workflow paths. The CI
+job therefore discovers workflow and composite-action files and generates a
+runtime config excluding only the lockfile pilot. Zizmor's two inline
+`unpinned-uses` exceptions apply only to the locked pilot references.
+Ghalint 1.5.6/1.5.7 do not understand lockfiles and report these same two tag
+references; no global action exemptions are configured. Use the lockfile
+verification result for those two references until Ghalint releases lockfile
+support.
