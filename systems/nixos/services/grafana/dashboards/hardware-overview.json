@@ -1,602 +1,591 @@
 {
-  "schemaVersion": 42,
-  "version": 1,
-  "editable": false,
-  "timezone": "browser",
-  "refresh": "1m",
-  "time": {
-    "from": "now-24h",
-    "to": "now"
-  },
-  "links": [
-    {
-      "title": "NVIDIA GPU details",
-      "type": "link",
-      "url": "/d/dotnix-nvidia-gpu",
-      "includeVars": true,
-      "keepTime": true
-    }
-  ],
-  "annotations": {
-    "list": []
-  },
-  "uid": "dotnix-hardware-overview",
-  "title": "Hardware Overview",
-  "description": "B450M-Pro4 disk SMART, GPU and hardware temperature monitoring. Device capabilities determine which metrics exist; no data is not a healthy result.",
-  "tags": [
-    "dotnix",
-    "hardware"
-  ],
-  "templating": {
-    "list": [
-      {
-        "name": "host",
-        "label": "Host",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
-        },
-        "query": {
-          "query": "label_values(up{job=~\"smartctl|nvidia-gpu\"}, host)",
-          "refId": "StandardVariableQuery"
-        },
-        "definition": "label_values(up{job=~\"smartctl|nvidia-gpu\"}, host)",
-        "refresh": 1,
-        "sort": 1,
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
-        "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "options": []
-      },
-      {
-        "name": "device",
-        "label": "Disk",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
-        },
-        "query": {
-          "query": "label_values(smartctl_device{host=~\"$host\"}, device)",
-          "refId": "StandardVariableQuery"
-        },
-        "definition": "label_values(smartctl_device{host=~\"$host\"}, device)",
-        "refresh": 1,
-        "sort": 1,
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
-        "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "options": []
-      }
-    ]
-  },
-  "panels": [
-    {
-      "id": 1,
-      "title": "Hardware exporters available (1 = up)",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 0,
-        "w": 24,
-        "h": 6
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "up{job=~\"smartctl|nvidia-gpu\",host=~\"$host\"}",
-          "legendFormat": "{{host}} {{job}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 2,
-      "title": "Disk SMART health (1 = passed)",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 6,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "smartctl_device_smart_status{host=~\"$host\",device=~\"$device\"}",
-          "legendFormat": "{{host}} {{device}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 3,
-      "title": "Disk temperature",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 6,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "smartctl_device_temperature{host=~\"$host\",device=~\"$device\",temperature_type=\"current\"}",
-          "legendFormat": "{{host}} {{device}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "celsius",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 4,
-      "title": "NVMe endurance consumed",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 14,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "smartctl_device_percentage_used{host=~\"$host\",device=~\"$device\"}",
-          "legendFormat": "{{host}} {{device}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 5,
-      "title": "GPU temperature",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 14,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "nvidia_smi_temperature_gpu{host=~\"$host\"}",
-          "legendFormat": "{{host}} {{uuid}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "celsius",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 6,
-      "title": "GPU memory used",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 22,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "100 * nvidia_smi_memory_used_bytes{host=~\"$host\"} / nvidia_smi_memory_total_bytes",
-          "legendFormat": "{{host}} {{uuid}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 7,
-      "title": "GPU utilization",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 22,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "100 * nvidia_smi_utilization_gpu_ratio{host=~\"$host\"}",
-          "legendFormat": "{{host}} {{uuid}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 8,
-      "title": "Hardware sensor temperatures",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 30,
-        "w": 24,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "node_hwmon_temp_celsius{host=~\"$host\"}",
-          "legendFormat": "{{host}} {{chip}} {{sensor}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "celsius",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 9,
-      "title": "Firing hardware alerts",
-      "type": "table",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 38,
-        "w": 24,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "ALERTS{alertstate=\"firing\",host=~\"$host\",alertname=~\"Hardware.*|Smart.*|DiskSmart.*|DiskWearout.*|DiskSpare.*|DiskMedia.*|DiskTemperature.*|Gpu.*\"}",
-          "legendFormat": "__auto",
-          "range": false,
-          "instant": true,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm"
-      }
-    },
-    {
-      "id": 10,
-      "title": "Disk I/O busy",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 46,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "100 * rate(node_disk_io_time_seconds_total{host=~\"$host\"}[$__rate_interval])",
-          "legendFormat": "{{host}} {{device}}",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 11,
-      "title": "Disk throughput",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 46,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "rate(node_disk_read_bytes_total{host=~\"$host\"}[$__rate_interval])",
-          "legendFormat": "{{host}} {{device}} read",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        },
-        {
-          "refId": "B",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "rate(node_disk_written_bytes_total{host=~\"$host\"}[$__rate_interval])",
-          "range": true,
-          "legendFormat": "{{host}} {{device}} write"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "Bps",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    }
-  ]
+	"schemaVersion": 42,
+	"version": 1,
+	"editable": false,
+	"timezone": "browser",
+	"refresh": "1m",
+	"time": {
+		"from": "now-24h",
+		"to": "now"
+	},
+	"links": [
+		{
+			"title": "NVIDIA GPU details",
+			"type": "link",
+			"url": "/d/dotnix-nvidia-gpu",
+			"includeVars": true,
+			"keepTime": true
+		}
+	],
+	"annotations": {
+		"list": []
+	},
+	"uid": "dotnix-hardware-overview",
+	"title": "Hardware Overview",
+	"description": "B450M-Pro4 disk SMART, GPU and hardware temperature monitoring. Device capabilities determine which metrics exist; no data is not a healthy result.",
+	"tags": ["dotnix", "hardware"],
+	"templating": {
+		"list": [
+			{
+				"name": "host",
+				"label": "Host",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "PBFA97CFB590B2093"
+				},
+				"query": {
+					"query": "label_values(up{job=~\"smartctl|nvidia-gpu\"}, host)",
+					"refId": "StandardVariableQuery"
+				},
+				"definition": "label_values(up{job=~\"smartctl|nvidia-gpu\"}, host)",
+				"refresh": 1,
+				"sort": 1,
+				"multi": true,
+				"includeAll": true,
+				"allValue": ".*",
+				"current": {
+					"text": ["All"],
+					"value": ["$__all"]
+				},
+				"options": []
+			},
+			{
+				"name": "device",
+				"label": "Disk",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "PBFA97CFB590B2093"
+				},
+				"query": {
+					"query": "label_values(smartctl_device{host=~\"$host\"}, device)",
+					"refId": "StandardVariableQuery"
+				},
+				"definition": "label_values(smartctl_device{host=~\"$host\"}, device)",
+				"refresh": 1,
+				"sort": 1,
+				"multi": true,
+				"includeAll": true,
+				"allValue": ".*",
+				"current": {
+					"text": ["All"],
+					"value": ["$__all"]
+				},
+				"options": []
+			}
+		]
+	},
+	"panels": [
+		{
+			"id": 1,
+			"title": "Hardware exporters available (1 = up)",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 24,
+				"h": 6
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "up{job=~\"smartctl|nvidia-gpu\",host=~\"$host\"}",
+					"legendFormat": "{{host}} {{job}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 2,
+			"title": "Disk SMART health (1 = passed)",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 6,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "smartctl_device_smart_status{host=~\"$host\",device=~\"$device\"}",
+					"legendFormat": "{{host}} {{device}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 3,
+			"title": "Disk temperature",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 6,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "smartctl_device_temperature{host=~\"$host\",device=~\"$device\",temperature_type=\"current\"}",
+					"legendFormat": "{{host}} {{device}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "celsius",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 4,
+			"title": "NVMe endurance consumed",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 14,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "smartctl_device_percentage_used{host=~\"$host\",device=~\"$device\"}",
+					"legendFormat": "{{host}} {{device}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 5,
+			"title": "GPU temperature",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 14,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "nvidia_smi_temperature_gpu{host=~\"$host\"}",
+					"legendFormat": "{{host}} {{uuid}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "celsius",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 6,
+			"title": "GPU memory used",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 22,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "100 * nvidia_smi_memory_used_bytes{host=~\"$host\"} / nvidia_smi_memory_total_bytes",
+					"legendFormat": "{{host}} {{uuid}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 7,
+			"title": "GPU utilization",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 22,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "100 * nvidia_smi_utilization_gpu_ratio{host=~\"$host\"}",
+					"legendFormat": "{{host}} {{uuid}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 8,
+			"title": "Hardware sensor temperatures",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 30,
+				"w": 24,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "node_hwmon_temp_celsius{host=~\"$host\"}",
+					"legendFormat": "{{host}} {{chip}} {{sensor}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "celsius",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 9,
+			"title": "Firing hardware alerts",
+			"type": "table",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 38,
+				"w": 24,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "ALERTS{alertstate=\"firing\",host=~\"$host\",alertname=~\"Hardware.*|Smart.*|DiskSmart.*|DiskWearout.*|DiskSpare.*|DiskMedia.*|DiskTemperature.*|Gpu.*\"}",
+					"legendFormat": "__auto",
+					"range": false,
+					"instant": true,
+					"format": "table"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm"
+			}
+		},
+		{
+			"id": 10,
+			"title": "Disk I/O busy",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 46,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "100 * rate(node_disk_io_time_seconds_total{host=~\"$host\"}[$__rate_interval])",
+					"legendFormat": "{{host}} {{device}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 11,
+			"title": "Disk throughput",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 46,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "rate(node_disk_read_bytes_total{host=~\"$host\"}[$__rate_interval])",
+					"legendFormat": "{{host}} {{device}} read",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				},
+				{
+					"refId": "B",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "rate(node_disk_written_bytes_total{host=~\"$host\"}[$__rate_interval])",
+					"range": true,
+					"legendFormat": "{{host}} {{device}} write"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "Bps",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		}
+	]
 }

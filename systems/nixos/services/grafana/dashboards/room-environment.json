@@ -1,492 +1,478 @@
 {
-  "schemaVersion": 42,
-  "version": 1,
-  "editable": false,
-  "timezone": "browser",
-  "refresh": "1m",
-  "time": {
-    "from": "now-24h",
-    "to": "now"
-  },
-  "links": [
-    {
-      "title": "Infrastructure",
-      "url": "/d/dotnix-infra-overview"
-    }
-  ],
-  "annotations": {
-    "list": []
-  },
-  "uid": "dotnix-room-environment",
-  "title": "Room Environment",
-  "description": "Home Assistant metrics stored in VictoriaMetrics. Entity choices come from collected metrics. No data can mean an unavailable device or a different metric/unit; inspect Home Assistant exports before configuring alerts. This overview may include non-room sensors; select the intended entities.",
-  "tags": [
-    "dotnix",
-    "home-assistant",
-    "room"
-  ],
-  "templating": {
-    "list": [
-      {
-        "name": "entity",
-        "label": "Entity",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
-        },
-        "query": {
-          "query": "label_values({__name__=~\"homeassistant_sensor_.*\"}, entity)",
-          "refId": "StandardVariableQuery"
-        },
-        "definition": "label_values({__name__=~\"homeassistant_sensor_.*\"}, entity)",
-        "refresh": 1,
-        "sort": 1,
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
-        "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "options": []
-      },
-      {
-        "name": "climate",
-        "label": "Air conditioner",
-        "type": "query",
-        "datasource": {
-          "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
-        },
-        "query": {
-          "query": "label_values(homeassistant_climate_current_temperature_celsius, entity)",
-          "refId": "StandardVariableQuery"
-        },
-        "definition": "label_values(homeassistant_climate_current_temperature_celsius, entity)",
-        "refresh": 1,
-        "sort": 1,
-        "multi": true,
-        "includeAll": true,
-        "allValue": ".*",
-        "current": {
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "options": []
-      }
-    ]
-  },
-  "panels": [
-    {
-      "id": 1,
-      "title": "Home Assistant metrics available (1 = up)",
-      "type": "stat",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 0,
-        "w": 24,
-        "h": 4
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "up{job=\"home-assistant\"}",
-          "legendFormat": "Home Assistant",
-          "range": false,
-          "instant": true,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "colorMode": "value",
-        "graphMode": "none",
-        "textMode": "auto"
-      }
-    },
-    {
-      "id": 2,
-      "title": "Temperature",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 4,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "homeassistant_sensor_temperature_celsius{entity=~\"$entity\"}",
-          "legendFormat": "{{friendly_name}} ({{entity}})",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "celsius",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 3,
-      "title": "Relative humidity",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 4,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "homeassistant_sensor_humidity_percent{entity=~\"$entity\"}",
-          "legendFormat": "{{friendly_name}} ({{entity}})",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 4,
-      "title": "CO2",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 12,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "homeassistant_sensor_carbon_dioxide_ppm{entity=~\"$entity\"}",
-          "legendFormat": "{{friendly_name}} ({{entity}})",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "suffix:ppm",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 5,
-      "title": "Battery remaining",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 12,
-        "w": 12,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "homeassistant_sensor_battery_percent{entity=~\"$entity\"}",
-          "legendFormat": "{{friendly_name}} ({{entity}})",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "percent",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 6,
-      "title": "PM2.5",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 20,
-        "w": 24,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "homeassistant_sensor_pm25_u0xb5g_per_mu0xb3{entity=~\"$entity\"}",
-          "legendFormat": "{{friendly_name}} ({{entity}})",
-          "range": true,
-          "instant": false,
-          "format": "time_series"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "suffix:\u00b5g/m\u00b3",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    },
-    {
-      "id": 7,
-      "title": "Firing room alerts (all monitored entities)",
-      "type": "table",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 28,
-        "w": 24,
-        "h": 8
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "ALERTS{alertstate=\"firing\",category=\"room\"}",
-          "legendFormat": "__auto",
-          "range": false,
-          "instant": true,
-          "format": "table"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "showHeader": true,
-        "cellHeight": "sm"
-      }
-    },
-    {
-      "id": 20,
-      "title": "Air conditioner: actual and target temperature",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 0,
-        "y": 36,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "homeassistant_climate_current_temperature_celsius{entity=~\"$climate\"}",
-          "legendFormat": "{{friendly_name}} actual"
-        },
-        {
-          "refId": "B",
-          "expr": "homeassistant_climate_target_temperature_celsius{entity=~\"$climate\"}",
-          "legendFormat": "{{friendly_name}} target"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "celsius",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      },
-      "description": "Reported temperature and set point; this does not prove the physical appliance obeyed an IR command."
-    },
-    {
-      "id": 21,
-      "title": "Sensor availability (1 = available)",
-      "type": "timeseries",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "gridPos": {
-        "x": 12,
-        "y": 36,
-        "w": 12,
-        "h": 7
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "expr": "homeassistant_entity_available{entity=~\"$entity\"}",
-          "legendFormat": "{{friendly_name}}"
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "short",
-          "noValue": "No data"
-        },
-        "overrides": []
-      },
-      "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
-      }
-    }
-  ]
+	"schemaVersion": 42,
+	"version": 1,
+	"editable": false,
+	"timezone": "browser",
+	"refresh": "1m",
+	"time": {
+		"from": "now-24h",
+		"to": "now"
+	},
+	"links": [
+		{
+			"title": "Infrastructure",
+			"url": "/d/dotnix-infra-overview"
+		}
+	],
+	"annotations": {
+		"list": []
+	},
+	"uid": "dotnix-room-environment",
+	"title": "Room Environment",
+	"description": "Home Assistant metrics stored in VictoriaMetrics. Entity choices come from collected metrics. No data can mean an unavailable device or a different metric/unit; inspect Home Assistant exports before configuring alerts. This overview may include non-room sensors; select the intended entities.",
+	"tags": ["dotnix", "home-assistant", "room"],
+	"templating": {
+		"list": [
+			{
+				"name": "entity",
+				"label": "Entity",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "PBFA97CFB590B2093"
+				},
+				"query": {
+					"query": "label_values({__name__=~\"homeassistant_sensor_.*\"}, entity)",
+					"refId": "StandardVariableQuery"
+				},
+				"definition": "label_values({__name__=~\"homeassistant_sensor_.*\"}, entity)",
+				"refresh": 1,
+				"sort": 1,
+				"multi": true,
+				"includeAll": true,
+				"allValue": ".*",
+				"current": {
+					"text": ["All"],
+					"value": ["$__all"]
+				},
+				"options": []
+			},
+			{
+				"name": "climate",
+				"label": "Air conditioner",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "PBFA97CFB590B2093"
+				},
+				"query": {
+					"query": "label_values(homeassistant_climate_current_temperature_celsius, entity)",
+					"refId": "StandardVariableQuery"
+				},
+				"definition": "label_values(homeassistant_climate_current_temperature_celsius, entity)",
+				"refresh": 1,
+				"sort": 1,
+				"multi": true,
+				"includeAll": true,
+				"allValue": ".*",
+				"current": {
+					"text": ["All"],
+					"value": ["$__all"]
+				},
+				"options": []
+			}
+		]
+	},
+	"panels": [
+		{
+			"id": 1,
+			"title": "Home Assistant metrics available (1 = up)",
+			"type": "stat",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 24,
+				"h": 4
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "up{job=\"home-assistant\"}",
+					"legendFormat": "Home Assistant",
+					"range": false,
+					"instant": true,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"textMode": "auto"
+			}
+		},
+		{
+			"id": 2,
+			"title": "Temperature",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 4,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "homeassistant_sensor_temperature_celsius{entity=~\"$entity\"}",
+					"legendFormat": "{{friendly_name}} ({{entity}})",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "celsius",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 3,
+			"title": "Relative humidity",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 4,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "homeassistant_sensor_humidity_percent{entity=~\"$entity\"}",
+					"legendFormat": "{{friendly_name}} ({{entity}})",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 4,
+			"title": "CO2",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 12,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "homeassistant_sensor_carbon_dioxide_ppm{entity=~\"$entity\"}",
+					"legendFormat": "{{friendly_name}} ({{entity}})",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "suffix:ppm",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 5,
+			"title": "Battery remaining",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 12,
+				"w": 12,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "homeassistant_sensor_battery_percent{entity=~\"$entity\"}",
+					"legendFormat": "{{friendly_name}} ({{entity}})",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 6,
+			"title": "PM2.5",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 20,
+				"w": 24,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "homeassistant_sensor_pm25_u0xb5g_per_mu0xb3{entity=~\"$entity\"}",
+					"legendFormat": "{{friendly_name}} ({{entity}})",
+					"range": true,
+					"instant": false,
+					"format": "time_series"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "suffix:\u00b5g/m\u00b3",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 7,
+			"title": "Firing room alerts (all monitored entities)",
+			"type": "table",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 28,
+				"w": 24,
+				"h": 8
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "ALERTS{alertstate=\"firing\",category=\"room\"}",
+					"legendFormat": "__auto",
+					"range": false,
+					"instant": true,
+					"format": "table"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm"
+			}
+		},
+		{
+			"id": 20,
+			"title": "Air conditioner: actual and target temperature",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 36,
+				"w": 12,
+				"h": 7
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "homeassistant_climate_current_temperature_celsius{entity=~\"$climate\"}",
+					"legendFormat": "{{friendly_name}} actual"
+				},
+				{
+					"refId": "B",
+					"expr": "homeassistant_climate_target_temperature_celsius{entity=~\"$climate\"}",
+					"legendFormat": "{{friendly_name}} target"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "celsius",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			},
+			"description": "Reported temperature and set point; this does not prove the physical appliance obeyed an IR command."
+		},
+		{
+			"id": 21,
+			"title": "Sensor availability (1 = available)",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 36,
+				"w": 12,
+				"h": 7
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "homeassistant_entity_available{entity=~\"$entity\"}",
+					"legendFormat": "{{friendly_name}}"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"noValue": "No data"
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		}
+	]
 }

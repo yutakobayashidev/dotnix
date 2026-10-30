@@ -39,11 +39,11 @@ GitHub-hosted runners create new ephemeral nodes on every run. Under Tailnet
 Lock, OAuth authentication alone does not sign those nodes. Use separate
 pre-signed, reusable, ephemeral, pre-approved auth keys tagged `tag:ci` for:
 
-| Repository | Workflow | Secret scope |
-| --- | --- | --- |
-| `yutakobayashidev/dotnix` | `infra-deploy.yaml` | Repository `TS_AUTHKEY` |
-| `zunoser/kasumilog` | `archive-collection-live.yml` | Environment `archive-collection-live`, `TS_AUTHKEY` |
-| `zunoser/299792457_` | `snapshot.yml` | Repository `TS_AUTHKEY` (Terraform instance `snapshots`) |
+| Repository                | Workflow                      | Secret scope                                             |
+| ------------------------- | ----------------------------- | -------------------------------------------------------- |
+| `yutakobayashidev/dotnix` | `infra-deploy.yaml`           | Repository `TS_AUTHKEY`                                  |
+| `zunoser/kasumilog`       | `archive-collection-live.yml` | Environment `archive-collection-live`, `TS_AUTHKEY`      |
+| `zunoser/299792457_`      | `snapshot.yml`                | Repository `TS_AUTHKEY` (Terraform instance `snapshots`) |
 
 The Action's `statedir` is a sibling of the checkout, outside the repository and
 temporary directories. It lives only for the hosted runner's lifetime. Never
