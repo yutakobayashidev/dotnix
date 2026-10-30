@@ -69,9 +69,9 @@ jobs:
       - name: Tailscale
         uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
         with:
-          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:ci
+          # Pre-signed, ephemeral, reusable auth key with tag:ci assigned to it.
+          authkey: ${{ secrets.TS_AUTHKEY }}
+          statedir: ${{ github.workspace }}/../tailscale-state
           ping: status.home.yutakobayashi.com
       - name: OpenTofu ${{ (github.event.label.name == 'safe-to-apply' || inputs.mode == 'apply') && 'apply' || 'plan' }}
         working-directory: source
