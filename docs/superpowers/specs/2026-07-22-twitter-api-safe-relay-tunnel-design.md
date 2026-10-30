@@ -8,6 +8,10 @@ runtime API key in the Nix store.
 
 ## Architecture
 
+The NUR package builds the upstream `fa0311/twitter_api_safe_relay` source,
+without the temporary personal fork. Its bundled request catalog avoids a
+runtime dependency on the retired external catalog URL.
+
 The NUR-packaged `twitter-api-safe-mcp` process runs through its exported NixOS
 module as a native systemd service on `127.0.0.1:18788`. It embeds the HTTP
 relay, dashboard, and Streamable HTTP MCP endpoint in one process. That process
