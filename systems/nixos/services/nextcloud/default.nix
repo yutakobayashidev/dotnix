@@ -30,6 +30,7 @@
   };
 
   systemd.services = {
+    nextcloud-update-db.environment.NEXTCLOUD_CONFIG_DIR = "${config.services.nextcloud.datadir}/config";
     nextcloud-setup.unitConfig.RequiresMountsFor = [
       config.services.nextcloud.datadir
     ];
