@@ -1,22 +1,21 @@
 # Tailnet Lock
 
-## Rollout status
+## Status and recovery storage
 
-The workflow migration is prepared; Tailnet Lock has not yet been enabled.
-Do not deploy the auth-key workflow until its `TS_AUTHKEY` secret is provisioned.
-Signing nodes are planned to be ThinkPad-X1-Carbon-Gen13 and UM790-Pro.
-Both report Tailscale 1.102.5.
+Tailnet Lock was enabled on 2026-10-31 (JST). ThinkPad-X1-Carbon-Gen13 and
+UM790-Pro are signing nodes, both running Tailscale 1.102.5. The three CI
+credentials have separate trusted signing keys. Both signing nodes report no
+peers blocked by missing signatures.
 
-The bootstrap configuration was published in `00be146f`. The first
-[CI plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41085762764)
-failed because the existing `TAILSCALE_API_KEY` returned HTTP 401. After the
-credential was refreshed, [the next plan](https://github.com/yutakobayashidev/dotnix/actions/runs/41087287567)
-succeeded. It also proposed replacing the unrelated expired NixOS enrollment
-key, so the CI cutover uses the scoped `tailscale-ci` target. No Lock
-initialization has run yet.
-The dedicated export identity is stored in
-`~/.local/state/tailnet-lock/2026-10-31/ci-export.agekey` (0600) and in the
-Personal vault item `Tailnet Lock recovery 2026-10-31` in 1Password.
+The Personal vault item `Tailnet Lock recovery 2026-10-31` in 1Password contains
+three disablement secrets, the dedicated CI-export age identity, and each CI
+credential's signing-key ID and expiry. Private local recovery files are in
+`~/.local/state/tailnet-lock/2026-10-31/` (directory 0700, files 0600). Do not
+copy these files into the repository or temporary directories.
+
+The CI enrollment keys expire on **2027-01-29 around 01:18–01:21 JST**; rotate
+and re-sign them before that date. The provider's API token has its own expiry
+and is independent of the CI enrollment keys.
 
 ## CI credentials
 
@@ -62,7 +61,7 @@ its plan before applying. It avoids rotating the unrelated NixOS enrollment
 key during cutover or CI credential retirement; use the ordinary `tailscale`
 target for a complete infrastructure plan.
 
-## Cutover
+## Initial cutover procedure
 
 1. Check all tailnet clients meet Tailscale's minimum version (1.46.1), verify
    both signing nodes are accessible, and confirm device approval is disabled.
@@ -102,15 +101,18 @@ Automatic recreation of expired keys is disabled: replacing an unsigned key
 without updating its signature and GitHub Secret would leave CI broken.
 Coordinate each Terraform replacement with the affected workflow paused.
 
-New NixOS machines still using `tailscale-authkey` need their node keys signed
-after initial enrollment. A normal rebuild with existing Tailscale state does
+The existing SOPS `tailscale-authkey` expired on 2026-09-11. Updating it is a
+separate task: a full `tailscale` plan proposes recreating the Terraform key but
+does not distribute the replacement to SOPS. Newly provisioned NixOS machines
+need a valid enrollment method and then a node-key signature. A normal rebuild with existing Tailscale state does
 not create a new node. Preserve signing-node state during reinstalls.
 
-If cutover fails, use a stored disablement secret through the Tailscale admin
-console to disable Tailnet Lock, restore the previous OAuth workflow revisions
-and recorded workflow states, then verify connectivity. Do not resume jobs with
-unprovisioned credentials. Disabling and re-enabling creates new recovery
-secrets; replace the saved recovery record each time.
+For a CI credential failure, keep the affected workflow paused while replacing
+and signing its key. Retired OAuth credentials cannot be restored just by
+reverting workflow YAML. For tailnet-wide emergency recovery, use a stored
+disablement secret through the Tailscale admin console. Disabling and
+re-enabling creates new recovery secrets; replace the saved recovery record.
+Verify connectivity before resuming workflows.
 
 ## References
 
