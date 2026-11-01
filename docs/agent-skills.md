@@ -49,6 +49,26 @@ while keeping services enabled is rejected. Existing service settings are retain
 Hermes has a separate service-local skill bundle and continues using the shared
 webforai transform.
 
+## Selecting general skills
+
+Edit `selectedSkillPaths` in
+`modules/features/super-intelligence/agent-skills/default.nix` to select general
+skills by source. Each list contains paths relative to that source's discovery
+root; the final path component becomes the deployed skill name. For example:
+
+```nix
+mattpocock = [
+  "productivity/grilling"
+  "in-progress/loop-me"
+  "engineering/retro"
+  "productivity/writing-for-agents"
+];
+```
+
+Selections requiring a different deployed name or the source root (`"."`) stay
+in `skills.explicit`. Mizchi's transformations stay in `mizchi.nix`, and local
+skills remain automatically selected through discovery.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager

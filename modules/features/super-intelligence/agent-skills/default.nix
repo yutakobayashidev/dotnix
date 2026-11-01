@@ -21,6 +21,33 @@ _:
         path = lib.mkDefault (if skill.relPath == "" then "." else skill.relPath);
       }) localCatalog;
 
+      # The final path component is the deployed skill name.
+      selectedSkillPaths = {
+        agent-scripts = [
+          "create-cli"
+          "skill-cleaner"
+        ];
+        mattpocock = [
+          "productivity/grilling"
+          "in-progress/loop-me"
+          "engineering/retro"
+          "productivity/writing-for-agents"
+        ];
+        twitter-api-relay = [ "twitter-api-relay" ];
+        prompt-review = [ "prompt-review" ];
+      };
+      selectedSkills = lib.concatMapAttrs (
+        from: paths:
+        lib.listToAttrs (
+          map (
+            path:
+            lib.nameValuePair (builtins.baseNameOf path) {
+              inherit from path;
+            }
+          ) paths
+        )
+      ) selectedSkillPaths;
+
       agentScriptsSrc = builtins.path {
         path = registrySources.agent-scripts.path;
         name = "agent-scripts-no-symlinks";
@@ -37,7 +64,6 @@ _:
           sources = {
             inherit (registrySources)
               local
-              anthropic
               prompt-review
               mattpocock
               i-have-adhd
@@ -60,6 +86,7 @@ _:
 
           skills.explicit =
             localSkills
+            // selectedSkills
             // (import ./mizchi.nix { inherit pkgs lib registrySources; })
             // {
               explain-diff-html = {
@@ -69,75 +96,6 @@ _:
               japanese-tech-writing = {
                 from = "japanese-tech-writing";
                 path = ".";
-              };
-
-              docx = {
-                from = "anthropic";
-                path = "docx";
-              };
-              pdf = {
-                from = "anthropic";
-                path = "pdf";
-              };
-              pptx = {
-                from = "anthropic";
-                path = "pptx";
-              };
-              xlsx = {
-                from = "anthropic";
-                path = "xlsx";
-              };
-
-              frontend-design = {
-                from = "anthropic";
-                path = "frontend-design";
-              };
-              skill-creator = {
-                from = "anthropic";
-                path = "skill-creator";
-              };
-              webapp-testing = {
-                from = "anthropic";
-                path = "webapp-testing";
-              };
-              create-cli = {
-                from = "agent-scripts";
-                path = "create-cli";
-              };
-
-              skill-cleaner = {
-                from = "agent-scripts";
-                path = "skill-cleaner";
-              };
-
-              twitter-api-relay = {
-                from = "twitter-api-relay";
-                path = "twitter-api-relay";
-              };
-
-              prompt-review = {
-                from = "prompt-review";
-                path = "prompt-review";
-              };
-
-              grilling = {
-                from = "mattpocock";
-                path = "productivity/grilling";
-              };
-
-              loop-me = {
-                from = "mattpocock";
-                path = "in-progress/loop-me";
-              };
-
-              retro = {
-                from = "mattpocock";
-                path = "engineering/retro";
-              };
-
-              writing-for-agents = {
-                from = "mattpocock";
-                path = "productivity/writing-for-agents";
               };
             };
 
