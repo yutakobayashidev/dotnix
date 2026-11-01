@@ -21,6 +21,19 @@ assert !config.my.programs.claude-code.telemetry.enable;
 assert config.my.programs.codex.acp.enable;
 assert config.my.programs.claude-code.acp.enable;
 assert config.my.programs.pi.acp.enable;
+assert
+  builtins.attrNames config.programs.agent-skills.targets == [
+    "claude"
+    "codex"
+    "pi"
+  ];
+assert builtins.all (target: target.enable && target.structure == "link") (
+  builtins.attrValues config.programs.agent-skills.targets
+);
+assert config.programs.agent-skills.targets.claude.dest == "/home/box/.config/claude/skills";
+assert config.programs.agent-skills.targets.codex.dest == "/home/box/.config/codex/skills";
+assert config.programs.agent-skills.targets.pi.dest == ".pi/agent/skills";
+assert !(config.home.activation ? agent-skills);
 assert !config.programs.atuin.settings.auto_sync;
 assert builtins.all (file: !(file.enable && lib.hasSuffix "/codex/hooks.json" file.target)) (
   builtins.attrValues config.home.file

@@ -49,6 +49,25 @@
     };
   };
   programs = {
+    # Fixed destinations and HM-owned links make first/repeated activation agree
+    # and coexist with Claude's Home Manager skill. Limit writes on the shared VM.
+    agent-skills.targets = lib.mkForce {
+      claude = {
+        enable = true;
+        dest = "${config.programs.claude-code.configDir}/skills";
+        structure = "link";
+      };
+      codex = {
+        enable = true;
+        dest = "${config.xdg.configHome}/codex/skills";
+        structure = "link";
+      };
+      pi = {
+        enable = true;
+        dest = ".pi/agent/skills";
+        structure = "link";
+      };
+    };
     claude-code.settings.env.ANTHROPIC_BASE_URL = lib.mkForce "https://api.anthropic.com";
     atuin.settings.auto_sync = lib.mkForce false;
     # Keep the provider's login shell; expose the profile to new Bash sessions.

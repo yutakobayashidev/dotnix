@@ -41,6 +41,25 @@ command -v codex-acp claude-agent-acp pi-acp
 Configure those commands in the ACP client and authenticate each agent as
 needed. Installing the adapters does not register them with Grok Bot automatically.
 
+Skills are linked by Home Manager only into `~/.config/claude/skills`,
+`~/.config/codex/skills`, and `~/.pi/agent/skills`. These fixed destinations do
+not depend on the activation shell's `CLAUDE_CONFIG_DIR` or `CODEX_HOME`.
+Recursive Home Manager links coexist with its generated Claude skill and
+unmanaged skills; the tree synchronizer must not take over these directories.
+Do not use `AGENT_SKILLS_FORCE=1` to recover from a skills ownership error.
+
+Older revisions installed skills into additional destinations such as
+`~/.claude/skills` and `~/.cursor/skills`. Updating does not delete those files;
+review them separately before cleanup because the VM is shared. Limiting the
+targets limits writes, not access: Bots sharing the `box` account can still
+read one another's files.
+
+If a second application failed at `agent-skills` on an older revision, update
+the clean `main` checkout with `git pull --ff-only`, then run bootstrap twice
+and run `--check`. No environment-variable unsetting, force takeover, or
+deletion of existing skills is needed. Save the Bot's recovery skill only after
+both applications succeed.
+
 ## First application
 
 Make the reviewed dotnix revision available in the cloud computer. For an
@@ -173,12 +192,16 @@ activating anything on the local host:
 
 ```sh
 nix eval --json --impure --expr 'let f = builtins.getFlake ("path:" + toString ./.); in import ./tests/grok-bot.nix { configuration = f.homeConfigurations.grok-bot; }'
+nix build --no-link --impure --expr 'let f = builtins.getFlake ("path:" + toString ./.); in import ./tests/grok-bot-skills.nix { configuration = f.homeConfigurations.grok-bot; }'
 nix build path:.#homeConfigurations.grok-bot.activationPackage --no-link
 bash tests/bootstrap-grok-bot.sh
 ```
 
-The shell tests mock installation/build boundaries and never install Nix or
-activate Home Manager. A successful local build does not prove deployment in
+The skills regression test runs the real Home Manager file-linking phases in
+a temporary home twice, without and with agent session variables. It verifies
+that the generated Claude skill and unrelated files survive. The shell tests
+mock installation/build boundaries and never install Nix or activate Home Manager.
+A successful local build does not prove deployment in
 the hosted VM. After applying there, run `--check`, open a fresh shell, verify
 `git`, `jq`, `rg`, `zsh`, and `home-manager`, and run bootstrap again to verify
 reapplication. Retain the resulting errors or success output for diagnosis.
