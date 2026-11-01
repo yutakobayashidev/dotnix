@@ -86,6 +86,11 @@ Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and 
 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 
+The desktop profile enables `my.programs.herdr-app` on Linux, installing
+`herdr-app` from the pinned personal NUR input with a launcher entry. Its wrapper
+provides the matching `herdr-core`; the existing `my.programs.herdr` CLI configuration
+remains separate. macOS and headless hosts do not enable the app by default.
+
 ## Shell prompt
 
 Zsh uses Powerlevel10k with a transparent, two-line prompt and pastel colors.

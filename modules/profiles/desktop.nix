@@ -16,6 +16,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         claude-desktop.enable = lib.mkDefault true;
         grok-bot.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
         handy.enable = lib.mkDefault true;
+        herdr-app.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
         hermes-desktop.enable = lib.mkDefault true;
         orca.enable = lib.mkDefault true;
       };
