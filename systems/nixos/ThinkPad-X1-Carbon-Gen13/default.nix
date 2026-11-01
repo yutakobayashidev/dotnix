@@ -81,7 +81,6 @@
       systemd-boot.enable = !config.ext.security.secureboot.enable;
     };
     initrd = {
-      systemd.enable = true;
       availableKernelModules = [
         "nvme"
         "thunderbolt"

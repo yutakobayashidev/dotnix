@@ -10,6 +10,45 @@ Skill-only repositories use the [upstream source registry](https://github.com/Ky
 Package-providing repositories continue to use flake inputs so their skills and
 packages share a revision. Repository-local skills continue to use local paths.
 
+## Package and skill features
+
+Tool-specific Home Manager features own their package, skill source, selection,
+and command transforms together under `my.programs.<tool>.enable`, following the
+Oracle pattern. Profiles enable these features rather than installing the same
+packages separately:
+
+- Media: Bird, Discrawl, edcb-tools, Obsidian, and webforai.
+- Development: ast-grep, before-and-after, difit, and repiq, alongside the existing
+  Oracle, agent-browser, Babashka, and other tool features.
+
+The central `agent-skills` feature keeps shared deployment/targets and general
+skills that do not belong to a dedicated application. Enable
+`my.programs.agent-skills.enable` to deploy selected skills. Disabling a tool
+feature removes its package and dedicated upstream skill selection; disabling
+skill integration does not remove enabled tools. The `local` source
+(`yutakobayashidev/skills`) is an exception: all its skills are enabled centrally,
+including newly added skills after refreshing the source lock. Tool features
+still supply package dependencies and transforms for their local skills when
+enabled, but disabling a tool does not hide those local instructions. Local
+skills do not automatically install every tool they describe. A development-only
+home does not receive media applications or their separate upstream skills unless
+it enables those features too.
+
+For example, a Home Manager configuration can select a tool independently:
+
+```nix
+my.programs.agent-skills.enable = true;
+my.programs.webforai.enable = true;
+my.programs.repiq.enable = true;
+```
+
+Obsidian owns the five selected Obsidian-source skills; defuddle is not selected.
+Discrawl's CLI/skill feature is independent of its user services. Enabling its
+services enables the feature by default, and explicitly disabling the feature
+while keeping services enabled is rejected. Existing service settings are retained.
+Hermes has a separate service-local skill bundle and continues using the shared
+webforai transform.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager

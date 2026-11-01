@@ -77,7 +77,6 @@
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     kernelPackages = pkgs.linuxPackages_latest;
     initrd = {
-      systemd.enable = true;
       luks.devices.cryptroot = {
         device = "/dev/disk/by-partlabel/cryptroot";
         bypassWorkqueues = true;

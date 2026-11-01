@@ -6,15 +6,18 @@ _:
       config,
       lib,
       pkgs,
+      inputs,
       ...
     }:
     let
+      registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
       cfg = config.my.programs.babashka;
     in
     {
       options.my.programs.babashka.enable = lib.mkEnableOption "Babashka";
 
       config = lib.mkIf cfg.enable {
+        programs.agent-skills.sources.local = registrySources.local;
         home.packages = [ pkgs.babashka ];
 
         programs.agent-skills.skills.explicit.babashka-nrepl = {

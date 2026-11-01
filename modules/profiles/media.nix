@@ -7,15 +7,18 @@ import ../../lib/mkProfile.nix { inherit lib; } {
     { lib, pkgs, ... }:
 
     {
-      my.programs.bird.enable = lib.mkDefault true;
+      my.programs = {
+        bird.enable = lib.mkDefault true;
+        discrawl.enable = lib.mkDefault true;
+        edcb-tools.enable = lib.mkDefault true;
+        obsidian.enable = lib.mkDefault true;
+        webforai.enable = lib.mkDefault true;
+      };
 
       home.packages =
         with pkgs;
         [
           apkeep
-          webforai
-          discrawl
-          edcb-tools
           exiftool
           ffmpeg
           imagemagick
@@ -24,7 +27,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           luanti
           mat2
           mpv
-          obsidian
           pdfpc
           sl
           stable.gallery-dl

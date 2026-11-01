@@ -6,11 +6,13 @@ _:
       config,
       lib,
       pkgs,
+      inputs,
       ...
     }:
 
     let
       cfg = config.my.programs.discrawl;
+      registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
       tomlFormat = pkgs.formats.toml { };
 
       defaultSettings = {
@@ -116,6 +118,11 @@ _:
     in
     {
       options.my.programs.discrawl = {
+        enable = lib.mkEnableOption "Discrawl CLI and agent skill" // {
+          default = cfg.systemd.enable;
+          defaultText = lib.literalExpression "config.my.programs.discrawl.systemd.enable";
+        };
+
         package = lib.mkOption {
           type = lib.types.package;
           default = pkgs.discrawl;
@@ -158,64 +165,87 @@ _:
         };
       };
 
-      config = lib.mkIf cfg.systemd.enable {
-        sops.secrets = lib.optionalAttrs (cfg.sopsFile != null) {
-          ${cfg.sopsSecretName}.sopsFile = cfg.sopsFile;
-        };
+      config = lib.mkMerge [
+        (lib.mkIf cfg.enable {
+          home.packages = [ cfg.package ];
 
-        xdg.configFile."discrawl/config.toml".source = configFile;
+          programs.agent-skills = {
+            sources.openclaw-discrawl = registrySources.openclaw // {
+              subdir = ".agents/skills/discrawl";
+            };
+            skills.explicit.discrawl = {
+              from = "openclaw-discrawl";
+              path = ".";
+              packages = [ cfg.package ];
+            };
+          };
+        })
+        (lib.mkIf cfg.systemd.enable {
+          assertions = [
+            {
+              assertion = cfg.enable;
+              message = "Discrawl user services require my.programs.discrawl.enable.";
+            }
+          ];
 
-        systemd.user.services = {
-          discrawl-tail = {
-            Unit = {
-              Description = "Discrawl live Discord archive tail";
-              After = [ "network-online.target" ];
+          sops.secrets = lib.optionalAttrs (cfg.sopsFile != null) {
+            ${cfg.sopsSecretName}.sopsFile = cfg.sopsFile;
+          };
+
+          xdg.configFile."discrawl/config.toml".source = configFile;
+
+          systemd.user.services = {
+            discrawl-tail = {
+              Unit = {
+                Description = "Discrawl live Discord archive tail";
+                After = [ "network-online.target" ];
+              };
+
+              Service = {
+                ExecStart = "${discrawl} tail --repair-every ${cfg.systemd.repairEvery}";
+                Restart = "always";
+                RestartSec = "30s";
+                WorkingDirectory = "%h";
+              };
+
+              Install = {
+                WantedBy = [ "default.target" ];
+              };
             };
 
-            Service = {
-              ExecStart = "${discrawl} tail --repair-every ${cfg.systemd.repairEvery}";
-              Restart = "always";
-              RestartSec = "30s";
-              WorkingDirectory = "%h";
-            };
+            discrawl-maintenance = {
+              Unit = {
+                Description = "Discrawl periodic sync, embedding, and Git publish";
+                After = [ "network-online.target" ];
+              };
 
-            Install = {
-              WantedBy = [ "default.target" ];
+              Service = {
+                Type = "oneshot";
+                ExecStart = maintenanceScript;
+                WorkingDirectory = "%h";
+              };
             };
           };
 
-          discrawl-maintenance = {
-            Unit = {
-              Description = "Discrawl periodic sync, embedding, and Git publish";
-              After = [ "network-online.target" ];
-            };
+          systemd.user.timers = {
+            discrawl-maintenance = {
+              Unit = {
+                Description = "Discrawl periodic maintenance timer";
+              };
 
-            Service = {
-              Type = "oneshot";
-              ExecStart = maintenanceScript;
-              WorkingDirectory = "%h";
+              Timer = {
+                OnBootSec = "5min";
+                OnUnitActiveSec = cfg.systemd.maintenanceInterval;
+                Persistent = true;
+                RandomizedDelaySec = "2min";
+              };
+
+              Install = {
+                WantedBy = [ "timers.target" ];
+              };
             };
           };
-        };
-
-        systemd.user.timers = {
-          discrawl-maintenance = {
-            Unit = {
-              Description = "Discrawl periodic maintenance timer";
-            };
-
-            Timer = {
-              OnBootSec = "5min";
-              OnUnitActiveSec = cfg.systemd.maintenanceInterval;
-              Persistent = true;
-              RandomizedDelaySec = "2min";
-            };
-
-            Install = {
-              WantedBy = [ "timers.target" ];
-            };
-          };
-        };
-      };
+        })
+      ];
     };
 }

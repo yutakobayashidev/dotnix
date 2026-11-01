@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ username, ... }:
 
 {
   imports = [ ../common.nix ];
@@ -6,6 +6,9 @@
   home-manager.users.${username} = {
     my.programs = {
       beets.enable = true;
+      bird.enable = true;
+      discrawl.enable = true;
+      edcb-tools.enable = true;
       whipper.enable = true;
       gallery-dl = {
         enable = true;
@@ -39,11 +42,6 @@
         systemd.enable = true;
       };
     };
-    home.packages = with pkgs; [
-      bird
-      discrawl
-      edcb-tools
-    ];
     systemd.user.services.oci-retry = {
       Unit = {
         Description = "OCI nix-builder retry loop";

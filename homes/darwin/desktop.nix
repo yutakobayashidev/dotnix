@@ -3,13 +3,13 @@
 
 {
   my.programs.emacs.enable = true;
+  my.programs.difit.enable = true;
 
   home.packages =
     with pkgs;
     [
       # Terminal
       ghostty-bin
-      difit
 
       # macOS apps (overlay)
       readout

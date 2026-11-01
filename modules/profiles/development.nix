@@ -15,6 +15,10 @@ import ../../lib/mkProfile.nix { inherit lib; } {
       my.programs = {
         agent-browser.enable = lib.mkDefault true;
         agent-skills.enable = lib.mkDefault true;
+        ast-grep.enable = lib.mkDefault true;
+        before-and-after.enable = lib.mkDefault true;
+        difit.enable = lib.mkDefault true;
+        repiq.enable = lib.mkDefault true;
         ax.enable = lib.mkDefault true;
         babashka.enable = lib.mkDefault true;
         claude-code.enable = lib.mkDefault true;
@@ -40,10 +44,8 @@ import ../../lib/mkProfile.nix { inherit lib; } {
       home.packages =
         with pkgs;
         [
-          before-and-after
           bumblebee
           cloc
-          difit
           gctx
           jj-desc
           jujutsu
@@ -51,7 +53,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           ni
           nil
           nix-init
-          repiq
           rinkaku
           ruff
           taplo

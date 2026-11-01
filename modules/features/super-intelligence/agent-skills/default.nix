@@ -13,7 +13,13 @@ _:
       cfg = config.my.programs.agent-skills;
       agentLib = inputs.agent-skills.lib.agent-skills;
       registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
-      edcbToolsPackage = pkgs.edcb-tools;
+      localCatalog = agentLib.discoverCatalog { inherit (registrySources) local; };
+      # Explicit declarations merge with tool features' packages and transforms.
+      # enableAll + explicit declarations would select the same skill twice.
+      localSkills = lib.mapAttrs (_: skill: {
+        from = lib.mkDefault "local";
+        path = lib.mkDefault (if skill.relPath == "" then "." else skill.relPath);
+      }) localCatalog;
 
       agentScriptsSrc = builtins.path {
         path = registrySources.agent-scripts.path;
@@ -32,25 +38,13 @@ _:
             inherit (registrySources)
               local
               anthropic
-              ast-grep
-              obsidian
               prompt-review
-              difit
-              before-and-after
               mattpocock
               i-have-adhd
               twitter-api-relay
               japanese-tech-writing
               mizchi
               ;
-            webforai = {
-              path = pkgs.webforai.src;
-              subdir = "skills";
-            };
-            repiq = {
-              path = inputs.repiq;
-              subdir = "skills";
-            };
             explain-diff = {
               # The Gist contains standalone Markdown files rather than skill directories.
               path = pkgs.writeTextDir "SKILL.md" (
@@ -60,230 +54,92 @@ _:
             agent-scripts = registrySources.agent-scripts // {
               path = agentScriptsSrc;
             };
-            openclaw-discrawl = registrySources.openclaw // {
-              subdir = ".agents/skills/discrawl";
-            };
-            edcb-tools = {
-              path = inputs.edcb-tools;
-              subdir = ".agents/skills";
-            };
           };
 
-          skills.enableAll = [
-            "repiq"
-            "difit"
-            "i-have-adhd"
-          ];
+          skills.enableAll = [ "i-have-adhd" ];
 
-          # Keep the Obsidian tools without the retired defuddle CLI skill.
-          skills.enable = [
-            "json-canvas"
-            "knap"
-            "obsidian-bases"
-            "obsidian-cli"
-            "obsidian-markdown"
-          ];
-
-          skills.explicit = (import ./mizchi.nix { inherit pkgs lib registrySources; }) // {
-            webforai = import ../../../../lib/webforai-skill.nix { inherit lib pkgs; };
-            explain-diff-html = {
-              from = "explain-diff";
-              path = ".";
-            };
-            japanese-tech-writing = {
-              from = "japanese-tech-writing";
-              path = ".";
-            };
-            adr = {
-              from = "local";
-              path = "adr";
-            };
-            create-web-api = {
-              from = "local";
-              path = "create-web-api";
-            };
-            dce = {
-              from = "local";
-              path = "dce";
-            };
-            functional-cohesion-components = {
-              from = "local";
-              path = "functional-cohesion-components";
-            };
-            gha-lint = {
-              from = "local";
-              path = "gha-lint";
-            };
-            good-first-issue-creator = {
-              from = "local";
-              path = "good-first-issue-creator";
-            };
-            grok-search = {
-              from = "local";
-              path = "grok-search";
-            };
-            nextjs-onboarding = {
-              from = "local";
-              path = "nextjs-onboarding";
-            };
-            oura-daily-watch = {
-              from = "local";
-              path = "oura-daily-watch";
-            };
-            repo-creator = {
-              from = "local";
-              path = "repo-creator";
-            };
-            social-digest = {
-              from = "local";
-              path = "social-digest";
-            };
-            speakerdeck = {
-              from = "local";
-              path = "speakerdeck";
-            };
-            terraform-toolchain = {
-              from = "local";
-              path = "terraform-toolchain";
-            };
-            vitest-testing = {
-              from = "local";
-              path = "vitest-testing";
-            };
-            youtube-transcript = {
-              from = "local";
-              path = "youtube-transcript";
-            };
-
-            before-and-after =
-              let
-                bnaBin = lib.getExe pkgs.before-and-after;
-              in
-              {
-                from = "before-and-after";
+          skills.explicit =
+            localSkills
+            // (import ./mizchi.nix { inherit pkgs lib registrySources; })
+            // {
+              explain-diff-html = {
+                from = "explain-diff";
                 path = ".";
-                packages = [ pkgs.before-and-after ];
-                rewriteCommands = false;
-                transform =
-                  { original, ... }:
-                  builtins.replaceStrings
-                    [
-                      "`which before-and-after || npm install -g @vercel/before-and-after`"
-                      "npm install -g @vercel/before-and-after"
-                      "npx @vercel/before-and-after"
-                    ]
-                    [
-                      "`which before-and-after`"
-                      "# (installed via Nix)"
-                      bnaBin
-                    ]
-                    original;
+              };
+              japanese-tech-writing = {
+                from = "japanese-tech-writing";
+                path = ".";
               };
 
-            docx = {
-              from = "anthropic";
-              path = "docx";
-            };
-            pdf = {
-              from = "anthropic";
-              path = "pdf";
-            };
-            pptx = {
-              from = "anthropic";
-              path = "pptx";
-            };
-            xlsx = {
-              from = "anthropic";
-              path = "xlsx";
-            };
-
-            frontend-design = {
-              from = "anthropic";
-              path = "frontend-design";
-            };
-            skill-creator = {
-              from = "anthropic";
-              path = "skill-creator";
-            };
-            webapp-testing = {
-              from = "anthropic";
-              path = "webapp-testing";
-            };
-            discrawl = {
-              from = "openclaw-discrawl";
-              path = ".";
-            };
-            edcb-tools = {
-              from = "edcb-tools";
-              path = "edcb-tools";
-              packages = [ edcbToolsPackage ];
-            };
-
-            create-cli = {
-              from = "agent-scripts";
-              path = "create-cli";
-            };
-
-            skill-cleaner = {
-              from = "agent-scripts";
-              path = "skill-cleaner";
-            };
-
-            ast-grep =
-              let
-                astGrepBin = lib.getExe pkgs.ast-grep;
-              in
-              {
-                from = "ast-grep";
-                path = "ast-grep";
-                packages = [ pkgs.ast-grep ];
-                rewriteCommands = false;
-                transform =
-                  { original, dependencies }:
-                  let
-                    patched =
-                      builtins.replaceStrings
-                        [ "| ast-grep " "ast-grep scan " "ast-grep run " ]
-                        [ "| ${astGrepBin} " "${astGrepBin} scan " "${astGrepBin} run " ]
-                        original;
-                  in
-                  ''
-                    ${patched}
-
-                    ${dependencies}
-                  '';
+              docx = {
+                from = "anthropic";
+                path = "docx";
+              };
+              pdf = {
+                from = "anthropic";
+                path = "pdf";
+              };
+              pptx = {
+                from = "anthropic";
+                path = "pptx";
+              };
+              xlsx = {
+                from = "anthropic";
+                path = "xlsx";
               };
 
-            twitter-api-relay = {
-              from = "twitter-api-relay";
-              path = "twitter-api-relay";
-            };
+              frontend-design = {
+                from = "anthropic";
+                path = "frontend-design";
+              };
+              skill-creator = {
+                from = "anthropic";
+                path = "skill-creator";
+              };
+              webapp-testing = {
+                from = "anthropic";
+                path = "webapp-testing";
+              };
+              create-cli = {
+                from = "agent-scripts";
+                path = "create-cli";
+              };
 
-            prompt-review = {
-              from = "prompt-review";
-              path = "prompt-review";
-            };
+              skill-cleaner = {
+                from = "agent-scripts";
+                path = "skill-cleaner";
+              };
 
-            grilling = {
-              from = "mattpocock";
-              path = "productivity/grilling";
-            };
+              twitter-api-relay = {
+                from = "twitter-api-relay";
+                path = "twitter-api-relay";
+              };
 
-            loop-me = {
-              from = "mattpocock";
-              path = "in-progress/loop-me";
-            };
+              prompt-review = {
+                from = "prompt-review";
+                path = "prompt-review";
+              };
 
-            retro = {
-              from = "mattpocock";
-              path = "engineering/retro";
-            };
+              grilling = {
+                from = "mattpocock";
+                path = "productivity/grilling";
+              };
 
-            writing-for-agents = {
-              from = "mattpocock";
-              path = "productivity/writing-for-agents";
+              loop-me = {
+                from = "mattpocock";
+                path = "in-progress/loop-me";
+              };
+
+              retro = {
+                from = "mattpocock";
+                path = "engineering/retro";
+              };
+
+              writing-for-agents = {
+                from = "mattpocock";
+                path = "productivity/writing-for-agents";
+              };
             };
-          };
 
           targets = builtins.mapAttrs (_: target: target // { enable = true; }) agentLib.defaultTargets;
         };
