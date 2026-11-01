@@ -1,4 +1,14 @@
 {
+  imports = [
+    ./services/comin
+    ../shared/comin/laptop.nix
+  ];
+
+  systemd.user.services.comin-desktop.serviceConfig = {
+    Restart = "on-failure";
+    RestartSec = 10;
+  };
+
   services = {
     tlp.enable = true;
     # TLP owns power management; override Noctalia's recommended default.

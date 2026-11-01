@@ -4,6 +4,7 @@
   imports = [
     ../common.nix
     ../desktop.nix
+    ../../shared/comin/laptop.nix
   ];
 
   networking.hostName = "M2-MacBook-Air";
