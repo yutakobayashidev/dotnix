@@ -53,6 +53,24 @@ No server Bluetooth adapter or Thread border router is needed for normal Lapis
 Wi-Fi operation. NixOS native Matter is outside HA's officially supported HA OS
 server installation.
 
+## Vicinae launcher
+
+The Vicinae feature installs the Raycast Home Assistant extension in place of
+the Nature Remo extension. After activation, open its preferences and set:
+
+- **Home Assistant URL**: `https://ha.home.yutakobayashi.com`
+- **API Token**: a Home Assistant long-lived access token, entered directly in
+  the extension's password field; never put it in Nix configuration or Git.
+- Leave **Internal Home Assistant URL** and **Home Network Detection** empty.
+  Wi-Fi SSID detection in this extension uses a macOS-only utility.
+- Use **Browser** as the preferred application.
+
+Start with **Climate**, **Lights**, **Switches**, **Scenes**, or **Scripts**.
+The available controls depend on the entities and attributes exposed by HA;
+Matter does not necessarily expose every Nature Remo control. Verify an entity
+can be read and an intended operation reaches the appliance. A successful
+extension build does not verify Vicinae API compatibility or device operation.
+
 ## ChatGPT through Secure MCP Tunnel
 
 Nix includes HA's `mcp_server` component and the

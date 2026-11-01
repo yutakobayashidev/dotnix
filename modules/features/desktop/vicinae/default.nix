@@ -29,12 +29,10 @@
           inherit name rev hash;
           buildPhase = "${raycastCli} build -e dist";
         };
-      natureRemo = mkLinuxRayCastExtension {
-        name = "nature-remo";
-        rev = "a03e4c58dd53593042397b412413afda7117790e";
-        hash = "sha256-vU8VUfhbATkoT0ba8j7CiPIn4XDenJsQjKW1VCs2LSM=";
-        apiVersion = "1.40.0";
-        cliHash = "sha256-0YKDMi2se9ghpAeBw43gQMouXusXJxYmKCDYgTpFR6A=";
+      homeAssistant = inputs.vicinae-extensions.inputs.vicinae.lib.${system}.mkRayCastExtension {
+        name = "homeassistant";
+        rev = "0fdd29f13d354309e993894183977c4f4e5fa3e2";
+        hash = "sha256-sB/B1AHd9CuKHV+Z0kvUANZxYGMaZARo932OWIaX++Y=";
       };
       searchMdn = mkLinuxRayCastExtension {
         name = "search-mdn";
@@ -76,7 +74,7 @@
             zoxide-recent-directories
             ssh
             port-killer
-            natureRemo
+            homeAssistant
             searchMdn
             (inputs.vicinae-extensions.inputs.vicinae.lib.${system}.mkVicinaeExtension (finalAttrs: {
               pname = "ai-sessions";
