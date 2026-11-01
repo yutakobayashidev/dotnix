@@ -4,6 +4,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
   name = "desktop";
 
   nixos = {
+    services.gnome.at-spi2-core.enable = lib.mkDefault true;
     my.programs.handy.enable = lib.mkDefault true;
     my.services.tailscale.configureResolver = lib.mkDefault true;
   };
@@ -12,6 +13,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
     { lib, pkgs, ... }:
     {
       my.programs = {
+        agent-desktop.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
         chatgpt.enable = lib.mkDefault true;
         claude-desktop.enable = lib.mkDefault true;
         grok-bot.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;

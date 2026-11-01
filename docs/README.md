@@ -32,6 +32,7 @@
 - [Configuration reference](configuration.md) — hosts, modules, and managed tools
 - [Firefox](firefox.md) — bookmarks, search engines, and Parfait
 - [Agent skills](agent-skills.md) — source maintenance and local development
+- [Agent Desktop](agent-desktop.md) — Linux desktop automation and Wayland limitations
 - [Beeper Server](beeper-server.md)
 - [GitHub authentication](github-auth.md)
 - [GhidraMCP](ghidra-mcp.md)

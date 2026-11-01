@@ -41,6 +41,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [moe: net pics and gallery-dl Immich on HDD](docs/moe.md)
 - [Grok Bot VM environment](docs/grok-bot.md)
 - [Agent skills](docs/agent-skills.md)
+- [Agent Desktop](docs/agent-desktop.md)
 - [Hermes Quantified Self wiki share](docs/hermes-qs-wiki.md)
 - [Firefox](docs/firefox.md)
 - [ActivityWatch on ThinkPad](docs/activitywatch.md)
