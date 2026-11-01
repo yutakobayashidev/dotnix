@@ -1,0 +1,7 @@
+# actionlint 1.7.12 does not yet parse GitHub's self-repository syntax.
+# Remove these exact-path exceptions when https://github.com/rhysd/actionlint/issues/732 is fixed.
+paths:
+  .github/workflows/*.yaml:
+    ignore:
+      - '^specifying action "\$/\.github/actions/(setup-nix|setup-git-bot|discover-flake-inputs|update-flake-input)" in invalid format because ref is missing\.'
+      - '^reusable workflow call "\$/\.github/workflows/_update-flake-reusable\.yaml" at "uses" is not following the format '

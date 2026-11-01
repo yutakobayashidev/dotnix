@@ -38,7 +38,9 @@ ThinkPad. The profile also enables Wireshark packet capture and the existing
 | Wordlists                    | SecLists                                                                                                                                                            | Supply discovery, fuzzing, username, and password lists                               |
 
 Impacket installs a suite of commands rather than one `impacket` executable.
-Likewise, the Nix package named `ropgadget` provides the `ROPgadget` command.
+The pwntools Python environment also provides `ROPgadget`; it has lower package
+priority so standalone tools win command-name collisions. `checksec` uses the
+stable nixpkgs package.
 Nuclei templates are maintained separately from the scanner itself.
 Masscan and tcpdump need root privileges or suitable packet-capture
 capabilities. Hashcat needs a working vendor OpenCL, CUDA, or ROCm runtime for

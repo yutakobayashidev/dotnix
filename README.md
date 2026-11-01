@@ -35,6 +35,8 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [All guides](docs/README.md)
 - [Hosts and module architecture](docs/configuration.md)
 - [Remote builds](docs/remote-build.md)
+- [Hyprland as an optional desktop session](docs/hyprland.md)
+- [GitHub Actions dependency checks](docs/github-actions.md)
 - [Home Assistant, Lapis, ChatGPT MCP and backups](docs/home-assistant.md)
 - [moe: net pics and gallery-dl Immich on HDD](docs/moe.md)
 - [Grok Bot VM environment](docs/grok-bot.md)

@@ -78,7 +78,7 @@ Application and system features live in purpose-based namespaces under `modules/
 | `system/`          | Boot, persistence, authentication, hardware, and home environment foundations |
 | `terminal/`        | Terminal emulator and multiplexer                                             |
 | `version-control/` | Git, GitHub CLI, Jujutsu, and repository tools                                |
-| `window-manager/`  | Niri, status bar, idle handling, and screen lock                              |
+| `window-manager/`  | Niri, desktop-only Hyprland, status bar, idle handling, and screen lock                              |
 
 The Grok Bot cloud VM is a standalone Home Manager target (`homeConfigurations.grok-bot`) declared in `modules/standalone.nix`, with settings in `homes/standalone/grok-bot/`. It reuses the `base` and `development` profiles without their NixOS halves. See [setup and recovery](grok-bot.md).
 
@@ -135,7 +135,7 @@ are in the [desktop style report](noctalia-style-report.md).
 
 ### NixOS
 
-- **WM**: [Niri](https://github.com/YaLTeR/niri) (scrollable tiling Wayland compositor)
+- **WM**: [Niri](https://github.com/YaLTeR/niri) by default, with an optional [Hyprland session](hyprland.md) on UM790-Pro and X870-Steel-Legend-WiFi
 - **Desktop shell**: [Noctalia](https://noctalia.dev/) with Catppuccin Mocha, a floating bar, centered workspaces, notifications, OSD, and control center
 - **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae), including [AI Sessions](https://github.com/yutakobayashidev/vicinae-extension-ai-session) for Codex/Claude Code history search and resume; see [configuration and updates](vicinae.md)
 - **Wallpaper**: Noctalia with per-host initial images set through `services.wallpaper.imagePath`; later selections are managed by Noctalia

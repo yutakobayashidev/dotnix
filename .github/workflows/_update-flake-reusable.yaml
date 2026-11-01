@@ -55,9 +55,9 @@ jobs:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           persist-credentials: false
-      - uses: ./.github/actions/setup-nix
+      - uses: $/.github/actions/setup-nix
       - id: discover
-        uses: ./.github/actions/discover-flake-inputs
+        uses: $/.github/actions/discover-flake-inputs
         with:
           inputs: ${{ inputs.inputs }}
           exclude-inputs: ${{ inputs.exclude-inputs }}
@@ -80,7 +80,7 @@ jobs:
           persist-credentials: false
 
       - id: setup-bot
-        uses: ./.github/actions/setup-git-bot
+        uses: $/.github/actions/setup-git-bot
         with:
           app-id: ${{ secrets.app-id }}
           app-private-key: ${{ secrets.private-key }}
@@ -92,9 +92,9 @@ jobs:
           token: ${{ steps.setup-bot.outputs.token }}
           persist-credentials: false
 
-      - uses: ./.github/actions/setup-nix
+      - uses: $/.github/actions/setup-nix
 
-      - uses: ./.github/actions/update-flake-input
+      - uses: $/.github/actions/update-flake-input
         with:
           input-name: ${{ matrix.name }}
           current-version: ${{ matrix.current_version }}

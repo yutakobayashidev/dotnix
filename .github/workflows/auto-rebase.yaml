@@ -24,7 +24,7 @@ jobs:
           persist-credentials: false
 
       - id: setup-bot
-        uses: ./.github/actions/setup-git-bot
+        uses: $/.github/actions/setup-git-bot
         with:
           app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
           app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}

@@ -1,11 +1,14 @@
 # NixOS desktop settings shared by graphical hosts.
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [
     ./fonts.nix
     ./input-method.nix
   ];
+
+  # Keep Niri available everywhere; Hyprland is an additional desktop session.
+  my.programs.hyprland.enable = !config.my.profiles.laptop.enable;
 
   programs = {
     gnome-disks.enable = true;
