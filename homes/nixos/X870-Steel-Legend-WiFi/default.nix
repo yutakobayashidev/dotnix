@@ -28,7 +28,8 @@
         ];
       })
       protonup-qt
-      sidequest
+      # Stable still ships the same 0.10.42 binary with EOL Electron 29.
+      stable.sidequest
       tetrio-desktop
       unityhub
       vrc-get
