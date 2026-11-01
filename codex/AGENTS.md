@@ -1,4 +1,6 @@
-作業を始める前に、`japanese-tech-writing` と `i-have-adhd` の各 `SKILL.md` を必ず読み、指示に従う。
+Before starting any task, always read and follow the `SKILL.md` files for `japanese-tech-writing` and `i-have-adhd`.
+
+When asked to clone or modify another repository, use `ghq` to locate or clone it.
 
 ## Self-Improvement Loop
 
