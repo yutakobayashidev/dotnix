@@ -229,6 +229,10 @@ let
           name = "";
           url = "https://ha.home.yutakobayashi.com/";
         }
+        {
+          name = "";
+          url = "https://cloud.ouraring.com/";
+        }
 
         # Cloud and operations
         {
