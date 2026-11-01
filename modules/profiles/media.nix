@@ -13,7 +13,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         with pkgs;
         [
           apkeep
-          defuddle
+          webforai
           discrawl
           edcb-tools
           exiftool

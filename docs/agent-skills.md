@@ -10,6 +10,15 @@ Skill-only repositories use the [upstream source registry](https://github.com/Ky
 Package-providing repositories continue to use flake inputs so their skills and
 packages share a revision. Repository-local skills continue to use local paths.
 
+## Web conversion CLI
+
+Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager
+and Hermes select the official skill from `pkgs.webforai.src`, keeping its
+instructions on the same revision as the CLI. The shared skill transform uses
+the Nix executable instead of fetching `webforai-cli` with npx. The remaining
+Obsidian skills stay enabled; Hermes removes its previously managed defuddle
+skill directory when preparing the service.
+
 ## Global mizchi skills
 
 `registry/sources/mizchi.nix` pins the reviewed revision of `mizchi/skills`.

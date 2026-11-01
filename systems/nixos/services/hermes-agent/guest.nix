@@ -96,7 +96,10 @@ let
       subdir = "skills";
     };
     skills = registrySources.local;
-    obsidian-skills = registrySources.obsidian;
+    webforai = {
+      path = pkgs.webforai.src;
+      subdir = "skills";
+    };
     openclaw-skills = registrySources.openclaw;
     edcb-tools = {
       path = inputs.edcb-tools;
@@ -120,10 +123,7 @@ let
         from = "skills";
         path = "bird";
       };
-      defuddle = {
-        from = "obsidian-skills";
-        path = "defuddle";
-      };
+      webforai = import ../../../../lib/webforai-skill.nix { inherit lib pkgs; };
       discrawl = {
         from = "openclaw-skills";
         path = "discrawl";
@@ -261,7 +261,7 @@ in
       pkgs.course-cli
       pkgs.curl
       pkgs.curl-impersonate
-      pkgs.defuddle
+      pkgs.webforai
       pkgs.discrawl
       pkgs.duckdb
       pkgs.fd
@@ -412,6 +412,8 @@ in
         chmod 0600 "$stamp"
       fi
 
+      # Retire the previously managed skill that invokes the removed CLI.
+      rm -rf /var/lib/hermes/.hermes/skills/defuddle
       ${hermesSkillsInstallScript}
 
       chown -R hermes:hermes \

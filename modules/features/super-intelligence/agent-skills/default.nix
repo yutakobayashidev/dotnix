@@ -43,6 +43,10 @@ _:
               japanese-tech-writing
               mizchi
               ;
+            webforai = {
+              path = pkgs.webforai.src;
+              subdir = "skills";
+            };
             repiq = {
               path = inputs.repiq;
               subdir = "skills";
@@ -66,13 +70,22 @@ _:
           };
 
           skills.enableAll = [
-            "obsidian"
             "repiq"
             "difit"
             "i-have-adhd"
           ];
 
+          # Keep the Obsidian tools without the retired defuddle CLI skill.
+          skills.enable = [
+            "json-canvas"
+            "knap"
+            "obsidian-bases"
+            "obsidian-cli"
+            "obsidian-markdown"
+          ];
+
           skills.explicit = (import ./mizchi.nix { inherit pkgs lib registrySources; }) // {
+            webforai = import ../../../../lib/webforai-skill.nix { inherit lib pkgs; };
             explain-diff-html = {
               from = "explain-diff";
               path = ".";
