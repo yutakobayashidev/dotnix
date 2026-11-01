@@ -14,6 +14,13 @@
 | M2 MacBook Air            | M2-MacBook-Air             | macOS laptop workstation         | macOS                  | aarch64-darwin | ◎      |
 | Galaxy S23 FE             | Galaxy-S23FE               | Android nix-on-droid environment | Android (nix-on-droid) | aarch64-linux  | △      |
 
+## Flare social client
+
+The `communication` profile enables the Flare social client on `x86_64-linux`
+desktops through `my.programs.flare-social.enable`. The `flare-social` NUR package
+wraps the official AppImage and provides a launcher and `flare:` / `pixiv:` URL
+handlers. Set the option to `false` to disable it on an individual host.
+
 ## Laptop configuration updates
 
 Comin uses manual build and deployment confirmation on the ThinkPad and M2

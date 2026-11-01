@@ -11,6 +11,8 @@ import ../../lib/mkProfile.nix { inherit lib; } {
     { lib, pkgs, ... }:
 
     {
+      my.programs.flare-social.enable = lib.mkDefault (pkgs.stdenv.hostPlatform.system == "x86_64-linux");
+
       home.packages =
         with pkgs;
         lib.optionals pkgs.stdenv.isLinux [
