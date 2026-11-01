@@ -192,6 +192,7 @@ _:
     {
       options.my.programs.codex = {
         enable = lib.mkEnableOption "Codex";
+        acp.enable = lib.mkEnableOption "Codex ACP adapter";
 
         desktopIntegration = lib.mkOption {
           type = lib.types.bool;
@@ -269,10 +270,12 @@ _:
         };
 
         home = {
-          packages = lib.optionals cfg.desktopIntegration [
-            pkgs.session-tts
-            inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
-          ];
+          packages =
+            lib.optionals cfg.desktopIntegration [
+              pkgs.session-tts
+              inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
+            ]
+            ++ lib.optional cfg.acp.enable (pkgs.llm-agents.codex-acp.override { codex = codexWrapper; });
 
           file = {
             # Codex updates its user config at runtime, so only immutable

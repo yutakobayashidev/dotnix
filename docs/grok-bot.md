@@ -27,6 +27,20 @@ LM Studio provider. Claude uses the direct Anthropic endpoint. Authentication
 is still required for tools that use external accounts; no credentials or sops
 keys are copied from existing hosts.
 
+ACP clients can launch `codex-acp`, `claude-agent-acp`, and `pi-acp` over stdio.
+The host enables `my.programs.codex.acp.enable`,
+`my.programs.claude-code.acp.enable`, and `my.programs.pi.acp.enable`.
+All three options default to disabled. These adapters use the existing pinned packages.
+After applying the configuration in the VM and loading the session environment,
+verify their availability with:
+
+```sh
+command -v codex-acp claude-agent-acp pi-acp
+```
+
+Configure those commands in the ACP client and authenticate each agent as
+needed. Installing the adapters does not register them with Grok Bot automatically.
+
 ## First application
 
 Make the reviewed dotnix revision available in the cloud computer. For an

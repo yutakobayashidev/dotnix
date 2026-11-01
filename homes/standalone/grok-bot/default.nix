@@ -33,14 +33,19 @@
     };
     # The hosted VM has no desktop audio session or access to the home tailnet.
     programs = {
+      pi.acp.enable = true;
       codex = {
+        acp.enable = true;
         desktopIntegration = false;
         telemetry = {
           enable = false;
           environment = "grok-bot";
         };
       };
-      claude-code.telemetry.enable = false;
+      claude-code = {
+        acp.enable = true;
+        telemetry.enable = false;
+      };
     };
   };
   programs = {

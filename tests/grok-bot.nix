@@ -18,6 +18,9 @@ assert config.sops.secrets == { };
 assert !config.my.programs.codex.desktopIntegration;
 assert !config.my.programs.codex.telemetry.enable;
 assert !config.my.programs.claude-code.telemetry.enable;
+assert config.my.programs.codex.acp.enable;
+assert config.my.programs.claude-code.acp.enable;
+assert config.my.programs.pi.acp.enable;
 assert !config.programs.atuin.settings.auto_sync;
 assert builtins.all (file: !(file.enable && lib.hasSuffix "/codex/hooks.json" file.target)) (
   builtins.attrValues config.home.file
@@ -27,6 +30,9 @@ assert builtins.all (name: builtins.elem name packageNames) [
   "jq"
   "ripgrep"
   "zsh"
+  "codex-acp"
+  "claude-agent-acp"
+  "pi-acp"
 ];
 assert !(builtins.elem "session-tts" packageNames);
 true

@@ -221,6 +221,7 @@ _:
     {
       options.my.programs.claude-code = {
         enable = lib.mkEnableOption "Claude Code";
+        acp.enable = lib.mkEnableOption "Claude Agent ACP adapter";
 
         telemetry = {
           enable = lib.mkOption {
@@ -262,10 +263,13 @@ _:
           inherit settings;
         };
 
-        home.packages = with pkgs.llm-agents; [
-          apm
-          ccusage
-        ];
+        home.packages =
+          with pkgs.llm-agents;
+          [
+            apm
+            ccusage
+          ]
+          ++ lib.optional cfg.acp.enable claude-agent-acp;
 
         xdg.configFile = {
           "claude/hooks".source = config.lib.file.mkOutOfStoreSymlink "${claudeDotfilesDir}/hooks";
