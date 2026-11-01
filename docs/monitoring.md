@@ -17,6 +17,8 @@ with separate infrastructure and room alert routing and configurable environment
 - System service journals and Comin logs → Alloy → Loki.
 
 Metrics retain one year, Loki logs 30 days and Tempo traces 30 days.
+The [Codex reset history](codex-limit-auto-reset.md) stream retains 400 days
+for its annual activity calendar; other Loki streams retain 30 days.
 Loki stores its data on B450M's bulk filesystem at `/srv/bulk/loki` so the
 crowded root filesystem does not trigger its WAL disk-usage protection.
 The deployment migration preserves the old `/var/lib/loki` as a rollback copy;

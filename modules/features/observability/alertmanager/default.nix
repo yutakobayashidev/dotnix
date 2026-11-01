@@ -63,6 +63,20 @@ _: {
                 repeat_interval = "24h";
                 routes = lib.optionals cfg.notifications.enable [
                   {
+                    matchers = [ ''alertname="CodexResetCompleted"'' ];
+                    receiver = "codex-reset-event";
+                    group_by = [
+                      "alertname"
+                      "host"
+                      "user_id"
+                      "credit_id"
+                    ];
+                    group_wait = "5s";
+                    group_interval = "1m";
+                    # Each event expires after 15 minutes; no normal repeat.
+                    repeat_interval = "24h";
+                  }
+                  {
                     matchers = [ ''category="room"'' ];
                     receiver = "home";
                     repeat_interval = "12h";
@@ -94,6 +108,17 @@ _: {
                   (receiver "infra-critical" "discord-infra-critical" true)
                   (receiver "infra-warning" "discord-infra-warning" true)
                   (receiver "infra-info" "discord-infra-info" false)
+                  (
+                    let
+                      base = receiver "codex-reset-event" "discord-infra-info" false;
+                    in
+                    base
+                    // {
+                      discord_configs = map (
+                        discord: discord // { title = "Codex reset completed"; }
+                      ) base.discord_configs;
+                    }
+                  )
                   (receiver "home" "discord-home" true)
                   (receiver "home-event" "discord-home" false)
                 ];

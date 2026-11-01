@@ -147,7 +147,7 @@ are in the [desktop style report](noctalia-style-report.md).
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
 - **Personal context**: OpenBrief context recall on the ThinkPad
-- **AI development**: Codex Desktop for Linux, Claude Desktop, Grok Bot, Hermes Desktop, and Orca on graphical hosts; [Orca headless server](orca.md) on UM790-Pro
+- **AI development**: Codex Desktop for Linux, Claude Desktop, Grok Bot, Hermes Desktop, and Orca on graphical hosts; [Orca headless server](orca.md) and [Codex limit auto reset user service](codex-limit-auto-reset.md) on UM790-Pro
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android development environment, VirtualBox on UM790-Pro

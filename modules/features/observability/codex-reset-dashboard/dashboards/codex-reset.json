@@ -1,0 +1,373 @@
+{
+	"id": null,
+	"uid": "codex-reset-history",
+	"title": "Codex reset history",
+	"description": "Successful Codex credit redemptions by Japan calendar day, plus retry and check history.",
+	"tags": ["codex", "observability"],
+	"timezone": "Asia/Tokyo",
+	"schemaVersion": 41,
+	"version": 1,
+	"editable": false,
+	"graphTooltip": 0,
+	"refresh": "5m",
+	"time": {
+		"from": "now-1y/d",
+		"to": "now"
+	},
+	"timepicker": {
+		"refresh_intervals": ["1m", "5m", "15m", "1h"]
+	},
+	"annotations": {
+		"list": []
+	},
+	"templating": {
+		"list": []
+	},
+	"links": [],
+	"panels": [
+		{
+			"id": 1,
+			"title": "Successful resets",
+			"type": "stat",
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 8,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"description": "Successful RPC results with outcome=reset in the selected period. Other outcomes and retries are excluded. No data does not prove that collection was available.",
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"editorMode": "code",
+					"expr": "sum(count_over_time({job=\"codex-limit-auto-reset\",host=\"UM790-Pro\",event=\"credit_redemption_result\"} | json outcome=\"outcome\" | outcome = \"reset\" | __error__ = \"\" [$__range]))",
+					"queryType": "instant",
+					"maxLines": 5000,
+					"direction": "backward"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"decimals": 0,
+					"unit": "short",
+					"noValue": "No recorded resets",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "green"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"textMode": "auto",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"id": 2,
+			"title": "Failed attempts / checks",
+			"type": "stat",
+			"gridPos": {
+				"x": 8,
+				"y": 0,
+				"w": 8,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"description": "Counts error events, including retry attempts. Three failed attempts and the terminal check failure are separate events.",
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"editorMode": "code",
+					"expr": "sum(count_over_time({job=\"codex-limit-auto-reset\",host=\"UM790-Pro\",event=~\"credit_redemption_error|check_failed\"} [$__range]))",
+					"queryType": "instant",
+					"maxLines": 5000,
+					"direction": "backward"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"decimals": 0,
+					"unit": "short",
+					"noValue": "No recorded failures",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "red"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"textMode": "auto",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"id": 3,
+			"title": "Completed checks in last 26h",
+			"type": "stat",
+			"gridPos": {
+				"x": 16,
+				"y": 0,
+				"w": 8,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"description": "A next_check event means a check completed. The normal maximum check interval is 24h. No data may indicate a stopped service or missing log collection; inspect the check history below.",
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"editorMode": "code",
+					"expr": "sum(count_over_time({job=\"codex-limit-auto-reset\",host=\"UM790-Pro\",event=\"next_check\"} [26h]))",
+					"queryType": "instant",
+					"maxLines": 5000,
+					"direction": "backward"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"decimals": 0,
+					"unit": "short",
+					"noValue": "No recent check",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "blue"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"textMode": "auto",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"id": 4,
+			"title": "Reset calendar \u00b7 Japan time",
+			"type": "tim012432-calendarheatmap-panel",
+			"gridPos": {
+				"x": 0,
+				"y": 4,
+				"w": 24,
+				"h": 9
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"description": "Each green square counts recorded successful resets for one Asia/Tokyo calendar day. Empty squares mean no recorded successful reset, not verified uptime. At most 5,000 success records are rendered; if the total exceeds this limit, narrow the dashboard period. History starts when collection is enabled; older data is not backfilled.",
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"editorMode": "code",
+					"expr": "{job=\"codex-limit-auto-reset\",host=\"UM790-Pro\",event=\"credit_redemption_result\"} | json outcome=\"outcome\" | outcome = \"reset\" | __error__ = \"\"",
+					"queryType": "range",
+					"maxLines": 5000,
+					"direction": "backward"
+				}
+			],
+			"transformations": [
+				{
+					"id": "extractFields",
+					"options": {
+						"source": "Line",
+						"format": "json",
+						"replace": false
+					}
+				},
+				{
+					"id": "convertFieldType",
+					"options": {
+						"conversions": [
+							{
+								"targetField": "attempt",
+								"destinationType": "number"
+							}
+						]
+					}
+				},
+				{
+					"id": "filterFieldsByName",
+					"options": {
+						"include": {
+							"names": ["Time", "attempt"]
+						}
+					}
+				}
+			],
+			"options": {
+				"colorScheme": "green",
+				"emptyColor": "#161b22",
+				"customColor": "#39d353",
+				"gradientColorLow": "#0e4429",
+				"gradientColorHigh": "#39d353",
+				"autoRectSize": true,
+				"rectSize": 12,
+				"space": 3,
+				"radius": 2,
+				"showWeekLabels": true,
+				"showMonthLabels": true,
+				"showLegend": true,
+				"weekStart": "sunday",
+				"monthLabelMode": "default",
+				"monthLabelCustom": "",
+				"weekLabelMode": "default",
+				"weekLabelCustom": "",
+				"aggregation": "count",
+				"conversionUnit": "short",
+				"useTimeRangeOfData": false,
+				"showTooltip": true,
+				"enableDataLinks": false
+			},
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"decimals": 0
+				},
+				"overrides": []
+			}
+		},
+		{
+			"id": 5,
+			"title": "Reading this calendar",
+			"type": "text",
+			"gridPos": {
+				"x": 0,
+				"y": 13,
+				"w": 24,
+				"h": 3
+			},
+			"options": {
+				"mode": "markdown",
+				"content": "**Green = confirmed reset.** `nothingToReset`, `noCredit`, and `alreadyRedeemed` do not grow the calendar. Days use **Asia/Tokyo**.\n\nEmpty cells mean **no recorded reset**, including dates before logging began or during collection outages. Check **Completed checks in last 26h** and the check log below for collection coverage. Calendar rendering is capped at **5,000 success records**; the total above is not capped. Reset logs are retained for **400 days**."
+			}
+		},
+		{
+			"id": 6,
+			"title": "Reset results and failed attempts",
+			"type": "logs",
+			"gridPos": {
+				"x": 0,
+				"y": 16,
+				"w": 24,
+				"h": 11
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"description": "Most recent 1000 matching records in the selected period. Expand a row for credit_id, attempt, outcome, and the application timestamp.",
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"editorMode": "code",
+					"expr": "{job=\"codex-limit-auto-reset\",host=\"UM790-Pro\",event=~\"credit_redemption_result|credit_redemption_error\"} | json",
+					"queryType": "range",
+					"maxLines": 1000,
+					"direction": "backward"
+				}
+			],
+			"options": {
+				"showTime": true,
+				"showLabels": false,
+				"showCommonLabels": false,
+				"wrapLogMessage": true,
+				"prettifyLogMessage": true,
+				"enableLogDetails": true,
+				"sortOrder": "Descending",
+				"dedupStrategy": "none"
+			}
+		},
+		{
+			"id": 7,
+			"title": "Check activity and terminal failures",
+			"type": "logs",
+			"gridPos": {
+				"x": 0,
+				"y": 27,
+				"w": 24,
+				"h": 8
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"description": "Most recent 200 matching records in the selected period. Expand a row for credit_id, attempt, outcome, and the application timestamp.",
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"editorMode": "code",
+					"expr": "{job=\"codex-limit-auto-reset\",host=\"UM790-Pro\",event=~\"next_check|check_failed\"} | json",
+					"queryType": "range",
+					"maxLines": 200,
+					"direction": "backward"
+				}
+			],
+			"options": {
+				"showTime": true,
+				"showLabels": false,
+				"showCommonLabels": false,
+				"wrapLogMessage": true,
+				"prettifyLogMessage": true,
+				"enableLogDetails": true,
+				"sortOrder": "Descending",
+				"dedupStrategy": "none"
+			}
+		}
+	]
+}
