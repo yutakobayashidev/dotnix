@@ -18,7 +18,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         handy.enable = lib.mkDefault true;
         herdr-app.enable = lib.mkDefault pkgs.stdenv.hostPlatform.isLinux;
         hermes-desktop.enable = lib.mkDefault true;
-        orca.enable = lib.mkDefault true;
       };
 
       home.packages = lib.optionals pkgs.stdenv.isLinux (

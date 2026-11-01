@@ -9,7 +9,6 @@
       ../desktop.nix
       ./twitter-lite.nix
       ./beeper.nix
-      ./orca.nix
     ];
     my.programs.course-cli.enable = true;
     services.codex-limit-auto-reset.enable = true;
