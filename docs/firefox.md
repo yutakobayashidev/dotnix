@@ -28,6 +28,10 @@ The modern `privacy.clearOnShutdown_v2` schema combines browsing and download hi
 
 Apply with `nix run .#switch`, then restart Firefox. Existing history is removed by the configured cleanup on a subsequent clean exit; configuration evaluation alone does not erase it. In Settings → Privacy & Security, verify Strict protection and the shutdown cleanup selections; visit a test page, quit normally, and confirm after reopening that history is empty while a chosen site's login survives. Open-tab and closed-tab recovery during a session, crash recovery, and browser-initiated restarts can still retain URLs. ActivityWatch and other external activity collectors keep separate records; these Firefox preferences do not erase or disable them. The `wallet` profile is unchanged.
 
+### Firefox Sync CLI
+
+Enabling `my.programs.firefox.enable` also installs `firefox-sync-client`, available as `ffsclient`. After applying with `nix run .#switch`, run `ffsclient --help` for usage.
+
 ### Extensions and appearance
 
 The `nix` profile includes the [linkding extension](https://addons.mozilla.org/en-US/firefox/addon/linkding-extension/), managed in `modules/features/browser/firefox/extensions.nix`.

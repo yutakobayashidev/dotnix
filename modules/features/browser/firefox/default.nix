@@ -173,7 +173,10 @@ _:
           };
         };
 
-        home.packages = [ walletLauncher ];
+        home.packages = [
+          pkgs.firefox-sync-client
+          walletLauncher
+        ];
 
         xdg.desktopEntries.firefox-wallet = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
           name = "Firefox Wallet";
