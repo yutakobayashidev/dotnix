@@ -88,7 +88,7 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
-          id       = uptimekuma_monitor_http.litellm.id
+          id       = uptimekuma_monitor_http.omniroute.id
           send_url = true
         },
         {
