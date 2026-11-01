@@ -173,8 +173,8 @@ Expected: only the `nur-packages` lock node changes and evaluation prints
 
 **Files:**
 
-- Modify: `modules/features/coding-agents/mcp.nix`
-- Modify: `modules/features/coding-agents/codex/default.nix`
+- Modify: `modules/features/super-intelligence/mcp.nix`
+- Modify: `modules/features/super-intelligence/codex/default.nix`
 - Modify: `homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix`
 - Create: `docs/ghidra-mcp.md`
 - Modify: `CLAUDE.md`
@@ -196,7 +196,7 @@ Expected: evaluation fails because the `ghidra` MCP server is not configured.
 
 - [ ] **Step 2: Add the module options and configuration**
 
-Replace `modules/features/coding-agents/mcp.nix` with:
+Replace `modules/features/super-intelligence/mcp.nix` with:
 
 ```nix
 _:
@@ -271,7 +271,7 @@ _:
 ```
 
 Replace the two dotted `mcp_servers` assignments in
-`modules/features/coding-agents/codex/default.nix` with:
+`modules/features/super-intelligence/codex/default.nix` with:
 
 ```nix
 mcp_servers =
@@ -349,7 +349,7 @@ Evaluate `home.activation.writeCodexConfig.data`, realise the referenced
 Run:
 
 ```bash
-nix run nixpkgs#nixfmt -- modules/features/coding-agents/mcp.nix modules/features/coding-agents/codex/default.nix homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix
+nix run nixpkgs#nixfmt -- modules/features/super-intelligence/mcp.nix modules/features/super-intelligence/codex/default.nix homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix
 nix build .#nixosConfigurations.ThinkPad-X1-Carbon-Gen13.config.system.build.toplevel --no-link
 git diff --check
 ```
@@ -360,7 +360,7 @@ errors.
 - [ ] **Step 7: Commit the dotnix integration**
 
 ```bash
-git add AGENTS.md docs/ghidra-mcp.md docs/superpowers/plans/2026-07-20-ghidra-mcp-integration.md docs/superpowers/specs/2026-07-20-ghidra-mcp-integration-design.md flake.lock homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix modules/features/coding-agents/codex/default.nix modules/features/coding-agents/mcp.nix
+git add AGENTS.md docs/ghidra-mcp.md docs/superpowers/plans/2026-07-20-ghidra-mcp-integration.md docs/superpowers/specs/2026-07-20-ghidra-mcp-integration-design.md flake.lock homes/nixos/ThinkPad-X1-Carbon-Gen13/default.nix modules/features/super-intelligence/codex/default.nix modules/features/super-intelligence/mcp.nix
 git commit -m "feat: configure ghidra-mcp"
 ```
 

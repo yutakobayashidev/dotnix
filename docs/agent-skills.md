@@ -14,7 +14,7 @@ packages share a revision. Repository-local skills continue to use local paths.
 
 `registry/sources/mizchi.nix` pins the reviewed revision of `mizchi/skills`.
 The Home Manager feature selects seven skills in
-`modules/features/coding-agents/agent-skills/mizchi.nix`: maintainer-persona,
+`modules/features/super-intelligence/agent-skills/mizchi.nix`: maintainer-persona,
 extract-glossary, stryker-js, natural-writing-ja, natural-writing-en, ai-index,
 and formal-methods-reconciler. They use the existing enabled global targets.
 
