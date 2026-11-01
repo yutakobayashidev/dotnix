@@ -15,6 +15,8 @@ with separate infrastructure and room alert routing and configurable environment
 - VictoriaMetrics → vmalert → Alertmanager → Discord infrastructure/room channels
   once notifications are configured.
 - System service journals and Comin logs → Alloy → Loki.
+- [Codex reset announcements](tibo-reset-monitor.md) → a persistent polling
+  service on B450M → Discord `infra-info`.
 
 Metrics retain one year, Loki logs 30 days and Tempo traces 30 days.
 The [Codex reset history](codex-limit-auto-reset.md) stream retains 400 days

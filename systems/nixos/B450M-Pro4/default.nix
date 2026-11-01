@@ -184,6 +184,10 @@
   };
 
   my.services.monitoring.enable = true;
+  my.services.tibo-reset-monitor = {
+    enable = true;
+    webhookFile = config.sops.secrets.discord-infra-info.path;
+  };
   my.services.alertmanager = {
     enable = true;
     notifications = {

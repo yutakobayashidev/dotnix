@@ -2089,11 +2089,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1793497070,
-        "narHash": "sha256-aUD4cdDg/Q54rZYJBz7l9o/F5RkIMKUFBmXjSBPF5a8=",
+        "lastModified": 1793498546,
+        "narHash": "sha256-BsuUYHYSLT4G3sij4qt4szebjjThzJJS1/pBMflHpWw=",
         "owner": "yutakobayashidev",
         "repo": "nur-packages",
-        "rev": "265d033d920fed520a49222a941416c715c2f514",
+        "rev": "a010a9441c37d9dda67fd22a5f98644b2b9a6492",
         "type": "github"
       },
       "original": {
