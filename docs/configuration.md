@@ -16,14 +16,12 @@
 
 ## Laptop configuration updates
 
-Comin runs on the ThinkPad and M2 MacBook Air with manual build and deployment
-confirmation. Servers keep their automatic deployment behavior. Linux laptop
-settings live in `systems/nixos/laptop.nix`; the MacBook imports the shared policy
-from `systems/shared/comin/laptop.nix`.
+Comin uses manual build and deployment confirmation on the ThinkPad and M2
+MacBook Air. Servers retain automatic updates. The shared policy is in
+`systems/shared/comin/laptop.nix`.
 
-After login, Comin sends desktop progress notifications. A companion user service
-checks for pending approvals every 30 seconds and notifies once per pending
-generation and phase. Notifications are informational; approve from a terminal:
+Comin's standard desktop client sends progress notifications after login.
+Pending approvals are not notified; check and approve them from a terminal:
 
 ```sh
 comin status
@@ -31,26 +29,13 @@ comin confirmation show
 comin confirmation accept
 ```
 
-Upstream's `accept` command approves both building and deploying the generation
-when a build is pending. If only deployment is pending, it approves deployment.
-It does not require two separate approvals. Manual confirmation does not prevent
-Git fetching or Nix evaluation, and does not impose an AC-power requirement.
+When a build is pending, `accept` approves both building and deploying that
+generation. Otherwise it approves the pending deployment. Git fetching and Nix
+evaluation still run automatically.
 
-On NixOS, notifications use the graphical session's notification service. On
-macOS, Home Manager starts LaunchAgents because upstream's Darwin module does
-not start a desktop client. Allow notifications in macOS settings if prompted.
-The pending-approval notification is repeated after restarting the notifier if
-the approval is still pending.
-
-Verify after applying the configuration and logging in:
-
-- On NixOS, inspect `systemctl --user status comin-desktop comin-confirmation-notifier`.
-- On macOS, inspect `launchctl list | rg comin`.
-- Push a configuration change, wait for the approval notification, inspect
-  `comin confirmation show`, then approve and check `comin status` for completion.
-
-The ThinkPad needs an initial configuration switch to enable Comin. Existing
-Comin-managed machines receive this policy through their normal Git deployment.
+NixOS uses the upstream desktop service; macOS uses a Home Manager LaunchAgent
+to run the same client. The ThinkPad needs an initial configuration switch to
+enable Comin; already managed hosts receive updates through Git.
 
 ## Module structure
 
