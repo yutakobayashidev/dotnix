@@ -31,8 +31,7 @@ managed outside the Nix configuration.
 
 ## Zotero runtime exception
 
-Zotero 10 requires Firefox ESR 140, which reached end of life on October 13,
-2026. The Zotero feature permits only
+Zotero 10 requires Firefox ESR 140, which reached end of life on October 13, 2026. The Zotero feature permits only
 `firefox-esr-140-bin-unwrapped-140.17.0esr` on NixOS and macOS so the pinned
 package can evaluate. This exception does not restore security updates to the
 runtime. Remove it when Zotero uses a supported ESR; the
@@ -135,7 +134,7 @@ Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 
 The desktop profile enables `my.programs.herdr-app` on Linux, installing
-`herdr-app` from the pinned personal NUR input with a launcher entry. Its wrapper
+`herdr-app` from the pinned `llm-agents.nix` input with a launcher entry. Its wrapper
 provides the matching `herdr-core`; the existing `my.programs.herdr` CLI configuration
 remains separate. macOS and headless hosts do not enable the app by default.
 

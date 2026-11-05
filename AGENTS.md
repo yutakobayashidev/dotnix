@@ -72,7 +72,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Personal context**: OpenBrief context recall on the ThinkPad (temporarily disabled while its source repository is private)
 - **Activity recording**: ActivityWatch with a Niri-compatible window/AFK watcher and Firefox web watcher on ThinkPad only; see [setup and verification](docs/activitywatch.md).
 - **Media history**: ThinkPad-only MPRIS JSONL collector with Aurboda-compatible records; see [format and verification](docs/mpris-collector.md).
-- **AI development**: ChatGPT Desktop (ChatGPT and Codex) and Claude Desktop via llm-agents.nix, Grok Bot, Herdr App via NUR, and Hermes Desktop on graphical hosts
+- **AI development**: ChatGPT Desktop (ChatGPT and Codex), Claude Desktop, and Herdr App via llm-agents.nix, Grok Bot, and Hermes Desktop on graphical hosts
 - **Desktop automation**: [Agent Desktop](docs/agent-desktop.md) via NUR with AT-SPI on Linux graphical hosts
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
