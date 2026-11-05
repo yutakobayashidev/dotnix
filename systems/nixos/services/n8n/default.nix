@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
   host = "n8n.home.yutakobayashi.com";
@@ -6,6 +6,10 @@ in
 {
   services.n8n = {
     enable = true;
+    # The available 2.2 GB uncompressed dependency substitute fails over HTTP/2.
+    package = pkgs.n8n.overrideAttrs (old: {
+      pnpmDeps = old.pnpmDeps.overrideAttrs { allowSubstitutes = false; };
+    });
     environment = {
       N8N_HOST = host;
       N8N_LISTEN_ADDRESS = "127.0.0.1";

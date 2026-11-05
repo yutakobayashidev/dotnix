@@ -13,6 +13,10 @@ or build is cancelled. Without this patch, generation garbage collection can
 remove a newly fetched commit before its evaluation starts. The package runs
 store and builder regression tests during its build.
 
+The n8n service builds its pnpm dependency store from the registry. Substitution
+is disabled for that dependency only because the available 2.2 GB uncompressed
+cache archive failed during HTTP/2 downloads on B450M.
+
 ## Configuration
 
 `modules/features/nix/remote-build.nix` defines two opt-in features:
