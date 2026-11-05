@@ -1,9 +1,5 @@
 { config, pkgs, ... }:
 {
-  sops.secrets."nextcloud-admin-pass" = {
-    sopsFile = ./secrets/default.yaml;
-  };
-
   services.nextcloud = {
     enable = true;
     package = pkgs.nextcloud33;
@@ -15,8 +11,6 @@
     config = {
       dbtype = "pgsql";
       dbhost = "/run/postgresql";
-      adminuser = "root";
-      adminpassFile = config.sops.secrets."nextcloud-admin-pass".path;
     };
 
     settings = {
