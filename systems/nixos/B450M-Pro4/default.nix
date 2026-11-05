@@ -210,6 +210,8 @@
   my.services.tempo.enable = true;
 
   services = {
+    # Remote builds and dependency tests can exceed Comin's 30-minute default.
+    comin.buildTimeout = 2 * 60 * 60;
     prometheus.exporters.node = {
       enable = true;
       enabledCollectors = [ "systemd" ];
