@@ -25,6 +25,10 @@ in
       enable = true;
       listenAddress = "127.0.0.1";
       port = gatewayPort;
+      mcp = {
+        enable = true;
+        allowedHosts = [ "rdt.home.yutakobayashi.com" ];
+      };
     };
 
     openai-tunnel-client.instances.rdt-gateway = {

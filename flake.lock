@@ -2241,11 +2241,11 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1793514606,
-        "narHash": "sha256-TYYCh3SpWkdVc+fCxGPa3cuEEJxk2LdqPpjNq0hdCzQ=",
+        "lastModified": 1793862296,
+        "narHash": "sha256-u9tmP7py0v2gtins/l6RQv8CS7YEfrMRpna1QE2H4o8=",
         "owner": "yutakobayashidev",
         "repo": "rdt-gateway",
-        "rev": "bb92a10ef63d48b837adb5e1f6d209e808d7a349",
+        "rev": "22c51a625b108b343cfbbd11ba08513d1a52181e",
         "type": "github"
       },
       "original": {
