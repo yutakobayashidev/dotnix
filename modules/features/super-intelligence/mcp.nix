@@ -71,6 +71,14 @@ _:
             playwright.enable = true;
             time = {
               enable = true;
+              # The reference time server requires the MCP 1.x SDK.
+              package =
+                inputs.mcp-servers-nix.packages.${pkgs.stdenv.hostPlatform.system}.mcp-server-time.override
+                  {
+                    python3Packages = pkgs.python3Packages // {
+                      mcp = pkgs.python3Packages.mcp_1;
+                    };
+                  };
               args = [ "--local-timezone=Asia/Tokyo" ];
             };
           };
