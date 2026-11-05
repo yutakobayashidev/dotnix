@@ -21,6 +21,14 @@ desktops through `my.programs.flare-social.enable`. The `flare-social` NUR packa
 wraps the official AppImage and provides a launcher and `flare:` / `pixiv:` URL
 handlers. Set the option to `false` to disable it on an individual host.
 
+## Kohaku CLI
+
+Home Manager installs `kohaku` from the personal NUR `kohaku-cli` package.
+The [upstream CLI](https://github.com/kassandraoftroy/kohaku-cli) manages Ethereum
+wallets and private balances. Set `RPC_URL` or pass `--rpc-url` when using it;
+wallet data defaults to `~/.kohaku-cli`. Wallet creation and credentials are
+managed outside the Nix configuration.
+
 ## Laptop configuration updates
 
 Comin uses manual build and deployment confirmation on the ThinkPad and M2
