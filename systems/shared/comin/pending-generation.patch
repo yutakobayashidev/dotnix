@@ -1,0 +1,82 @@
+--- a/internal/store/generation.go
++++ b/internal/store/generation.go
+@@ -113,6 +113,9 @@
+ }
+ 
+ func (s *Store) NewGeneration(hostname, repositoryDir, systemAttr string, rs *protobuf.GitRepositoryStatus, buildAttemptsLimit int) (g protobuf.Generation) {
++	s.mu.Lock()
++	defer s.mu.Unlock()
++
+ 	// Find the selected remote URL
+ 	selectedRemoteUrl := ""
+ 	for _, remote := range rs.Remotes {
+@@ -200,7 +203,9 @@
+ func (s *Store) generationsGC() {
+ 	alive := make([]*protobuf.Generation, 0)
+ 	for _, g := range s.persisted.Generations {
+-		if g == s.lastEvalStarted || g == s.lastEvalFinished || g == s.lastBuildStarted || g == s.lastBuildFinished {
++		// The manager registers a replacement before Builder.Eval stops old work.
++		// Keep it while old completion callbacks collect generations.
++		if g.EvalStatus == EvalInit.String() || g == s.lastEvalStarted || g == s.lastEvalFinished || g == s.lastBuildStarted || g == s.lastBuildFinished {
+ 			alive = append(alive, g)
+ 		}
+ 	}
+--- /dev/null
++++ b/internal/store/pending_generation_test.go
+@@ -0,0 +1,56 @@
++package store
++
++import (
++	"context"
++	"testing"
++
++	"github.com/nlewo/comin/internal/broker"
++	"github.com/nlewo/comin/pkg/protobuf"
++	"github.com/stretchr/testify/require"
++)
++
++// A replacement is registered before Builder.Eval cancels the old work.
++// Finishing that work must not collect the replacement before evaluation starts.
++func TestPendingGenerationSurvivesCancellation(t *testing.T) {
++	for _, phase := range []string{"evaluation", "build"} {
++		t.Run(phase, func(t *testing.T) {
++			tmp := t.TempDir()
++			bk := broker.New()
++			bk.Start()
++			t.Cleanup(bk.Stop)
++			s, err := New(bk, tmp+"/state", tmp+"/gcroot", 2, 2, 5)
++			require.NoError(t, err)
++			newGeneration := func() protobuf.Generation {
++				return s.NewGeneration("host", "", "system", &protobuf.GitRepositoryStatus{}, 0)
++			}
++			old := newGeneration()
++			require.NoError(t, s.GenerationEvalStarted(old.Uuid))
++			if phase == "build" {
++				require.NoError(t, s.GenerationEvalFinished(old.Uuid, "drv", "out", "machine", nil))
++				require.NoError(t, s.GenerationBuildStart(old.Uuid, "test"))
++			}
++			pending := newGeneration()
++			if phase == "evaluation" {
++				require.NoError(t, s.GenerationEvalFinished(old.Uuid, "", "", "", context.Canceled))
++			} else {
++				require.NoError(t, s.GenerationBuildFinished(old.Uuid, context.Canceled))
++			}
++			got, err := s.GenerationGet(pending.Uuid)
++			require.NoError(t, err)
++			require.Equal(t, EvalInit.String(), got.EvalStatus)
++			require.NoError(t, s.GenerationEvalStarted(pending.Uuid))
++			require.NoError(t, s.GenerationEvalFinished(pending.Uuid, "drv", "out", "machine", nil))
++			require.NoError(t, s.GenerationBuildStart(pending.Uuid, "test"))
++			require.NoError(t, s.GenerationBuildFinished(pending.Uuid, context.Canceled))
++
++			// Protection expires after evaluation starts, so normal GC still applies.
++			latest := newGeneration()
++			require.NoError(t, s.GenerationEvalStarted(latest.Uuid))
++			require.NoError(t, s.GenerationEvalFinished(latest.Uuid, "drv", "out", "machine", nil))
++			require.NoError(t, s.GenerationBuildStart(latest.Uuid, "test"))
++			require.NoError(t, s.GenerationBuildFinished(latest.Uuid, context.Canceled))
++			_, err = s.GenerationGet(pending.Uuid)
++			require.Error(t, err)
++		})
++	}
++}

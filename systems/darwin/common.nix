@@ -11,6 +11,7 @@
   imports = [
     ../common.nix
     ../shared/comin/alloy.nix
+    ../shared/comin/package.nix
     inputs.comin.darwinModules.comin
     inputs.sops-nix.darwinModules.sops
   ];

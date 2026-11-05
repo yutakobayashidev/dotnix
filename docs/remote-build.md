@@ -8,6 +8,11 @@ daemon's builder configuration without separate deployment commands.
 B450M's Comin build timeout is two hours, allowing remote source builds and
 dependency tests to finish instead of cancelling them after the default 30 minutes.
 
+The shared Comin package preserves pending generations when an older evaluation
+or build is cancelled. Without this patch, generation garbage collection can
+remove a newly fetched commit before its evaluation starts. The package runs
+store and builder regression tests during its build.
+
 ## Configuration
 
 `modules/features/nix/remote-build.nix` defines two opt-in features:
