@@ -9,7 +9,8 @@
       imports = [
         ../../desktop.nix
         ../desktop.nix
-        inputs.openbrief.homeManagerModules.default
+        # Temporarily disabled: the OpenBrief source is now private (rensheng).
+        # inputs.openbrief.homeManagerModules.default
         inputs.onepassword-shell-plugins.hmModules.default
         inputs.temari.homeManagerModules.default
       ];
@@ -34,7 +35,7 @@
         vrcx
       ];
       services = {
-        openbrief.enable = true;
+        # openbrief.enable = true; # Re-enable with the module import above.
         poweralertd.enable = true;
         temari = {
           enable = true;

@@ -176,7 +176,7 @@ are in the [desktop style report](noctalia-style-report.md).
 - **Wallpaper**: Noctalia with per-host initial images set through `services.wallpaper.imagePath`; later selections are managed by Noctalia
 - **IME**: fcitx5 + [hazkey](https://github.com/aster-void/nix-hazkey) (LLM-powered Japanese input)
 - **Speech-to-text**: Handy with automatic startup and Niri shortcuts
-- **Personal context**: OpenBrief context recall on the ThinkPad
+- **Personal context**: OpenBrief context recall on the ThinkPad (temporarily disabled while its source repository is private)
 - **AI development**: Codex Desktop for Linux, Claude Desktop, Grok Bot, and Hermes Desktop on graphical hosts; [Codex limit auto reset user service](codex-limit-auto-reset.md) on UM790-Pro
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
