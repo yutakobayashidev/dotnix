@@ -95,6 +95,25 @@
 			},
 			"subdir": "skill"
 		},
+		"benjitaylor": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "299140fafd08df55a9c234e610c3f64af3f45531",
+				"branch": "main",
+				"owner": "benjitaylor",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
 		"difit": {
 			"filter": {
 				"maxDepth": null,
@@ -447,6 +466,19 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/vercel-labs/before-and-after/archive/8306d34f459b6704e08e6adb5829fcddb0dc3557.tar.gz"
+			},
+			"benjitaylor": {
+				"branch": "main",
+				"hash": "sha256-23vysV6e5emspdlr4lOfaKc205ZTbFr8SKICwT6hLyY=",
+				"repository": {
+					"owner": "benjitaylor",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "299140fafd08df55a9c234e610c3f64af3f45531",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/benjitaylor/skills/archive/299140fafd08df55a9c234e610c3f64af3f45531.tar.gz"
 			},
 			"difit": {
 				"branch": "main",

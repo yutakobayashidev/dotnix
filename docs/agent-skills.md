@@ -69,6 +69,12 @@ Selections requiring a different deployed name or the source root (`"."`) stay
 in `skills.explicit`. Mizchi's transformations stay in `mizchi.nix`, and local
 skills remain automatically selected through discovery.
 
+Stageshow is selected from the pinned `benjitaylor/skills` source, including its
+React kit, examples, and filming scripts. Its Nix-managed directory is read-only;
+copy the complete skill into a writable project before installing npm dependencies
+or working on a preview. Node.js is supplied through the skill's dependencies.
+Filming uses an installed Chrome/Chromium browser (`CHROME_PATH` can select it).
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager

@@ -64,6 +64,7 @@ _:
           sources = {
             inherit (registrySources)
               local
+              benjitaylor
               prompt-review
               mattpocock
               i-have-adhd
@@ -89,6 +90,32 @@ _:
             // selectedSkills
             // (import ./mizchi.nix { inherit pkgs lib registrySources; })
             // {
+              stageshow = {
+                from = "benjitaylor";
+                path = "stageshow";
+                packages = [ pkgs.nodejs_24 ];
+                rewriteCommands = false;
+                transform = { original, dependencies }: ''
+                  ${builtins.replaceStrings
+                    [ "## Workflow" ]
+                    [ ''
+                      ## Nix-managed installation
+
+                      This skill directory is read-only. Copy the complete `stageshow/`
+                      directory into a writable project workspace before installing npm
+                      dependencies, adding examples, or running the preview. Run the
+                      commands below in that copy. Set `CHROME_PATH` to an installed
+                      Chrome or Chromium executable when the filming scripts cannot
+                      find Chrome automatically.
+
+                      ## Workflow
+                    '' ]
+                    original
+                  }
+
+                  ${dependencies}
+                '';
+              };
               explain-diff-html = {
                 from = "explain-diff";
                 path = ".";
