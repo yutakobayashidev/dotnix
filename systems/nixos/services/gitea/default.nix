@@ -22,7 +22,6 @@ in
         USER = "api_token";
       };
       server = {
-        DOMAIN = domain;
         ROOT_URL = "https://${domain}/";
         SSH_DOMAIN = sshDomain;
       };

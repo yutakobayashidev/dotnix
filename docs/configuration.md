@@ -226,3 +226,22 @@ The web service sets `TWITTER_LITE_ROUTINE_DIR` to `~/.local/state/twitter-lite/
 ### Workspace TypeSafe credentials
 
 `secrets/ori-typesafe.env` stores the Home composer TypeSafe API key encrypted with sops for UM790-Pro. Home Manager decrypts it as `ori-typesafe-env`; the web service reads that secret through `EnvironmentFile` after `sops-nix.service`. Edit it with `sops secrets/ori-typesafe.env`, keeping `TYPESAFE_API_KEY` as the dotenv variable, and rebuild. Recovery requires the UM790-Pro age key or a replacement API key. Never commit plaintext credentials.
+
+## Nextcloud administrator setup
+
+Nextcloud administrator accounts are stored in its database. The NixOS module no
+longer accepts `services.nextcloud.config.adminuser` or `adminpassFile`; removing
+these bootstrap options does not change existing accounts or passwords.
+
+For a fresh installation on B450M-Pro4, wait for `nextcloud-setup.service` to
+succeed, then create the administrator interactively:
+
+```bash
+sudo nextcloud-occ user:add root
+sudo nextcloud-occ group:adduser admin root
+```
+
+The first command prompts for a password. Skip account creation when restoring an
+existing database. The old encrypted administrator password remains in
+`systems/nixos/services/nextcloud/secrets/default.yaml` for recovery, but is no
+longer decrypted during activation.
