@@ -1,6 +1,15 @@
 _:
 
+let
+  module = {
+    # Zotero 10 requires ESR 140. Remove when Zotero uses a supported ESR.
+    my.nixpkgs.permittedInsecurePackages = [ "firefox-esr-140-bin-unwrapped-140.17.0esr" ];
+  };
+in
 {
+  flake.modules.nixos.zotero = module;
+  flake.modules.darwin.zotero = module;
+
   flake.modules.homeManager.zotero =
     {
       config,

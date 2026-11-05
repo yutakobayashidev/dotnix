@@ -29,6 +29,16 @@ wallets and private balances. Set `RPC_URL` or pass `--rpc-url` when using it;
 wallet data defaults to `~/.kohaku-cli`. Wallet creation and credentials are
 managed outside the Nix configuration.
 
+## Zotero runtime exception
+
+Zotero 10 requires Firefox ESR 140, which reached end of life on October 13,
+2026. The Zotero feature permits only
+`firefox-esr-140-bin-unwrapped-140.17.0esr` on NixOS and macOS so the pinned
+package can evaluate. This exception does not restore security updates to the
+runtime. Remove it when Zotero uses a supported ESR; the
+[upstream nixpkgs packaging change](https://github.com/NixOS/nixpkgs/commit/abfd73f84c823ed3353e1e9ac485b1fbdda29bdc)
+identifies Zotero 11 as the planned ESR 153 migration.
+
 ## Laptop configuration updates
 
 Comin uses manual build and deployment confirmation on the ThinkPad and M2
