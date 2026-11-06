@@ -169,6 +169,8 @@ in
         Environment = environment ++ [
           "HOST=100.91.91.87"
           "PORT=3006"
+          # The Traefik router enforces Tailnet access; browser login uses OIDC.
+          "TWITTER_LITE_AUTH_MODE=none"
           "WORKSPACE_OIDC_ISSUER=https://id.yutakobayashi.com"
           "WORKSPACE_OIDC_CLIENT_ID=ori"
           "WORKSPACE_OIDC_CLIENT_SECRET_FILE=${config.sops.secrets.ori-oidc-client-secret.path}"
