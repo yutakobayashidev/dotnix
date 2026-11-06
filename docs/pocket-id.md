@@ -85,9 +85,10 @@ undone merely by rolling back a NixOS generation.
   password login remains available.
 
 Before enabling OIDC, database snapshots were taken on B450M-Pro4 under
-`/var/backups/oidc-2026-11-06` (root-only). These contain SQLite backups for
+`/var/lib/oidc-migration-backups/2026-11-06` (root-only). These contain SQLite backups for
 Pocket ID, Grafana, Gitea, and linkding, and PostgreSQL custom-format dumps for
-Immich, moe, and Nextcloud. This directory is on the same host, not an off-host
+Immich, moe, and Nextcloud. This directory survives root rollback through `/var/lib` persistence. It is on
+the same host, not an off-host
 disaster recovery backup. Restore only with the affected application stopped.
 
 After deployment, check all service statuses and each login page, then complete
