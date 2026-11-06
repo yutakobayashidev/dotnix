@@ -225,6 +225,8 @@ existing Tailnet OTLP HTTP collector on B450M-Pro4. Traces are stored in Tempo
 and metrics in VictoriaMetrics. The web process uses `service.name=ori`; the
 event delivery worker uses `service.name=ori-events`. No additional public
 ingress or tracing service is needed.
+The services use `OTEL_TRACES_SAMPLER=always_on` so incoming clients cannot
+suppress Ori's diagnostic traces through an unsampled parent context.
 
 The [Ori MCP dashboard](https://grafana.home.yutakobayashi.com/d/ori-mcp)
 shows tool call rates, p95 latency, server errors and recent traces.

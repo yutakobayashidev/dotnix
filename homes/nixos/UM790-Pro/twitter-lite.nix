@@ -48,6 +48,7 @@ let
     "NODE_ENV=production"
     "OTEL_EXPORTER_OTLP_ENDPOINT=http://B450M-Pro4.tail29d068.ts.net:4318"
     "OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf"
+    "OTEL_TRACES_SAMPLER=always_on"
     "TWITTER_LITE_DB_PATH=${stateDir}/workspace.sqlite"
     "TWITTER_LITE_CREDENTIAL_KEY_FILE=${credentialKey}"
     "TWITTER_LITE_BEEPER_CLI=${lib.getExe pkgs.beeper-cli}"
