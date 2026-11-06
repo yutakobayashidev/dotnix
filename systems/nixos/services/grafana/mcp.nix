@@ -8,45 +8,60 @@ let
   credentialDir = "/run/credentials/${serviceName}.service";
   environmentFile = "/var/lib/grafana-mcp/mcp-tunnel.env";
   grafanaMcp = pkgs.mcp-grafana;
+  mcpAddress = "127.0.0.1:18994";
 in
 {
   sops.secrets.grafana-mcp-token = {
     sopsFile = ../../../../secrets/grafana-mcp.yaml;
-    restartUnits = [ "${serviceName}.service" ];
+    restartUnits = [ "grafana-mcp.service" ];
   };
-
-  systemd.tmpfiles.rules = [ "d /var/lib/grafana-mcp 0700 root root -" ];
 
   services.openai-tunnel-client.instances.grafana = {
     enable = true;
-    environment = {
-      GRAFANA_URL = "https://grafana.home.yutakobayashi.com";
-      GRAFANA_SERVICE_ACCOUNT_TOKEN_FILE = "${credentialDir}/grafana-token";
-    };
     settings = {
       config_version = 1;
       control_plane.api_key = "file:${credentialDir}/control-plane-api-key";
       health.listen_addr = "127.0.0.1:18794";
       admin_ui.open_browser = false;
-      mcp.commands = [
+      mcp.server_urls = [
         {
           channel = "main";
-          command = "${grafanaMcp}/bin/mcp-grafana --disable-write";
+          url = "http://${mcpAddress}/mcp";
         }
       ];
     };
   };
 
-  systemd.services.${serviceName} = {
-    after = [ "grafana.service" ];
-    wants = [ "grafana.service" ];
-    unitConfig.ConditionPathExists = environmentFile;
-    serviceConfig = {
-      EnvironmentFile = environmentFile;
-      LoadCredential = [
-        "control-plane-api-key:${config.sops.secrets.openai-tunnel-api-key.path}"
-        "grafana-token:${config.sops.secrets.grafana-mcp-token.path}"
-      ];
+  systemd = {
+    tmpfiles.rules = [ "d /var/lib/grafana-mcp 0700 root root -" ];
+    services.grafana-mcp = {
+      description = "Grafana MCP over stateless Streamable HTTP";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "grafana.service" ];
+      wants = [ "grafana.service" ];
+      environment = {
+        GRAFANA_URL = "https://grafana.home.yutakobayashi.com";
+        GRAFANA_SERVICE_ACCOUNT_TOKEN_FILE = "/run/credentials/grafana-mcp.service/grafana-token";
+      };
+      serviceConfig = {
+        ExecStart = "${grafanaMcp}/bin/mcp-grafana --disable-write --transport streamable-http --address ${mcpAddress}";
+        DynamicUser = true;
+        LoadCredential = [ "grafana-token:${config.sops.secrets.grafana-mcp-token.path}" ];
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
+    };
+
+    services.${serviceName} = {
+      after = [ "grafana-mcp.service" ];
+      wants = [ "grafana-mcp.service" ];
+      unitConfig.ConditionPathExists = environmentFile;
+      serviceConfig = {
+        EnvironmentFile = environmentFile;
+        LoadCredential = [
+          "control-plane-api-key:${config.sops.secrets.openai-tunnel-api-key.path}"
+        ];
+      };
     };
   };
 }

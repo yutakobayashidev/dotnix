@@ -113,15 +113,19 @@ then verify dashboard discovery and a query against datasource
 
 ### ChatGPT through Secure Tunnel
 
-B450M runs `tunnel-client-grafana`, which starts the Grafana MCP process on
-the `main` channel over stdio with `--disable-write`. No new inbound MCP port
-is opened. The Viewer token and OpenAI runtime key are supplied through
-systemd `LoadCredential`; the health listener is `127.0.0.1:18794`.
+B450M runs `grafana-mcp` with `--disable-write` and stateless Streamable HTTP
+on `127.0.0.1:18994`. `tunnel-client-grafana` forwards its `main` channel to
+that service's `/mcp` endpoint. This allows independent client initialization
+without sharing a stateful stdio connection and rejecting subsequent
+`initialize` requests. The MCP listener is loopback-only; no firewall port is
+opened. Each service receives its own credential through systemd
+`LoadCredential`: the Viewer token for Grafana MCP and the OpenAI runtime key
+for the tunnel. The tunnel health listener remains `127.0.0.1:18794`.
 
 Create the Grafana tunnel with OpenTofu in the separate
 `tofu-configuration/infra/services/openai` repository. Put its output ID in
 the root-only `/var/lib/grafana-mcp/mcp-tunnel.env` on B450M as
-`CONTROL_PLANE_TUNNEL_ID=<tunnel ID>` (mode `0600`). The service stays skipped
+`CONTROL_PLANE_TUNNEL_ID=<tunnel ID>` (mode `0600`). The tunnel stays skipped
 until this file exists. Apply NixOS, start `tunnel-client-grafana`, and check
 its journal and `/readyz` endpoint. The runtime API key needs Tunnels Read
 and Use permissions for this tunnel; the organization admin key is only for
