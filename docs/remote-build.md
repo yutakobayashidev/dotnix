@@ -5,6 +5,12 @@ UM790-Pro. Evaluation and activation stay on the requesting host. Existing
 `nix run .#build`, `nix run .#switch`, and B450M's comin deployment use the Nix
 daemon's builder configuration without separate deployment commands.
 
+On hosts using Comin and Lanzaboote, the bootloader installer also registers
+each deployment in the standard system profile. Lanzaboote scans that profile
+rather than Comin's named profile, keeping signed boot entries aligned with
+the deployed system. Kernel and NVIDIA driver updates still require a reboot;
+preparing the boot entry does not reboot the host.
+
 B450M's Comin build timeout is two hours, allowing remote source builds and
 dependency tests to finish instead of cancelling them after the default 30 minutes.
 
