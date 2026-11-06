@@ -71,9 +71,11 @@ undone merely by rolling back a NixOS generation.
   First OIDC login synchronizes the old `admin` login name to `yuta` and the
   email to `hi@yutakobayashi.com`. The password, user ID and admin rights remain;
   subsequent local password login also uses `yuta`.
-- **linkding:** existing accounts are matched by email. The initial deployment
-  had no users; the first Pocket ID login creates a normal user named from
-  `preferred_username`.
+- **linkding:** existing accounts are matched by email. Automatic creation is
+  disabled with `OIDC_CREATE_USER = False` in the upstream `custom.py` settings
+  hook, supplied by a Nix package override (the setting has no environment
+  variable in linkding). The `yuta` account uses `hi@yutakobayashi.com` and must
+  exist before Pocket ID login. Additional users must be provisioned explicitly.
 - **Immich / moe:** sign in with the existing password, then use account settings
   to link OAuth. Automatic registration is disabled. Check both web and mobile
   login. Their current storage-template settings are preserved in Nix; all

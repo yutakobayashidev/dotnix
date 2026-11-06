@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   domain = "linkding.home.yutakobayashi.com";
   port = 9091;
@@ -7,6 +7,12 @@ in
   services.linkding = {
     enable = true;
     inherit port;
+    # linkding does not expose this Django OIDC setting as an environment variable.
+    package = pkgs.linkding.overrideAttrs (old: {
+      postPatch = (old.postPatch or "") + ''
+        echo 'OIDC_CREATE_USER = False' >> bookmarks/settings/custom.py
+      '';
+    });
     settings = {
       LD_ENABLE_OIDC = "True";
       LD_DISABLE_LOGIN_FORM = "False";
