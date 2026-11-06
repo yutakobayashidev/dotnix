@@ -98,18 +98,20 @@ _:
                 transform = { original, dependencies }: ''
                   ${builtins.replaceStrings
                     [ "## Workflow" ]
-                    [ ''
-                      ## Nix-managed installation
+                    [
+                      ''
+                        ## Nix-managed installation
 
-                      This skill directory is read-only. Copy the complete `stageshow/`
-                      directory into a writable project workspace before installing npm
-                      dependencies, adding examples, or running the preview. Run the
-                      commands below in that copy. Set `CHROME_PATH` to an installed
-                      Chrome or Chromium executable when the filming scripts cannot
-                      find Chrome automatically.
+                        This skill directory is read-only. Copy the complete `stageshow/`
+                        directory into a writable project workspace before installing npm
+                        dependencies, adding examples, or running the preview. Run the
+                        commands below in that copy. Set `CHROME_PATH` to an installed
+                        Chrome or Chromium executable when the filming scripts cannot
+                        find Chrome automatically.
 
-                      ## Workflow
-                    '' ]
+                        ## Workflow
+                      ''
+                    ]
                     original
                   }
 
