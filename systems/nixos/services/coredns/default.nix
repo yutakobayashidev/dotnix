@@ -54,6 +54,10 @@ in
   systemd.services.coredns = {
     after = [ "tailscaled-set.service" ];
     wants = [ "tailscaled-set.service" ];
+    # The Tailnet address can disappear briefly while switching configurations.
+    # Keep retrying until it returns instead of exhausting systemd's start limit.
+    unitConfig.StartLimitIntervalSec = 0;
+    serviceConfig.RestartSec = "5s";
   };
 
   networking.firewall.allowedTCPPorts = [ 53 ];
