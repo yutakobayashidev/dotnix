@@ -139,3 +139,10 @@ user signup remains disabled. API permissions and grants use the committed
 manifest and existing deployment workflow described in
 [the infrastructure README](../infra/pocket-id/README.md), because the pinned
 Pocket ID Terraform provider does not expose these API features.
+
+Before the Ori migration, verified SQLite backups were taken at
+`/home/yuta/.local/state/twitter-lite/backups/before-oidc-2026-11-07.sqlite`
+on UM790-Pro and
+`/var/lib/oidc-migration-backups/ori-2026-11-07/pocket-id-before-ori.db`
+on B450M-Pro4. Restoring the old password-based Ori version requires restoring
+its pre-migration database too, because the migration drops password columns.
