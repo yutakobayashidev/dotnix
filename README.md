@@ -38,7 +38,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [Hyprland as an optional desktop session](docs/hyprland.md)
 - [GitHub Actions dependency checks](docs/github-actions.md)
 - [Home Assistant, Lapis, ChatGPT MCP and backups](docs/home-assistant.md)
-- [RSSHub and scheduled DISTANCE MEDIA feeds](docs/rsshub.md)
+- [RSSHub and the DISTANCE MEDIA feed](docs/rsshub.md)
 - [moe: net pics and gallery-dl Immich on HDD](docs/moe.md)
 - [Grok Bot VM environment](docs/grok-bot.md)
 - [Agent skills](docs/agent-skills.md)

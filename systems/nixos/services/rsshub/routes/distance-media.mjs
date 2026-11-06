@@ -1,5 +1,3 @@
-import { readFile } from 'node:fs/promises';
-
 export const namespace = {
 	name: 'DISTANCE MEDIA',
 	url: 'distance.media',
@@ -11,7 +9,11 @@ export const routes = [
 		name: 'Articles',
 		maintainers: ['yutakobayashidev'],
 		handler: async () => {
-			const { data } = JSON.parse(await readFile(process.env.DISTANCE_MEDIA_DATA_PATH, 'utf8'));
+			const response = await fetch('https://distance.media/dist/js/distanceposts.json', {
+				signal: AbortSignal.timeout(10_000),
+			});
+			if (!response.ok) throw new Error(`DISTANCE MEDIA returned HTTP ${response.status}`);
+			const { data } = await response.json();
 			return {
 				title: 'DISTANCE MEDIA',
 				link: 'https://distance.media/',
