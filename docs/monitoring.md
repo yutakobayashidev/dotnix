@@ -239,8 +239,9 @@ to inspect MCP calls. Tool errors, including MCP results with `isError: true`,
 are represented in the SDK spans. Outgoing event delivery spans cover webhook
 attempts; retries remain managed by Ori's existing outbox.
 
-New MCP communication records are no longer written to Ori's SQLite history.
-Existing history is retained, and activity change audit records remain enabled.
+MCP communication history is no longer recorded or exposed in Ori's History UI
+or MCP tools. Use Grafana for protocol diagnostics. Old database records remain
+in place, while activity change audit records remain enabled and visible.
 The SDK does not capture tool arguments or result bodies. Error messages and
 resource URIs can still appear in traces; the collector's known-attribute scrub
 is not a general-purpose content sanitizer.
