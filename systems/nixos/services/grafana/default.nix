@@ -1,10 +1,16 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   imports = [ ./mcp.nix ];
 
   services.grafana = {
     enable = true;
+    # Grafana 13.3 distributes these data sources as separate plugins.
+    declarativePlugins = with pkgs.grafanaPlugins; [
+      loki
+      prometheus
+      tempo
+    ];
     settings = {
       server = {
         http_addr = "0.0.0.0";
