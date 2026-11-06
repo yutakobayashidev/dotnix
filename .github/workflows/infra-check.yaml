@@ -87,3 +87,6 @@ jobs:
         run: |
           nix develop ".#$INFRA_SHELL" --command tofu -chdir=${{ matrix.root }} init -backend=false
           nix develop ".#$INFRA_SHELL" --command tofu -chdir=${{ matrix.root }} validate
+      - name: Test Pocket ID MCP reconciliation
+        if: ${{ matrix.name == 'pocket-id' }}
+        run: nix develop .#pocket-id-ci --command python3 -m unittest discover -s infra/pocket-id -p 'test_*.py'

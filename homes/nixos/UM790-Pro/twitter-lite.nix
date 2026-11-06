@@ -79,6 +79,11 @@ in
     key = "";
   };
 
+  sops.secrets.ori-oidc-client-secret = {
+    sopsFile = ../../../secrets/pocket-id-oidc.yaml;
+    key = "client-secrets/ori";
+  };
+
   systemd.user.services = {
     ori-xiaomi-s200 = {
       Unit = {
@@ -164,7 +169,11 @@ in
         Environment = environment ++ [
           "HOST=100.91.91.87"
           "PORT=3006"
-          "TWITTER_LITE_AUTH_MODE=none"
+          "WORKSPACE_OIDC_ISSUER=https://id.yutakobayashi.com"
+          "WORKSPACE_OIDC_CLIENT_ID=ori"
+          "WORKSPACE_OIDC_CLIENT_SECRET_FILE=${config.sops.secrets.ori-oidc-client-secret.path}"
+          "WORKSPACE_OIDC_OWNER_SUBJECT=a3a3549f-6584-4c36-aa27-4492fc35420e"
+          "WORKSPACE_MCP_RESOURCE=https://home.yutakobayashi.com/mcp"
           "TWITTER_LITE_MCP_URL=http://100.91.91.87:3006/mcp"
           "TWITTER_LITE_ORIGIN=https://home.yutakobayashi.com"
           "TWITTER_RELAY_BASE_URL=https://tw.home.yutakobayashi.com"

@@ -38,13 +38,14 @@ curl --fail https://id.yutakobayashi.com/.well-known/openid-configuration
 
 ## Declarative application login
 
-The clients for Grafana, linkding, Immich, moe, Gitea, and Nextcloud are managed
+The clients for Grafana, linkding, Immich, moe, Gitea, Nextcloud, Ori, and
+Ori's ChatGPT connection are managed
 in [`infra/pocket-id`](../infra/pocket-id/README.md). LiteLLM and n8n are excluded.
 Client IDs and callback URLs are managed by OpenTofu; application settings are
 managed by their NixOS service modules. Existing password login remains enabled.
 
 `secrets/pocket-id-oidc.yaml` contains the static administration API key and the
-six client secrets. Pocket ID receives its API key through a systemd credential;
+application client secrets. Pocket ID receives its API key through a systemd credential;
 application secrets are supplied through SOPS files or rendered templates, never
 literal Nix store values. The matching API key and client-secret map are stored
 in the repository's `POCKETID_API_TOKEN` and `POCKETID_CLIENT_SECRETS` Actions
@@ -100,3 +101,41 @@ encryption key, public domain, and user/client IDs as well as OpenTofu state.
 
 See the [upstream documentation](https://pocket-id.org/docs/setup/installation)
 for registering passkeys and connecting OIDC clients.
+
+## Ori browser login and MCP
+
+Ori uses the fixed confidential client `ori` with PKCE and callback
+`https://home.yutakobayashi.com/api/auth/callback`. Its existing owner data is
+retained; only the configured Pocket ID issuer and subject can sign in.
+The client secret is decrypted by Home Manager on UM790-Pro. Password login
+and local account setup are removed by the application migration. Existing
+browser sessions remain valid until logout or expiry.
+
+MCP uses resource `https://home.yutakobayashi.com/mcp` and scope `ori:mcp`.
+The application checks signed access tokens, issuer, audience, expiry, scope,
+and the configured owner subject. ID tokens are not accepted as API tokens.
+Internal Research and execution requests use separate, scoped credentials.
+
+The existing `tunnel-client-personal-workspace` service remains the ChatGPT
+transport. Its upstream URL uses the private HTTPS Tailnet route, supporting
+OAuth discovery without publishing an additional ingress or opening ports.
+In ChatGPT select the existing tunnel, OAuth authentication, and the fixed
+client ID `ori-chatgpt`; retrieve its secret from SOPS key
+`client-secrets/ori-chatgpt` in `secrets/pocket-id-oidc.yaml`. Do not paste the
+secret into issues, logs, or this document. The registered callback is
+`https://chatgpt.com/connector_platform_oauth_redirect`; verify that exact URI
+in the connector settings. Complete Pocket ID passkey authentication there.
+
+Claude Code and Codex can connect directly to the private HTTPS MCP URL from
+the Tailnet using CIMD. The allowlist contains only the published metadata
+URLs for Claude, Claude Code, and Codex. Claude's hosted service would need a
+separate reachable transport; the OpenAI tunnel is not a generic Claude proxy.
+ChatGPT's current CIMD document prefers `private_key_jwt`, which Pocket ID's
+public-client-only CIMD implementation rejects, hence its separate fixed client.
+
+Pocket ID UI configuration is disabled so Nix environment settings actually
+control the CIMD allowlist. Existing settings were checked before switching;
+user signup remains disabled. API permissions and grants use the committed
+manifest and existing deployment workflow described in
+[the infrastructure README](../infra/pocket-id/README.md), because the pinned
+Pocket ID Terraform provider does not expose these API features.

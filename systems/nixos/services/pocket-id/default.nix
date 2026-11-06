@@ -10,6 +10,14 @@
       TRUST_PROXY = true;
       TRUSTED_PLATFORM = "CF-Connecting-IP";
       ANALYTICS_DISABLED = true;
+      # UI-managed settings are otherwise read from the database, ignoring env.
+      UI_CONFIG_DISABLED = true;
+      ALLOW_USER_SIGNUPS = "disabled";
+      CIMD_URL_ALLOWLIST = builtins.toJSON [
+        "https://claude.ai/oauth/mcp-oauth-client-metadata"
+        "https://claude.ai/oauth/claude-code-client-metadata"
+        "https://chatgpt.com/oauth/codex/client.json"
+      ];
     };
     credentials.ENCRYPTION_KEY = config.sops.secrets.pocket-id-encryption-key.path;
     credentials.STATIC_API_KEY = config.sops.secrets.pocket-id-api-key.path;

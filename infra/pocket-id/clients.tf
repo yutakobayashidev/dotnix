@@ -1,5 +1,17 @@
 locals {
   clients = {
+    ori = {
+      name          = "Ori"
+      launch_url    = "https://home.yutakobayashi.com"
+      callback_urls = ["https://home.yutakobayashi.com/api/auth/callback"]
+      pkce_enabled  = true
+    }
+    ori-chatgpt = {
+      name          = "Ori MCP (ChatGPT)"
+      launch_url    = "https://chatgpt.com"
+      callback_urls = ["https://chatgpt.com/connector_platform_oauth_redirect"]
+      pkce_enabled  = true
+    }
     grafana = {
       name          = "Grafana"
       launch_url    = "https://grafana.home.yutakobayashi.com"

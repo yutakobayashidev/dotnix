@@ -1,0 +1,15 @@
+{
+	"name": "Ori MCP",
+	"resource": "https://home.yutakobayashi.com/mcp",
+	"permissions": [
+		{
+			"key": "ori:mcp",
+			"name": "Use Ori MCP",
+			"description": "Access the owner's Ori workspace through MCP"
+		}
+	],
+	"cimdPermissions": ["ori:mcp"],
+	"clientPermissions": {
+		"ori-chatgpt": ["ori:mcp"]
+	}
+}

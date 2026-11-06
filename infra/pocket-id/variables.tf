@@ -1,12 +1,14 @@
 variable "client_secrets" {
   description = "Client secrets shared with the applications through SOPS"
   type = object({
-    grafana   = string
-    linkding  = string
-    immich    = string
-    moe       = string
-    gitea     = string
-    nextcloud = string
+    ori         = string
+    ori-chatgpt = string
+    grafana     = string
+    linkding    = string
+    immich      = string
+    moe         = string
+    gitea       = string
+    nextcloud   = string
   })
   sensitive = true
 }

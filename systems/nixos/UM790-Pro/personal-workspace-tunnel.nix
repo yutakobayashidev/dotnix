@@ -20,7 +20,7 @@ in
       mcp.server_urls = [
         {
           channel = "main";
-          url = "http://100.91.91.87:3006/mcp";
+          url = "https://home.yutakobayashi.com/mcp";
         }
       ];
     };

@@ -113,6 +113,9 @@ jobs:
           else
             nix develop ".#$INFRA_SHELL" --command tofu -chdir="$ROOT" plan "${plan_args[@]}" -input=false -no-color
           fi
+          if [[ "$ROOT" == "infra/pocket-id" ]]; then
+            nix develop ".#$INFRA_SHELL" --command python3 "$ROOT/sync-mcp.py" "$DEPLOY_MODE"
+          fi
       - name: Upload encrypted CI enrollment keys
         if: ${{ github.event_name == 'workflow_dispatch' && contains(fromJSON('["tailscale", "tailscale-ci"]'), inputs.target) && inputs.mode == 'apply' && inputs.ci_key_recipient != '' }}
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

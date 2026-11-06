@@ -75,7 +75,10 @@
 
         # Pocket ID uses its signed, locked upstream provider release.
         pocket-id-ci = pkgs.mkShell {
-          packages = [ pkgs.opentofu ];
+          packages = [
+            pkgs.opentofu
+            pkgs.python3
+          ];
         };
 
         infra-ci = pkgs.mkShell {

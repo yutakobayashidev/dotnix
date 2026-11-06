@@ -1,6 +1,7 @@
 # Pocket ID clients
 
-This root manages the Grafana, linkding, Immich, moe, Gitea, and Nextcloud
+This root manages the Grafana, linkding, Immich, moe, Gitea, Nextcloud, Ori,
+and Ori ChatGPT
 OIDC clients. Application-side configuration lives in the corresponding
 `systems/nixos/services/` modules. LiteLLM and n8n are intentionally excluded.
 
@@ -16,7 +17,7 @@ Required repository secrets:
 
 - `POCKETID_API_TOKEN`: the API credential configured in Pocket ID.
 - `POCKETID_CLIENT_SECRETS`: a JSON object with the keys `grafana`, `linkding`,
-  `immich`, `moe`, `gitea`, and `nextcloud`. Values must match the application
+  `immich`, `moe`, `gitea`, `nextcloud`, `ori`, and `ori-chatgpt`. Values must match the application
   secrets managed by SOPS.
 - Existing `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`,
   `STATE_ENCRYPTION_PASSPHRASE`, and `TS_AUTHKEY` infrastructure credentials.
@@ -44,3 +45,37 @@ tofu -chdir=infra/pocket-id apply
 Client secret changes must be applied to Pocket ID and the application's
 SOPS secret together; changing only one side prevents login. Local login
 remains available in the application configurations during migration.
+
+## Ori MCP API access
+
+`mcp.json` declares Ori's MCP resource identifier, permissions, and the
+permissions available to allowed CIMD clients. The global CIMD URL allowlist
+is configured separately in the Pocket ID NixOS module. Ori also validates
+the access token's audience, scope, and owner subject before accepting it.
+`clientPermissions` grants the fixed `ori-chatgpt` client user-delegated access
+to `ori:mcp`; it explicitly disables client-credentials access. This client
+is registered by OpenTofu before the reconciliation script runs.
+
+Trozz/pocketid 2.5.0 does not manage API resources or their grants.
+`sync-mcp.py` therefore reconciles this manifest after OpenTofu in the same
+deployment workflow. These API settings are **not in OpenTofu state**. Plan
+mode only reads and reports differences. Apply finds the API by its immutable
+resource identifier, creates it if absent, updates changed settings, and
+reads it again to verify the result. Repeated apply does not issue writes
+when settings match. No background service or timer is involved.
+
+```sh
+nix develop .#pocket-id-ci --command python3 infra/pocket-id/sync-mcp.py plan
+nix develop .#pocket-id-ci --command python3 infra/pocket-id/sync-mcp.py apply
+nix develop .#pocket-id-ci --command python3 -m unittest discover -s infra/pocket-id -p 'test_*.py'
+```
+
+Both deployment commands read `POCKETID_API_TOKEN` from the environment.
+The manifest owns the entire permission list and CIMD grant for this API;
+out-of-band changes are reported by plan and reconciled by apply. Changing
+the resource URI creates a new API and leaves the old API for an explicit
+migration/removal. To disable CIMD access, set `cimdPermissions` to `[]` and
+apply before removing this manifest or its workflow invocation.
+To revoke a managed fixed client's access, set its `clientPermissions` entry
+to `[]` and apply before removing the entry. Unlisted fixed clients are not
+modified by this script.
