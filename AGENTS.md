@@ -25,8 +25,8 @@ Skills are managed using `agent-skills-nix`. Skill-only repositories, including 
 When adding a new skill to `yutakobayashidev/skills`, prefer scanning with a GitHub URL to find existing skill implementations:
 
 ```bash
-OPENAI_BASE_URL=https://litellm.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>
-OPENAI_BASE_URL=https://litellm.home.yutakobayashi.com OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>/tree/main/path/to/skill
+OPENAI_BASE_URL=https://omniroute.home.yutakobayashi.com/v1 OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>
+OPENAI_BASE_URL=https://omniroute.home.yutakobayashi.com/v1 OPENAI_API_KEY=sk-proxy skillspector scan https://github.com/<user>/<repo>/tree/main/path/to/skill
 ```
 
 Update skill sources from the repository root:
@@ -79,6 +79,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
 - **Remote builds**: B450M-Pro4 and ThinkPad offload to UM790-Pro over Tailscale; see [rollout and offline build commands](docs/remote-build.md)
 - **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [GhidraMCP](docs/ghidra-mcp.md), on the ThinkPad
+- **AI gateway**: OmniRoute on B450M-Pro4, OpenCode Go / ChatGPT providers, and Birdclaw routing; see [migration and recovery](docs/omniroute.md).
 - **Observability**: Grafana / VictoriaMetrics / vmalert / Alertmanager / Loki / Tempo on B450M-Pro4, Claude Code and Codex OTLP telemetry, Grafana MCP via Secure Tunnel; see [monitoring setup and migration](docs/monitoring.md)
 - **Home automation**: Home Assistant / Matter.js for Lapis on B450M-Pro4, VictoriaMetrics history, ChatGPT MCP via Secure Tunnel, and local Restic backups; see [setup and restore](docs/home-assistant.md).
 

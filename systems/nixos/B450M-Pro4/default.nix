@@ -44,7 +44,7 @@
     ../services/starla
     ../services/uptime-kuma
     ../services/continuwuity
-    ../services/litellm
+    ../services/omniroute
     ../services/birdclaw
     ../services/searxng
     ../services/linkding

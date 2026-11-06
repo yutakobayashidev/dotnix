@@ -400,10 +400,15 @@ resource "uptimekuma_monitor_http" "nostr" {
   ]
 }
 
-resource "uptimekuma_monitor_http" "litellm" {
-  name                  = "LiteLLM"
-  url                   = "https://litellm.home.yutakobayashi.com"
-  accepted_status_codes = ["200-299", "401", "404"]
+moved {
+  from = uptimekuma_monitor_http.litellm
+  to   = uptimekuma_monitor_http.omniroute
+}
+
+resource "uptimekuma_monitor_http" "omniroute" {
+  name                  = "OmniRoute"
+  url                   = "https://omniroute.home.yutakobayashi.com/api/health/ping"
+  accepted_status_codes = ["200-299"]
   interval              = 60
   timeout               = 30
   max_retries           = 0
