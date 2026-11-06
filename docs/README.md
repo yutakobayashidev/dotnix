@@ -18,6 +18,7 @@
 - [tailnet-lock.md](tailnet-lock.md) - Tailnet Lock rollout, CI credentials and recovery
 - [home-assistant.md](home-assistant.md) - Lapis Matter pairing, history, metrics and Restic backups
 - [remote-build.md](remote-build.md) - Build B450M and ThinkPad packages on UM790 over Tailscale
+- [rsshub.md](rsshub.md) - RSSHub private routes and scheduled DISTANCE MEDIA snapshots
 - [B450M-Pro4-HDD-service-storage.md](B450M-Pro4-HDD-service-storage.md) - B450M-Pro4 HDD service storage setup
 - [B450M-Pro4-s3s.md](B450M-Pro4-s3s.md) - s3s (Splatoon 3 stats uploader) workflow
 - [hermes-agent-discord.md](hermes-agent-discord.md) - Discord setup for the UM790-Pro Hermes Agent microVM
