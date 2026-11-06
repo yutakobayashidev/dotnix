@@ -218,6 +218,29 @@ use a device-specific last-seen measurement when available. Sampled appliance
 states cannot guarantee every short event is observed. Door/lock checks are
 operational reminders, not a replacement for a security alarm.
 
+## Ori MCP
+
+Ori on UM790-Pro sends MCP traces and operation-duration metrics through the
+existing Tailnet OTLP HTTP collector on B450M-Pro4. Traces are stored in Tempo
+and metrics in VictoriaMetrics. The web process uses `service.name=ori`; the
+event delivery worker uses `service.name=ori-events`. No additional public
+ingress or tracing service is needed.
+
+The [Ori MCP dashboard](https://grafana.home.yutakobayashi.com/d/ori-mcp)
+shows tool call rates, p95 latency, server errors and recent traces.
+In Grafana Explore, select Tempo and query `{ resource.service.name = "ori" }`
+to inspect MCP calls. Tool errors, including MCP results with `isError: true`,
+are represented in the SDK spans. Outgoing event delivery spans cover webhook
+attempts; retries remain managed by Ori's existing outbox.
+
+New MCP communication records are no longer written to Ori's SQLite history.
+Existing history is retained, and activity change audit records remain enabled.
+The SDK does not capture tool arguments or result bodies. Error messages and
+resource URIs can still appear in traces; the collector's known-attribute scrub
+is not a general-purpose content sanitizer. Client-to-server trace continuity
+requires the client to propagate trace context; server instrumentation alone
+does not expose the client's conversation or reasoning.
+
 ## Claude Code and Codex
 
 The managed CLI configurations enable OTLP exporters while disabling raw

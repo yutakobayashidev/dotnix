@@ -1,0 +1,350 @@
+{
+	"uid": "ori-mcp",
+	"title": "Ori MCP",
+	"description": "Native MCP SDK operation metrics and traces. Metrics are exported through the shared OTLP collector to VictoriaMetrics; traces are stored in Tempo. Durations are seconds.",
+	"tags": ["ori", "mcp"],
+	"schemaVersion": 39,
+	"version": 1,
+	"refresh": "30s",
+	"time": {
+		"from": "now-6h",
+		"to": "now"
+	},
+	"timezone": "browser",
+	"panels": [
+		{
+			"id": 1,
+			"title": "Tool calls in selected range",
+			"type": "stat",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 12,
+				"h": 4
+			},
+			"description": "Completed tools/call operations. Counter increases need multiple exports and can undercount short sessions; use traces for individual calls.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "sum(increase(mcp_server_operation_duration_count{service_name=\"ori\",mcp_method_name=\"tools/call\"}[$__range]))",
+					"legendFormat": "Tool calls",
+					"instant": true,
+					"range": false
+				}
+			],
+			"options": {
+				"colorMode": "value",
+				"graphMode": "none",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"id": 2,
+			"title": "Server errors in selected range",
+			"type": "stat",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 0,
+				"w": 12,
+				"h": 4
+			},
+			"description": "SDK server failures, including tool results with isError=true. Caller errors such as invalid arguments are not classified as server failures.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "sum(increase(mcp_server_operation_duration_count{service_name=\"ori\",error_type!=\"\"}[$__range])) or (0 * sum(increase(mcp_server_operation_duration_count{service_name=\"ori\"}[$__range])))",
+					"legendFormat": "Errors",
+					"instant": true,
+					"range": false
+				}
+			],
+			"options": {
+				"colorMode": "value",
+				"graphMode": "none",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"id": 3,
+			"title": "Tool calls per minute",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 4,
+				"w": 12,
+				"h": 8
+			},
+			"description": "",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "60 * sum by (gen_ai_tool_name) (rate(mcp_server_operation_duration_count{service_name=\"ori\",mcp_method_name=\"tools/call\"}[$__rate_interval]))",
+					"legendFormat": "{{gen_ai_tool_name}}",
+					"instant": false,
+					"range": true
+				}
+			],
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 4,
+			"title": "Tool duration p95",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 4,
+				"w": 12,
+				"h": 8
+			},
+			"description": "",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "histogram_quantile(0.95, sum by (le, gen_ai_tool_name) (rate(mcp_server_operation_duration_bucket{service_name=\"ori\",mcp_method_name=\"tools/call\"}[$__rate_interval])))",
+					"legendFormat": "{{gen_ai_tool_name}}",
+					"instant": false,
+					"range": true
+				}
+			],
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 5,
+			"title": "MCP operations per minute",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 12,
+				"w": 12,
+				"h": 8
+			},
+			"description": "Requests and notifications observed by the SDK, grouped by MCP method.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "60 * sum by (mcp_method_name) (rate(mcp_server_operation_duration_count{service_name=\"ori\"}[$__rate_interval]))",
+					"legendFormat": "{{mcp_method_name}}",
+					"instant": false,
+					"range": true
+				}
+			],
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 6,
+			"title": "Server errors per minute",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 12,
+				"w": 12,
+				"h": 8
+			},
+			"description": "No error series is emitted until a failure occurs.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "prometheus",
+						"uid": "PBFA97CFB590B2093"
+					},
+					"expr": "60 * sum by (mcp_method_name, gen_ai_tool_name, error_type) (rate(mcp_server_operation_duration_count{service_name=\"ori\",error_type!=\"\"}[$__rate_interval]))",
+					"legendFormat": "{{mcp_method_name}} {{gen_ai_tool_name}} {{error_type}}",
+					"instant": false,
+					"range": true
+				}
+			],
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 7,
+			"title": "Recent Ori traces",
+			"type": "table",
+			"datasource": {
+				"type": "tempo",
+				"uid": "tempo"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 20,
+				"w": 24,
+				"h": 10
+			},
+			"description": "Open a trace to inspect MCP methods, tool names, errors and duration. Tool arguments and result bodies are not collected. Includes event delivery spans from ori-events.",
+			"options": {
+				"showHeader": true
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"datasource": {
+						"type": "tempo",
+						"uid": "tempo"
+					},
+					"queryType": "traceql",
+					"query": "{ resource.service.name =~ \"ori|ori-events\" }",
+					"tableType": "traces",
+					"limit": 50
+				}
+			]
+		}
+	],
+	"templating": {
+		"list": []
+	},
+	"annotations": {
+		"list": []
+	}
+}

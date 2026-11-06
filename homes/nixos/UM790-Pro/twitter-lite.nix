@@ -46,6 +46,8 @@ let
   '';
   sharedEnvironment = [
     "NODE_ENV=production"
+    "OTEL_EXPORTER_OTLP_ENDPOINT=http://B450M-Pro4.tail29d068.ts.net:4318"
+    "OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf"
     "TWITTER_LITE_DB_PATH=${stateDir}/workspace.sqlite"
     "TWITTER_LITE_CREDENTIAL_KEY_FILE=${credentialKey}"
     "TWITTER_LITE_BEEPER_CLI=${lib.getExe pkgs.beeper-cli}"
@@ -143,6 +145,7 @@ in
         ExecStart = "${app}/bin/twitter-lite-events-worker";
         WorkingDirectory = config.home.homeDirectory;
         Environment = sharedEnvironment ++ [
+          "OTEL_SERVICE_NAME=ori-events"
           "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
         ];
         UMask = "0077";
@@ -167,6 +170,7 @@ in
         WorkingDirectory = config.home.homeDirectory;
         EnvironmentFile = config.sops.secrets.ori-typesafe-env.path;
         Environment = environment ++ [
+          "OTEL_SERVICE_NAME=ori"
           "HOST=100.91.91.87"
           "PORT=3006"
           # The Traefik router enforces Tailnet access; browser login uses OIDC.
