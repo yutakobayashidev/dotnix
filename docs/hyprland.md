@@ -26,26 +26,26 @@ Hyprland graphical session target so shared desktop services can run.
 
 ## Shortcuts
 
-| Shortcut | Action |
-| --- | --- |
-| Super+Q | Ghostty |
-| Super+E | Nautilus |
-| Super+R | Vicinae |
-| Super+V | Clipboard history |
-| Super+C | Close window |
-| Super+L | Lock session |
-| Super+Shift+M | Exit Hyprland |
-| Super+Shift+F | Toggle floating |
-| Super+J | Toggle dwindle split |
-| Super+arrow | Focus window |
-| Super+1…0 | Switch workspace 1…10 |
-| Super+Shift+1…0 | Move window to workspace 1…10 |
-| Super+S | Toggle scratchpad |
-| Super+Ctrl+S | Move window to scratchpad |
-| Super+left/right mouse drag | Move/resize window |
-| Super+] | Copy output screenshot |
-| Super+Shift+] | Copy active window screenshot |
-| Super+Shift+S | Copy selected area screenshot |
+| Shortcut                    | Action                        |
+| --------------------------- | ----------------------------- |
+| Super+Q                     | Ghostty                       |
+| Super+E                     | Nautilus                      |
+| Super+R                     | Vicinae                       |
+| Super+V                     | Clipboard history             |
+| Super+C                     | Close window                  |
+| Super+L                     | Lock session                  |
+| Super+Shift+M               | Exit Hyprland                 |
+| Super+Shift+F               | Toggle floating               |
+| Super+J                     | Toggle dwindle split          |
+| Super+arrow                 | Focus window                  |
+| Super+1…0                   | Switch workspace 1…10         |
+| Super+Shift+1…0             | Move window to workspace 1…10 |
+| Super+S                     | Toggle scratchpad             |
+| Super+Ctrl+S                | Move window to scratchpad     |
+| Super+left/right mouse drag | Move/resize window            |
+| Super+]                     | Copy output screenshot        |
+| Super+Shift+]               | Copy active window screenshot |
+| Super+Shift+S               | Copy selected area screenshot |
 
 ## Verification
 
