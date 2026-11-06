@@ -298,27 +298,6 @@ resource "uptimekuma_monitor_http" "rsshub" {
   ]
 }
 
-resource "uptimekuma_monitor_http" "headroom" {
-  name                  = "Headroom"
-  url                   = "https://headroom.home.yutakobayashi.com"
-  accepted_status_codes = ["200-299", "401", "404"]
-  interval              = 60
-  timeout               = 30
-  max_retries           = 0
-  retry_interval        = 60
-  resend_interval       = 300
-  active                = true
-  method                = "GET"
-  max_redirects         = 10
-  parent                = uptimekuma_monitor_group.internal.id
-  notification_ids      = local.default_notification_ids
-  tags = [
-    {
-      tag_id = uptimekuma_tag.service.id
-    },
-  ]
-}
-
 resource "uptimekuma_monitor_http" "aivisspeech" {
   name             = "AivisSpeech"
   url              = "https://aivisspeech.home.yutakobayashi.com"

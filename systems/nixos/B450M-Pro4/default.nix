@@ -38,7 +38,6 @@
     ../services/twitter-bookmark-snap
     ../services/twitter-lite
     ../services/s3s
-    ../services/headroom
     ../services/aivisspeech
     ../services/voicevox
     ../services/starla

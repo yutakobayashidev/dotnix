@@ -68,10 +68,6 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
-          id       = uptimekuma_monitor_http.headroom.id
-          send_url = true
-        },
-        {
           id       = uptimekuma_monitor_http.aivisspeech.id
           send_url = true
         },
