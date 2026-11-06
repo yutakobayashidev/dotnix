@@ -19,4 +19,8 @@
     key = "encryption-key";
     restartUnits = [ "pocket-id.service" ];
   };
+
+  my.services.cloudflared-tunnel.ingress."id.yutakobayashi.com" = {
+    service = "http://127.0.0.1:1411";
+  };
 }
