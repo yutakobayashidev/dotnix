@@ -36,6 +36,7 @@ in
         "moe-redis"
       ];
       environment = {
+        IMMICH_CONFIG_FILE = "/config/immich.json";
         DB_HOSTNAME = "database";
         DB_USERNAME = "postgres";
         DB_DATABASE_NAME = "immich";
@@ -43,6 +44,7 @@ in
       };
       environmentFiles = [ "${stateDir}/database.env" ];
       volumes = [
+        "${config.sops.templates."moe-immich.json".path}:/config/immich.json:ro"
         "${stateDir}/library:/data"
         "/var/lib/immich-net-pics:/external/net-pics:ro"
         "/srv/bulk/gallery-dl:/external/gallery-dl:ro"
@@ -71,6 +73,27 @@ in
         "--shm-size=128m"
       ];
     };
+  };
+
+  sops.templates."moe-immich.json" = {
+    content = builtins.toJSON {
+      storageTemplate = {
+        enabled = true;
+        template = "{{y}}/{{MM}}/{{dd}}/{{filename}}";
+      };
+      passwordLogin.enabled = true;
+      oauth = {
+        enabled = true;
+        issuerUrl = "https://id.yutakobayashi.com";
+        clientId = "moe";
+        clientSecret = config.sops.placeholder.oidc-moe-client-secret;
+        scope = "openid profile email";
+        buttonText = "Login with Pocket ID";
+        autoRegister = false;
+        autoLaunch = false;
+      };
+    };
+    restartUnits = [ "podman-moe-server.service" ];
   };
 
   systemd.services = {

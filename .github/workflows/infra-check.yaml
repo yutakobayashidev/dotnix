@@ -10,6 +10,7 @@ on:
       - '.github/workflows/infra-check.yaml'
       - '.github/workflows/infra-deploy.yaml'
       - 'infra/gitea/**'
+      - 'infra/pocket-id/**'
       - 'infra/uptime-kuma/**'
       - 'infra/tailscale/**'
       - 'modules/per-system/dev-shell.nix'
@@ -21,6 +22,7 @@ on:
       - '.github/workflows/infra-check.yaml'
       - '.github/workflows/infra-deploy.yaml'
       - 'infra/gitea/**'
+      - 'infra/pocket-id/**'
       - 'infra/uptime-kuma/**'
       - 'infra/tailscale/**'
       - 'modules/per-system/dev-shell.nix'
@@ -47,6 +49,7 @@ jobs:
       - name: OpenTofu fmt
         run: |
           nix develop .#infra-ci --command tofu -chdir=infra/gitea fmt -check
+          nix develop .#pocket-id-ci --command tofu -chdir=infra/pocket-id fmt -check
           nix develop .#infra-ci --command tofu -chdir=infra/uptime-kuma fmt -check
           nix develop .#infra-ci --command tofu -chdir=infra/tailscale fmt -check
 
@@ -63,12 +66,15 @@ jobs:
         include:
           - name: gitea
             root: infra/gitea
+          - name: pocket-id
+            root: infra/pocket-id
           - name: uptime-kuma
             root: infra/uptime-kuma
           - name: tailscale
             root: infra/tailscale
     env:
       TF_IN_AUTOMATION: 'true'
+      INFRA_SHELL: ${{ matrix.name == 'pocket-id' && 'pocket-id-ci' || 'infra-ci' }}
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -79,5 +85,5 @@ jobs:
           GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
           TF_VAR_state_encryption_passphrase: ${{ secrets.STATE_ENCRYPTION_PASSPHRASE }}
         run: |
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} init -backend=false
-          nix develop .#infra-ci --command tofu -chdir=${{ matrix.root }} validate
+          nix develop ".#$INFRA_SHELL" --command tofu -chdir=${{ matrix.root }} init -backend=false
+          nix develop ".#$INFRA_SHELL" --command tofu -chdir=${{ matrix.root }} validate

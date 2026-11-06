@@ -39,7 +39,7 @@ For initial setup, see the [installation guides](docs/README.md#system-installat
 - [GitHub Actions dependency checks](docs/github-actions.md)
 - [Home Assistant, Lapis, ChatGPT MCP and backups](docs/home-assistant.md)
 - [RSSHub and the DISTANCE MEDIA feed](docs/rsshub.md)
-- [Pocket ID via Cloudflare Tunnel](docs/pocket-id.md)
+- [Pocket ID via Cloudflare Tunnel and declarative application SSO](docs/pocket-id.md)
 - [moe: net pics and gallery-dl Immich on HDD](docs/moe.md)
 - [Grok Bot VM environment](docs/grok-bot.md)
 - [Agent skills](docs/agent-skills.md)

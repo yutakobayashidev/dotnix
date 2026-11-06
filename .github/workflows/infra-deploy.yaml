@@ -10,6 +10,7 @@ on:
         options:
           - uptime-kuma
           - gitea
+          - pocket-id
           - tailscale
           - tailscale-ci
       mode:
@@ -46,10 +47,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        name: ${{ github.event_name == 'workflow_dispatch' && fromJSON(format('["{0}"]', inputs.target)) || fromJSON('["gitea", "uptime-kuma", "tailscale"]') }}
+        name: ${{ github.event_name == 'workflow_dispatch' && fromJSON(format('["{0}"]', inputs.target)) || fromJSON('["gitea", "uptime-kuma", "tailscale", "pocket-id"]') }}
     env:
       AWS_EC2_METADATA_DISABLED: 'true'
       TF_IN_AUTOMATION: 'true'
+      INFRA_SHELL: ${{ matrix.name == 'pocket-id' && 'pocket-id-ci' || 'infra-ci' }}
     steps:
       - name: Setup Nix
         uses: $/.github/actions/setup-nix
@@ -74,6 +76,8 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
           GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
+          POCKETID_API_TOKEN: ${{ matrix.name == 'pocket-id' && secrets.POCKETID_API_TOKEN || '' }}
+          TF_VAR_client_secrets: ${{ matrix.name == 'pocket-id' && secrets.POCKETID_CLIENT_SECRETS || '' }}
           R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
           TF_VAR_tailscale_api_key: ${{ secrets.TAILSCALE_API_KEY }}
           TF_VAR_uptimekuma_endpoint: https://status.home.yutakobayashi.com
@@ -95,19 +99,19 @@ jobs:
             )
           fi
 
-          nix develop .#infra-ci --command tofu -chdir="$ROOT" init \
+          nix develop ".#$INFRA_SHELL" --command tofu -chdir="$ROOT" init \
             -reconfigure \
             -backend-config="endpoints={s3=\"$R2_ENDPOINT\"}"
           if [[ "$DEPLOY_MODE" == "apply" ]]; then
-            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan "${plan_args[@]}" -out=tfplan -input=false
-            nix develop .#infra-ci --command tofu -chdir="$ROOT" apply -input=false -auto-approve tfplan
+            nix develop ".#$INFRA_SHELL" --command tofu -chdir="$ROOT" plan "${plan_args[@]}" -out=tfplan -input=false
+            nix develop ".#$INFRA_SHELL" --command tofu -chdir="$ROOT" apply -input=false -auto-approve tfplan
             if [[ "$ROOT" == "infra/tailscale" && -n "$CI_KEY_RECIPIENT" ]]; then
-              nix develop .#infra-ci --command tofu -chdir="$ROOT" output -json ci_auth_keys \
-                | nix develop .#infra-ci --command age -r "$CI_KEY_RECIPIENT" \
+              nix develop ".#$INFRA_SHELL" --command tofu -chdir="$ROOT" output -json ci_auth_keys \
+                | nix develop ".#$INFRA_SHELL" --command age -r "$CI_KEY_RECIPIENT" \
                     -o "$RUNNER_TEMP/tailscale-ci-keys.age"
             fi
           else
-            nix develop .#infra-ci --command tofu -chdir="$ROOT" plan "${plan_args[@]}" -input=false -no-color
+            nix develop ".#$INFRA_SHELL" --command tofu -chdir="$ROOT" plan "${plan_args[@]}" -input=false -no-color
           fi
       - name: Upload encrypted CI enrollment keys
         if: ${{ github.event_name == 'workflow_dispatch' && contains(fromJSON('["tailscale", "tailscale-ci"]'), inputs.target) && inputs.mode == 'apply' && inputs.ci_key_recipient != '' }}

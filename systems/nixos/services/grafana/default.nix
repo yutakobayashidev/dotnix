@@ -16,9 +16,26 @@
         http_addr = "0.0.0.0";
         http_port = 3001;
         enable_gzip = true;
+        root_url = "https://grafana.home.yutakobayashi.com";
       };
       security.secret_key = "$__file{${config.sops.secrets.grafana-secret-key.path}}";
       analytics.reporting_enabled = false;
+      "auth.generic_oauth" = {
+        enabled = true;
+        name = "Pocket ID";
+        client_id = "grafana";
+        client_secret = "$__file{${config.sops.secrets.oidc-grafana-client-secret.path}}";
+        scopes = "openid profile email";
+        auth_url = "https://id.yutakobayashi.com/authorize";
+        token_url = "https://id.yutakobayashi.com/api/oidc/token";
+        api_url = "https://id.yutakobayashi.com/api/oidc/userinfo";
+        login_attribute_path = "preferred_username";
+        use_pkce = true;
+        auto_login = false;
+        allow_sign_up = false;
+        # Keep existing organization roles and administrator privileges.
+        skip_org_role_sync = true;
+      };
     };
     provision = {
       enable = true;
@@ -66,6 +83,11 @@
   sops.secrets.grafana-secret-key = {
     sopsFile = ./secrets.yaml;
     owner = "grafana";
+  };
+
+  sops.secrets.oidc-grafana-client-secret = {
+    owner = "grafana";
+    restartUnits = [ "grafana.service" ];
   };
 
   services.traefik.dynamicConfigOptions.http = {
