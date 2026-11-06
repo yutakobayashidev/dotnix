@@ -239,9 +239,13 @@ New MCP communication records are no longer written to Ori's SQLite history.
 Existing history is retained, and activity change audit records remain enabled.
 The SDK does not capture tool arguments or result bodies. Error messages and
 resource URIs can still appear in traces; the collector's known-attribute scrub
-is not a general-purpose content sanitizer. Client-to-server trace continuity
-requires the client to propagate trace context; server instrumentation alone
-does not expose the client's conversation or reasoning.
+is not a general-purpose content sanitizer.
+
+Each incoming MCP request starts its own trace and links to any client trace
+context. This keeps a long client session from exhausting Tempo's per-trace
+size limit and dropping subsequent MCP calls. Nested work within the request
+remains in its trace. Server instrumentation does not expose the client's
+conversation or reasoning.
 
 ## Claude Code and Codex
 
