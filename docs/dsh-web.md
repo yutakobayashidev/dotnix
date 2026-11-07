@@ -56,17 +56,35 @@ site's cookies before reopening the homepage.
 
 ## Models and providers
 
-`homes/nixos/UM790-Pro/dsh.nix` declares three providers:
+`homes/nixos/UM790-Pro/dsh.nix` declares two native providers:
 
-- `litellm-chat`: Chat Completions models from B450M-Pro4's LiteLLM registry.
-- `litellm-responses`: the registry's Responses models, including ChatGPT models.
-- `openai-codex`: the bundled pi-ai route for direct ChatGPT/Codex sign-in.
+- `opencode-go`: direct OpenCode Go access using the bundled pi-ai model catalog
+  and per-conversation session-header handling.
+- `openai-codex`: direct ChatGPT/Codex access using its bundled model catalog and
+  authentication implementation. Initial interactive sign-in in dsh is required;
+  it does not reuse LiteLLM's credentials.
 
-The LiteLLM model lists come from the server's Nix configuration; model IDs match
-its `model_name` values. The service receives the gateway's existing shared key
-through its environment. Actual upstream API credentials and ChatGPT refresh
-state stay on the LiteLLM server. Direct `openai-codex` use requires an initial
-interactive sign-in in dsh; it does not reuse LiteLLM's credentials.
+Both providers intentionally omit `api`, `baseURL`, and model overrides. Setting
+an explicit `api` would replace the native provider dispatch with a generic
+adapter and bypass OpenCode's session-header handling. Provider catalogs update
+with the dsh package rather than copying legacy model names from LiteLLM.
+
+OpenCode's existing key remains in
+`systems/nixos/services/litellm/secrets.yaml`, encrypted for B450M-Pro4 and UM790-Pro.
+Home Manager sops-nix renders a user-only `dsh-web.env` at runtime, and systemd
+loads it through `EnvironmentFile` after `sops-nix.service`. The plaintext key
+is not embedded in the Nix store or the unit definition.
+
+The shared OpenCode key was reported expired on 2026-11-07. It must be replaced
+in OpenCode Console and the encrypted file before generation can succeed; see
+[LiteLLM credential maintenance](litellm.md#verification-and-credentials). After
+a key replacement is deployed, restart `dsh-web.service` so it reloads the
+rendered environment file.
+
+The duplicate `litellm-chat` and `litellm-responses` routes are removed. LiteLLM
+itself remains available to other clients. Add a separate dsh route if local
+models or other gateway-only models are needed; do not route these native
+providers through it.
 
 The existing default and per-session model selections are preserved. Select a
 registered model in the UI as needed. dsh's separate web-search provider still needs its own configuration;
@@ -82,16 +100,18 @@ for persistent provider changes. Existing mutable profile files and
 credential storage are preserved. Configuration contains credential references,
 not upstream API keys. No model request is sent to Codex until it is selected.
 
-### Upstream availability
+### Model availability and validation
 
-Registry membership is not proof that an upstream account can use a model.
-During validation on 2026-11-07, dsh registered all three routes, but LiteLLM
-rejected `chatgpt/gpt-5.5` and `chatgpt/gpt-5.4` as unsupported by its ChatGPT
-account. The `deepseek-v4-flash` request was rejected by OpenCode Go for missing
-session metadata. Its [client requirements](https://opencode.ai/docs/console/go/#where-can-i-use-it)
-list incomplete DeepSeek Harness session-header support as a known issue.
-These failures are not fixed by declaring providers. No synthetic session header
-or downstream adapter patch is added here; no failing model is forced as default.
+When switching from the former LiteLLM routes, select a native provider/model
+for existing sessions that still reference `litellm-chat` or `litellm-responses`.
+No default model or saved conversation is rewritten. Account authorization and
+upstream availability still determine which catalog entries can actually run.
+
+The previous generic OpenCode route omitted `x-opencode-session`, and the
+LiteLLM ChatGPT registry contained rejected legacy model IDs. Native providers
+avoid those overrides. OpenCode's [client requirements](https://opencode.ai/docs/console/go/#where-can-i-use-it)
+require a stable session ID per conversation; no synthetic constant header or
+custom adapter patch is used here.
 
 ## Endpoint verification
 
