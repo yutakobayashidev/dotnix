@@ -54,8 +54,46 @@ removed by the browser and sign-in is automatic again. As in the reference
 implementation, a corrupt cookie with a `dsh-auth-` name requires clearing the
 site's cookies before reopening the homepage.
 
-Model credentials and profiles must be configured for the UM790-Pro user in
-dsh; this module does not provision a DeepSeek API key.
+## Models and providers
+
+`homes/nixos/UM790-Pro/dsh.nix` declares three providers:
+
+- `litellm-chat`: Chat Completions models from B450M-Pro4's LiteLLM registry.
+- `litellm-responses`: the registry's Responses models, including ChatGPT models.
+- `openai-codex`: the bundled pi-ai route for direct ChatGPT/Codex sign-in.
+
+The LiteLLM model lists come from the server's Nix configuration; model IDs match
+its `model_name` values. The service receives the gateway's existing shared key
+through its environment. Actual upstream API credentials and ChatGPT refresh
+state stay on the LiteLLM server. Direct `openai-codex` use requires an initial
+interactive sign-in in dsh; it does not reuse LiteLLM's credentials.
+
+The existing default and per-session model selections are preserved. Select a
+registered model in the UI as needed. dsh's separate web-search provider still needs its own configuration;
+adding a model provider does not configure search.
+
+`my.programs.dsh.web.settings` generates an upstream `--patch` overlay for the
+Web service. This follows the declarative provider approach in
+[codgician/serenitea-pot](https://github.com/codgician/serenitea-pot/blob/HEAD/hm-modules/codgi/generic/dsh/default.nix)
+and the bundled Codex route in
+[jadeezomg/flake](https://github.com/jadeezomg/flake/blob/9aef41879898327d12131afcc5c0b56e2b802265/modules/profiles/devenv/agents/dsh.nix).
+The generated overlay takes precedence over saved profile settings; edit Nix
+for persistent provider changes. Existing mutable profile files and
+credential storage are preserved. Configuration contains credential references,
+not upstream API keys. No model request is sent to Codex until it is selected.
+
+### Upstream availability
+
+Registry membership is not proof that an upstream account can use a model.
+During validation on 2026-11-07, dsh registered all three routes, but LiteLLM
+rejected `chatgpt/gpt-5.5` and `chatgpt/gpt-5.4` as unsupported by its ChatGPT
+account. The `deepseek-v4-flash` request was rejected by OpenCode Go for missing
+session metadata. Its [client requirements](https://opencode.ai/docs/console/go/#where-can-i-use-it)
+list incomplete DeepSeek Harness session-header support as a known issue.
+These failures are not fixed by declaring providers. No synthetic session header
+or downstream adapter patch is added here; no failing model is forced as default.
+
+## Endpoint verification
 
 From a Tailnet client, check the HTTPS entry point:
 

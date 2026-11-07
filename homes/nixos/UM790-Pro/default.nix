@@ -9,6 +9,7 @@
       ../desktop.nix
       ./twitter-lite.nix
       ./beeper.nix
+      ./dsh.nix
     ];
     my.programs.course-cli.enable = true;
     my.programs.dsh.web = {

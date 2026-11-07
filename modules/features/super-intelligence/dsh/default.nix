@@ -11,6 +11,9 @@ _:
     let
       cfg = config.my.programs.dsh;
       autoAuth = import ./auto-auth.nix { inherit config lib pkgs; };
+      webPatch = (pkgs.formats.yaml { }).generate "dsh-web-providers.yml" (
+        lib.mapAttrsToList (id: config: { inherit id config; }) cfg.web.settings
+      );
     in
     {
       options.my.programs.dsh = {
@@ -18,6 +21,11 @@ _:
         web = {
           enable = lib.mkEnableOption "DeepSeek Harness Web";
           autoAuth = lib.mkEnableOption "NixKits-style automatic browser sign-in on a trusted network";
+          settings = lib.mkOption {
+            type = lib.types.attrsOf (lib.types.attrsOf lib.types.anything);
+            default = { };
+            description = "Plugin entry config overrides applied through a declarative --patch layer. Use credential references, not secret values.";
+          };
           backendPort = lib.mkOption {
             type = lib.types.port;
             default = 3082;
@@ -57,7 +65,14 @@ _:
               lib.escapeShellArgs (
                 [
                   "${pkgs.llm-agents.dsh}/bin/dsh"
+                  "--profile"
                   "web"
+                ]
+                ++ lib.optionals (cfg.web.settings != { }) [
+                  "--patch"
+                  (toString webPatch)
+                ]
+                ++ [
                   "--no-open"
                   "--host"
                   (if cfg.web.autoAuth then "127.0.0.1" else cfg.web.host)
