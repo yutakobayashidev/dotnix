@@ -13,6 +13,7 @@
     my.programs.course-cli.enable = true;
     my.programs.dsh.web = {
       enable = true;
+      autoAuth = true;
       host = "100.91.91.87";
       publicUrl = "https://dsh.home.yutakobayashi.com/";
       trustedHosts = [ "dsh.home.yutakobayashi.com" ];

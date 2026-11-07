@@ -10,12 +10,19 @@ _:
     }:
     let
       cfg = config.my.programs.dsh;
+      autoAuth = import ./auto-auth.nix { inherit config lib pkgs; };
     in
     {
       options.my.programs.dsh = {
         enable = lib.mkEnableOption "DeepSeek Harness";
         web = {
           enable = lib.mkEnableOption "DeepSeek Harness Web";
+          autoAuth = lib.mkEnableOption "NixKits-style automatic browser sign-in on a trusted network";
+          backendPort = lib.mkOption {
+            type = lib.types.port;
+            default = 3082;
+            description = "Loopback dsh port when automatic sign-in is enabled.";
+          };
           host = lib.mkOption {
             type = lib.types.str;
             default = "127.0.0.1";
@@ -39,6 +46,9 @@ _:
 
       config = lib.mkIf cfg.enable {
         home.packages = [ pkgs.llm-agents.dsh ];
+        systemd.user.services.dsh-web-proxy = lib.mkIf (
+          cfg.web.enable && cfg.web.autoAuth
+        ) autoAuth.service;
         systemd.user.services.dsh-web = lib.mkIf cfg.web.enable {
           Unit.Description = "DeepSeek Harness Web";
           Install.WantedBy = [ "default.target" ];
@@ -49,9 +59,9 @@ _:
                 "web"
                 "--no-open"
                 "--host"
-                cfg.web.host
+                (if cfg.web.autoAuth then "127.0.0.1" else cfg.web.host)
                 "--port"
-                (toString cfg.web.port)
+                (toString (if cfg.web.autoAuth then cfg.web.backendPort else cfg.web.port))
                 "--public-url"
                 cfg.web.publicUrl
               ]
@@ -78,7 +88,8 @@ _:
             Restart = "on-failure";
             RestartSec = 5;
             UMask = "0077";
-          };
+          }
+          // lib.optionalAttrs cfg.web.autoAuth autoAuth.backendService;
         };
       };
     };
