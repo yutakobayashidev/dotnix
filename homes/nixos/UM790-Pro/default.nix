@@ -10,6 +10,7 @@
       ./twitter-lite.nix
       ./beeper.nix
       ./dsh.nix
+      ./opencode.nix
     ];
     my.programs.course-cli.enable = true;
     my.programs.dsh.web = {

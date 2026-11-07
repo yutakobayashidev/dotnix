@@ -39,6 +39,7 @@
     ../services/twitter-bookmark-snap
     ../services/twitter-lite
     ../services/dsh-web
+    ../services/opencode-web
     ../services/s3s
     ../services/aivisspeech
     ../services/voicevox
