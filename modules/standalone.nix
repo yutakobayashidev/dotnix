@@ -16,7 +16,6 @@
         {
           ax = inputs.ax.packages.${system}.default;
           edcb-tools = inputs.edcb-tools.packages.${system}.edcb-tools;
-          gogcli = inputs.nix-openclaw-tools.packages.${system}.gogcli;
           gh-graph = inputs.gh-graph.packages.${system}.default;
           gh-nippou = inputs.gh-nippou.packages.${system}.default;
           repiq = inputs.repiq.packages.${system}.default;

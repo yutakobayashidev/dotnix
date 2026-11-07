@@ -29,7 +29,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         copilot-cli.enable = lib.mkDefault true;
         cursor-agent.enable = lib.mkDefault true;
         dsh.enable = lib.mkDefault true;
-        gog.enable = lib.mkDefault true;
         grok.enable = lib.mkDefault true;
         herdr.enable = lib.mkDefault true;
         gh.enable = lib.mkDefault true;
