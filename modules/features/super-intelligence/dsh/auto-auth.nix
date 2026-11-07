@@ -64,11 +64,15 @@ let
   '';
 in
 {
+  wrap =
+    command:
+    pkgs.writeShellScript "dsh-web-start" ''
+      exec ${command} > "$RUNTIME_DIRECTORY/web.log"
+    '';
   backendService = {
     RuntimeDirectory = "dsh-web";
     RuntimeDirectoryMode = "0700";
     ExecStartPre = "${pkgs.coreutils}/bin/rm -f %t/dsh-web/launch-token %t/dsh-web/web.log";
-    StandardOutput = "append:%t/dsh-web/web.log";
     ExecStartPost = lib.getExe capture;
   };
   service = {

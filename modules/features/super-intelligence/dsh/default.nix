@@ -53,22 +53,24 @@ _:
           Unit.Description = "DeepSeek Harness Web";
           Install.WantedBy = [ "default.target" ];
           Service = {
-            ExecStart = lib.escapeShellArgs (
-              [
-                "${pkgs.llm-agents.dsh}/bin/dsh"
-                "web"
-                "--no-open"
-                "--host"
-                (if cfg.web.autoAuth then "127.0.0.1" else cfg.web.host)
-                "--port"
-                (toString (if cfg.web.autoAuth then cfg.web.backendPort else cfg.web.port))
-                "--public-url"
-                cfg.web.publicUrl
-              ]
-              ++ lib.concatMap (host: [
-                "--trusted-host"
-                host
-              ]) cfg.web.trustedHosts
+            ExecStart = (if cfg.web.autoAuth then autoAuth.wrap else command: command) (
+              lib.escapeShellArgs (
+                [
+                  "${pkgs.llm-agents.dsh}/bin/dsh"
+                  "web"
+                  "--no-open"
+                  "--host"
+                  (if cfg.web.autoAuth then "127.0.0.1" else cfg.web.host)
+                  "--port"
+                  (toString (if cfg.web.autoAuth then cfg.web.backendPort else cfg.web.port))
+                  "--public-url"
+                  cfg.web.publicUrl
+                ]
+                ++ lib.concatMap (host: [
+                  "--trusted-host"
+                  host
+                ]) cfg.web.trustedHosts
+              )
             );
             WorkingDirectory = config.home.homeDirectory;
             Environment = [
