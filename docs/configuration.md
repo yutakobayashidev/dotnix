@@ -217,7 +217,7 @@ are in the [desktop style report](noctalia-style-report.md).
 
 ## Managed tools
 
-- **AI Development**: claude-code, codex, dsh (DeepSeek Harness, including the [Web UI on UM790-Pro](dsh-web.md)), grok, opencode, pi, ccusage; Codex-enabled environments include [codex-transcribe](https://github.com/nakasyou/codex-transcribe) for audio transcription using the existing Codex login (`codex-transcribe recording.wav --language ja`)
+- **AI Development**: amp (Amp), omp (Oh My Pi), claude-code, codex, dsh (DeepSeek Harness, including the [Web UI on UM790-Pro](dsh-web.md)), grok, opencode, pi, ccusage; Codex-enabled environments include [codex-transcribe](https://github.com/nakasyou/codex-transcribe) for audio transcription using the existing Codex login (`codex-transcribe recording.wav --language ja`)
 - **Version Control**: git, lazygit, jujutsu (jj), git-lfs, git-wt
 - **Core CLI**: ripgrep, fzf, jq, zoxide, lsd, btop, yazi, tmux
 - **Communication**: Beeper Desktop and local MCP; Beeper CLI on UM790-Pro only; halloy (IRC)

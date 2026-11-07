@@ -13,6 +13,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
     {
       my.programs = {
+        amp.enable = lib.mkDefault true;
         agent-browser.enable = lib.mkDefault true;
         agent-skills.enable = lib.mkDefault true;
         ast-grep.enable = lib.mkDefault true;
@@ -34,6 +35,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         gh.enable = lib.mkDefault true;
         jj.enable = lib.mkDefault true;
         markitdown.enable = lib.mkDefault true;
+        omp.enable = lib.mkDefault true;
         opencode.enable = lib.mkDefault true;
         oracle.enable = lib.mkDefault true;
         pi.enable = lib.mkDefault true;
