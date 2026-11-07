@@ -71,3 +71,19 @@ The Nix-managed defaults are intentionally conservative:
 - Sessions are isolated per user in shared channels.
 - History backfill is enabled for mentioned server-channel turns.
 - The bot cannot ping `@everyone`, `@here`, or roles.
+
+## OpenCode Go credential rotation
+
+Hermes uses a dedicated service-account key in the Go workspace, independent
+of the LiteLLM/dsh key. It is stored as `hermes-agent/opencode-go-key` in
+`systems/nixos/services/hermes-agent/secrets.yaml` and rendered as
+`OPENCODE_GO_API_KEY` in the host's `hermes-agent.env` sops template.
+
+After updating that encrypted entry and deploying through Comin, restart
+`microvm@hermes-agent.service` on UM790-Pro. Credentials are passed to the VM
+at boot, so restarting only the guest's Hermes process does not refresh them.
+The guest copies the credential environment into `/var/lib/hermes/.hermes/.env`.
+
+The replacement key was verified on 2026-11-07 against the configured Go
+fallback model, `deepseek-v4-pro`: response `OK`, `billing_source: go`, `cost: 0`.
+Never commit plaintext keys or pass them as literal shell command arguments.
