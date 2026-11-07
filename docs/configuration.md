@@ -18,8 +18,10 @@
 
 The `communication` profile enables the Flare social client on `x86_64-linux`
 desktops through `my.programs.flare-social.enable`. The `flare-social` NUR package
-wraps the official AppImage and provides a launcher and `flare:` / `pixiv:` URL
-handlers. Set the option to `false` to disable it on an individual host.
+builds the tagged upstream source with a pinned Gradle dependency manifest and
+runs it with JDK 25, WebKitGTK, and GStreamer. It provides a launcher and
+`flare:` / `pixiv:` URL handlers. Set the option to `false` to disable it on an
+individual host.
 
 ## Kohaku CLI
 
