@@ -34,11 +34,17 @@ array of input messages; a bare input string was rejected by the backend.
 The existing LiteLLM 1.106.4 library and ChatGPT credentials successfully generated
 an `OK` response from `chatgpt/gpt-6-luna` during validation on 2026-11-07.
 
-OpenCode's existing key returned HTTP 401 with an explicit expired-key error
-on that date. Updating the model registry does not renew it. Create a replacement
-in OpenCode Console and update the encrypted `litellm/opencode-go-key` entry in
-`systems/nixos/services/litellm/secrets.yaml`, then deploy through Comin. Never
-put plaintext credentials in Git, the Nix store, or temporary files.
+The expired OpenCode key was replaced on 2026-11-07 with a service-account key
+from the Go workspace. A direct `deepseek-v4.1-flash` request returned `OK`,
+`usage.opencode.billing_source: go`, and `usage.cost: 0`. Service-account keys
+can use the personal Go plan; select the Go endpoint, not the pay-as-you-go
+endpoint. Verify the billing source on every credential/routing change.
+
+For future rotation, create a replacement in OpenCode Console and update the
+encrypted `litellm/opencode-go-key` entry in
+`systems/nixos/services/litellm/secrets.yaml`, then deploy through Comin and
+restart LiteLLM and the UM790 user service `dsh-web` to reload their environments.
+Never put plaintext credentials in Git, the Nix store, or temporary files.
 
 ChatGPT refresh state remains in `/var/lib/litellm/chatgpt/auth.json`. The
 sops-managed seed is installed only when that file is absent; model updates do

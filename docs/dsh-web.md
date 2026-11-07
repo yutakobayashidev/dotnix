@@ -75,8 +75,8 @@ Home Manager sops-nix renders a user-only `dsh-web.env` at runtime, and systemd
 loads it through `EnvironmentFile` after `sops-nix.service`. The plaintext key
 is not embedded in the Nix store or the unit definition.
 
-The shared OpenCode key was reported expired on 2026-11-07. It must be replaced
-in OpenCode Console and the encrypted file before generation can succeed; see
+The shared key is a service-account key from the Go workspace. Its replacement
+was verified on 2026-11-07 with `billing_source: go` and `cost: 0`; see
 [LiteLLM credential maintenance](litellm.md#verification-and-credentials). After
 a key replacement is deployed, restart `dsh-web.service` so it reloads the
 rendered environment file.
