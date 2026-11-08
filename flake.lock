@@ -2102,6 +2102,23 @@
         "type": "github"
       }
     },
+    "omniroute-nixpkgs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794054840,
+        "narHash": "sha256-SvG/ckXuNIg3zpvAhw5DcykxHfl9sSNLkWACBFZ21g4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "682096be7038a86337aafa8d213aa3364d204f9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "682096be7038a86337aafa8d213aa3364d204f9f",
+        "type": "github"
+      }
+    },
     "onepassword-shell-plugins": {
       "inputs": {
         "nixpkgs": "nixpkgs_6",
@@ -2321,6 +2338,7 @@
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixtopsy": "nixtopsy",
         "nur-packages": "nur-packages",
+        "omniroute-nixpkgs": "omniroute-nixpkgs",
         "onepassword-shell-plugins": "onepassword-shell-plugins",
         "openai-secure-tunnel-nix": "openai-secure-tunnel-nix",
         "openbrief": "openbrief",

@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+    omniroute-nixpkgs = {
+      # nixpkgs PR #548454: package and NixOS service module.
+      url = "github:NixOS/nixpkgs/682096be7038a86337aafa8d213aa3364d204f9f";
+      flake = false;
+    };
     ax = {
       url = "github:yusukebe/ax";
       inputs.nixpkgs.follows = "nixpkgs";
