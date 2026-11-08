@@ -112,6 +112,7 @@ _:
                     # Privacy preferences adapted from nyanshiba/firefox-profile-settings
                     # at 7e0216b218764be55340119e941488224bb26fda.
                     "browser.contentblocking.category" = "strict";
+                    "privacy.bounceTrackingProtection.enabled" = false;
                     "privacy.firstparty.isolate" = false;
                     "privacy.annotate_channels.strict_list.enabled" = true;
                     "dom.storage_access.auto_grants" = false;
