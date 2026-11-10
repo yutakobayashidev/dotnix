@@ -2105,11 +2105,11 @@
     "omniroute-nixpkgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1794054840,
-        "narHash": "sha256-SvG/ckXuNIg3zpvAhw5DcykxHfl9sSNLkWACBFZ21g4=",
+        "lastModified": 1794059656,
+        "narHash": "sha256-2OiZi3vKe6NaDKNegINRGcRb4FNlC97GwyhQVBzfmr4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "682096be7038a86337aafa8d213aa3364d204f9f",
+        "rev": "1f57b123412474dfda3bc9a722f116c817e6da8f",
         "type": "github"
       },
       "original": {
