@@ -112,7 +112,7 @@ _:
                     # Privacy preferences adapted from nyanshiba/firefox-profile-settings
                     # at 7e0216b218764be55340119e941488224bb26fda.
                     "browser.contentblocking.category" = "strict";
-                    "privacy.bounceTrackingProtection.enabled" = false;
+                    "privacy.bounceTrackingProtection.mode" = 1;
                     "privacy.firstparty.isolate" = false;
                     "privacy.annotate_channels.strict_list.enabled" = true;
                     "dom.storage_access.auto_grants" = false;
@@ -121,7 +121,8 @@ _:
                     "network.cookie.sameSite.schemeful" = true;
                     "privacy.query_stripping.enabled" = true;
                     "privacy.query_stripping.enabled.pbmode" = true;
-                    "privacy.query_stripping.strip_list" = "s t";
+                    # Meta's Muse sign-in redirects require the `t` parameter; stripping it causes a 404.
+                    "privacy.query_stripping.strip_list" = "s";
 
                     "browser.cache.disk.enable" = false;
                     "privacy.history.custom" = true;
