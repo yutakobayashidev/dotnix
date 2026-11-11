@@ -51,7 +51,7 @@ local function card(event, now, bookmark)
 	local controls = {
 		button(service and "Join" or "Open link", service and "video" or "external-link", function()
 			open(event)
-		end, { enabled = validLink, variant = active and "primary" or "secondary" }),
+		end, { enabled = validLink, variant = active and "primary" or "outline" }),
 		button("", "copy", function()
 			common.copyLink(event)
 			message = "Link copied"
@@ -66,9 +66,9 @@ local function card(event, now, bookmark)
 		padding = 12,
 		gap = 7,
 		radius = 10,
-		fill = active and "primary_container" or "surface_container",
-		borderWidth = active and 1 or 0,
-		border = "primary",
+		fill = active and "primary_container" or "surface",
+		borderWidth = 1,
+		border = active and "primary" or "outline_variant",
 	}, {
 		ui.row({ gap = 8, align = "center" }, {
 			ui.box({
@@ -157,7 +157,7 @@ render = function()
 	panel.render(ui.column({ padding = 16, gap = 12, flexGrow = 1 }, {
 		ui.row({ gap = 8, align = "center" }, {
 			ui.glyph({ name = "calendar-event", size = 22, color = "primary" }),
-			label("Meeting Bar", { fontSize = 20, fontWeight = "bold", flexGrow = 1 }),
+			label("Meeting Bar", { fontSize = 18, fontWeight = "bold", flexGrow = 1 }),
 			button("", "settings", function()
 				panel.close()
 				noctalia.openSettings()
@@ -171,12 +171,12 @@ render = function()
 				tab = "agenda"
 				message = ""
 				render()
-			end, { selected = tab == "agenda" }),
+			end, { selected = tab == "agenda", variant = "ghost" }),
 			button("Favorites", "star", function()
 				tab = "favorites"
 				message = ""
 				render()
-			end, { selected = tab == "favorites" }),
+			end, { selected = tab == "favorites", variant = "ghost" }),
 			ui.spacer({}),
 			button("New meeting", "plus", function()
 				common.createMeeting()
@@ -205,7 +205,12 @@ render = function()
 		ui.scroll({ key = "agenda-list", flexGrow = 1, gap = 10 }, rows),
 		ui.row({ gap = 8, align = "center" }, {
 			label(
-				message ~= "" and message or tostring(count) .. (tab == "favorites" and " favorites" or " events"),
+				message ~= "" and message
+					or tostring(count)
+						.. (
+							tab == "favorites" and (count == 1 and " favorite" or " favorites")
+							or (count == 1 and " event" or " events")
+						),
 				{ flexGrow = 1, fontSize = 12, color = "on_surface_variant" }
 			),
 			button("Calendar", "calendar", function()

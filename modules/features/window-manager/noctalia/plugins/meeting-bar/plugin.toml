@@ -21,7 +21,7 @@ entry = "service.luau"
 id = "agenda"
 entry = "panel.luau"
 width = 480
-height = 620
+height = 460
 placement = "attached"
 open_near_click = true
 
