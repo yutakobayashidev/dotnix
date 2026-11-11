@@ -87,3 +87,8 @@ The guest copies the credential environment into `/var/lib/hermes/.hermes/.env`.
 The replacement key was verified on 2026-11-07 against the configured Go
 fallback model, `deepseek-v4-pro`: response `OK`, `billing_source: go`, `cost: 0`.
 Never commit plaintext keys or pass them as literal shell command arguments.
+
+## Ori MCP
+
+The same gateway connects to Ori with OAuth and supports MCP Events over
+Tailnet-only HTTPS. See [Ori MCP configuration and login](hermes-ori-mcp.md).

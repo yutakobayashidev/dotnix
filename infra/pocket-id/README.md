@@ -1,7 +1,7 @@
 # Pocket ID clients
 
 This root manages the Grafana, linkding, Immich, moe, Gitea, Nextcloud, Ori,
-Ori ChatGPT, and Ori Muse OIDC clients. Application-side configuration lives
+Ori ChatGPT, Ori Muse, and Ori Hermes OIDC clients. Application-side configuration lives
 in the corresponding
 `systems/nixos/services/` modules. LiteLLM and n8n are intentionally excluded.
 
@@ -24,7 +24,7 @@ Required repository secrets:
 
 - `POCKETID_API_TOKEN`: the API credential configured in Pocket ID.
 - `POCKETID_CLIENT_SECRETS`: a JSON object with the keys `grafana`, `linkding`,
-  `immich`, `moe`, `gitea`, `nextcloud`, `ori`, `ori-chatgpt`, and `ori-muse`.
+  `immich`, `moe`, `gitea`, `nextcloud`, `ori`, `ori-chatgpt`, `ori-muse`, and `ori-hermes`.
   Values must match the application secrets managed by SOPS.
 - Existing `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_ENDPOINT`,
   `STATE_ENCRYPTION_PASSPHRASE`, and `TS_AUTHKEY` infrastructure credentials.
@@ -59,7 +59,7 @@ remains available in the application configurations during migration.
 permissions available to allowed CIMD clients. The global CIMD URL allowlist
 is configured separately in the Pocket ID NixOS module. Ori also validates
 the access token's audience, scope, and owner subject before accepting it.
-`clientPermissions` grants the fixed `ori-chatgpt` and `ori-muse` clients
+`clientPermissions` grants the fixed `ori-chatgpt`, `ori-muse`, and `ori-hermes` clients
 user-delegated access to `ori:mcp`; it explicitly disables client-credentials access. These clients
 are registered by OpenTofu before the reconciliation script runs.
 

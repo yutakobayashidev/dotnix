@@ -4,6 +4,7 @@ variable "client_secrets" {
     ori         = string
     ori-chatgpt = string
     ori-muse    = string
+    ori-hermes  = string
     grafana     = string
     linkding    = string
     immich      = string

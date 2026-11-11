@@ -45,6 +45,14 @@ let
     }
   '';
   sharedEnvironment = [
+    "WORKSPACE_MCP_WEBHOOK_TAILNET_DESTINATIONS=${
+      builtins.toJSON {
+        "https://um790-pro.tail29d068.ts.net" = [
+          "100.91.91.87"
+          "fd7a:115c:a1e0::b901:5b83"
+        ];
+      }
+    }"
     "NODE_ENV=production"
     "OTEL_EXPORTER_OTLP_ENDPOINT=http://B450M-Pro4.tail29d068.ts.net:4318"
     "OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf"

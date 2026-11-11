@@ -1,5 +1,11 @@
 locals {
   clients = {
+    ori-hermes = {
+      name          = "Ori MCP (Hermes Agent)"
+      launch_url    = "https://home.yutakobayashi.com"
+      callback_urls = ["http://127.0.0.1:27890/callback"]
+      pkce_enabled  = true
+    }
     ori-muse = {
       name          = "Ori MCP (Muse)"
       launch_url    = "https://agent.meta.ai"

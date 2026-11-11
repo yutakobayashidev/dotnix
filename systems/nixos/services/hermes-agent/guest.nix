@@ -163,6 +163,8 @@ let
   credentialsDir = "/run/credentials/@system";
 in
 {
+  networking.firewall.allowedTCPPorts = [ 8644 ];
+
   networking.hosts = {
     "100.111.109.43" = [
       "tw.home.yutakobayashi.com"
@@ -184,6 +186,15 @@ in
         type = "user";
         id = "hermes-net";
         mac = "02:00:00:00:48:01";
+      }
+    ];
+
+    forwardPorts = [
+      {
+        from = "host";
+        host.address = "127.0.0.1";
+        host.port = 18644;
+        guest.port = 8644;
       }
     ];
 
@@ -303,6 +314,27 @@ in
       ];
 
       web.search_backend = "searxng";
+      mcp_servers.ori = {
+        url = "https://home.yutakobayashi.com/mcp";
+        auth = "oauth";
+        events = true;
+        oauth = {
+          client_id = "ori-hermes";
+          client_secret = "\${ORI_MCP_CLIENT_SECRET}";
+          token_endpoint_auth_method = "client_secret_basic";
+          redirect_host = "127.0.0.1";
+          redirect_port = 27890;
+          scope = "openid offline_access ori:mcp";
+        };
+      };
+      platforms.webhook = {
+        enabled = true;
+        extra = {
+          host = "0.0.0.0";
+          port = 8644;
+          public_url = "https://um790-pro.tail29d068.ts.net";
+        };
+      };
       compression = {
         threshold = 0.85;
         codex_gpt55_autoraise = true;

@@ -3,6 +3,7 @@
   config,
   inputs,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -12,6 +13,10 @@
   ];
 
   sops.secrets = {
+    "hermes-agent/ori-mcp-client-secret" = {
+      sopsFile = ../../../../secrets/pocket-id-oidc.yaml;
+      key = "client-secrets/ori-hermes";
+    };
     "hermes-agent/slack-bot-token".sopsFile = ./secrets.yaml;
     "hermes-agent/slack-app-token".sopsFile = ./secrets.yaml;
     "hermes-agent/slack-allowed-users".sopsFile = ./secrets.yaml;
@@ -45,6 +50,7 @@
       DISCORD_BOT_TOKEN=${config.sops.placeholder."hermes-agent/discord-bot-token"}
       DISCORD_ALLOWED_USERS=890908900520505354
       OPENCODE_GO_API_KEY=${config.sops.placeholder."hermes-agent/opencode-go-key"}
+      ORI_MCP_CLIENT_SECRET=${config.sops.placeholder."hermes-agent/ori-mcp-client-secret"}
       DISCORD_HOME_CHANNEL=1028287639918497822
       BIRD_PROFILE_NAME=account1
       COURSE_API_URL=https://api.nnn.ed.nico/
@@ -66,6 +72,23 @@
   };
 
   microvm.autostart = [ "hermes-agent" ];
+
+  # HTTPS on Tailnet only. Preserve the host's existing Serve root route.
+  systemd.services.hermes-mcp-events-serve = {
+    description = "Hermes MCP Events HTTPS receiver on Tailnet";
+    wantedBy = [ "multi-user.target" ];
+    after = [
+      "tailscaled.service"
+      "microvm@hermes-agent.service"
+    ];
+    requires = [ "tailscaled.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${lib.getExe pkgs.tailscale} serve --bg --https=443 --set-path=/webhooks http://127.0.0.1:18644/webhooks";
+      ExecStop = "${lib.getExe pkgs.tailscale} serve --https=443 --set-path=/webhooks off";
+    };
+  };
 
   # Override microvm.nix's default microvm:kvm ownership for this writable wiki.
   systemd.tmpfiles.settings."10-microvm"."/home/yuta/ghq/git.yutakobayashi.com/yuta/quantified-self-wiki".d =

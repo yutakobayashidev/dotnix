@@ -11,6 +11,7 @@
 	"cimdPermissions": ["ori:mcp"],
 	"clientPermissions": {
 		"ori-chatgpt": ["ori:mcp"],
-		"ori-muse": ["ori:mcp"]
+		"ori-muse": ["ori:mcp"],
+		"ori-hermes": ["ori:mcp"]
 	}
 }
