@@ -29,11 +29,6 @@ _:
           recursive = true;
         };
 
-        xdg.dataFile."noctalia/plugins/meeting-bar" = {
-          source = ./plugins/meeting-bar;
-          recursive = true;
-        };
-
         programs.niri.settings.binds = lib.mkIf config.my.programs.niri.enable {
           "Mod+Shift+M" = {
             hotkey-overlay.title = "Meeting agenda";
@@ -117,6 +112,7 @@ _:
 
             plugins.enabled = [
               "yuta/codexbar-usage"
+              # Provided by Noctalia's built-in community source.
               "yuta/meeting-bar"
               "dotnetrob/cat"
             ];

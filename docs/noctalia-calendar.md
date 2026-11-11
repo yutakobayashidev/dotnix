@@ -11,7 +11,9 @@ Google Calendarは **Google** を選び、ローカルの識別名（例: `perso
 
 ## Meeting Bar
 
-ローカルプラグイン `yuta/meeting-bar` をNoctaliaのバーに配置している。
+[community版の Meeting Bar](https://github.com/noctalia-dev/community-plugins/tree/main/meeting-bar)
+（`yuta/meeting-bar`）を `programs.noctalia.settings.plugins.enabled` で宣言的に有効化している。
+取得と更新にはNoctalia標準のcommunityソースを使う。
 Noctalia v5.4.0以降の同期済み予定を使うため、追加のGoogle認証は必要ない。
 
 - バーには現在または次の予定名と残り時間を表示する。左クリックで日別の予定一覧、右クリックで現在または次の認識済みオンライン会議へ参加する。中クリックで設定を開く。
@@ -46,7 +48,8 @@ noctalia msg plugin yuta/meeting-bar:calendar all snooze
 
 ## 保存場所と制限
 
-コードは `modules/features/window-manager/noctalia/plugins/meeting-bar/`、配布先はHome Managerの `xdg.dataFile."noctalia/plugins/meeting-bar"` で管理する。
+プラグインのコードとテストはupstreamで管理する。dotnixにはローカルコピーを置かない。
+プラグインIDは移行前と同じため、バー配置・ショートカット・保存済み設定を引き継ぐ。
 お気に入りの会議名・URLとリマインダー情報は `noctalia.pluginDataDir()` が返すユーザー専用ディレクトリにJSONで保存する。
 通常は `~/.local/state/noctalia/plugins/data/yuta/meeting-bar/` で、Noctaliaの状態ディレクトリ指定に従う。予定一覧全体や認証情報はプラグイン側では保存しない。
 
@@ -55,22 +58,23 @@ noctalia msg plugin yuta/meeting-bar:calendar all snooze
 未知の会議サービスは一般リンクとして開けるが、自動的な会議選択と全画面リマインダーの対象にはしない。
 Niriではブラウザーを開いても前面に出ない場合がある。Noctalia側の同期に失敗しているときは、APIが返すキャッシュの予定が表示される。
 
-## 検証
+## ローカル版からの移行と確認
+
+`nix run .#switch` でHome Managerのローカル配布設定を削除する。
+以前に開発用のpathソースを登録していた場合は、communityを更新してから削除する。
+ローカルコピーや追加のpathソースは、標準のcommunityソースより優先される。
 
 ```sh
-noctalia plugins lint modules/features/window-manager/noctalia/plugins/meeting-bar
-TZ=Asia/Tokyo lua tests/noctalia-meeting-bar.lua
-TZ=America/New_York lua tests/noctalia-meeting-bar.lua
-```
-
-Lua 5.4以降を使う。予定の絞り込み・重複・繰り返し・日付境界・夏時間・リンク判定・起動引数・お気に入り・スヌーズと再起動後の状態を検証する。
-Noctaliaの実ランタイムでは、架空の予定でバー、一覧、全画面表示、スヌーズ後の非表示と再表示を確認した。
-
-開発時は `dotnix-meeting-bar` というpathソースからこのリポジトリのプラグインを読み込める。
-Home Manager反映後はローカルのdataディレクトリが優先されるため、その開発用ソースは削除できる。
-
-```sh
+noctalia msg plugins update community
 noctalia msg plugins source remove dotnix-meeting-bar
+noctalia msg plugins enable yuta/meeting-bar
+noctalia msg plugins enable yuta/codexbar-usage
+noctalia msg plugins list | rg 'yuta/meeting-bar'
 ```
+
+開発用ソースの削除時には、そのソースで検出されていたプラグインの有効状態も外れるため、
+Meeting BarとローカルのCodex barを再度有効にする。Nix側の `plugins.enabled` にも両方を指定している。
+一覧で `yuta/meeting-bar [community] ... enabled` と表示されることを確認する。
+新規環境では開発用ソースの削除は不要。
 
 仕様: [Noctalia Calendar](https://docs.noctalia.dev/noctalia/services/calendar/)
