@@ -1,7 +1,11 @@
 { pkgs, ... }:
 
 let
-  server = pkgs.beeper-server;
+  # The prebuilt server crashes in glibc 2.44-57's loader before main().
+  # Keep its runtime and ELF patching toolchain together on stable nixpkgs.
+  server = pkgs.beeper-server.override {
+    inherit (pkgs.stable) stdenv stdenvNoCC autoPatchelfHook;
+  };
 in
 {
   home.packages = [ pkgs.beeper-cli ];

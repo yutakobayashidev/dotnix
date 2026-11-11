@@ -43,3 +43,17 @@ Before applying it, stop the transient unit and reload the user manager.
 The binary is a nightly distribution; check actual chat retrieval, not only
 process health, before adding an MCP adapter. The shared Desktop MCP configuration
 is unchanged and does not constitute a verified Server MCP deployment.
+
+## Runtime compatibility
+
+The UM790 service builds the pinned Beeper Server with stable nixpkgs'
+`stdenv`, `stdenvNoCC`, and `autoPatchelfHook` together. The unstable glibc
+2.44-57 build crashes in the ELF loader before opening the Client API port.
+Keep this override until a replacement build passes both systemd startup and
+authenticated chat retrieval; a successful Nix build alone is insufficient.
+
+Ori only watches chats with unexpired MCP Events subscriptions. Check both
+Beeper availability and subscription expiry when events stop. Expired callbacks
+must pass the normal signed verification challenge before renewal; never extend
+expiry directly in SQLite or disable the expiry check. The receiving client is
+responsible for refreshing subscriptions before `refreshBefore`.
