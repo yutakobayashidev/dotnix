@@ -1,4 +1,4 @@
-{ ... }:
+_:
 
 # HTTP proxy that lets browser automation running inside the Muse VM exit
 # from this host's residential connection.
