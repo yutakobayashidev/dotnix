@@ -9,7 +9,14 @@ The existing `Infra: Approved OpenTofu deploy` workflow accepts `pocket-id` as
 a target. Run `plan`, review its result, and run `apply` against the same
 revision. The workflow uses the dedicated `pocket-id-ci` shell because the
 other infrastructure shell restricts providers to its Nix-built mirror.
-The Pocket ID provider is downloaded using the committed dependency lock.
+The Pocket ID provider is verified using the committed dependency lock.
+On x86_64 Linux, the shell uses a fixed-hash recovery mirror of version 2.5.0
+because the upstream release assets are no longer available. The recovered
+package matches the existing lock's `h1` hash exactly; the repackaged archive
+has a separate SHA-256 pinned in `modules/per-system/dev-shell.nix` and retains
+the original MIT license. The lock file is unchanged. Other platforms still
+use the upstream registry and require its release assets to be available.
+See the [recovery artifact](https://github.com/yutakobayashidev/dotnix/releases/tag/pocketid-provider-v2.5.0-recovery).
 
 ## Credentials and state
 

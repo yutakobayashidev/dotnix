@@ -73,13 +73,39 @@
           '';
         };
 
-        # Pocket ID uses its signed, locked upstream provider release.
-        pocket-id-ci = pkgs.mkShell {
-          packages = [
-            pkgs.opentofu
-            pkgs.python3
-          ];
-        };
+        # The recovered linux_amd64 package matches the existing lock's h1 hash.
+        pocket-id-ci =
+          let
+            providerArchive = pkgs.fetchurl {
+              url = "https://github.com/yutakobayashidev/dotnix/releases/download/pocketid-provider-v2.5.0-recovery/pocketid-2.5.0-linux-amd64-recovered.zip";
+              sha256 = "f7d8a82d44c8c6fce971ac5e0d2f24773fead917f54a8370512be061aa1dda7f";
+            };
+            providerMirror = pkgs.runCommand "pocketid-provider-mirror" { } ''
+              mkdir -p "$out/registry.terraform.io/trozz/pocketid"
+              ln -s ${providerArchive} "$out/registry.terraform.io/trozz/pocketid/terraform-provider-pocketid_2.5.0_linux_amd64.zip"
+            '';
+          in
+          pkgs.mkShell (
+            {
+              packages = [
+                pkgs.opentofu
+                pkgs.python3
+              ];
+            }
+            // pkgs.lib.optionalAttrs (pkgs.stdenv.hostPlatform.system == "x86_64-linux") {
+              TF_CLI_CONFIG_FILE = pkgs.writeText "pocketid-tofu.tfrc" ''
+                provider_installation {
+                  filesystem_mirror {
+                    path = "${providerMirror}"
+                    include = ["registry.terraform.io/trozz/pocketid"]
+                  }
+                  direct {
+                    exclude = ["registry.terraform.io/trozz/pocketid"]
+                  }
+                }
+              '';
+            }
+          );
 
         infra-ci = pkgs.mkShell {
           packages = [
