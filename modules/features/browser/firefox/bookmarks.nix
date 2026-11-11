@@ -84,6 +84,10 @@ let
         # AI
         {
           name = "";
+          url = "https://litellm.home.yutakobayashi.com/dashboard";
+        }
+        {
+          name = "";
           url = "https://opencode.home.yutakobayashi.com/";
         }
         {
