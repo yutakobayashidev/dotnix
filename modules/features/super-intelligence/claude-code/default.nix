@@ -267,6 +267,7 @@ _:
           [
             apm
             ccusage
+            clauth
           ]
           ++ lib.optional cfg.acp.enable claude-agent-acp;
 

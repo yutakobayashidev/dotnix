@@ -270,12 +270,14 @@ _:
         };
 
         home = {
-          packages =
-            lib.optionals cfg.desktopIntegration [
-              pkgs.session-tts
-              inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
-            ]
-            ++ lib.optional cfg.acp.enable (pkgs.llm-agents.codex-acp.override { codex = codexWrapper; });
+          packages = [
+            pkgs.llm-agents.codex-auth
+          ]
+          ++ lib.optionals cfg.desktopIntegration [
+            pkgs.session-tts
+            inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
+          ]
+          ++ lib.optional cfg.acp.enable (pkgs.llm-agents.codex-acp.override { codex = codexWrapper; });
 
           file = {
             # Codex updates its user config at runtime, so only immutable
