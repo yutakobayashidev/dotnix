@@ -12,6 +12,7 @@
     ../services/comin
     (modulesPath + "/installer/scan/not-detected.nix")
     ./local-mcp.nix
+    ./tinyproxy.nix
     ./codex-limit-auto-reset.nix
     ./personal-workspace-tunnel.nix
     ./virtualbox.nix
