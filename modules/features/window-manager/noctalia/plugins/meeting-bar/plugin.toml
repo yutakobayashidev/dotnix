@@ -1,6 +1,6 @@
 id = "yuta/meeting-bar"
 name = "Meeting Bar"
-version = "0.1.0"
+version = "0.1.4"
 plugin_api = 37
 min_noctalia = "5.4.0"
 author = "yuta"
