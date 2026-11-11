@@ -99,6 +99,13 @@ runs:
             continue
           fi
 
+          # A revision in the original input is an explicit pin, not a branch to track.
+          pinned_rev=$(echo "$metadata" | jq -r --arg input "$input" '.locks.nodes[$input].original.rev // empty')
+          if [ -n "$pinned_rev" ]; then
+            echo "  - $input (pinned to $pinned_rev)"
+            continue
+          fi
+
           current_rev=$(echo "$metadata" | jq -r ".locks.nodes.\"$input\".locked.rev // \"unknown\"" | head -c 8)
           owner=$(echo "$metadata" | jq -r ".locks.nodes.\"$input\".original.owner // \"unknown\"")
           repo=$(echo "$metadata" | jq -r ".locks.nodes.\"$input\".original.repo // \"unknown\"")
