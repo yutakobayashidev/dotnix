@@ -29,6 +29,34 @@ _:
           recursive = true;
         };
 
+        xdg.dataFile."noctalia/plugins/meeting-bar" = {
+          source = ./plugins/meeting-bar;
+          recursive = true;
+        };
+
+        programs.niri.settings.binds = lib.mkIf config.my.programs.niri.enable {
+          "Mod+Shift+M" = {
+            hotkey-overlay.title = "Meeting agenda";
+            action.spawn = [
+              "noctalia"
+              "msg"
+              "panel-toggle"
+              "yuta/meeting-bar:agenda"
+            ];
+          };
+          "Mod+Ctrl+M" = {
+            hotkey-overlay.title = "Join current or next meeting";
+            action.spawn = [
+              "noctalia"
+              "msg"
+              "plugin"
+              "yuta/meeting-bar:calendar"
+              "all"
+              "join"
+            ];
+          };
+        };
+
         programs.noctalia = {
           enable = true;
           systemd.enable = true;
@@ -71,6 +99,7 @@ _:
                 "app-launcher"
                 "dotnetrob/cat:cat"
                 "yuta/codexbar-usage:usage"
+                "yuta/meeting-bar:bar"
                 "media"
               ];
               center = [ "workspaces" ];
@@ -88,6 +117,7 @@ _:
 
             plugins.enabled = [
               "yuta/codexbar-usage"
+              "yuta/meeting-bar"
               "dotnetrob/cat"
             ];
 

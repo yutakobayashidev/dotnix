@@ -84,6 +84,14 @@ let
         # AI
         {
           name = "";
+          url = "https://opencode.home.yutakobayashi.com/";
+        }
+        {
+          name = "";
+          url = "https://dsh.home.yutakobayashi.com/";
+        }
+        {
+          name = "";
           url = "https://chatgpt.com/";
           tags = [ "shortcut" ];
         }
