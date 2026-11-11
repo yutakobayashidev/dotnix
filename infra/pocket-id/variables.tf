@@ -3,6 +3,7 @@ variable "client_secrets" {
   type = object({
     ori         = string
     ori-chatgpt = string
+    ori-muse    = string
     grafana     = string
     linkding    = string
     immich      = string

@@ -1,5 +1,11 @@
 locals {
   clients = {
+    ori-muse = {
+      name          = "Ori MCP (Muse)"
+      launch_url    = "https://agent.meta.ai"
+      callback_urls = ["https://agent.meta.ai/api/hatch/oauth/callback"]
+      pkce_enabled  = true
+    }
     ori = {
       name          = "Ori"
       launch_url    = "https://home.yutakobayashi.com"

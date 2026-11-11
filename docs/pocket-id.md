@@ -39,7 +39,7 @@ curl --fail https://id.yutakobayashi.com/.well-known/openid-configuration
 ## Declarative application login
 
 The clients for Grafana, linkding, Immich, moe, Gitea, Nextcloud, Ori, and
-Ori's ChatGPT connection are managed
+Ori's ChatGPT and Muse connections are managed
 in [`infra/pocket-id`](../infra/pocket-id/README.md). LiteLLM and n8n are excluded.
 Client IDs and callback URLs are managed by OpenTofu; application settings are
 managed by their NixOS service modules. Existing password login remains enabled.
@@ -125,6 +125,18 @@ client ID `ori-chatgpt`; retrieve its secret from SOPS key
 secret into issues, logs, or this document. The registered callback is
 `https://chatgpt.com/connector_platform_oauth_redirect`; verify that exact URI
 in the connector settings. Complete Pocket ID passkey authentication there.
+
+Muse uses the confidential client `ori-muse` with PKCE enabled and
+`client_secret_basic` token authentication. Its only registered callback is
+`https://agent.meta.ai/api/hatch/oauth/callback`, with no trailing slash.
+Retrieve its secret from SOPS key `client-secrets/ori-muse` in
+`secrets/pocket-id-oidc.yaml`; recovery requires a SOPS age key authorized for
+that file. The secret is also synchronized to the `POCKETID_CLIENT_SECRETS`
+Actions secret for subsequent OpenTofu deployments. No plaintext copy is stored.
+No allowed user groups are specified, which grants All Users access in Pocket
+ID. Ori still restricts access to its configured owner subject. The MCP manifest
+grants this client user-delegated `ori:mcp` access, without client-credentials
+access. Configure the connector with client ID `ori-muse` and this secret.
 
 Claude Code and Codex can connect directly to the private HTTPS MCP URL from
 the Tailnet using CIMD. The allowlist contains only the published metadata
