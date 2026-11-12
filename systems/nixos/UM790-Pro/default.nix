@@ -11,6 +11,7 @@
     ../services/hermes-agent
     ../services/comin
     (modulesPath + "/installer/scan/not-detected.nix")
+    ./experimental-router.nix
     ./local-mcp.nix
     ./tinyproxy.nix
     ./codex-limit-auto-reset.nix
