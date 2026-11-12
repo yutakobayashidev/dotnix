@@ -1,0 +1,184 @@
+{
+	"uid": "experimental-router",
+	"title": "Experimental Router",
+	"tags": ["network", "experimental"],
+	"schemaVersion": 39,
+	"version": 1,
+	"refresh": "30s",
+	"time": {
+		"from": "now-6h",
+		"to": "now"
+	},
+	"panels": [
+		{
+			"id": 1,
+			"title": "Interface traffic",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 12,
+				"h": 8
+			},
+			"fieldConfig": {
+				"defaults": {
+					"unit": "Bps",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "rate(node_network_receive_bytes_total{job=\"node\",host=\"UM790-Pro\",device=~\"wlp2s0|enp1s0\"}[$__rate_interval])",
+					"legendFormat": "{{device}} RX"
+				},
+				{
+					"refId": "B",
+					"expr": "rate(node_network_transmit_bytes_total{job=\"node\",host=\"UM790-Pro\",device=~\"wlp2s0|enp1s0\"}[$__rate_interval])",
+					"legendFormat": "{{device}} TX"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"title": "Interface packet drops",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 0,
+				"w": 12,
+				"h": 8
+			},
+			"fieldConfig": {
+				"defaults": {
+					"unit": "pps",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "rate(node_network_receive_drop_total{job=\"node\",host=\"UM790-Pro\",device=~\"wlp2s0|enp1s0\"}[$__rate_interval])",
+					"legendFormat": "{{device}} RX"
+				},
+				{
+					"refId": "B",
+					"expr": "rate(node_network_transmit_drop_total{job=\"node\",host=\"UM790-Pro\",device=~\"wlp2s0|enp1s0\"}[$__rate_interval])",
+					"legendFormat": "{{device}} TX"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"title": "Interface link state",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 8,
+				"w": 12,
+				"h": 8
+			},
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "node_network_up{job=\"node\",host=\"UM790-Pro\",device=~\"wlp2s0|enp1s0\"}",
+					"legendFormat": "{{device}}"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"title": "CPU utilisation",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 8,
+				"w": 12,
+				"h": 8
+			},
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percentunit",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "1 - avg(rate(node_cpu_seconds_total{job=\"node\",host=\"UM790-Pro\",mode=\"idle\"}[$__rate_interval]))",
+					"legendFormat": "CPU"
+				}
+			]
+		},
+		{
+			"id": 5,
+			"title": "Memory utilisation",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 16,
+				"w": 12,
+				"h": 8
+			},
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percentunit",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "1 - node_memory_MemAvailable_bytes{job=\"node\",host=\"UM790-Pro\"} / node_memory_MemTotal_bytes{job=\"node\",host=\"UM790-Pro\"}",
+					"legendFormat": "Memory"
+				}
+			]
+		},
+		{
+			"id": 6,
+			"title": "Experiment status and firewall counters",
+			"type": "text",
+			"gridPos": {
+				"x": 12,
+				"y": 16,
+				"w": 12,
+				"h": 8
+			},
+			"options": {
+				"mode": "markdown",
+				"content": "The router feature is disabled by default. Traffic on wlp2s0 includes existing host/container traffic; these charts do not prove LAN forwarding.\n\nFirewall rejection counters are available on the router with `sudo nft list table inet dotnix_experimental_router`. They reset when rules reload. No additional exporter is installed.\n\nSee docs/experimental-router.md for approval, isolated cabling and rollback requirements."
+			}
+		}
+	]
+}
