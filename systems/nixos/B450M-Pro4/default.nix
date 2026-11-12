@@ -174,17 +174,6 @@
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
     px4_drv.enable = true;
-    nvidia = {
-      open = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-    graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        config.boot.kernelPackages.nvidiaPackages.stable
-      ];
-    };
-    nvidia-container-toolkit.enable = true;
   };
 
   my.services.monitoring.enable = true;
@@ -221,7 +210,6 @@
       enable = true;
       enabledCollectors = [ "systemd" ];
     };
-    xserver.videoDrivers = [ "nvidia" ];
     nginx.virtualHosts."localhost" = {
       listen = [
         {
@@ -238,6 +226,8 @@
   sops.secrets.cloudflared-tunnel = {
     sopsFile = ./secrets.yaml;
   };
+
+  my.devices.nvidia.enable = true;
 
   system.stateVersion = "25.11";
 }

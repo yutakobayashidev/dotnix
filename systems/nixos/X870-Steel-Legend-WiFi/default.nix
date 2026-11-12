@@ -79,7 +79,6 @@
       enabledCollectors = [ "systemd" ];
     };
 
-    xserver.videoDrivers = [ "nvidia" ];
 
     logind.settings.Login = {
       HandlePowerKey = "ignore";
@@ -102,18 +101,9 @@
   hardware = {
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-    nvidia = {
-      open = true;
-      package = config.boot.kernelPackages.nvidiaPackages.stable;
-    };
-    graphics = {
-      enable = true;
-      extraPackages = with pkgs; [
-        config.boot.kernelPackages.nvidiaPackages.stable
-      ];
-    };
-    nvidia-container-toolkit.enable = true;
   };
+
+  my.devices.nvidia.enable = true;
 
   system.stateVersion = "25.11";
 }
