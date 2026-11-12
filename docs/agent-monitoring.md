@@ -18,8 +18,7 @@ directly to VictoriaMetrics over Tailscale. Logs go to Loki and traces to Tempo.
 Per-host accumulation and remote-write host labels follow the local collector
 pipeline; one central accumulator no longer handles every active client.
 
-B450M accepts remote-write on 8428, Loki OTLP on 3100, and Tempo OTLP/gRPC on
-14317. Its firewall permits these ports through the already trusted Tailscale
+B450M accepts remote-write on 8428, Loki OTLP on 3100, and Tempo OTLP/gRPC on 14317. Its firewall permits these ports through the already trusted Tailscale
 interface, not through the ordinary network interfaces. Tempo uses 14317 so it
 does not conflict with the local Alloy gRPC receiver on 4317.
 
