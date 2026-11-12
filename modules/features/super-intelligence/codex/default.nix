@@ -248,6 +248,17 @@ _:
       };
 
       config = lib.mkIf cfg.enable {
+        # Codex recursively merges CLI tables with its mutable config. Replace
+        # the managed exporter enums on activation before changing transport.
+        home.activation.codexTelemetry = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          run ${lib.getExe (pkgs.python3.withPackages (ps: [ ps.tomlkit ]))} \
+            ${./migrate-otel.py} \
+            ${lib.escapeShellArg "${config.home.homeDirectory}/${lib.removePrefix "/" codexConfigDir}/config.toml"} \
+            ${pkgs.writeText "codex-otel-exporters.json" (
+              builtins.toJSON (lib.getAttrs [ "exporter" "metrics_exporter" "trace_exporter" ] baseSettings.otel)
+            )}
+        '';
+
         programs.codex = {
           enable = true;
           enableMcpIntegration = true;

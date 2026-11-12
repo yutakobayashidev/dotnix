@@ -26,6 +26,10 @@ A separate legacy HTTP pipeline on B450M:4318 continues to accept Ori and older
 sessions. It preserves their supplied identity and uses `unknown` when none is
 present; it never assigns B450M's identity to anonymous remote telemetry.
 Restart managed agents after activation to move them to the local receiver.
+Codex recursively merges CLI tables with its mutable `config.toml`. Activation
+replaces only its three managed exporter definitions, so an old HTTP exporter
+cannot coexist with the new gRPC variant. Other settings and comments remain
+intact; the rewrite is atomic and stays inside the private config directory.
 Standalone Home Manager clients retain the legacy HTTP endpoint as their default.
 `my.services.agentTelemetry` controls enablement, storage host, local HTTP port
 and server mode. The shared Alloy interface supports Linux and macOS.
