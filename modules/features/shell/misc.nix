@@ -35,6 +35,7 @@ _:
         ++ lib.optionals pkgs.stdenv.isLinux [
           dmidecode
           kubo
+          nvme-cli
           psmisc
           usbutils
         ];

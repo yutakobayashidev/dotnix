@@ -73,12 +73,14 @@ in
     cryptsetup
     curl
     disko
+    dmidecode
     dvb-apps
     efibootmgr
     git
     installerHelp
     jq
     mkpasswd
+    nvme-cli
     opensc
     parted
     pciutils
