@@ -77,7 +77,9 @@ _: {
       config = lib.mkIf cfg.enable {
         services.victoriametrics = {
           enable = true;
-          listenAddress = "127.0.0.1:8428";
+          # Per-host Alloy remote_write is accepted over the trusted tailnet.
+          # The NixOS firewall keeps this port closed on other interfaces.
+          listenAddress = "0.0.0.0:8428";
           retentionPeriod = "1y";
           # HA bearer credentials exist only at runtime.
           checkConfig = false;

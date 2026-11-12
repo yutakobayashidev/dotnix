@@ -33,7 +33,7 @@ _:
         OTEL_LOG_TOOL_CONTENT = "0";
         OTEL_LOG_RAW_API_BODIES = "0";
         OTEL_LOG_ASSISTANT_RESPONSES = "0";
-        OTEL_EXPORTER_OTLP_PROTOCOL = "http/protobuf";
+        OTEL_EXPORTER_OTLP_PROTOCOL = cfg.telemetry.protocol;
         OTEL_EXPORTER_OTLP_ENDPOINT = cfg.telemetry.endpoint;
         OTEL_METRIC_EXPORT_INTERVAL = "10000";
         OTEL_LOG_USER_PROMPTS = boolString cfg.telemetry.logUserPrompts;
@@ -229,14 +229,23 @@ _:
             description = "Enable Claude Code OTLP telemetry.";
           };
 
+          protocol = lib.mkOption {
+            type = lib.types.enum [
+              "grpc"
+              "http/protobuf"
+            ];
+            default = if osConfig.my.services.agentTelemetry.enable or false then "grpc" else "http/protobuf";
+            description = "Transport for the configured OTLP endpoint.";
+          };
+
           endpoint = lib.mkOption {
             type = lib.types.str;
             default =
               if osConfig.my.services.agentTelemetry.enable or false then
-                "http://127.0.0.1:4318"
+                "http://127.0.0.1:4317"
               else
                 "http://B450M-Pro4.tail29d068.ts.net:4318";
-            description = "OTLP HTTP endpoint for Claude Code telemetry.";
+            description = "OTLP endpoint for Claude Code telemetry.";
           };
 
           logUserPrompts = lib.mkOption {

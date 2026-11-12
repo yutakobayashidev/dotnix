@@ -60,12 +60,19 @@ _:
       otelExporter =
         signal:
         if cfg.telemetry.enable then
-          {
-            "otlp-http" = {
-              endpoint = "${cfg.telemetry.endpoint}/v1/${signal}";
-              protocol = "binary";
-            };
-          }
+          (
+            if cfg.telemetry.protocol == "grpc" then
+              {
+                "otlp-grpc".endpoint = cfg.telemetry.endpoint;
+              }
+            else
+              {
+                "otlp-http" = {
+                  endpoint = "${cfg.telemetry.endpoint}/v1/${signal}";
+                  protocol = "binary";
+                };
+              }
+          )
         else
           "none";
       settings = {
@@ -207,14 +214,23 @@ _:
             description = "Enable Codex OTLP telemetry.";
           };
 
+          protocol = lib.mkOption {
+            type = lib.types.enum [
+              "grpc"
+              "http/protobuf"
+            ];
+            default = if osConfig.my.services.agentTelemetry.enable or false then "grpc" else "http/protobuf";
+            description = "Transport for the configured OTLP endpoint.";
+          };
+
           endpoint = lib.mkOption {
             type = lib.types.str;
             default =
               if osConfig.my.services.agentTelemetry.enable or false then
-                "http://127.0.0.1:4318"
+                "http://127.0.0.1:4317"
               else
                 "http://B450M-Pro4.tail29d068.ts.net:4318";
-            description = "OTLP HTTP base endpoint for Codex logs, metrics, and traces.";
+            description = "OTLP base endpoint for Codex logs, metrics, and traces.";
           };
 
           environment = lib.mkOption {

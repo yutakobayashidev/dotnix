@@ -67,7 +67,7 @@ let
     "WORKSPACE_OWNTRACKS_CREDENTIAL_FILE=${ownTracksCredential}"
     "WORKSPACE_XIAOMI_SCALE_ARCHIVE_DIR=${scaleState}/archive"
     "WORKSPACE_XIAOMI_SCALE_CREDENTIAL_FILE=${scaleState}/ingest.json"
-    "WORKSPACE_RUNTIME_URL=http://127.0.0.1:4318"
+    "WORKSPACE_RUNTIME_URL=http://127.0.0.1:4320"
     "WORKSPACE_RUNTIME_TOKEN_FILE=${runtimeToken}"
     "TWITTER_LITE_REPORT_ROOT=${reportDir}"
     "TWITTER_LITE_JOURNAL_DIR=${stateDir}/journal"
@@ -122,7 +122,7 @@ in
         Environment = [
           "WORKSPACE_RUNTIME_ROOT=${stateDir}/execution"
           "WORKSPACE_RUNTIME_TOKEN_FILE=${runtimeToken}"
-          "WORKSPACE_RUNTIME_PORT=4318"
+          "WORKSPACE_RUNTIME_PORT=4320"
           "WORKSPACE_RUNTIME_CONCURRENCY=2"
           "WORKSPACE_CODEX_PATH=${lib.getExe config.programs.codex.package}"
           "CODEX_HOME=${config.xdg.configHome}/codex"

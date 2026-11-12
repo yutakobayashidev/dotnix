@@ -303,20 +303,17 @@ and exported errors/latencies come from client telemetry, not billing records.
 Codex metrics are not interchangeable with Claude's cost metrics. Desktop apps
 that do not inherit the managed CLI configuration must be verified separately.
 
-Claude uses cumulative metrics and opt-in beta tracing. Codex configures
-separate logs, metrics and traces exporters under `otel`. The Nix telemetry
-endpoint option is the base URL (`http://127.0.0.1:4318` for managed system clients);
-the generated Codex configuration appends `/v1/logs`, `/v1/metrics`, and
-`/v1/traces` for the respective exporters.
-The collector converts delta metrics to cumulative when necessary and pushes
-remote write samples directly, so short sessions do not depend on a scrape.
+Claude uses cumulative metrics and opt-in beta tracing. Managed Claude and
+Codex clients send all three signals over OTLP/gRPC to local Alloy on 4317.
+Pi and dsh send HTTP metrics to local Alloy on 4318 (4319 on B450M).
+Each local collector converts deltas to cumulative, removes Codex turn and
+conversation metric labels, tags the host and remote-writes to VictoriaMetrics.
+See [agent monitoring](agent-monitoring.md) for the storage ports and legacy ingress.
 Metric names use underscore escaping without additional unit/type suffixes.
-Keep per-session identities on cumulative metrics to distinguish concurrent
-clients; session/trace IDs should not become Loki index labels.
-Codex 0.165.0's native metrics observed during verification do not include a
-session identity. Short sessions can export only one sample, so `increase`
-panels may show zero and `rate`-based latency panels may be empty despite
-successful ingestion. These panels are not exact per-session accounting.
+Keep per-process identities on Pi/dsh metrics to distinguish concurrent clients;
+session/trace IDs should not become Loki index labels. Native Codex streams
+without a session identity can lose concurrent deltas. Their first sample is
+not a zero baseline, so short sessions can still be undercounted by `increase`.
 
 Apply the Home Manager configuration on each client host, including the
 ThinkPad; deploying the collector on B450M does not update client settings.

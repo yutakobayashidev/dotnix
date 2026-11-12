@@ -11,8 +11,8 @@ _: {
       config = lib.mkIf config.my.services.tempo.enable {
         services.tempo = {
           enable = true;
-          # Only the local collector ingests traces; clients use its existing
-          # tailnet OTLP endpoint. All Tempo 3.x write paths stay in StateDirectory.
+          # Local and tailnet Alloy collectors ingest traces. Port 4317 is
+          # reserved for this host's loopback Alloy receiver.
           settings = {
             server = {
               http_listen_address = "127.0.0.1";
@@ -20,7 +20,7 @@ _: {
               grpc_listen_address = "127.0.0.1";
               grpc_listen_port = 9096;
             };
-            distributor.receivers.otlp.protocols.grpc.endpoint = "127.0.0.1:4317";
+            distributor.receivers.otlp.protocols.grpc.endpoint = "0.0.0.0:14317";
             storage.trace = {
               backend = "local";
               local.path = "/var/lib/tempo/blocks";

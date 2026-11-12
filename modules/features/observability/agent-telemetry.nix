@@ -1,5 +1,3 @@
-# Adapted from natsukium/dotfiles' local OTLP pipeline. Keep one tailnet
-# gateway so existing clients and Ori do not need direct access to storage APIs.
 { lib, ... }:
 let
   module =
@@ -8,6 +6,7 @@ let
       cfg = config.my.services.agentTelemetry;
       server = cfg.mode == "server";
       hostname = config.networking.hostName;
+      backend = if server then "127.0.0.1" else cfg.storageHost;
       privateAttributes = [
         "user.prompt"
         "prompt"
@@ -27,33 +26,83 @@ let
       scrub =
         context:
         builtins.toJSON (map (key: ''delete_key(${context}.attributes, "${key}")'') privateAttributes);
-      resourceStatements = builtins.toJSON (
-        if server then
-          [
-            ''set(attributes["host"], attributes["host.name"]) where attributes["host"] == nil and attributes["host.name"] != nil''
-            ''set(attributes["host"], attributes["deployment.environment"]) where attributes["host"] == nil and attributes["deployment.environment"] != nil''
-            ''replace_pattern(attributes["host"], "^home-", "") where attributes["host"] != nil''
-            ''set(attributes["host"], "unknown") where attributes["host"] == nil''
-          ]
-        else
-          [
-            ''set(attributes["host"], "${hostname}")''
-            ''set(attributes["host.name"], "${hostname}") where attributes["host.name"] == nil''
-          ]
-      );
-      output =
-        if server then
-          ''
-            metrics = [otelcol.processor.deltatocumulative.coding_agents.input]
+      localIdentity = builtins.toJSON [
+        ''set(attributes["host"], "${hostname}")''
+        ''set(attributes["host.name"], "${hostname}")''
+      ];
+      legacyIdentity = builtins.toJSON [
+        ''set(attributes["host"], attributes["host.name"]) where attributes["host"] == nil and attributes["host.name"] != nil''
+        ''set(attributes["host"], attributes["deployment.environment.name"]) where attributes["host"] == nil and attributes["deployment.environment.name"] != nil''
+        ''set(attributes["host"], attributes["deployment.environment"]) where attributes["host"] == nil and attributes["deployment.environment"] != nil''
+        ''replace_pattern(attributes["host"], "^home-", "") where attributes["host"] != nil''
+        ''set(attributes["host"], "unknown") where attributes["host"] == nil''
+      ];
+      # Keep the old tailnet HTTP ingress for Ori and clients not yet restarted.
+      # It must never inherit this collector's own hostname.
+      pipeline = name: identity: local: ''
+        otelcol.processor.memory_limiter "${name}" {
+          check_interval = "1s"
+          limit = "512MiB"
+          spike_limit = "128MiB"
+          output {
+            metrics = [otelcol.processor.transform.${name}.input]
+            logs = [otelcol.processor.transform.${name}.input]
+            traces = [otelcol.processor.transform.${name}.input]
+          }
+        }
+        otelcol.processor.transform "${name}" {
+          error_mode = "ignore"
+          metric_statements {
+            context = "resource"
+            statements = ${identity}
+          }
+          metric_statements {
+            context = "datapoint"
+            statements = [
+              `delete_key(attributes, "turn.id") where IsMatch(metric.name, "^codex[.]")`,
+              `delete_key(attributes, "conversation.id") where IsMatch(metric.name, "^codex[.]")`,
+            ]
+          }
+          log_statements {
+            context = "resource"
+            statements = ${identity}
+          }
+          log_statements {
+            context = "log"
+            statements = ${scrub "log"}
+          }
+          trace_statements {
+            context = "resource"
+            statements = ${identity}
+          }
+          trace_statements {
+            context = "span"
+            statements = ${scrub "span"}
+          }
+          trace_statements {
+            context = "spanevent"
+            statements = ${scrub "spanevent"}
+          }
+          output {
+            metrics = [otelcol.processor.deltatocumulative.${name}.input]
             logs = [otelcol.exporter.otlphttp.agent_loki.input]
             traces = [otelcol.exporter.otlp.agent_tempo.input]
-          ''
-        else
-          ''
-            metrics = [otelcol.exporter.otlphttp.agent_gateway.input]
-            logs = [otelcol.exporter.otlphttp.agent_gateway.input]
-            traces = [otelcol.exporter.otlphttp.agent_gateway.input]
-          '';
+          }
+        }
+        otelcol.processor.deltatocumulative "${name}" {
+          max_stale = "168h"
+          output { metrics = [otelcol.exporter.prometheus.${name}.input] }
+        }
+        otelcol.exporter.prometheus "${name}" {
+          add_metric_suffixes = false
+          resource_to_telemetry_conversion = true
+          forward_to = [prometheus.remote_write.${name}.receiver]
+        }
+        prometheus.remote_write "${name}" {
+          ${lib.optionalString local ''external_labels = { host = "${hostname}" }''}
+          endpoint { url = "http://${backend}:8428/api/v1/write" }
+        }
+      '';
     in
     {
       options.my.services.agentTelemetry = {
@@ -74,12 +123,17 @@ let
             "server"
           ];
           default = "forward";
-          description = "Forward to the tailnet gateway, or store all three signals locally.";
+          description = "Ship to storage over the tailnet, or use local storage and retain legacy OTLP ingress.";
         };
-        endpoint = lib.mkOption {
+        storageHost = lib.mkOption {
           type = lib.types.str;
-          default = "http://B450M-Pro4.tail29d068.ts.net:4318";
-          description = "Tailnet OTLP HTTP gateway used by forwarding collectors.";
+          default = "B450M-Pro4.tail29d068.ts.net";
+          description = "Tailnet host for VictoriaMetrics, Loki and Tempo.";
+        };
+        httpPort = lib.mkOption {
+          type = lib.types.port;
+          default = if server then 4319 else 4318;
+          description = "Loopback OTLP HTTP port; the server retains port 4318 for legacy remote clients.";
         };
       };
       config = lib.mkIf cfg.enable {
@@ -88,95 +142,36 @@ let
           stabilityLevel = "experimental";
           configs.agent-telemetry = ''
             otelcol.receiver.otlp "coding_agents" {
-              http { endpoint = "${if server then "0.0.0.0" else "127.0.0.1"}:4318" }
+              grpc { endpoint = "127.0.0.1:4317" }
+              http { endpoint = "127.0.0.1:${toString cfg.httpPort}" }
               output {
                 metrics = [otelcol.processor.memory_limiter.coding_agents.input]
                 logs = [otelcol.processor.memory_limiter.coding_agents.input]
                 traces = [otelcol.processor.memory_limiter.coding_agents.input]
               }
             }
-            otelcol.processor.memory_limiter "coding_agents" {
-              check_interval = "1s"
-              limit = "512MiB"
-              spike_limit = "128MiB"
-              output {
-                metrics = [otelcol.processor.transform.coding_agents.input]
-                logs = [otelcol.processor.transform.coding_agents.input]
-                traces = [otelcol.processor.transform.coding_agents.input]
-              }
+            ${pipeline "coding_agents" localIdentity true}
+            otelcol.exporter.otlphttp "agent_loki" {
+              client { endpoint = "http://${backend}:3100/otlp" }
             }
-            otelcol.processor.transform "coding_agents" {
-              error_mode = "ignore"
-              metric_statements {
-                context = "resource"
-                statements = ${resourceStatements}
-              }
-              metric_statements {
-                context = "datapoint"
-                statements = [
-                  `delete_key(attributes, "turn.id") where IsMatch(metric.name, "^codex[.]")`,
-                  `delete_key(attributes, "conversation.id") where IsMatch(metric.name, "^codex[.]")`,
-                ]
-              }
-              log_statements {
-                context = "resource"
-                statements = ${resourceStatements}
-              }
-              log_statements {
-                context = "log"
-                statements = ${scrub "log"}
-              }
-              trace_statements {
-                context = "resource"
-                statements = ${resourceStatements}
-              }
-              trace_statements {
-                context = "span"
-                statements = ${scrub "span"}
-              }
-              trace_statements {
-                context = "spanevent"
-                statements = ${scrub "spanevent"}
-              }
-              output {
-                ${output}
+            otelcol.exporter.otlp "agent_tempo" {
+              client {
+                endpoint = "${backend}:14317"
+                tls { insecure = true }
               }
             }
           ''
-          + (
-            if server then
-              ''
-                otelcol.processor.deltatocumulative "coding_agents" {
-                  max_stale = "168h"
-                  output { metrics = [otelcol.exporter.prometheus.coding_agents.input] }
-                }
-                otelcol.exporter.prometheus "coding_agents" {
-                  add_metric_suffixes = false
-                  resource_to_telemetry_conversion = true
-                  forward_to = [prometheus.remote_write.coding_agents.receiver]
-                }
-                prometheus.remote_write "coding_agents" {
-                  endpoint { url = "http://127.0.0.1:8428/api/v1/write" }
-                }
-                otelcol.exporter.otlphttp "agent_loki" {
-                  client { endpoint = "http://127.0.0.1:3100/otlp" }
-                }
-                otelcol.exporter.otlp "agent_tempo" {
-                  client {
-                    endpoint = "127.0.0.1:4317"
-                    tls { insecure = true }
-                  }
-                }
-              ''
-            else
-              ''
-                otelcol.exporter.otlphttp "agent_gateway" {
-                  client { endpoint = "${cfg.endpoint}" }
-                  retry_on_failure { max_elapsed_time = "0s" }
-                  sending_queue { queue_size = 10000 }
-                }
-              ''
-          );
+          + lib.optionalString server ''
+            otelcol.receiver.otlp "legacy_agents" {
+              http { endpoint = "0.0.0.0:4318" }
+              output {
+                metrics = [otelcol.processor.memory_limiter.legacy_agents.input]
+                logs = [otelcol.processor.memory_limiter.legacy_agents.input]
+                traces = [otelcol.processor.memory_limiter.legacy_agents.input]
+              }
+            }
+            ${pipeline "legacy_agents" legacyIdentity false}
+          '';
         };
       };
     };

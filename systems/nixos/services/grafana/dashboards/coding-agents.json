@@ -134,7 +134,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(claude_code_cost_usage{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(claude_code_cost_usage{host=~\"${host:regex}\"}[$__range])))",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -146,7 +146,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(codex_turn_cost_microusd{host=~\"$host\"}[$__range])) / 1e6)",
+          "expr": "(sum(increase(codex_turn_cost_microusd{host=~\"${host:regex}\"}[$__range])) / 1e6)",
           "refId": "B",
           "instant": true,
           "range": false,
@@ -158,7 +158,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(pi_cost_usage{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(pi_cost_usage{host=~\"${host:regex}\"}[$__range])))",
           "refId": "C",
           "instant": true,
           "range": false,
@@ -212,7 +212,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(claude_code_token_usage{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(claude_code_token_usage{host=~\"${host:regex}\"}[$__range])))",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -224,7 +224,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"${host:regex}\"}[$__range])))",
           "refId": "B",
           "instant": true,
           "range": false,
@@ -236,7 +236,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(pi_token_usage{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(pi_token_usage{host=~\"${host:regex}\"}[$__range])))",
           "refId": "C",
           "instant": true,
           "range": false,
@@ -248,7 +248,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(dsh_token_usage{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(dsh_token_usage{host=~\"${host:regex}\"}[$__range])))",
           "refId": "D",
           "instant": true,
           "range": false,
@@ -301,7 +301,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(claude_code_session_count{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(claude_code_session_count{host=~\"${host:regex}\"}[$__range])))",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -313,7 +313,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(codex_thread_started{session_source!~\"subagent.*\",host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(codex_thread_started{session_source!~\"subagent.*\",host=~\"${host:regex}\"}[$__range])))",
           "refId": "B",
           "instant": true,
           "range": false,
@@ -325,7 +325,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(pi_session_count{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(pi_session_count{host=~\"${host:regex}\"}[$__range])))",
           "refId": "C",
           "instant": true,
           "range": false,
@@ -382,7 +382,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_cost_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(claude_code_cost_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "Claude Code"
@@ -393,7 +393,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_cost_microusd{host=~\"$host\"}[$__rate_interval])) / 1e6",
+          "expr": "sum(increase(codex_turn_cost_microusd{host=~\"${host:regex}\"}[$__rate_interval])) / 1e6",
           "refId": "B",
           "range": true,
           "legendFormat": "Codex"
@@ -404,7 +404,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(pi_cost_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(pi_cost_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "C",
           "range": true,
           "legendFormat": "pi"
@@ -460,7 +460,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(claude_code_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "Claude Code"
@@ -471,7 +471,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "B",
           "range": true,
           "legendFormat": "Codex"
@@ -482,7 +482,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(pi_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(pi_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "C",
           "range": true,
           "legendFormat": "pi"
@@ -493,7 +493,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(dsh_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(dsh_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "D",
           "range": true,
           "legendFormat": "dsh"
@@ -560,7 +560,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_cost_usage{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(claude_code_cost_usage{host=~\"${host:regex}\"}[$__range]))",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -615,7 +615,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_cost_usage{host=~\"$host\"}[$__range])) / clamp_min(sum(increase(claude_code_session_count{host=~\"$host\"}[$__range])), 1)",
+          "expr": "sum(increase(claude_code_cost_usage{host=~\"${host:regex}\"}[$__range])) / clamp_min(sum(increase(claude_code_session_count{host=~\"${host:regex}\"}[$__range])), 1)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -668,7 +668,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_token_usage{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(claude_code_token_usage{host=~\"${host:regex}\"}[$__range]))",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -741,7 +741,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_token_usage{type=\"cacheRead\",host=~\"$host\"}[$__range])) / clamp_min(sum(increase(claude_code_token_usage{type=~\"cacheRead|cacheCreation|input\",host=~\"$host\"}[$__range])), 1)",
+          "expr": "sum(increase(claude_code_token_usage{type=\"cacheRead\",host=~\"${host:regex}\"}[$__range])) / clamp_min(sum(increase(claude_code_token_usage{type=~\"cacheRead|cacheCreation|input\",host=~\"${host:regex}\"}[$__range])), 1)",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -794,7 +794,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_session_count{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(claude_code_session_count{host=~\"${host:regex}\"}[$__range]))",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -847,7 +847,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_active_time_total{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(claude_code_active_time_total{host=~\"${host:regex}\"}[$__range]))",
           "instant": true,
           "range": false,
           "refId": "A"
@@ -930,7 +930,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (model) (increase(claude_code_cost_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (model) (increase(claude_code_cost_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "range": true,
           "instant": false,
           "refId": "A",
@@ -1002,7 +1002,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (type) (increase(claude_code_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (type) (increase(claude_code_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "range": true,
           "instant": false,
           "refId": "A",
@@ -1064,7 +1064,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (model) (increase(claude_code_cost_usage{host=~\"$host\"}[$__range]))",
+          "expr": "sum by (model) (increase(claude_code_cost_usage{host=~\"${host:regex}\"}[$__range]))",
           "instant": true,
           "range": false,
           "refId": "A",
@@ -1131,7 +1131,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (model) (increase(claude_code_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (model) (increase(claude_code_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "range": true,
           "instant": false,
           "refId": "A",
@@ -1198,7 +1198,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(rate(claude_code_token_usage{type=\"cacheRead\",host=~\"$host\"}[$__rate_interval])) / clamp_min(sum(rate(claude_code_token_usage{type=~\"cacheRead|cacheCreation|input\",host=~\"$host\"}[$__rate_interval])), 1)",
+          "expr": "sum(rate(claude_code_token_usage{type=\"cacheRead\",host=~\"${host:regex}\"}[$__rate_interval])) / clamp_min(sum(rate(claude_code_token_usage{type=~\"cacheRead|cacheCreation|input\",host=~\"${host:regex}\"}[$__rate_interval])), 1)",
           "range": true,
           "instant": false,
           "refId": "A",
@@ -1308,7 +1308,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (type) (increase(claude_code_lines_of_code_count{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (type) (increase(claude_code_lines_of_code_count{host=~\"${host:regex}\"}[$__rate_interval]))",
           "range": true,
           "instant": false,
           "refId": "A",
@@ -1374,7 +1374,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_commit_count{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(claude_code_commit_count{host=~\"${host:regex}\"}[$__rate_interval]))",
           "range": true,
           "instant": false,
           "refId": "A",
@@ -1386,7 +1386,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(claude_code_pull_request_count{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(claude_code_pull_request_count{host=~\"${host:regex}\"}[$__rate_interval]))",
           "range": true,
           "instant": false,
           "refId": "B",
@@ -1483,7 +1483,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (decision) (increase(claude_code_code_edit_tool_decision{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (decision) (increase(claude_code_code_edit_tool_decision{host=~\"${host:regex}\"}[$__rate_interval]))",
           "range": true,
           "instant": false,
           "refId": "A",
@@ -1755,7 +1755,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(codex_turn_cost_microusd{host=~\"$host\"}[$__range])) / 1e6)",
+          "expr": "(sum(increase(codex_turn_cost_microusd{host=~\"${host:regex}\"}[$__range])) / 1e6)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1807,7 +1807,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1860,7 +1860,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"cached_input\",host=~\"$host\"}[$__range])) / clamp_min(sum(increase(codex_turn_token_usage_sum{token_type=\"input\",host=~\"$host\"}[$__range])), 1)",
+          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"cached_input\",host=~\"${host:regex}\"}[$__range])) / clamp_min(sum(increase(codex_turn_token_usage_sum{token_type=\"input\",host=~\"${host:regex}\"}[$__range])), 1)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1912,7 +1912,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_thread_started{session_source!~\"subagent.*\",host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(codex_thread_started{session_source!~\"subagent.*\",host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1964,7 +1964,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_e2e_duration_ms_count{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(codex_turn_e2e_duration_ms_count{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2016,7 +2016,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_tool_call{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(codex_tool_call{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2071,7 +2071,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"input\",host=~\"$host\"}[$__rate_interval])) - sum(increase(codex_turn_token_usage_sum{token_type=\"cached_input\",host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"input\",host=~\"${host:regex}\"}[$__rate_interval])) - sum(increase(codex_turn_token_usage_sum{token_type=\"cached_input\",host=~\"${host:regex}\"}[$__rate_interval]))",
           "legendFormat": "input (uncached)",
           "range": true,
           "refId": "A"
@@ -2082,7 +2082,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"cached_input\",host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"cached_input\",host=~\"${host:regex}\"}[$__rate_interval]))",
           "legendFormat": "cached input",
           "range": true,
           "refId": "B"
@@ -2093,7 +2093,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"output\",host=~\"$host\"}[$__rate_interval])) - sum(increase(codex_turn_token_usage_sum{token_type=\"reasoning_output\",host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"output\",host=~\"${host:regex}\"}[$__rate_interval])) - sum(increase(codex_turn_token_usage_sum{token_type=\"reasoning_output\",host=~\"${host:regex}\"}[$__rate_interval]))",
           "legendFormat": "output (excl. reasoning)",
           "range": true,
           "refId": "C"
@@ -2104,7 +2104,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"reasoning_output\",host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(increase(codex_turn_token_usage_sum{token_type=\"reasoning_output\",host=~\"${host:regex}\"}[$__rate_interval]))",
           "legendFormat": "reasoning output",
           "range": true,
           "refId": "D"
@@ -2159,7 +2159,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (model) (increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (model) (increase(codex_turn_token_usage_sum{token_type=\"total\",host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{model}}"
@@ -2214,7 +2214,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.5, sum by (le) (rate(codex_turn_ttft_duration_ms_bucket{host=~\"$host\"}[$__rate_interval])))",
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(codex_turn_ttft_duration_ms_bucket{host=~\"${host:regex}\"}[$__rate_interval])))",
           "refId": "A",
           "range": true,
           "legendFormat": "p50"
@@ -2225,7 +2225,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(codex_turn_ttft_duration_ms_bucket{host=~\"$host\"}[$__rate_interval])))",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(codex_turn_ttft_duration_ms_bucket{host=~\"${host:regex}\"}[$__rate_interval])))",
           "refId": "B",
           "range": true,
           "legendFormat": "p95"
@@ -2280,7 +2280,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (tool) (increase(codex_tool_call{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (tool) (increase(codex_tool_call{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{tool}}"
@@ -2453,7 +2453,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "(sum(increase(pi_cost_usage{host=~\"$host\"}[$__range])))",
+          "expr": "(sum(increase(pi_cost_usage{host=~\"${host:regex}\"}[$__range])))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2505,7 +2505,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(pi_token_usage{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(pi_token_usage{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2558,7 +2558,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(pi_token_usage{type=\"cacheRead\",host=~\"$host\"}[$__range])) / clamp_min(sum(increase(pi_token_usage{type=~\"cacheRead|cacheCreation|input\",host=~\"$host\"}[$__range])), 1)",
+          "expr": "sum(increase(pi_token_usage{type=\"cacheRead\",host=~\"${host:regex}\"}[$__range])) / clamp_min(sum(increase(pi_token_usage{type=~\"cacheRead|cacheCreation|input\",host=~\"${host:regex}\"}[$__range])), 1)",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2610,7 +2610,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(pi_session_count{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(pi_session_count{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2662,7 +2662,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(pi_tool_call{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(pi_tool_call{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2714,7 +2714,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(pi_tool_call{success=\"false\",host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(pi_tool_call{success=\"false\",host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2769,7 +2769,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (provider, model) (increase(pi_cost_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (provider, model) (increase(pi_cost_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{provider}}/{{model}}"
@@ -2824,7 +2824,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (type) (increase(pi_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (type) (increase(pi_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{type}}"
@@ -2879,7 +2879,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (tool) (increase(pi_tool_call{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (tool) (increase(pi_tool_call{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{tool}}"
@@ -2944,7 +2944,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(dsh_token_usage{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(dsh_token_usage{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -2997,7 +2997,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(dsh_api_request{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(dsh_api_request{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -3050,7 +3050,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(dsh_api_request{host=~\"$host\",outcome=\"error\"}[$__range]))",
+          "expr": "sum(increase(dsh_api_request{host=~\"${host:regex}\",outcome=\"error\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -3103,7 +3103,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(dsh_api_duration{host=~\"$host\"}[$__range])) / sum(increase(dsh_api_request{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(dsh_api_duration{host=~\"${host:regex}\"}[$__range])) / sum(increase(dsh_api_request{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -3159,7 +3159,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (type) (increase(dsh_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (type) (increase(dsh_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{type}}"
@@ -3214,7 +3214,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (provider, model) (increase(dsh_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (provider, model) (increase(dsh_token_usage{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{provider}} / {{model}}"
@@ -3269,7 +3269,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum by (outcome) (increase(dsh_api_request{host=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum by (outcome) (increase(dsh_api_request{host=~\"${host:regex}\"}[$__rate_interval]))",
           "refId": "A",
           "range": true,
           "legendFormat": "{{outcome}}"
@@ -3322,7 +3322,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "sum(increase(dsh_api_usage_reported{host=~\"$host\"}[$__range])) / sum(increase(dsh_api_request{host=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(dsh_api_usage_reported{host=~\"${host:regex}\"}[$__range])) / sum(increase(dsh_api_request{host=~\"${host:regex}\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false,

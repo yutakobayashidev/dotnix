@@ -2,26 +2,37 @@
 
 The [Coding Agents dashboard](https://grafana.home.yutakobayashi.com/d/coding-agents)
 combines Claude Code, Codex, Pi and dsh usage, latency, errors, events and traces.
-It adapts the CC0-licensed [natsukium/dotfiles implementation](https://github.com/natsukium/dotfiles/tree/1a73d4fdf47f0dc28509cb304f44646f1edf56a4/modules/features/monitoring)
-and its Pi telemetry extension at the same revision.
+It uses the local-collector pattern and Pi extension from the CC0-licensed
+[upstream implementation](https://github.com/natsukium/dotfiles/tree/840060e3c97823608781697a6b3d2fd8a0789dfe/modules/features/monitoring).
+The dsh instrumentation and legacy ingress are local additions. Prompt/content
+capture stays disabled, unlike the upstream personal tracing configuration.
 
 ## Collection
 
-Managed NixOS and macOS hosts with an enabled agent use Alloy on
-`127.0.0.1:4318`. It adds the host identity, removes known sensitive log/span
-attributes and forwards OTLP HTTP over Tailscale to B450M-Pro4:4318.
-B450M uses the same Alloy service for journals and agent ingestion, replacing
-the standalone OpenTelemetry collector. It converts delta metrics to cumulative
-and pushes samples to VictoriaMetrics, sends logs to Loki and traces to Tempo.
-The existing central endpoint remains available to Ori and older clients.
-Standalone Home Manager clients retain that endpoint as their default.
+Managed NixOS and macOS hosts use a loopback Alloy receiver. Claude Code and
+Codex send OTLP/gRPC to `127.0.0.1:4317`; Pi and dsh use OTLP/HTTP on port
+4318 (4319 on B450M, where 4318 remains the legacy remote ingress).
+Each host adds its own identity, removes known sensitive log/span attributes,
+converts delta metrics to cumulative with a 168-hour stale timeout, and writes
+directly to VictoriaMetrics over Tailscale. Logs go to Loki and traces to Tempo.
+Per-host accumulation and remote-write host labels follow the local collector
+pipeline; one central accumulator no longer handles every active client.
 
-Unlike the reference implementation, forwarding clients do not write directly
-to storage backends. Storage APIs stay local to B450M. Only the receiver is
-reachable over the existing trusted tailnet; client receivers are loopback-only.
-`my.services.agentTelemetry` controls enablement, forwarding endpoint and server
-mode. The unified `my.services.alloy` interface supports Linux and macOS.
+B450M accepts remote-write on 8428, Loki OTLP on 3100, and Tempo OTLP/gRPC on
+14317. Its firewall permits these ports through the already trusted Tailscale
+interface, not through the ordinary network interfaces. Tempo uses 14317 so it
+does not conflict with the local Alloy gRPC receiver on 4317.
+
+A separate legacy HTTP pipeline on B450M:4318 continues to accept Ori and older
+sessions. It preserves their supplied identity and uses `unknown` when none is
+present; it never assigns B450M's identity to anonymous remote telemetry.
+Restart managed agents after activation to move them to the local receiver.
+Standalone Home Manager clients retain the legacy HTTP endpoint as their default.
+`my.services.agentTelemetry` controls enablement, storage host, local HTTP port
+and server mode. The shared Alloy interface supports Linux and macOS.
 Full Linux Alloy configuration is validated during the system build.
+
+The UM790 workspace runtime uses loopback port 4320, leaving 4318 for OTLP.
 
 Pi installs `~/.pi/agent/extensions/otel-metrics.ts`. It exports token usage,
 estimated cost, new sessions and tool successes/failures, without message or
@@ -56,17 +67,19 @@ concurrent CLI/Web processes do not overwrite one another.
 ## Privacy and interpretation
 
 Existing Claude/Codex prompt and tool-content collection defaults remain off.
-Both collection stages remove the known sensitive attributes listed in
+The local and legacy pipelines remove the known sensitive attributes listed in
 `agent-telemetry.nix`; this is not a general content sanitizer. Session and trace
 identifiers are retained for diagnostics, but are not Loki index labels.
 Codex per-turn and conversation metric labels are removed to limit cardinality.
 Native Codex metrics without a session identity can undercount concurrent or
-single-sample sessions. Cost values are telemetry estimates, not invoices.
+single-sample sessions. Cost values are telemetry estimates, not invoices. A Codex cost counter is
+emitted only when the client receives an estimated turn cost; token telemetry
+does not imply that this field is available. No absent cost is synthesized as zero.
 Missing data is shown as missing rather than forced to zero.
 
-The local forwarding queue is memory-only and retries while Alloy is running;
-restarts or long outages can lose queued telemetry. Central delta accumulation
-also resets on collector restart. Historical metrics and logs remain in the
+Delta accumulation is in memory and resets on each collector restart.
+Prometheus remote-write uses Alloy's WAL; it does not make in-flight agent
+exports or the delta accumulator durable. Historical metrics and logs remain in the
 existing databases. Historical series without `host` do not match a selected
 host. The original Claude event detail view remains available; the two redundant
 Claude metrics/Codex views are removed through Grafana provisioning.
@@ -75,7 +88,7 @@ Claude metrics/Codex views are removed through Grafana provisioning.
 
 1. Build and deploy B450M through Comin. Confirm Alloy, VictoriaMetrics, Loki
    and Tempo are active and the old collector is stopped. Port 4318 must have
-   only the Alloy listener; Tempo keeps its existing loopback 4317 listener.
+   only the legacy Alloy listener; local gRPC uses 4317 and Tempo uses 14317.
 2. Apply the client system and Home Manager configuration together, then start
    new agent sessions. Existing Codex wrappers retain their old overrides until
    updated. A server deployment alone does not switch clients to local Alloy.
@@ -85,5 +98,18 @@ Claude metrics/Codex views are removed through Grafana provisioning.
 4. Exercise a short Pi session and inspect its token/session increase. Run
    `node --test tests/pi-otel-metrics.mjs` (Node 24+) for extension regression
    checks. Do not interpret an empty agent panel as proof of zero usage.
+
+The collector integration test runs generated server configuration against
+isolated Alloy and VictoriaMetrics processes, without writing to production:
+
+```sh
+python3 tests/agent-telemetry.py --alloy /path/to/alloy \
+  --victoriametrics /path/to/victoria-metrics --config /path/to/server.alloy
+```
+
+It checks local identity, cost aggregation across turn IDs, concurrent Pi
+streams, and legacy identity fallback. Use `nix eval --raw
+.#nixosConfigurations.B450M-Pro4.config.my.services.alloy.configs.agent-telemetry`
+to obtain the configuration.
 
 See [monitoring](monitoring.md) for storage retention, alerting and access.

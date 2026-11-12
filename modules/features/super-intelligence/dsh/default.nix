@@ -57,7 +57,7 @@ _:
           type = lib.types.str;
           default =
             if osConfig.my.services.agentTelemetry.enable or false then
-              "http://127.0.0.1:4318/v1/metrics"
+              "http://127.0.0.1:${toString osConfig.my.services.agentTelemetry.httpPort}/v1/metrics"
             else
               "http://B450M-Pro4.tail29d068.ts.net:4318/v1/metrics";
           description = "OTLP HTTP metrics endpoint.";
