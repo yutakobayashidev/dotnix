@@ -18,7 +18,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         lib.optionals pkgs.stdenv.isLinux [
           beeper
           element-desktop
-          google-chrome
           halloy
           keybase-gui
           mattermost-desktop
