@@ -45,6 +45,8 @@
     kernelModules = [
       "kvm-amd"
       "nvidia-uvm"
+      # Onboard MediaTek RZ717 (MT7925); firmware is enabled below.
+      "mt7925e"
     ];
     extraModulePackages = [ ];
   };
