@@ -36,6 +36,7 @@ _:
           dmidecode
           kubo
           nvme-cli
+          pciutils
           psmisc
           usbutils
         ];
