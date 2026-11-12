@@ -83,7 +83,7 @@ let
 
         # AI
         {
-          name = "";
+          name = "OmniRoute Dashboard";
           url = "https://litellm.home.yutakobayashi.com/dashboard";
         }
         {
