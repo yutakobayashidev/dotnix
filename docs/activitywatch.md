@@ -6,6 +6,12 @@ Home Manager runs the local ActivityWatch server and
 records the active application/window title and AFK state on Niri; the standard
 X11 window and AFK watchers are not started.
 
+The service selects `pkgs.aw-server-rust` directly, rather than the full
+`pkgs.activitywatch` bundle with its unused Qt tray and Python/X11 watchers.
+This keeps their Python dependencies out of the build; the pinned bundle's
+`aw-core` requires Peewee 3 while nixpkgs supplies Peewee 4. The server and its
+database location remain the same.
+
 The server listens on `127.0.0.1:5600`. Open the ActivityWatch launcher entry or
 <http://127.0.0.1:5600>. Data stays on the ThinkPad; no Android sync or remote
 collector is configured. The pinned nixpkgs currently supplies ActivityWatch

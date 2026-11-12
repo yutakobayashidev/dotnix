@@ -15,6 +15,7 @@ _:
       config = lib.mkIf config.my.services.activitywatch.enable {
         services.activitywatch = {
           enable = true;
+          package = pkgs.aw-server-rust;
           settings = {
             address = "127.0.0.1";
             port = 5600;
