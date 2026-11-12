@@ -110,24 +110,24 @@ flake-module.nix             # Host table and generated system outputs
 
 Application and system features live in purpose-based namespaces under `modules/features/`:
 
-| Namespace             | Contents                                                                      |
-| --------------------- | ----------------------------------------------------------------------------- |
-| `browser/`            | Firefox and Chromium                                                          |
-| `super-intelligence/` | Coding agents, agent skills, and MCP integration                              |
-| `desktop/`            | Launcher, wallpaper, desktop search, and sleep prevention                     |
-| `development/`        | API tools, scripting, and code analysis                                       |
-| `editor/`             | Emacs, Neovim, and Zed                                                        |
-| `input/`              | Input methods and speech-to-text                                              |
-| `media/`              | Media capture, downloads, and music library tools                             |
-| `network/`            | Tailscale and Cloudflare tunnels                                              |
-| `nix/`                | Nix daemon, nixpkgs policy, and remote builds                                 |
-| `observability/`      | Log shipping and rotation                                                     |
-| `productivity/`       | Personal workflows, information retrieval, and document tools                 |
-| `shell/`              | Zsh with Powerlevel10k and general command-line utilities                     |
-| `system/`             | Boot, persistence, authentication, hardware, and home environment foundations |
-| `terminal/`           | Terminal emulator and multiplexer                                             |
-| `version-control/`    | Git, GitHub CLI, Jujutsu, and repository tools                                |
-| `window-manager/`     | Niri, desktop-only Hyprland, status bar, idle handling, and screen lock       |
+| Namespace             | Contents                                                                       |
+| --------------------- | ------------------------------------------------------------------------------ |
+| `browser/`            | Firefox and Chromium                                                           |
+| `super-intelligence/` | Coding agents, agent skills, and MCP integration                               |
+| `desktop/`            | Launcher, wallpaper, desktop search, and sleep prevention                      |
+| `development/`        | API tools, scripting, and code analysis                                        |
+| `editor/`             | Emacs, Neovim, and Zed                                                         |
+| `input/`              | Input methods and speech-to-text                                               |
+| `media/`              | Media capture, downloads, and music library tools                              |
+| `network/`            | Tailscale and Cloudflare tunnels                                               |
+| `nix/`                | Nix daemon, nixpkgs policy, and remote builds                                  |
+| `observability/`      | Log shipping and rotation                                                      |
+| `productivity/`       | Personal workflows, information retrieval, and document tools                  |
+| `shell/`              | Zsh with Powerlevel10k and general command-line utilities                      |
+| `system/`             | Boot, persistence, authentication, hardware, and home environment foundations  |
+| `terminal/`           | Terminal emulator and multiplexer                                              |
+| `version-control/`    | Git, GitHub CLI, Jujutsu, and repository tools                                 |
+| `window-manager/`     | Niri, labwc, desktop-only Hyprland, status bar, idle handling, and screen lock |
 
 The Grok Bot cloud VM is a standalone Home Manager target (`homeConfigurations.grok-bot`) declared in `modules/standalone.nix`, with settings in `homes/standalone/grok-bot/`. It reuses the `base` and `development` profiles without their NixOS halves. See [setup and recovery](grok-bot.md).
 
@@ -189,7 +189,7 @@ are in the [desktop style report](noctalia-style-report.md).
 
 ### NixOS
 
-- **WM**: [Niri](https://github.com/YaLTeR/niri) by default, with an optional [Hyprland session](hyprland.md) on UM790-Pro and X870-Steel-Legend-WiFi
+- **WM**: [Niri](https://github.com/YaLTeR/niri) by default, with an optional [labwc session](labwc.md) on graphical hosts and [Hyprland session](hyprland.md) on UM790-Pro and X870-Steel-Legend-WiFi
 - **Desktop shell**: [Noctalia](https://noctalia.dev/) with Catppuccin Mocha, a floating bar, centered workspaces, notifications, OSD, and control center
 - **Launcher**: [Vicinae](https://github.com/vicinaehq/vicinae), including [AI Sessions](https://github.com/yutakobayashidev/vicinae-extension-ai-session) for Codex/Claude Code history search and resume; see [configuration and updates](vicinae.md)
 - **Wallpaper**: Noctalia with per-host initial images set through `services.wallpaper.imagePath`; later selections are managed by Noctalia

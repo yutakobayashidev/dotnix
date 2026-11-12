@@ -1,9 +1,10 @@
-{ pkgs, ... }:
+_:
 
 {
   services.comfyui = {
     enable = true;
-    package = pkgs.comfyui.override { withManager = true; };
+    extraPackages = ps: [ ps.comfyui-manager ];
+    extraArgs = [ "--enable-manager" ];
     listen = [ "0.0.0.0" ];
   };
 

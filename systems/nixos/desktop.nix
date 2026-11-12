@@ -9,6 +9,7 @@
 
   # Keep Niri available everywhere; Hyprland is an additional desktop session.
   my.programs.hyprland.enable = !config.my.profiles.laptop.enable;
+  my.programs.labwc.enable = true;
 
   programs = {
     gnome-disks.enable = true;
