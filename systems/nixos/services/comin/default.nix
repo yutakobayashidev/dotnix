@@ -7,7 +7,6 @@
 
 {
   imports = [
-    ../alloy
     ../../../shared/comin/alloy.nix
     ../../../shared/comin/package.nix
   ];

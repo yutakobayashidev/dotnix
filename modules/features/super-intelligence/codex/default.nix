@@ -209,7 +209,11 @@ _:
 
           endpoint = lib.mkOption {
             type = lib.types.str;
-            default = "http://B450M-Pro4.tail29d068.ts.net:4318";
+            default =
+              if osConfig.my.services.agentTelemetry.enable or false then
+                "http://127.0.0.1:4318"
+              else
+                "http://B450M-Pro4.tail29d068.ts.net:4318";
             description = "OTLP HTTP base endpoint for Codex logs, metrics, and traces.";
           };
 

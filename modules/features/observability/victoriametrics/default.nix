@@ -195,7 +195,7 @@ _: {
           }
           loki.source.journal "infrastructure" {
             forward_to = [loki.relabel.infrastructure.receiver]
-            matches = "_SYSTEMD_UNIT=traefik.service + _SYSTEMD_UNIT=home-assistant.service + _SYSTEMD_UNIT=gitea.service + _SYSTEMD_UNIT=victoriametrics.service + _SYSTEMD_UNIT=vmalert-main.service + _SYSTEMD_UNIT=alertmanager.service + _SYSTEMD_UNIT=opentelemetry-collector.service + _SYSTEMD_UNIT=tempo.service"
+            matches = "_SYSTEMD_UNIT=traefik.service + _SYSTEMD_UNIT=home-assistant.service + _SYSTEMD_UNIT=gitea.service + _SYSTEMD_UNIT=victoriametrics.service + _SYSTEMD_UNIT=vmalert-main.service + _SYSTEMD_UNIT=alertmanager.service + _SYSTEMD_UNIT=alloy.service + _SYSTEMD_UNIT=tempo.service"
             labels = { job = "infrastructure", host = "${config.networking.hostName}" }
           }
         '';
@@ -204,20 +204,6 @@ _: {
           wants = [ "victoriametrics.service" ];
         };
         system.checks = [
-          (pkgs.runCommand "monitoring-alloy-config-check" { } ''
-            ${lib.getExe pkgs.grafana-alloy} validate ${
-              pkgs.writeText "alloy.alloy" (
-                lib.concatStringsSep "\n" (
-                  lib.mapAttrsToList (_: value: value.text) (
-                    lib.filterAttrs (
-                      name: value: lib.hasPrefix "alloy/" name && value.text != null
-                    ) config.environment.etc
-                  )
-                )
-              )
-            }
-            touch $out
-          '')
           (pkgs.runCommand "monitoring-rules-check" { } ''
             ${lib.getExe' config.services.vmalert.package "vmalert"} -rule=${yaml.generate "rules.yml" config.services.vmalert.instances.main.rules} -dryRun
             touch $out

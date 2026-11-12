@@ -10,7 +10,7 @@ with separate infrastructure and room alert routing and configurable environment
 
 - Node exporters, Comin, Starla and Home Assistant → VictoriaMetrics.
 - B450M SMART/NVMe health and NVIDIA GPU exporter → VictoriaMetrics.
-- Claude Code and Codex → OTLP HTTP collector → VictoriaMetrics (metrics), Loki
+- Claude Code, Codex and Pi → local Alloy → B450M Alloy → VictoriaMetrics (metrics), Loki
   (logs), Tempo (traces).
 - VictoriaMetrics → vmalert → Alertmanager → Discord infrastructure/room channels
   once notifications are configured.
@@ -252,22 +252,24 @@ size limit and dropping subsequent MCP calls. Nested work within the request
 remains in its trace. Server instrumentation does not expose the client's
 conversation or reasoning.
 
-## Claude Code and Codex
+## Coding agents
+
+See [agent telemetry architecture and rollout](agent-monitoring.md) for the Alloy migration, Pi extension and verification.
 
 The managed CLI configurations enable OTLP exporters while disabling raw
 prompt/content collection. The central collector also removes known sensitive
 attributes from logs and traces. New SDK fields still need review; do not
 assume this removes every possible secret in arbitrary telemetry.
 
-The original Claude event dashboard is retained alongside metrics and Codex
-views. Loki log trace IDs link to Tempo; traces link back to logs. Token usage
+The unified [Coding Agents dashboard](https://grafana.home.yutakobayashi.com/d/coding-agents) replaces the separate Claude metrics and Codex dashboards.
+The original Claude event detail dashboard is retained. Loki log trace IDs link to Tempo; traces link back to logs. Token usage
 and exported errors/latencies come from client telemetry, not billing records.
 Codex metrics are not interchangeable with Claude's cost metrics. Desktop apps
 that do not inherit the managed CLI configuration must be verified separately.
 
 Claude uses cumulative metrics and opt-in beta tracing. Codex configures
 separate logs, metrics and traces exporters under `otel`. The Nix telemetry
-endpoint option is the base URL (`http://B450M-Pro4.tail29d068.ts.net:4318`);
+endpoint option is the base URL (`http://127.0.0.1:4318` for managed system clients);
 the generated Codex configuration appends `/v1/logs`, `/v1/metrics`, and
 `/v1/traces` for the respective exporters.
 The collector converts delta metrics to cumulative when necessary and pushes
@@ -304,7 +306,7 @@ and [Codex exporter configuration](https://learn.chatgpt.com/docs/config-file/co
    vmalert expressions. Check Alertmanager config, collector config and the
    complete NixOS system evaluation as well.
 3. Apply on B450M using the repository's normal deployment workflow. Verify
-   `victoriametrics`, `vmalert-main`, `alertmanager`, `opentelemetry-collector`,
+   `victoriametrics`, `vmalert-main`, `alertmanager`,
    `tempo` and `alloy` are active. Check journal errors and `/targets` on
    `http://127.0.0.1:8428` locally.
 4. In Grafana, verify `up` for node, Comin, Starla and HA. Check service
@@ -318,7 +320,7 @@ and [Codex exporter configuration](https://learn.chatgpt.com/docs/config-file/co
    delivery. Remove the test alert afterward.
 
 Grafana dashboards include Infrastructure Overview, Room Environment, Hardware
-Overview, NVIDIA GPU, Comin, Claude Code and Codex. The NVIDIA view uses the
+Overview, NVIDIA GPU, Comin and Coding Agents. The NVIDIA view uses the
 reference layout with GPU UUID filtering, utilization, VRAM, temperature/fan,
 power/limit, throttling and clocks. Room Environment also compares the observed
 HA air-conditioner temperature and set point. The metrics/rules APIs are local; use Grafana or an SSH

@@ -73,7 +73,7 @@
             options.path = "${./dashboards}";
             options.foldersFromFilesStructure = true;
             allowUiUpdates = false;
-            disableDeletion = true;
+            disableDeletion = false;
           }
         ];
       };

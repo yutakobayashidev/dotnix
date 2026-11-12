@@ -23,7 +23,6 @@
     ../services/simple-nostr-relay
     ../services/webhashtag-rust-server
     ../services/loki
-    ../services/opentelemetry-collector
     ../services/oura-metrics
     ../services/n8n
     ../services/niks3
@@ -177,6 +176,10 @@
   };
 
   my.services.monitoring.enable = true;
+  my.services.agentTelemetry = {
+    enable = true;
+    mode = "server";
+  };
   my.services.tibo-reset-monitor = {
     enable = true;
     webhookFile = config.sops.secrets.discord-infra-info.path;

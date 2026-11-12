@@ -50,6 +50,7 @@ in
         {
           action = "index_label";
           attributes = [
+            "host"
             "account_name"
             "deployment.environment"
             "team"
