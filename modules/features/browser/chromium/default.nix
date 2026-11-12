@@ -29,6 +29,7 @@ _:
             { id = "kpgefcfmnafjgpblomihpgmejjdanjjp"; } # nos2x
             { id = "fcoeoabgfenejglbffodgkkbkcdhcgfn"; } # Claude
             { id = "hehggadaopoacecdllhhajmbjkdcmajg"; } # ChatGPT
+            { id = "jnakhhjmpmoohbjgfccbccfoifnmbdjd"; } # Muse from Meta
             { id = "lkihjlcipnbgeokmfnpogjfflofbfhga"; } # Are.na
             { id = "opfckbclghgjapgbpncggbllfpiegnbm"; } # Miro
             { id = "nkbihfbeogaeaoehlefnkodbefgpgknn"; } # MetaMask
