@@ -33,6 +33,7 @@ _:
           zoxide
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
+          dmidecode
           kubo
           psmisc
           usbutils
