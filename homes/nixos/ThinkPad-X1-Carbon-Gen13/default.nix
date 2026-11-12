@@ -5,6 +5,16 @@
 
   home-manager.users.${username} =
     { pkgs, ... }:
+    let
+      openNani = pkgs.writeShellScript "open-nani" ''
+        set -euo pipefail
+        ${pkgs.xdg-utils}/bin/xdg-open "$1"
+        window_id="$(${pkgs.niri}/bin/niri msg --json windows | ${pkgs.jq}/bin/jq -r '[.[] | select(.app_id == "nani")] | first | .id // empty')"
+        if [ -n "$window_id" ]; then
+          ${pkgs.niri}/bin/niri msg action focus-window --id "$window_id"
+        fi
+      '';
+    in
     {
       imports = [
         ../../desktop.nix
@@ -73,14 +83,14 @@
               selected_text="$(${pkgs.wl-clipboard}/bin/wl-paste --primary --no-newline)" || exit 0
               [ -n "$selected_text" ] || exit 0
               encoded_text="$(printf '%s' "$selected_text" | ${pkgs.jq}/bin/jq -sRr @uri)"
-              exec ${pkgs.xdg-utils}/bin/xdg-open "naniapp://translate?source=$encoded_text"
+              exec ${openNani} "naniapp://translate?source=$encoded_text"
             ''
           ];
         };
         "Mod+Ctrl+J" = {
           repeat = false;
           action.spawn = [
-            "${pkgs.xdg-utils}/bin/xdg-open"
+            "${openNani}"
             "naniapp://translate"
           ];
         };
