@@ -45,6 +45,19 @@ in
     };
   };
 
+  # OIDC discovery needs working DNS and the local identity provider.
+  systemd.services.gitea = {
+    after = [
+      "network-online.target"
+      "pocket-id.service"
+    ];
+    wants = [
+      "network-online.target"
+      "pocket-id.service"
+    ];
+    serviceConfig.RestartSec = "30s";
+  };
+
   # Authentication sources live in the database, so reconcile this source after
   # the upstream preStart has prepared app.ini and migrated the database.
   systemd.services.gitea.preStart = lib.mkAfter ''

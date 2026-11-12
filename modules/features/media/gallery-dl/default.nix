@@ -159,23 +159,21 @@ _:
           };
           templates."gallery-dl-config.json" = {
             content = builtins.toJSON fullSettings;
+            path = "${galleryDlConfigDir}/config.json";
+            mode = "0600";
           };
         };
 
-        home.activation.initGalleryDlConfig = lib.hm.dag.entryAfter [ "sops-nix" ] ''
-          mkdir -p "${galleryDlConfigDir}"
-          ${pkgs.coreutils}/bin/cp ${
-            config.sops.templates."gallery-dl-config.json".path
-          } "${galleryDlConfigDir}/config.json"
-          ${pkgs.coreutils}/bin/chmod 600 "${galleryDlConfigDir}/config.json"
-        '';
-
+        # sops-nix creates the config once the user manager is running, including
+        # boot where Home Manager activation runs before user secret rendering.
         systemd.user.services = lib.mapAttrs' (
           name: value:
           lib.nameValuePair (jobUnitName name) {
             Unit = {
               Description = "gallery-dl archive job '${name}'";
               Documentation = [ "man:gallery-dl(1)" ];
+              Requires = [ "sops-nix.service" ];
+              After = [ "sops-nix.service" ];
             };
 
             Service = {

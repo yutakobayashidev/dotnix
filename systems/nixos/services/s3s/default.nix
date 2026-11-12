@@ -36,6 +36,8 @@ let
       echo "No session token available, skipping token refresh."
       exit 0
     fi
+    # DNS failures also consume nxapi's local authentication attempt budget.
+    ${pkgs.getent}/bin/getent ahosts accounts.nintendo.com >/dev/null
     export NXAPI_USER_AGENT="s3s/0.7.0"
     ${pkgs.nxapi}/bin/nxapi util update-s3s-token "${s3sConfigPath}" --token "$SESSION_TOKEN"
   '';
@@ -62,14 +64,23 @@ in
     services = {
       nxapi-token = {
         description = "Refresh s3s tokens via nxapi";
-        after = [ "sops-nix.service" ];
-        wants = [ "sops-nix.service" ];
+        after = [
+          "sops-nix.service"
+          "network-online.target"
+        ];
+        wants = [
+          "sops-nix.service"
+          "network-online.target"
+        ];
         serviceConfig = {
           Type = "oneshot";
           User = username;
           StateDirectory = "s3s";
           ExecStartPre = initS3sConfig;
           ExecStart = nxapiS3sRefresh;
+          # nxapi allows four authentication attempts per rolling hour.
+          Restart = "on-failure";
+          RestartSec = "20min";
         };
       };
       s3s = {

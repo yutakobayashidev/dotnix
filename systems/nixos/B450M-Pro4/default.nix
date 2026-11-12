@@ -110,6 +110,9 @@
     };
   };
 
+  # USB Wi-Fi may need several authentication attempts after a cold boot.
+  systemd.network.wait-online.timeout = 300;
+
   sops.secrets.wifi = {
     owner = "wpa_supplicant";
     group = "wpa_supplicant";

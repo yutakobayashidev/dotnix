@@ -23,6 +23,10 @@
     credentials.STATIC_API_KEY = config.sops.secrets.pocket-id-api-key.path;
   };
 
+  # A previous instance's database lease can outlive an abrupt reboot.
+  # Keep retrying slowly instead of exhausting the start limit in seconds.
+  systemd.services.pocket-id.serviceConfig.RestartSec = lib.mkForce "30s";
+
   sops.secrets = {
     pocket-id-encryption-key = {
       sopsFile = ../../../../secrets/pocket-id.yaml;
