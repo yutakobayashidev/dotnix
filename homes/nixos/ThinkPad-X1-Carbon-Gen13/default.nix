@@ -48,7 +48,8 @@
         # openbrief.enable = true; # Re-enable with the module import above.
         poweralertd.enable = true;
         temari = {
-          enable = true;
+          # Temporarily disabled while the upstream test suite fails.
+          enable = false;
           workspaces.downloads = {
             workspaceId = "workspace-1785071330865-1131974-0";
             configFile = "/home/yuta/.config/temari/config.toml";
