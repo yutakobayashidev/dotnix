@@ -130,3 +130,11 @@ authentication or tool execution.
 Configuration lives in `modules/features/super-intelligence/dsh/default.nix`,
 `homes/nixos/UM790-Pro/default.nix`, and `systems/nixos/services/dsh-web/default.nix`.
 Both hosts use the existing Comin deployment workflow.
+
+## Grafana usage metrics
+
+The managed CLI and Web service load a numeric-only metrics plugin by default.
+The [Coding Agents dashboard](https://grafana.home.yutakobayashi.com/d/coding-agents)
+has a dsh row for tokens, requests, outcomes and duration. See
+[agent monitoring](agent-monitoring.md) for scope, privacy and export limitations.
+Disable it with `my.programs.dsh.telemetry.enable = false`.

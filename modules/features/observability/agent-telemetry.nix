@@ -64,6 +64,7 @@ let
             (user.my.programs.codex.enable or false)
             || (user.my.programs.claude-code.enable or false)
             || (user.my.programs.pi.enable or false)
+            || (user.my.programs.dsh.enable or false)
           ) (lib.attrValues (config.home-manager.users or { }));
           description = "Collect coding-agent OTLP locally with Alloy.";
         };

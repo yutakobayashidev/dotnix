@@ -1,7 +1,7 @@
 # Coding agent monitoring
 
 The [Coding Agents dashboard](https://grafana.home.yutakobayashi.com/d/coding-agents)
-combines Claude Code, Codex and Pi usage, latency, errors, events and traces.
+combines Claude Code, Codex, Pi and dsh usage, latency, errors, events and traces.
 It adapts the CC0-licensed [natsukium/dotfiles implementation](https://github.com/natsukium/dotfiles/tree/1a73d4fdf47f0dc28509cb304f44646f1edf56a4/modules/features/monitoring)
 and its Pi telemetry extension at the same revision.
 
@@ -29,6 +29,29 @@ tool contents. A zero baseline before the first delta preserves short-session
 increases. Each process has a separate service instance identity. Resuming a
 session does not increment the new-session counter. Export failures do not
 interrupt Pi; its in-memory buffer is not a durable usage ledger.
+
+dsh uses a declarative `--patch` plugin in both its managed CLI and Web service.
+`my.programs.dsh.telemetry.enable` disables it; `telemetry.endpoint` selects the
+OTLP HTTP metrics receiver. The plugin wraps the `llm/stream` extension point
+in dsh 0.2.2-rc.1 and exports cumulative token counters, request outcomes and
+summed request duration. The latest provider usage sample wins within each
+call; retries count as separate calls. Input, output, cache reads and cache
+writes are disjoint. Reasoning tokens are not added again to output.
+
+Collection starts with new calls after the managed process is restarted; it
+does not replay saved conversations or backfill historical usage. Helper calls
+such as session titles and compaction are included. The usage coverage panel
+shows how many calls reported token usage; failed requests may omit it. No
+cost is inferred for subscription providers. No prompts, responses, tool
+arguments, errors, session IDs or credentials are exported. This does not
+enable dsh's separate session-history/feedback telemetry exporter.
+
+Cumulative samples are sent every 10 seconds and on clean disposal. A
+collector outage does not interrupt a call; a later sample can recover counts
+while that process stays alive. An abrupt exit can lose the last window.
+An initial zero is sent for each series; if that baseline is lost, the first
+increase can be missed. Process IDs are random telemetry identities so
+concurrent CLI/Web processes do not overwrite one another.
 
 ## Privacy and interpretation
 

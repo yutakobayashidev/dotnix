@@ -35,7 +35,8 @@
     "codex",
     "pi",
     "llm",
-    "otel"
+    "otel",
+    "dsh"
   ],
   "templating": {
     "list": [
@@ -46,10 +47,10 @@
           "type": "prometheus",
           "uid": "PBFA97CFB590B2093"
         },
-        "definition": "label_values({__name__=~\"claude_code_.*|codex_.*|pi_.*\"}, host)",
+        "definition": "label_values({__name__=~\"claude_code_.*|codex_.*|pi_.*|dsh_.*\"}, host)",
         "query": {
           "qryType": 1,
-          "query": "label_values({__name__=~\"claude_code_.*|codex_.*|pi_.*\"}, host)",
+          "query": "label_values({__name__=~\"claude_code_.*|codex_.*|pi_.*|dsh_.*\"}, host)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "includeAll": true,
@@ -163,7 +164,8 @@
           "range": false,
           "legendFormat": "pi"
         }
-      ]
+      ],
+      "description": "dsh does not export cost or session counts. Its token usage and LLM call metrics are shown separately."
     },
     {
       "datasource": {
@@ -239,6 +241,18 @@
           "instant": true,
           "range": false,
           "legendFormat": "pi"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "(sum(increase(dsh_token_usage{host=~\"$host\"}[$__range])))",
+          "refId": "D",
+          "instant": true,
+          "range": false,
+          "legendFormat": "dsh"
         }
       ]
     },
@@ -317,7 +331,8 @@
           "range": false,
           "legendFormat": "pi"
         }
-      ]
+      ],
+      "description": "dsh does not export cost or session counts. Its token usage and LLM call metrics are shown separately."
     },
     {
       "datasource": {
@@ -394,7 +409,8 @@
           "range": true,
           "legendFormat": "pi"
         }
-      ]
+      ],
+      "description": "dsh does not export cost or session counts. Its token usage and LLM call metrics are shown separately."
     },
     {
       "datasource": {
@@ -470,6 +486,17 @@
           "refId": "C",
           "range": true,
           "legendFormat": "pi"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(dsh_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "refId": "D",
+          "range": true,
+          "legendFormat": "dsh"
         }
       ]
     },
@@ -2858,7 +2885,452 @@
           "legendFormat": "{{tool}}"
         }
       ]
+    },
+    {
+      "id": 500,
+      "title": "dsh",
+      "type": "row",
+      "collapsed": false,
+      "gridPos": {
+        "x": 0,
+        "y": 117,
+        "w": 24,
+        "h": 1
+      },
+      "panels": []
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 501,
+      "title": "Tokens",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 118,
+        "w": 6,
+        "h": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "textMode": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(dsh_token_usage{host=~\"$host\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "legendFormat": ""
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 502,
+      "title": "LLM requests",
+      "type": "stat",
+      "gridPos": {
+        "x": 6,
+        "y": 118,
+        "w": 6,
+        "h": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "purple"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "textMode": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(dsh_api_request{host=~\"$host\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "legendFormat": ""
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 503,
+      "title": "LLM errors",
+      "type": "stat",
+      "gridPos": {
+        "x": 12,
+        "y": 118,
+        "w": 6,
+        "h": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "red"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "textMode": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(dsh_api_request{host=~\"$host\",outcome=\"error\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "legendFormat": ""
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 504,
+      "title": "Mean request duration",
+      "type": "stat",
+      "gridPos": {
+        "x": 18,
+        "y": 118,
+        "w": 6,
+        "h": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "textMode": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(dsh_api_duration{host=~\"$host\"}[$__range])) / sum(increase(dsh_api_request{host=~\"$host\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "legendFormat": ""
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 505,
+      "title": "Token usage by type",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 0,
+        "y": 122,
+        "w": 8,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum by (type) (increase(dsh_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "refId": "A",
+          "range": true,
+          "legendFormat": "{{type}}"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 506,
+      "title": "Tokens by provider / model",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 8,
+        "y": 122,
+        "w": 8,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum by (provider, model) (increase(dsh_token_usage{host=~\"$host\"}[$__rate_interval]))",
+          "refId": "A",
+          "range": true,
+          "legendFormat": "{{provider}} / {{model}}"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 507,
+      "title": "LLM outcomes",
+      "type": "timeseries",
+      "gridPos": {
+        "x": 16,
+        "y": 122,
+        "w": 8,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "drawStyle": "bars",
+            "fillOpacity": 80,
+            "lineWidth": 1,
+            "showPoints": "never",
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            }
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum by (outcome) (increase(dsh_api_request{host=~\"$host\"}[$__rate_interval]))",
+          "refId": "A",
+          "range": true,
+          "legendFormat": "{{outcome}}"
+        }
+      ]
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "id": 508,
+      "title": "Requests reporting usage",
+      "type": "stat",
+      "gridPos": {
+        "x": 0,
+        "y": 130,
+        "w": 8,
+        "h": 4
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          },
+          "decimals": 1
+        },
+        "overrides": []
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "textMode": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(dsh_api_usage_reported{host=~\"$host\"}[$__range])) / sum(increase(dsh_api_request{host=~\"$host\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "legendFormat": ""
+        }
+      ],
+      "description": "Fraction of calls that returned a provider usage sample; tokens can be unavailable on failures. Includes helper calls (such as titles and compaction). Starts after telemetry deployment; no historical backfill or cost estimates."
     }
   ],
-  "description": "Claude Code, Codex and Pi usage from OTLP. Empty panels mean no matching samples; cost is telemetry-derived, not a billing record. Codex first samples and concurrent delta streams may undercount."
+  "description": "Claude Code, Codex, Pi and dsh usage from OTLP. Empty panels mean no matching samples; cost is telemetry-derived, not a billing record. Codex first samples and concurrent delta streams may undercount."
 }

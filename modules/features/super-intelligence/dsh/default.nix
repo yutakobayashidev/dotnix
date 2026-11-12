@@ -6,10 +6,40 @@ _:
       config,
       lib,
       pkgs,
+      osConfig ? { },
       ...
     }:
     let
       cfg = config.my.programs.dsh;
+      telemetryPatch = (pkgs.formats.yaml { }).generate "dsh-metrics.yml" [
+        {
+          insert = [
+            {
+              id = "dotnix-otel-metrics";
+              name = "file://${./otel-metrics.mjs}";
+              config.endpoint = cfg.telemetry.endpoint;
+            }
+          ];
+        }
+      ];
+      launcher = pkgs.writeShellScript "dsh-with-metrics" (
+        lib.replaceStrings
+          [ "@dsh@" "@patch@" ]
+          [ "${pkgs.llm-agents.dsh}/bin/dsh" (toString telemetryPatch) ]
+          (builtins.readFile ./launcher.sh)
+      );
+      package =
+        if cfg.telemetry.enable then
+          pkgs.symlinkJoin {
+            name = "dsh-with-metrics";
+            paths = [ pkgs.llm-agents.dsh ];
+            postBuild = ''
+              rm $out/bin/dsh
+              ln -s ${launcher} $out/bin/dsh
+            '';
+          }
+        else
+          pkgs.llm-agents.dsh;
       autoAuth = import ./auto-auth.nix { inherit config lib pkgs; };
       webPatch = (pkgs.formats.yaml { }).generate "dsh-web-providers.yml" (
         lib.mapAttrsToList (id: config: { inherit id config; }) cfg.web.settings
@@ -18,6 +48,20 @@ _:
     {
       options.my.programs.dsh = {
         enable = lib.mkEnableOption "DeepSeek Harness";
+        telemetry.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Export numeric LLM usage without session content.";
+        };
+        telemetry.endpoint = lib.mkOption {
+          type = lib.types.str;
+          default =
+            if osConfig.my.services.agentTelemetry.enable or false then
+              "http://127.0.0.1:4318/v1/metrics"
+            else
+              "http://B450M-Pro4.tail29d068.ts.net:4318/v1/metrics";
+          description = "OTLP HTTP metrics endpoint.";
+        };
         web = {
           enable = lib.mkEnableOption "DeepSeek Harness Web";
           autoAuth = lib.mkEnableOption "NixKits-style automatic browser sign-in on a trusted network";
@@ -53,7 +97,7 @@ _:
       };
 
       config = lib.mkIf cfg.enable {
-        home.packages = [ pkgs.llm-agents.dsh ];
+        home.packages = [ package ];
         systemd.user.services.dsh-web-proxy = lib.mkIf (
           cfg.web.enable && cfg.web.autoAuth
         ) autoAuth.service;
@@ -64,7 +108,7 @@ _:
             ExecStart = (if cfg.web.autoAuth then autoAuth.wrap else command: command) (
               lib.escapeShellArgs (
                 [
-                  "${pkgs.llm-agents.dsh}/bin/dsh"
+                  "${package}/bin/dsh"
                   "--profile"
                   "web"
                 ]
