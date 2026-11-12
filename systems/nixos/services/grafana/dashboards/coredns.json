@@ -1,0 +1,295 @@
+{
+	"uid": "coredns",
+	"title": "CoreDNS",
+	"description": "B450M CoreDNS metrics via VictoriaMetrics and journal logs via Alloy/Loki.",
+	"tags": ["dns", "infrastructure"],
+	"schemaVersion": 39,
+	"version": 1,
+	"refresh": "30s",
+	"time": {
+		"from": "now-6h",
+		"to": "now"
+	},
+	"timezone": "browser",
+	"templating": {
+		"list": [
+			{
+				"name": "host",
+				"label": "Host",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "PBFA97CFB590B2093"
+				},
+				"query": "label_values(up{job=\"coredns\"}, host)",
+				"refresh": 1,
+				"includeAll": false,
+				"multi": false
+			}
+		]
+	},
+	"panels": [
+		{
+			"id": 1,
+			"title": "DNS queries per second",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 8,
+				"h": 8
+			},
+			"description": "",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "reqps",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "sum(rate(coredns_dns_requests_total{job=\"coredns\",host=~\"$host\"}[$__rate_interval]))",
+					"legendFormat": "__auto",
+					"range": true,
+					"interval": "15s"
+				}
+			]
+		},
+		{
+			"id": 2,
+			"title": "SERVFAIL / REFUSED ratio",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 8,
+				"y": 0,
+				"w": 8,
+				"h": 8
+			},
+			"description": "Share of responses returning SERVFAIL or REFUSED. NXDOMAIN and NODATA are excluded.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percentunit",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "(sum(rate(coredns_dns_responses_total{job=\"coredns\",host=~\"$host\",rcode=~\"SERVFAIL|REFUSED\"}[$__rate_interval])) or (0 * sum(rate(coredns_dns_responses_total{job=\"coredns\",host=~\"$host\"}[$__rate_interval])))) / clamp_min(sum(rate(coredns_dns_responses_total{job=\"coredns\",host=~\"$host\"}[$__rate_interval])), 1e-9)",
+					"legendFormat": "__auto",
+					"range": true,
+					"interval": "15s"
+				}
+			]
+		},
+		{
+			"id": 3,
+			"title": "CoreDNS processing time p50 / p95",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 16,
+				"y": 0,
+				"w": 8,
+				"h": 8
+			},
+			"description": "CoreDNS processing duration; excludes client-side network latency.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "B",
+					"expr": "histogram_quantile(0.50, sum by (le) (rate(coredns_dns_request_duration_seconds_bucket{job=\"coredns\",host=~\"$host\"}[$__rate_interval])))",
+					"legendFormat": "p50",
+					"range": true,
+					"interval": "15s"
+				},
+				{
+					"refId": "A",
+					"expr": "histogram_quantile(0.95, sum by (le) (rate(coredns_dns_request_duration_seconds_bucket{job=\"coredns\",host=~\"$host\"}[$__rate_interval])))",
+					"legendFormat": "p95",
+					"range": true,
+					"interval": "15s"
+				}
+			]
+		},
+		{
+			"id": 4,
+			"title": "Responses by code",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 8,
+				"w": 12,
+				"h": 8
+			},
+			"description": "",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "reqps",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "sum by (rcode) (rate(coredns_dns_responses_total{job=\"coredns\",host=~\"$host\"}[$__rate_interval]))",
+					"legendFormat": "{{rcode}}",
+					"range": true,
+					"interval": "15s"
+				}
+			]
+		},
+		{
+			"id": 5,
+			"title": "Metrics target up",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 12,
+				"y": 8,
+				"w": 12,
+				"h": 8
+			},
+			"description": "1 = scrape succeeded, 0 = scrape failed. No data means the target is absent.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "up{job=\"coredns\",host=~\"$host\"}",
+					"legendFormat": "{{host}}",
+					"range": true,
+					"interval": "15s"
+				}
+			]
+		},
+		{
+			"id": 7,
+			"title": "Queries by type",
+			"type": "timeseries",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "PBFA97CFB590B2093"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 16,
+				"w": 12,
+				"h": 8
+			},
+			"description": "QTYPE breakdown across all server blocks. CoreDNS groups less common query types as other.",
+			"fieldConfig": {
+				"defaults": {
+					"unit": "reqps",
+					"min": 0,
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 70,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						}
+					}
+				},
+				"overrides": []
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "sum by (type) (rate(coredns_dns_requests_total{job=\"coredns\",host=~\"$host\"}[$__rate_interval]))",
+					"legendFormat": "{{type}}",
+					"range": true,
+					"interval": "15s"
+				}
+			],
+			"options": {
+				"legend": {
+					"displayMode": "table",
+					"placement": "bottom",
+					"calcs": ["mean", "max"]
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"id": 8,
+			"title": "Metric coverage",
+			"type": "text",
+			"gridPos": {
+				"x": 12,
+				"y": 16,
+				"w": 12,
+				"h": 8
+			},
+			"options": {
+				"mode": "markdown",
+				"content": "QTYPE and RCODE cover all queries, including successful answers. p50/p95 measure CoreDNS processing time, not client network latency.\n\n**Cache statistics:** unavailable because the cache plugin is not enabled.\n\n**NODATA:** not a separate RCODE; it is included in NOERROR. CoreDNS 1.14.7 requires an SOA to classify it for denial logging. The existing home-domain AAAA empty response has no SOA and is not logged.\n\nIndividual logs contain denial/error queries and service diagnostics. Query names and client addresses are not Loki labels."
+			}
+		},
+		{
+			"id": 6,
+			"title": "DNS denial / error and service logs",
+			"type": "logs",
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"gridPos": {
+				"x": 0,
+				"y": 24,
+				"w": 24,
+				"h": 12
+			},
+			"description": "Denial/error query logs plus CoreDNS startup and runtime diagnostics. NOERROR with no answer can be NODATA. Names and client addresses remain in the message, not labels.",
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "{job=\"coredns\",host=~\"$host\"}",
+					"queryType": "range"
+				}
+			],
+			"options": {
+				"showTime": true,
+				"sortOrder": "Descending",
+				"wrapLogMessage": true,
+				"enableLogDetails": true
+			}
+		}
+	]
+}

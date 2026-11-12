@@ -39,6 +39,42 @@ scrape configuration. B450M and UM790-Pro (the shared builder and agent server) 
 pi5 is not yet running NixOS and is excluded from both node-exporter and Comin
 scrape targets. Add it only after the corresponding services are deployed.
 
+## CoreDNS
+
+B450M's four CoreDNS server blocks expose metrics on `127.0.0.1:9153`.
+VictoriaMetrics on the same host scrapes them every 15 seconds with
+`job="coredns"` and `host="B450M-Pro4"`. No additional firewall port is needed.
+The provisioned [CoreDNS dashboard](https://grafana.home.yutakobayashi.com/d/coredns)
+shows QPS, the SERVFAIL/REFUSED response ratio, processing-time p50/p95, query
+types, response codes, scrape health and logs. These durations exclude
+client-side network latency. Query types are stacked to show their contribution
+to traffic. Cache statistics are unavailable because the cache plugin is not
+enabled. NODATA is included in NOERROR, not exposed as a separate RCODE.
+
+Every block uses `log . { class denial error }` plus `errors`. Successful
+answers are not logged; NXDOMAIN, NODATA classified by CoreDNS, and error
+responses are logged. CoreDNS 1.14.7 classifies NODATA using an SOA in the
+authority section. The existing home-domain AAAA template returns an empty
+NOERROR response without an SOA, so it is counted in metrics but not logged
+by this filter. Startup and runtime diagnostics remain available.
+Alloy reads only `coredns.service` for this stream and reuses the existing
+Loki writer. Query names and client addresses stay in the message, not Loki
+labels. The stream uses the normal 30-day Loki retention. On its first start,
+the journal source can also ingest existing entries from the preceding seven
+hours, including successful queries recorded before this change.
+
+After deployment, verify `up{job="coredns"}` is 1 in Grafana Explore, then query
+`{job="coredns",host="B450M-Pro4"}` in Loki. To find failures, append
+`|= "SERVFAIL"`. Send an A query for `coredns-monitoring.invalid` to this resolver
+to exercise an NXDOMAIN response and check that it appears in Loki;
+an A query for `home.yutakobayashi.com` should succeed without a query-log entry. Metrics need
+at least two scrapes before rates appear. An empty log stream alone does not
+prove forwarding is working.
+
+References: [CoreDNS metrics](https://coredns.io/plugins/metrics/),
+[CoreDNS log classes](https://coredns.io/plugins/log/), and
+[Alloy journal source](https://grafana.com/docs/alloy/latest/reference/components/loki/loki.source.journal/).
+
 ## Hardware and clock warnings
 
 Additional rules use the existing SMART and node exporters:

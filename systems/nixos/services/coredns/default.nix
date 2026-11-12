@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 let
   mitmDomain = "www.mod.gov.cn";
@@ -16,14 +16,20 @@ in
       .:53 {
         bind 127.0.0.1 ${b450m}
         forward . 8.8.8.8 1.1.1.1
-        log
+        prometheus 127.0.0.1:9153
+        log . {
+          class denial error
+        }
         errors
       }
 
       ${tailDomain}:53 {
         bind 127.0.0.1 ${b450m}
         forward . 100.100.100.100
-        log
+        prometheus 127.0.0.1:9153
+        log . {
+          class denial error
+        }
         errors
       }
 
@@ -37,7 +43,10 @@ in
           rcode NOERROR
         }
         forward . 8.8.8.8 1.1.1.1
-        log
+        prometheus 127.0.0.1:9153
+        log . {
+          class denial error
+        }
         errors
       }
 
@@ -46,10 +55,41 @@ in
         hosts {
           ${mitmDomain} ${hostName}
         }
-        log
+        prometheus 127.0.0.1:9153
+        log . {
+          class denial error
+        }
+        errors
       }
     '';
   };
+
+  services.victoriametrics.prometheusConfig.scrape_configs =
+    lib.mkIf config.my.services.monitoring.enable
+      [
+        {
+          job_name = "coredns";
+          scrape_interval = "15s";
+          static_configs = [
+            {
+              targets = [ "127.0.0.1:9153" ];
+              labels.host = hostName;
+            }
+          ];
+        }
+      ];
+
+  my.services.alloy.configs.coredns = ''
+    loki.source.journal "coredns" {
+      matches = "_SYSTEMD_UNIT=coredns.service"
+      labels = {
+        job = "coredns",
+        host = "${hostName}",
+        service = "coredns",
+      }
+      forward_to = [loki.write.default.receiver]
+    }
+  '';
 
   systemd.services.coredns = {
     after = [ "tailscaled-set.service" ];
