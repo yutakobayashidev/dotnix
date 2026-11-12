@@ -1,4 +1,4 @@
-_:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -10,6 +10,11 @@ _:
 
   services.home-assistant = {
     enable = true;
+    customComponents = [
+      (pkgs.homeassistant-petkit.override {
+        python3Packages = config.services.home-assistant.package.python3Packages;
+      })
+    ];
     extraComponents = [
       "matter"
       "mcp_server"

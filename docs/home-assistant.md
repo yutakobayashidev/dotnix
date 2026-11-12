@@ -1,4 +1,4 @@
-# Home Assistant and Nature Remo Lapis
+# Home Assistant, Nature Remo Lapis, and PETKIT
 
 B450M-Pro4 runs native Home Assistant and Matter.js Server. Lapis and the
 server must share the home LAN. This follows the
@@ -22,9 +22,33 @@ and humidity metrics and entity labels; entity IDs are assigned after pairing.
 
 Neither a scrape nor a reported climate state proves that an IR appliance
 physically obeyed a command. Recorder/Activity are not a complete command audit
-trail. This configuration does not add a custom command logger, Cloud API
-polling, HACS, or InfluxDB. Verify which Lapis controls and sensors appear over
+trail. This configuration does not add a custom command logger, HACS, or
+InfluxDB. PETKIT uses its cloud API. Verify which Lapis controls and sensors appear over
 Matter before adding another integration.
+
+## PETKIT feeder
+
+The PETKIT custom integration is packaged in `nur-packages` as
+`homeassistant-petkit` and installed through `customComponents`. Its Python
+dependencies use Home Assistant's own interpreter. HACS is not required.
+
+1. Register the feeder in the official PETKIT app and verify it is online.
+2. After deployment, open Settings → Devices & services → Add integration
+   in HA and select **Petkit**.
+3. Enter PETKIT credentials in HA, never in Nix or Git. For simultaneous use
+   with the official app, use a second PETKIT account invited to the primary
+   account's family, as described in the upstream configuration guide.
+4. Confirm the feeder is discovered and its state updates. Test one intended
+   manual feeding while observing the device; discovery alone does not prove
+   dispensing works.
+
+Fresh Element Mini P530 is not named in the upstream supported-device table,
+but the pinned integration 1.29.0 and API library 1.31.1 include `feedermini`
+manual feeding. P530 operation and schedule support still require hardware
+verification. This integration uses PETKIT's cloud; it does not flash firmware.
+
+- [Integration configuration](https://github.com/Jezza34000/homeassistant_petkit/wiki/Configuration)
+- [Reference Nix packaging](https://github.com/natsukium/dotfiles/tree/840060e3c97823608781697a6b3d2fd8a0789dfe/systems/nixos/services/home-assistant)
 
 ## Apply and pair
 
