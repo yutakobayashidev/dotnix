@@ -24,6 +24,8 @@
 
   # Lanzaboote scans the standard system profile, not Comin's named profile.
   # Register the deployment before the existing installer signs boot entries.
+  # This also runs for boot-only deployments (e.g. NVIDIA switch inhibitors),
+  # so it must not depend on the generation matching /run/current-system.
   system.build.installBootLoader =
     lib.mkIf (config.services.comin.enable && config.boot.lanzaboote.enable)
       (

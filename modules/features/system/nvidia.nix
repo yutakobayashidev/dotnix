@@ -1,5 +1,4 @@
-_:
-{
+_: {
   flake.modules.nixos.nvidia =
     { config, lib, ... }:
     {
@@ -15,6 +14,10 @@ _:
           };
           nvidia-container-toolkit.enable = true;
         };
+
+        # The loaded kernel module cannot follow a live userspace driver upgrade.
+        # Comin schedules changed versions for boot; manual switches refuse them.
+        system.switch.inhibitors.nvidia = config.hardware.nvidia.package.version;
       };
     };
 }

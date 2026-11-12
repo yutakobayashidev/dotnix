@@ -14,6 +14,25 @@
 | M2 MacBook Air            | M2-MacBook-Air             | macOS laptop workstation         | macOS                  | aarch64-darwin | ◎      |
 | Galaxy S23 FE             | Galaxy-S23FE               | Android nix-on-droid environment | Android (nix-on-droid) | aarch64-linux  | △      |
 
+## NVIDIA driver deployment
+
+B450M-Pro4 and X870-Steel-Legend-WiFi enable `my.devices.nvidia.enable`.
+The feature keeps the open NVIDIA kernel module, graphics libraries, and
+container toolkit together. It also records the driver version in
+`system.switch.inhibitors.nvidia`.
+
+When that version changes, Comin stages the whole new generation for the next
+boot instead of switching the running system. A manual switch refuses the
+change unless forced; use a boot deployment and reboot when convenient.
+The existing Lanzaboote installer registers the staged generation in the
+standard system profile, including boot-only deployments. Adding the inhibitor
+for the first time does not itself require a reboot; subsequent version changes
+do.
+
+Adapted from natsukium/dotfiles commits
+[2b03e0e](https://github.com/natsukium/dotfiles/commit/2b03e0effd8ff412c9aa87280d88aac7c32b939e)
+and [f322787](https://github.com/natsukium/dotfiles/commit/f322787d556d6569225c7747303ca13907992a13).
+
 ## Flare social client
 
 The `communication` profile enables the Flare social client on `x86_64-linux`
