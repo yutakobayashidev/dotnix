@@ -10,6 +10,7 @@
   imports = [
     ../common.nix
     ../services/comfyui
+    ../services/llm
     ../services/wivrn
     (modulesPath + "/installer/scan/not-detected.nix")
     ../desktop.nix
@@ -74,6 +75,10 @@
   };
 
   services = {
+    # Remote OpenCode clients connect through the trusted tailscale0 interface.
+    # Keep openFirewall disabled so port 11434 is not exposed on other interfaces.
+    ollama.host = "0.0.0.0";
+
     prometheus.exporters.node = {
       enable = true;
       enabledCollectors = [ "systemd" ];
