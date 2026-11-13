@@ -10,17 +10,14 @@ _:
     }:
     let
       cfg = config.my.programs.opencode;
+      opencode = pkgs.writeShellScriptBin "opencode" ''
+        exec ${lib.getExe pkgs.llm-agents.opencode2} "$@"
+      '';
 
       opencodeConfig = builtins.toJSON {
         "$schema" = "https://opencode.ai/config.json";
-        autoupdate = false;
-        logLevel = "DEBUG";
-        provider.ollama = {
-          npm = "@ai-sdk/openai-compatible";
-          name = "Ollama (x870-stell-legend)";
-          options.baseURL = "http://x870-stell-legend.tail29d068.ts.net:11434/v1";
-          models = { };
-        };
+        update = "disable";
+        providers.ollama.settings.baseURL = "http://x870-stell-legend.tail29d068.ts.net:11434/v1";
       };
     in
     {
@@ -44,8 +41,11 @@ _:
       };
 
       config = lib.mkIf cfg.enable {
-        # OpenCode package
-        home.packages = lib.mkAfter [ pkgs.llm-agents.opencode ];
+        # Keep the usual command name while llm-agents packages V2 as opencode2.
+        home.packages = lib.mkAfter [
+          pkgs.llm-agents.opencode2
+          opencode
+        ];
 
         systemd.user.services.opencode-web = lib.mkIf cfg.web.enable {
           Unit.Description = "OpenCode Web";
@@ -57,12 +57,12 @@ _:
                   echo "OPENCODE_SERVER_PASSWORD must not be empty" >&2
                   exit 1
                 fi
-                exec ${pkgs.llm-agents.opencode}/bin/opencode web --hostname ${lib.escapeShellArg cfg.web.host} --port ${toString cfg.web.port}
+                exec ${lib.getExe pkgs.llm-agents.opencode2} serve --hostname ${lib.escapeShellArg cfg.web.host} --port ${toString cfg.web.port}
               ''
             );
             WorkingDirectory = config.home.homeDirectory;
             EnvironmentFile = cfg.web.environmentFile;
-            # Keep `opencode web` from opening a browser in the desktop session.
+            # The headless service does not need a desktop session.
             UnsetEnvironment = [
               "DISPLAY"
               "WAYLAND_DISPLAY"

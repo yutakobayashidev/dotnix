@@ -1,5 +1,16 @@
 # OpenCode Web
 
+The CLI and server use OpenCode V2 (`llm-agents.opencode2`). Both `opencode`
+and `opencode2` run V2; the user service starts `opencode2 serve`.
+
+The shared configuration uses the built-in Ollama provider at
+`http://x870-stell-legend.tail29d068.ts.net:11434/v1`. OpenCode discovers models
+from Ollama; no model list is duplicated in the client configuration. Steel
+Legend currently declares an empty `loadModels` list with `syncModels = true`.
+Add models to `systems/nixos/services/llm/default.nix` before using inference;
+model synchronization removes models that are not declared there. Ollama's
+port remains closed on untrusted interfaces, with access through Tailscale.
+
 After applying the configuration on both hosts, open
 <https://opencode.home.yutakobayashi.com/> from the Tailnet and sign in as
 `opencode`.
@@ -14,8 +25,8 @@ failed starts are retried after five seconds.
 
 ## Password
 
-The [upstream authentication mechanism](https://opencode.ai/docs/web/#authentication)
-uses `OPENCODE_SERVER_PASSWORD` and defaults to the username `opencode`.
+The [V2 authentication mechanism](https://opencode.ai/docs/migrate-v1#server-authentication)
+still accepts `OPENCODE_SERVER_PASSWORD`; the username is always `opencode`.
 The generated password is encrypted in `secrets/opencode-web.yaml` for the
 UM790-Pro and ThinkPad Home Manager age keys. No plaintext password is stored
 in the repository or Nix store. sops-nix renders the runtime environment file
@@ -54,11 +65,11 @@ accept the configured password. The second command prompts for the password
 without including it in the command line:
 
 ```bash
-curl -sS -o /dev/null -w '%{http_code}\n' https://opencode.home.yutakobayashi.com/global/health
-curl --user opencode https://opencode.home.yutakobayashi.com/global/health
+curl -sS -o /dev/null -w '%{http_code}\n' https://opencode.home.yutakobayashi.com/api/info
+curl --user opencode https://opencode.home.yutakobayashi.com/api/info
 ```
 
-Expect `401` without credentials and a healthy JSON response after signing in.
+Expect `401` without credentials and server information as JSON after signing in.
 Also open the HTTPS URL in a browser and verify that the project/session UI loads.
 
 Configuration lives in `modules/features/super-intelligence/opencode/default.nix`,

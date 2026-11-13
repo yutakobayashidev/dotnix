@@ -77,7 +77,7 @@
   xdg.configFile."opencode/opencode.json".text = lib.mkForce (
     builtins.toJSON {
       "$schema" = "https://opencode.ai/config.json";
-      autoupdate = false;
+      update = "disable";
     }
   );
 
