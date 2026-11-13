@@ -25,7 +25,11 @@ class FlakeUpdatePins(unittest.TestCase):
                     "locked": {"rev": "incorrect-updater-revision"},
                 },
                 "tracking": {
-                    "original": {"owner": "NixOS", "repo": "nixpkgs", "ref": "nixos-unstable"},
+                    "original": {
+                        "owner": "NixOS",
+                        "repo": "nixpkgs",
+                        "ref": "nixos-unstable",
+                    },
                     "locked": {"rev": "latest-tracking-revision"},
                 },
             }
@@ -35,21 +39,39 @@ class FlakeUpdatePins(unittest.TestCase):
             binary.mkdir()
             for name, script in {
                 "nix": '#!/bin/bash\nif [[ "$1 $2" == "flake metadata" ]]; then cat metadata.json; else echo unexpected-nix-call >&2; exit 99; fi\n',
-                "gh": '#!/bin/bash\necho unexpected-network-call >&2\nexit 99\n',
+                "gh": "#!/bin/bash\necho unexpected-network-call >&2\nexit 99\n",
             }.items():
                 path = binary / name
-                path.write_text(script.replace("#!/bin/bash", "#!" + shutil.which("bash")))
+                path.write_text(
+                    script.replace("#!/bin/bash", "#!" + shutil.which("bash"))
+                )
                 path.chmod(0o755)
-            definition = yaml.safe_load((ROOT / ".github/actions" / action / "action.yaml").read_text())
-            script = next(step["run"] for step in definition["runs"]["steps"] if "run" in step)
+            definition = yaml.safe_load(
+                (ROOT / ".github/actions" / action / "action.yaml").read_text()
+            )
+            script = next(
+                step["run"] for step in definition["runs"]["steps"] if "run" in step
+            )
             output = root / "output"
             result = subprocess.run(
-                ["bash", "-c", script], cwd=root, text=True, capture_output=True,
-                env={**os.environ, "PATH": str(binary) + os.pathsep + os.environ["PATH"],
-                     "GITHUB_OUTPUT": str(output), "INPUTS": requested, "EXCLUDE_INPUTS": "",
-                     "SKIP_DELAY_INPUTS": "", "INPUT_NAME": "pinned", "INPUT_OWNER": "NixOS",
-                     "INPUT_REPO": "nixpkgs", "INPUT_REF": "", "SKIP_DELAY": skip_delay,
-                     "MIN_AGE_DAYS": "3"},
+                ["bash", "-c", script],
+                cwd=root,
+                text=True,
+                capture_output=True,
+                env={
+                    **os.environ,
+                    "PATH": str(binary) + os.pathsep + os.environ["PATH"],
+                    "GITHUB_OUTPUT": str(output),
+                    "INPUTS": requested,
+                    "EXCLUDE_INPUTS": "",
+                    "SKIP_DELAY_INPUTS": "",
+                    "INPUT_NAME": "pinned",
+                    "INPUT_OWNER": "NixOS",
+                    "INPUT_REPO": "nixpkgs",
+                    "INPUT_REF": "",
+                    "SKIP_DELAY": skip_delay,
+                    "MIN_AGE_DAYS": "3",
+                },
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertNotIn("unexpected-", result.stderr)
@@ -69,7 +91,12 @@ class FlakeUpdatePins(unittest.TestCase):
     def test_update_rechecks_pin_before_api_or_lock_mutation(self):
         for skip_delay in ("false", "true"):
             with self.subTest(skip_delay=skip_delay):
-                self.assertEqual(self.run_action("update-flake-input", skip_delay=skip_delay)["updated"], "false")
+                self.assertEqual(
+                    self.run_action("update-flake-input", skip_delay=skip_delay)[
+                        "updated"
+                    ],
+                    "false",
+                )
 
 
 if __name__ == "__main__":

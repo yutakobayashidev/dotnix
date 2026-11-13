@@ -52,7 +52,9 @@ _:
             "npm:pi-web-access@0.47.0"
           ];
           appendSystem = ''
-            The recall executable is at ${config.home.homeDirectory}/.pi/agent/npm/node_modules/@pratikgajjar/pi-recall/bin/recall-${if pkgs.stdenv.hostPlatform.isDarwin then "darwin" else "linux"}-${if pkgs.stdenv.hostPlatform.isAarch64 then "arm64" else "x64"}.
+            The recall executable is at ${config.home.homeDirectory}/.pi/agent/npm/node_modules/@pratikgajjar/pi-recall/bin/recall-${
+              if pkgs.stdenv.hostPlatform.isDarwin then "darwin" else "linux"
+            }-${if pkgs.stdenv.hostPlatform.isAarch64 then "arm64" else "x64"}.
             Use this absolute path when recall is not on PATH.
             When a task depends on earlier work, decisions, or debugging, use recall
             to search past AI sessions and read the relevant messages before asking
