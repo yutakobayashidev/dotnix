@@ -97,6 +97,9 @@ in `registry/sources/nyanshiba.nix`. It supports individual paper summaries and
 cross-paper topic summaries, with chat output or a project's `incoming/` and
 `topics/` directories; no project directories are created during installation.
 
+The `cat-writing` skill uses the same pinned `nyanshiba` source. Its optional
+`cognitive-rhythm-writing` companion is already selected in the shared bundle.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager

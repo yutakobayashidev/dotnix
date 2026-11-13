@@ -37,7 +37,10 @@ _:
           "productivity/writing-for-agents"
         ];
         humanlayer = [ "show-me" ];
-        nyanshiba = [ "surveyor" ];
+        nyanshiba = [
+          "cat-writing"
+          "surveyor"
+        ];
         twitter-api-relay = [ "twitter-api-relay" ];
         prompt-review = [ "prompt-review" ];
       };
