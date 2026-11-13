@@ -13,15 +13,19 @@ pkgs.testers.runNixOSTest {
         1
         2
       ];
-      networking.interfaces.eth2.ipv4.addresses = lib.mkForce [ ];
-      networking.useDHCP = false;
-      networking.interfaces.eth1.ipv4.addresses = [
-        {
-          address = "192.168.50.2";
-          prefixLength = 24;
-        }
-      ];
-      networking.defaultGateway = "192.168.50.1";
+      networking = {
+        interfaces = {
+          eth2.ipv4.addresses = lib.mkForce [ ];
+          eth1.ipv4.addresses = [
+            {
+              address = "192.168.50.2";
+              prefixLength = 24;
+            }
+          ];
+        };
+        useDHCP = false;
+        defaultGateway = "192.168.50.1";
+      };
       my.services.experimentalRouter = {
         enable = true;
         wanInterface = "eth1";
@@ -35,33 +39,39 @@ pkgs.testers.runNixOSTest {
         pkgs.dig
       ];
     };
-    wan = { ... }: {
+    wan = _: {
       virtualisation.vlans = [ 1 ];
-      networking.useDHCP = false;
-      networking.firewall.enable = false;
-      networking.interfaces.eth1.ipv4.addresses = [
-        {
-          address = "192.168.50.1";
-          prefixLength = 24;
-        }
-        {
-          address = "198.18.0.1";
-          prefixLength = 24;
-        }
-      ];
-      networking.interfaces.eth1.ipv6.addresses = [
-        {
-          address = "fd00:1::1";
-          prefixLength = 64;
-        }
-      ];
-      networking.interfaces.eth1.ipv4.routes = [
-        {
-          address = "10.77.10.0";
-          prefixLength = 24;
-          via = "192.168.50.2";
-        }
-      ];
+      networking = {
+        useDHCP = false;
+        firewall.enable = false;
+        interfaces.eth1 = {
+          ipv4 = {
+            addresses = [
+              {
+                address = "192.168.50.1";
+                prefixLength = 24;
+              }
+              {
+                address = "198.18.0.1";
+                prefixLength = 24;
+              }
+            ];
+            routes = [
+              {
+                address = "10.77.10.0";
+                prefixLength = 24;
+                via = "192.168.50.2";
+              }
+            ];
+          };
+          ipv6.addresses = [
+            {
+              address = "fd00:1::1";
+              prefixLength = 64;
+            }
+          ];
+        };
+      };
       services.dnsmasq = {
         enable = true;
         settings.address = "/router-test.example/198.18.0.1";
@@ -74,10 +84,14 @@ pkgs.testers.runNixOSTest {
     };
     client = { lib, ... }: {
       virtualisation.vlans = [ 2 ];
-      networking.useDHCP = false;
-      networking.interfaces.eth1.useDHCP = true;
-      networking.interfaces.eth1.ipv4.addresses = lib.mkForce [ ];
-      networking.firewall.enable = false;
+      networking = {
+        useDHCP = false;
+        interfaces.eth1 = {
+          useDHCP = true;
+          ipv4.addresses = lib.mkForce [ ];
+        };
+        firewall.enable = false;
+      };
       environment.systemPackages = [ pkgs.dig ];
     };
   };

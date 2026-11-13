@@ -96,37 +96,98 @@ in
         message = "Experimental LAN must not be trusted.";
       }
     ];
-    networking.networkmanager.unmanaged = [ "interface-name:${cfg.lanInterface}" ];
-    networking.dhcpcd.denyInterfaces = [ cfg.lanInterface ];
-    networking.interfaces.${cfg.lanInterface}.useDHCP = false;
+    networking = {
+      networkmanager.unmanaged = [ "interface-name:${cfg.lanInterface}" ];
+      dhcpcd.denyInterfaces = [ cfg.lanInterface ];
+      interfaces.${cfg.lanInterface}.useDHCP = false;
+      firewall = {
+        interfaces.${cfg.lanInterface} = {
+          allowedUDPPorts = [
+            53
+            67
+          ];
+          allowedTCPPorts = [ 53 ];
+        };
+        extraCommands =
+          "PATH=${pkgs.iproute2}/bin:$PATH ${pkgs.python3}/bin/python3 ${./preflight.py} ${cfg.lanInterface} ${cfg.wanInterface} ${subnet}\n"
+          + "${pkgs.nftables}/bin/nft -f ${rules}\n"
+          + lib.concatMapStringsSep "\n" (
+            r: "iptables -w -C FORWARD ${r} 2>/dev/null || iptables -w -I FORWARD 1 ${r}"
+          ) forwardRules;
+        extraStopCommands = lib.concatMapStringsSep "\n" (
+          r: "iptables -w -D FORWARD ${r} 2>/dev/null || true"
+        ) forwardRules;
+      };
+    };
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
     # Do not change global IPv6 forwarding: Tailscale already uses it.
-    systemd.network.enable = true;
-    # WAN readiness remains owned by NetworkManager; an unplugged lab LAN must not delay Docker.
-    systemd.network.wait-online.enable = lib.mkDefault false;
-    systemd.network.networks."20-experimental-lan" = {
-      matchConfig.Name = cfg.lanInterface;
-      address = [ "${gateway}/24" ];
-      linkConfig.RequiredForOnline = false;
-      networkConfig = {
-        DHCP = "no";
-        DHCPServer = true;
-        IPv4Forwarding = true;
-        IPv6Forwarding = false;
-        IPv6AcceptRA = false;
-        IPv6SendRA = false;
-        LinkLocalAddressing = "no";
-        ConfigureWithoutCarrier = true;
+    systemd = {
+      network = {
+        enable = true;
+        # WAN readiness remains owned by NetworkManager; an unplugged lab LAN must not delay Docker.
+        wait-online.enable = lib.mkDefault false;
+        networks."20-experimental-lan" = {
+          matchConfig.Name = cfg.lanInterface;
+          address = [ "${gateway}/24" ];
+          linkConfig.RequiredForOnline = false;
+          networkConfig = {
+            DHCP = "no";
+            DHCPServer = true;
+            IPv4Forwarding = true;
+            IPv6Forwarding = false;
+            IPv6AcceptRA = false;
+            IPv6SendRA = false;
+            LinkLocalAddressing = "no";
+            ConfigureWithoutCarrier = true;
+          };
+          dhcpServerConfig = {
+            PoolOffset = 100;
+            PoolSize = 100;
+            EmitRouter = true;
+            Router = gateway;
+            EmitDNS = true;
+            DNS = gateway;
+            DefaultLeaseTimeSec = "1h";
+          };
+        };
       };
-      dhcpServerConfig = {
-        PoolOffset = 100;
-        PoolSize = 100;
-        EmitRouter = true;
-        Router = gateway;
-        EmitDNS = true;
-        DNS = gateway;
-        DefaultLeaseTimeSec = "1h";
+      services = {
+        experimental-router-firewall = {
+          description = "Isolated nftables guard and NAT for the experimental LAN";
+          wantedBy = [ "multi-user.target" ];
+          before = [
+            "systemd-networkd.service"
+            "dnsmasq.service"
+          ];
+          after = [ "firewall.service" ];
+          requires = [ "firewall.service" ];
+          path = [
+            pkgs.nftables
+            pkgs.iproute2
+          ];
+          preStart = "${pkgs.python3}/bin/python3 ${./preflight.py} ${cfg.lanInterface} ${cfg.wanInterface} ${subnet}";
+          reloadIfChanged = true;
+          reload = "nft -f ${rules}";
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+          };
+          script = "nft -f ${rules}";
+          # Close the link before removing its guard, including rollback/disable.
+          preStop = "ip link set dev ${cfg.lanInterface} down || true";
+          postStop = "nft delete table inet dotnix_experimental_router || true";
+        };
+        systemd-networkd = {
+          requires = [ "experimental-router-firewall.service" ];
+          after = [ "experimental-router-firewall.service" ];
+        };
+        dnsmasq = {
+          requires = [ "experimental-router-firewall.service" ];
+          after = [ "experimental-router-firewall.service" ];
+        };
       };
+      # Prevent socket activation from resurrecting networkd during rollback.
+      sockets.systemd-networkd.partOf = [ "experimental-router-firewall.service" ];
     };
     services.dnsmasq = {
       enable = true;
@@ -141,57 +202,6 @@ in
         server = [ cfg.upstreamDNS ];
         cache-size = 0;
       };
-    };
-    networking.firewall.interfaces.${cfg.lanInterface} = {
-      allowedUDPPorts = [
-        53
-        67
-      ];
-      allowedTCPPorts = [ 53 ];
-    };
-    networking.firewall.extraCommands =
-      "PATH=${pkgs.iproute2}/bin:$PATH ${pkgs.python3}/bin/python3 ${./preflight.py} ${cfg.lanInterface} ${cfg.wanInterface} ${subnet}\n"
-      + "${pkgs.nftables}/bin/nft -f ${rules}\n"
-      + lib.concatMapStringsSep "\n" (
-        r: "iptables -w -C FORWARD ${r} 2>/dev/null || iptables -w -I FORWARD 1 ${r}"
-      ) forwardRules;
-    networking.firewall.extraStopCommands = lib.concatMapStringsSep "\n" (
-      r: "iptables -w -D FORWARD ${r} 2>/dev/null || true"
-    ) forwardRules;
-    systemd.services.experimental-router-firewall = {
-      description = "Isolated nftables guard and NAT for the experimental LAN";
-      wantedBy = [ "multi-user.target" ];
-      before = [
-        "systemd-networkd.service"
-        "dnsmasq.service"
-      ];
-      after = [ "firewall.service" ];
-      requires = [ "firewall.service" ];
-      path = [
-        pkgs.nftables
-        pkgs.iproute2
-      ];
-      preStart = "${pkgs.python3}/bin/python3 ${./preflight.py} ${cfg.lanInterface} ${cfg.wanInterface} ${subnet}";
-      reloadIfChanged = true;
-      reload = "nft -f ${rules}";
-      serviceConfig = {
-        Type = "oneshot";
-        RemainAfterExit = true;
-      };
-      script = "nft -f ${rules}";
-      # Close the link before removing its guard, including rollback/disable.
-      preStop = "ip link set dev ${cfg.lanInterface} down || true";
-      postStop = "nft delete table inet dotnix_experimental_router || true";
-    };
-    # Prevent socket activation from resurrecting networkd during rollback.
-    systemd.sockets.systemd-networkd.partOf = [ "experimental-router-firewall.service" ];
-    systemd.services.systemd-networkd = {
-      requires = [ "experimental-router-firewall.service" ];
-      after = [ "experimental-router-firewall.service" ];
-    };
-    systemd.services.dnsmasq = {
-      requires = [ "experimental-router-firewall.service" ];
-      after = [ "experimental-router-firewall.service" ];
     };
     environment.etc."experimental-router.nft".source = rules;
   };

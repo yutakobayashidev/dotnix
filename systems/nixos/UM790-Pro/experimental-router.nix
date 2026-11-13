@@ -1,4 +1,4 @@
-{ ... }: {
+_: {
   # Keep disabled until console access, isolated cabling, and rollback are reviewed.
   my.services.experimentalRouter = {
     enable = false;
