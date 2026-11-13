@@ -70,7 +70,6 @@ _:
           ENABLE_EXPERIMENTAL_MCP_CLI = "false";
           ENABLE_TOOL_SEARCH = "true";
           CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
-          IS_DEMO = "1";
         }
         // telemetryEnv;
 
