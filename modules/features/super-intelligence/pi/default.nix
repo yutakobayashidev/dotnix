@@ -39,7 +39,18 @@ _:
             hostname = osConfig.networking.hostName or "unknown";
           };
         };
-        home.packages = [ pkgs.llm-agents.pi ] ++ lib.optional cfg.acp.enable pkgs.pi-acp;
+        programs.pi-coding-agent = {
+          enable = true;
+          package = pkgs.llm-agents.pi;
+          extraPackages = [ pkgs.nodejs ];
+          mutableSettings = true;
+          settings.packages = [
+            "npm:@aliou/pi-guardrails@0.23.0"
+            "npm:pi-rewind-hook@1.8.8"
+          ];
+        };
+
+        home.packages = lib.optional cfg.acp.enable pkgs.pi-acp;
       };
     };
 }
