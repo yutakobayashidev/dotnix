@@ -19,10 +19,11 @@
       };
       bundle = agentLib.mkBundle { inherit pkgs selection; };
       localTargets = builtins.mapAttrs (
-        _: target:
+        name: target:
         target
         // {
-          enable = true;
+          # Pi also discovers .agents/skills in the project.
+          enable = name != "pi";
         }
       ) agentLib.defaultLocalTargets;
     in

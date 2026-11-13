@@ -51,6 +51,12 @@ webforai transform.
 
 ## Selecting general skills
 
+Pi reads the shared `~/.agents/skills` and project-local `.agents/skills` directories.
+The Pi-specific targets (`~/.pi/agent/skills` and `.pi/skills`) are disabled in
+Home Manager and the development shell to avoid duplicate skill loading.
+Previously deployed Pi-specific directories must be moved aside once when migrating;
+disabling a synchronization target does not remove its existing files.
+
 Edit `selectedSkillPaths` in
 `modules/features/super-intelligence/agent-skills/default.nix` to select general
 skills by source. Each list contains paths relative to that source's discovery
