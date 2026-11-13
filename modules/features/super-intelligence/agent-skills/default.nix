@@ -168,7 +168,9 @@ _:
             };
 
           # Pi also discovers ~/.agents/skills; avoid duplicate skill loading.
-          targets = builtins.mapAttrs (name: target: target // { enable = name != "pi"; }) agentLib.defaultTargets;
+          targets = builtins.mapAttrs (
+            name: target: target // { enable = name != "pi"; }
+          ) agentLib.defaultTargets;
         };
       };
     };
