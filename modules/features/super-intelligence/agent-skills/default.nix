@@ -36,6 +36,7 @@ _:
           "engineering/retro"
           "productivity/writing-for-agents"
         ];
+        humanlayer = [ "show-me" ];
         twitter-api-relay = [ "twitter-api-relay" ];
         prompt-review = [ "prompt-review" ];
       };
@@ -68,6 +69,7 @@ _:
             inherit (registrySources)
               local
               deepseek-harness
+              humanlayer
               benjitaylor
               prompt-review
               mattpocock

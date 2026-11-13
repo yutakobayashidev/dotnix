@@ -84,6 +84,10 @@ supporting skills, examples, and repository documentation resolve to the same
 immutable source in the Nix store. Only the requested skill is exposed globally;
 the supporting material remains available through those links.
 
+The `show-me` skill is selected from `humanlayer/skills`, pinned explicitly in
+`registry/sources/humanlayer.nix`. Its upstream manual-invocation setting is
+preserved; use `/show-me` to request a visual explanation.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager
