@@ -151,6 +151,13 @@
       url = "github:ananthb/starla/v0.3.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    streamcontroller = {
+      url = "github:Daaboulex/streamcontroller-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.home-manager.follows = "home-manager";
+      inputs.git-hooks.follows = "git-hooks";
+    };
     simple-nostr-relay.url = "github:yutakobayashidev/simple-nostr-relay";
     webhashtag-rust-server = {
       url = "github:yutakobayashidev/webhashtag-rust-server";

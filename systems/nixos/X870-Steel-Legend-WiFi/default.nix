@@ -17,6 +17,7 @@
   ];
 
   dualboot.enable = true;
+  my.programs.streamcontroller.enable = true;
   my.profiles = {
     base.enable = true;
     communication.enable = true;

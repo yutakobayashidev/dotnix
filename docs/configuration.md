@@ -159,6 +159,10 @@ The desktop profile enables `my.programs.herdr-app` on Linux, installing
 provides the matching `herdr-core`; the existing `my.programs.herdr` CLI configuration
 remains separate. macOS and headless hosts do not enable the app by default.
 
+X870 enables StreamController through `my.programs.streamcontroller.enable`,
+using the `streamcontroller-nix` package and modules for USB access, autostart,
+and declarative pages. See [StreamController setup](streamcontroller.md).
+
 ## Shell prompt
 
 Zsh uses Powerlevel10k with a transparent, two-line prompt and pastel colors.
