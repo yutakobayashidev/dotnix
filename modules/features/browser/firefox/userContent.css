@@ -13,6 +13,27 @@
 	}
 }
 
+@-moz-document domain("www.youtube.com") {
+	/* Shorts専用の棚 */
+	ytd-reel-shelf-renderer,
+	ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts]),
+	/* 一覧に混ざるShorts */
+	:is(
+		ytd-rich-item-renderer,
+		ytd-video-renderer,
+		ytd-grid-video-renderer,
+		ytd-compact-video-renderer,
+		grid-shelf-view-model
+	):has(a[href^="/shorts/"]),
+	/* サイドバーのShorts */
+	:is(
+		ytd-guide-entry-renderer,
+		ytd-mini-guide-entry-renderer
+	):has(a[href^="/shorts"]) {
+		display: none !important;
+	}
+}
+
 @-moz-document domain(x.com), domain(twitter.com) {
 	/* Twitterの幅を広げる */
 	.r-rthrr5 {
