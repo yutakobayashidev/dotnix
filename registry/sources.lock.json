@@ -342,6 +342,25 @@
 			},
 			"subdir": "."
 		},
+		"nyanshiba": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "fa2a78ae505fb476d1e8faec1314732d419e1eb9",
+				"branch": "main",
+				"owner": "nyanshiba",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": ".agents/skills"
+		},
 		"obsidian": {
 			"filter": {
 				"maxDepth": null,
@@ -689,6 +708,19 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/mizchi/skills/archive/62f580819410cb1d398e4d7f234bbd0aad1c1a15.tar.gz"
+			},
+			"nyanshiba": {
+				"branch": "main",
+				"hash": "sha256-MkbVT0Fm+cLK42ePHJZ0U/yZZZ7Ow50JYp3d4+yskNw=",
+				"repository": {
+					"owner": "nyanshiba",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "fa2a78ae505fb476d1e8faec1314732d419e1eb9",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/nyanshiba/skills/archive/fa2a78ae505fb476d1e8faec1314732d419e1eb9.tar.gz"
 			},
 			"obsidian": {
 				"branch": "main",

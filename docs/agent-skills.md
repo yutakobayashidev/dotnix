@@ -92,6 +92,11 @@ The `cognitive-rhythm-writing` skill is selected from k16shikano's Gist at the
 explicit revision in `registry/sources/cognitive-rhythm-writing.nix`. Its required
 `japanese-tech-writing` sibling is selected in the same shared bundle.
 
+The `surveyor` skill is selected from `nyanshiba/skills` at the explicit revision
+in `registry/sources/nyanshiba.nix`. It supports individual paper summaries and
+cross-paper topic summaries, with chat output or a project's `incoming/` and
+`topics/` directories; no project directories are created during installation.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager

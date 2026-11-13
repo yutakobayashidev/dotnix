@@ -37,6 +37,7 @@ _:
           "productivity/writing-for-agents"
         ];
         humanlayer = [ "show-me" ];
+        nyanshiba = [ "surveyor" ];
         twitter-api-relay = [ "twitter-api-relay" ];
         prompt-review = [ "prompt-review" ];
       };
@@ -71,6 +72,7 @@ _:
               deepseek-harness
               cognitive-rhythm-writing
               humanlayer
+              nyanshiba
               benjitaylor
               prompt-review
               mattpocock
