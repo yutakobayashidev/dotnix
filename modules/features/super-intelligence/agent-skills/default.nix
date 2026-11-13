@@ -102,6 +102,11 @@ _:
             // selectedSkills
             // (import ./mizchi.nix { inherit pkgs lib registrySources; })
             // {
+              publish-cot = {
+                from = "nyanshiba";
+                path = "publish-cot";
+                packages = [ pkgs.bun ];
+              };
               cognitive-rhythm-writing = {
                 from = "cognitive-rhythm-writing";
                 path = ".";

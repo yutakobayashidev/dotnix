@@ -100,6 +100,10 @@ cross-paper topic summaries, with chat output or a project's `incoming/` and
 The `cat-writing` skill uses the same pinned `nyanshiba` source. Its optional
 `cognitive-rhythm-writing` companion is already selected in the shared bundle.
 
+The `publish-cot` skill uses the pinned `nyanshiba` source and includes Bun for
+its token generation and Wrangler commands. It publishes conversation-based
+reports as HTML and Markdown on Cloudflare Workers when invoked.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager
