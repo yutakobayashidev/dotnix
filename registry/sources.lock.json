@@ -114,6 +114,25 @@
 			},
 			"subdir": "."
 		},
+		"deepseek-harness": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "e8f7b93a344964de3dca1ace9e72b6e4d6de87cb",
+				"branch": "master",
+				"owner": "deepseek-ai",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "deepseek-harness",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": ".agents/skills"
+		},
 		"difit": {
 			"filter": {
 				"maxDepth": null,
@@ -479,6 +498,19 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/benjitaylor/skills/archive/299140fafd08df55a9c234e610c3f64af3f45531.tar.gz"
+			},
+			"deepseek-harness": {
+				"branch": "master",
+				"hash": "sha256-eIYTSm19oSJ3ge1mypUZSkHe/JHXZEKUlvXNLuVXFlU=",
+				"repository": {
+					"owner": "deepseek-ai",
+					"repo": "deepseek-harness",
+					"type": "GitHub"
+				},
+				"revision": "e8f7b93a344964de3dca1ace9e72b6e4d6de87cb",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/deepseek-ai/deepseek-harness/archive/e8f7b93a344964de3dca1ace9e72b6e4d6de87cb.tar.gz"
 			},
 			"difit": {
 				"branch": "main",

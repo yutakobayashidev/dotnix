@@ -67,6 +67,7 @@ _:
           sources = {
             inherit (registrySources)
               local
+              deepseek-harness
               benjitaylor
               prompt-review
               mattpocock
@@ -93,6 +94,24 @@ _:
             // selectedSkills
             // (import ./mizchi.nix { inherit pkgs lib registrySources; })
             // {
+              dsh-trim-cot-leakage = {
+                from = "deepseek-harness";
+                path = "dsh-trim-cot-leakage";
+                transform =
+                  { original, ... }:
+                  let
+                    source = registrySources.deepseek-harness.path;
+                  in
+                  builtins.replaceStrings
+                    [ "](references/" "](../dsh-" "](../../notes/" "](../../../docs/" ]
+                    [
+                      "](${source}/.agents/skills/dsh-trim-cot-leakage/references/"
+                      "](${source}/.agents/skills/dsh-"
+                      "](${source}/.agents/notes/"
+                      "](${source}/docs/"
+                    ]
+                    original;
+              };
               stageshow = {
                 from = "benjitaylor";
                 path = "stageshow";

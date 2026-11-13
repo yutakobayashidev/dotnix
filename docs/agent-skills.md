@@ -78,6 +78,12 @@ copy the complete skill into a writable project before installing npm dependenci
 or working on a preview. Node.js is supplied through the skill's dependencies.
 Filming uses an installed Chrome/Chromium browser (`CHROME_PATH` can select it).
 
+The `dsh-trim-cot-leakage` skill is selected from `deepseek-ai/deepseek-harness`
+at the explicit revision in `registry/sources/deepseek-harness.nix`. Its links to
+supporting skills, examples, and repository documentation resolve to the same
+immutable source in the Nix store. Only the requested skill is exposed globally;
+the supporting material remains available through those links.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager
