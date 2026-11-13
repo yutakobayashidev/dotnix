@@ -26,10 +26,18 @@ _:
             from = "local";
             path = "bird";
             packages = [ pkgs.bird ];
+            # Command rewriting also changes frontmatter and URLs.
+            rewriteCommands = false;
+            transform = { original, dependencies }: ''
+              ${builtins.replaceStrings [ "name: Bird\n" ] [ "name: bird\n" ] original}
+
+              ${dependencies}
+            '';
           };
           bird-deep-research = {
             from = "local";
             path = "bird-deep-research";
+            rewriteCommands = false;
             packages = [
               pkgs.bird
               pkgs.nodejs

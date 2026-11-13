@@ -177,6 +177,8 @@ _:
               from = "openclaw-discrawl";
               path = ".";
               packages = [ cfg.package ];
+              # Preserve the skill name and URLs when adding CLI dependencies.
+              rewriteCommands = false;
             };
           };
         })
