@@ -69,6 +69,7 @@ _:
             inherit (registrySources)
               local
               deepseek-harness
+              cognitive-rhythm-writing
               humanlayer
               benjitaylor
               prompt-review
@@ -96,6 +97,10 @@ _:
             // selectedSkills
             // (import ./mizchi.nix { inherit pkgs lib registrySources; })
             // {
+              cognitive-rhythm-writing = {
+                from = "cognitive-rhythm-writing";
+                path = ".";
+              };
               dsh-trim-cot-leakage = {
                 from = "deepseek-harness";
                 path = "dsh-trim-cot-leakage";

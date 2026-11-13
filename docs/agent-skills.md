@@ -88,6 +88,10 @@ The `show-me` skill is selected from `humanlayer/skills`, pinned explicitly in
 `registry/sources/humanlayer.nix`. Its upstream manual-invocation setting is
 preserved; use `/show-me` to request a visual explanation.
 
+The `cognitive-rhythm-writing` skill is selected from k16shikano's Gist at the
+explicit revision in `registry/sources/cognitive-rhythm-writing.nix`. Its required
+`japanese-tech-writing` sibling is selected in the same shared bundle.
+
 ## Web conversion CLI
 
 Web conversion uses the NUR `webforai` package instead of defuddle. Home Manager

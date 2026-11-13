@@ -114,6 +114,25 @@
 			},
 			"subdir": "."
 		},
+		"cognitive-rhythm-writing": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": "a3b1e26beced71d582e13314fb6f5b179b023c76",
+				"branch": "main",
+				"forge": "none",
+				"preReleases": false,
+				"releasePrefix": null,
+				"submodules": false,
+				"type": "git",
+				"url": "https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432.git",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		},
 		"deepseek-harness": {
 			"filter": {
 				"maxDepth": null,
@@ -517,6 +536,18 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/benjitaylor/skills/archive/299140fafd08df55a9c234e610c3f64af3f45531.tar.gz"
+			},
+			"cognitive-rhythm-writing": {
+				"branch": "main",
+				"hash": "sha256-Zo3iVnTvVG6IfU9vBf4Zv/bEcKmNKnI2IY1D0uvzkNM=",
+				"repository": {
+					"type": "Git",
+					"url": "https://gist.github.com/k16shikano/eb2929f13ed19c97188393d297be8432.git"
+				},
+				"revision": "a3b1e26beced71d582e13314fb6f5b179b023c76",
+				"submodules": false,
+				"type": "Git",
+				"url": null
 			},
 			"deepseek-harness": {
 				"branch": "master",
