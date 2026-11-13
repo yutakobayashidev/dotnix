@@ -58,6 +58,9 @@ root; the final path component becomes the deployed skill name. For example:
 
 ```nix
 mattpocock = [
+  "engineering/domain-modeling"
+  "engineering/grill-with-docs"
+  "productivity/grill-me"
   "productivity/grilling"
   "in-progress/loop-me"
   "engineering/retro"

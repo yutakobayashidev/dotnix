@@ -28,6 +28,9 @@ _:
           "skill-cleaner"
         ];
         mattpocock = [
+          "engineering/domain-modeling"
+          "engineering/grill-with-docs"
+          "productivity/grill-me"
           "productivity/grilling"
           "in-progress/loop-me"
           "engineering/retro"
