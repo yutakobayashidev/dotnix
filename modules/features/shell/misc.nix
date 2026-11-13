@@ -38,6 +38,7 @@ _:
           nvme-cli
           pciutils
           psmisc
+          reptyr
           usbutils
         ];
 
