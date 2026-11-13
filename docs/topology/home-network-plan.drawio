@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net">
+  <diagram id="page-0" name="現在の論理構成・11月12日観測">
+    <mxGraphModel adaptiveColors="auto" page="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="f" value="auひかり ホーム5ギガ＋電話" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="30" width="250" height="70" />
+        </mxCell>
+        <mxCell id="h" value="BL4000HM&lt;br&gt;ONU・IPv4/IPv6ゲートウェイ" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="160" width="250" height="70" />
+        </mxCell>
+        <mxCell id="a" value="Archer C6&lt;br&gt;AP相当と推定・有線最大1GbE" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="300" width="250" height="70" />
+        </mxCell>
+        <mxCell id="l" value="ThinkPad&lt;br&gt;wlp0s20f3" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="80" y="470" width="250" height="70" />
+        </mxCell>
+        <mxCell id="m" value="UM790-Pro&lt;br&gt;wlp2s0／enp1s0リンクなし" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="470" width="250" height="70" />
+        </mxCell>
+        <mxCell id="b" value="B450M-Pro4&lt;br&gt;wlp2s0f0u5" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="720" y="470" width="250" height="70" />
+        </mxCell>
+        <mxCell id="note" value="論理構成。配線全体は未確定。破線：同一BSSIDへの接続は未確認。" style="text;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="100" y="740" width="850" height="70" />
+        </mxCell>
+        <mxCell id="e0" source="f" target="h" value="契約確認記録" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" source="h" target="a" value="配線・ポート未確認" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" source="a" target="l" value="Wi-Fi" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" source="a" target="m" value="Wi-Fi" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" source="a" target="b" value="同一SSIDのみ確認" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;dashed=1;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page-1" name="隔離IPv4実験・実機では無効">
+    <mxGraphModel adaptiveColors="auto" page="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="h" value="既存BL4000HM" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="30" width="250" height="70" />
+        </mxCell>
+        <mxCell id="c" value="既存Archer C6" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="160" width="250" height="70" />
+        </mxCell>
+        <mxCell id="u" value="UM790-Pro&lt;br&gt;実験用IPv4ルーター" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="240" y="320" width="250" height="70" />
+        </mxCell>
+        <mxCell id="o" value="家族・他端末&lt;br&gt;既存Wi-Fiを維持" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="650" y="320" width="250" height="70" />
+        </mxCell>
+        <mxCell id="x" value="実験PC／隔離スイッチ&lt;br&gt;家庭LANへ接続しない" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="240" y="500" width="250" height="70" />
+        </mxCell>
+        <mxCell id="note" value="VM検証記録あり。実機は無効。下流DHCP/DNS・IPv4 NAT、下流IPv6は拒否。" style="text;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="100" y="740" width="850" height="70" />
+        </mxCell>
+        <mxCell id="e0" source="h" target="c" value="現状維持" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" source="c" target="u" value="wlp2s0：上流Wi-Fi" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" source="c" target="o" value="変更なし" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" source="u" target="x" value="enp1s0：下流LAN" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="page-2" name="将来のVLAN構成・未施工">
+    <mxGraphModel adaptiveColors="auto" page="1" pageWidth="1100" pageHeight="850">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="f" value="auひかり ホーム5ギガ＋電話" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="20" width="250" height="70" />
+        </mxCell>
+        <mxCell id="h" value="BL4000HM&lt;br&gt;ONU・上位HGW・電話" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="140" width="250" height="70" />
+        </mxCell>
+        <mxCell id="r" value="専用NixOSルーター&lt;br&gt;WAN／LAN別NIC" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="280" width="250" height="70" />
+        </mxCell>
+        <mxCell id="w" value="任意のWARP/NAT64&lt;br&gt;必要時のみ" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="740" y="280" width="250" height="70" />
+        </mxCell>
+        <mxCell id="s" value="マネージドL2スイッチ" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="400" y="430" width="250" height="70" />
+        </mxCell>
+        <mxCell id="p" value="Trusted：VLAN 10&lt;br&gt;PC・スマホ" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="60" y="590" width="250" height="70" />
+        </mxCell>
+        <mxCell id="v" value="Servers：VLAN 20&lt;br&gt;UM790・B450M" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="380" y="590" width="250" height="70" />
+        </mxCell>
+        <mxCell id="a" value="VLAN対応AP&lt;br&gt;Home / IoT / Guest" style="rounded=1;whiteSpace=wrap;html=1;fontSize=16;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="700" y="590" width="250" height="70" />
+        </mxCell>
+        <mxCell id="note" value="VLAN IDは例。IPv6 PD未検証。破線：任意の将来拡張。" style="text;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry as="geometry" x="100" y="740" width="850" height="70" />
+        </mxCell>
+        <mxCell id="e0" source="f" target="h" value="" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e1" source="h" target="r" value="LAN1：RJ45 10G" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e2" source="r" target="s" value="802.1Q trunk" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e3" source="r" target="w" value="任意の拡張" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;dashed=1;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e4" source="s" target="p" value="VLAN 10" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e5" source="s" target="v" value="VLAN 20" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="e6" source="s" target="a" value="VLAN 10/30/40" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;fontSize=14;labelBackgroundColor=#ffffff;endArrow=block;">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

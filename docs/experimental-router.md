@@ -4,6 +4,17 @@ Status: implemented for evaluation and isolated VM testing; **disabled on UM790-
 Do not push an enabled host configuration or run `switch`, `boot`, or `test`
 on a physical host without explicit approval. Comin deploys main automatically.
 
+## Household baseline and plan (2026-11-14)
+
+The [network investigation and staged plan](network-investigation-2026-11-12.md)
+incorporates the supplied contract/label record: au Hikari Home 5 Gbps with
+telephone service, and BL4000HM retained as ONU/upstream gateway/telephone.
+Its LAN1 supports 10GbE; Archer C6 wired ports are limited to 1GbE.
+Actual cabling, negotiated rates, HGW Wi-Fi activation and downstream IPv6 PD
+remain unverified. Keep the current household network unchanged for this trial.
+The plan distinguishes the existing VM validation below from the pending
+physical trial and future VLAN migration.
+
 ## Observed baseline (2026-11-13)
 
 Read-only SSH inspection confirmed NetworkManager owns `wlp2s0`, with a

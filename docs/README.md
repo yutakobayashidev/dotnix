@@ -42,6 +42,9 @@
 
 ## Network topology
 
+- [Home network baseline and plan](network-investigation-2026-11-12.md) — observed topology, 5 Gbps contract, and staged router/VLAN plan
+- [Experimental IPv4 router](experimental-router.md) — isolated trial, validation status, and rollback
+
 - [Main topology](topology/main.svg)
 - [Network overview](topology/network.svg)
 
