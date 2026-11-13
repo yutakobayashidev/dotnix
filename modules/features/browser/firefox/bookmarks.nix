@@ -190,6 +190,10 @@ let
         }
         {
           name = "";
+          url = "https://www.netflix.com/";
+        }
+        {
+          name = "";
           url = "https://news.ycombinator.com/";
         }
         {
