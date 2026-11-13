@@ -88,7 +88,7 @@ _:
         web_search = "live";
         oss_provider = "lmstudio";
 
-        apps."Dev-6a60662bf1888191a2da3c0b2f811534".enabled = false;
+        apps."asdk_app_6a60662bf1888191a2da3c0b2f811534".enabled = false;
 
         features = {
           hooks = true;
