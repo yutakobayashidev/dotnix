@@ -55,3 +55,5 @@ nix build .#topology.x86_64-linux.config.output --out-link result
 ```
 
 - [Monitoring](monitoring.md) — unified metrics, infrastructure and room alerts, Claude/Codex telemetry, and migration.
+
+- [UniFi Network](unifi.md) — controller on B450M-Pro4 and management access

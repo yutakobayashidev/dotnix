@@ -14,6 +14,7 @@
     ../services/immich
     ../services/moe
     ../services/kubo
+    ../services/unifi
     ../services/gitea
     ../services/gitea-actions-runner
     ../services/home-assistant
