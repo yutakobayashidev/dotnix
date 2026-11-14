@@ -4,7 +4,6 @@ _:
   flake.modules.homeManager.git =
     {
       config,
-      lib,
       pkgs,
       ...
     }:

@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # Keep dsh's positional profile shorthand and plugin management dispatch.
 case "${1-}" in
 plugin | --version | -V | --help | -h | "") exec '@dsh@' "$@" ;;

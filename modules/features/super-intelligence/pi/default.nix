@@ -33,11 +33,22 @@ _:
       };
 
       config = lib.mkIf cfg.enable {
-        home.file.".pi/agent/extensions/otel-metrics.ts" = lib.mkIf cfg.telemetry.enable {
-          source = pkgs.replaceVars ./extensions/otel-metrics.ts {
-            endpoint = cfg.telemetry.endpoint;
-            hostname = osConfig.networking.hostName or "unknown";
+        home = {
+          file.".pi/agent/extensions/otel-metrics.ts" = lib.mkIf cfg.telemetry.enable {
+            source = pkgs.replaceVars ./extensions/otel-metrics.ts {
+              endpoint = cfg.telemetry.endpoint;
+              hostname = osConfig.networking.hostName or "unknown";
+            };
           };
+          # Keep extension configuration in Pi's directory even when XDG_CONFIG_HOME is set.
+          sessionVariables.PI_CODING_AGENT_DIR = config.programs.pi-coding-agent.configDir;
+          file.".pi/agent/web-search.json".text = builtins.toJSON {
+            provider = "searxng";
+            searxngBaseUrl = "https://search.home.yutakobayashi.com";
+            # The configured search server is reachable over Tailscale.
+            ssrf.allowRanges = [ "100.111.109.43/32" ];
+          };
+          packages = lib.optional cfg.acp.enable pkgs.pi-acp;
         };
         programs.pi-coding-agent = {
           enable = true;
@@ -63,16 +74,6 @@ _:
           '';
         };
 
-        # Keep extension configuration in Pi's directory even when XDG_CONFIG_HOME is set.
-        home.sessionVariables.PI_CODING_AGENT_DIR = config.programs.pi-coding-agent.configDir;
-        home.file.".pi/agent/web-search.json".text = builtins.toJSON {
-          provider = "searxng";
-          searxngBaseUrl = "https://search.home.yutakobayashi.com";
-          # The configured search server is reachable over Tailscale.
-          ssrf.allowRanges = [ "100.111.109.43/32" ];
-        };
-
-        home.packages = lib.optional cfg.acp.enable pkgs.pi-acp;
       };
     };
 }

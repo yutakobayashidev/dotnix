@@ -36,8 +36,19 @@ let
       echo "No session token available, skipping token refresh."
       exit 0
     fi
-    # DNS failures also consume nxapi's local authentication attempt budget.
-    ${pkgs.getent}/bin/getent ahosts accounts.nintendo.com >/dev/null
+    # CoreDNS loads the policy after systemd considers its simple service started.
+    # Wait before authenticating: DNS failures consume nxapi's hourly attempt budget.
+    # https://github.com/samuelthomas2774/nxapi/blob/main/src/common/auth/util.ts
+    for attempt in $(${pkgs.coreutils}/bin/seq 1 30); do
+      if ${pkgs.getent}/bin/getent ahosts accounts.nintendo.com >/dev/null; then
+        break
+      fi
+      if [ "$attempt" -eq 30 ]; then
+        echo "Nintendo Account DNS is unavailable; postponing token refresh." >&2
+        exit 1
+      fi
+      ${pkgs.coreutils}/bin/sleep 1
+    done
     export NXAPI_USER_AGENT="s3s/0.7.0"
     ${pkgs.nxapi}/bin/nxapi util update-s3s-token "${s3sConfigPath}" --token "$SESSION_TOKEN"
   '';
@@ -67,7 +78,8 @@ in
         after = [
           "sops-nix.service"
           "network-online.target"
-        ];
+        ]
+        ++ lib.optional config.services.coredns.enable "coredns.service";
         wants = [
           "sops-nix.service"
           "network-online.target"

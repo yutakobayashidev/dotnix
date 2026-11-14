@@ -17,15 +17,18 @@
   ];
 
   dualboot.enable = true;
-  my.programs.streamcontroller.enable = true;
-  my.profiles = {
-    base.enable = true;
-    communication.enable = true;
-    desktop.enable = true;
-    media.enable = true;
-    network.enable = true;
-    productivity.enable = true;
-    security.enable = true;
+  my = {
+    programs.streamcontroller.enable = true;
+    devices.nvidia.enable = true;
+    profiles = {
+      base.enable = true;
+      communication.enable = true;
+      desktop.enable = true;
+      media.enable = true;
+      network.enable = true;
+      productivity.enable = true;
+      security.enable = true;
+    };
   };
 
   ext.security.secureboot.enable = true;
@@ -107,8 +110,6 @@
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   };
-
-  my.devices.nvidia.enable = true;
 
   system.stateVersion = "25.11";
 }

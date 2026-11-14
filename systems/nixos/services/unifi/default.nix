@@ -13,8 +13,16 @@
   '';
 
   networking.firewall = {
-    allowedTCPPorts = [ 8080 18880 8843 6789 ];
-    allowedUDPPorts = [ 3478 10001 ];
+    allowedTCPPorts = [
+      8080
+      18880
+      8843
+      6789
+    ];
+    allowedUDPPorts = [
+      3478
+      10001
+    ];
   };
 
   services.traefik.dynamicConfigOptions.http = {

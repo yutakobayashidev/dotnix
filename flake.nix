@@ -153,10 +153,12 @@
     };
     streamcontroller = {
       url = "github:Daaboulex/streamcontroller-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.home-manager.follows = "home-manager";
-      inputs.git-hooks.follows = "git-hooks";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+        home-manager.follows = "home-manager";
+        git-hooks.follows = "git-hooks";
+      };
     };
     simple-nostr-relay.url = "github:yutakobayashidev/simple-nostr-relay";
     webhashtag-rust-server = {
