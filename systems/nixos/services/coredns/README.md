@@ -38,8 +38,11 @@ subtrees; the allowlist takes precedence.
 
 ## Cache and availability
 
-Popular answers are prefetched. After an upstream failure, previously cached
-answers can be served stale for up to one hour; fresh answers are attempted first.
+The cache matches nyanshiba/corednsconf: `cache { serve_stale 24h immediate }`.
+Normal responses follow upstream TTLs within CoreDNS default limits. Expired
+answers can be returned immediately for up to 24 hours after expiry while a
+background refresh runs, including when upstreams are healthy. No prefetch or
+custom negative/SERVFAIL cache settings are applied.
 Internal home/MagicDNS zones do not use this stale cache. CoreDNS/B450M failure
 still interrupts DNS: Cloudflare is an upstream fallback, not a replacement for
 the CoreDNS server. DNS filtering cannot remove ads served from the same hostname

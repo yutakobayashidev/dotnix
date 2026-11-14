@@ -34,9 +34,34 @@ class Upstream:
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.socket.bind(("127.0.0.1", 0))
         self.port = self.socket.getsockname()[1]
+        # CoreDNS cache background refreshes use TCP, independent of the client.
+        self.tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.tcp.bind(("127.0.0.1", self.port))
+        self.tcp.listen()
+        threading.Thread(target=self.serve_tcp, daemon=True).start()
         self.rcode = 0
         self.queries = []
         threading.Thread(target=self.serve, daemon=True).start()
+
+    def serve_tcp(self):
+        while True:
+            connection, _ = self.tcp.accept()
+            threading.Thread(
+                target=self.handle_tcp, args=(connection,), daemon=True
+            ).start()
+
+    def handle_tcp(self, connection):
+        with connection, connection.makefile("rb") as stream:
+            while prefix := stream.read(2):
+                query = dns.message.from_wire(
+                    stream.read(int.from_bytes(prefix, "big"))
+                )
+                try:
+                    reply = dns.query.udp(query, "127.0.0.1", port=self.port, timeout=1)
+                except dns.exception.Timeout:
+                    return
+                wire = reply.to_wire()
+                connection.sendall(len(wire).to_bytes(2, "big") + wire)
 
     def serve(self):
         while True:
@@ -149,7 +174,7 @@ class CoreDNSTest(unittest.TestCase):
             )
             text = text.replace("100.100.100.100", f"127.0.0.1:{cls.primary.port}")
             # Short TTL makes the real serve_stale behavior testable without minutes of waiting.
-            text = text.replace("cache 300 {", "cache 300 {\n success 9984 300 0")
+            text = text.replace("cache {", "cache {\n success 9984 3600 0")
             (cls.path / name).write_text(text)
         cls.log = (cls.path / "log").open("w+")
         cls.process = subprocess.Popen(
@@ -268,6 +293,11 @@ class CoreDNSTest(unittest.TestCase):
         self.assertEqual(response.rcode(), 0)
         self.assertTrue(response.answer)
         self.assertEqual(response.answer[0].ttl, 0)
+        # Immediate stale replies precede the asynchronous upstream refresh.
+        for _ in range(100):
+            if name in self.secondary.queries:
+                break
+            time.sleep(0.02)
         self.assertGreaterEqual(self.primary.queries.count(name), 2)
         self.assertIn(name, self.secondary.queries)
 
