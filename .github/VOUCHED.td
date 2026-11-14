@@ -46,6 +46,7 @@ github:Probmkr
 github:ProxymanApp
 github:Quramy
 github:RasaHQ
+github:Remocn
 github:Rich-Harris
 github:Safecast
 github:SakanaAI
@@ -67,6 +68,7 @@ github:amalsony
 github:antfu
 github:anthropics
 github:antiwork
+github:apache
 github:apparentlymart
 github:apple-oss-distributions
 github:asmvik
@@ -90,7 +92,7 @@ github:chenglou
 github:ci7lus
 github:cisagov
 github:claude
-github:clavia-inc
+github:clavia-labs
 github:codeforjapan
 github:colinhacks
 github:crusoecloud
@@ -229,6 +231,7 @@ github:sifue
 github:sindresorhus
 github:snakajima
 github:soartec-lab
+github:soltia48
 github:sony
 github:sosukesuzuki
 github:stackblitz
