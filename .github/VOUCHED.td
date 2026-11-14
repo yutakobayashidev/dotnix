@@ -18,6 +18,7 @@ github:Canva
 github:CouncilDataProject
 github:DIYgod
 github:DeNA
+github:DimensionDev
 github:Dinnerbone
 github:EskiMojo14
 github:ExpTechTW
@@ -46,6 +47,7 @@ github:Probmkr
 github:ProxymanApp
 github:Quramy
 github:RasaHQ
+github:Remocn
 github:Rich-Harris
 github:Safecast
 github:SakanaAI
@@ -67,6 +69,8 @@ github:amalsony
 github:antfu
 github:anthropics
 github:antiwork
+github:anywhere-labs
+github:apache
 github:apparentlymart
 github:apple-oss-distributions
 github:asmvik
@@ -81,6 +85,7 @@ github:bluesky-social
 github:bobzhang
 github:bot-rucachan
 github:bot-uichan
+github:buildpacks
 github:bytedance
 github:callebtc
 github:campsite
@@ -90,7 +95,7 @@ github:chenglou
 github:ci7lus
 github:cisagov
 github:claude
-github:clavia-inc
+github:clavia-labs
 github:codeforjapan
 github:colinhacks
 github:crusoecloud
@@ -150,6 +155,7 @@ github:kazupon
 github:kentcdodds
 github:koto
 github:koucha0124
+github:kuraneko1
 github:kyuridenamida
 github:lachlan2k
 github:las7
@@ -168,6 +174,7 @@ github:mercari
 github:messagepassing
 github:minagishl
 github:mitsukitesuri
+github:mizchi
 github:mizunashi-mana
 github:mono0218
 github:moonbit-community
@@ -178,6 +185,7 @@ github:nagadomi
 github:nakasyou
 github:naruya
 github:nasa
+github:nblky
 github:newt239
 github:nextjs
 github:nikkou-0814
@@ -229,6 +237,7 @@ github:sifue
 github:sindresorhus
 github:snakajima
 github:soartec-lab
+github:soltia48
 github:sony
 github:sosukesuzuki
 github:stackblitz
@@ -260,6 +269,7 @@ github:voidzero-dev
 github:web-infra-dev
 github:whatwg
 github:woodpecker-ci
+github:yksr-melt
 github:yuiseki
 github:yuseicm0721
 github:yusukebe
