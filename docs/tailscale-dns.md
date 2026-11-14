@@ -11,6 +11,11 @@ address. For public names it tries Quad9 (`9.9.9.9`) first, then Cloudflare
 makes the order meaningful. NXDOMAIN is returned unchanged, including Quad9
 blocking responses. Healthy Quad9 is preferred again after recovery.
 
+Public queries pass through the local HaGeZi Normal and CNAME tracker policy
+before forwarding. Rule sources, exceptions, cache behavior, and update commands
+are documented in the [CoreDNS module](../systems/nixos/services/coredns/README.md).
+Home and MagicDNS zones bypass this filtering.
+
 MagicDNS names are still answered by Tailscale. B450M disables Tailscale DNS
 acceptance, uses its local CoreDNS, and forwards only its Tailnet domain to
 `100.100.100.100`, avoiding a default-forwarding loop. Applications with their own

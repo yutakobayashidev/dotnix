@@ -1,0 +1,2 @@
+# Local additions, one domain per line; includes all subdomains.
+# Shared blocklists and CNAME targets are pinned in sources.json.

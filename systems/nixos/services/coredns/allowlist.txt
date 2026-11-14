@@ -1,0 +1,4 @@
+# One domain per line; the domain and all its subdomains bypass local filtering.
+# For a broken CNAME-backed site, allow the queried site name here.
+# Quad9's own filtering still applies. Keep exceptions as narrow as possible.
+# Example (disabled): login.example.com

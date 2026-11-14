@@ -1,0 +1,44 @@
+# Routing stays separate from generated policy and NixOS service wiring.
+# https://coredns.io/plugins/import/
+(common) {
+    bind 127.0.0.1 @tailnetAddress@
+    prometheus 127.0.0.1:9153
+    log . {
+        class denial error
+    }
+    errors
+}
+
+(upstream) {
+    import @forward@
+}
+
+(cached) {
+    import @cache@
+}
+
+.:53 {
+    import common
+    import cached
+    # CNAME cloaking: rewrite known tracker targets, then resolve the local sink.
+    # Inspiration: https://github.com/nyanshiba/corednsconf
+    # https://coredns.io/plugins/rewrite/#cname-field-rewrites
+    import @policy@/cname.conf
+    template IN ANY invalid {
+        rcode NXDOMAIN
+        authority "invalid. 60 IN SOA localhost. hostmaster.invalid. 1 60 60 60 60"
+    }
+    # Sparse zone: listed names and their subdomains have no address/service
+    # records. Unlisted names (including empty parent nodes) fall through.
+    # TXT markers make NODATA terminal for A/AAAA/HTTPS/SVCB, unlike NXDOMAIN.
+    # https://coredns.io/plugins/file/
+    # https://github.com/coredns/coredns/blob/v1.14.7/plugin/file/file.go
+    file @policy@/blocked.zone . {
+        reload 0
+        fallthrough
+    }
+    import upstream
+}
+
+import @zones@
+import @policy@/allowlist.conf

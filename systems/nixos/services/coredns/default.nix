@@ -1,11 +1,29 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  mitmDomain = "www.mod.gov.cn";
   homeDomain = "home.yutakobayashi.com";
   tailDomain = "tail29d068.ts.net";
-  b450m = "100.111.109.43";
+  tailnetAddress = "100.111.109.43";
   inherit (config.networking) hostName;
+  policy = import ./policy.nix { inherit pkgs homeDomain tailDomain; };
+  zones = pkgs.replaceVars ./zones.conf {
+    inherit
+      homeDomain
+      tailDomain
+      tailnetAddress
+      hostName
+      ;
+  };
+  corefile = pkgs.replaceVars ./Corefile {
+    inherit policy zones tailnetAddress;
+    forward = ./forward.conf;
+    cache = ./cache.conf;
+  };
 in
 {
   services = {
@@ -13,62 +31,7 @@ in
 
     coredns = {
       enable = true;
-      config = ''
-        .:53 {
-          bind 127.0.0.1 ${b450m}
-          forward . 9.9.9.9 1.1.1.1 {
-            policy sequential
-            failover SERVFAIL REFUSED
-          }
-          prometheus 127.0.0.1:9153
-          log . {
-            class denial error
-          }
-          errors
-        }
-
-        ${tailDomain}:53 {
-          bind 127.0.0.1 ${b450m}
-          forward . 100.100.100.100
-          prometheus 127.0.0.1:9153
-          log . {
-            class denial error
-          }
-          errors
-        }
-
-        ${homeDomain}:53 {
-          bind 127.0.0.1 ${b450m}
-          # Cover the zone apex and all subdomains on the Tailnet.
-          template ANY A {
-            answer "{{ .Name }} 300 IN A ${b450m}"
-          }
-          template ANY AAAA {
-            rcode NOERROR
-          }
-          forward . 9.9.9.9 1.1.1.1 {
-            policy sequential
-            failover SERVFAIL REFUSED
-          }
-          prometheus 127.0.0.1:9153
-          log . {
-            class denial error
-          }
-          errors
-        }
-
-        ${mitmDomain}:53 {
-          bind 127.0.0.1 ${b450m}
-          hosts {
-            ${mitmDomain} ${hostName}
-          }
-          prometheus 127.0.0.1:9153
-          log . {
-            class denial error
-          }
-          errors
-        }
-      '';
+      config = "import ${corefile}";
     };
 
     victoriametrics.prometheusConfig.scrape_configs = lib.mkIf config.my.services.monitoring.enable [
