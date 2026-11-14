@@ -21,6 +21,9 @@ resource "tailscale_acl" "main" {
     {"src": ["tag:server"],       "dst": ["*"], "ip": ["*"]},
     {"src": ["tag:ci"],           "dst": ["*"], "ip": ["*"]},
 
+    // The global resolver must also be reachable by the restricted Muse VM.
+    {"src": ["muse-vm"], "dst": ["100.111.109.43"], "ip": ["udp:53", "tcp:53"]},
+
     // Muse (muse-vm) is scoped to the endpoints it actually uses.
     // B450M-Pro4: Traefik HTTPS (tw.home and rdt.home MCP servers) and
     // the grafana-mcp tailnet forwarder (100.111.109.43:18995).

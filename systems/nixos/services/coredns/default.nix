@@ -16,7 +16,10 @@ in
       config = ''
         .:53 {
           bind 127.0.0.1 ${b450m}
-          forward . 8.8.8.8 1.1.1.1
+          forward . 9.9.9.9 1.1.1.1 {
+            policy sequential
+            failover SERVFAIL REFUSED
+          }
           prometheus 127.0.0.1:9153
           log . {
             class denial error
@@ -43,7 +46,10 @@ in
           template ANY AAAA {
             rcode NOERROR
           }
-          forward . 8.8.8.8 1.1.1.1
+          forward . 9.9.9.9 1.1.1.1 {
+            policy sequential
+            failover SERVFAIL REFUSED
+          }
           prometheus 127.0.0.1:9153
           log . {
             class denial error
