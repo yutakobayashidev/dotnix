@@ -42,6 +42,8 @@
 
 ## Network topology
 
+- [DNS64 / NAT64 / WARP](nat64-warp.md) — opt-in domain routing, isolated VM tests, and rollback
+
 - [Home network baseline and plan](network-investigation-2026-11-12.md) — observed topology, 5 Gbps contract, and staged router/VLAN plan
 - [Experimental IPv4 router](experimental-router.md) — isolated trial, validation status, and rollback
 
