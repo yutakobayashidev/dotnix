@@ -15,7 +15,7 @@ _:
       '';
 
       # Adapted from nyanshiba/harness-bonsai at 6e32b7673495966de274a2fb5fb7bd7defc92e8e.
-      # Plugin paths and the example Linkding MCP endpoint require separate setup.
+      # Only settings applicable without the upstream harness are included.
       opencodeConfig = builtins.toJSON {
         "$schema" = "https://opencode.ai/config.json";
         update = "disable";
@@ -23,17 +23,9 @@ _:
           provider = "parallel";
         };
         default_agent = "plan";
-        experimental = {
-          subagent_depth = 1;
-        };
         agents = {
           plan = {
             permissions = [
-              {
-                action = "edit";
-                resource = "~/.opencode/plan/*";
-                effect = "allow";
-              }
               {
                 action = "webfetch";
                 resource = "*";
@@ -41,11 +33,6 @@ _:
               }
               {
                 action = "websearch";
-                resource = "*";
-                effect = "allow";
-              }
-              {
-                action = "linkding_*";
                 resource = "*";
                 effect = "allow";
               }
@@ -71,114 +58,11 @@ _:
               }
               {
                 action = "external_directory";
-                resource = "~/.opencode/plan/**";
-                effect = "allow";
-              }
-              {
-                action = "external_directory";
                 resource = "/tmp/**";
                 effect = "allow";
               }
               {
                 action = "edit";
-                resource = "*";
-                effect = "allow";
-              }
-            ];
-          };
-          build-auto = {
-            mode = "all";
-            permissions = [
-              {
-                action = "external_directory";
-                resource = "*";
-                effect = "ask";
-              }
-              {
-                action = "external_directory";
-                resource = "/tmp/**";
-                effect = "allow";
-              }
-              {
-                action = "read";
-                resource = "*.env";
-                effect = "allow";
-              }
-              {
-                action = "read";
-                resource = "*.env.*";
-                effect = "allow";
-              }
-              {
-                action = "subagent";
-                resource = "build-auto";
-                effect = "allow";
-              }
-              {
-                action = "edit";
-                resource = "*";
-                effect = "allow";
-              }
-              {
-                action = "shell";
-                resource = "*";
-                effect = "allow";
-              }
-            ];
-          };
-          general = {
-            disabled = true;
-          };
-          explorer = {
-            disabled = true;
-          };
-          websearch-researcher = {
-            permissions = [
-              {
-                action = "webfetch";
-                resource = "*";
-                effect = "allow";
-              }
-              {
-                action = "websearch";
-                resource = "*";
-                effect = "allow";
-              }
-            ];
-          };
-          linkding-researcher = {
-            permissions = [
-              {
-                action = "webfetch";
-                resource = "*";
-                effect = "allow";
-              }
-              {
-                action = "websearch";
-                resource = "*";
-                effect = "allow";
-              }
-              {
-                action = "linkding_*";
-                resource = "*";
-                effect = "allow";
-              }
-            ];
-          };
-          feed-triage = {
-            permissions = [
-              {
-                action = "edit";
-                resource = "feed/replies/*";
-                effect = "allow";
-              }
-              {
-                action = "webfetch";
-                resource = "*";
-                effect = "allow";
-              }
-              {
-                action = "websearch";
                 resource = "*";
                 effect = "allow";
               }
@@ -437,16 +321,6 @@ _:
             effect = "allow";
           }
           {
-            action = "external_directory";
-            resource = "~/.opencode/plan/**";
-            effect = "allow";
-          }
-          {
-            action = "external_directory";
-            resource = "~/.opencode/build/**";
-            effect = "allow";
-          }
-          {
             action = "read";
             resource = "~/.config";
             effect = "deny";
@@ -480,36 +354,6 @@ _:
             action = "shell";
             resource = "pwd";
             effect = "ask";
-          }
-          {
-            action = "linkding_*";
-            resource = "*";
-            effect = "deny";
-          }
-          {
-            action = "webfetch";
-            resource = "*";
-            effect = "deny";
-          }
-          {
-            action = "websearch";
-            resource = "*";
-            effect = "deny";
-          }
-          {
-            action = "subagent";
-            resource = "*";
-            effect = "deny";
-          }
-          {
-            action = "subagent";
-            resource = "*-researcher";
-            effect = "allow";
-          }
-          {
-            action = "subagent";
-            resource = "bulk-reader";
-            effect = "allow";
           }
         ];
       };
