@@ -34,6 +34,7 @@
             pkgs.zizmor
             pkgs.ast-grep
             pkgs.tree-sitter
+            pkgs.ruff
             (pkgs.opentofu.withPlugins (pl: [
               pl.go-gitea_gitea
               pl.oracle_oci

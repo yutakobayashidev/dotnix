@@ -32,7 +32,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         grok.enable = lib.mkDefault true;
         herdr.enable = lib.mkDefault true;
         gh.enable = lib.mkDefault true;
-        jj.enable = lib.mkDefault true;
         lazydsh.enable = lib.mkDefault true;
         markitdown.enable = lib.mkDefault true;
         omp.enable = lib.mkDefault true;
@@ -47,24 +46,14 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         [
           bumblebee
           cloc
-          gctx
-          jj-desc
-          jujutsu
           llm-agents.hunk
           ni
           nil
           nix-init
           rinkaku
-          ruff
           taplo
           vhs
           whichllm
-        ]
-        ++ lib.optionals (pkgs.stdenv.isx86_64 || pkgs.stdenv.isDarwin) [
-          bit-vcs
-        ]
-        ++ lib.optionals config.my.profiles.desktop.enable [
-          insomnia
         ]
         ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.isLinux) [
           # android-studio
