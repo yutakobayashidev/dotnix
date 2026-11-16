@@ -1,0 +1,19 @@
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -189,3 +189,10 @@
++fn codex_home() -> PathBuf {
++    std::env::var_os("CODEX_HOME")
++        .filter(|value| !value.is_empty())
++        .map(PathBuf::from)
++        .unwrap_or_else(|| home_dir().join(".codex"))
++}
++
+ pub fn codex_dir() -> PathBuf {
+-    home_dir().join(".codex").join("sessions")
++    codex_home().join("sessions")
+ }
+@@ -193,3 +200,3 @@
+ pub fn codex_session_index_file() -> PathBuf {
+-    home_dir().join(".codex").join("session_index.jsonl")
++    codex_home().join("session_index.jsonl")
+ }

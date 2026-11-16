@@ -50,6 +50,19 @@ wallets and private balances. Set `RPC_URL` or pass `--rpc-url` when using it;
 wallet data defaults to `~/.kohaku-cli`. Wallet creation and credentials are
 managed outside the Nix configuration.
 
+## Agent session search
+
+The `development` profile installs [fast-resume](https://github.com/angristan/fast-resume)
+through `my.programs.fast-resume.enable`. Run `fr -a codex` to search Codex
+conversation text, `Ctrl+P` to preview a conversation, and `Enter` to resume it.
+Run `fr` without the agent filter to search other supported agents as well.
+
+The package comes from nixpkgs. A local patch makes both Codex
+session discovery and session titles respect `CODEX_HOME`, falling back to
+`~/.codex` when unset or empty. This supports Home Manager's XDG Codex directory
+without moving existing history. The search index lives in the XDG cache
+directory under `fast-resume`; tool output is not part of the conversation index.
+
 ## Zotero runtime exception
 
 Zotero 10 requires Firefox ESR 140, which reached end of life on October 13, 2026. The Zotero feature permits only
