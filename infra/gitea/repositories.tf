@@ -74,6 +74,7 @@ resource "gitea_repository" "life" {
   username  = "yuta"
   name      = "rensheng"
   private   = true
+  archived  = true
   auto_init = false
 }
 
