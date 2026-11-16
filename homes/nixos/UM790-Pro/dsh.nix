@@ -14,7 +14,10 @@ let
     command = "${pkgs.bun}/bin/bunx";
     args = [ package ];
     env = env // {
-      PATH = lib.makeBinPath [ pkgs.nodejs pkgs.bun ];
+      PATH = lib.makeBinPath [
+        pkgs.nodejs
+        pkgs.bun
+      ];
     };
     startupTimeoutMs = 30000;
     toolCallTimeoutMs = 30000;
@@ -40,6 +43,13 @@ in
     pubmed = stdio "@cyanheads/pubmed-mcp-server@latest" (logging // unpaywallEnv);
     semantic-scholar = stdio "@xbghc/semanticscholar-mcp" { };
     unpaywall = stdio "unpaywall-mcp" unpaywallEnv;
+
+    # Local Atuin: cross-harness thread search + shell history for the DSH model.
+    atuin = {
+      transport = "stdio";
+      command = lib.getExe config.programs.atuin.package;
+      args = [ "mcp" ];
+    };
   };
 
   my.programs.dsh.web.settings."llm-pi-ai".providers = {
