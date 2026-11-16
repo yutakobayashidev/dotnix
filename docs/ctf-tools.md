@@ -19,31 +19,37 @@ ashiba environments. Use `reverse-android` for APK analysis, `reverse-native`
 for ELF/native analysis, or compose both modules for Android native libraries.
 The Android development template also provides SDK, emulator, and Maestro shells.
 
+Native CTF tools now live in the [ashiba pwn template](https://github.com/yutakobayashidev/ashiba/tree/main/pwn):
+GDB/GEF, pwntools/ptrlib, Ropper/ROPgadget, one_gadget, pwninit, checksec,
+binutils, patchelf, QEMU, strace and ltrace. Use `nix develop .#full` there to
+add Ghidra CLI. Wireshark capture permissions remain in this profile.
+
+`flakeModules.pwn` and `flakeModules.reverse-native` can also be imported into
+an existing flake-parts environment. Their skills are synchronized together.
+The shell does not change host ptrace policy or configure KVM.
+
 ## Installed toolkit
 
-| Area                         | Tools                                                                                                                                                       | Primary use                                                                           |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Recon and OSINT              | `amass`, `subfinder`, `dnsx`, `shuffledns`, `httpx`, `nmap`, `masscan`, `arp-scan`                                                                          | Discover domains, hosts, and exposed services                                         |
-| Active Directory and Windows | `netexec` (`nxc`), Impacket, `enum4linux-ng`, Evil-WinRM, Responder, Certipy, BloodHound Python                                                             | Enumerate Windows, AD, LDAP, Kerberos, and AD CS configurations                       |
-| Web                          | `ffuf`, `feroxbuster`, `katana`, `dalfox`, `nuclei`, `sqlmap`, `mitmproxy`, OWASP ZAP, `curl-impersonate`                                                   | Crawl applications, discover content, test XSS and SQL injection, and inspect traffic |
-| Certificates and TLS         | Cert Spotter, `tlsx`, Certigo                                                                                                                               | Monitor CT logs and collect, inspect, and validate TLS certificates                   |
-| Pwn and reverse engineering  | GDB, `gef`, radare2, `pwntools`, ptrlib, Ropper, `ROPgadget`, `one_gadget`, `pwninit`, QEMU, `checksec`, `binutils`, `patchelf`, `strace`, `ltrace`, `wabt` | Inspect, emulate, debug, and script against native and WebAssembly binaries           |
-| Password testing             | John the Ripper, Hashcat, THC Hydra                                                                                                                         | Analyze captured hashes and test authorized online authentication                     |
-| Forensics and file analysis  | `binwalk`, ExifTool, Sleuth Kit, Volatility 3, `magika`, `yara`, `foremost`, `steghide`, `stegseek`, `testdisk`, `zsteg`                                    | Identify, extract, recover, and classify files, disks, memory, and firmware           |
-| Mobile                       | `droidperm`                                                                                                                                                 | Inspect Android package permissions                                                   |
-| Cloud security               | Prowler, Scout Suite, CloudFox                                                                                                                              | Assess cloud configurations and enumerate authorized cloud environments               |
-| Kubernetes and containers    | `kubectl`, Helm, Kubescape, kube-bench, Grype, Trivy, Syft                                                                                                  | Inspect clusters, benchmark configurations, scan artifacts, and generate SBOMs        |
-| Secrets                      | Gitleaks, TruffleHog                                                                                                                                        | Detect exposed credentials and secrets in repositories and files                      |
-| Vulnerability research       | `codex-security`, `osv-scanner`, `vulnix`, `vt`                                                                                                             | Review source, Nix packages, dependencies, and known file intelligence                |
-| Exploit research             | ExploitDB (`searchsploit`)                                                                                                                                  | Search public exploit references for authorized vulnerability research                |
-| Pivoting                     | Chisel, Ligolo-ng, Proxychains-NG, sshuttle                                                                                                                 | Reach segmented lab networks through authorized tunnels                               |
-| Traffic analysis             | Wireshark, `tcpdump`, `socat`                                                                                                                               | Capture, inspect, and relay network traffic                                           |
-| Wordlists                    | SecLists                                                                                                                                                    | Supply discovery, fuzzing, username, and password lists                               |
+| Area                         | Tools                                                                                                                    | Primary use                                                                           |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| Recon and OSINT              | `amass`, `subfinder`, `dnsx`, `shuffledns`, `httpx`, `nmap`, `masscan`, `arp-scan`                                       | Discover domains, hosts, and exposed services                                         |
+| Active Directory and Windows | `netexec` (`nxc`), Impacket, `enum4linux-ng`, Evil-WinRM, Responder, Certipy, BloodHound Python                          | Enumerate Windows, AD, LDAP, Kerberos, and AD CS configurations                       |
+| Web                          | `ffuf`, `feroxbuster`, `katana`, `dalfox`, `nuclei`, `sqlmap`, `mitmproxy`, OWASP ZAP, `curl-impersonate`                | Crawl applications, discover content, test XSS and SQL injection, and inspect traffic |
+| Certificates and TLS         | Cert Spotter, `tlsx`, Certigo                                                                                            | Monitor CT logs and collect, inspect, and validate TLS certificates                   |
+| Reverse engineering          | radare2, `wabt`                                                                                                          | Inspect native and WebAssembly binaries                                               |
+| Password testing             | John the Ripper, Hashcat, THC Hydra                                                                                      | Analyze captured hashes and test authorized online authentication                     |
+| Forensics and file analysis  | `binwalk`, ExifTool, Sleuth Kit, Volatility 3, `magika`, `yara`, `foremost`, `steghide`, `stegseek`, `testdisk`, `zsteg` | Identify, extract, recover, and classify files, disks, memory, and firmware           |
+| Mobile                       | `droidperm`                                                                                                              | Inspect Android package permissions                                                   |
+| Cloud security               | Prowler, Scout Suite, CloudFox                                                                                           | Assess cloud configurations and enumerate authorized cloud environments               |
+| Kubernetes and containers    | `kubectl`, Helm, Kubescape, kube-bench, Grype, Trivy, Syft                                                               | Inspect clusters, benchmark configurations, scan artifacts, and generate SBOMs        |
+| Secrets                      | Gitleaks, TruffleHog                                                                                                     | Detect exposed credentials and secrets in repositories and files                      |
+| Vulnerability research       | `codex-security`, `osv-scanner`, `vulnix`, `vt`                                                                          | Review source, Nix packages, dependencies, and known file intelligence                |
+| Exploit research             | ExploitDB (`searchsploit`)                                                                                               | Search public exploit references for authorized vulnerability research                |
+| Pivoting                     | Chisel, Ligolo-ng, Proxychains-NG, sshuttle                                                                              | Reach segmented lab networks through authorized tunnels                               |
+| Traffic analysis             | Wireshark, `tcpdump`, `socat`                                                                                            | Capture, inspect, and relay network traffic                                           |
+| Wordlists                    | SecLists                                                                                                                 | Supply discovery, fuzzing, username, and password lists                               |
 
 Impacket installs a suite of commands rather than one `impacket` executable.
-The pwntools Python environment also provides `ROPgadget`; it has lower package
-priority so standalone tools win command-name collisions. `checksec` uses the
-stable nixpkgs package.
 Nuclei templates are maintained separately from the scanner itself.
 Masscan and tcpdump need root privileges or suitable packet-capture
 capabilities. Hashcat needs a working vendor OpenCL, CUDA, or ROCm runtime for
@@ -54,9 +60,7 @@ Responder performs active name-resolution poisoning and needs appropriate
 privileges; use it only on an authorized network. Cert Spotter requires a
 watchlist before it can monitor domains continuously.
 Cloud tools use the caller's configured credentials, while Kubernetes tools
-use the active kubeconfig context. Installing QEMU provides emulation commands
-but does not enable a system virtualization service or configure KVM access.
-Pivoting tools create tunnels or proxy traffic and should only be used on
+use the active kubeconfig context. Pivoting tools create tunnels or proxy traffic and should only be used on
 authorized lab networks. Certipy and BloodHound Python require valid AD access
 and are intended for authorized directory assessments.
 
@@ -66,7 +70,7 @@ and are intended for authorized directory assessments.
 
 - [Ghidra](https://github.com/NationalSecurityAgency/ghidra) is a software
   reverse-engineering framework for static analysis and decompilation.
-- [GEF](https://github.com/bata24/gef) adds CTF-oriented memory, register,
+- [GEF](https://github.com/hugsy/gef) adds CTF-oriented memory, register,
   stack, heap, and disassembly views to GDB.
 - [ptrlib](https://github.com/ptr-yudai/ptrlib) is a Python library for writing
   CTF solvers involving processes, sockets, ELF files, packing, cryptography,
