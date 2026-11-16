@@ -30,5 +30,11 @@ For composition with another flake-parts environment, import
 `perSystem.devshells.default` settings. See the
 [template documentation](https://github.com/yutakobayashidev/ashiba/tree/main/reverse-native).
 
+For APK analysis, add `inputs.ashiba.flakeModules.reverse-android`. For SDK,
+emulator, and Maestro support, also add `inputs.ashiba.flakeModules.android` and
+set `perSystem.ashiba.android.acceptLicense = true` after reviewing the license.
+Skills from these modules are collected into a single synchronization hook.
+Additional tools such as GDB belong in `perSystem.devshells.default.packages`.
+
 The migration takes effect on the next Home Manager/system activation. Existing
 Ghidra projects and user data are not removed or converted automatically.

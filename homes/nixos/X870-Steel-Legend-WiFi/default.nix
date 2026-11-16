@@ -10,7 +10,6 @@
     ];
     home.packages = with pkgs; [
       alcom
-      android-tools
       beatoraja
       blender
       bs-manager

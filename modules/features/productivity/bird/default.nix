@@ -34,15 +34,6 @@ _:
               ${dependencies}
             '';
           };
-          bird-deep-research = {
-            from = "local";
-            path = "bird-deep-research";
-            rewriteCommands = false;
-            packages = [
-              pkgs.bird
-              pkgs.nodejs
-            ];
-          };
         };
       };
     };

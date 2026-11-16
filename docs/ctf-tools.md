@@ -14,8 +14,10 @@ my.profiles.pentest.enable = true;
 
 The system profile cascades into Home Manager. It is already enabled on the
 ThinkPad. The profile also enables Wireshark packet capture. Native analysis with
-[Ghidra CLI](ghidra-cli.md) is provided by a project-local ashiba shell, not a
-global Ghidra installation or MCP registration.
+[Ghidra CLI](ghidra-cli.md), JADX, and Apktool are provided by project-local
+ashiba environments. Use `reverse-android` for APK analysis, `reverse-native`
+for ELF/native analysis, or compose both modules for Android native libraries.
+The Android development template also provides SDK, emulator, and Maestro shells.
 
 ## Installed toolkit
 
@@ -28,7 +30,7 @@ global Ghidra installation or MCP registration.
 | Pwn and reverse engineering  | GDB, `gef`, radare2, `pwntools`, ptrlib, Ropper, `ROPgadget`, `one_gadget`, `pwninit`, QEMU, `checksec`, `binutils`, `patchelf`, `strace`, `ltrace`, `wabt` | Inspect, emulate, debug, and script against native and WebAssembly binaries           |
 | Password testing             | John the Ripper, Hashcat, THC Hydra                                                                                                                         | Analyze captured hashes and test authorized online authentication                     |
 | Forensics and file analysis  | `binwalk`, ExifTool, Sleuth Kit, Volatility 3, `magika`, `yara`, `foremost`, `steghide`, `stegseek`, `testdisk`, `zsteg`                                    | Identify, extract, recover, and classify files, disks, memory, and firmware           |
-| Mobile                       | `apktool`, `jadx`, `droidperm`                                                                                                                              | Inspect Android packages, resources, bytecode, and permissions                        |
+| Mobile                       | `droidperm`                                                                                                                                                 | Inspect Android package permissions                                                   |
 | Cloud security               | Prowler, Scout Suite, CloudFox                                                                                                                              | Assess cloud configurations and enumerate authorized cloud environments               |
 | Kubernetes and containers    | `kubectl`, Helm, Kubescape, kube-bench, Grype, Trivy, Syft                                                                                                  | Inspect clusters, benchmark configurations, scan artifacts, and generate SBOMs        |
 | Secrets                      | Gitleaks, TruffleHog                                                                                                                                        | Detect exposed credentials and secrets in repositories and files                      |

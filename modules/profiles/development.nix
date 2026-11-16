@@ -66,14 +66,8 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         ++ lib.optionals config.my.profiles.desktop.enable [
           insomnia
         ]
-        ++ lib.optionals pkgs.stdenv.isLinux [
-          android-tools
-        ]
         ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.isLinux) [
           # android-studio
-          arduino-ide
-          stable.freecad
-          (kicad.override { stable = true; })
           tableplus
         ];
     };

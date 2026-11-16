@@ -76,7 +76,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **Desktop automation**: [Agent Desktop](docs/agent-desktop.md) via NUR with AT-SPI on Linux graphical hosts
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
-- **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
+- **Development**: Docker, Tailscale, [Android dev template](docs/mobile-template.md), [Hardware dev templates](docs/diy-template.md), and VirtualBox on UM790-Pro
 - **Remote builds**: B450M-Pro4 and ThinkPad offload to UM790-Pro over Tailscale; see [rollout and offline build commands](docs/remote-build.md)
 - **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [project-local Ghidra CLI](docs/ghidra-cli.md), on the ThinkPad
 - **Observability**: Grafana / VictoriaMetrics / vmalert / Alertmanager / Loki / Tempo on B450M-Pro4, Claude Code and Codex OTLP telemetry, Grafana MCP via Secure Tunnel; see [monitoring setup and migration](docs/monitoring.md)
