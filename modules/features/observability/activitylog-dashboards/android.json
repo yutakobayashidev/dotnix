@@ -1,0 +1,1837 @@
+{
+	"title": "Android",
+	"uid": "activitylog-android",
+	"description": "Phone usage from the activitylog Android app: screen time, apps, mobile data, browser tabs, unlocks and location.",
+	"tags": ["activitylog", "android", "opentelemetry"],
+	"timezone": "browser",
+	"editable": true,
+	"graphTooltip": 1,
+	"schemaVersion": 39,
+	"time": {
+		"from": "now-24h",
+		"to": "now"
+	},
+	"refresh": "5m",
+	"links": [
+		{
+			"title": "activitylog",
+			"type": "dashboards",
+			"tags": ["activitylog"],
+			"asDropdown": true,
+			"icon": "external link",
+			"includeVars": false,
+			"keepTime": true
+		}
+	],
+	"templating": {
+		"list": [
+			{
+				"name": "prom",
+				"label": "Metrics",
+				"type": "datasource",
+				"query": "prometheus",
+				"current": {
+					"text": "Prometheus",
+					"value": "PBFA97CFB590B2093"
+				},
+				"hide": 2,
+				"includeAll": false,
+				"multi": false,
+				"options": [],
+				"refresh": 1,
+				"regex": "/.*/",
+				"skipUrlSync": false
+			},
+			{
+				"name": "loki",
+				"label": "Logs",
+				"type": "datasource",
+				"query": "loki",
+				"current": {
+					"text": "Loki",
+					"value": "loki"
+				},
+				"hide": 2,
+				"includeAll": false,
+				"multi": false,
+				"options": [],
+				"refresh": 1,
+				"regex": "/.*/",
+				"skipUrlSync": false
+			},
+			{
+				"name": "tempo",
+				"label": "Traces",
+				"type": "datasource",
+				"query": "tempo",
+				"current": {
+					"text": "Tempo",
+					"value": "tempo"
+				},
+				"hide": 2,
+				"includeAll": false,
+				"multi": false,
+				"options": [],
+				"refresh": 1,
+				"regex": "/.*/",
+				"skipUrlSync": false
+			},
+			{
+				"name": "device",
+				"label": "Device",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "${prom}"
+				},
+				"query": "label_values(activity_time_seconds_total{job=\"activitylog/activitylog-android\"}, instance)",
+				"definition": "label_values(activity_time_seconds_total{job=\"activitylog/activitylog-android\"}, instance)",
+				"current": {},
+				"hide": 0,
+				"includeAll": true,
+				"multi": false,
+				"options": [],
+				"refresh": 2,
+				"regex": "",
+				"skipUrlSync": false,
+				"sort": 1,
+				"description": "Select one Android device, or All for the combined daily report.",
+				"allValue": ".*"
+			}
+		]
+	},
+	"annotations": {
+		"list": [
+			{
+				"builtIn": 1,
+				"datasource": {
+					"type": "grafana",
+					"uid": "-- Grafana --"
+				},
+				"enable": true,
+				"hide": true,
+				"iconColor": "rgba(0, 211, 255, 1)",
+				"name": "Annotations & Alerts",
+				"type": "dashboard"
+			}
+		]
+	},
+	"panels": [
+		{
+			"type": "row",
+			"title": "Overview ($device)",
+			"id": 1,
+			"collapsed": false,
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 24,
+				"h": 1
+			},
+			"panels": []
+		},
+		{
+			"type": "stat",
+			"title": "Screen time",
+			"description": "Time the device was in use (screen on and unlocked) in the selected range. Shows the selected device; All combines devices.",
+			"id": 2,
+			"gridPos": {
+				"x": 0,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_state=\"active\"}[$__range]))",
+					"legendFormat": "__auto",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "blue"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"textMode": "value",
+				"justifyMode": "center",
+				"orientation": "auto",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"title": "Unlocks",
+			"description": "Number of device unlocks in the selected range. Shows the selected device; All combines devices.",
+			"id": 3,
+			"gridPos": {
+				"x": 3,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_device_unlocks_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range]))",
+					"legendFormat": "__auto",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "purple"
+					},
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"textMode": "value",
+				"justifyMode": "center",
+				"orientation": "auto",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"title": "Time per unlock",
+			"description": "Average screen time per unlock. Shows the selected device; All combines devices.",
+			"id": 4,
+			"gridPos": {
+				"x": 6,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_state=\"active\"}[$__range])) / sum(increase(activity_device_unlocks_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range]))",
+					"legendFormat": "__auto",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "blue"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"textMode": "value",
+				"justifyMode": "center",
+				"orientation": "auto",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"title": "Apps used",
+			"description": "Number of apps that were in the foreground for at least a minute. Shows the selected device; All combines devices.",
+			"id": 5,
+			"gridPos": {
+				"x": 9,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "count(sum by (activity_app_id) (increase(activity_app_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range])) >= 60)",
+					"legendFormat": "__auto",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "green"
+					},
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"textMode": "value",
+				"justifyMode": "center",
+				"orientation": "auto",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"title": "App switches",
+			"description": "activity.app.switch log events. Shows the selected device; All combines devices.",
+			"id": 6,
+			"gridPos": {
+				"x": 12,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(count_over_time({service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=\"activity.app.switch\" [$__range]))",
+					"queryType": "instant"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "orange"
+					},
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"textMode": "value",
+				"justifyMode": "center",
+				"orientation": "auto",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"title": "Location fixes",
+			"description": "device.location log events. 0 when location recording is off. Shows the selected device; All combines devices.",
+			"id": 7,
+			"gridPos": {
+				"x": 15,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(count_over_time({service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=\"device.location\" [$__range]))",
+					"queryType": "instant"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "teal"
+					},
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"textMode": "value",
+				"justifyMode": "center",
+				"orientation": "auto",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"title": "Mobile data",
+			"description": "Received and sent mobile data during the selected time range. Estimated from 15-minute cumulative samples; at least two samples are required. Shows the selected device; All combines devices.",
+			"id": 26,
+			"gridPos": {
+				"x": 18,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_network_mobile_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_network_scope=\"device\"}[$__range]))",
+					"legendFormat": "Mobile data",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"decimals": 1,
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"title": "Wi-Fi data",
+			"description": "Received and sent Wi-Fi data during the selected time range. Estimated from 15-minute cumulative samples; at least two samples are required. Shows the selected device; All combines devices.",
+			"id": 28,
+			"gridPos": {
+				"x": 21,
+				"y": 1,
+				"w": 3,
+				"h": 4
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_network_wifi_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_network_scope=\"device\"}[$__range]))",
+					"legendFormat": "Wi-Fi data",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"decimals": 1,
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "timeseries",
+			"title": "Screen time per hour by category",
+			"description": "Foreground time per app category, per hour. The app sends metrics about every 15 minutes, so finer steps are not meaningful.",
+			"id": 8,
+			"gridPos": {
+				"x": 0,
+				"y": 5,
+				"w": 16,
+				"h": 9
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum by (activity_category) (increase(activity_category_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__interval]))",
+					"legendFormat": "{{activity_category}}",
+					"range": true,
+					"instant": false,
+					"interval": "1h"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 80,
+						"lineWidth": 1,
+						"barAlignment": 1,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						},
+						"showPoints": "never",
+						"axisSoftMin": 0
+					},
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"showLegend": true,
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			},
+			"interval": "1h"
+		},
+		{
+			"type": "piechart",
+			"title": "Categories",
+			"description": "Share of foreground time per app category in the selected range.",
+			"id": 9,
+			"gridPos": {
+				"x": 16,
+				"y": 5,
+				"w": 8,
+				"h": 9
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum by (activity_category) (increase(activity_category_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range]))",
+					"legendFormat": "{{activity_category}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"pieType": "donut",
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"legend": {
+					"showLegend": true,
+					"displayMode": "table",
+					"placement": "right",
+					"values": ["value", "percent"]
+				},
+				"tooltip": {
+					"mode": "single"
+				},
+				"displayLabels": []
+			}
+		},
+		{
+			"id": 31,
+			"type": "row",
+			"title": "By device ($device)",
+			"collapsed": false,
+			"panels": [],
+			"gridPos": {
+				"x": 0,
+				"y": 14,
+				"w": 24,
+				"h": 1
+			}
+		},
+		{
+			"type": "bargauge",
+			"title": "Screen time by device",
+			"description": "Each selected device shown separately over the selected time range. Requires at least two samples per series.",
+			"id": 32,
+			"gridPos": {
+				"x": 0,
+				"y": 15,
+				"w": 6,
+				"h": 8
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(sum by (instance) (increase(activity_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_state=\"active\"}[$__range])))",
+					"legendFormat": "{{instance}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 24,
+				"maxVizHeight": 40,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "bargauge",
+			"title": "Unlocks by device",
+			"description": "Each selected device shown separately over the selected time range. Requires at least two samples per series.",
+			"id": 33,
+			"gridPos": {
+				"x": 6,
+				"y": 15,
+				"w": 6,
+				"h": 8
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(sum by (instance) (increase(activity_device_unlocks_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range])))",
+					"legendFormat": "{{instance}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples",
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 24,
+				"maxVizHeight": 40,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "bargauge",
+			"title": "Mobile data by device",
+			"description": "Each selected device shown separately over the selected time range. Requires at least two samples per series.",
+			"id": 34,
+			"gridPos": {
+				"x": 12,
+				"y": 15,
+				"w": 6,
+				"h": 8
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(sum by (instance) (increase(activity_network_mobile_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_network_scope=\"device\"}[$__range])))",
+					"legendFormat": "{{instance}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 24,
+				"maxVizHeight": 40,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "bargauge",
+			"title": "Wi-Fi data by device",
+			"description": "Each selected device shown separately over the selected time range. Requires at least two samples per series.",
+			"id": 35,
+			"gridPos": {
+				"x": 18,
+				"y": 15,
+				"w": 6,
+				"h": 8
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(sum by (instance) (increase(activity_network_wifi_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_network_scope=\"device\"}[$__range])))",
+					"legendFormat": "{{instance}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 24,
+				"maxVizHeight": 40,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "row",
+			"title": "Apps ($device)",
+			"id": 10,
+			"collapsed": false,
+			"gridPos": {
+				"x": 0,
+				"y": 23,
+				"w": 24,
+				"h": 1
+			},
+			"panels": []
+		},
+		{
+			"type": "bargauge",
+			"title": "Top apps",
+			"description": "Foreground time per app in the selected range (top 15). Rankings are calculated separately for each selected device.",
+			"id": 11,
+			"gridPos": {
+				"x": 0,
+				"y": 24,
+				"w": 10,
+				"h": 12
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(topk by (instance) (15, sum by (instance, activity_app_id, activity_app_name) (increase(activity_app_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range]))))",
+					"legendFormat": "{{instance}} / {{activity_app_name}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "auto",
+				"minVizHeight": 16,
+				"maxVizHeight": 24,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "timeseries",
+			"title": "Top apps per hour",
+			"description": "Foreground time per hour of the 8 apps used most in the selected range. Rankings are calculated separately for each selected device.",
+			"id": 12,
+			"gridPos": {
+				"x": 10,
+				"y": 24,
+				"w": 14,
+				"h": 12
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum by (instance, activity_app_id, activity_app_name) (increase(activity_app_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__interval])) and on (instance, activity_app_id, activity_app_name) topk by (instance) (8, sum by (instance, activity_app_id, activity_app_name) (increase(activity_app_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range] @ end())))",
+					"legendFormat": "{{instance}} / {{activity_app_name}}",
+					"range": true,
+					"instant": false,
+					"interval": "1h"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 80,
+						"lineWidth": 1,
+						"barAlignment": 1,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						},
+						"showPoints": "never",
+						"axisSoftMin": 0
+					},
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"showLegend": true,
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			},
+			"interval": "1h"
+		},
+		{
+			"type": "timeseries",
+			"title": "Unlocks per hour",
+			"description": "Device unlocks per hour.",
+			"id": 13,
+			"gridPos": {
+				"x": 0,
+				"y": 36,
+				"w": 12,
+				"h": 7
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_device_unlocks_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__interval]))",
+					"legendFormat": "unlocks",
+					"range": true,
+					"instant": false,
+					"interval": "1h"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"decimals": 0,
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 80,
+						"lineWidth": 1,
+						"barAlignment": 1,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						},
+						"showPoints": "never",
+						"axisSoftMin": 0
+					},
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "purple"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"showLegend": false
+				},
+				"tooltip": {
+					"mode": "single"
+				}
+			},
+			"interval": "1h"
+		},
+		{
+			"type": "timeseries",
+			"title": "App switches per hour",
+			"description": "activity.app.switch events per hour.",
+			"id": 14,
+			"gridPos": {
+				"x": 12,
+				"y": 36,
+				"w": 12,
+				"h": 7
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(count_over_time({service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=\"activity.app.switch\" [$__interval]))",
+					"queryType": "range",
+					"legendFormat": "switches"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"decimals": 0,
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 80,
+						"lineWidth": 1,
+						"barAlignment": 1,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						},
+						"showPoints": "never",
+						"axisSoftMin": 0
+					},
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "orange"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"showLegend": false
+				},
+				"tooltip": {
+					"mode": "single"
+				}
+			},
+			"interval": "1h"
+		},
+		{
+			"type": "row",
+			"title": "Location ($device)",
+			"id": 15,
+			"collapsed": false,
+			"gridPos": {
+				"x": 0,
+				"y": 43,
+				"w": 24,
+				"h": 1
+			},
+			"panels": []
+		},
+		{
+			"type": "geomap",
+			"title": "Route",
+			"description": "device.location logs from the Android app, connected in time order. Structured metadata geo_location_lat/lon are extracted from the log labels.",
+			"id": 16,
+			"gridPos": {
+				"x": 0,
+				"y": 44,
+				"w": 16,
+				"h": 16
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "{service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=\"device.location\"",
+					"queryType": "range",
+					"maxLines": 5000
+				}
+			],
+			"fieldConfig": {
+				"defaults": {},
+				"overrides": []
+			},
+			"options": {
+				"view": {
+					"id": "fit",
+					"lat": 0,
+					"lon": 0,
+					"zoom": 12,
+					"allLayers": true
+				},
+				"controls": {
+					"showZoom": true,
+					"mouseWheelZoom": true,
+					"showAttribution": true
+				},
+				"basemap": {
+					"type": "default",
+					"name": "Basemap"
+				},
+				"layers": [
+					{
+						"type": "route",
+						"name": "Route",
+						"tooltip": true,
+						"location": {
+							"mode": "coords",
+							"latitude": "geo_location_lat",
+							"longitude": "geo_location_lon"
+						},
+						"config": {
+							"arrow": 0,
+							"style": {
+								"color": {
+									"fixed": "#5794F2"
+								},
+								"lineWidth": 2,
+								"opacity": 0.8,
+								"size": {
+									"fixed": 3,
+									"min": 2,
+									"max": 6
+								}
+							}
+						}
+					}
+				],
+				"tooltip": {
+					"mode": "details"
+				}
+			},
+			"transformations": [
+				{
+					"id": "extractFields",
+					"options": {
+						"source": "labels",
+						"format": "auto",
+						"replace": false,
+						"keepTime": false
+					}
+				},
+				{
+					"id": "convertFieldType",
+					"options": {
+						"conversions": [
+							{
+								"targetField": "geo_location_lat",
+								"destinationType": "number"
+							},
+							{
+								"targetField": "geo_location_lon",
+								"destinationType": "number"
+							},
+							{
+								"targetField": "activity_location_accuracy",
+								"destinationType": "number"
+							}
+						]
+					}
+				},
+				{
+					"id": "sortBy",
+					"options": {
+						"sort": [
+							{
+								"field": "Time"
+							}
+						]
+					}
+				},
+				{
+					"id": "organize",
+					"options": {
+						"includeByName": {
+							"Time": true,
+							"geo_location_lat": true,
+							"geo_location_lon": true,
+							"activity_location_accuracy": true,
+							"activity_location_provider": true,
+							"activity_location_source": true
+						}
+					}
+				}
+			]
+		},
+		{
+			"type": "timeseries",
+			"title": "Speed",
+			"description": "Average speed reported with the location fixes (km/h). Near 0 while staying in one place.",
+			"id": 17,
+			"gridPos": {
+				"x": 16,
+				"y": 44,
+				"w": 8,
+				"h": 8
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "avg(avg_over_time({service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=\"device.location\" | activity_location_speed != \"\" | unwrap activity_location_speed [$__interval])) * 3.6",
+					"queryType": "range",
+					"legendFormat": "speed"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "velocitykmh",
+					"min": 0,
+					"decimals": 1,
+					"custom": {
+						"drawStyle": "line",
+						"lineWidth": 1,
+						"fillOpacity": 20,
+						"showPoints": "never",
+						"spanNulls": 1800000
+					},
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "teal"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"showLegend": false
+				},
+				"tooltip": {
+					"mode": "single"
+				}
+			},
+			"interval": "5m"
+		},
+		{
+			"type": "timeseries",
+			"title": "Location fixes per hour",
+			"description": "device.location events per hour, by how they were obtained: foreground (the 1-minute service), passive (fixes requested by other apps) or job (the 15-minute job).",
+			"id": 18,
+			"gridPos": {
+				"x": 16,
+				"y": 52,
+				"w": 8,
+				"h": 8
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum by (activity_location_source) (count_over_time({service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=\"device.location\" [$__interval]))",
+					"queryType": "range",
+					"legendFormat": "{{activity_location_source}}"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "short",
+					"decimals": 0,
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 80,
+						"lineWidth": 1,
+						"barAlignment": 1,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						},
+						"showPoints": "never",
+						"axisSoftMin": 0
+					},
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"showLegend": true,
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi"
+				}
+			},
+			"interval": "1h"
+		},
+		{
+			"type": "timeseries",
+			"title": "Altitude",
+			"description": "Average reported location altitude in metres for each device over the query interval. Missing altitude is omitted; negative values are retained.",
+			"id": 36,
+			"gridPos": {
+				"x": 0,
+				"y": 60,
+				"w": 24,
+				"h": 8
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "avg_over_time({service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=\"device.location\" | activity_location_altitude != \"\" | unwrap activity_location_altitude | __error__=\"\" [$__interval]) by (service_instance_id)",
+					"queryType": "range",
+					"legendFormat": "{{service_instance_id}}"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "lengthm",
+					"decimals": 1,
+					"custom": {
+						"drawStyle": "line",
+						"lineWidth": 1,
+						"fillOpacity": 20,
+						"showPoints": "never",
+						"spanNulls": false
+					},
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "teal"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"showLegend": true
+				},
+				"tooltip": {
+					"mode": "single"
+				}
+			},
+			"interval": "5m"
+		},
+		{
+			"type": "row",
+			"title": "Browser ($device)",
+			"id": 19,
+			"collapsed": false,
+			"gridPos": {
+				"x": 0,
+				"y": 68,
+				"w": 24,
+				"h": 1
+			},
+			"panels": []
+		},
+		{
+			"type": "bargauge",
+			"title": "Top domains",
+			"description": "Time spent on each browser domain in the selected range.",
+			"id": 20,
+			"gridPos": {
+				"x": 0,
+				"y": 69,
+				"w": 10,
+				"h": 10
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(topk(15, sum by (url_domain) (increase(activity_browser_domain_time_seconds_total{job=\"activitylog/activitylog-android\", instance=~\"$device\"}[$__range]))))",
+					"legendFormat": "{{url_domain}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 16,
+				"maxVizHeight": 24,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "table",
+			"title": "Recent tabs",
+			"description": "Android browser.tab spans. The URL follows the app's URL privacy setting; page titles are not available on Android.",
+			"id": 21,
+			"gridPos": {
+				"x": 10,
+				"y": 69,
+				"w": 14,
+				"h": 10
+			},
+			"datasource": {
+				"type": "tempo",
+				"uid": "${tempo}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "tempo",
+						"uid": "${tempo}"
+					},
+					"refId": "A",
+					"queryType": "traceql",
+					"limit": 50,
+					"spss": 1,
+					"tableType": "spans",
+					"query": "{resource.service.name=\"activitylog-android\" && resource.service.instance.id=~\"${device:regex}\" && span.activity.context.kind=\"browser.tab\"} | select(span.url.domain, span.url.full, span.activity.browser.name)"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm"
+			}
+		},
+		{
+			"type": "row",
+			"title": "Sessions and events ($device)",
+			"id": 22,
+			"collapsed": false,
+			"gridPos": {
+				"x": 0,
+				"y": 80,
+				"w": 24,
+				"h": 1
+			},
+			"panels": []
+		},
+		{
+			"type": "table",
+			"title": "Recent sessions",
+			"description": "active spans: one per period of use from unlock to screen off. Click a trace ID to open the apps used in the session.",
+			"id": 23,
+			"gridPos": {
+				"x": 0,
+				"y": 81,
+				"w": 12,
+				"h": 10
+			},
+			"datasource": {
+				"type": "tempo",
+				"uid": "${tempo}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "tempo",
+						"uid": "${tempo}"
+					},
+					"refId": "A",
+					"queryType": "traceql",
+					"limit": 50,
+					"tableType": "traces",
+					"query": "{resource.service.name=\"activitylog-android\" && resource.service.instance.id=~\"${device:regex}\" && name=\"active\"}"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm"
+			}
+		},
+		{
+			"type": "logs",
+			"title": "Events",
+			"description": "App switches and screen events.",
+			"id": 24,
+			"gridPos": {
+				"x": 12,
+				"y": 81,
+				"w": 12,
+				"h": 10
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "{service_name=\"activitylog-android\", service_instance_id=~\"${device:pipe}\"} | event_name=~\"activity.app.switch|activity.device.screen\"",
+					"queryType": "range"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {},
+				"overrides": []
+			},
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": false,
+				"sortOrder": "Descending",
+				"enableLogDetails": true,
+				"dedupStrategy": "none",
+				"prettifyLogMessage": false,
+				"showCommonLabels": false,
+				"showLabels": false
+			}
+		},
+		{
+			"type": "row",
+			"title": "Mobile data ($device)",
+			"id": 25,
+			"collapsed": false,
+			"gridPos": {
+				"x": 0,
+				"y": 92,
+				"w": 24,
+				"h": 1
+			},
+			"panels": []
+		},
+		{
+			"type": "bargauge",
+			"title": "Top apps by mobile data",
+			"description": "Top 15 apps / UIDs by received and sent mobile data during the selected time range. Shared UIDs are combined; system and unmapped UIDs appear separately. Requires at least two samples per series. Rankings are calculated separately for each selected device.",
+			"id": 27,
+			"gridPos": {
+				"x": 0,
+				"y": 93,
+				"w": 24,
+				"h": 12
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(topk by (instance) (15, sum by (instance, activity_app_id, activity_app_name) (increase(activity_network_mobile_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_network_scope=\"app\"}[$__range])) > 0))",
+					"legendFormat": "{{instance}} / {{activity_app_name}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 16,
+				"maxVizHeight": 24,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "row",
+			"title": "Wi-Fi data ($device)",
+			"id": 29,
+			"collapsed": false,
+			"gridPos": {
+				"x": 0,
+				"y": 105,
+				"w": 24,
+				"h": 1
+			},
+			"panels": []
+		},
+		{
+			"type": "bargauge",
+			"title": "Top apps by Wi-Fi data",
+			"description": "Top 15 apps / UIDs by received and sent Wi-Fi data during the selected time range. Shared UIDs are combined; system and unmapped UIDs appear separately. Requires at least two samples per series. Rankings are calculated separately for each selected device.",
+			"id": 30,
+			"gridPos": {
+				"x": 0,
+				"y": 106,
+				"w": 24,
+				"h": 12
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(topk by (instance) (15, sum by (instance, activity_app_id, activity_app_name) (increase(activity_network_wifi_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"$device\", activity_network_scope=\"app\"}[$__range])) > 0))",
+					"legendFormat": "{{instance}} / {{activity_app_name}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 16,
+				"maxVizHeight": 24,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		}
+	]
+}

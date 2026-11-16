@@ -12,6 +12,8 @@ with separate infrastructure and room alert routing and configurable environment
 - B450M SMART/NVMe health and NVIDIA GPU exporter → VictoriaMetrics.
 - Claude Code, Codex and Pi → local Alloy → B450M Alloy → VictoriaMetrics (metrics), Loki
   (logs), Tempo (traces).
+- ActivityLog (Android) → Traefik (HTTPS + Basic) → B450M Alloy → VictoriaMetrics
+  (metrics), Loki (logs), Tempo (traces); see [activitylog](activitylog.md).
 - VictoriaMetrics → vmalert → Alertmanager → Discord infrastructure/room channels
   once notifications are configured.
 - System service journals and Comin logs → Alloy → Loki.

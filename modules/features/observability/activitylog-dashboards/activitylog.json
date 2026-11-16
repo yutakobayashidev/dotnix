@@ -1,0 +1,1842 @@
+{
+	"annotations": {
+		"list": [
+			{
+				"builtIn": 1,
+				"datasource": {
+					"type": "grafana",
+					"uid": "-- Grafana --"
+				},
+				"enable": true,
+				"hide": true,
+				"iconColor": "rgba(0, 211, 255, 1)",
+				"name": "Annotations & Alerts",
+				"type": "dashboard"
+			}
+		]
+	},
+	"description": "activitylog: foreground apps, AFK, browser, editor and terminal activity (OTLP -> Grafana Cloud).",
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 1,
+	"id": null,
+	"links": [],
+	"panels": [
+		{
+			"type": "row",
+			"id": 1,
+			"title": "Overview",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 0
+			},
+			"panels": []
+		},
+		{
+			"type": "stat",
+			"id": 2,
+			"title": "Active time",
+			"description": "Non-AFK time in the selected range.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 5,
+				"x": 0,
+				"y": 1
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum(increase(activity_time_seconds_total{activity_state=\"active\", instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range]))",
+					"legendFormat": "Active time",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dtdurations",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "green"
+					},
+					"noValue": "0",
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "green",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"id": 3,
+			"title": "AFK time",
+			"description": "Idle, locked and sleep time in the selected range.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 5,
+				"x": 5,
+				"y": 1
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum(increase(activity_time_seconds_total{activity_state=\"afk\", instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range]))",
+					"legendFormat": "AFK time",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dtdurations",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "text"
+					},
+					"noValue": "0",
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "text",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"id": 4,
+			"title": "Terminal commands",
+			"description": "Commands run in instrumented shells.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 5,
+				"x": 10,
+				"y": 1
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum(increase(activity_terminal_commands_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range]))",
+					"legendFormat": "Terminal commands",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "blue"
+					},
+					"noValue": "0",
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "blue",
+								"value": null
+							}
+						]
+					},
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"id": 5,
+			"title": "Failed commands",
+			"description": "Commands that exited with a non-zero status.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 5,
+				"x": 15,
+				"y": 1
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum(increase(activity_terminal_commands_total{activity_terminal_command_status=\"error\", instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range]))",
+					"legendFormat": "Failed commands",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "red"
+					},
+					"noValue": "0",
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "red",
+								"value": null
+							}
+						]
+					},
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "stat",
+			"id": 6,
+			"title": "Device unlocks",
+			"description": "Screen unlocks (Android only).",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 4,
+				"w": 4,
+				"x": 20,
+				"y": 1
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum(increase(activity_device_unlocks_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range]))",
+					"legendFormat": "Device unlocks",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "purple"
+					},
+					"noValue": "0",
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "purple",
+								"value": null
+							}
+						]
+					},
+					"decimals": 0
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "timeseries",
+			"id": 7,
+			"title": "Active time per hour",
+			"description": "Active (non-AFK) time per hour, stacked by device.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 9,
+				"w": 16,
+				"x": 0,
+				"y": 5
+			},
+			"interval": "1h",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum by (instance) (increase(activity_time_seconds_total{activity_state=\"active\", instance=~\"$instance\", job=~\"activitylog/.*\"}[1h]))",
+					"legendFormat": "{{instance}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series",
+					"editorMode": "code",
+					"interval": "1h"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 80,
+						"lineWidth": 1,
+						"barAlignment": -1,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						},
+						"showPoints": "never",
+						"axisSoftMin": 0,
+						"gradientMode": "none",
+						"spanNulls": false
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true,
+					"calcs": ["sum"]
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"type": "piechart",
+			"id": 8,
+			"title": "Categories",
+			"description": "Time per category (privacy/classification rules) in the selected range.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 9,
+				"w": 8,
+				"x": 16,
+				"y": 5
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum by (activity_category) (increase(activity_category_time_seconds_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range]))",
+					"legendFormat": "{{activity_category}}",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dtdurations",
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"pieType": "donut",
+				"displayLabels": [],
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"legend": {
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true,
+					"values": ["value", "percent"]
+				},
+				"tooltip": {
+					"mode": "single",
+					"sort": "none"
+				}
+			}
+		},
+		{
+			"type": "row",
+			"id": 9,
+			"title": "Apps",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 14
+			},
+			"panels": []
+		},
+		{
+			"type": "bargauge",
+			"id": 10,
+			"title": "Top 15 apps",
+			"description": "Foreground time per app in the selected range.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 12,
+				"w": 9,
+				"x": 0,
+				"y": 15
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "topk(15, sum by (activity_app_name) (increase(activity_app_time_seconds_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range])))",
+					"legendFormat": "{{activity_app_name}}",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"transformations": [
+				{
+					"id": "reduce",
+					"options": {
+						"reducers": ["lastNotNull"],
+						"mode": "seriesToRows",
+						"includeTimeField": false
+					}
+				},
+				{
+					"id": "sortBy",
+					"options": {
+						"fields": {},
+						"sort": [
+							{
+								"field": "Last *",
+								"desc": true
+							}
+						]
+					}
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dtdurations",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "blue",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "/^Last \\*$/",
+					"values": true
+				},
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "color",
+				"namePlacement": "left",
+				"showUnfilled": true,
+				"sizing": "auto",
+				"minVizHeight": 16,
+				"minVizWidth": 8,
+				"maxVizHeight": 300
+			}
+		},
+		{
+			"type": "timeseries",
+			"id": 11,
+			"title": "Apps over time (top 10, 15m buckets)",
+			"description": "Foreground time per 15 minutes for the 10 apps with the most time in the selected range.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 12,
+				"w": 15,
+				"x": 9,
+				"y": 15
+			},
+			"interval": "15m",
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum by (activity_app_name) (increase(activity_app_time_seconds_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[15m]))\nand on (activity_app_name)\ntopk(10, sum by (activity_app_name) (increase(activity_app_time_seconds_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range] @ end())))",
+					"legendFormat": "{{activity_app_name}}",
+					"range": true,
+					"instant": false,
+					"format": "time_series",
+					"editorMode": "code",
+					"interval": "15m"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "s",
+					"min": 0,
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"drawStyle": "bars",
+						"fillOpacity": 80,
+						"lineWidth": 1,
+						"barAlignment": -1,
+						"stacking": {
+							"mode": "normal",
+							"group": "A"
+						},
+						"showPoints": "never",
+						"axisSoftMin": 0,
+						"gradientMode": "none",
+						"spanNulls": false
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom",
+					"showLegend": true,
+					"calcs": ["sum"]
+				},
+				"tooltip": {
+					"mode": "multi",
+					"sort": "desc"
+				}
+			}
+		},
+		{
+			"type": "row",
+			"id": 12,
+			"title": "Browser & editor",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 27
+			},
+			"panels": []
+		},
+		{
+			"type": "bargauge",
+			"id": 13,
+			"title": "Top 20 browser domains",
+			"description": "Time on the focused browser tab per domain.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 13,
+				"w": 8,
+				"x": 0,
+				"y": 28
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "topk(20, sum by (url_domain) (increase(activity_browser_domain_time_seconds_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range])))",
+					"legendFormat": "{{url_domain}}",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"transformations": [
+				{
+					"id": "reduce",
+					"options": {
+						"reducers": ["lastNotNull"],
+						"mode": "seriesToRows",
+						"includeTimeField": false
+					}
+				},
+				{
+					"id": "sortBy",
+					"options": {
+						"fields": {},
+						"sort": [
+							{
+								"field": "Last *",
+								"desc": true
+							}
+						]
+					}
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dtdurations",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "blue",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "/^Last \\*$/",
+					"values": true
+				},
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "color",
+				"namePlacement": "left",
+				"showUnfilled": true,
+				"sizing": "auto",
+				"minVizHeight": 16,
+				"minVizWidth": 8,
+				"maxVizHeight": 300
+			}
+		},
+		{
+			"type": "bargauge",
+			"id": 14,
+			"title": "Editor projects",
+			"description": "Time with the editor focused, per workspace.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 13,
+				"w": 8,
+				"x": 8,
+				"y": 28
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "topk(15, sum by (activity_editor_project) (increase(activity_editor_project_time_seconds_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range])))",
+					"legendFormat": "{{activity_editor_project}}",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"transformations": [
+				{
+					"id": "reduce",
+					"options": {
+						"reducers": ["lastNotNull"],
+						"mode": "seriesToRows",
+						"includeTimeField": false
+					}
+				},
+				{
+					"id": "sortBy",
+					"options": {
+						"fields": {},
+						"sort": [
+							{
+								"field": "Last *",
+								"desc": true
+							}
+						]
+					}
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dtdurations",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "blue",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "/^Last \\*$/",
+					"values": true
+				},
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "color",
+				"namePlacement": "left",
+				"showUnfilled": true,
+				"sizing": "auto",
+				"minVizHeight": 16,
+				"minVizWidth": 8,
+				"maxVizHeight": 300
+			}
+		},
+		{
+			"type": "bargauge",
+			"id": 15,
+			"title": "Editor languages",
+			"description": "Time with the editor focused, per language ID.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 13,
+				"w": 8,
+				"x": 16,
+				"y": 28
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "topk(15, sum by (activity_editor_language) (increase(activity_editor_project_time_seconds_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range])))",
+					"legendFormat": "{{activity_editor_language}}",
+					"range": false,
+					"instant": true,
+					"format": "time_series",
+					"editorMode": "code"
+				}
+			],
+			"transformations": [
+				{
+					"id": "reduce",
+					"options": {
+						"reducers": ["lastNotNull"],
+						"mode": "seriesToRows",
+						"includeTimeField": false
+					}
+				},
+				{
+					"id": "sortBy",
+					"options": {
+						"fields": {},
+						"sort": [
+							{
+								"field": "Last *",
+								"desc": true
+							}
+						]
+					}
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dtdurations",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "blue",
+								"value": null
+							}
+						]
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "/^Last \\*$/",
+					"values": true
+				},
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "color",
+				"namePlacement": "left",
+				"showUnfilled": true,
+				"sizing": "auto",
+				"minVizHeight": 16,
+				"minVizWidth": 8,
+				"maxVizHeight": 300
+			}
+		},
+		{
+			"type": "row",
+			"id": 16,
+			"title": "Terminal",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 41
+			},
+			"panels": []
+		},
+		{
+			"type": "table",
+			"id": 17,
+			"title": "Terminal commands",
+			"description": "Command count by command name and status in the selected range.",
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"gridPos": {
+				"h": 11,
+				"w": 9,
+				"x": 0,
+				"y": 42
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"expr": "sum by (activity_terminal_command_name, activity_terminal_command_status) (increase(activity_terminal_commands_total{instance=~\"$instance\", job=~\"activitylog/.*\"}[$__range]))",
+					"legendFormat": "",
+					"range": false,
+					"instant": true,
+					"format": "table",
+					"editorMode": "code"
+				}
+			],
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time": true
+						},
+						"indexByName": {
+							"activity_terminal_command_name": 0,
+							"activity_terminal_command_status": 1,
+							"Value": 2
+						},
+						"renameByName": {
+							"activity_terminal_command_name": "Command",
+							"activity_terminal_command_status": "Status",
+							"Value": "Count"
+						}
+					}
+				},
+				{
+					"id": "sortBy",
+					"options": {
+						"fields": {},
+						"sort": [
+							{
+								"field": "Count",
+								"desc": true
+							}
+						]
+					}
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"custom": {
+						"align": "auto",
+						"cellOptions": {
+							"type": "auto"
+						}
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "Count"
+						},
+						"properties": [
+							{
+								"id": "decimals",
+								"value": 0
+							},
+							{
+								"id": "unit",
+								"value": "none"
+							},
+							{
+								"id": "custom.cellOptions",
+								"value": {
+									"type": "gauge",
+									"mode": "basic"
+								}
+							},
+							{
+								"id": "color",
+								"value": {
+									"mode": "continuous-BlPu"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "Status"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"ok": {
+												"color": "green",
+												"index": 0
+											},
+											"error": {
+												"color": "red",
+												"index": 1
+											}
+										}
+									}
+								]
+							},
+							{
+								"id": "custom.cellOptions",
+								"value": {
+									"type": "color-text"
+								}
+							},
+							{
+								"id": "custom.width",
+								"value": 80
+							}
+						]
+					}
+				]
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm",
+				"footer": {
+					"show": false
+				},
+				"sortBy": [
+					{
+						"displayName": "Count",
+						"desc": true
+					}
+				]
+			}
+		},
+		{
+			"type": "table",
+			"id": 18,
+			"title": "Long-running commands (> 30s)",
+			"description": "terminal.command spans longer than 30 seconds (Tempo).",
+			"datasource": {
+				"type": "tempo",
+				"uid": "${tempo}"
+			},
+			"gridPos": {
+				"h": 11,
+				"w": 15,
+				"x": 9,
+				"y": 42
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "tempo",
+						"uid": "${tempo}"
+					},
+					"refId": "A",
+					"queryType": "traceql",
+					"query": "{resource.service.namespace=\"activitylog\" && resource.service.instance.id=~\"${instance:pipe}\" && name=\"terminal.command\" && duration > 30s} | select(span.process.command, span.process.exit.code, span.activity.terminal.cwd)",
+					"limit": 50,
+					"spss": 3,
+					"tableType": "spans"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"custom": {
+						"align": "auto",
+						"cellOptions": {
+							"type": "auto"
+						}
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm",
+				"footer": {
+					"show": false
+				}
+			}
+		},
+		{
+			"type": "row",
+			"id": 19,
+			"title": "Traces",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 53
+			},
+			"panels": []
+		},
+		{
+			"type": "table",
+			"id": 20,
+			"title": "Sessions",
+			"description": "Active sessions (root spans). A session is split every max_session_span (default 1h). Spans appear only after they end.",
+			"datasource": {
+				"type": "tempo",
+				"uid": "${tempo}"
+			},
+			"gridPos": {
+				"h": 11,
+				"w": 10,
+				"x": 0,
+				"y": 54
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "tempo",
+						"uid": "${tempo}"
+					},
+					"refId": "A",
+					"queryType": "traceql",
+					"query": "{resource.service.namespace=\"activitylog\" && resource.service.instance.id=~\"${instance:pipe}\" && name=\"active\"}",
+					"limit": 50,
+					"spss": 3,
+					"tableType": "traces"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"custom": {
+						"align": "auto",
+						"cellOptions": {
+							"type": "auto"
+						}
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm",
+				"footer": {
+					"show": false
+				}
+			}
+		},
+		{
+			"type": "table",
+			"id": 21,
+			"title": "Browser tabs",
+			"description": "Focused browser tab intervals (Tempo). URLs follow each platform's privacy settings; Android does not provide page titles.",
+			"datasource": {
+				"type": "tempo",
+				"uid": "${tempo}"
+			},
+			"gridPos": {
+				"h": 11,
+				"w": 14,
+				"x": 10,
+				"y": 54
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "tempo",
+						"uid": "${tempo}"
+					},
+					"refId": "A",
+					"queryType": "traceql",
+					"query": "{resource.service.namespace=\"activitylog\" && resource.service.instance.id=~\"${instance:pipe}\" && span.activity.context.kind=\"browser.tab\"} | select(span.url.domain, span.url.full, span.activity.browser.tab.title, span.activity.browser.name)",
+					"limit": 50,
+					"spss": 3,
+					"tableType": "spans"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"custom": {
+						"align": "auto",
+						"cellOptions": {
+							"type": "auto"
+						}
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "sm",
+				"footer": {
+					"show": false
+				}
+			}
+		},
+		{
+			"type": "row",
+			"id": 22,
+			"title": "Logs",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 65
+			},
+			"panels": []
+		},
+		{
+			"type": "logs",
+			"id": 23,
+			"title": "App switches",
+			"description": "activity.app.switch events.",
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"gridPos": {
+				"h": 11,
+				"w": 12,
+				"x": 0,
+				"y": 66
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"expr": "{service_namespace=\"activitylog\", service_instance_id=~\"${instance:pipe}\"} | event_name=\"activity.app.switch\"",
+					"queryType": "range",
+					"editorMode": "code"
+				}
+			],
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": true,
+				"sortOrder": "Descending",
+				"enableLogDetails": true,
+				"dedupStrategy": "none",
+				"prettifyLogMessage": false,
+				"showCommonLabels": false,
+				"showLabels": false
+			}
+		},
+		{
+			"type": "logs",
+			"id": 24,
+			"title": "Agent diagnostics",
+			"description": "agent.start / agent.stop / agent.permission / agent.diagnostic events.",
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"gridPos": {
+				"h": 11,
+				"w": 12,
+				"x": 12,
+				"y": 66
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"expr": "{service_namespace=\"activitylog\", service_instance_id=~\"${instance:pipe}\"} | event_name=~\"agent.*\"",
+					"queryType": "range",
+					"editorMode": "code"
+				}
+			],
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": true,
+				"sortOrder": "Descending",
+				"enableLogDetails": true,
+				"dedupStrategy": "none",
+				"prettifyLogMessage": false,
+				"showCommonLabels": false,
+				"showLabels": false
+			}
+		},
+		{
+			"type": "logs",
+			"id": 25,
+			"title": "All events",
+			"description": "All activitylog log records.",
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"gridPos": {
+				"h": 12,
+				"w": 24,
+				"x": 0,
+				"y": 77
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"expr": "{service_namespace=\"activitylog\", service_instance_id=~\"${instance:pipe}\"}",
+					"queryType": "range",
+					"editorMode": "code"
+				}
+			],
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": true,
+				"sortOrder": "Descending",
+				"enableLogDetails": true,
+				"dedupStrategy": "none",
+				"prettifyLogMessage": false,
+				"showCommonLabels": false,
+				"showLabels": false
+			}
+		},
+		{
+			"type": "row",
+			"title": "Location",
+			"id": 26,
+			"gridPos": {
+				"x": 0,
+				"y": 89,
+				"w": 24,
+				"h": 1
+			},
+			"collapsed": false,
+			"panels": []
+		},
+		{
+			"type": "geomap",
+			"title": "Locations (Android)",
+			"id": 27,
+			"gridPos": {
+				"x": 0,
+				"y": 90,
+				"w": 24,
+				"h": 14
+			},
+			"description": "device.location logs from the Android app. Structured metadata geo_location_lat/lon are extracted from the log labels.",
+			"datasource": {
+				"type": "loki",
+				"uid": "${loki}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "loki",
+						"uid": "${loki}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"queryType": "range",
+					"maxLines": 5000,
+					"expr": "{service_namespace=\"activitylog\", service_instance_id=~\"${instance:pipe}\"} | event_name=\"device.location\""
+				}
+			],
+			"transformations": [
+				{
+					"id": "extractFields",
+					"options": {
+						"source": "labels",
+						"format": "auto",
+						"replace": false,
+						"keepTime": false
+					}
+				},
+				{
+					"id": "convertFieldType",
+					"options": {
+						"conversions": [
+							{
+								"targetField": "geo_location_lat",
+								"destinationType": "number"
+							},
+							{
+								"targetField": "geo_location_lon",
+								"destinationType": "number"
+							}
+						]
+					}
+				}
+			],
+			"fieldConfig": {
+				"defaults": {},
+				"overrides": []
+			},
+			"options": {
+				"view": {
+					"id": "fit",
+					"lat": 0,
+					"lon": 0,
+					"zoom": 2,
+					"allLayers": true
+				},
+				"controls": {
+					"showZoom": true,
+					"mouseWheelZoom": true,
+					"showAttribution": true
+				},
+				"basemap": {
+					"type": "default",
+					"name": "Basemap"
+				},
+				"layers": [
+					{
+						"type": "markers",
+						"name": "Locations",
+						"tooltip": true,
+						"location": {
+							"mode": "coords",
+							"latitude": "geo_location_lat",
+							"longitude": "geo_location_lon"
+						},
+						"config": {
+							"showLegend": false,
+							"style": {
+								"size": {
+									"fixed": 5
+								},
+								"color": {
+									"fixed": "blue"
+								},
+								"opacity": 0.6
+							}
+						}
+					}
+				],
+				"tooltip": {
+					"mode": "details"
+				}
+			}
+		},
+		{
+			"type": "row",
+			"id": 28,
+			"title": "Android mobile data",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 104
+			},
+			"panels": []
+		},
+		{
+			"type": "stat",
+			"id": 29,
+			"title": "Mobile data",
+			"description": "Android received and sent mobile data during the selected time range. Estimated from 15-minute samples; requires at least two samples.",
+			"gridPos": {
+				"h": 8,
+				"w": 8,
+				"x": 0,
+				"y": 105
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_network_mobile_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"${instance:pipe}\", activity_network_scope=\"device\"}[$__range]))",
+					"legendFormat": "Mobile data",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"decimals": 1,
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "bargauge",
+			"id": 30,
+			"title": "Top apps by mobile data",
+			"description": "Android apps / UIDs ranked by received and sent mobile data during the selected time range. Shared UIDs are combined. Requires at least two samples per series.",
+			"gridPos": {
+				"h": 8,
+				"w": 16,
+				"x": 8,
+				"y": 105
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(topk(15, sum by (instance, activity_app_id, activity_app_name) (increase(activity_network_mobile_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"${instance:pipe}\", activity_network_scope=\"app\"}[$__range])) > 0))",
+					"legendFormat": "{{instance}} / {{activity_app_name}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 16,
+				"maxVizHeight": 24,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		},
+		{
+			"type": "row",
+			"id": 31,
+			"title": "Android Wi-Fi data",
+			"collapsed": false,
+			"gridPos": {
+				"h": 1,
+				"w": 24,
+				"x": 0,
+				"y": 113
+			},
+			"panels": []
+		},
+		{
+			"type": "stat",
+			"id": 32,
+			"title": "Wi-Fi data",
+			"description": "Android received and sent Wi-Fi data during the selected time range. Estimated from 15-minute samples; requires at least two samples.",
+			"gridPos": {
+				"h": 8,
+				"w": 8,
+				"x": 0,
+				"y": 114
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sum(increase(activity_network_wifi_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"${instance:pipe}\", activity_network_scope=\"device\"}[$__range]))",
+					"legendFormat": "Wi-Fi data",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"decimals": 1,
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				},
+				"colorMode": "value",
+				"graphMode": "none",
+				"justifyMode": "auto",
+				"orientation": "auto",
+				"textMode": "value",
+				"wideLayout": true,
+				"showPercentChange": false
+			}
+		},
+		{
+			"type": "bargauge",
+			"id": 33,
+			"title": "Top apps by Wi-Fi data",
+			"description": "Android apps / UIDs ranked by received and sent Wi-Fi data during the selected time range. Shared UIDs are combined. Requires at least two samples per series.",
+			"gridPos": {
+				"h": 8,
+				"w": 16,
+				"x": 8,
+				"y": 114
+			},
+			"datasource": {
+				"type": "prometheus",
+				"uid": "${prom}"
+			},
+			"targets": [
+				{
+					"datasource": {
+						"type": "prometheus",
+						"uid": "${prom}"
+					},
+					"refId": "A",
+					"editorMode": "code",
+					"expr": "sort_desc(topk(15, sum by (instance, activity_app_id, activity_app_name) (increase(activity_network_wifi_usage_bytes_total{job=\"activitylog/activitylog-android\", instance=~\"${instance:pipe}\", activity_network_scope=\"app\"}[$__range])) > 0))",
+					"legendFormat": "{{instance}} / {{activity_app_name}}",
+					"range": false,
+					"instant": true
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "decbytes",
+					"min": 0,
+					"color": {
+						"mode": "continuous-BlPu"
+					},
+					"noValue": "No samples"
+				},
+				"overrides": []
+			},
+			"options": {
+				"orientation": "horizontal",
+				"displayMode": "gradient",
+				"valueMode": "text",
+				"showUnfilled": true,
+				"namePlacement": "left",
+				"sizing": "manual",
+				"minVizHeight": 16,
+				"maxVizHeight": 24,
+				"reduceOptions": {
+					"calcs": ["lastNotNull"],
+					"fields": "",
+					"values": false
+				}
+			}
+		}
+	],
+	"refresh": "1m",
+	"schemaVersion": 39,
+	"tags": ["activitylog", "opentelemetry"],
+	"templating": {
+		"list": [
+			{
+				"name": "prom",
+				"label": "Metrics",
+				"type": "datasource",
+				"query": "prometheus",
+				"current": {
+					"text": "Prometheus",
+					"value": "PBFA97CFB590B2093"
+				},
+				"hide": 0,
+				"includeAll": false,
+				"multi": false,
+				"options": [],
+				"refresh": 1,
+				"regex": "/.*/",
+				"skipUrlSync": false
+			},
+			{
+				"name": "tempo",
+				"label": "Traces",
+				"type": "datasource",
+				"query": "tempo",
+				"current": {
+					"text": "Tempo",
+					"value": "tempo"
+				},
+				"hide": 0,
+				"includeAll": false,
+				"multi": false,
+				"options": [],
+				"refresh": 1,
+				"regex": "/.*/",
+				"skipUrlSync": false
+			},
+			{
+				"name": "loki",
+				"label": "Logs",
+				"type": "datasource",
+				"query": "loki",
+				"current": {
+					"text": "Loki",
+					"value": "loki"
+				},
+				"hide": 0,
+				"includeAll": false,
+				"multi": false,
+				"options": [],
+				"refresh": 1,
+				"regex": "/.*/",
+				"skipUrlSync": false
+			},
+			{
+				"name": "instance",
+				"label": "Device",
+				"type": "query",
+				"datasource": {
+					"type": "prometheus",
+					"uid": "${prom}"
+				},
+				"query": "label_values(activity_time_seconds_total{job=~\"activitylog/.*\"}, instance)",
+				"definition": "label_values(activity_time_seconds_total{job=~\"activitylog/.*\"}, instance)",
+				"current": {},
+				"hide": 0,
+				"includeAll": true,
+				"allValue": ".*",
+				"multi": true,
+				"options": [],
+				"refresh": 2,
+				"regex": "",
+				"skipUrlSync": false,
+				"sort": 1
+			}
+		]
+	},
+	"time": {
+		"from": "now/d",
+		"to": "now"
+	},
+	"timepicker": {},
+	"timezone": "browser",
+	"title": "activitylog",
+	"uid": "activitylog-overview",
+	"version": 4,
+	"weekStart": ""
+}
