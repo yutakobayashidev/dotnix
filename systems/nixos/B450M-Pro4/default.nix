@@ -206,6 +206,10 @@
     };
   };
   my.services.tempo.enable = true;
+  my.services.activitylog = {
+    enable = true;
+    authHash = "$2b$05$2rYnAMiVkGQSJlT3FZ7YIuj0a9nvYW8gXod8ebpYCYe8lILrgl0lu";
+  };
 
   services = {
     # Remote builds and dependency tests can exceed Comin's 30-minute default.
