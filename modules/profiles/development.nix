@@ -40,7 +40,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         oracle.enable = lib.mkDefault true;
         pi.enable = lib.mkDefault true;
         similarity-ts.enable = lib.mkDefault true;
-        spec-kit.enable = lib.mkDefault true;
       };
 
       home.packages =
