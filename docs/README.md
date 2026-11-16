@@ -40,7 +40,7 @@
 - [Agent Desktop](agent-desktop.md) — Linux desktop automation and Wayland limitations
 - [Beeper Server](beeper-server.md)
 - [GitHub authentication](github-auth.md)
-- [GhidraMCP](ghidra-mcp.md)
+- [Ghidra CLI](ghidra-cli.md)
 - [Local MCP tunnel](local-mcp-tunnel.md)
 
 ## Network topology

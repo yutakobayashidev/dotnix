@@ -11,7 +11,6 @@ _:
     }:
     let
       cfg = config.my.programs.mcp;
-      ghidraWithMcp = pkgs.ghidra-mcp.ghidra.withExtensions (_: [ pkgs.ghidra-mcp ]);
     in
     {
       imports = [ inputs.mcp-servers-nix.homeManagerModules.default ];
@@ -25,24 +24,9 @@ _:
           description = "Sops file containing grafana-mcp-token; setting it enables Grafana MCP.";
         };
 
-        ghidra = {
-          enable = lib.mkEnableOption "GhidraMCP integration";
-          host = lib.mkOption {
-            type = lib.types.str;
-            default = "127.0.0.1";
-            description = "Host running the GhidraMCP HTTP extension.";
-          };
-          port = lib.mkOption {
-            type = lib.types.port;
-            default = 38473;
-            description = "Port used by the GhidraMCP HTTP extension.";
-          };
-        };
       };
 
       config = lib.mkIf cfg.enable {
-        home.packages = lib.optional cfg.ghidra.enable ghidraWithMcp;
-
         sops.secrets = lib.optionalAttrs (cfg.grafana.sopsFile != null) {
           grafana-mcp-token.sopsFile = cfg.grafana.sopsFile;
         };
@@ -87,15 +71,6 @@ _:
             searxng = {
               command = lib.getExe pkgs.mcp-searxng;
               env.SEARXNG_URL = "https://search.home.yutakobayashi.com";
-            };
-          }
-          // lib.optionalAttrs cfg.ghidra.enable {
-            ghidra = {
-              command = lib.getExe pkgs.ghidra-mcp-bridge;
-              args = [
-                "--ghidra-server"
-                "http://${cfg.ghidra.host}:${toString cfg.ghidra.port}"
-              ];
             };
           };
         };
