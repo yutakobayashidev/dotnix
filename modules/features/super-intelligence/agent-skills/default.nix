@@ -13,7 +13,10 @@ _:
       cfg = config.my.programs.agent-skills;
       agentLib = inputs.agent-skills.lib.agent-skills;
       registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
-      localCatalog = agentLib.discoverCatalog { inherit (registrySources) local; };
+      # Exclude the retired skill until its source deletion is published and pinned.
+      localCatalog = builtins.removeAttrs (agentLib.discoverCatalog {
+        inherit (registrySources) local;
+      }) [ "audit-email-noise" ];
       # Explicit declarations merge with tool features' packages and transforms.
       # enableAll + explicit declarations would select the same skill twice.
       localSkills = lib.mapAttrs (_: skill: {
@@ -72,6 +75,7 @@ _:
           sources = {
             inherit (registrySources)
               local
+              natsukium
               deepseek-harness
               cognitive-rhythm-writing
               humanlayer
@@ -128,6 +132,49 @@ _:
                       "](${source}/docs/"
                     ]
                     original;
+              };
+              mail = {
+                from = "natsukium";
+                path = "mail";
+                packages = with pkgs; [
+                  notmuch
+                  afew
+                  jq
+                  gawk
+                  findutils
+                ];
+                rewriteCommands = false;
+                transform =
+                  { original, dependencies }:
+                  let
+                    adapted =
+                      builtins.replaceStrings
+                        [ "homes/shared/email.nix" "tomoya.otabi@gmail.com" "tomoya.otabi@attm.co.jp" ]
+                        [
+                          "modules/features/mail/gmail.nix"
+                          "<primary-email-from-notmuch-config>"
+                          "<primary-email-from-notmuch-config>"
+                        ]
+                        original;
+                  in
+                  adapted
+                  + ''
+
+                    ## dotnix deployment overrides
+
+                    This installation has one account, `gmail`, on ThinkPad and/or
+                    UM790-Pro. The upstream `work` account and attm.co.jp-specific
+                    tags are not configured. Use only gmail folders and obtain the
+                    actual address with `notmuch config get user.primary_email`;
+                    never use the placeholder addresses in examples as queries.
+                    Periodic mbsync runs indexing and afew; imapnotify is not enabled.
+                    Maildir and the notmuch database are independent on each host.
+                    Custom tags do not synchronize between hosts; Gmail folder and
+                    standard flag changes do. If notmuch is not configured, finish
+                    the setup in docs/mail.md before operating on email.
+
+                    ${dependencies}
+                  '';
               };
               stageshow = {
                 from = "benjitaylor";

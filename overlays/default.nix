@@ -17,6 +17,16 @@
   };
 
   patches = final: prev: {
+    # natsukium/dotfiles: afew needs its man output and notmuch at runtime.
+    afew = prev.afew.overridePythonAttrs (old: {
+      sphinxBuilders = "html man";
+      makeWrapperArgs = (old.makeWrapperArgs or [ ]) ++ [
+        "--prefix"
+        "PATH"
+        ":"
+        "${final.notmuch}/bin"
+      ];
+    });
     # Native expiring credentials require gh >= 2.103.0.
     gh = prev.gh.overrideAttrs (_: {
       version = "2.103.2";
