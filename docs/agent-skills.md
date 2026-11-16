@@ -10,6 +10,24 @@ Skill-only repositories use the [upstream source registry](https://github.com/Ky
 Package-providing repositories continue to use flake inputs so their skills and
 packages share a revision. Repository-local skills continue to use local paths.
 
+## Repository-local skills
+
+Keep dotnix-specific skill sources in `skills/<name>/SKILL.md`. The development
+shell discovers this directory as the `dotnix` source alongside the HashiCorp
+skills and deploys the combined bundle to project-local agent skill directories,
+including `.agents/skills`, `.codex/skills`, and `.claude/skills`. Enter the default
+dev shell (or reload direnv) after changing a skill. Start a new agent session if
+the current session has already loaded its skill catalog.
+
+These deployment directories are generated and ignored by Git; edit and track
+the originals under `skills/`. Include new files in the flake's Git source before
+evaluating the shell. No registry source lock update or Home Manager switch is
+needed, and these skills are not installed globally.
+
+`nur-package-to-dotnix` covers package availability checks, NUR packaging and
+validation, and integration into dotnix with publication and activation scoped
+to the user's request.
+
 ## Package and skill features
 
 Tool-specific Home Manager features own their package, skill source, selection,

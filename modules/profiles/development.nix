@@ -33,6 +33,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         herdr.enable = lib.mkDefault true;
         gh.enable = lib.mkDefault true;
         jj.enable = lib.mkDefault true;
+        lazydsh.enable = lib.mkDefault true;
         markitdown.enable = lib.mkDefault true;
         omp.enable = lib.mkDefault true;
         opencode.enable = lib.mkDefault true;

@@ -6,7 +6,10 @@
       agentLib = inputs.agent-skills.lib.agent-skills;
 
       registrySources = import ../../lib/skill-sources.nix { inherit inputs; };
-      sources = { inherit (registrySources) hashicorp; };
+      sources = {
+        inherit (registrySources) hashicorp;
+        dotnix.path = ../../skills;
+      };
 
       catalog = agentLib.discoverCatalog sources;
       allowlist = agentLib.allowlistFor {
