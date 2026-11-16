@@ -1,0 +1,13 @@
+.direnv/
+.diy/
+.pio/
+**/.pio/
+build/
+exports/
+.agents/skills/
+.codex/skills/
+.claude/skills/
+.opencode/skills/
+*.FCStd1
+*.kicad_prl
+*.lck

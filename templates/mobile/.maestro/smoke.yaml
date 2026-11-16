@@ -1,0 +1,6 @@
+# yamllint disable rule:document-start
+# Pass APP_ID and READY_TEXT with `mobile test -e ...`.
+appId: ${APP_ID}
+---
+- launchApp
+- assertVisible: ${READY_TEXT}

@@ -222,7 +222,7 @@ are in the [desktop style report](noctalia-style-report.md).
 - **AI development**: Codex Desktop for Linux, Claude Desktop, Grok Bot, and Hermes Desktop on graphical hosts; [Codex limit auto reset user service](codex-limit-auto-reset.md) on UM790-Pro
 - **Audio production**: Bitwig Studio, native synths/effects, and Windows VST support via PipeWire JACK and yabridge
 - **YubiKey**: PAM U2F authentication (polkit, swaylock)
-- **Development**: Docker, Tailscale, Android development environment, VirtualBox on UM790-Pro
+- **Development**: Docker, Tailscale, [Android dev template](mobile-template.md), [DIY dev template](diy-template.md), VirtualBox on UM790-Pro
 - **Pentesting**: GhidraMCP, Wireshark, OWASP ZAP, mitmproxy, and security analysis tools on the ThinkPad
 - **Reddit CLI**: Every NixOS/macOS Home Manager host gets `rdt`, defaulting to `https://rdt.home.yutakobayashi.com`. Override with `RDT_GATEWAY_URL` or `--url`; for example, `rdt search "nixos flakes" --limit 5`. Apply the updated configuration on each machine with `nix run .#switch`.
 - **Reddit**: rdt-gateway on B450M-Pro4 at `https://rdt.home.yutakobayashi.com`, with Streamable HTTP MCP at `https://rdt.home.yutakobayashi.com/mcp` sharing the gateway cache and request limits. Its stdio MCP server is also exposed through OpenAI Secure MCP Tunnel. Add the tunnel as a custom MCP server in ChatGPT; running the tunnel does not automatically install the plugin.

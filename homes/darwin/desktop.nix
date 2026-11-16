@@ -50,9 +50,6 @@
       stats
       yubico-authenticator
 
-      # Hardware
-      arduino-ide
-
       # Other
       ipfs-desktop
       sidequest

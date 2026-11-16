@@ -13,7 +13,10 @@ _:
       cfg = config.my.programs.agent-skills;
       agentLib = inputs.agent-skills.lib.agent-skills;
       registrySources = import ../../../../lib/skill-sources.nix { inherit inputs; };
-      localCatalog = agentLib.discoverCatalog { inherit (registrySources) local; };
+      # Keep retired skills excluded while the source lock still contains them.
+      localCatalog = builtins.removeAttrs (agentLib.discoverCatalog {
+        inherit (registrySources) local;
+      }) [ "bird-deep-research" ];
       # Explicit declarations merge with tool features' packages and transforms.
       # enableAll + explicit declarations would select the same skill twice.
       localSkills = lib.mapAttrs (_: skill: {

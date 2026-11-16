@@ -31,6 +31,9 @@
 
 ### Configuration and development
 
+- [DIY development template](diy-template.md) — firmware, CAD, PCB design, printing, and project-local agent skills
+- [Mobile development template](mobile-template.md) — Android SDK, analysis tools, and project-local agent skills
+
 - [Configuration reference](configuration.md) — hosts, modules, and managed tools
 - [Firefox](firefox.md) — bookmarks, search engines, and Parfait
 - [Agent skills](agent-skills.md) — source maintenance and local development

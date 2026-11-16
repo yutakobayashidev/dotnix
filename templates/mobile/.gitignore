@@ -1,0 +1,10 @@
+.direnv/
+.mobile/
+.gradle/
+**/build/
+local.properties
+analysis/
+.agents/skills/
+.codex/skills/
+.claude/skills/
+.opencode/skills/

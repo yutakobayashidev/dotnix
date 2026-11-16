@@ -1,0 +1,42 @@
+{
+	"manifests": {
+		"android": {
+			"filter": {
+				"maxDepth": null,
+				"nameRegex": null
+			},
+			"idPrefix": null,
+			"pin": {
+				"at": null,
+				"branch": "main",
+				"owner": "android",
+				"preReleases": false,
+				"releasePrefix": null,
+				"repo": "skills",
+				"submodules": false,
+				"type": "github",
+				"versionUpperBound": null
+			},
+			"subdir": "."
+		}
+	},
+	"npins": {
+		"pins": {
+			"android": {
+				"branch": "main",
+				"hash": "sha256-Syj3TJoQkTbWncuKyIzmQfQL2jhwcBo/DHHdHCbivaY=",
+				"repository": {
+					"owner": "android",
+					"repo": "skills",
+					"type": "GitHub"
+				},
+				"revision": "c72942584fff970dac86ced78b367fce0c441e52",
+				"submodules": false,
+				"type": "Git",
+				"url": "https://github.com/android/skills/archive/c72942584fff970dac86ced78b367fce0c441e52.tar.gz"
+			}
+		},
+		"version": 8
+	},
+	"schemaVersion": 1
+}
