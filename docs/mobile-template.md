@@ -7,7 +7,7 @@ Android用のプロジェクトテンプレートは [ashiba](https://github.com
 
 ```bash
 nix flake init -t github:yutakobayashidev/ashiba#android
-git add flake.nix flake.lock registry android-dev.sh .maestro .envrc .gitignore AGENTS.md README.md
+git add flake.nix flake.lock .maestro .envrc .gitignore AGENTS.md README.md
 nix develop
 ```
 
@@ -17,3 +17,9 @@ nix develop
 
 ホスト側のデバイス権限は引き続きdotnixで管理する。パッケージ削除の実環境への適用は、
 次回のHome Manager / システム反映時に行われる。
+
+APK解析だけなら `reverse-android` テンプレートを使う。SDKやエミュレータは取得せず、
+JADX・Apktool・Frida・ADBと解析Skillを利用できる。
+Androidの `analysis` shellは開発環境にこの解析moduleを加え、`full` shellはさらに
+Ghidra CLIの `reverse-native` moduleを加える。Skillsはまとめて1回配布される。
+ネイティブCTFでも `reverse-native` と必要なデバッガをプロジェクト内で組み合わせる。
