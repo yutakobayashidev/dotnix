@@ -7,7 +7,7 @@ Android用のプロジェクトテンプレートは [ashiba](https://github.com
 
 ```bash
 nix flake init -t github:yutakobayashidev/ashiba#mobile
-git add flake.nix flake.lock nix registry scripts .maestro .envrc .gitignore AGENTS.md README.md
+git add flake.nix flake.lock registry mobile.sh .maestro .envrc .gitignore AGENTS.md README.md
 nix develop
 ```
 

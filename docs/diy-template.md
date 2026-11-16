@@ -7,7 +7,7 @@ DIY用のプロジェクトテンプレートは [ashiba](https://github.com/yut
 
 ```bash
 nix flake init -t github:yutakobayashidev/ashiba#diy
-git add flake.nix flake.lock nix skills .envrc .gitignore AGENTS.md README.md
+git add flake.nix flake.lock skills .envrc .gitignore AGENTS.md README.md
 nix develop
 ```
 
