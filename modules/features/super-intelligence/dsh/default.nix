@@ -43,6 +43,13 @@ _:
       autoAuth = import ./auto-auth.nix { inherit config lib pkgs; };
       webPatch = (pkgs.formats.yaml { }).generate "dsh-web-providers.yml" (
         lib.mapAttrsToList (id: config: { inherit id config; }) cfg.web.settings
+        ++ lib.optional (cfg.web.mcpServers != { }) {
+          insert = lib.mapAttrsToList (serverName: serverConfig: {
+            id = "mcp-${serverName}";
+            name = "@deepseek-ai/dsh-mcp-client";
+            config = serverConfig // { inherit serverName; };
+          }) cfg.web.mcpServers;
+        }
       );
     in
     {
@@ -69,6 +76,11 @@ _:
             type = lib.types.attrsOf (lib.types.attrsOf lib.types.anything);
             default = { };
             description = "Plugin entry config overrides applied through a declarative --patch layer. Use credential references, not secret values.";
+          };
+          mcpServers = lib.mkOption {
+            type = lib.types.attrsOf (lib.types.attrsOf lib.types.anything);
+            default = { };
+            description = "MCP client configurations inserted into the Web profile. Use runtime credential references for secrets.";
           };
           backendPort = lib.mkOption {
             type = lib.types.port;
@@ -112,7 +124,7 @@ _:
                   "--profile"
                   "web"
                 ]
-                ++ lib.optionals (cfg.web.settings != { }) [
+                ++ lib.optionals (cfg.web.settings != { } || cfg.web.mcpServers != { }) [
                   "--patch"
                   (toString webPatch)
                 ]

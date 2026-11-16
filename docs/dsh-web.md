@@ -113,6 +113,36 @@ avoid those overrides. OpenCode's [client requirements](https://opencode.ai/docs
 require a stable session ID per conversation; no synthetic constant header or
 custom adapter patch is used here.
 
+## Research MCP servers
+
+`homes/nixos/UM790-Pro/dsh.nix` inserts ClinicalTrials.gov, Crossref, OpenAlex,
+PubMed, Semantic Scholar, and Unpaywall into the Web profile through
+`my.programs.dsh.web.mcpServers`. Local servers use Bun's package runner with
+an explicit Node.js/Bun PATH; Crossref uses Streamable HTTP without configured
+OAuth. Package versions follow the supplied configuration and are downloaded
+at runtime, so first startup needs network access and can exceed the 30-second
+startup timeout. Restart the service after resolving a failed initial startup.
+
+Oura is intentionally omitted. Elsevier was disabled in the supplied config
+and is not inserted; its `/root/health` executable is not available here.
+
+OpenAlex, PubMed, and Semantic Scholar start without API keys. Anonymous
+access has lower rate limits; keys can be added later if needed.
+
+The standalone Unpaywall server and PubMed's Unpaywall full-text fallback
+receive the configured contact email through `UNPAYWALL_EMAIL`. This is a
+contact address sent with API requests, not an API secret. No credential
+registration is needed for the current configuration.
+
+Optional keys are `OPENALEX_API_KEY`, `NCBI_API_KEY`, and
+`SEMANTIC_SCHOLAR_API_KEY`. Add their transport environment references only
+when they are actually provisioned, using DSH's `${credential:NAME}` syntax
+with `expandTemplates = true`. Do not put plaintext API keys in Nix.
+
+After deployment, check the Web profile for `mcp__<serverName>__<tool>` tools
+and inspect `journalctl --user -u dsh-web -b` for discovery failures. Schema
+validation does not establish API authentication or successful tool calls.
+
 ## Endpoint verification
 
 From a Tailnet client, check the HTTPS entry point:
