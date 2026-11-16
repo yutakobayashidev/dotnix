@@ -14,11 +14,13 @@ _:
         exec ${lib.getExe pkgs.llm-agents.opencode2} "$@"
       '';
 
-      opencodeConfig = builtins.toJSON {
-        "$schema" = "https://opencode.ai/config.json";
-        update = "disable";
-        providers.ollama.settings.baseURL = "http://x870-stell-legend.tail29d068.ts.net:11434/v1";
-      };
+      opencodeConfig = builtins.toJSON (
+        lib.recursiveUpdate (import ./settings.nix) {
+          "$schema" = "https://opencode.ai/config.json";
+          update = "disable";
+          providers.ollama.settings.baseURL = "http://x870-stell-legend.tail29d068.ts.net:11434/v1";
+        }
+      );
     in
     {
       options.my.programs.opencode = {
