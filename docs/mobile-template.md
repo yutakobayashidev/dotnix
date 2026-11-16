@@ -1,28 +1,19 @@
-# Mobile development template
+# Android development template
 
-Androidの開発・解析ツールはホストの共通パッケージから分離し、
-`templates/mobile` の開発shellで提供する。
+Android用のプロジェクトテンプレートは [ashiba](https://github.com/yutakobayashidev/ashiba)
+で管理する。dotnixはホスト設定を管理し、android-toolsを共通パッケージへ直接追加しない。
 
-公開後は、新規プロジェクトのディレクトリで初期化する。
-
-```bash
-nix flake init -t github:yutakobayashidev/dotnix#mobile
-git add flake.nix flake.lock nix scripts registry .envrc .gitignore AGENTS.md README.md
-nix develop
-mobile doctor
-```
-
-未公開のローカル変更は、空ディレクトリで次のように試せる。
+新しいプロジェクトのディレクトリで初期化する。
 
 ```bash
-nix flake init -t path:/home/yuta/ghq/github.com/yutakobayashidev/dotnix#mobile
+nix flake init -t github:yutakobayashidev/ashiba#mobile
+git add flake.nix flake.lock nix registry scripts .maestro .envrc .gitignore AGENTS.md README.md
 nix develop
 ```
 
-独立したflakeとソースロックをコピーするため、作成したプロジェクトはdotnixの
-ホスト設定に依存しない。Android CLI・SDK・JDKを固定し、公式Android Skillsは
-agent-skills-nixでプロジェクト内へ配備する。
+用途別shell、Agent Skills、
+ツールの固定と検証については [テンプレートのREADME](https://github.com/yutakobayashidev/ashiba/tree/main/mobile)
+を参照。
 
-実行手順と構成の変更方法は [テンプレートのREADME](../templates/mobile/README.md) を参照。
-ホスト側にはKVMとUSB権限を残す。`android-tools` の共通profile / X870への直接追加は
-削除した。実行中のホストからの削除は次回のHome Manager / システム反映時に行われる。
+ホスト側のデバイス権限は引き続きdotnixで管理する。パッケージ削除の実環境への適用は、
+次回のHome Manager / システム反映時に行われる。

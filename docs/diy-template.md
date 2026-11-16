@@ -1,26 +1,19 @@
 # DIY development template
 
-共通development profileのArduino IDE・FreeCAD・KiCadと、macOS desktopの
-Arduino IDEを `templates/diy` へ移した。ホストには直接インストールせず、
-プロジェクトごとに必要な機能を選ぶ。
+DIY用のプロジェクトテンプレートは [ashiba](https://github.com/yutakobayashidev/ashiba)
+で管理する。dotnixはホスト設定を管理し、Arduino IDE・FreeCAD・KiCadを共通パッケージへ直接追加しない。
 
-公開後、新しいプロジェクトで初期化する。
+新しいプロジェクトのディレクトリで初期化する。
 
 ```bash
-nix flake init -t github:yutakobayashidev/dotnix#diy
+nix flake init -t github:yutakobayashidev/ashiba#diy
 git add flake.nix flake.lock nix skills .envrc .gitignore AGENTS.md README.md
 nix develop
 ```
 
-未公開のローカル変更は、空のプロジェクトディレクトリで試せる。
+用途別shell、Agent Skills、
+ツールの固定と検証については [テンプレートのREADME](https://github.com/yutakobayashidev/ashiba/tree/main/diy)
+を参照。
 
-```bash
-nix flake init -t path:/home/yuta/ghq/github.com/yutakobayashidev/dotnix#diy
-nix develop .#cad
-```
-
-用途別shell、依存の固定、デバイス権限、Agent Skillsの配備については
-[テンプレートのREADME](../templates/diy/README.md)を参照。
-
-既存のホスト設定からのパッケージ削除は、次回のHome Manager / システム反映時に
-適用される。シリアル権限・udevルールはホスト側に残し、必要なものだけ設定する。
+ホスト側のデバイス権限は引き続きdotnixで管理する。パッケージ削除の実環境への適用は、
+次回のHome Manager / システム反映時に行われる。
