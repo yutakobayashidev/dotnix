@@ -78,7 +78,7 @@ nix run .#switch --override-input nur-packages path:../nur-packages
 - **YubiKey**: PAM U2F authentication support (polkit, swaylock)
 - **Development**: Docker, Tailscale, Android dev environment, and VirtualBox on UM790-Pro
 - **Remote builds**: B450M-Pro4 and ThinkPad offload to UM790-Pro over Tailscale; see [rollout and offline build commands](docs/remote-build.md)
-- **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [GhidraMCP](docs/ghidra-mcp.md), on the ThinkPad
+- **Pentesting**: [CTF and security analysis toolkit](docs/ctf-tools.md), including [project-local Ghidra CLI](docs/ghidra-cli.md), on the ThinkPad
 - **Observability**: Grafana / VictoriaMetrics / vmalert / Alertmanager / Loki / Tempo on B450M-Pro4, Claude Code and Codex OTLP telemetry, Grafana MCP via Secure Tunnel; see [monitoring setup and migration](docs/monitoring.md)
 - **Home automation**: Home Assistant / Matter.js for Lapis on B450M-Pro4, VictoriaMetrics history, ChatGPT MCP via Secure Tunnel, and local Restic backups; see [setup and restore](docs/home-assistant.md).
 
