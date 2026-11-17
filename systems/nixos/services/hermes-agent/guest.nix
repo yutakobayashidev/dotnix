@@ -261,6 +261,26 @@ in
 
   services.hermes-agent = {
     enable = true;
+    # patchelfUnstable already includes the ELF header fix that upstream tries
+    # to apply to the incompatible default patchelf 0.15. Keep the fixed tool
+    # without applying that patch twice.
+    package = inputs.hermes-agent.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+      pmPackages =
+        lib.mapAttrs
+          (
+            _: package:
+            package.overrideAttrs (old: {
+              nativeBuildInputs = map (
+                tool: if lib.getName tool == "patchelf" then pkgs.patchelfUnstable else tool
+              ) old.nativeBuildInputs;
+            })
+          )
+          (
+            lib.filterAttrs (_: lib.isDerivation) (
+              pkgs.callPackage "${inputs.hermes-agent}/nix/pm-packages.nix" { }
+            )
+          );
+    };
     addToSystemPackages = true;
     extraDependencyGroups = [ "messaging" ];
     extraPackages = [
