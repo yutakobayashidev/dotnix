@@ -133,9 +133,6 @@ _:
           "**/.claude/settings.local.json"
           "**/CLAUDE.local.md"
           "z-ai/"
-
-          # Continues
-          ".continues-handoff.md"
         ];
         settings = {
           alias = {

@@ -34,7 +34,6 @@ abbr -f -qq pic="pi -c"
 abbr -f -qq pir="pi -r"
 abbr -f -qq ob="openbrief"
 abbr -f -qq ca="cursor-agent"
-abbr -f -qq ct="continues"
 abbr -f -qq nnn="course-cli"
 
 # Docker

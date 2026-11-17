@@ -25,7 +25,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         claude-code.enable = lib.mkDefault true;
         codex.enable = lib.mkDefault true;
         mcp.enable = lib.mkDefault true;
-        continues.enable = lib.mkDefault true;
         copilot-cli.enable = lib.mkDefault true;
         cursor-agent.enable = lib.mkDefault true;
         dsh.enable = lib.mkDefault true;
