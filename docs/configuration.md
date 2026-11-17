@@ -172,6 +172,14 @@ The desktop profile enables `my.programs.herdr-app` on Linux, installing
 provides the matching `herdr-core`; the existing `my.programs.herdr` CLI configuration
 remains separate. macOS and headless hosts do not enable the app by default.
 
+When Atuin is enabled, Home Manager also installs the pinned
+[Atuin Threads mod](https://github.com/atuinsh/herdr-atuin-threads).
+Open it with Ctrl+Shift+T on Linux or Cmd+Shift+T on macOS. Its `local.json`
+selects the same Atuin package as Home Manager's daemon. The mod files and
+`herdr-app/keys.json` are managed by Nix; edit this feature module to change them.
+Upstream requires Atuin 18.24.3+, but the search command, Herdr mod check,
+and popup loading also passed with 18.24.2; session resume remains unverified.
+
 X870 enables StreamController through `my.programs.streamcontroller.enable`,
 using the `streamcontroller-nix` package and modules for USB access, autostart,
 and declarative pages. See [StreamController setup](streamcontroller.md).
