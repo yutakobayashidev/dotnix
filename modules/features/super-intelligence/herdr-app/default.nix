@@ -9,6 +9,12 @@ _:
       ...
     }:
     let
+      boardSrc = pkgs.fetchFromGitHub {
+        owner = "herdrdev";
+        repo = "herdr-layout-examples";
+        rev = "0ec967640bf854ffb839e9af06c1e0c328bc9815";
+        hash = "sha256-vrA4BkUrIVQZrOFhfzCSTjQFygjldQx9pB80tOcudzI=";
+      };
       threadsSrc = pkgs.fetchFromGitHub {
         owner = "atuinsh";
         repo = "herdr-atuin-threads";
@@ -57,7 +63,14 @@ _:
           };
         };
 
-        xdg.configFile = lib.mkIf config.programs.atuin.enable {
+        xdg.configFile = {
+          "herdr-app/layouts/board.json".source = "${boardSrc}/board/layouts/board.json";
+          "herdr-app/mods/board" = {
+            source = "${boardSrc}/board/mods/board";
+            recursive = true;
+          };
+        }
+        // lib.optionalAttrs config.programs.atuin.enable {
           "herdr-app/layouts/dotnix-threads.json".source = ./layout.json;
           "herdr-app/layouts/dotnix-threads.svg".source = ./layout.svg;
           "herdr-app/mods/atuin-threads" = {
