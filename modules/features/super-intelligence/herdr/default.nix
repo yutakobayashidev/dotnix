@@ -234,6 +234,15 @@ _:
           skills.explicit.herdr = {
             from = "herdr";
             path = ".";
+            rewriteCommands = false;
+            transform =
+              { original, ... }:
+              builtins.replaceStrings
+                [ "Control Herdr, a terminal multiplexer for coding agents." ]
+                [
+                  "Control the legacy Herdr TUI (herdr command), not Herdr App or herdr-core. For HC_TERMINAL_ID sessions, use the herdr-core skill instead."
+                ]
+                original;
           };
         };
       };

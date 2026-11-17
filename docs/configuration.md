@@ -172,6 +172,12 @@ The desktop profile enables `my.programs.herdr-app` on Linux, installing
 matching `herdr-core` on PATH; the existing `my.programs.herdr` CLI configuration
 remains separate. macOS and headless hosts do not enable the app by default.
 
+The app feature also installs the official `herdr-core` agent skill from the
+same source as its core package. It recognizes `HC_TERMINAL_ID` and directs
+agents to `hc --skill` for terminal operations and `herdr-app --skill` for the
+window. The separate `herdr` skill is explicitly labeled for the legacy TUI
+(`HERDR_ENV=1`); refreshing its registry pin does not migrate it to Herdr App.
+
 When Atuin is enabled, Home Manager also installs the pinned
 [Atuin Threads mod](https://github.com/atuinsh/herdr-atuin-threads).
 Ctrl+Shift+T on Linux or Cmd+Shift+T on macOS switches to the `dotnix-threads`

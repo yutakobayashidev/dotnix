@@ -46,6 +46,17 @@ _:
           pkgs.llm-agents.herdr-core
         ];
 
+        programs.agent-skills = {
+          # Keep the entry point in step with the installed core. The detailed
+          # manuals are supplied by hc --skill and herdr-app --skill at runtime.
+          sources.herdr-core.path = "${pkgs.llm-agents.herdr-core.src}/skills/herdr-core";
+          skills.explicit.herdr-core = {
+            from = "herdr-core";
+            path = ".";
+            rewriteCommands = false;
+          };
+        };
+
         xdg.configFile = lib.mkIf config.programs.atuin.enable {
           "herdr-app/layouts/dotnix-threads.json".source = ./layout.json;
           "herdr-app/layouts/dotnix-threads.svg".source = ./layout.svg;
