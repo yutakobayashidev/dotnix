@@ -5,19 +5,23 @@ description: Audit dotnix's globally installed CLI tools and move low-value perm
 
 # Audit global packages
 
-Keep frequently used tools and runtime dependencies installed. Prefer `nix shell` for occasional, standalone diagnostics. Keep this audit small: inspect evidence, propose a short list, and migrate only within the requested scope.
+Judge candidates by the need for permanent installation, the benefit of removal, and the ease of using them on demand. Keep everyday tools and runtime dependencies installed. Keep this audit small: propose a short list and migrate only within the requested scope.
 
 ## Audit
 
 1. Read repository instructions and current changes. Inspect `home.packages`, `environment.systemPackages`, `programs.*`, feature/profile enables, and agent-skill `packages`/transforms. Map candidates to the hosts and profiles that actually install them; a declaration alone does not prove installation.
-2. Trace each candidate's consumers with `rg`: services, timers, scripts, aliases, keybindings, wrappers, dev shells, and skill commands. Use recent shell history when available to support usage frequency. No history is not proof of disuse; background and agent usage may be absent.
-3. Classify a small set of candidates:
+2. **Need:** trace consumers with `rg`: services, timers, scripts, aliases, keybindings, wrappers, dev shells, and skill commands. Keep unattended runtime dependencies. Consider standalone CLIs whose purpose is limited to a particular development or diagnostic task.
+3. **Benefit:** use `nix why-depends ROOT PACKAGE_STORE_PATH` to trace why a candidate remains in a realised closure. Where practical, compare the same host's before/after closure path sets and sizes with only that candidate removed. Shared dependencies may remain; package size is not marginal savings. Do not build a large configuration just to measure savings: label unavailable comparisons as estimates or unknowns.
+4. **Ease of on-demand use:** verify the package source, cache availability, startup/configuration requirements, and offline needs. Favor candidates with a simple working `nix shell` replacement and meaningful removal benefit. Do not rank by absence from history alone.
+5. Classify a small set of candidates:
    - **Keep:** everyday shell tools, service/runtime dependencies, offline essentials, or tools with required desktop/system integration.
-   - **On demand:** infrequent standalone CLIs with a verified package source and no unattended consumer requiring them on PATH.
+   - **On demand:** task-specific standalone CLIs that are easy to obtain when needed, with no unattended consumer requiring them on PATH.
    - **Project scope:** project-specific toolchains belong in an existing devShell when they need coordinated dependencies.
    - **Unknown:** insufficient evidence; state what needs checking.
 
-Report package, installation location/hosts, consumers or usage evidence, recommendation, and replacement command. Consider rebuild cost and closure size, but do not equate package size with marginal disk savings: dependencies may be shared. An audit request alone does not authorize removals.
+Use Atuin only to resolve uncertain cases: a recorded invocation is evidence of use; missing history is not evidence of disuse. Background and agent usage may be absent. Do not add execution monitoring or telemetry for a routine audit.
+
+Report package, installation location/hosts, permanent consumers, removal benefit (measured or estimated), ease of on-demand use, and recommendation/replacement command. An audit request alone does not authorize removals.
 
 ## Migrate when requested
 
