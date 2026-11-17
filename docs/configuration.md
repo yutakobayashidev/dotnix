@@ -168,15 +168,19 @@ Feature modules register through `flake.modules.{nixos,darwin,homeManager}` and 
 Home Manager deploys repository-backed configuration from the flake source in the Nix store. Initial activation does not require a checkout at the configured `ghq` path; clone the repository only when making or applying later changes.
 
 The desktop profile enables `my.programs.herdr-app` on Linux, installing
-`herdr-app` from the pinned `llm-agents.nix` input with a launcher entry. Its wrapper
-provides the matching `herdr-core`; the existing `my.programs.herdr` CLI configuration
+`herdr-app` from the pinned `llm-agents.nix` input with a launcher entry and the
+matching `herdr-core` on PATH; the existing `my.programs.herdr` CLI configuration
 remains separate. macOS and headless hosts do not enable the app by default.
 
 When Atuin is enabled, Home Manager also installs the pinned
 [Atuin Threads mod](https://github.com/atuinsh/herdr-atuin-threads).
-Open it with Ctrl+Shift+T on Linux or Cmd+Shift+T on macOS. Its `local.json`
-selects the same Atuin package as Home Manager's daemon. The mod files and
-`herdr-app/keys.json` are managed by Nix; edit this feature module to change them.
+Ctrl+Shift+T on Linux or Cmd+Shift+T on macOS switches to the `dotnix-threads`
+layout, where Threads is docked on the right. In that layout, the same shortcut
+toggles the panel; drag its boundary to resize it. This personal layout is a
+snapshot of Herdr's main layout; upstream layout changes must be ported explicitly.
+Its `local.json` selects the same Atuin package as Home Manager's daemon. The mod
+files, custom layout, preview, and `herdr-app/keys.json` are managed by Nix; edit
+this feature module and its adjacent assets to change them.
 Upstream requires Atuin 18.24.3+, but the search command, Herdr mod check,
 and popup loading also passed with 18.24.2; session resume remains unverified.
 
