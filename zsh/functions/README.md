@@ -10,7 +10,6 @@
 | `cd-up`      | 親ディレクトリに移動（Alt+Up にバインド）         | キーバインド                 |
 | `cdf`        | 最近移動したディレクトリを fzf で選択して移動     | `cdf [query]`                |
 | `claude-zai` | Z.AI API プロキシ経由で Claude Code を実行        | `claude-zai [args]`          |
-| `ct`         | Claude Code を tmux teammate mode で起動          | `ct [args]`                  |
 | `cdg`        | Git リポジトリのルートへ移動                      | `cdg`                        |
 | `fpull`      | fetch 後に必要なら stash して pull                | `fpull`                      |
 | `g`          | 引数なし: ghq+fzf でリポジトリ移動、引数あり: git | `g [git args]`               |

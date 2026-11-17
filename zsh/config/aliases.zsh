@@ -15,6 +15,7 @@ else
 fi
 
 # AI tools
+abbr -f -qq ct="atuin resume"
 abbr -f -qq cl="claude"
 abbr -f -qq cld="claude --dangerously-skip-permissions"
 abbr -f -qq cldc="claude --dangerously-skip-permissions --continue"
