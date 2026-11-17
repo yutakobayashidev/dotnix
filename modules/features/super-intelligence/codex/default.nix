@@ -51,7 +51,6 @@ _:
               command = "NIRI_BIN=${lib.getExe pkgs.niri} ${lib.getExe pkgs.bash} ${lib.escapeShellArg "${codexDotfilesDir}/hooks/focus-approval.sh"}";
               timeout = 5;
             }
-            ++ [ (mkSessionTtsHook "notify-permission.sh" [ ]) ]
           );
           UserPromptSubmit = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "prompt" ]) ];
           SubagentStart = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "subagent" ]) ];

@@ -5,7 +5,7 @@ description: Toggle TTS playback for the current agent session. TTS is ON by def
 
 # TTS toggle ($ARGUMENTS)
 
-Codex reads responses aloud via `Stop` and `PermissionRequest` hooks. A `SessionStart` hook assigns this session a voice and marks it ON automatically, so every new session speaks by default. This skill is the override path: silence the current session, re-enable after silencing, or check status.
+Codex reads responses aloud via the `Stop` hook. A `SessionStart` hook assigns this session a voice and marks it ON automatically, so every new session speaks by default. This skill is the override path: silence the current session, re-enable after silencing, or check status.
 
 The voice assigned to this session is decided once at SessionStart and stays the same even after `session-tts off`/`session-tts on` — only playback is gated.
 
