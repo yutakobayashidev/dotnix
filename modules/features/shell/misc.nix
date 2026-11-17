@@ -16,7 +16,6 @@ _:
           fzf
           glow
           gum
-          hydra-check
           jq
           jnv
           jolt-tui
