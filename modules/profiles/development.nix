@@ -18,7 +18,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         agent-skills.enable = lib.mkDefault true;
         ast-grep.enable = lib.mkDefault true;
         before-and-after.enable = lib.mkDefault true;
-        difit.enable = lib.mkDefault true;
         repiq.enable = lib.mkDefault true;
         ax.enable = lib.mkDefault true;
         babashka.enable = lib.mkDefault true;
@@ -31,6 +30,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         fast-resume.enable = lib.mkDefault true;
         grok.enable = lib.mkDefault true;
         herdr.enable = lib.mkDefault true;
+        hunk.enable = lib.mkDefault true;
         gh.enable = lib.mkDefault true;
         lazydsh.enable = lib.mkDefault true;
         markitdown.enable = lib.mkDefault true;
@@ -46,7 +46,6 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         [
           bumblebee
           cloc
-          llm-agents.hunk
           ni
           nil
           nix-init

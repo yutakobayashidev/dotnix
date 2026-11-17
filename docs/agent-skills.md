@@ -36,7 +36,7 @@ Oracle pattern. Profiles enable these features rather than installing the same
 packages separately:
 
 - Media: Bird, Discrawl, edcb-tools, Obsidian, and webforai.
-- Development: ast-grep, before-and-after, difit, and repiq, alongside the existing
+- Development: ast-grep, before-and-after, hunk, and repiq, alongside the existing
   Oracle, agent-browser, Babashka, and other tool features.
 
 The central `agent-skills` feature keeps shared deployment/targets and general
@@ -66,6 +66,15 @@ services enables the feature by default, and explicitly disabling the feature
 while keeping services enabled is rejected. Existing service settings are retained.
 Hermes has a separate service-local skill bundle and continues using the shared
 webforai transform.
+
+## Hunk review
+
+`my.programs.hunk.enable` installs Hunk and registers its bundled `hunk-review`
+skill through agent-skills-nix. The source is `${pkgs.llm-agents.hunk}/share/hunk/skills`,
+so the instructions match the installed CLI. Command rewriting is disabled to
+preserve the upstream skill's name and examples. The development profile enables
+this feature. In zsh, `ghunk` selects an inclusive commit range with fzf and opens
+it in Hunk.
 
 ## Selecting general skills
 

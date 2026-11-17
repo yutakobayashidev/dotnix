@@ -152,25 +152,6 @@
 			},
 			"subdir": ".agents/skills"
 		},
-		"difit": {
-			"filter": {
-				"maxDepth": null,
-				"nameRegex": null
-			},
-			"idPrefix": null,
-			"pin": {
-				"at": null,
-				"branch": "main",
-				"owner": "yoshiko-pg",
-				"preReleases": false,
-				"releasePrefix": null,
-				"repo": "difit",
-				"submodules": false,
-				"type": "github",
-				"versionUpperBound": null
-			},
-			"subdir": "skills"
-		},
 		"explain-diff": {
 			"filter": {
 				"maxDepth": null,
@@ -580,19 +561,6 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/deepseek-ai/deepseek-harness/archive/e8f7b93a344964de3dca1ace9e72b6e4d6de87cb.tar.gz"
-			},
-			"difit": {
-				"branch": "main",
-				"hash": "sha256-1EoC5t+8KjNmwKg5lFLig26tzCnp2byhkeGjctVdRls=",
-				"repository": {
-					"owner": "yoshiko-pg",
-					"repo": "difit",
-					"type": "GitHub"
-				},
-				"revision": "82a765c037ec28fe7fe90ab2f1e4b5748032b4fa",
-				"submodules": false,
-				"type": "Git",
-				"url": "https://github.com/yoshiko-pg/difit/archive/82a765c037ec28fe7fe90ab2f1e4b5748032b4fa.tar.gz"
 			},
 			"explain-diff": {
 				"branch": "main",

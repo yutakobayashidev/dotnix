@@ -3,7 +3,6 @@
 
 {
   my.programs.emacs.enable = true;
-  my.programs.difit.enable = true;
 
   home.packages =
     with pkgs;
