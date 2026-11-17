@@ -20,7 +20,6 @@ _:
         else
           ".codex";
       codexDotfilesDir = "${dotfilesDir}/codex";
-      inherit (pkgs.stdenv.hostPlatform) isLinux;
       sessionTtsRoot = "${codexDotfilesDir}/session-tts";
       sessionTtsSkills = ../../../../codex/session-tts/skills;
       sessionTtsHome = "${config.xdg.stateHome}/session-tts";
@@ -45,13 +44,6 @@ _:
         hooks = {
           SessionStart = mkHookGroup [ (mkSessionTtsHook "session-on.sh" [ ]) ];
           Stop = mkHookGroup [ (mkSessionTtsHook "dispatch.sh" [ ]) ];
-          PermissionRequest = mkHookGroup (
-            lib.optional isLinux {
-              type = "command";
-              command = "NIRI_BIN=${lib.getExe pkgs.niri} ${lib.getExe pkgs.bash} ${lib.escapeShellArg "${codexDotfilesDir}/hooks/focus-approval.sh"}";
-              timeout = 5;
-            }
-          );
           UserPromptSubmit = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "prompt" ]) ];
           SubagentStart = mkHookGroup [ (mkSessionTtsHook "remind-say.sh" [ "subagent" ]) ];
         };
@@ -163,17 +155,6 @@ _:
           text = ''
             ${lib.optionalString cfg.desktopIntegration ''
               export SESSION_TTS_HOME=${lib.escapeShellArg sessionTtsHome}
-              export CODEX_NIRI_WINDOW_ID=
-            ''}
-            ${lib.optionalString (cfg.desktopIntegration && isLinux) ''
-              if [[ ''${HERDR_ENV:-} != 1 && -n ''${NIRI_SOCKET:-} ]]; then
-                if window_id=$(${lib.getExe pkgs.niri} msg -j focused-window 2>/dev/null \
-                  | ${lib.getExe pkgs.jq} -r \
-                    'select(.app_id == "com.mitchellh.ghostty") | .id // empty') \
-                  && [[ $window_id =~ ^[0-9]+$ ]]; then
-                  export CODEX_NIRI_WINDOW_ID=$window_id
-                fi
-              fi
             ''}
 
             config_args=()
