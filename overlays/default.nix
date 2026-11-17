@@ -17,6 +17,14 @@
   };
 
   patches = final: prev: {
+    # The nixpkgs Cargo hook requires system libraries instead of vendoring them.
+    rustowl = prev.rustowl.overrideAttrs (old: {
+      buildInputs = (old.buildInputs or [ ]) ++ [
+        final.aws-lc
+        final.rust-jemalloc-sys
+      ];
+    });
+
     # Native expiring credentials require gh >= 2.103.0.
     gh = prev.gh.overrideAttrs (_: {
       version = "2.103.2";
