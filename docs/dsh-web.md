@@ -168,3 +168,35 @@ The [Coding Agents dashboard](https://grafana.home.yutakobayashi.com/d/coding-ag
 has a dsh row for tokens, requests, outcomes and duration. See
 [agent monitoring](agent-monitoring.md) for scope, privacy and export limitations.
 Disable it with `my.programs.dsh.telemetry.enable = false`.
+
+## Herdr integration
+
+UM790-Pro enables `my.programs.dsh.web.herdrBridge.enable`. The Web service loads
+[dsh-herdr-bridge](https://github.com/Hariketsu/dsh-herdr-bridge) 0.4.0 from a
+commit- and hash-pinned Nix store source through its generated `--patch` layer.
+There is no runtime npm installation. The patch specifies the Nix-provided
+Herdr Core executable and groups sessions by folder in Herdr App.
+
+The bridge uses UM790-Pro's local Herdr Core. Sessions appear on their first
+run, or when `/herdr` is entered in a Web session. On UM790-Pro, `hc templates`
+lists `dsh`; `hc run --bg --name task dsh "…"` starts a session and
+`hc send task "…"` sends a follow-up. Approval answers use `hc send --force`.
+
+The plugin owns its writable runtime files in `~/.dsh/herdr-bridge/`, including
+`bridge.log`, `control.sock`, and the `bin/dsh-hc` launcher. It also maintains
+`~/.config/herdr-core/templates/dsh.md`, the DSH entry in Herdr App's
+`programs.json`, and `icons/dsh-herdr-bridge.svg`. These generated files are not
+Home Manager symlinks; existing custom template/program entries are preserved
+by upstream. Authentication remains in DSH's existing private state.
+
+After activation, check `systemctl --user status dsh-web`,
+`tail ~/.dsh/herdr-bridge/bridge.log`, and `hc templates`. To list sessions,
+run `~/.dsh/herdr-bridge/bin/dsh-hc ls`.
+
+With DSH 0.2.2-rc.3, a graceful Web service restart closes existing bridge
+terminals (the Host emits a session-disposed event). After restarting, reopen
+the session with `/herdr` or `hc run --bg --name task
+~/.dsh/herdr-bridge/bin/dsh-hc attach <session-id>`. The upstream 30-second
+reconnect grace handles connection loss, but does not override an explicit
+session-close event. Reopen terminals after upgrading the bridge as well so
+they use its new proxy. Disabling the option stops loading the bridge but does not delete its generated files or session history.

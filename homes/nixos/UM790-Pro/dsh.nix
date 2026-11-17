@@ -29,33 +29,37 @@ let
 in
 
 {
-  my.programs.dsh.web.mcpServers = {
-    clinicaltrials = stdio "clinicaltrialsgov-mcp-server@latest" logging;
-    crossref = {
-      transport = "streamable-http";
-      url = "https://crossref.caseyjhand.com/mcp";
-      startupTimeoutMs = 30000;
-      toolCallTimeoutMs = 30000;
-    };
-    # Anonymous access: optional credential references would block startup
-    # when the user has not registered those credentials in DSH.
-    openalex = stdio "@cyanheads/openalex-mcp-server@latest" logging;
-    pubmed = stdio "@cyanheads/pubmed-mcp-server@latest" (logging // unpaywallEnv);
-    semantic-scholar = stdio "@xbghc/semanticscholar-mcp" { };
-    unpaywall = stdio "unpaywall-mcp" unpaywallEnv;
+  my.programs.dsh.web = {
+    herdrBridge.enable = true;
+    mcpServers = {
+      clinicaltrials = stdio "clinicaltrialsgov-mcp-server@latest" logging;
+      crossref = {
+        transport = "streamable-http";
+        url = "https://crossref.caseyjhand.com/mcp";
+        startupTimeoutMs = 30000;
+        toolCallTimeoutMs = 30000;
+      };
+      # Anonymous access: optional credential references would block startup
+      # when the user has not registered those credentials in DSH.
+      openalex = stdio "@cyanheads/openalex-mcp-server@latest" logging;
+      pubmed = stdio "@cyanheads/pubmed-mcp-server@latest" (logging // unpaywallEnv);
+      semantic-scholar = stdio "@xbghc/semanticscholar-mcp" { };
+      unpaywall = stdio "unpaywall-mcp" unpaywallEnv;
 
-    # Local Atuin: cross-harness thread search + shell history for the DSH model.
-    atuin = {
-      transport = "stdio";
-      command = lib.getExe config.programs.atuin.package;
-      args = [ "mcp" ];
+      # Local Atuin: cross-harness thread search + shell history for the DSH model.
+      atuin = {
+        transport = "stdio";
+        command = lib.getExe config.programs.atuin.package;
+        args = [ "mcp" ];
+      };
     };
-  };
 
-  my.programs.dsh.web.settings."llm-pi-ai".providers = {
-    # Keep native model catalogs, authentication, and session-header handling.
-    openai-codex = { };
-    opencode-go = { };
+    settings."llm-pi-ai".providers = {
+      # Keep native model catalogs, authentication, and session-header handling.
+      openai-codex = { };
+      opencode-go = { };
+    };
+
   };
 
   sops = {

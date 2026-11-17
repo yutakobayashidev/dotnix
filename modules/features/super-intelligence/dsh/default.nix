@@ -11,6 +11,12 @@ _:
     }:
     let
       cfg = config.my.programs.dsh;
+      herdrBridgeSrc = pkgs.fetchFromGitHub {
+        owner = "Hariketsu";
+        repo = "dsh-herdr-bridge";
+        rev = "731ecdc062310f0904e361ccf244c0799c9f21b2";
+        hash = "sha256-lle12iSHyBZDfpwCUCBZn/momOJywN/bImY2adAKzlM=";
+      };
       telemetryPatch = (pkgs.formats.yaml { }).generate "dsh-metrics.yml" [
         {
           insert = [
@@ -43,11 +49,25 @@ _:
       autoAuth = import ./auto-auth.nix { inherit config lib pkgs; };
       webPatch = (pkgs.formats.yaml { }).generate "dsh-web-providers.yml" (
         lib.mapAttrsToList (id: config: { inherit id config; }) cfg.web.settings
+        ++ lib.optional cfg.web.herdrBridge.enable {
+          insert = [
+            {
+              id = "herdr-bridge";
+              name = "file://${herdrBridgeSrc}/index.js";
+              config = {
+                hc = "${pkgs.llm-agents.herdr-core}/bin/hc";
+                herdrPlacement = "folder";
+              };
+            }
+          ];
+        }
         ++ lib.optional (cfg.web.mcpServers != { }) {
           insert = lib.mapAttrsToList (serverName: serverConfig: {
             id = "mcp-${serverName}";
             name = "@deepseek-ai/dsh-mcp-client";
-            config = serverConfig // { inherit serverName; };
+            config = serverConfig // {
+              inherit serverName;
+            };
           }) cfg.web.mcpServers;
         }
       );
@@ -71,6 +91,7 @@ _:
         };
         web = {
           enable = lib.mkEnableOption "DeepSeek Harness Web";
+          herdrBridge.enable = lib.mkEnableOption "DSH Web session integration with local Herdr Core";
           autoAuth = lib.mkEnableOption "NixKits-style automatic browser sign-in on a trusted network";
           settings = lib.mkOption {
             type = lib.types.attrsOf (lib.types.attrsOf lib.types.anything);
@@ -124,10 +145,12 @@ _:
                   "--profile"
                   "web"
                 ]
-                ++ lib.optionals (cfg.web.settings != { } || cfg.web.mcpServers != { }) [
-                  "--patch"
-                  (toString webPatch)
-                ]
+                ++
+                  lib.optionals (cfg.web.settings != { } || cfg.web.mcpServers != { } || cfg.web.herdrBridge.enable)
+                    [
+                      "--patch"
+                      (toString webPatch)
+                    ]
                 ++ [
                   "--no-open"
                   "--host"
