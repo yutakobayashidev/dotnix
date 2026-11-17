@@ -17,6 +17,14 @@
   };
 
   patches = final: prev: {
+    # keifu 0.3.0 pins libgit2 1.8 in Cargo.lock. The new Cargo setup hook
+    # disables vendoring, but nixpkgs supplies a newer incompatible libgit2.
+    keifu = prev.keifu.overrideAttrs (old: {
+      preBuild = (old.preBuild or "") + ''
+        export LIBGIT2_NO_VENDOR=0
+      '';
+    });
+
     # The nixpkgs Cargo hook requires system libraries instead of vendoring them.
     rustowl = prev.rustowl.overrideAttrs (old: {
       buildInputs = (old.buildInputs or [ ]) ++ [
