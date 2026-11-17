@@ -11,6 +11,11 @@ let
   localMcpPkg =
     inputs.local-mcp.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
       (oldAttrs: {
+        # The Cargo setup hook requires system crypto libraries, not vendoring.
+        buildInputs = (oldAttrs.buildInputs or [ ]) ++ [
+          pkgs.aws-lc
+          pkgs.openssl
+        ];
         cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           inherit (oldAttrs) src;
           hash = "sha256-q1hHXNkI5BSGGgUiRq/P0JA8gjrkho2ae52PtF22frg=";
