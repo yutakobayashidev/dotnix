@@ -44,7 +44,7 @@
       options.my.programs.streamcontroller.enable =
         lib.mkEnableOption "StreamController page configuration";
 
-      config = lib.mkIf (config.my.programs.streamcontroller.enable && pkgs.stdenv.isLinux) {
+      config = lib.mkIf (config.my.programs.streamcontroller.enable && pkgs.stdenv.hostPlatform.isLinux) {
         programs.streamcontroller.enable = true;
       };
     };

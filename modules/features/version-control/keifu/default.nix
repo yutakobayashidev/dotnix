@@ -13,7 +13,7 @@ _:
       options.my.programs.keifu.enable = lib.mkEnableOption "keifu";
 
       config = lib.mkIf config.my.programs.keifu.enable {
-        home.packages = lib.optionals pkgs.stdenv.isLinux [
+        home.packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           pkgs.keifu
         ];
       };

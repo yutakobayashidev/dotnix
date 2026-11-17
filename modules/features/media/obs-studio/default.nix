@@ -10,7 +10,7 @@ _:
     }:
 
     let
-      isLinux = pkgs.stdenv.isLinux;
+      isLinux = pkgs.stdenv.hostPlatform.isLinux;
     in
     {
       options.my.programs.obs-studio.enable = lib.mkEnableOption "obs-studio";

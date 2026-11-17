@@ -17,7 +17,7 @@ _:
       config = lib.mkIf cfg.enable {
         programs.chromium = {
           enable = true;
-          package = if pkgs.stdenv.isDarwin then null else pkgs.chromium;
+          package = if pkgs.stdenv.hostPlatform.isDarwin then null else pkgs.chromium;
           extensions = [
             { id = "hoombieeljmmljlkjmnheibnpciblicm"; } # Language Reactor
             { id = "bhdngeocokoeblnnlhjibojcadefimpi"; } # Mazelingo

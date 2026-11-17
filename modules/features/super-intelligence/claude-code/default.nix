@@ -43,7 +43,10 @@ _:
       };
 
       terminal-notifier =
-        if pkgs.stdenv.isDarwin then lib.getExe' pkgs.terminal-notifier "terminal-notifier" else "";
+        if pkgs.stdenv.hostPlatform.isDarwin then
+          lib.getExe' pkgs.terminal-notifier "terminal-notifier"
+        else
+          "";
 
       baseSettings = {
         "$schema" = "https://json.schemastore.org/claude-code-settings.json";
@@ -147,7 +150,7 @@ _:
         };
       };
 
-      darwinSettings = lib.optionalAttrs pkgs.stdenv.isDarwin {
+      darwinSettings = lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
         hooks = {
           PreToolUse = [
             {

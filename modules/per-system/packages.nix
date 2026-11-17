@@ -6,7 +6,7 @@
       ...
     }:
     let
-      isDarwin = pkgs.stdenv.isDarwin;
+      isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
       nom = "${pkgs.nix-output-monitor}/bin/nom";
 
       isAgentCheck = ''

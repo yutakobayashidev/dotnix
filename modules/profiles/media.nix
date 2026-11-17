@@ -33,7 +33,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           stable.yt-dlp
           xurl
         ]
-        ++ lib.optionals pkgs.stdenv.isLinux [
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           bitwig-studio
           cava
           dexed

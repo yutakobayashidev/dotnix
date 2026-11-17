@@ -23,11 +23,11 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           speedtest-cli
           wireguard-tools
         ]
-        ++ lib.optionals pkgs.stdenv.isLinux [
+        ++ lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           proton-vpn-cli
           (cloudflare-warp.override { headless = !config.my.profiles.desktop.enable; })
         ]
-        ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.isLinux) [
+        ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.hostPlatform.isLinux) [
           tor-browser
         ];
     };

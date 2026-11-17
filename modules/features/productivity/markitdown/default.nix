@@ -16,7 +16,7 @@ _:
     {
       options.my.programs.markitdown.enable = lib.mkEnableOption "MarkItDown";
 
-      config = lib.mkIf (cfg.enable && pkgs.stdenv.isLinux) {
+      config = lib.mkIf (cfg.enable && pkgs.stdenv.hostPlatform.isLinux) {
         home.packages = [ package ];
 
         programs.agent-skills.skills.explicit.markdown-converter = {

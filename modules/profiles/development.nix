@@ -55,7 +55,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
           vhs
           whichllm
         ]
-        ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.isLinux) [
+        ++ lib.optionals (config.my.profiles.desktop.enable && pkgs.stdenv.hostPlatform.isLinux) [
           # android-studio
           tableplus
         ];

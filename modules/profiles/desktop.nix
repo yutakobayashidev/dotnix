@@ -23,7 +23,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         t3code-desktop.enable = lib.mkDefault true;
       };
 
-      home.packages = lib.optionals pkgs.stdenv.isLinux (
+      home.packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux (
         with pkgs;
         [
           brightnessctl

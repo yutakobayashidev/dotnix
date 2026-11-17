@@ -15,7 +15,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
       home.packages =
         with pkgs;
-        lib.optionals pkgs.stdenv.isLinux [
+        lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           beeper
           element-desktop
           halloy
@@ -72,7 +72,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         };
       };
 
-      programs.mcp.servers = lib.optionalAttrs pkgs.stdenv.isLinux {
+      programs.mcp.servers = lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         beeper.url = "http://localhost:23373/v0/mcp";
       };
     };

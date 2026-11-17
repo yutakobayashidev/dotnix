@@ -22,6 +22,9 @@
     xwayland.enable = true;
   };
 
+  # Opt into PipeWire JACK per application: pw-jack <command>.
+  environment.systemPackages = [ pkgs.pipewire.jack ];
+
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 
@@ -43,7 +46,6 @@
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
-      jack.enable = true;
       pulse.enable = true;
 
       extraConfig.pipewire."90-echo-cancel.conf" = {

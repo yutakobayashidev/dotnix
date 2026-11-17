@@ -9,7 +9,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
     {
       home.packages =
         with pkgs;
-        lib.optionals pkgs.stdenv.isLinux [
+        lib.optionals pkgs.stdenv.hostPlatform.isLinux [
           libreoffice
           nextcloud-client
           stable.anki
