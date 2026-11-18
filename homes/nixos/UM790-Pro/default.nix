@@ -20,7 +20,11 @@
       publicUrl = "https://dsh.home.yutakobayashi.com/";
       trustedHosts = [ "dsh.home.yutakobayashi.com" ];
     };
-    services.codex-limit-auto-reset.enable = true;
+    services.codex-limit-auto-reset = {
+      enable = true;
+      resetRemainingPercent = 3;
+      usagePollSeconds = 60;
+    };
     home.homeDirectory = "/home/${username}";
     services.wallpaper.imagePath = "/home/${username}/wallpapers/wp13990714.png";
   };

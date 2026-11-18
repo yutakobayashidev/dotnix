@@ -27,14 +27,34 @@ they use the same Codex account and redeem the same credits.
 The earlier [system service design](superpowers/specs/2026-07-13-codex-limit-auto-reset-design.md)
 is historical and is superseded by this user-service configuration.
 
+## Low-usage resets
+
+UM790-Pro sets `resetRemainingPercent = 3` and `usagePollSeconds = 60`.
+The worker checks the main Codex allowance once per minute and redeems the
+soonest-expiring available reset when either active allowance has 3% or less
+remaining. The existing six-hour expiry trigger remains enabled. Only one credit
+is selected per check, even when both triggers apply. Model-specific allowances
+are excluded. The service does not resume tasks already stopped by a limit;
+consumption between polls can still exhaust the allowance.
+
+A pending redemption is saved at
+`~/.local/state/codex-limit-auto-reset/recovery.json` before the request. Until
+usage recovery is observed, the service may retry the same available credit
+with the same idempotency key but will not select another. This guard survives
+service restarts. Keep one worker per account; do not run another instance on
+another host. If `usage_recovery_pending` persists, inspect account usage and
+reset history before clearing the checkpoint. A corrupt checkpoint fails closed.
+
+Set `resetRemainingPercent = null` to return to expiry-only scheduling.
+
 ## Reset history
 
 The NUR package pins the [personal fork](https://github.com/yutakobayashidev/codex-limit-auto-reset).
 Its daemon writes JSON lines with an ISO UTC `timestamp`, `level`, and `event`.
 Redemption events also include `credit_id` and `attempt`; results include
-`outcome`. Each failed redemption attempt is logged separately, and terminal
-initialization/check failures use `check_failed`. Error messages and RPC payloads
-are not included in these events.
+`outcome` and `reason` (`expiry` or `low_usage`). Each failed redemption attempt
+is logged separately, and terminal initialization/check failures use `check_failed`.
+Error messages and RPC payloads are not included in these events.
 
 Alloy on UM790-Pro reads `_SYSTEMD_USER_UNIT=codex-limit-auto-reset.service`,
 keeps the recognized JSON events, and forwards them to Loki with

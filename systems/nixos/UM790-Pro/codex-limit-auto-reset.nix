@@ -32,7 +32,7 @@
         values = { event = "", level = "" }
       }
       stage.match {
-        selector = "{job=\"codex-limit-auto-reset\", event!~\"credit_redemption_attempt|credit_redemption_result|credit_redemption_error|check_failed|next_check\"}"
+        selector = "{job=\"codex-limit-auto-reset\", event!~\"credit_redemption_attempt|credit_redemption_result|credit_redemption_error|check_failed|usage_recovery_pending|next_check\"}"
         action = "drop"
         drop_counter_reason = "not_reset_event"
       }
