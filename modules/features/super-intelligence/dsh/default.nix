@@ -11,6 +11,19 @@ _:
     }:
     let
       cfg = config.my.programs.dsh;
+      codexSubscription = pkgs.runCommand "dsh-codex-subscription-host" { } ''
+        mkdir -p $out
+        cp -r ${pkgs.dsh-codex-subscription}/lib/node_modules/dsh-codex-subscription/. $out/
+        chmod -R u+w $out
+        # Reuse the running DSH's peer modules, preserving class/service identity.
+        # Keep the plugin's own pinned networking dependencies.
+        for dependency in ${pkgs.llm-agents.dsh}/lib/node_modules/@deepseek-ai/dsh/node_modules/*; do
+          target="$out/node_modules/$(basename "$dependency")"
+          if [ ! -e "$target" ]; then
+            ln -s "$dependency" "$target"
+          fi
+        done
+      '';
       herdrBridgeSrc = pkgs.fetchFromGitHub {
         owner = "Hariketsu";
         repo = "dsh-herdr-bridge";
@@ -49,6 +62,20 @@ _:
       autoAuth = import ./auto-auth.nix { inherit config lib pkgs; };
       webPatch = (pkgs.formats.yaml { }).generate "dsh-web-providers.yml" (
         lib.mapAttrsToList (id: config: { inherit id config; }) cfg.web.settings
+        ++ lib.optional cfg.web.codexSubscription.enable {
+          insert = [
+            {
+              id = "codex-subscription";
+              name = "file://${codexSubscription}/lib/index.js";
+              config = {
+                otherModels = "off";
+                imageGeneration = false;
+                imageShortcut = false;
+                imageEditing = false;
+              };
+            }
+          ];
+        }
         ++ lib.optional cfg.web.herdrBridge.enable {
           insert = [
             {
@@ -92,6 +119,7 @@ _:
         web = {
           enable = lib.mkEnableOption "DeepSeek Harness Web";
           herdrBridge.enable = lib.mkEnableOption "DSH Web session integration with local Herdr Core";
+          codexSubscription.enable = lib.mkEnableOption "ChatGPT subscription sign-in and Codex models in DSH Web";
           autoAuth = lib.mkEnableOption "NixKits-style automatic browser sign-in on a trusted network";
           settings = lib.mkOption {
             type = lib.types.attrsOf (lib.types.attrsOf lib.types.anything);
@@ -146,7 +174,13 @@ _:
                   "web"
                 ]
                 ++
-                  lib.optionals (cfg.web.settings != { } || cfg.web.mcpServers != { } || cfg.web.herdrBridge.enable)
+                  lib.optionals
+                    (
+                      cfg.web.settings != { }
+                      || cfg.web.mcpServers != { }
+                      || cfg.web.herdrBridge.enable
+                      || cfg.web.codexSubscription.enable
+                    )
                     [
                       "--patch"
                       (toString webPatch)

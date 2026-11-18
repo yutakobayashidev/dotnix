@@ -56,18 +56,20 @@ site's cookies before reopening the homepage.
 
 ## Models and providers
 
-`homes/nixos/UM790-Pro/dsh.nix` declares two native providers:
+`homes/nixos/UM790-Pro/dsh.nix` enables the following providers:
 
 - `opencode-go`: direct OpenCode Go access using the bundled pi-ai model catalog
   and per-conversation session-header handling.
-- `openai-codex`: direct ChatGPT/Codex access using its bundled model catalog and
-  authentication implementation. Initial interactive sign-in in dsh is required;
-  it does not reuse LiteLLM's credentials.
+- `openai-codex`: owned by the Nix-packaged `dsh-codex-subscription` 3.2.24
+  plugin. Open **Settings → Codex** and choose device-code sign-in when the
+  browser is on a different machine from UM790-Pro. Complete ChatGPT approval
+  yourself, then select a Codex model in the conversation. Credentials remain
+  in DSH's private host credential service; Codex CLI credentials are not copied.
 
-Both providers intentionally omit `api`, `baseURL`, and model overrides. Setting
+The native OpenCode provider intentionally omits `api`, `baseURL`, and model overrides. Setting
 an explicit `api` would replace the native provider dispatch with a generic
-adapter and bypass OpenCode's session-header handling. Provider catalogs update
-with the dsh package rather than copying legacy model names from LiteLLM.
+adapter and bypass OpenCode's session-header handling. OpenCode's catalog updates with dsh; the subscription plugin discovers Codex models
+from the signed-in account.
 
 OpenCode's existing key remains in
 `systems/nixos/services/litellm/secrets.yaml`, encrypted for B450M-Pro4 and UM790-Pro.
@@ -99,6 +101,19 @@ The generated overlay takes precedence over saved profile settings; edit Nix
 for persistent provider changes. Existing mutable profile files and
 credential storage are preserved. Configuration contains credential references,
 not upstream API keys. No model request is sent to Codex until it is selected.
+
+### Codex subscription plugin
+
+`my.programs.dsh.web.codexSubscription.enable` loads the pinned NUR package
+through the declarative Web patch. Its networking dependencies are locked; DSH
+and Pi peer modules come from the running host package to avoid duplicate
+service identities. No runtime npm installation is required. Do not also declare
+`openai-codex` under `llm-pi-ai.providers`: both would register the same route.
+
+The initial configuration disables subscription tools for other models and
+image generation/editing. Remote control and connectors retain their upstream
+off defaults. Authentication is an interactive user action, separate from
+deployment; seeing the sign-in page does not establish account/model access.
 
 ### Model availability and validation
 

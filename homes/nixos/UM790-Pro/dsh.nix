@@ -31,6 +31,7 @@ in
 {
   my.programs.dsh.web = {
     herdrBridge.enable = true;
+    codexSubscription.enable = true;
     mcpServers = {
       clinicaltrials = stdio "clinicaltrialsgov-mcp-server@latest" logging;
       crossref = {
@@ -55,8 +56,8 @@ in
     };
 
     settings."llm-pi-ai".providers = {
-      # Keep native model catalogs, authentication, and session-header handling.
-      openai-codex = { };
+      # Codex is owned by codexSubscription; avoid duplicate adapter registration.
+      # Keep OpenCode's native catalog and session-header handling.
       opencode-go = { };
     };
 
