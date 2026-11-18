@@ -1,0 +1,1170 @@
+{
+	"uid": "codex-usage-advisor",
+	"title": "Codex / Tibo — 利用枠と回復見通し",
+	"schemaVersion": 41,
+	"version": 1,
+	"editable": false,
+	"tags": ["codex", "tibo", "usage"],
+	"timezone": "browser",
+	"time": {
+		"from": "now-24h",
+		"to": "now"
+	},
+	"refresh": "1m",
+	"panels": [
+		{
+			"id": 1,
+			"title": "Codex / Tibo — 残量・回復見通し",
+			"type": "text",
+			"description": "",
+			"gridPos": {
+				"x": 0,
+				"y": 0,
+				"w": 24,
+				"h": 3
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"mode": "markdown",
+				"content": "5分ごとに複数アカウントを監視。**提案のみ：自動切替なし**。現在値は15分以内の観測。消費速度・継続時間は履歴不足なら「不明」。Tibo予測は未校正で、通常回復・実際の残量とは別の情報です。\n\n破線の注釈：Tibo monitorが通知した時刻（全アカウントの回復確定時刻ではありません）。[予測元](https://nextreset.ai/forecast/) · [公表・観測元](https://codex-resets.com/) · [リセット権の使用履歴](/d/codex-reset-history)"
+			}
+		},
+		{
+			"id": 2,
+			"title": "監視が最後に成功した時刻",
+			"type": "stat",
+			"description": "",
+			"gridPos": {
+				"x": 0,
+				"y": 3,
+				"w": 8,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "last_over_time({job=\"codex-usage-advisor\"} | json | event=\"advisor_status\" | observed_at!=\"\"  | unwrap observed_at | __error__=\"\" [15m]) by (host) * 1000",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "instant",
+					"legendFormat": "{{host}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "dateTimeAsIso",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"reduceOptions": {
+					"calcs": ["last"],
+					"fields": "",
+					"values": false
+				},
+				"textMode": "value_and_name",
+				"colorMode": "value",
+				"graphMode": "none"
+			}
+		},
+		{
+			"id": 3,
+			"title": "アカウント状態",
+			"type": "table",
+			"description": "",
+			"gridPos": {
+				"x": 8,
+				"y": 3,
+				"w": 8,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | fresh!=\"\"  | unwrap fresh | __error__=\"\" [15m]) by (host, account, account_number)",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "instant",
+					"legendFormat": "アカウント {{account_number}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "text"
+					},
+					"custom": {
+						"align": "left",
+						"cellOptions": {
+							"type": "auto"
+						},
+						"wrapText": true
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "状態"
+						},
+						"properties": [
+							{
+								"id": "unit",
+								"value": "none"
+							},
+							{
+								"id": "decimals",
+								"value": 1
+							},
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"0": {
+												"text": "取得不可・古い",
+												"color": "red"
+											},
+											"1": {
+												"text": "最新",
+												"color": "green"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "利用枠"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"300": {
+												"text": "5時間枠"
+											},
+											"10080": {
+												"text": "週次枠"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "md",
+				"footer": {
+					"show": false
+				}
+			},
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time": true,
+							"account": true,
+							"host": true
+						},
+						"indexByName": {
+							"account_number": 0,
+							"window_minutes": 1,
+							"Value #A": 2
+						},
+						"renameByName": {
+							"account_number": "アカウント",
+							"window_minutes": "利用枠",
+							"Value #A": "状態",
+							"Value": "状態"
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 4,
+			"title": "UM790で選択中のアカウント",
+			"type": "table",
+			"description": "",
+			"gridPos": {
+				"x": 16,
+				"y": 3,
+				"w": 8,
+				"h": 4
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | active!=\"\"  | unwrap active | __error__=\"\" [15m]) by (host, account, account_number)",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "instant",
+					"legendFormat": "アカウント {{account_number}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "text"
+					},
+					"custom": {
+						"align": "left",
+						"cellOptions": {
+							"type": "auto"
+						},
+						"wrapText": true
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "選択状態"
+						},
+						"properties": [
+							{
+								"id": "unit",
+								"value": "none"
+							},
+							{
+								"id": "decimals",
+								"value": 1
+							},
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"0": {
+												"text": "待機"
+											},
+											"1": {
+												"text": "選択中",
+												"color": "green"
+											}
+										}
+									}
+								]
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "利用枠"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"300": {
+												"text": "5時間枠"
+											},
+											"10080": {
+												"text": "週次枠"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "md",
+				"footer": {
+					"show": false
+				}
+			},
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time": true,
+							"account": true,
+							"host": true
+						},
+						"indexByName": {
+							"account_number": 0,
+							"window_minutes": 1,
+							"Value #A": 2
+						},
+						"renameByName": {
+							"account_number": "アカウント",
+							"window_minutes": "利用枠",
+							"Value #A": "選択状態",
+							"Value": "選択状態"
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 5,
+			"title": "アカウント別の残量",
+			"type": "timeseries",
+			"description": "プラン間の%は利用可能トークン数の比較ではありません。",
+			"gridPos": {
+				"x": 0,
+				"y": 7,
+				"w": 14,
+				"h": 8
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "(last_over_time({job=\"codex-usage-advisor\"} | json | event=\"usage_snapshot\" | remaining_percent!=\"\"  | unwrap remaining_percent | __error__=\"\" [15m]) by (host, account, account_number, window_minutes)) and on (host, account) (last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | fresh!=\"\"  | unwrap fresh | __error__=\"\" [15m]) by (host, account, account_number) == 1)",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "range",
+					"legendFormat": "アカウント {{account_number}} / {{window_minutes}} 分枠",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					},
+					"min": 0,
+					"max": 100
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi"
+				}
+			}
+		},
+		{
+			"id": 6,
+			"title": "Tiboリセット予測",
+			"type": "timeseries",
+			"description": "予測元の時間幅をそのまま表示。無効・期限切れなら表示しません。",
+			"gridPos": {
+				"x": 14,
+				"y": 7,
+				"w": 10,
+				"h": 8
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "(last_over_time({job=\"codex-usage-advisor\"} | json | event=\"forecast_snapshot\" | probability!=\"\"  | unwrap probability | __error__=\"\" [15m]) by (host, horizon_hours) * 100) and on(host) (last_over_time({job=\"codex-usage-advisor\"} | json | event=\"advisor_status\" | forecast_valid!=\"\"  | unwrap forecast_valid | __error__=\"\" [15m]) by (host) == 1)",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "range",
+					"legendFormat": "{{horizon_hours}} 時間以内",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "percent",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					},
+					"min": 0,
+					"max": 100
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi"
+				}
+			}
+		},
+		{
+			"id": 7,
+			"title": "消費ペース",
+			"type": "timeseries",
+			"description": "過去6時間のうち同じアカウントが選択されていた連続観測から計算。最低4点・15分必要。実作業時間ではありません。",
+			"gridPos": {
+				"x": 0,
+				"y": 15,
+				"w": 12,
+				"h": 7
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "(last_over_time({job=\"codex-usage-advisor\"} | json | event=\"usage_snapshot\" | rate_pph!=\"\"  | unwrap rate_pph | __error__=\"\" [15m]) by (host, account, account_number, window_minutes) >= 0) and on (host, account) (last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | fresh!=\"\"  | unwrap fresh | __error__=\"\" [15m]) by (host, account, account_number) == 1)",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "range",
+					"legendFormat": "アカウント {{account_number}} / {{window_minutes}} 分枠",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "suffix: pp/h",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"legend": {
+					"displayMode": "list",
+					"placement": "bottom"
+				},
+				"tooltip": {
+					"mode": "multi"
+				}
+			}
+		},
+		{
+			"id": 8,
+			"title": "残量から見た継続時間",
+			"type": "table",
+			"description": "通常回復を織り込む前の残量換算。速度が不明なら不明。",
+			"gridPos": {
+				"x": 12,
+				"y": 15,
+				"w": 12,
+				"h": 7
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "(last_over_time({job=\"codex-usage-advisor\"} | json | event=\"usage_snapshot\" | runway_hours!=\"\"  | unwrap runway_hours | __error__=\"\" [15m]) by (host, account, account_number, window_minutes) >= 0) and on (host, account) (last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | fresh!=\"\"  | unwrap fresh | __error__=\"\" [15m]) by (host, account, account_number) == 1)",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "instant",
+					"legendFormat": "アカウント {{account_number}} / {{window_minutes}} 分枠",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "text"
+					},
+					"custom": {
+						"align": "left",
+						"cellOptions": {
+							"type": "auto"
+						},
+						"wrapText": true
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "継続時間"
+						},
+						"properties": [
+							{
+								"id": "unit",
+								"value": "h"
+							},
+							{
+								"id": "decimals",
+								"value": 1
+							},
+							{
+								"id": "mappings",
+								"value": []
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "利用枠"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"300": {
+												"text": "5時間枠"
+											},
+											"10080": {
+												"text": "週次枠"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "md",
+				"footer": {
+					"show": false
+				}
+			},
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time": true,
+							"account": true,
+							"host": true
+						},
+						"indexByName": {
+							"account_number": 0,
+							"window_minutes": 1,
+							"Value #A": 2
+						},
+						"renameByName": {
+							"account_number": "アカウント",
+							"window_minutes": "利用枠",
+							"Value #A": "継続時間",
+							"Value": "継続時間"
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 9,
+			"title": "通常回復の予定時刻",
+			"type": "table",
+			"description": "アカウント・利用枠ごとの通常回復予定。リセット権の有効期限とは別です。",
+			"gridPos": {
+				"x": 0,
+				"y": 22,
+				"w": 12,
+				"h": 5
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "((last_over_time({job=\"codex-usage-advisor\"} | json | event=\"usage_snapshot\" | resets_at!=\"\"  | unwrap resets_at | __error__=\"\" [15m]) by (host, account, account_number, window_minutes)) and on (host, account) (last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | fresh!=\"\"  | unwrap fresh | __error__=\"\" [15m]) by (host, account, account_number) == 1)) * 1000",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "instant",
+					"legendFormat": "アカウント {{account_number}} / {{window_minutes}} 分枠",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "text"
+					},
+					"custom": {
+						"align": "left",
+						"cellOptions": {
+							"type": "auto"
+						},
+						"wrapText": true
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "通常回復予定"
+						},
+						"properties": [
+							{
+								"id": "unit",
+								"value": "dateTimeAsIso"
+							},
+							{
+								"id": "decimals",
+								"value": 1
+							},
+							{
+								"id": "mappings",
+								"value": []
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "利用枠"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"300": {
+												"text": "5時間枠"
+											},
+											"10080": {
+												"text": "週次枠"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "md",
+				"footer": {
+					"show": false
+				}
+			},
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time": true,
+							"account": true,
+							"host": true
+						},
+						"indexByName": {
+							"account_number": 0,
+							"window_minutes": 1,
+							"Value #A": 2
+						},
+						"renameByName": {
+							"account_number": "アカウント",
+							"window_minutes": "利用枠",
+							"Value #A": "通常回復予定",
+							"Value": "通常回復予定"
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 10,
+			"title": "使えるリセット権",
+			"type": "table",
+			"description": "アカウント別の権利数。合計値ではありません。",
+			"gridPos": {
+				"x": 12,
+				"y": 22,
+				"w": 6,
+				"h": 5
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "(last_over_time({job=\"codex-usage-advisor\"} | json | event=\"credit_snapshot\" | credits_available!=\"\"  | unwrap credits_available | __error__=\"\" [15m]) by (host, account, account_number)) and on(host,account) (last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | fresh!=\"\"  | unwrap fresh | __error__=\"\" [15m]) by (host, account, account_number) == 1)",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "instant",
+					"legendFormat": "アカウント {{account_number}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "text"
+					},
+					"custom": {
+						"align": "left",
+						"cellOptions": {
+							"type": "auto"
+						},
+						"wrapText": true
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "権利数"
+						},
+						"properties": [
+							{
+								"id": "unit",
+								"value": "short"
+							},
+							{
+								"id": "decimals",
+								"value": 0
+							},
+							{
+								"id": "mappings",
+								"value": []
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "利用枠"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"300": {
+												"text": "5時間枠"
+											},
+											"10080": {
+												"text": "週次枠"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "md",
+				"footer": {
+					"show": false
+				}
+			},
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time": true,
+							"account": true,
+							"host": true
+						},
+						"indexByName": {
+							"account_number": 0,
+							"window_minutes": 1,
+							"Value #A": 2
+						},
+						"renameByName": {
+							"account_number": "アカウント",
+							"window_minutes": "利用枠",
+							"Value #A": "権利数",
+							"Value": "権利数"
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 11,
+			"title": "リセット権の期限",
+			"type": "table",
+			"description": "権利がない、または有効期限が不明なら表示しません。",
+			"gridPos": {
+				"x": 18,
+				"y": 22,
+				"w": 6,
+				"h": 5
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "((last_over_time({job=\"codex-usage-advisor\"} | json | event=\"credit_snapshot\" | credit_expiry_at!=\"\"  | unwrap credit_expiry_at | __error__=\"\" [15m]) by (host, account, account_number) >= 0) and on(host,account) (last_over_time({job=\"codex-usage-advisor\"} | json | event=\"account_status\" | fresh!=\"\"  | unwrap fresh | __error__=\"\" [15m]) by (host, account, account_number) == 1)) * 1000",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "instant",
+					"legendFormat": "アカウント {{account_number}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"color": {
+						"mode": "fixed",
+						"fixedColor": "text"
+					},
+					"custom": {
+						"align": "left",
+						"cellOptions": {
+							"type": "auto"
+						},
+						"wrapText": true
+					}
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "有効期限"
+						},
+						"properties": [
+							{
+								"id": "unit",
+								"value": "dateTimeAsIso"
+							},
+							{
+								"id": "decimals",
+								"value": 1
+							},
+							{
+								"id": "mappings",
+								"value": []
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "利用枠"
+						},
+						"properties": [
+							{
+								"id": "mappings",
+								"value": [
+									{
+										"type": "value",
+										"options": {
+											"300": {
+												"text": "5時間枠"
+											},
+											"10080": {
+												"text": "週次枠"
+											}
+										}
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			"options": {
+				"showHeader": true,
+				"cellHeight": "md",
+				"footer": {
+					"show": false
+				}
+			},
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {
+							"Time": true,
+							"account": true,
+							"host": true
+						},
+						"indexByName": {
+							"account_number": 0,
+							"window_minutes": 1,
+							"Value #A": 2
+						},
+						"renameByName": {
+							"account_number": "アカウント",
+							"window_minutes": "利用枠",
+							"Value #A": "有効期限",
+							"Value": "有効期限"
+						}
+					}
+				}
+			]
+		},
+		{
+			"id": 12,
+			"title": "最新の切替・温存提案",
+			"type": "logs",
+			"description": "",
+			"gridPos": {
+				"x": 0,
+				"y": 27,
+				"w": 24,
+				"h": 7
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "{job=\"codex-usage-advisor\"} | json | event=\"usage_advice\" | line_format \"{{.summary}} — {{.description}}\"",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "range",
+					"legendFormat": "{{account_number}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": true,
+				"sortOrder": "Descending",
+				"showLabels": false
+			}
+		},
+		{
+			"id": 13,
+			"title": "Tibo monitor — 公表・観測の通知履歴",
+			"type": "logs",
+			"description": "通知ログの時刻です。過去の通知を再送しません。",
+			"gridPos": {
+				"x": 0,
+				"y": 34,
+				"w": 16,
+				"h": 6
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "{job=\"tibo-reset-monitor\"} | json | event=\"notification_sent\" | line_format \"{{.reset_type}} / {{.reset_id}}\"",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "range",
+					"legendFormat": "{{account_number}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": true,
+				"sortOrder": "Descending",
+				"showLabels": false
+			}
+		},
+		{
+			"id": 14,
+			"title": "Tibo monitor — 最近のポーリング",
+			"type": "logs",
+			"description": "",
+			"gridPos": {
+				"x": 16,
+				"y": 34,
+				"w": 8,
+				"h": 6
+			},
+			"datasource": {
+				"type": "loki",
+				"uid": "loki"
+			},
+			"targets": [
+				{
+					"refId": "A",
+					"expr": "{job=\"tibo-reset-monitor\"} | json | event=~\"poll_completed|poll_failed|deferred|baseline_created\"",
+					"datasource": {
+						"type": "loki",
+						"uid": "loki"
+					},
+					"queryType": "range",
+					"legendFormat": "{{account_number}}",
+					"editorMode": "code"
+				}
+			],
+			"fieldConfig": {
+				"defaults": {
+					"unit": "none",
+					"noValue": "不明",
+					"decimals": 1,
+					"color": {
+						"mode": "palette-classic"
+					}
+				},
+				"overrides": []
+			},
+			"options": {
+				"showTime": true,
+				"wrapLogMessage": true,
+				"sortOrder": "Descending",
+				"showLabels": false
+			}
+		}
+	],
+	"annotations": {
+		"list": [
+			{
+				"name": "Tibo通知",
+				"enable": true,
+				"hide": false,
+				"iconColor": "#B877D9",
+				"datasource": {
+					"type": "loki",
+					"uid": "loki"
+				},
+				"target": {
+					"refId": "Anno",
+					"expr": "{job=\"tibo-reset-monitor\"} | json | event=\"notification_sent\"",
+					"queryType": "range"
+				},
+				"textFormat": "{{reset_type}} / {{reset_id}}",
+				"titleFormat": "Tibo monitor通知"
+			}
+		]
+	},
+	"templating": {
+		"list": []
+	}
+}

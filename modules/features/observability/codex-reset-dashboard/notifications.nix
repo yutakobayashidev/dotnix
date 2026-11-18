@@ -13,6 +13,26 @@ let
         interval = "30s";
         rules = [
           {
+            alert = "CodexAccountAdvice";
+            expr = ''
+              sum by (host, user_id, advice_id, summary, description) (
+                count_over_time(
+                  {job="codex-usage-advisor"}
+                  | json event="event", advice_id="advice_id", summary="summary", description="description"
+                  | event="usage_advice" | advice_id!="" | __error__="" [15m]
+                )
+              ) > 0
+            '';
+            labels = {
+              severity = "info";
+              kind = "event";
+            };
+            annotations = {
+              summary = "{{ $labels.summary }}";
+              description = "{{ $labels.description }}";
+            };
+          }
+          {
             alert = "CodexResetCompleted";
             expr = ''
               sum by (host, user_id, credit_id) (

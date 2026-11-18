@@ -1,8 +1,8 @@
 # Codex limit auto reset
 
 UM790-Pro runs `codex-limit-auto-reset` as a Home Manager systemd user service
-for `yuta`. The reusable module and package live in the personal NUR repository;
-dotnix imports `homeModules.codex-limit-auto-reset` and enables it only in that
+for `yuta`. The reusable module and package live in the personal project's flake;
+dotnix imports `homeManagerModules.default` and enables it only in that
 host's home configuration.
 
 The shared NixOS user configuration enables linger, so the user manager starts
@@ -27,14 +27,35 @@ they use the same Codex account and redeem the same credits.
 The earlier [system service design](superpowers/specs/2026-07-13-codex-limit-auto-reset-design.md)
 is historical and is superseded by this user-service configuration.
 
+## Low-usage resets
+
+UM790-Pro sets `resetRemainingPercent = null`: low-remaining-quota redemption is
+disabled, while the existing six-hour expiry trigger remains enabled. The code
+and configurable threshold remain available for later use. With low-usage monitoring enabled, only one credit is selected per check, even
+when both triggers apply. Expiry-only scheduling uses the upstream worker. Model-specific allowances
+are excluded. The service does not resume tasks already stopped by a limit;
+consumption between polls can still exhaust the allowance.
+
+When low-usage monitoring is enabled, a pending redemption is saved at
+`~/.local/state/codex-limit-auto-reset/recovery.json` before the request. Until
+usage recovery is observed, the service may retry the same available credit
+with the same idempotency key but will not select another. This guard survives
+service restarts. Keep one worker per account; do not run another instance on
+another host. If `usage_recovery_pending` persists, inspect account usage and
+reset history before clearing the checkpoint. A corrupt checkpoint fails closed.
+
+Set `resetRemainingPercent = null` to return to expiry-only scheduling.
+
 ## Reset history
 
-The NUR package pins the [personal fork](https://github.com/yutakobayashidev/codex-limit-auto-reset).
+The `codex-limit-auto-reset` flake input pins the [personal fork](https://github.com/yutakobayashidev/codex-limit-auto-reset).
 Its daemon writes JSON lines with an ISO UTC `timestamp`, `level`, and `event`.
 Redemption events also include `credit_id` and `attempt`; results include
-`outcome`. Each failed redemption attempt is logged separately, and terminal
-initialization/check failures use `check_failed`. Error messages and RPC payloads
-are not included in these events.
+`outcome`; the optional low-usage worker also includes `reason` (`expiry` or
+`low_usage`). Each failed redemption attempt
+is logged separately, and terminal initialization/check failures use `check_failed`.
+Upstream failure events include safe error categories and may include a short
+app-server error detail. Raw exceptions, stacks and RPC payloads are omitted.
 
 Alloy on UM790-Pro reads `_SYSTEMD_USER_UNIT=codex-limit-auto-reset.service`,
 keeps the recognized JSON events, and forwards them to Loki with

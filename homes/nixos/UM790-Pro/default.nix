@@ -20,7 +20,13 @@
       publicUrl = "https://dsh.home.yutakobayashi.com/";
       trustedHosts = [ "dsh.home.yutakobayashi.com" ];
     };
-    services.codex-limit-auto-reset.enable = true;
+    services.codex-limit-auto-reset = {
+      enable = true;
+      # Keep expiry redemption, but leave low-quota decisions to advisory alerts.
+      resetRemainingPercent = null;
+      usagePollSeconds = 60;
+      advisor.enable = true;
+    };
     home.homeDirectory = "/home/${username}";
     services.wallpaper.imagePath = "/home/${username}/wallpapers/wp13990714.png";
   };

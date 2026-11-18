@@ -57,6 +57,8 @@ Generate the diagrams with [nix-topology](https://github.com/oddlama/nix-topolog
 nix build .#topology.x86_64-linux.config.output --out-link result
 ```
 
+- [Codex account advice](codex-usage-advisor.md) — multi-account quota, expiry and Tibo forecast recommendations to Discord; no automatic switching.
+
 - [Monitoring](monitoring.md) — unified metrics, infrastructure and room alerts, Claude/Codex telemetry, and migration.
 
 - [UniFi Network](unifi.md) — controller on B450M-Pro4 and management access

@@ -55,3 +55,12 @@ Inspect JSON journal events for baseline, delivery, rate limits, and failures.
 Manual starts use the same persistent state and do not intentionally resend
 already acknowledged announcements. Secrets and API response bodies are not
 written to the service's logs.
+
+## Unified Codex dashboard
+
+The monitor's JSON journal is also collected by Alloy as
+`job="tibo-reset-monitor"`. [Codex / Tibo](https://grafana.home.yutakobayashi.com/d/codex-usage-advisor)
+shows announcement notifications alongside account quota, credit expiry and Tibo
+forecasts from the [usage advisor](codex-usage-advisor.md). An annotation marks
+when a notification was delivered, not the exact time an account recovered.
+The dashboard does not resend notifications or change delivery state.

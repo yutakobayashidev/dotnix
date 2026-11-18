@@ -26,6 +26,18 @@ _:
       };
 
       config = lib.mkIf cfg.enable {
+        my.services.alloy.configs.tibo-reset-monitor = ''
+          loki.source.journal "tibo_reset_monitor" {
+            forward_to = [loki.write.default.receiver]
+            matches = "_SYSTEMD_UNIT=tibo-reset-monitor.service"
+            max_age = "168h"
+            labels = {
+              job = "tibo-reset-monitor",
+              host = "${config.networking.hostName}",
+            }
+          }
+        '';
+
         systemd.services.tibo-reset-monitor = {
           description = "Codex reset announcement monitor";
           wants = [ "network-online.target" ];

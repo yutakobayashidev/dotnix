@@ -63,6 +63,19 @@ _: {
                 repeat_interval = "24h";
                 routes = lib.optionals cfg.notifications.enable [
                   {
+                    matchers = [ ''alertname="CodexAccountAdvice"'' ];
+                    receiver = "infra-info";
+                    group_by = [
+                      "alertname"
+                      "host"
+                      "user_id"
+                      "advice_id"
+                    ];
+                    group_wait = "5s";
+                    group_interval = "1m";
+                    repeat_interval = "24h";
+                  }
+                  {
                     matchers = [ ''alertname="CodexResetCompleted"'' ];
                     receiver = "codex-reset-event";
                     group_by = [
