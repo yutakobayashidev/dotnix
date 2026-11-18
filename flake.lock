@@ -207,11 +207,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794989633,
-        "narHash": "sha256-b1Mwt5YYENTPOInoSwQCajfNMfYy2Vd9xY4ltILGnHI=",
+        "lastModified": 1794995074,
+        "narHash": "sha256-inDSfVVjcyUo3Xg2xvxDsdpbbXmLC7sqmW0NyMsGYiw=",
         "owner": "yutakobayashidev",
         "repo": "codex-limit-auto-reset",
-        "rev": "40cdb6a9187ee992fbeefa78199db4cd9f90cdef",
+        "rev": "bfbe7bd87c6eac9cd4f92cdd3e66462588fe291e",
         "type": "github"
       },
       "original": {
