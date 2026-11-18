@@ -2111,11 +2111,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1795022773,
-        "narHash": "sha256-DhdoGaFYWyMi0H7Uzc1+E4z40F4x8qjmvr6RUt97cL0=",
+        "lastModified": 1795023477,
+        "narHash": "sha256-8shMbNaxzcUgRyXSPo185YVgQxt3TOEpOjlJLI5Q5l8=",
         "owner": "yutakobayashidev",
         "repo": "noren",
-        "rev": "0afdfabab3ba7d7beb559a173f7c96bc2e5ebad4",
+        "rev": "9f98f3c5cd0fd9de7bfee5f3d70346e6dd34dc30",
         "type": "github"
       },
       "original": {
