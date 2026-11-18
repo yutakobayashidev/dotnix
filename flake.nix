@@ -124,6 +124,7 @@
       url = "github:yutakobayashidev/droidperm";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    noren.url = "github:yutakobayashidev/noren";
     # Keep the gateway's tested Rust/native toolchain pinned independently.
     rdt-gateway.url = "github:yutakobayashidev/rdt-gateway";
     repiq = {

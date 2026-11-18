@@ -1,7 +1,7 @@
 # Pocket ID clients
 
 This root manages the Grafana, linkding, Immich, moe, Gitea, Nextcloud, Ori,
-Ori ChatGPT, Ori Muse, and Ori Hermes OIDC clients. Application-side configuration lives
+Ori ChatGPT, Ori Muse, Ori Hermes, and Noren OIDC clients. Application-side configuration lives
 in the corresponding
 `systems/nixos/services/` modules. LiteLLM and n8n are intentionally excluded.
 
@@ -48,6 +48,9 @@ tofu -chdir=infra/pocket-id init \
 tofu -chdir=infra/pocket-id plan
 tofu -chdir=infra/pocket-id apply
 ```
+
+Noren uses a public PKCE client with an exact HTTPS redirect URI. Its NixOS
+service restricts access to the owner subject before exposing the shared relay.
 
 Client secret changes must be applied to Pocket ID and the application's
 SOPS secret together; changing only one side prevents login. Local login

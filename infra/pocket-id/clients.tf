@@ -86,3 +86,12 @@ resource "pocketid_client" "app" {
   is_public     = false
   pkce_enabled  = each.value.pkce_enabled
 }
+
+resource "pocketid_client" "noren" {
+  name          = "Noren"
+  client_id     = "noren"
+  launch_url    = "https://noren.home.yutakobayashi.com"
+  callback_urls = ["https://noren.home.yutakobayashi.com/auth/callback"]
+  is_public     = true
+  pkce_enabled  = true
+}
