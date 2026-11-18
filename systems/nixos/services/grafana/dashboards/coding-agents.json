@@ -18,14 +18,7 @@
 	"editable": false,
 	"fiscalYearStartMonth": 0,
 	"graphTooltip": 1,
-	"links": [
-		{
-			"title": "Claude event details",
-			"type": "link",
-			"url": "/d/claude-code-telemetry",
-			"targetBlank": false
-		}
-	],
+	"links": [],
 	"preload": false,
 	"refresh": "1m",
 	"schemaVersion": 42,

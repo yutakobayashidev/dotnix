@@ -151,3 +151,14 @@ adapter therefore timestamps a newly confirmed API observation itself, requiring
 `refresh.requested=true`, `method=api`, `status=ok`, and `source=api`. Unchanged
 samples count toward the consumption timeline; a failed or skipped refresh does
 not acquire a new timestamp.
+
+The unified dashboard also includes reset-credit redemption totals, the Japan-time
+annual calendar, results and worker failures. The calendar defaults to the last
+year when the dashboard uses a relative time range; other history panels follow
+the selected range. The old `codex-reset-history` dashboard is retired.
+
+The runtime provisioning copy now points `nix-managed` at
+`/var/lib/grafana/managed-dashboards` (without the retired Claude telemetry
+screen) and `codex-reset` at the empty `/var/lib/grafana/retired-codex-dashboards`
+with deletion enabled. These two directories can also be removed after the
+Grafana provisioning override is retired following a full Nix deployment.

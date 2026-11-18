@@ -50,7 +50,7 @@ let
             annotations = {
               summary = "Codex rate limit reset completed";
               description = "Credit: {{ $labels.credit_id }}";
-              dashboard_url = "https://grafana.home.yutakobayashi.com/d/codex-reset-history";
+              dashboard_url = "https://grafana.home.yutakobayashi.com/d/codex-usage-advisor";
             };
           }
         ];

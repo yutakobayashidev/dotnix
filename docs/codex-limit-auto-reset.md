@@ -77,7 +77,7 @@ or during a collection outage, does not prove zero resets.
 ## Grafana calendar
 
 After applying UM790-Pro (daemon and Alloy) and B450M-Pro4 (Grafana and Loki),
-open [Codex reset history](https://grafana.home.yutakobayashi.com/d/codex-reset-history).
+open the reset history section in [Codex / Tibo](https://grafana.home.yutakobayashi.com/d/codex-usage-advisor).
 The signed calendar panel displays one day per square in `Asia/Tokyo`; darker
 green indicates fewer confirmed resets and brighter green indicates more.
 The dashboard also shows totals, failed attempts/checks, recent check activity,

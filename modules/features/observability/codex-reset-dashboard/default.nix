@@ -19,7 +19,7 @@ _:
               name = "codex-reset";
               options.path = ./dashboards;
               allowUiUpdates = false;
-              disableDeletion = true;
+              disableDeletion = false;
             }
           ];
         };
