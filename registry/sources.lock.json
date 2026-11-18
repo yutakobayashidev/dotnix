@@ -399,25 +399,6 @@
 			},
 			"subdir": "skills/oracle"
 		},
-		"superpowers": {
-			"filter": {
-				"maxDepth": null,
-				"nameRegex": null
-			},
-			"idPrefix": null,
-			"pin": {
-				"at": null,
-				"branch": "main",
-				"owner": "obra",
-				"preReleases": false,
-				"releasePrefix": null,
-				"repo": "superpowers",
-				"submodules": false,
-				"type": "github",
-				"versionUpperBound": null
-			},
-			"subdir": "skills"
-		},
 		"twitter-api-relay": {
 			"filter": {
 				"maxDepth": null,
@@ -709,19 +690,6 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/yutakobayashidev/oracle/archive/722b058add0253cfdfda0179922cc9f2a9bd470b.tar.gz"
-			},
-			"superpowers": {
-				"branch": "main",
-				"hash": "sha256-9+69YEdjdaDu5sWTyAbufSVcZgGD7h6wAq4nUVY2syE=",
-				"repository": {
-					"owner": "obra",
-					"repo": "superpowers",
-					"type": "GitHub"
-				},
-				"revision": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b",
-				"submodules": false,
-				"type": "Git",
-				"url": "https://github.com/obra/superpowers/archive/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b.tar.gz"
 			},
 			"twitter-api-relay": {
 				"branch": "main",

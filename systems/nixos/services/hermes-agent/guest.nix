@@ -90,7 +90,7 @@ let
     git-discrawl-archive,git-ssh.yutakobayashi.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPZl6HOE9OLZQxnK1liKwcFUSNHKVk0YPC49tdyxHO/
   '';
   hermesSkillsSources = {
-    inherit (registrySources) superpowers i-have-adhd;
+    inherit (registrySources) i-have-adhd;
     ax = {
       path = inputs.ax;
       subdir = "skills";
@@ -114,10 +114,6 @@ let
       ax = {
         from = "ax";
         path = "ax";
-      };
-      brainstorming = {
-        from = "superpowers";
-        path = "brainstorming";
       };
       bird = {
         from = "skills";
@@ -464,8 +460,9 @@ in
         chmod 0600 "$stamp"
       fi
 
-      # Retire the previously managed skill that invokes the removed CLI.
+      # Remove retired managed skills from the persistent Hermes directory.
       rm -rf /var/lib/hermes/.hermes/skills/defuddle
+      rm -rf /var/lib/hermes/.hermes/skills/brainstorming
       ${hermesSkillsInstallScript}
 
       chown -R hermes:hermes \
