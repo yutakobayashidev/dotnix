@@ -5,8 +5,16 @@ nameserver, with local DNS override enabled. Clients accept this configuration;
 Linux desktops use systemd-resolved without static nameservers or search domains.
 The explicit `home.yutakobayashi.com` split route points to the same CoreDNS.
 
-CoreDNS answers `home.yutakobayashi.com` and its subdomains with the B450M Tailnet
-address. For public names it tries Quad9 (`9.9.9.9`) first, then Cloudflare
+CoreDNS resolves A/AAAA queries for `home.yutakobayashi.com` and its subdomains
+through `b450m-pro4.tail29d068.ts.net` using Tailscale MagicDNS. It rewrites the
+answer name back to the requested application name; clients keep their existing
+URLs. App address records therefore follow MagicDNS rather than a hard-coded IP.
+The CoreDNS listening address and Tailscale nameserver setting remain unchanged.
+HTTPS/SVCB queries return NOERROR with no answers (NODATA), so public NXDOMAIN
+responses cannot invalidate internal address lookups. Other types retain public
+forwarding, including TXT lookups used for ACME DNS challenges.
+
+For public names it tries Quad9 (`9.9.9.9`) first, then Cloudflare
 (`1.1.1.1`) on network errors, timeouts, SERVFAIL or REFUSED. `policy sequential`
 makes the order meaningful. NXDOMAIN is returned unchanged, including Quad9
 blocking responses. Healthy Quad9 is preferred again after recovery.

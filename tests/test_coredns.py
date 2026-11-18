@@ -144,6 +144,7 @@ class CoreDNSTest(unittest.TestCase):
             "tailnetAddress": "127.0.0.1",
             "homeDomain": "home.test",
             "tailDomain": "tail.test",
+            "appHost": "gateway.tail.test",
             "hostName": "test",
             "policy": str(cls.path),
             "zones": str(cls.path / "zones.conf"),
@@ -263,9 +264,39 @@ class CoreDNSTest(unittest.TestCase):
         self.assertNotIn("blocked.invalid.", self.primary.queries)
 
     def test_internal_zones(self):
-        self.assertEqual(str(self.query("unifi.home.test").answer[0][0]), "127.0.0.1")
-        self.assertFalse(self.query("unifi.home.test", "AAAA").answer)
+        for name in ("home.test", "unifi.home.test", "deep.app.home.test"):
+            for kind, address in (("A", "192.0.2.10"), ("AAAA", "2001:db8::10")):
+                with self.subTest(name=name, kind=kind):
+                    before = len(self.primary.queries)
+                    response = self.query(name, kind)
+                    self.assertEqual(response.rcode(), dns.rcode.NOERROR)
+                    self.assertEqual(str(response.answer[0].name), name + ".")
+                    self.assertEqual(str(response.answer[0][0]), address)
+                    self.assertIn("gateway.tail.test.", self.primary.queries[before:])
+                    self.assertNotIn(name + ".", self.primary.queries[before:])
         self.assertTrue(self.query("host.tail.test").answer)
+
+    def test_home_service_bindings_do_not_poison_address_resolution(self):
+        # Even an upstream NXDOMAIN must not affect internal service bindings.
+        self.primary.rcode = self.secondary.rcode = dns.rcode.NXDOMAIN
+        before = len(self.primary.queries) + len(self.secondary.queries)
+        for name in ("home.test", "dsh.home.test", "deep.app.home.test"):
+            for kind in ("HTTPS", "SVCB"):
+                response = self.query(name, kind)
+                self.assertEqual(response.rcode(), dns.rcode.NOERROR)
+                self.assertFalse(response.answer)
+        self.assertEqual(
+            before, len(self.primary.queries) + len(self.secondary.queries)
+        )
+        self.primary.rcode = 0
+        self.assertEqual(str(self.query("dsh.home.test").answer[0][0]), "192.0.2.10")
+
+    def test_acme_queries_keep_public_names(self):
+        name = "_acme-challenge.dsh.home.test."
+        before = len(self.primary.queries)
+        self.query(name, "TXT")
+        self.assertIn(name, self.primary.queries[before:])
+        self.assertNotIn("gateway.tail.test.", self.primary.queries[before:])
 
     def test_upstream_priority_and_failover(self):
         for label, code, secondary, result in (

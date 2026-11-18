@@ -8,6 +8,15 @@
 | `sources.json`, `generate-policy.py` | Pinned upstream lists and offline compilation      |
 | `allowlist.txt`, `blocklist.txt`     | Local exceptions and additions                     |
 
+## Internal application names
+
+A/AAAA queries under `home.yutakobayashi.com` use a type-specific `view` and
+`rewrite ... answer auto` to resolve the local server's MagicDNS name through
+`100.100.100.100`. Responses retain the original app name. HTTPS/SVCB queries
+return NODATA locally; other types use the existing public upstreams so ACME TXT
+validation continues to work. Public filtering and stale caching do not apply to
+this zone. The address view must precede the catch-all home-zone block.
+
 ## Filtering
 
 The configuration draws on [nyanshiba's CoreDNS configuration](https://github.com/nyanshiba/corednsconf)

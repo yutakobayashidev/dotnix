@@ -12,10 +12,10 @@ let
   inherit (config.networking) hostName;
   policy = import ./policy.nix { inherit pkgs homeDomain tailDomain; };
   zones = pkgs.replaceVars ./zones.conf {
+    appHost = "${lib.toLower hostName}.${tailDomain}";
     inherit
       homeDomain
       tailDomain
-      tailnetAddress
       hostName
       ;
   };
