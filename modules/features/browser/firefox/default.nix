@@ -48,6 +48,7 @@ _:
             settings =
               let
                 parfaitSrc = fetchTarball {
+                  name = "parfait-source";
                   inherit (parfait) url;
                   sha256 = parfait.outputHash;
                 };
