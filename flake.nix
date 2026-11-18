@@ -21,10 +21,6 @@
       url = "github:nakasyou/codex-transcribe";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    codex-limit-auto-reset = {
-      url = "github:yutakobayashidev/codex-limit-auto-reset";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nani-translate-linux = {
       url = "git+https://git.yutakobayashi.com/yuta/nani-translate-linux";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -137,6 +133,10 @@
     temari = {
       url = "github:yutakobayashidev/temari";
       inputs.agent-skills-nix.follows = "agent-skills";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    codex-limit-auto-reset = {
+      url = "github:yutakobayashidev/codex-limit-auto-reset";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur-packages = {
