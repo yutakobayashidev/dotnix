@@ -11,23 +11,12 @@ _:
 
     let
       cfg = config.my.programs.noctalia;
-      codexbarUsagePlugin = pkgs.runCommand "noctalia-codexbar-usage-plugin" { } ''
-        mkdir -p "$out"
-        cp ${./plugins/codexbar-usage/plugin.toml} "$out/plugin.toml"
-        substitute ${./plugins/codexbar-usage/usage.luau} "$out/usage.luau" \
-          --replace-fail "@codexbarPath@" "${lib.getExe pkgs.codexbar-waybar}"
-      '';
     in
     {
       options.my.programs.noctalia.enable = lib.mkEnableOption "Noctalia";
 
       config = lib.mkIf cfg.enable {
         home.packages = [ pkgs.networkmanagerapplet ];
-
-        xdg.dataFile."noctalia/plugins/codexbar-usage" = {
-          source = codexbarUsagePlugin;
-          recursive = true;
-        };
 
         programs.niri.settings.binds = lib.mkIf config.my.programs.niri.enable {
           "Mod+Shift+M" = {
@@ -93,7 +82,7 @@ _:
               start = [
                 "app-launcher"
                 "dotnetrob/cat:cat"
-                "yuta/codexbar-usage:usage"
+                "ayagmar/headroom:usage"
                 "yuta/meeting-bar:bar"
                 "media"
               ];
@@ -111,8 +100,8 @@ _:
             };
 
             plugins.enabled = [
-              "yuta/codexbar-usage"
               # Provided by Noctalia's built-in community source.
+              "ayagmar/headroom"
               "yuta/meeting-bar"
               "dotnetrob/cat"
             ];

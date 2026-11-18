@@ -68,12 +68,12 @@ Niriではブラウザーを開いても前面に出ない場合がある。Noct
 noctalia msg plugins update community
 noctalia msg plugins source remove dotnix-meeting-bar
 noctalia msg plugins enable yuta/meeting-bar
-noctalia msg plugins enable yuta/codexbar-usage
+noctalia msg plugins enable ayagmar/headroom
 noctalia msg plugins list | rg 'yuta/meeting-bar'
 ```
 
 開発用ソースの削除時には、そのソースで検出されていたプラグインの有効状態も外れるため、
-Meeting BarとローカルのCodex barを再度有効にする。Nix側の `plugins.enabled` にも両方を指定している。
+Meeting BarとHeadroomを再度有効にする。Nix側の `plugins.enabled` にも両方を指定している。
 一覧で `yuta/meeting-bar [community] ... enabled` と表示されることを確認する。
 新規環境では開発用ソースの削除は不要。
 
