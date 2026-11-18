@@ -1,9 +1,11 @@
 # Codex limit auto reset
 
 UM790-Pro runs `codex-limit-auto-reset` as a Home Manager systemd user service
-for `yuta`. The reusable module and package live in the personal NUR repository;
-dotnix imports `homeModules.codex-limit-auto-reset` and enables it only in that
-host's home configuration.
+for `yuta`. The reusable module and package live in the application repository;
+dotnix imports `inputs.codex-limit-auto-reset.homeManagerModules.default` and
+enables it only in that host's home configuration. The input currently pins the
+personal fork while the upstream Nix and usage-monitoring PRs are under review.
+NUR retains compatibility exports but no longer owns these definitions.
 
 The shared NixOS user configuration enables linger, so the user manager starts
 at boot and remains active after logout. The service belongs to `default.target`.

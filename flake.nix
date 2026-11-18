@@ -135,6 +135,10 @@
       inputs.agent-skills-nix.follows = "agent-skills";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    codex-limit-auto-reset = {
+      url = "github:yutakobayashidev/codex-limit-auto-reset";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nur-packages = {
       url = "github:yutakobayashidev/nur-packages";
       inputs.nixpkgs.follows = "nixpkgs";

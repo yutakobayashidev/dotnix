@@ -200,6 +200,26 @@
         "type": "github"
       }
     },
+    "codex-limit-auto-reset": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794979709,
+        "narHash": "sha256-o4nc93xv08zpYFt9itbidSmNpBMKZvWVOGfjyryBkBw=",
+        "owner": "yutakobayashidev",
+        "repo": "codex-limit-auto-reset",
+        "rev": "e15e0727bfabd1bf37caf19d60562736ebad7d0e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yutakobayashidev",
+        "repo": "codex-limit-auto-reset",
+        "type": "github"
+      }
+    },
     "codex-transcribe": {
       "inputs": {
         "nixpkgs": [
@@ -2289,6 +2309,7 @@
         "birdclaw": "birdclaw",
         "brew-api": "brew-api",
         "brew-nix": "brew-nix",
+        "codex-limit-auto-reset": "codex-limit-auto-reset",
         "codex-transcribe": "codex-transcribe",
         "comin": "comin",
         "disko": "disko",
