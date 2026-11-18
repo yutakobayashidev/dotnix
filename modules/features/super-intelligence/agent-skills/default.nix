@@ -103,6 +103,16 @@ _:
             // selectedSkills
             // (import ./mizchi.nix { inherit pkgs lib registrySources; })
             // {
+              twitter-api-relay = selectedSkills.twitter-api-relay // {
+                transform =
+                  { original, ... }:
+                  builtins.replaceStrings
+                    [ "Use this whenever you get a Twitter-related instruction." ]
+                    [
+                      "Use only when the user explicitly requests relay or bird does not support the required operation. Prefer the bird skill by default for X/Twitter tasks."
+                    ]
+                    original;
+              };
               publish-cot = {
                 from = "nyanshiba";
                 path = "publish-cot";

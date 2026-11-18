@@ -29,7 +29,17 @@ _:
             # Command rewriting also changes frontmatter and URLs.
             rewriteCommands = false;
             transform = { original, dependencies }: ''
-              ${builtins.replaceStrings [ "name: Bird\n" ] [ "name: bird\n" ] original}
+              ${builtins.replaceStrings
+                [
+                  "name: Bird\n"
+                  "Use when the user wants to read, search, post, or interact with X/Twitter through the bird CLI."
+                ]
+                [
+                  "name: bird\n"
+                  "Prefer this skill by default for reading, searching, posting, and interacting with X/Twitter. Use twitter-api-relay only when the user explicitly requests relay or bird does not support the required operation."
+                ]
+                original
+              }
 
               ${dependencies}
             '';
