@@ -399,25 +399,6 @@
 			},
 			"subdir": "skills/oracle"
 		},
-		"prompt-review": {
-			"filter": {
-				"maxDepth": null,
-				"nameRegex": null
-			},
-			"idPrefix": null,
-			"pin": {
-				"at": null,
-				"branch": "main",
-				"owner": "tokoroten",
-				"preReleases": false,
-				"releasePrefix": null,
-				"repo": "prompt-review",
-				"submodules": false,
-				"type": "github",
-				"versionUpperBound": null
-			},
-			"subdir": ".claude/skills"
-		},
 		"superpowers": {
 			"filter": {
 				"maxDepth": null,
@@ -728,19 +709,6 @@
 				"submodules": false,
 				"type": "Git",
 				"url": "https://github.com/yutakobayashidev/oracle/archive/722b058add0253cfdfda0179922cc9f2a9bd470b.tar.gz"
-			},
-			"prompt-review": {
-				"branch": "main",
-				"hash": "sha256-Ma9qm0aggx+F0FDNd0DMXsuZLZz/Ei3o1oid8ljWGfA=",
-				"repository": {
-					"owner": "tokoroten",
-					"repo": "prompt-review",
-					"type": "GitHub"
-				},
-				"revision": "0a83fd9eeead58fe92d0b04522da9e6840a71940",
-				"submodules": false,
-				"type": "Git",
-				"url": "https://github.com/tokoroten/prompt-review/archive/0a83fd9eeead58fe92d0b04522da9e6840a71940.tar.gz"
 			},
 			"superpowers": {
 				"branch": "main",

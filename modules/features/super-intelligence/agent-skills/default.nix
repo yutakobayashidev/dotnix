@@ -45,7 +45,6 @@ _:
           "surveyor"
         ];
         twitter-api-relay = [ "twitter-api-relay" ];
-        prompt-review = [ "prompt-review" ];
       };
       selectedSkills = lib.concatMapAttrs (
         from: paths:
@@ -80,7 +79,6 @@ _:
               humanlayer
               nyanshiba
               benjitaylor
-              prompt-review
               mattpocock
               i-have-adhd
               twitter-api-relay
