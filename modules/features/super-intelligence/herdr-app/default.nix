@@ -21,6 +21,12 @@ _:
         rev = "6e2786d1ae7555cbe4c338c55c265badc86812cb";
         hash = "sha256-y7YjVtnCRjC/8eaGKAlsJJtCdc9gyikweL0cpj9+Ufg=";
       };
+      portForwardSrc = pkgs.fetchFromGitHub {
+        owner = "yutakobayashidev";
+        repo = "herdr-port-forward";
+        rev = "2b3f219f49b57088a4c05005b48ba1270331d81f";
+        hash = "sha256-odFAxMEC7wTLwGfJQM6hMrK26Dtu1ugx0SDjMIIUKTw=";
+      };
       keysOverrides = pkgs.writeText "herdr-app-keys-overrides.json" (
         builtins.toJSON {
           global = {
@@ -64,6 +70,11 @@ _:
         };
 
         xdg.configFile = {
+          "herdr-app/layouts/port-forward.json".source = "${portForwardSrc}/layouts/port-forward.json";
+          "herdr-app/mods/port-forward" = {
+            source = "${portForwardSrc}/mods/port-forward";
+            recursive = true;
+          };
           "herdr-app/layouts/board.json".source = "${boardSrc}/board/layouts/board.json";
           "herdr-app/mods/board" = {
             source = "${boardSrc}/board/mods/board";
