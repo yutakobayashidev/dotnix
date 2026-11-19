@@ -69,7 +69,6 @@ _:
           DISABLE_MICROCOMPACT = "1";
           DISABLE_NON_ESSENTIAL_MODEL_CALLS = "1";
           DISABLE_TELEMETRY = boolString (!cfg.telemetry.enable);
-          CLAUDE_CODE_EFFORT_LEVEL = "max";
           ENABLE_EXPERIMENTAL_MCP_CLI = "false";
           ENABLE_TOOL_SEARCH = "true";
           CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS = "1";
