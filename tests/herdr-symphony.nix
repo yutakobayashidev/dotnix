@@ -37,7 +37,10 @@ let
   };
   host = evaluate {
     imports = [ ../homes/nixos/UM790-Pro/herdr-symphony ];
-    home.sessionVariables.CODEX_HOME = "/home/tester/.config/codex";
+    home.sessionVariables = {
+      CLAUDE_CONFIG_DIR = "/home/tester/.config/claude";
+      CODEX_HOME = "/home/tester/.config/codex";
+    };
   };
   hostWorkflows = host.my.services.herdr-symphony.workflows;
   disabled = evaluate { };
@@ -84,6 +87,14 @@ assert
 assert
   hostWorkflows.verify.settings.work.herdr_agent.codex.env
   == host.my.services.herdr-symphony.environment;
+assert hostWorkflows.implement.settings.work.herdr_agent.agent == "claude";
+assert hostWorkflows.verify.settings.work.herdr_agent.claude.permission_mode == "bypassPermissions";
+assert
+  hostWorkflows.verify.settings.work.herdr_agent.claude.env
+  == host.my.services.herdr-symphony.environment;
+assert
+  host.my.services.herdr-symphony.environment.CLAUDE_CONFIG_DIR == "/home/tester/.config/claude";
+assert hostWorkflows.implement.settings.work.herdr_agent.codex.yolo;
 assert !(disabled.systemd.user.services ? herdr-symphony);
 assert assertValid generated;
 assert assertValid files;

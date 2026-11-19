@@ -37,9 +37,14 @@ let
       };
       runner = "herdr_core";
       herdr_agent = {
-        agent = "codex";
+        agent = "claude";
         app_space = "spe197553d6d39c7e2fbf69dde3e4806e7";
+        claude = {
+          permission_mode = "bypassPermissions";
+          env = cfg.environment;
+        };
         codex = {
+          yolo = true;
           model = "gpt-6.2-astra";
           thinking_effort = "medium";
           env = cfg.environment;
@@ -60,7 +65,13 @@ in
       pkgs.nodejs
     ];
     environment =
-      lib.filterAttrs (name: _: builtins.elem name [ "CODEX_HOME" ]) config.home.sessionVariables
+      lib.filterAttrs (
+        name: _:
+        builtins.elem name [
+          "CLAUDE_CONFIG_DIR"
+          "CODEX_HOME"
+        ]
+      ) config.home.sessionVariables
       // {
         XDG_CONFIG_HOME = config.xdg.configHome;
         XDG_DATA_HOME = config.xdg.dataHome;
