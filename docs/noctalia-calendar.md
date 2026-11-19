@@ -68,7 +68,7 @@ Niriではブラウザーを開いても前面に出ない場合がある。Noct
 noctalia msg plugins update community
 noctalia msg plugins source remove dotnix-meeting-bar
 noctalia msg plugins enable yuta/meeting-bar
-noctalia msg plugins enable ayagmar/headroom
+noctalia msg plugins enable yutakobayashidev/headroom
 noctalia msg plugins list | rg 'yuta/meeting-bar'
 ```
 
@@ -76,5 +76,7 @@ noctalia msg plugins list | rg 'yuta/meeting-bar'
 Meeting BarとHeadroomを再度有効にする。Nix側の `plugins.enabled` にも両方を指定している。
 一覧で `yuta/meeting-bar [community] ... enabled` と表示されることを確認する。
 新規環境では開発用ソースの削除は不要。
+
+Headroomは[個人fork版](noctalia-headroom.md)をHome Managerで配布する。
 
 仕様: [Noctalia Calendar](https://docs.noctalia.dev/noctalia/services/calendar/)

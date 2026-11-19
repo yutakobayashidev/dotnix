@@ -11,12 +11,25 @@ _:
 
     let
       cfg = config.my.programs.noctalia;
+      headroomSource = pkgs.fetchFromGitHub {
+        owner = "yutakobayashidev";
+        repo = "headroom";
+        rev = "2bae3e7cf796b764333d0756134c128838539783";
+        hash = "sha256-PubTpX9h1+cs8ASrMoe4ozQPfbNbloA14BdRzmmQKx0=";
+      };
     in
     {
       options.my.programs.noctalia.enable = lib.mkEnableOption "Noctalia";
 
       config = lib.mkIf cfg.enable {
-        home.packages = [ pkgs.networkmanagerapplet ];
+        home.packages = [
+          pkgs.networkmanagerapplet
+          pkgs.llm-agents.codex-auth
+          pkgs.python3
+        ];
+
+        # A pinned local plugin takes precedence over community updates.
+        xdg.dataFile."noctalia/plugins/headroom".source = headroomSource;
 
         programs.niri.settings.binds = lib.mkIf config.my.programs.niri.enable {
           "Mod+Shift+M" = {
@@ -82,7 +95,7 @@ _:
               start = [
                 "app-launcher"
                 "dotnetrob/cat:cat"
-                "ayagmar/headroom:usage"
+                "yutakobayashidev/headroom:usage"
                 "yuta/meeting-bar:bar"
                 "media"
               ];
@@ -100,8 +113,8 @@ _:
             };
 
             plugins.enabled = [
+              "yutakobayashidev/headroom"
               # Provided by Noctalia's built-in community source.
-              "ayagmar/headroom"
               "yuta/meeting-bar"
               "dotnetrob/cat"
             ];
