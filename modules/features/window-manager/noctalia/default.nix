@@ -14,8 +14,8 @@ _:
       headroomSource = pkgs.fetchFromGitHub {
         owner = "yutakobayashidev";
         repo = "headroom";
-        rev = "2bae3e7cf796b764333d0756134c128838539783";
-        hash = "sha256-PubTpX9h1+cs8ASrMoe4ozQPfbNbloA14BdRzmmQKx0=";
+        rev = "7caaa729c2e9c06e903cf857c758034a093e84aa";
+        hash = "sha256-lPRaIc4AxZJR4iZ4Kur/XdKFKAHXs+yVqsxiI6/aono=";
       };
     in
     {
@@ -30,6 +30,11 @@ _:
 
         # A pinned local plugin takes precedence over community updates.
         xdg.dataFile."noctalia/plugins/headroom".source = headroomSource;
+
+        # Match the account registry used by the interactive Codex CLI.
+        systemd.user.services.noctalia.Service.Environment = [
+          "CODEX_HOME=${config.xdg.configHome}/codex"
+        ];
 
         programs.niri.settings.binds = lib.mkIf config.my.programs.niri.enable {
           "Mod+Shift+M" = {
@@ -94,12 +99,13 @@ _:
               position = "top";
               start = [
                 "app-launcher"
+                "workspaces"
                 "dotnetrob/cat:cat"
                 "yutakobayashidev/headroom:usage"
                 "yuta/meeting-bar:bar"
                 "media"
               ];
-              center = [ "workspaces" ];
+              center = [ ];
               end = [
                 "tray"
                 "notifications"
@@ -122,14 +128,15 @@ _:
             widget = {
               app-launcher = {
                 type = "custom_button";
-                glyph = "apps";
-                actions.left = "vicinae toggle";
-                tooltip = "Applications";
+                glyph = "search";
+                actions.left = "exec vicinae toggle";
+                tooltip = "アプリを検索 (Vicinae)";
               };
               workspaces = {
                 type = "workspaces";
-                style = "focus_hint";
-                show_labels = false;
+                style = "minimal";
+                show_labels = true;
+                label_source = "id";
                 show_icons = false;
                 hide_when_empty = true;
               };
