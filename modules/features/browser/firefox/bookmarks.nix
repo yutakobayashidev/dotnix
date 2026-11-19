@@ -13,6 +13,10 @@ let
           tags = [ "shortcut" ];
         }
         {
+          name = "Agent Work Queue";
+          url = "https://github.com/users/yutakobayashidev/projects/3";
+        }
+        {
           name = "";
           url = "https://git.yutakobayashi.com/";
         }

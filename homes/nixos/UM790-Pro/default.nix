@@ -11,6 +11,7 @@
       ./beeper.nix
       ./dsh.nix
       ./opencode.nix
+      ./herdr-symphony
     ];
     my.programs.course-cli.enable = true;
     my.programs.dsh.web = {

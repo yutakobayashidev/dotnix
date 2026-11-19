@@ -141,7 +141,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur-packages = {
-      url = "github:yutakobayashidev/nur-packages";
+      url = "github:yutakobayashidev/nur-packages/adaaa1bdda03a7f4867d979c7c1eecd1fe4638c4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     openai-secure-tunnel-nix = {

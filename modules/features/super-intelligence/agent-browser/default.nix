@@ -32,11 +32,13 @@ _:
               builtins.replaceStrings
                 [
                   "Bash(agent-browser:*), Bash(npx agent-browser:*)"
+                  "Bash(agent-browser:*)"
                   "Install: `npm i -g agent-browser && agent-browser install`\n\n"
                   "agent-browser skills "
                   "`agent-browser`"
                 ]
                 [
+                  "Bash(${agentBrowserBin}:*)"
                   "Bash(${agentBrowserBin}:*)"
                   ""
                   "${agentBrowserBin} skills "
