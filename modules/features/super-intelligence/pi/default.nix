@@ -56,6 +56,7 @@ _:
           extraPackages = [ pkgs.nodejs ];
           mutableSettings = true;
           settings.packages = [
+            "npm:@ogulcancelik/pi-herdr@0.4.1"
             "npm:@aliou/pi-guardrails@0.23.0"
             "npm:pi-rewind-hook@1.8.8"
             "npm:pi-petrroll@0.3.1"
