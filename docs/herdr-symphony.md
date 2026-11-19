@@ -90,3 +90,9 @@ Run the reproducible materialization and application-parser check with `nix buil
 Symphony closes its recorded Herdr terminal five minutes after success, failure or timeout, on the next polling sweep. Independently started terminals are not enumerated or closed. Reusing a scheduled terminal does not cancel its cleanup; use a separate terminal for follow-up work. The setting is captured when a task starts and does not retroactively clean up old terminals. Pending cleanup timers are in memory and are lost when Symphony restarts.
 
 The host service uses the user profile and `/run/current-system/sw` for its tools. Node.js is added explicitly because it is not on those profiles and the media attachment formatter needs it. The module adds Symphony itself to PATH and the host forwards the same PATH to Codex started by Herdr Core.
+
+## Dedicated App space and history
+
+UM790-Pro sends workers to the `Symphony Tasks` space through `herdr_agent.app_space`. Each issue receives its own tab; the Queue shell keeps the named space available after workers close. The App can be closed while Core runs tasks. If the space is deleted, the next worker recreates its configured ID as an unnamed space; rename it or update the ID in the host configuration.
+
+The service and Codex share `cfg.environment`, with PATH from the profiles, CODEX_HOME from Home Manager session variables, and the XDG directories from Home Manager. Atuin uses those same configured directories to ingest Codex threads and tool commands. Direct service commands do not become interactive shell history. App Threads also requires an Atuin client compatible with the running daemon.
