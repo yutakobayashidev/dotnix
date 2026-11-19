@@ -38,11 +38,6 @@ _:
             deepwiki = {
               url = "https://mcp.deepwiki.com/mcp";
             };
-
-            atuin = {
-              command = lib.getExe pkgs.atuin;
-              args = [ "mcp" ];
-            };
           };
         };
 
