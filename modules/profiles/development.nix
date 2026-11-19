@@ -34,6 +34,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
         gh.enable = lib.mkDefault true;
         lazydsh.enable = lib.mkDefault true;
         markitdown.enable = lib.mkDefault true;
+        mistral-vibe.enable = lib.mkDefault true;
         omp.enable = lib.mkDefault true;
         opencode.enable = lib.mkDefault true;
         oracle.enable = lib.mkDefault true;
