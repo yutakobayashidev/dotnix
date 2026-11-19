@@ -14,8 +14,8 @@ _:
       headroomSource = pkgs.fetchFromGitHub {
         owner = "yutakobayashidev";
         repo = "headroom";
-        rev = "7caaa729c2e9c06e903cf857c758034a093e84aa";
-        hash = "sha256-lPRaIc4AxZJR4iZ4Kur/XdKFKAHXs+yVqsxiI6/aono=";
+        rev = "fd581cacc8a3a20598a39af1025197ac6cc38a43";
+        hash = "sha256-a6v90BulwgbC5kemLz+bL8PSJYThGxR8untsw934/hk=";
       };
     in
     {
