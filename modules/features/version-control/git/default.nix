@@ -184,8 +184,11 @@ _:
             enabled = true;
             autoupdate = true;
           };
-          wt.basedir = ".git/worktree";
-          wt.remover = "trash";
+          wt = {
+            basedir = ".git/worktree";
+            remover = "trash";
+            hook = [ "if [ -f .envrc ]; then direnv allow; fi" ];
+          };
         };
         includes = [
           {
