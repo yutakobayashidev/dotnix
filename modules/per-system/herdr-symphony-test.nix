@@ -20,7 +20,7 @@
           pkgs.runCommand "herdr-symphony-module-check" { nativeBuildInputs = [ pkgs.herdr-symphony ]; } ''
             export HOME="$TMPDIR"
             export XDG_CACHE_HOME="$TMPDIR/cache"
-            herdr-symphony validate ${result.generatedWorkflow}
+            herdr-symphony validate ${result.generatedWorkflow} ${lib.escapeShellArgs result.hostWorkflowFiles}
             touch "$out"
           '';
       };

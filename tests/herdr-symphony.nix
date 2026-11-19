@@ -35,6 +35,11 @@ let
       };
     };
   };
+  host = evaluate {
+    imports = [ ../homes/nixos/UM790-Pro/herdr-symphony ];
+    home.sessionVariables.CODEX_HOME = "/home/tester/.config/codex";
+  };
+  hostWorkflows = host.my.services.herdr-symphony.workflows;
   disabled = evaluate { };
   generated = evaluate base;
   files = evaluate {
@@ -64,6 +69,21 @@ let
   empty = evaluate { my.services.herdr-symphony.enable = true; };
   assertValid = c: lib.all (a: a.assertion) c.assertions;
 in
+assert
+  builtins.attrNames hostWorkflows == [
+    "implement"
+    "verify"
+  ];
+assert hostWorkflows.implement.settings.work.active_states == [ "Implement" ];
+assert hostWorkflows.implement.settings.work.success_state == "Verify";
+assert hostWorkflows.verify.settings.work.active_states == [ "Verify" ];
+assert hostWorkflows.verify.settings.work.success_state == null;
+assert hostWorkflows.verify.settings.work.failure_state == "Blocked";
+assert
+  hostWorkflows.implement.settings.work.workspace == hostWorkflows.verify.settings.work.workspace;
+assert
+  hostWorkflows.verify.settings.work.herdr_agent.codex.env
+  == host.my.services.herdr-symphony.environment;
 assert !(disabled.systemd.user.services ? herdr-symphony);
 assert assertValid generated;
 assert assertValid files;
@@ -85,5 +105,9 @@ assert
   generated.my.services.herdr-symphony.stateDirectory == "/home/tester/.local/state/herdr-symphony";
 {
   passed = true;
+  hostWorkflowFiles = map (name: host.xdg.configFile."herdr-symphony/workflows/${name}.md".source) [
+    "implement"
+    "verify"
+  ];
   generatedWorkflow = generated.xdg.configFile."herdr-symphony/WORKFLOW.md".source;
 }
