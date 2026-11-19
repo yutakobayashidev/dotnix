@@ -395,12 +395,10 @@ runs:
           pr_number=$(gh pr list --head "$branch" --json number --jq '.[0].number')
         fi
 
-        # Enable auto-merge
-        if [ "$AUTO_MERGE" = "true" ] && [ -n "$pr_number" ]; then
-          echo "Enabling auto-merge for PR #$pr_number"
-          gh pr merge "$pr_number" --auto --squash || echo "Note: Auto-merge may require branch protection rules"
-        fi
-
         pr_url=$(gh pr view "$pr_number" --json url --jq '.url')
         echo "pr_url=$pr_url" >> "$GITHUB_OUTPUT"
         echo "PR URL: $pr_url"
+
+        if [ "$AUTO_MERGE" = "true" ] && [ -n "$pr_number" ]; then
+          "$GITHUB_ACTION_PATH/merge-pr.sh" "$pr_number"
+        fi

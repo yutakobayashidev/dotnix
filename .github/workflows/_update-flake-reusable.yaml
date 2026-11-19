@@ -107,6 +107,57 @@ jobs:
           pr-labels: ${{ inputs.pr-labels }}
           github-token: ${{ steps.setup-bot.outputs.token }}
 
+  # PRs for inputs that were removed or pinned never receive another update,
+  # so nothing would ever merge or close them.
+  close-orphaned:
+    # Only full discovery runs know the complete input set.
+    if: inputs.inputs == ''
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        with:
+          persist-credentials: false
+
+      - id: setup-bot
+        uses: $/.github/actions/setup-git-bot
+        with:
+          app-id: ${{ secrets.app-id }}
+          app-private-key: ${{ secrets.private-key }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Close PRs for removed or pinned inputs
+        shell: bash
+        env:
+          GH_TOKEN: ${{ steps.setup-bot.outputs.token }}
+        run: |
+          set -euo pipefail
+
+          # Root inputs that the update action would still move forward.
+          updatable=$(jq -r '
+            .nodes as $nodes
+            | $nodes[.root].inputs
+            | to_entries[]
+            | select((.value | type) == "string")
+            | select($nodes[.value].original.rev == null)
+            | .key
+          ' flake.lock)
+
+          gh pr list --state open --limit 200 --json number,headRefName \
+            --jq '.[] | select(.headRefName | startswith("update-flake-")) | "\(.number) \(.headRefName)"' |
+            while read -r number branch; do
+              input="${branch#update-flake-}"
+              if grep -qxF "$input" <<< "$updatable"; then
+                continue
+              fi
+              echo "Closing PR #$number: input '$input' is no longer an updatable root input"
+              gh pr close "$number" --delete-branch \
+                --comment "Closing because \`$input\` is no longer an unpinned root input in \`flake.lock\`. The update workflow will not refresh this branch again."
+            done
+
   summary:
     needs: [discover, update]
     if: always() && needs.discover.outputs.has-updates == 'true'
