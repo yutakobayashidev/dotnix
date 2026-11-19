@@ -8,18 +8,9 @@ in
   my.services.herdr-symphony = {
     enable = true;
     path = [
-      pkgs.git
-      pkgs.gh
-      pkgs.ghq
-      pkgs.git-wt
-      pkgs.llm-agents.agent-browser
-      pkgs.ffmpeg
-      pkgs.nodejs
-      pkgs.coreutils
-      pkgs.llm-agents.herdr-core
-      config.programs.codex.package
       config.home.profileDirectory
       "/run/current-system/sw"
+      pkgs.nodejs
     ];
     workflows.default = {
       promptFile = ./prompt.md;

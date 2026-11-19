@@ -88,3 +88,5 @@ The tests evaluate real Home Manager configurations for disabled mode, generated
 Run the reproducible materialization and application-parser check with `nix build .#checks.x86_64-linux.herdr-symphony-module`.
 
 Symphony closes its recorded Herdr terminal five minutes after success, failure or timeout, on the next polling sweep. Independently started terminals are not enumerated or closed. Reusing a scheduled terminal does not cancel its cleanup; use a separate terminal for follow-up work. The setting is captured when a task starts and does not retroactively clean up old terminals. Pending cleanup timers are in memory and are lost when Symphony restarts.
+
+The host service uses the user profile and `/run/current-system/sw` for its tools. Node.js is added explicitly because it is not on those profiles and the media attachment formatter needs it. The module adds Symphony itself to PATH and the host forwards the same PATH to Codex started by Herdr Core.
