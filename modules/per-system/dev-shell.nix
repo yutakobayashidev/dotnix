@@ -55,6 +55,9 @@
               (pkgs.opentofu.plugins.mkProvider {
                 owner = "breml";
                 repo = "terraform-provider-uptimekuma";
+                # x/net 0.54 drops http2.TrailerPrefix on Go 1.27 unless built with
+                # http2legacy, and the vendored grpc 1.79 still references it.
+                mkProviderGoModule = args: pkgs.buildGoModule (args // { tags = [ "http2legacy" ]; });
                 rev = "v0.3.2";
                 hash = "sha256-/szEaiMkFpcQnyxh230whyCEwoaJ8FgGMQa9Bu/6frA=";
                 vendorHash = "sha256-vo4eLZjS4J6c5WsdqNQDYduWtlXMCGsnFXUF3Ead910=";
@@ -131,6 +134,9 @@
               (pkgs.opentofu.plugins.mkProvider {
                 owner = "breml";
                 repo = "terraform-provider-uptimekuma";
+                # x/net 0.54 drops http2.TrailerPrefix on Go 1.27 unless built with
+                # http2legacy, and the vendored grpc 1.79 still references it.
+                mkProviderGoModule = args: pkgs.buildGoModule (args // { tags = [ "http2legacy" ]; });
                 rev = "v0.3.2";
                 hash = "sha256-/szEaiMkFpcQnyxh230whyCEwoaJ8FgGMQa9Bu/6frA=";
                 vendorHash = "sha256-vo4eLZjS4J6c5WsdqNQDYduWtlXMCGsnFXUF3Ead910=";
