@@ -2578,11 +2578,11 @@
         "nixpkgs": "nixpkgs_10"
       },
       "locked": {
-        "lastModified": 1795150991,
-        "narHash": "sha256-GdynEfGbGnOtkhIiU46FgMX/nrwV2TiWvS8/XJYzQn8=",
+        "lastModified": 1795153058,
+        "narHash": "sha256-EYosZ8EIL7AAfIfPXd2WNQgCtqGXdjrlBi6I86ip+68=",
         "owner": "yutakobayashidev",
         "repo": "simple-nostr-relay",
-        "rev": "c6a6df57f421edf3e4f6f1c81eba385df5660576",
+        "rev": "563c1cf4dba3a0e191509b243163b8543aa30105",
         "type": "github"
       },
       "original": {
