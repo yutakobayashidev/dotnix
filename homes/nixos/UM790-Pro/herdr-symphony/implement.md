@@ -1,8 +1,8 @@
 ## 実装・修正
 
-1. 初回はIssueの要件を実装する。既存PRがあれば最新の人間の指示と未解決レビューを先に扱い、同じPRへ追加commitする。作業前にリモートの対象ブランチを確認し、人間の変更を失わないよう取り込む。
+1. 初回はIssueの要件を実装する。既存PRがあれば最新の人間の指示と未解決レビューを先に扱い、同じPRへ追加commitする。作業前にリモートの対象ブランチを確認し、人間の変更を失わないよう取り込む。続けて `git fetch origin` し、default branch（通常は `origin/main`）を `git merge` で取り込む。要件・コード・テストから解き方を決められない衝突は `git merge --abort` で戻し、理由をsummaryに含めて `--status failed` で報告する。
 2. 各指摘を修正するか、採用できない根拠を元のスレッドに返信する。対応commitと検証結果を記録する。前回Verifyが示した不具合を解消し、必要なテストと視覚検証を実行する。
-3. 変更をcommit・pushし、既存PRを更新する。PRがなければ対象Issueを参照するPRを作る。本文に変更内容・検証結果・必要なメディアを記載する。
+3. 変更をcommit・pushし、既存PRを更新する。PRがなければ対象Issueを参照するPRを作る。PR本文には `Closes {{ issue.identifier }}` を必ず含め、既存PRに無ければ追記する。マージ時にIssueが閉じ、このIssueを blocked by に持つ後続Issueが開始される。本文に変更内容・検証結果・必要なメディアを記載する。
 4. 実装とローカル検証が完了し、PRがリモートに存在することを確認したら `herdr-symphony report --status done --summary "..."` を実行する。SymphonyがVerifyへ移す。CIと独立したコードレビューの最終判定は検証workflowが行う。
 
 認証不足、要件の判断待ち、必須の実機確認ができないなど実装を完了できない場合は、理由をsummaryに含め `--status failed` で報告する。SymphonyがBlockedへ移す。Projectの状態はこの実装workflowから直接変更しない。
