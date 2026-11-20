@@ -81,8 +81,6 @@ in
     workflows = {
       implement = {
         settings = lib.recursiveUpdate commonSettings {
-          # git-wt creates new branches from the repository root's HEAD without fetching.
-          hooks.before_run = "git fetch -q origin && git merge -q --ff-only origin/main || true";
           work = {
             # Symphony's built-in blocker check does not apply to GitHub Projects;
             # wait here until every "blocked by" issue is closed.

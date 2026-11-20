@@ -81,7 +81,6 @@ assert hostWorkflows.implement.settings.work.active_states == [ "Implement" ];
 assert hostWorkflows.implement.settings.work.success_state == "Verify";
 assert lib.hasInfix "issue.blockedBy" hostWorkflows.implement.settings.work."if";
 assert !(lib.hasInfix "issue.blockedBy" hostWorkflows.verify.settings.work."if");
-assert lib.hasInfix "git fetch" hostWorkflows.implement.settings.hooks.before_run;
 assert hostWorkflows.verify.settings.work.active_states == [ "Verify" ];
 assert hostWorkflows.verify.settings.work.success_state == null;
 assert hostWorkflows.verify.settings.work.failure_state == "Blocked";
