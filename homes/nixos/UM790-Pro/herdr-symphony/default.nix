@@ -81,7 +81,13 @@ in
     workflows = {
       implement = {
         settings = lib.recursiveUpdate commonSettings {
+          # git-wt creates new branches from the repository root's HEAD without fetching.
+          hooks.before_run = "git fetch -q origin && git merge -q --ff-only origin/main || true";
           work = {
+            # Symphony's built-in blocker check does not apply to GitHub Projects;
+            # wait here until every "blocked by" issue is closed.
+            "if" =
+              ''{% assign open_blockers = issue.blockedBy | where: "state", "OPEN" | size %}{% if issue.repository and open_blockers == 0 %}true{% else %}false{% endif %}'';
             active_states = [ "Implement" ];
             running_state = "In progress";
             success_state = "Verify";
