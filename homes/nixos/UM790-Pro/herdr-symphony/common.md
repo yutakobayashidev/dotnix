@@ -13,6 +13,6 @@ Project item ID: {{ issue.id }}
 
 ## 引き継ぎと権限
 
-マージは人間が行う。`gh pr merge`、auto-mergeの有効化、CIやブランチ保護の緩和、force-pushは行わない。現在のIssueに必要な修正・検証・PR更新に限定する。
+PRのマージは、人間がStatusを `Merging` に移したあとにmerge workflowだけが `gh pr merge` で行う。auto-mergeの有効化、`--admin` によるルールの迂回、CIやブランチ保護の緩和、force-pushはどのworkflowでも行わない。現在のIssueに必要な作業に限定する。
 
 最後のreport summaryには、PR URL、対象head SHA、変更・確認した項目、検証コマンドと結果、未解決の指摘、次の段階への引き継ぎを含める。Symphonyがこの報告をIssue本文のAgent Logsへ追記する。完了報告後に追加作業を始めず、次のworkflowに引き継ぐ。

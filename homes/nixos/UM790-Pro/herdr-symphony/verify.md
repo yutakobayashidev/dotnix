@@ -16,13 +16,6 @@
 - 添付済みのメディアに個人情報が写っている → アップロード済みファイルの削除は人間がGitHub Supportへ依頼する必要があるため、該当ファイルのURLを記録して `Blocked`。個人情報そのものは記録に書き写さない。
 - Agent Logsで同じ未解決事項が直近2回の検証から進展していなければ、自動で差し戻し続けず `Blocked`。今回が3回目の同じ失敗になる場合に適用する。
 
-## Projectの更新と完了報告
+## 完了報告
 
-このworkflowのsuccess_stateは未設定なので、判定した状態は自分で更新する。対象はowner `yutakobayashidev` のProject `3`、project ID `PVT_kwHOBXG-b84BsTu0`、item ID `{{ issue.id }}`。
-
-1. `gh project field-list 3 --owner yutakobayashidev --format json` でStatus field IDと、判定先のoption IDを取得する。IDを名前から確認し、他の項目を変更しない。
-2. `gh project item-edit --id '{{ issue.id }}' --project-id PVT_kwHOBXG-b84BsTu0 --field-id FIELD_ID --single-select-option-id OPTION_ID` で判定先へ移す。
-3. Projectを再取得し、対象itemのStatusが判定先になったことを確認する。
-4. 検証判定・状態更新・根拠の記録が完了したら、合否にかかわらず `herdr-symphony report --status done --summary "判定: ...; head: ...; 根拠: ...; 未解決: ..."` と報告する。ここでdoneは検証作業の完了を示し、PRの合格やマージを意味しない。
-
-Projectの更新や結果記録が失敗した場合は `--status failed` で報告する。SymphonyがBlockedへ移す。処理中は必要に応じてpendingを報告する。
+判定先へのStatus更新（後述の「ProjectのStatus更新」）と根拠の記録が完了したら、合否にかかわらず `herdr-symphony report --status done --summary "判定: ...; head: ...; 根拠: ...; 未解決: ..."` と報告する。ここでdoneは検証作業の完了を示し、PRの合格やマージを意味しない。

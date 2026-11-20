@@ -75,6 +75,7 @@ in
 assert
   builtins.attrNames hostWorkflows == [
     "implement"
+    "merge"
     "verify"
   ];
 assert hostWorkflows.implement.settings.work.active_states == [ "Implement" ];
@@ -84,6 +85,10 @@ assert !(lib.hasInfix "issue.blockedBy" hostWorkflows.verify.settings.work."if")
 assert hostWorkflows.verify.settings.work.active_states == [ "Verify" ];
 assert hostWorkflows.verify.settings.work.success_state == null;
 assert hostWorkflows.verify.settings.work.failure_state == "Blocked";
+assert hostWorkflows.merge.settings.work.active_states == [ "Merging" ];
+assert hostWorkflows.merge.settings.work.running_state == "Landing";
+assert hostWorkflows.merge.settings.work.success_state == null;
+assert hostWorkflows.merge.settings.work.failure_state == "Blocked";
 assert
   hostWorkflows.implement.settings.work.workspace == hostWorkflows.verify.settings.work.workspace;
 assert
@@ -120,6 +125,7 @@ assert
   passed = true;
   hostWorkflowFiles = map (name: host.xdg.configFile."herdr-symphony/workflows/${name}.md".source) [
     "implement"
+    "merge"
     "verify"
   ];
   generatedWorkflow = generated.xdg.configFile."herdr-symphony/WORKFLOW.md".source;

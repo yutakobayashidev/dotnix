@@ -55,6 +55,7 @@ let
     };
   };
   commonPrompt = builtins.readFile ./common.md;
+  projectStatusPrompt = builtins.readFile ./project-status.md;
 in
 {
   my.services.herdr-symphony = {
@@ -106,7 +107,17 @@ in
             success_state = null;
           };
         };
-        prompt = commonPrompt + "\n" + builtins.readFile ./verify.md;
+        prompt = commonPrompt + "\n" + builtins.readFile ./verify.md + "\n" + projectStatusPrompt;
+      };
+      merge = {
+        settings = lib.recursiveUpdate commonSettings {
+          work = {
+            active_states = [ "Merging" ];
+            running_state = "Landing";
+            success_state = null;
+          };
+        };
+        prompt = commonPrompt + "\n" + builtins.readFile ./merge.md + "\n" + projectStatusPrompt;
       };
     };
   };

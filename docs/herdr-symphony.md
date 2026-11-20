@@ -1,12 +1,12 @@
 # Herdr Symphony
 
-UM790-Pro runs `herdr-symphony.service` as a systemd user service. It polls the private [Agent Work Queue](https://github.com/users/yutakobayashidev/projects/3) every 30 seconds and starts at most one interactive Codex agent per workflow (up to two across different issues) through Herdr Core (`hc`). The host workflow pins `gpt-6.2-astra` with `medium` reasoning effort. Codex runs with `--no-daemon`, keeps its configured approval/sandbox policy, and reports completion using `herdr-symphony report`. First use of a repository may require trusting its worktree in the Codex terminal. Symphony does not embed an App Server client.
+UM790-Pro runs `herdr-symphony.service` as a systemd user service. It polls the private [Agent Work Queue](https://github.com/users/yutakobayashidev/projects/3) every 30 seconds and starts at most one interactive Codex agent per workflow (up to three across different issues) through Herdr Core (`hc`). The host workflow pins `gpt-6.2-astra` with `medium` reasoning effort. Codex runs with `--no-daemon`, keeps its configured approval/sandbox policy, and reports completion using `herdr-symphony report`. First use of a repository may require trusting its worktree in the Codex terminal. Symphony does not embed an App Server client.
 
 ## Module boundaries
 
 - NUR packages the CLI; `package` selects the derivation.
 - `modules/features/super-intelligence/herdr-symphony/default.nix` implements the Home Manager service, workflow materialization, and runtime environment. It contains no owner, Project number, agent choice, repository root, or prompt policy.
-- `homes/nixos/UM790-Pro/herdr-symphony/default.nix` selects the runner and Project and supplies the workflow settings. `common.md`, `implement.md`, `verify.md`, and `visual-validation.md` supply the Liquid prompt bodies. Shared runner, environment, workspace and tracker settings are defined once in the host module.
+- `homes/nixos/UM790-Pro/herdr-symphony/default.nix` selects the runner and Project and supplies the workflow settings. `common.md`, `implement.md`, `verify.md`, `merge.md`, `project-status.md`, and `visual-validation.md` supply the Liquid prompt bodies. Shared runner, environment, workspace and tracker settings are defined once in the host module.
 
 The input model follows [nix-openclaw's separation of configuration, runtime packages, and environment](https://github.com/openclaw/nix-openclaw/blob/0992734dee124e27cfc7a614d3af444240aec39e/nix/modules/home-manager/openclaw/options-instance.nix). Symphony workflows share a process rather than using OpenClaw-style independent instances: the in-process claim registry prevents double dispatch across workflows. Concurrency limits remain per workflow, not global across all workflows.
 
@@ -56,23 +56,25 @@ Issues belong to their target repositories. Add an issue to the Project and move
 
 Worktrees use the `git-wt` provider, invoking `git wt --nocd -- <branch>`. Paths come from `git wt --json`; `wt.basedir`, copy rules and creation hooks are honored. Existing worktrees are reused by branch without rerunning creation hooks. The current dotnix configuration sets `wt.basedir = .git/worktree`. Do not set Symphony workspace `path` or `base_dir` for this provider. A failed creation hook can leave a worktree behind; inspect and repair it before retrying. Before creating a new branch, Symphony fetches `origin` and passes the default branch that `origin/HEAD` points to as the git-wt start point, so the branch does not depend on the repository root's checkout. Existing local branches are reused; remote-only branches are left to git-wt. A failed fetch aborts creation and the dispatch is retried. Repositories without `origin` or `origin/HEAD` start from the repository root's HEAD.
 
-The two workflows implement this loop:
+The three workflows implement this loop:
 
 ```text
-Implement -> In progress -> Verify -> Verifying -> In review -> human merge
-    ^                                    |
-    +------------- changes needed -------+
+Implement -> In progress -> Verify -> Verifying -> In review -(human approval)-> Merging -> Landing -> Done
+    ^                                    |                                          |
+    +------------- changes needed -------+------------ conflicts / failed checks ----+
 ```
 
 `implement` reads the latest issue comments and all PR feedback, updates the existing branch/PR, merges the fetched default branch, runs local and visual validation, then reports completion. A conflict that cannot be resolved from the requirements, code and tests aborts the merge and reports failure. Symphony moves a completed run to `Verify`. `verify` independently reviews the current head, checks CI, mergeability and media, and chooses `In review`, `Implement`, or `Blocked`. It updates the Project item, verifies the new status, and reports completion; its `success_state = null` preserves that decision. Infrastructure failures and timeouts go to `Blocked`. Both phases share the same worktree and record successful phase summaries in the Issue's Agent Logs. A verification finding is a successful verification run with an Implement verdict, not a process failure.
 
 For human revisions, comment on the PR and move the original Issue's Project item from `In review` to `Implement`. This starts a new Codex session on the existing worktree. Comments alone do not trigger execution. Avoid sending follow-up work to a completed terminal scheduled for cleanup.
 
-The verify prompt treats missing required CI, zero checks, skipped/cancelled required checks and unavailable verification as non-passing. It stops repeated unchanged findings at `Blocked` after three verification rounds. These are agent instructions, not additional deterministic enforcement in Symphony; target repository branch protection remains the merge guard. Neither workflow merges or enables auto-merge. The human merges. PR bodies contain `Closes <owner>/<repo>#<number>`, so the merge closes the Issue and the default Project workflow marks the item `Done`.
+The verify prompt treats missing required CI, zero checks, skipped/cancelled required checks and unavailable verification as non-passing. It stops repeated unchanged findings at `Blocked` after three verification rounds. These are agent instructions, not additional deterministic enforcement in Symphony; target repository branch protection remains the merge guard. PR bodies contain `Closes <owner>/<repo>#<number>`, so the merge closes the Issue and the default Project workflow marks the item `Done`.
+
+`merge` runs after a human reviews the PR and moves the item from `In review` to `Merging`; that move is the approval. It never changes PR content: conflicts and failed, skipped or cancelled checks send the item back to `Implement`, so a changed PR returns to `In review` through verify. A branch that only has to catch up with the default branch is updated with `gh pr update-branch`. After checks pass it squash-merges with `gh pr merge --squash --match-head-commit` on that head, confirms `MERGED`, and checks that the Issue closed and the item is `Done`. Zero checks, a closed unmerged PR, or a merge queue or auto-merge that does not merge immediately go to `Blocked`. Only this workflow merges; no workflow enables auto-merge, bypasses rules with `--admin`, or relaxes CI or branch protection. `verify` and `merge` update their own Status through the shared `project-status.md` procedure.
 
 Dependencies use GitHub issue relationships (`blocked by`). Symphony's built-in blocker check does not apply to GitHub Projects: it runs only for `Todo`/`Backlog` items and compares the blocker's issue state (`OPEN`/`CLOSED`) with Status names. The implement workflow therefore renders `work.if` false while any blocker is still open. Dependent items can wait in `Implement` and start on the first poll after every blocker closes. An item marked `Done` without closing its Issue keeps its dependents waiting. Skipped items appear only in debug logs (`reason=if_condition`).
 
-Project 3 keeps the former Ready option ID under the name `Implement` and adds `Verify` and `Verifying`. Existing Done/Blocked items retain their state. Renaming `default` to `implement`/`verify` changes workflow persistence identities, so apply this migration only when the old workflow has no running task. The old WORKFLOW.md is no longer an active service input.
+Project 3 keeps the former Ready option ID under the name `Implement` and adds `Verify`, `Verifying`, `Merging` and `Landing`. Existing Done/Blocked items retain their state. When adding Status options through the GraphQL API, pass every existing option with its `id`; `updateProjectV2Field` replaces the option list, and omitting an `id` clears that value from items. Renaming `default` to `implement`/`verify` changes workflow persistence identities, so apply this migration only when the old workflow has no running task. The old WORKFLOW.md is no longer an active service input.
 
 ```sh
 systemctl --user status herdr-symphony
