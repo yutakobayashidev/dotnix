@@ -17,7 +17,9 @@ Webフロントエンド、またはAndroidアプリの見た目・操作・画�
 
 ### Androidの撮影
 
-1. 撮影はプロジェクトの開発用AVD（エミュレータ）で行い、AGENTS.mdとREADMEの手順に従って画面なし（`-no-window`）で起動してください。実機はIssueが実機での確認を求めている場合だけ使います。このホストに実機が接続されていなければ、視覚検証を未完了として報告してください。
+Android CLIは、`android-dev` を使うプロジェクトでは `android-dev android` として実行してください。
+
+1. 撮影はプロジェクトの開発用AVD（エミュレータ）で行い、AGENTS.mdとREADMEの手順に従ってウィンドウを出さずに（`-no-window`）起動してください。実機はIssueが実機での確認を求めている場合だけ使います。このホストに実機が接続されていなければ、視覚検証を未完了として報告してください。
 2. 撮影前にSystemUIのデモモードでステータスバーを固定してください。時刻・電池・通知アイコンが変更前後で揃い、通知の内容も写りません。撮影後は `-e command exit` を送って解除してください。
 
    ```bash
@@ -28,8 +30,9 @@ Webフロントエンド、またはAndroidアプリの見た目・操作・画�
    adb -s SERIAL shell am broadcast -a com.android.systemui.demo -e command notifications -e visible false
    ```
 
-3. 静止画はAndroid CLIの `android screen capture --device=SERIAL --output=captures/NAME.png` で撮ってください。`android-dev` を使うプロジェクトでは `android-dev android screen capture` として実行します。`--annotate` を付けると要素番号の枠が画像に描き込まれるので、PRに添付する画像では付けないでください。
+3. 静止画はAndroid CLIの `android screen capture --device=SERIAL --output=captures/NAME.png` で撮ってください。`--annotate` を付けると要素番号の枠が画像に描き込まれるので、PRに添付する画像では付けないでください。
 4. 動画は、変更した画面までの操作をMaestroのFlowに書き、`maestro record --local FLOW.yaml` で作ってください。アプリの画面とFlowの実行内容を並べた動画になります。古い版のMaestroは `--local` を付けないと録画とFlowの出力をmobile.devのサーバーへ送るので、必ず付けてください。失敗した場合はFlowの `startRecording`/`stopRecording` か `adb shell screenrecord` を使ってください。`screenrecord` の既定のビットレートは20Mbpsなので、`--bit-rate 4000000` 程度に下げてください。Maestroは版によって出力先と使えるオプション（`--test-output-dir`、`cropOn` など）が違います。`maestro --version` とヘルプで確認し、出力を `captures/` へコピーしてください。
+5. 変更がJetpack Composeの部品の見た目だけで、その部品に `@Preview` 関数がある場合は、エミュレータを起動せずに比較画像を作れます。`android preview list` で対象を確認し、変更前後のworktreeで `android preview render :MODULE --fqn=PREVIEW_FQN --output=captures/NAME.png` を実行してください。画面遷移・実データ・ステータスバーは写らず、動画も作れないので、操作や画面遷移を変えた場合と描画に失敗した場合はエミュレータで撮影してください。
 
 ### 個人情報の確認とマスク
 
