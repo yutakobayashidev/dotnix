@@ -67,11 +67,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785036893,
-        "narHash": "sha256-hXp5U1LeNbJSi5e7ucH/46teWdiBWHovC8nMC/397vk=",
+        "lastModified": 1794864554,
+        "narHash": "sha256-upmRNXOwIYYJVNUteZV/G+73dvlAYd3ufsV7JETdCkA=",
         "ref": "refs/heads/main",
-        "rev": "45657a171e7ddab9d74346abcd9a8ff931657eee",
-        "revCount": 333,
+        "rev": "12fb94fb118fbe5a2dc03a1a1ac79ec7e98b71b4",
+        "revCount": 335,
         "type": "git",
         "url": "https://git.yutakobayashi.com/yuta/bird"
       },
