@@ -21,6 +21,9 @@ in
     };
   };
 
+  # Index migrations on the production database can exceed systemd's default 90 seconds.
+  systemd.services.simple-nostr-relay.serviceConfig.TimeoutStartSec = "30min";
+
   my.services.cloudflared-tunnel.ingress.${domain} = {
     service = "http://localhost:${toString port}";
   };
