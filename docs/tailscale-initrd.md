@@ -1,8 +1,11 @@
 # Tailscale initrd unlock: deployment preparation
 
 PR [#2532](https://github.com/yutakobayashidev/dotnix/pull/2532) adds an
-opt-in systemd initrd feature. No host enables it. B450M-Pro4 still needs wired
-networking and an on-site recovery path before its first unlock trial.
+opt-in systemd initrd feature. No host enables it. B450M-Pro4's wired interface `enp5s0` was verified on
+2026-11-21: 1 Gbit/s full duplex, DHCP address `192.168.0.13`, driver `r8169`,
+and successful external IPv4 traffic over that interface. Wi-Fi remains up
+with a lower-priority default route. An on-site recovery path is still needed
+before the first unlock trial.
 
 The feature uses NixOS OpenSSH, not Tailscale SSH. Its Tailscale state is in
 memory, so each boot enrolls a new node; shutdown runs `tailscale logout`.
@@ -18,6 +21,10 @@ Its example gives the initramfs a dedicated tag, grants members inbound access,
 and tests that the tagged node cannot initiate connections. It does not limit
 inbound network access to TCP 22. Its `ssh` rules govern Tailscale SSH and
 must not be copied as authentication rules for our OpenSSH daemon.
+
+The prepared ACL declares `tag:initrd` and asserts outbound isolation plus
+existing operator/CI connectivity. It retains the reference's broad inbound
+policy; it does not claim to restrict inbound access to TCP 22.
 
 Use `tag:initrd` alone for this host's boot environment. Do not also assign
 `tag:server` or `tag:ci`: both are allowed to initiate arbitrary connections
@@ -82,13 +89,36 @@ security grounds. Expiring or revoking the enrollment key does not remove
 its trusted signing key. Record that signing-key ID separately and remove it
 when retiring the credential. See [lock sign](https://tailscale.com/docs/reference/tailscale-cli/lock).
 
-The existing [CI key workflow](tailnet-lock.md) provides a useful provisioning
-pattern: OpenTofu creates an unsigned key, exports ciphertext using age, and a
-trusted operator signs locally when required. Its current `tailscale-ci` target
-and `ci_auth_keys` output only cover CI; they do not provision initrd keys.
-A future implementation should add a dedicated initrd resource, sensitive
-output and scoped workflow target, rather than trigger unrelated key rotation.
-Signed keys must stay out of Terraform state, logs and Git.
+The [CI key workflow](tailnet-lock.md) provides the provisioning pattern:
+OpenTofu creates unsigned keys and exports only age ciphertext. The new
+`tailscale-initrd` target scopes changes to `tailscale_tailnet_key.initrd` and
+its ACL dependency. It leaves the existing CI and stage-2 enrollment resources
+outside that targeted plan. Review the plan before apply.
+
+The `initrd_key_generations` set retains overlapping credentials during rotation;
+its first generation is `2026-11`. Add a new generation before removing the old
+one. `initrd_auth_keys` is sensitive; `initrd_auth_key_expiry` contains deadlines.
+The export is unsigned: this preparation assumes per-boot node signing, not a
+trusted signing private key embedded in the boot artifact.
+
+After merging this workflow change, first run:
+
+```sh
+gh workflow run infra-deploy.yaml --ref main -f target=tailscale-initrd -f mode=plan
+```
+
+Review the scoped plan. For apply, pass the public recipient from the existing
+private `~/.local/state/tailnet-lock/2026-10-31/ci-export.agekey` identity as
+`initrd_key_recipient`. The workflow uploads `tailscale-initrd-keys`, a one-day
+artifact containing `tailscale-initrd-keys.age`. The private identity remains
+local. `tailscale-ci` and its export continue to operate independently.
+
+Decrypt only into mode-0600 files inside a mode-0700 persistent directory outside
+the repository. The encrypted JSON maps generation names to enrollment keys.
+Install only the selected generation on B450M-Pro4 at the path below; do not
+print the decrypted JSON or place it in command arguments. Keep the identity
+and recovery record described in [Tailnet Lock](tailnet-lock.md). A missing
+artifact must be treated as failed delivery even if OpenTofu apply succeeded.
 
 ### Proposed rotation procedure
 
@@ -115,9 +145,38 @@ complete only after deployment verification. These intervals are local policy.
 
 A scheduled key replacement alone is insufficient: generation, optional signing,
 secret delivery and boot-artifact installation must succeed as one operation.
-No automatic rotation is deployed by this documentation PR.
+No automatic rotation timer is deployed by this preparation PR.
 
 ## SSH keys
+
+Prepared on 2026-11-21:
+
+| Item | Persistent location / identity |
+| --- | --- |
+| B450M-Pro4 host private key | `/persist/etc/ssh/initrd_ssh_host_ed25519_key`, root-owned, mode 0600 |
+| Verified host fingerprint | `SHA256:V59EwyxRdS4dFMhVftoL6Lyf+mrD9NHNjx/J735/VRI` |
+| ThinkPad operator private key | `~/.ssh/initrd_b450m_ed25519`, mode 0600, no passphrase |
+| Operator public fingerprint | `SHA256:RbNZeZF/kvyNwK+CacKK8Vq0QT1OPyK7DzWsV7LbvXg` |
+| Pinned host public key | `~/.ssh/known_hosts_b450m_initrd`, host alias `B450M-Pro4-initrd` |
+
+The operator public key and `r8169` driver are staged in the B450M-Pro4 host
+configuration with `enable = false`. Both private keys were generated at their
+final persistent paths and were not copied to the repository. If the operator
+key is lost, provision a new public key through a normal boot and rebuild the
+initrd. If the host key is lost, regenerate it on the host and verify its new
+fingerprint through the trusted administrative connection before changing pins.
+Neither private key has been backed up by this preparation.
+
+After enabling and signing the boot node, connect from the ThinkPad with:
+
+```sh
+ssh -t -i ~/.ssh/initrd_b450m_ed25519 \
+  -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+  -o UserKnownHostsFile=~/.ssh/known_hosts_b450m_initrd \
+  -o HostKeyAlias=B450M-Pro4-initrd \
+  root@B450M-Pro4-initrd systemd-tty-ask-password-agent
+```
+
 
 The server identity is the initrd SSH host key. Generate it once **on B450M-Pro4**
 at its final persistent destination; do not reuse the stage-2 host key or
@@ -163,8 +222,9 @@ Secure Boot authenticates those artifacts; it does not encrypt their contents.
 
 ## Before enabling B450M-Pro4
 
-Choose the inbound policy and Tailnet Lock enrollment method, implement their
-provisioning and rotation, and verify wired NIC support. Run the existing VM
+Apply and export the dedicated enrollment key, then install it on B450M-Pro4.
+Verify how the new node key is authenticated before each manual Tailnet Lock
+signature. Wired NIC support and the SSH keys are prepared; initrd remains disabled. Run the existing VM
 test on UM790-Pro without copying large outputs back to the full ThinkPad.
 Then test the chosen enrollment method against the actual locked tailnet and
 perform the first hardware reboot with local console recovery available.

@@ -10,6 +10,7 @@ resource "tailscale_acl" "main" {
 
   "tagOwners": {
     "tag:ci":     ["autogroup:admin"],
+    "tag:initrd": ["autogroup:admin"],
     "tag:server": ["autogroup:admin"]
   },
 
@@ -32,6 +33,21 @@ resource "tailscale_acl" "main" {
     // tinyproxy home-IP route, whose own config already allowlists this
     // VM only.
     {"src": ["muse-vm"], "dst": ["100.91.91.87"],   "ip": ["tcp:443", "tcp:8888"]}
+  ],
+
+  // Dedicated boot nodes may reply to inbound sessions, but cannot initiate
+  // tailnet connections. Keep tag:initrd separate from tag:server/tag:ci.
+  "tests": [
+    {
+      "src": "tag:initrd",
+      "deny": [
+        "100.111.109.43:22", "100.91.91.87:22", "tag:ci:443",
+        "192.168.0.1:22", "192.168.0.13:22"
+      ]
+    },
+    {"src": "tag:initrd", "proto": "udp", "deny": ["100.111.109.43:53", "192.168.0.1:53"]},
+    {"src": "autogroup:member", "accept": ["tag:initrd:22", "tag:server:22"]},
+    {"src": "tag:ci", "accept": ["100.111.109.43:443", "100.91.91.87:443"]}
   ],
 
   "ssh": [
