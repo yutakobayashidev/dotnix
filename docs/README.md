@@ -15,6 +15,7 @@
 
 ### Operations
 
+- [tailscale-initrd.md](tailscale-initrd.md) - Initrd ACL, enrollment rotation and SSH key preparation
 - [tailnet-lock.md](tailnet-lock.md) - Tailnet Lock rollout, CI credentials and recovery
 - [home-assistant.md](home-assistant.md) - Lapis Matter pairing, history, metrics and Restic backups
 - [remote-build.md](remote-build.md) - Build B450M and ThinkPad packages on UM790 over Tailscale
