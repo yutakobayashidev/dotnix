@@ -13,7 +13,7 @@ set -e
 
 trigger="${1:-}"
 if [ -z "$trigger" ]; then
-  exit 0
+	exit 0
 fi
 
 input=$(cat)
@@ -25,7 +25,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 data_dir=$(session_tts_data_dir)
 if [ -z "$session_id" ] || [ ! -e "$data_dir/sessions/$session_id" ] || [ -e "$data_dir/silenced/$session_id" ]; then
-  exit 0
+	exit 0
 fi
 
 cmd="bash \"$script_dir/say.sh\" \"<phrase>\""
@@ -36,34 +36,34 @@ tail_common="Call Bash (synchronous; do NOT pass run_in_background) with command
 
 case "$trigger" in
 subagent)
-  event="SubagentStart"
-  head="You are delegating to a subagent. Narrate WHAT you are delegating and WHY before starting it."
-  ;;
+	event="SubagentStart"
+	head="You are delegating to a subagent. Narrate WHAT you are delegating and WHY before starting it."
+	;;
 prompt)
-  msg=$(
-    cat <<EOF
+	msg=$(
+		cat <<EOF
 [session-tts] User prompt received. If this turn becomes multi-step,
 narrate at milestones (transition / problem / finding / pivot).
 $tail_common
 EOF
-  )
-  jq -n --arg additionalContext "$msg" \
-    '{
+	)
+	jq -n --arg additionalContext "$msg" \
+		'{
       hookSpecificOutput: {
         hookEventName: "UserPromptSubmit",
         additionalContext: $additionalContext
       }
     }'
-  exit 0
-  ;;
+	exit 0
+	;;
 *)
-  exit 0
-  ;;
+	exit 0
+	;;
 esac
 
 jq -n --arg additionalContext "[session-tts] $head $tail_common" \
-  --arg hookEventName "$event" \
-  '{
+	--arg hookEventName "$event" \
+	'{
     hookSpecificOutput: {
       hookEventName: $hookEventName,
       additionalContext: $additionalContext
