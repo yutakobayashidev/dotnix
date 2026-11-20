@@ -15,7 +15,7 @@ session_tts_root="$(cd "$script_dir/.." && pwd)"
 
 session_id=$(jq -r '.session_id // empty')
 if [ -z "$session_id" ]; then
-  exit 0
+	exit 0
 fi
 
 data_dir=$(session_tts_data_dir)
@@ -28,7 +28,7 @@ mkdir -p "$sessions_dir"
 # --- inject mid-turn narration guidance into Codex's context ---
 session_tts_root_for_instr="$session_tts_root"
 instructions=$(
-  cat <<EOF
+	cat <<EOF
 [session-tts] TTS is enabled for this session.
 
 You can deliver **verbal task-progress reports during autonomous, multi-step
@@ -50,7 +50,7 @@ at real milestones — see the list below.
 
 Call this at these moments:
 EOF
-  cat <<'EOF'
+	cat <<'EOF'
 - **Task transitions**: when you finish a task and move on to the next
 - **Problems**: when a task hits an unexpected obstacle, error, or blocker
 - **Important findings**: when investigation surfaces a notable result
@@ -88,28 +88,28 @@ EOF
 # --- pick a voice for this session (only if not already assigned) -----
 newly_assigned=0
 if [ ! -f "$session_file" ]; then
-  prev=$(cat "$index_file" 2>/dev/null || echo -1)
-  case "$prev" in '' | *[!0-9-]*) prev=-1 ;; esac
-  next=$(((prev + 1) % 3))
-  case "$next" in
-  0) speaker_id=888753760 ;; # まお（ノーマル）
-  1) speaker_id=888753761 ;; # まお（ふつー）
-  2) speaker_id=888753762 ;; # まお（あまあま）
-  *) speaker_id=888753760 ;;
-  esac
-  echo "$next" >"$index_file"
-  echo "$speaker_id" >"$session_file"
-  newly_assigned=1
+	prev=$(cat "$index_file" 2>/dev/null || echo -1)
+	case "$prev" in '' | *[!0-9-]*) prev=-1 ;; esac
+	next=$(((prev + 1) % 3))
+	case "$next" in
+	0) speaker_id=888753760 ;; # まお（ノーマル）
+	1) speaker_id=888753761 ;; # まお（ふつー）
+	2) speaker_id=888753762 ;; # まお（あまあま）
+	*) speaker_id=888753760 ;;
+	esac
+	echo "$next" >"$index_file"
+	echo "$speaker_id" >"$session_file"
+	newly_assigned=1
 fi
 
 # --- ready announcement (first assignment only) ---------------------------
 # Engine is remotely hosted — no local bootstrap needed.
 if [ "$newly_assigned" = "1" ]; then
-  sid=$(resolve_speaker "$session_id") && speak_text "$sid" "TTSを開始します。" "$session_id" >/dev/null 2>&1 || true
+	sid=$(resolve_speaker "$session_id") && speak_text "$sid" "TTSを開始します。" "$session_id" >/dev/null 2>&1 || true
 fi
 
 jq -n --arg additionalContext "$instructions" \
-  '{
+	'{
     hookSpecificOutput: {
       hookEventName: "SessionStart",
       additionalContext: $additionalContext

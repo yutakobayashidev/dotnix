@@ -13,9 +13,9 @@ selectedText=$(pbpaste)
 
 # 変数が空の場合はエラー
 if [ -z "$selectedText" ]; then
-  echo "クリップボードにテキストがありません。"
-  osascript -e 'display notification "クリップボードにテキストがありません" with title "辞書検索失敗"'
-  exit 1
+	echo "クリップボードにテキストがありません。"
+	osascript -e 'display notification "クリップボードにテキストがありません" with title "辞書検索失敗"'
+	exit 1
 fi
 
 # クリップボードの値をURL用にエンコード

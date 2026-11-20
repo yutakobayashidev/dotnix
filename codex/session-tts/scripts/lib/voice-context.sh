@@ -15,30 +15,30 @@
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/runtime.sh"
 
 resolve_speaker() {
-  local session_id="$1"
-  local data_dir
-  data_dir=$(session_tts_data_dir)
-  local session_file="$data_dir/sessions/$session_id"
-  local silenced_file="$data_dir/silenced/$session_id"
+	local session_id="$1"
+	local data_dir
+	data_dir=$(session_tts_data_dir)
+	local session_file="$data_dir/sessions/$session_id"
+	local silenced_file="$data_dir/silenced/$session_id"
 
-  [ -z "$session_id" ] && return 1
-  [ ! -e "$session_file" ] && return 1
-  [ -e "$silenced_file" ] && return 1
+	[ -z "$session_id" ] && return 1
+	[ ! -e "$session_file" ] && return 1
+	[ -e "$silenced_file" ] && return 1
 
-  local speaker_id
-  speaker_id=$(cat "$session_file" 2>/dev/null || echo "")
-  [ -z "$speaker_id" ] && return 1
+	local speaker_id
+	speaker_id=$(cat "$session_file" 2>/dev/null || echo "")
+	[ -z "$speaker_id" ] && return 1
 
-  printf '%s' "$speaker_id"
+	printf '%s' "$speaker_id"
 }
 
 speak_text() {
-  local speaker_id="$1"
-  local text="$2"
-  local session_id="$3"
-  printf '%s' "$text" |
-    SESSION_TTS_SPEAKER_ID="$speaker_id" \
-      SESSION_TTS_SESSION_ID="$session_id" \
-      SESSION_TTS_ENGINE_URL="https://aivisspeech.home.yutakobayashi.com" \
-      session-tts-say-response
+	local speaker_id="$1"
+	local text="$2"
+	local session_id="$3"
+	printf '%s' "$text" |
+		SESSION_TTS_SPEAKER_ID="$speaker_id" \
+			SESSION_TTS_SESSION_ID="$session_id" \
+			SESSION_TTS_ENGINE_URL="https://aivisspeech.home.yutakobayashi.com" \
+			session-tts-say-response
 }
