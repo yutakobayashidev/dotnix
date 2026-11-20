@@ -24,7 +24,7 @@ in
       };
       mailer = {
         ENABLED = true;
-        FROM = "Gitea <noreply@yutakobayashi.com>";
+        FROM = "Gitea <noreply@git.yutakobayashi.com>";
         PROTOCOL = "smtps";
         SMTP_ADDR = "smtp.mx.cloudflare.net";
         SMTP_PORT = 465;
