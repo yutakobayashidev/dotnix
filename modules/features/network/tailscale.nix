@@ -11,6 +11,9 @@ _:
 
     let
       cfg = config.my.services.tailscale;
+      initrdCfg = cfg.initrd;
+      tailscale = config.services.tailscale.package;
+      initrdAuthKeyPath = "/etc/tailscale/authkey";
     in
     {
       imports = [ inputs.sops-nix.nixosModules.sops ];
@@ -23,34 +26,176 @@ _:
           default = false;
           description = "Enable systemd-resolved for Tailscale DNS (desktop systems).";
         };
+
+        initrd = {
+          enable = lib.mkEnableOption ''
+            Tailscale and SSH in systemd stage 1 for remote LUKS unlocking.
+            Connect with `ssh root@<hostname>` over the tailnet and run
+            `systemd-tty-ask-password-agent`'';
+
+          hostname = lib.mkOption {
+            type = lib.types.str;
+            default = "${config.networking.hostName}-initrd";
+            defaultText = lib.literalExpression ''"''${config.networking.hostName}-initrd"'';
+            description = "Tailnet node name used in stage 1; must differ from the main node.";
+          };
+
+          authKeyFile = lib.mkOption {
+            type = lib.types.str;
+            default = "/persist/etc/secrets/initrd/tailscale-authkey";
+            description = ''
+              Host path to a reusable, ephemeral, pre-approved, tagged auth key.
+              It is embedded unencrypted in the initrd via `boot.initrd.secrets`,
+              so it cannot be managed by sops-nix.
+            '';
+          };
+
+          sshHostKey = lib.mkOption {
+            type = lib.types.str;
+            default = "/persist/etc/ssh/initrd_ssh_host_ed25519_key";
+            description = "Dedicated stage 1 SSH host key; do not reuse the main host key.";
+          };
+
+          authorizedKeys = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            description = "Public keys allowed to log in as root in stage 1.";
+          };
+
+          extraUpFlags = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            example = [ "--login-server=https://headscale.example.com" ];
+            description = "Extra flags passed to `tailscale up` in stage 1.";
+          };
+
+          kernelModules = lib.mkOption {
+            type = lib.types.listOf lib.types.str;
+            default = [ ];
+            example = [ "r8169" ];
+            description = "Wired NIC drivers needed in stage 1.";
+          };
+        };
       };
 
-      config = lib.mkIf cfg.enable (
-        lib.mkMerge [
-          {
-            services.tailscale = {
-              enable = true;
-              useRoutingFeatures = "server";
-              authKeyFile = config.sops.secrets.tailscale-authkey.path;
-              extraUpFlags = [ "--ssh" ];
-              extraSetFlags = [
-                "--accept-dns=${lib.boolToString cfg.configureResolver}"
-              ];
-            };
+      config = lib.mkMerge [
+        (lib.mkIf cfg.enable {
+          services.tailscale = {
+            enable = true;
+            useRoutingFeatures = "server";
+            authKeyFile = config.sops.secrets.tailscale-authkey.path;
+            extraUpFlags = [ "--ssh" ];
+            extraSetFlags = [
+              "--accept-dns=${lib.boolToString cfg.configureResolver}"
+            ];
+          };
 
-            networking = {
-              firewall = {
-                trustedInterfaces = [ "tailscale0" ];
-                allowedUDPPorts = [ config.services.tailscale.port ];
+          networking = {
+            firewall = {
+              trustedInterfaces = [ "tailscale0" ];
+              allowedUDPPorts = [ config.services.tailscale.port ];
+            };
+          };
+
+          sops.secrets.tailscale-authkey = { };
+        })
+        (lib.mkIf (cfg.enable && cfg.configureResolver) {
+          services.resolved.enable = true;
+        })
+        (lib.mkIf initrdCfg.enable {
+          assertions = [
+            {
+              assertion = initrdCfg.authorizedKeys != [ ];
+              message = "my.services.tailscale.initrd.authorizedKeys must not be empty.";
+            }
+            {
+              assertion = initrdCfg.kernelModules != [ ];
+              message = "my.services.tailscale.initrd.kernelModules must list the wired NIC driver.";
+            }
+          ];
+
+          boot.initrd = {
+            availableKernelModules = initrdCfg.kernelModules;
+            kernelModules = [ "tun" ];
+
+            network = {
+              enable = true;
+              flushBeforeStage2 = true;
+              ssh = {
+                enable = true;
+                port = 22;
+                hostKeys = [ initrdCfg.sshHostKey ];
+                inherit (initrdCfg) authorizedKeys;
               };
             };
 
-            sops.secrets.tailscale-authkey = { };
-          }
-          (lib.mkIf cfg.configureResolver {
-            services.resolved.enable = true;
-          })
-        ]
-      );
+            secrets.${initrdAuthKeyPath} = initrdCfg.authKeyFile;
+
+            systemd = {
+              network = {
+                enable = true;
+                # Sort after networks generated from networking.interfaces (40-*).
+                networks."99-initrd-wired" = {
+                  matchConfig.Type = "ether";
+                  networkConfig.DHCP = "yes";
+                };
+              };
+
+              initrdBin = [ tailscale ];
+              contents."/etc/ssl/certs/ca-certificates.crt".source = config.security.pki.caBundle;
+
+              services = {
+                tailscaled = {
+                  description = "Tailscale node agent (stage 1)";
+                  wantedBy = [ "initrd.target" ];
+                  after = [ "systemd-networkd.service" ];
+                  wants = [ "systemd-networkd.service" ];
+                  before = [ "shutdown.target" ];
+                  conflicts = [ "shutdown.target" ];
+                  unitConfig.DefaultDependencies = false;
+                  serviceConfig = {
+                    ExecStart = "${tailscale}/bin/tailscaled --state=mem: --no-logs-no-support --tun=tailscale0";
+                    Restart = "on-failure";
+                    RuntimeDirectory = "tailscale";
+                  };
+                };
+
+                tailscale-up = {
+                  description = "Join the tailnet (stage 1)";
+                  wantedBy = [ "initrd.target" ];
+                  after = [
+                    "tailscaled.service"
+                    "initrd-nixos-copy-secrets.service"
+                  ];
+                  requires = [ "tailscaled.service" ];
+                  before = [ "shutdown.target" ];
+                  conflicts = [ "shutdown.target" ];
+                  unitConfig.DefaultDependencies = false;
+                  serviceConfig = {
+                    # Not oneshot: initrd.target must not wait for the tailnet,
+                    # so a local passphrase still boots without network.
+                    Type = "simple";
+                    RemainAfterExit = true;
+                    ExecStart =
+                      lib.concatStringsSep " " [
+                        "${tailscale}/bin/tailscale up"
+                        "--auth-key=file:${initrdAuthKeyPath}"
+                        "--hostname=${initrdCfg.hostname}"
+                        "--accept-dns=false"
+                        "--netfilter-mode=off"
+                        "--timeout=300s"
+                      ]
+                      + lib.optionalString (initrdCfg.extraUpFlags != [ ]) (
+                        " " + lib.escapeShellArgs initrdCfg.extraUpFlags
+                      );
+                    # Remove the ephemeral node before switching root.
+                    ExecStop = "-${tailscale}/bin/tailscale logout";
+                  };
+                };
+              };
+            };
+          };
+        })
+      ];
     };
 }
