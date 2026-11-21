@@ -2544,11 +2544,11 @@
         "rustowl": "rustowl"
       },
       "locked": {
-        "lastModified": 1794370914,
-        "narHash": "sha256-6OsvM1zgOrIqo5/YaL3UXFIC2t6Oz64r8GW7WYMpJ/4=",
+        "lastModified": 1794985618,
+        "narHash": "sha256-mJGzb7m0Cc1UVww08MnShFXdUFWOfh8jhS1hKhLxY2c=",
         "owner": "nix-community",
         "repo": "rustowl-flake",
-        "rev": "96dff098adc3de30190550fc62570e4680d8fdee",
+        "rev": "8e01a2a0e5b95363f4bf340226825575c180e93f",
         "type": "github"
       },
       "original": {
