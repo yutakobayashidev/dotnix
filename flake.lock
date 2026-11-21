@@ -2664,11 +2664,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794510026,
-        "narHash": "sha256-ct2ttZvIg3zOCPrwSxj4PeVrCmQFNi/+EVQSorMSFTU=",
+        "lastModified": 1794944248,
+        "narHash": "sha256-3ynjrzwlz6GlqxNCg86EkbCGjmB2839C+4yQ4Cv6MC8=",
         "owner": "Daaboulex",
         "repo": "nix-packaging-standard",
-        "rev": "d31deba4b9757cac78a4747f444ba20e8a2b0ccd",
+        "rev": "66b972606ed6d24f9b371d9dbd052a6eaad7c62f",
         "type": "github"
       },
       "original": {
@@ -2695,11 +2695,11 @@
         "std": "std"
       },
       "locked": {
-        "lastModified": 1794515087,
-        "narHash": "sha256-nZlSUkxRMtf9GBAVS8RrpPz3Y+MgumBWDSO0n8jw/78=",
+        "lastModified": 1794968953,
+        "narHash": "sha256-Rj3paTs3y62gyTo3BzE2ZTm6zex74uHyycOJoZLAbEg=",
         "owner": "Daaboulex",
         "repo": "streamcontroller-nix",
-        "rev": "cf57b4be0e4f46e616f2bb8be886888c6ba1a8c6",
+        "rev": "6ab7f06eea73a0c65c081b5de26ee8a2378c6daf",
         "type": "github"
       },
       "original": {
