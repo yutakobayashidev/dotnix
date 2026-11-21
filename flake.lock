@@ -3030,11 +3030,11 @@
         "vicinae": "vicinae"
       },
       "locked": {
-        "lastModified": 1793810868,
-        "narHash": "sha256-UR269g8GwB5jywGcxqViVscjl8gtvRO9XjtCoGnUbSs=",
+        "lastModified": 1794927628,
+        "narHash": "sha256-JPXVn5d45Vmog/QElkKrGnNiCfavLY63x+rac8FWc+I=",
         "owner": "vicinaehq",
         "repo": "extensions",
-        "rev": "181904331f5289b53ee3443f98cfa5441d399f35",
+        "rev": "7f5e77930ba3a5c35bc2f21d41e539a430429de6",
         "type": "github"
       },
       "original": {
