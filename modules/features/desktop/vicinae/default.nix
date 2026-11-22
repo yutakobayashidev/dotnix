@@ -48,6 +48,7 @@
       config = lib.mkIf config.my.programs.vicinae.enable {
         programs.vicinae = {
           enable = true;
+          mutableSettings = true;
           systemd = {
             enable = true;
             autoStart = true;

@@ -273,6 +273,7 @@ _:
           package = pkgs.llm-agents.claude-code;
           configDir = claudeConfigDir;
           enableMcpIntegration = true;
+          mutableSettings = true;
           inherit settings;
         };
 

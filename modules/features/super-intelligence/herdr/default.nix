@@ -196,10 +196,6 @@ _:
           sound.enabled = false;
         };
       };
-
-      configFile = tomlFormat.generate "herdr-config.toml" (
-        lib.recursiveUpdate defaultSettings cfg.settings
-      );
     in
     {
       options.my.programs.herdr = {
@@ -220,13 +216,17 @@ _:
       };
 
       config = lib.mkIf cfg.enable {
+        programs.herdr = {
+          enable = true;
+          inherit (cfg) package;
+          mutableSettings = true;
+          settings = lib.recursiveUpdate defaultSettings cfg.settings;
+        };
+
         home.packages = [
-          cfg.package
           focusAttentionAgent
           forkAgentSession
         ];
-
-        xdg.configFile."herdr/config.toml".source = configFile;
 
         programs.agent-skills = {
           sources.herdr.path = herdrSkillSrc;
