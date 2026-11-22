@@ -69,7 +69,6 @@ _:
       settings = {
         approval_policy = "on-request";
         approvals_reviewer = "auto_review";
-        model_reasoning_effort = "medium";
         model_reasoning_summary = "concise";
         model_verbosity = "low";
         personality = "pragmatic";
@@ -121,51 +120,6 @@ _:
           "presentations@openai-primary-runtime".enabled = true;
         };
       };
-      rawSettings =
-        if config.programs.codex.settings == null then { } else config.programs.codex.settings;
-      baseSettings = lib.removeAttrs rawSettings [ "mcp_servers" ];
-      settingMcpServers = rawSettings.mcp_servers or { };
-      sharedMcpServers = lib.mapAttrs (
-        name: server:
-        lib.hm.mcp.transformMcpServer {
-          inherit server;
-          exclude = [
-            "headers"
-            "type"
-          ];
-          extraTransforms = [
-            (s: s // lib.optionalAttrs (s.headers or { } != { }) { http_headers = s.headers; })
-            lib.hm.mcp.addType
-            (lib.hm.mcp.wrapEnvFilesCommand { inherit pkgs name; })
-          ];
-        }
-      ) config.programs.mcp.servers;
-      inlineConfig = inputs.mcp-servers-nix.lib.mkConfig pkgs {
-        flavor = "codex";
-        format = "toml-inline";
-        fileName = "codex-inline-config.toml";
-        settings = baseSettings // {
-          servers = sharedMcpServers // settingMcpServers;
-        };
-      };
-      codexWrapper =
-        (pkgs.writeShellApplication {
-          name = "codex";
-          text = ''
-            ${lib.optionalString cfg.desktopIntegration ''
-              export SESSION_TTS_HOME=${lib.escapeShellArg sessionTtsHome}
-            ''}
-
-            config_args=()
-            while IFS= read -r config; do
-              config_args+=(--config "$config")
-            done < ${inlineConfig}
-            exec ${lib.getExe pkgs.llm-agents.codex} "''${config_args[@]}" "$@"
-          '';
-        }).overrideAttrs
-          {
-            inherit (pkgs.llm-agents.codex) version;
-          };
     in
     {
       options.my.programs.codex = {
@@ -222,8 +176,10 @@ _:
         programs.codex = {
           enable = true;
           enableMcpIntegration = true;
-          package = codexWrapper;
+          package = pkgs.llm-agents.codex;
+          mutableSettings = true;
           inherit settings;
+          hooks = lib.mkIf cfg.desktopIntegration codexHooks.hooks;
         };
 
         programs.agent-skills = lib.mkIf cfg.desktopIntegration {
@@ -268,18 +224,14 @@ _:
             pkgs.session-tts
             inputs.codex-transcribe.packages.${pkgs.stdenv.hostPlatform.system}.default
           ]
-          ++ lib.optional cfg.acp.enable (pkgs.llm-agents.codex-acp.override { codex = codexWrapper; });
+          ++ lib.optional cfg.acp.enable (
+            pkgs.llm-agents.codex-acp.override { codex = pkgs.llm-agents.codex; }
+          );
 
           file = {
-            # Codex updates its user config at runtime, so only immutable
-            # defaults are injected by the wrapper.
-            "${codexConfigDir}/config.toml".enable = false;
             "${codexConfigDir}/rules".source = config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/rules";
             "${codexConfigDir}/AGENTS.md".source =
               config.lib.file.mkOutOfStoreSymlink "${codexDotfilesDir}/AGENTS.md";
-            "${codexConfigDir}/hooks.json" = lib.mkIf cfg.desktopIntegration {
-              text = builtins.toJSON codexHooks;
-            };
           };
         };
       };
