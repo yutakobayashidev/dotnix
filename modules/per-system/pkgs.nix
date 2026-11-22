@@ -53,10 +53,10 @@ in
               version-lsp = inputs.version-lsp.packages.${system}.default;
             }
           )
-          inputs.rustowl-flake.overlays.default
           inputs.nur-packages.overlays.default
           localOverlays.stable
           localOverlays.llm-agents
+          localOverlays.rustowl
           localOverlays.patches
         ];
       };

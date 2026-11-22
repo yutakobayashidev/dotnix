@@ -9,6 +9,11 @@
     llm-agents = inputs.llm-agents.packages.${final.stdenv.hostPlatform.system};
   };
 
+  # Built with rustowl-flake's own nixpkgs, matching nix-community.cachix.org.
+  rustowl = final: _prev: {
+    inherit (inputs.rustowl-flake.packages.${final.stdenv.hostPlatform.system}) rustowl rustowl-nvim;
+  };
+
   stable = _final: prev: {
     stable = import inputs.nixpkgs-stable {
       inherit (prev.stdenv.hostPlatform) system;
@@ -23,14 +28,6 @@
       preBuild = (old.preBuild or "") + ''
         export LIBGIT2_NO_VENDOR=0
       '';
-    });
-
-    # The nixpkgs Cargo hook requires system libraries instead of vendoring them.
-    rustowl = prev.rustowl.overrideAttrs (old: {
-      buildInputs = (old.buildInputs or [ ]) ++ [
-        final.aws-lc
-        final.rust-jemalloc-sys
-      ];
     });
 
     session-tts =

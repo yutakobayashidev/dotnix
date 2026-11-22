@@ -225,10 +225,8 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    rustowl-flake = {
-      url = "github:nix-community/rustowl-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Keep its own nixpkgs so rustowl matches nix-community.cachix.org builds.
+    rustowl-flake.url = "github:nix-community/rustowl-flake";
     version-lsp = {
       url = "github:skanehira/version-lsp";
       inputs.nixpkgs.follows = "nixpkgs";

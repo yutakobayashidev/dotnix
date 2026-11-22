@@ -117,7 +117,6 @@ in
                       gh-nippou = inputs.gh-nippou.packages.${system}.default;
                     }
                   )
-                  inputs.rustowl-flake.overlays.default
                   inputs.firefox-addons.overlays.default
                   inputs.nix-cachyos-kernel.overlays.default
                   inputs.nur-packages.overlays.default
