@@ -103,7 +103,6 @@ in
                 overlays = [
                   (_final: _prev: {
                     _nix-openclaw-tools = inputs.nix-openclaw-tools;
-                    _ghostty = inputs.ghostty;
                     _repiq = inputs.repiq;
                     _moonbit-overlay = inputs.moonbit-overlay;
                   })

@@ -19,7 +19,6 @@
 
   nixpkgs = {
     overlays = [
-      inputs.ghostty.overlays.default
       (
         _final: prev:
         let
