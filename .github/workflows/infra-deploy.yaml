@@ -14,6 +14,7 @@ on:
           - tailscale
           - tailscale-ci
           - tailscale-webhook
+          - tailscale-b450-recovery
       mode:
         description: Review a plan before applying the same main revision
         type: choice
@@ -65,6 +66,7 @@ jobs:
           persist-credentials: false
           allow-unsafe-pr-checkout: true
       - name: Tailscale
+        if: matrix.name != 'tailscale-b450-recovery'
         uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
         with:
           # Pre-signed, ephemeral, reusable auth key with tag:ci assigned to it.
@@ -90,12 +92,16 @@ jobs:
           DEPLOY_MODE: ${{ (github.event.label.name == 'safe-to-apply' || inputs.mode == 'apply') && 'apply' || 'plan' }}
           ROOT: infra/${{ startsWith(matrix.name, 'tailscale') && 'tailscale' || matrix.name }}
           CI_KEYS_ONLY: ${{ matrix.name == 'tailscale-ci' }}
+          B450_RECOVERY: ${{ matrix.name == 'tailscale-b450-recovery' }}
           WEBHOOK_ONLY: ${{ matrix.name == 'tailscale-webhook' }}
           CI_KEY_RECIPIENT: ${{ inputs.ci_key_recipient }}
         run: |
           set -euo pipefail
 
           plan_args=()
+          if [[ "$B450_RECOVERY" == "true" ]]; then
+            plan_args+=(-target=tailscale_device_key.b450m_pro4)
+          fi
           if [[ "$CI_KEYS_ONLY" == "true" ]]; then
             plan_args+=(
               -target=tailscale_tailnet_key.ci
