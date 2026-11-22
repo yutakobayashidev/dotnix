@@ -2054,11 +2054,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1795023477,
-        "narHash": "sha256-8shMbNaxzcUgRyXSPo185YVgQxt3TOEpOjlJLI5Q5l8=",
+        "lastModified": 1795095760,
+        "narHash": "sha256-1FrRpSKH3wDrNEbKd+LdLkeehi/Y7vGQpZVyopc/42o=",
         "owner": "yutakobayashidev",
         "repo": "noren",
-        "rev": "9f98f3c5cd0fd9de7bfee5f3d70346e6dd34dc30",
+        "rev": "df89bacdb77aa8f82f9aa42bb542b99c1bf42d34",
         "type": "github"
       },
       "original": {
