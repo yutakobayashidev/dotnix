@@ -47,3 +47,19 @@ alongside CoreDNS in Tailscale: those are not ordered standby resolvers.
 The deployment test uses a separate CoreDNS process and loopback-only mock DNS
 servers to verify primary preference, failover, NXDOMAIN preservation, and recovery
 without disrupting production DNS.
+
+## Recover B450M device key expiry
+
+B450M's device key expiry is disabled declaratively by
+`tailscale_device_key.b450m_pro4` in `infra/tailscale/devices.tf`.
+
+If this device expires, run `Infra: Approved OpenTofu deploy` on main with
+`target=tailscale-b450-recovery`, first in `plan` mode and then in `apply` mode
+at the same revision. This recovery target skips the Tailscale connection and
+internal service ping, and targets only the B450M device key. It uses the public
+Tailscale API and R2 state backend, so it does not require the failed DNS server.
+It deliberately leaves enrollment keys and other device settings untouched.
+
+After applying, verify `Expired` is false in `tailscale status --json` and query
+CoreDNS at `100.111.109.43`. If connectivity remains unavailable, use LAN SSH
+and reauthenticate the device as described in the Tailscale key expiry docs.

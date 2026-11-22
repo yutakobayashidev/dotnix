@@ -5,7 +5,7 @@ resource "tailscale_device_authorization" "b450m_pro4" {
 
 resource "tailscale_device_key" "b450m_pro4" {
   device_id           = "nWu8AHoCP811CNTRL"
-  key_expiry_disabled = false
+  key_expiry_disabled = true
 }
 
 resource "tailscale_device_authorization" "m2_macbook_air" {
