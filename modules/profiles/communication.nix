@@ -30,6 +30,9 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
       programs.vesktop = {
         enable = true;
+        # Vesktop saves settings by renaming a temp file over settings.json,
+        # which replaces a store symlink and breaks the next activation.
+        mutableSettings = true;
 
         settings = {
           discordBranch = "stable";
@@ -53,6 +56,7 @@ import ../../lib/mkProfile.nix { inherit lib; } {
 
         vencord = {
           useSystem = false;
+          mutableSettings = true;
 
           settings = {
             autoUpdate = true;
