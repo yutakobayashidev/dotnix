@@ -1,0 +1,6 @@
+region = "nrt"
+plan   = "vc2-2c-4gb"
+# Ubuntu 24.04 x64; look up the ID with `vultr-cli os list`.
+os_id                       = 0
+ssh_public_key              = "ssh-ed25519 AAAA... yuta@ThinkPad-X1-Carbon-Gen13"
+state_encryption_passphrase = "use-a-passphrase-of-at-least-16-characters"
