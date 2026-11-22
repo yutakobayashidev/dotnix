@@ -54,15 +54,27 @@ resource "vultr_instance" "fedi" {
   ssh_key_ids      = [vultr_ssh_key.install.id]
 }
 
-module "deploy" {
-  source = "github.com/nix-community/nixos-anywhere//terraform/all-in-one?ref=0416d53"
+# The all-in-one module would run nixos-rebuild over SSH to the public IP after
+# installing, which the host's firewall blocks. comin deploys later changes, so
+# the stack only installs the first system.
+module "system_build" {
+  source    = "github.com/nix-community/nixos-anywhere//terraform/nix-build?ref=0416d53"
+  attribute = "${path.module}/../../..#nixosConfigurations.vultr-fedi.config.system.build.toplevel"
+}
 
-  nixos_system_attr      = "${path.module}/../../..#nixosConfigurations.vultr-fedi.config.system.build.toplevel"
-  nixos_partitioner_attr = "${path.module}/../../..#nixosConfigurations.vultr-fedi.config.system.build.diskoScript"
-  target_host            = vultr_instance.fedi.main_ip
-  instance_id            = vultr_instance.fedi.id
-  install_user           = "root"
-  extra_files_script     = "${path.module}/decrypt-ssh-secret.sh"
+module "partitioner_build" {
+  source    = "github.com/nix-community/nixos-anywhere//terraform/nix-build?ref=0416d53"
+  attribute = "${path.module}/../../..#nixosConfigurations.vultr-fedi.config.system.build.diskoScript"
+}
+
+module "install" {
+  source = "github.com/nix-community/nixos-anywhere//terraform/install?ref=0416d53"
+
+  nixos_system       = module.system_build.result.out
+  nixos_partitioner  = module.partitioner_build.result.out
+  target_host        = vultr_instance.fedi.main_ip
+  instance_id        = vultr_instance.fedi.id
+  extra_files_script = "${path.module}/decrypt-ssh-secret.sh"
 }
 
 output "ip-address" {

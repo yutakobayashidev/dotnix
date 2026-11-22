@@ -9,7 +9,10 @@ nixos-anywhere kexec installer, then installs
 `nixosConfigurations.vultr-fedi` with its disko partition layout.
 
 The host exposes no public TCP ports. HTTP(S) reaches nginx through Cloudflare
-Tunnel, and administration goes through Tailscale SSH.
+Tunnel, and administration goes through Tailscale SSH. Because SSH to the
+public IP stops working once NixOS boots, the stack uses only the
+nixos-anywhere `install` module and leaves later deployments to comin. To
+reinstall, replace the instance with `tofu apply -replace=vultr_instance.fedi`.
 
 ## Local files
 
