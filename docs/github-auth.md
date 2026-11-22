@@ -6,8 +6,8 @@ refreshed OAuth credentials. Home Manager sets
 requests them by default. HTTPS Git authentication uses Home Manager's
 `programs.gh.gitCredentialHelper` integration for GitHub and Gist.
 
-This requires gh 2.103.0 or later. The overlay pins gh 2.103.2 until the
-repository's nixpkgs pin supplies a supported version. See the
+This requires gh 2.103.0 or later, which the pinned nixpkgs package provides.
+See the
 [official announcement](https://github.blog/changelog/2026-10-21-github-cli-opt-in-to-expiring-auto-refreshing-oauth-tokens/).
 
 ## Initial login and migration

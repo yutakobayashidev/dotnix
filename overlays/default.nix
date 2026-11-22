@@ -33,21 +33,6 @@
       ];
     });
 
-    # Native expiring credentials require gh >= 2.103.0.
-    gh = prev.gh.overrideAttrs (_: {
-      version = "2.103.2";
-      src = final.fetchFromGitHub {
-        owner = "cli";
-        repo = "cli";
-        tag = "v2.103.2";
-        hash = "sha256-g79A0s6PZdALB9aWVZV12Om/2uKVE1Zac2aFkqwa7MQ=";
-        postCheckout = ''
-          git -C "$out" log -1 --pretty=%ct > $out/SOURCE_DATE_EPOCH
-        '';
-      };
-      vendorHash = "sha256-e9E2iTwF8kYNgW7Vs5upQBD2VT2lJ4dZcUDUk+igq/Y=";
-    });
-
     session-tts =
       let
         python = prev.python3;
