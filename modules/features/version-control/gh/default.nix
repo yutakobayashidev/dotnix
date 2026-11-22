@@ -21,6 +21,7 @@ _:
           gitCredentialHelper.enable = true;
           settings.expiring_credentials = "enabled";
           extensions = [
+            pkgs.gh-actions-lock
             pkgs.gh-graph
             pkgs.gh-nippou
             pkgs.gh-dash

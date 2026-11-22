@@ -4,10 +4,10 @@
 lockfile support. `.github/workflows/actions.lock` currently covers only this
 workflow. Other workflows continue to use their existing SHA pins.
 
-Install the official extension and verify the pilot:
+The official `gh-actions-lock` extension is managed by Home Manager alongside
+`gh`. After applying the configuration, verify the pilot:
 
 ```bash
-gh extension install github/gh-actions-lock --pin v0.4.0
 gh actions-lock --verify .github/workflows/pinact.yaml
 ```
 
