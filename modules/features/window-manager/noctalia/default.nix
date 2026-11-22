@@ -14,8 +14,8 @@ _:
       headroomSource = pkgs.fetchFromGitHub {
         owner = "yutakobayashidev";
         repo = "headroom";
-        rev = "fd581cacc8a3a20598a39af1025197ac6cc38a43";
-        hash = "sha256-a6v90BulwgbC5kemLz+bL8PSJYThGxR8untsw934/hk=";
+        rev = "cc4bfccdc74a9c5f86124c6a8fa0f56cec5356f4";
+        hash = "sha256-0O/No+TcsB6PFWmnW5SALLtvLqZ4r67Pp9JZlxak+wQ=";
       };
     in
     {
@@ -26,6 +26,8 @@ _:
           pkgs.networkmanagerapplet
           pkgs.llm-agents.codex-auth
           pkgs.python3
+          # secret-tool: Headroom reads the Mistral Vibe key from the keyring.
+          pkgs.libsecret
         ];
 
         # A pinned local plugin takes precedence over community updates.
