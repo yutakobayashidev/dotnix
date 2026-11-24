@@ -7,7 +7,8 @@
 # repository settings. See docs/octo-sts.md.
 let
   domain = "sts.yutakobayashi.com";
-  port = 18792;
+  # Outside the 1879x range, which tunnel-client health endpoints use.
+  port = 23792;
   appId = "5900527";
   # Container user of the ko-built image.
   imageUid = 65532;
@@ -26,6 +27,11 @@ in
       GITHUB_APP_IDS = appId;
       APP_SECRET_CERTIFICATE_FILE = "/run/secrets/app.pem";
       METRICS = "false";
+      # The caller names the issuer before its token is verified; only
+      # GitHub Actions may make this host fetch OIDC discovery documents,
+      # and never from private addresses on the home network.
+      OCTOSTS_ALLOWED_ISSUERS = "https://token.actions.githubusercontent.com";
+      OCTOSTS_OIDC_BLOCK_PRIVATE_IPS = "true";
     };
   };
 
