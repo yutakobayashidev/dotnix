@@ -3,53 +3,79 @@
 # Docs: https://gh.io/actions-lockfile
 version: 'v0.0.3'
 workflows:
-    '.github/workflows/infra-deploy.yaml':
-        - 'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0'
-        - 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02'
-        - 'cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866'
-        - 'cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3'
-        - 'mic92/niks3-action@a3da573cc4d21634990e5f21391abe55ed49ec46'
-        - 'tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8'
-    '.github/workflows/pinact.yaml':
+    '.github/workflows/_update-flake-reusable.yaml':
         - 'actions/checkout@v7.0.0'
-        - 'suzuki-shunsuke/pinact-action@v3.0.0'
+        - 'cachix/cachix-action@v17'
+        - 'mic92/niks3-action@v1.0.2'
+        - 'nixbuild/nix-quick-install-action@v35'
+        - 'octo-sts/action@v1.1.1'
+    '.github/workflows/auto-rebase.yaml':
+        - 'actions/checkout@v7.0.0'
+        - 'octo-sts/action@v1.1.1'
+    '.github/workflows/ci.yaml': []
+    '.github/workflows/infra-check.yaml':
+        - 'actions/checkout@v7.0.0'
+        - 'cachix/cachix-action@v17'
+        - 'mic92/niks3-action@v1.0.2'
+        - 'nixbuild/nix-quick-install-action@v35'
+    '.github/workflows/infra-deploy.yaml':
+        - 'actions/checkout@v7.0.0'
+        - 'actions/upload-artifact@v4.6.2'
+        - 'cachix/cachix-action@v17'
+        - 'mic92/niks3-action@v1.0.2'
+        - 'nixbuild/nix-quick-install-action@v35'
+        - 'tailscale/github-action@v4.1.2'
+    '.github/workflows/nix-build.yaml':
+        - 'actions/checkout@v7.0.0'
+        - 'cachix/cachix-action@v17'
+        - 'dorny/paths-filter@v4.0.1'
+        - 'mic92/niks3-action@v1.0.2'
+        - 'nixbuild/nix-quick-install-action@v35'
+    '.github/workflows/update-flake-frequent.yaml': []
+    '.github/workflows/update-flake.yaml': []
+    '.github/workflows/update-overlays.yaml':
+        - 'actions/checkout@v7.0.0'
+        - 'cachix/cachix-action@v17'
+        - 'mic92/niks3-action@v1.0.2'
+        - 'nixbuild/nix-quick-install-action@v35'
+        - 'octo-sts/action@v1.1.1'
 dependencies:
-    'actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0':
-        ref: 'v7.0.0'
-        commit: 'sha1-9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0'
-        owner_id: 44036562
-        repo_id: 197814629
     'actions/checkout@v7.0.0':
         ref: 'v7.0.0'
         commit: 'sha1-9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0'
         owner_id: 44036562
         repo_id: 197814629
-    'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02':
+    'actions/upload-artifact@v4.6.2':
         ref: 'v4.6.2'
         commit: 'sha1-ea165f8d65b6e75b540449e92b4886f43607fa02'
         owner_id: 44036562
         repo_id: 192625955
-    'cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866':
+    'cachix/cachix-action@v17':
         ref: 'v17'
         commit: 'sha1-38b082610b782e7e93e209c35fd730d399dee866'
         owner_id: 36824654
         repo_id: 211717886
-    'cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3':
-        ref: 'v31.10.6'
-        commit: 'sha1-8aa03977d8d733052d78f4e008a241fd1dbf36b3'
-        owner_id: 36824654
-        repo_id: 212301524
-    'mic92/niks3-action@a3da573cc4d21634990e5f21391abe55ed49ec46':
+    'dorny/paths-filter@v4.0.1':
+        ref: 'v4.0.1'
+        commit: 'sha1-fbd0ab8f3e69293af611ebaee6363fc25e6d187d'
+        owner_id: 1588572
+        repo_id: 265601040
+    'mic92/niks3-action@v1.0.2':
         ref: 'v1.0.2'
         commit: 'sha1-a3da573cc4d21634990e5f21391abe55ed49ec46'
         owner_id: 96200
         repo_id: 1234569622
-    'suzuki-shunsuke/pinact-action@v3.0.0':
-        ref: 'v3.0.0'
-        commit: 'sha1-896d595f299e71d65b9d28349d6956abe144390a'
-        owner_id: 13323303
-        repo_id: 663789591
-    'tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8':
+    'nixbuild/nix-quick-install-action@v35':
+        ref: 'v35'
+        commit: 'sha1-9f63be77f412a248c9d9a65a4c82cf066cdf8f0c'
+        owner_id: 60610456
+        repo_id: 296639338
+    'octo-sts/action@v1.1.1':
+        ref: 'v1.1.1'
+        commit: 'sha1-f603d3be9d8dd9871a265776e625a27b00effe05'
+        owner_id: 160145231
+        repo_id: 749429568
+    'tailscale/github-action@v4.1.2':
         ref: 'v4.1.2'
         commit: 'sha1-306e68a486fd2350f2bfc3b19fcd143891a4a2d8'
         owner_id: 48932923

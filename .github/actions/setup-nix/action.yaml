@@ -5,14 +5,17 @@ description: Install Nix and configure caches
 runs:
   using: composite
   steps:
-    - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+    - name: Install Nix
+      uses: nixbuild/nix-quick-install-action@v35 # zizmor: ignore[unpinned-uses] Exact commit enforced by the calling workflows' actions.lock entries.
       with:
         github_access_token: ${{ github.token }}
-    - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
+        nix_conf: |
+          access-tokens = github.com=${{ github.token }}
+    - uses: cachix/cachix-action@v17 # zizmor: ignore[unpinned-uses] Exact commit enforced by the calling workflows' actions.lock entries.
       with:
         name: numtide
         skipPush: true
     - name: Setup niks3
-      uses: Mic92/niks3-action@a3da573cc4d21634990e5f21391abe55ed49ec46 # v1.0.2
+      uses: Mic92/niks3-action@v1.0.2 # zizmor: ignore[unpinned-uses] Exact commit enforced by the calling workflows' actions.lock entries.
       with:
         server-url: https://niks3.yutakobayashi.com
