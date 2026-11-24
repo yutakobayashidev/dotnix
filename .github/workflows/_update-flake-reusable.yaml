@@ -36,11 +36,6 @@ on:
         description: Title for the summary section
         type: string
         default: 'Update Summary'
-    secrets:
-      app-id:
-        required: true
-      private-key:
-        required: true
 
 jobs:
   discover:
@@ -74,6 +69,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -82,10 +78,7 @@ jobs:
       - id: setup-bot
         uses: $/.github/actions/setup-git-bot
         with:
-          app-id: ${{ secrets.app-id }}
-          app-private-key: ${{ secrets.private-key }}
-          permission-contents: write
-          permission-pull-requests: write
+          identity: flake-update
 
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:

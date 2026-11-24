@@ -17,17 +17,16 @@ on:
         type: boolean
         default: false
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   update:
     uses: $/.github/workflows/_update-flake-reusable.yaml
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     with:
       exclude-inputs: 'llm-agents'
       minimum-release-age-days: ${{ github.event.inputs.minimum-release-age-days && github.event.inputs.minimum-release-age-days || '3' }}
       skip-delay: ${{ github.event.inputs.skip-delay == 'true' }}
-    secrets:
-      app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
-      private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}

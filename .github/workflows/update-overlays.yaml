@@ -5,14 +5,16 @@ on:
     - cron: '0 18 * * 5' # Saturday 03:00 JST
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   update:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -21,10 +23,7 @@ jobs:
       - id: setup-bot
         uses: $/.github/actions/setup-git-bot
         with:
-          app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
-          app-private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}
-          permission-contents: write
-          permission-pull-requests: write
+          identity: overlay-update
 
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
