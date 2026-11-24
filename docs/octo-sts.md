@@ -10,7 +10,7 @@ GitHub Secrets. This follows 10X's setup:
 
 | Part            | Where                                                                                                        |
 | --------------- | ------------------------------------------------------------------------------------------------------------ |
-| Service         | `systems/nixos/services/octo-sts` (podman container, image pinned by digest, listening on `127.0.0.1:18792`) |
+| Service         | `systems/nixos/services/octo-sts` (podman container, image pinned by digest, listening on `127.0.0.1:23792`) |
 | App private key | `secrets/octo-sts.yaml` (sops, `b450m` and `thinkpad-home`)                                                  |
 | Public endpoint | Cloudflare Tunnel ingress; the DNS record is in yutakobayashidev/tofu-configuration                          |
 | Logs            | journald of `podman-octo-sts.service`, shipped to Loki                                                       |
