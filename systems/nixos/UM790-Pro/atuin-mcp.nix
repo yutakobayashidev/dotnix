@@ -6,7 +6,6 @@
 }:
 let
   service = "tunnel-client-atuin-mcp";
-  environmentFile = "/etc/atuin-mcp/tunnel.env";
   home = config.home-manager.users.${username};
   atuin = home.programs.atuin.package;
 in
@@ -23,7 +22,11 @@ in
     };
     settings = {
       config_version = 1;
-      control_plane.api_key = "file:/run/credentials/${service}.service/control-plane-api-key";
+      control_plane = {
+        # openai_mcp_tunnel.atuin_mcp in tofu-configuration.
+        tunnel_id = "tunnel_6b05de9520148191b5e9dc1c08aa1c8e";
+        api_key = "file:/run/credentials/${service}.service/control-plane-api-key";
+      };
       health.listen_addr = "127.0.0.1:18796";
       admin_ui.open_browser = false;
       mcp.commands = [
@@ -47,10 +50,8 @@ in
 
   systemd.services.${service} = {
     after = [ "home-manager-${username}.service" ];
-    unitConfig.ConditionPathExists = environmentFile;
-    serviceConfig = {
-      EnvironmentFile = environmentFile;
-      LoadCredential = [ "control-plane-api-key:${config.sops.secrets.openai-tunnel-api-key.path}" ];
-    };
+    serviceConfig.LoadCredential = [
+      "control-plane-api-key:${config.sops.secrets.openai-tunnel-api-key.path}"
+    ];
   };
 }

@@ -39,49 +39,45 @@ UM790-Pro runs `tunnel-client-atuin-mcp` as the owner of the synchronized
 Atuin client database. Its `main` channel launches `atuin mcp` over stdio.
 B450M-Pro4 serves the Atuin sync protocol on port 8890. Search coverage
 depends on which records and captured outputs are available on UM790-Pro.
-Check `atuin status` and `atuin sync` as the history owner before rollout.
-The service sees the user's Atuin configuration and data directories. It
-needs write access to the data directory for SQLite.
+Check `atuin status` and `atuin sync` as the history owner before relying on
+it. The service sees only the user's Atuin configuration and data directories,
+and needs write access to the data directory for SQLite.
+
+The tunnel is `openai_mcp_tunnel.atuin_mcp` in tofu-configuration; its ID
+(`tofu -chdir=infra/services/openai output -raw atuin_mcp_tunnel_id`) is set in
+`systems/nixos/UM790-Pro/atuin-mcp.nix`. The runtime key comes from the existing
+sops secret `openai-tunnel-api-key` through `LoadCredential`. Health and the
+local admin UI listen on `127.0.0.1:18796` only.
 
 1. In [Platform tunnel settings](https://platform.openai.com/settings/organization/tunnels),
-   create a dedicated tunnel named `atuin-mcp` with Tunnels Read + Manage.
-   Associate the intended Platform organization and ChatGPT workspace.
-   Limit access to people allowed to read this user's shell history, command
-   output and agent threads. Grant the runtime key Tunnels Read + Use.
-2. On UM790-Pro run `sudo install -d -m 0700 /etc/atuin-mcp` and
-   `sudoedit /etc/atuin-mcp/tunnel.env`. Enter one line,
-   `CONTROL_PLANE_TUNNEL_ID=<issued tunnel ID>`, replacing the placeholder.
-   This file records the deployment's ID. The service skips startup until
-   the file exists. Systemd loads the runtime key from the existing sops
-   secret via `LoadCredential`.
-3. Apply the reviewed UM790-Pro configuration, then run
-   `sudo systemctl restart tunnel-client-atuin-mcp` and
-   `curl -fsS http://127.0.0.1:18796/readyz`. The local admin UI at
+   associate the `Atuin MCP` tunnel with the intended ChatGPT workspace. Limit
+   access to people allowed to read this user's shell history, command output
+   and agent threads.
+2. After comin applies UM790-Pro, check the client:
+   `curl -fsS http://127.0.0.1:18796/readyz`. The admin UI at
    `http://127.0.0.1:18796/ui` shows polling status. Use
    `journalctl -u tunnel-client-atuin-mcp -b` to diagnose startup failures.
-4. In the associated ChatGPT workspace, add a custom MCP server named
-   **Atuin**, choose **Connection → Tunnel**, and select the dedicated ID.
-   Select **No authentication** for the stdio server. Review the access
-   warning, create the plugin, and grant the intended users access.
-   Connect the plugin on each supported client. Verify discovery and
-   approve an `atuin_history` search for a harmless test command recorded on
-   UM790-Pro. Check `atuin_output` with its returned history ID if output
-   capture was enabled.
+3. In the associated ChatGPT workspace, add a custom MCP server named
+   **Atuin**, choose **Connection → Tunnel**, and select `Atuin MCP`. Select
+   **No authentication** for the stdio server. Review the access warning,
+   create the plugin, and grant the intended users access. Verify discovery
+   and approve an `atuin_history` search for a harmless test command recorded
+   on UM790-Pro.
 
-Responses API agents in an associated organization can register the following
-entry in the request's `tools` array, substituting the same issued ID:
+Responses API agents in the organization can register it in the request's
+`tools` array:
 
 ```json
 {
-  "type": "mcp",
-  "server_label": "atuin",
-  "tunnel_id": "<issued tunnel ID>",
-  "require_approval": "always"
+	"type": "mcp",
+	"server_label": "atuin",
+	"tunnel_id": "tunnel_6b05de9520148191b5e9dc1c08aa1c8e",
+	"require_approval": "always"
 }
 ```
 
-The shared Home Manager MCP configuration previously launched a separate
-Atuin process on every client. Generic clients that accept only a stdio
-command or an HTTP server URL cannot consume an OpenAI tunnel ID. The
-loopback port above serves health and administration only.
+Each host keeps its local `atuin mcp` registration in
+`modules/features/super-intelligence/mcp.nix`, which searches that host's
+own Atuin database. The tunnel adds remote access for clients that accept a
+tunnel ID, such as ChatGPT and the Responses API.
 [OpenAI Secure MCP Tunnel guide](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels)
