@@ -6,16 +6,16 @@ runs:
   using: composite
   steps:
     - name: Install Nix
-      uses: nixbuild/nix-quick-install-action@v35
+      uses: nixbuild/nix-quick-install-action@v35 # zizmor: ignore[unpinned-uses] Exact commit enforced by the calling workflows' actions.lock entries.
       with:
         github_access_token: ${{ github.token }}
         nix_conf: |
           access-tokens = github.com=${{ github.token }}
-    - uses: cachix/cachix-action@v17
+    - uses: cachix/cachix-action@v17 # zizmor: ignore[unpinned-uses] Exact commit enforced by the calling workflows' actions.lock entries.
       with:
         name: numtide
         skipPush: true
     - name: Setup niks3
-      uses: Mic92/niks3-action@v1.0.2
+      uses: Mic92/niks3-action@v1.0.2 # zizmor: ignore[unpinned-uses] Exact commit enforced by the calling workflows' actions.lock entries.
       with:
         server-url: https://niks3.yutakobayashi.com
