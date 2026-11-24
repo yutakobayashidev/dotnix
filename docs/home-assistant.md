@@ -171,11 +171,17 @@ Check `http://127.0.0.1:8428/targets` on the server, or query
 sensors, binary sensors, climates, lights, switches and locks. Narrow it to observed
 entity IDs if unrelated sensors are added later.
 
-## Local backup
+## Backup
 
-Restic stores encrypted snapshots at `/srv/bulk/backups/home-assistant` daily
-at 03:00 with up to 45 minutes jitter. The service requires `/srv/bulk` to be
-mounted. This is a separate disk on the same machine, not an off-site backup.
+Restic stores encrypted snapshots off-site in Cloudflare R2, at
+`restic-backup/B450M-Pro4/home-assistant`, daily at 03:00 with up to 45 minutes
+jitter. tofu-configuration owns the `restic-backup` bucket and a token scoped to
+it (`homelab-prod-restic-backup-r2`). Its access key ID and secret are in
+`systems/nixos/services/home-assistant/restic.yaml` (sops, readable by B450M-Pro4
+and `thinkpad-home`) and reach restic as `environmentFile`. To rotate them,
+replace the token in tofu-configuration and re-encrypt that file from
+`tofu -chdir=infra/global output -raw restic_backup_access_key_id` and
+`restic_backup_secret_access_key`.
 
 Create the repository password once, directly at its persistent destination:
 
@@ -226,15 +232,23 @@ host's directory layout and ownership rather than replacing that symlink or
 blindly restoring an old numeric UID. Start the services and verify history and
 paired devices. Do not run two controllers with a copied fabric concurrently.
 
-### Later migration to R2
+### Copy the local snapshots to R2
 
-The reference uses `s3:https://ACCOUNT.r2.cloudflarestorage.com/restic-backup/HOST/SERVICE`.
-When ready, create the bucket and scoped credentials, change the Restic
-repository, and supply `AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY` through a
-root-only `environmentFile` (prefer sops). Keep the repository password safe.
-Use Restic's `copy` command with the local repository as the source if retaining
-existing snapshots; merely changing the URL starts a separate repository.
-Verify the R2 snapshots and a restore before removing local backups.
+Backups before the move went to `/srv/bulk/backups/home-assistant`, a separate
+disk on the same machine. Both repositories use the same password, so `restic
+copy` reads the old one and writes into R2 without re-encrypting under a new key:
+
+```sh
+sudo restic-home-assistant snapshots   # R2; created by the first run
+sudo restic-home-assistant copy --from-repo /srv/bulk/backups/home-assistant \
+  --from-password-file /var/lib/home-assistant-secrets/restic-password
+sudo restic-home-assistant snapshots
+sudo restic-home-assistant check
+```
+
+Then restore the latest R2 snapshot into
+`/var/lib/home-assistant-restore` as above and compare it with the live
+configuration. Remove the local repository only after both pass.
 
 ## Diagnostics and sources
 
