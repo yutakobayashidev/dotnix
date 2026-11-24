@@ -9,11 +9,25 @@ let
   configDir = config.services.home-assistant.configDir;
   stage = "/var/lib/home-assistant-backup";
   passwordFile = "/var/lib/home-assistant-secrets/restic-password";
+  # One repository per host and service, as in natsukium/dotfiles: restic
+  # forget --prune locks its whole repository, and a restore only wants one
+  # service. tofu-configuration owns the bucket and its scoped token.
+  repository = "s3:https://8b50ea3379fb9efb39ecef76cfcaa04a.r2.cloudflarestorage.com/restic-backup/${config.networking.hostName}/home-assistant";
 in
 {
+  # AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY for the restic-backup bucket.
+  sops.secrets.restic-r2-credentials = {
+    sopsFile = ./restic.yaml;
+  };
+
   services.restic.backups.home-assistant = {
-    repository = "/srv/bulk/backups/home-assistant";
-    inherit passwordFile;
+    # Off-site, so that losing this machine or its disks does not take the
+    # backups with it.
+    inherit repository passwordFile;
+    environmentFile = config.sops.secrets.restic-r2-credentials.path;
+    # R2 has no regions, but the S3 client needs one and would otherwise ask
+    # the bucket where it lives on every run.
+    extraOptions = [ "s3.region=auto" ];
     initialize = true;
     timerConfig = {
       OnCalendar = "*-*-* 03:00:00";
@@ -67,10 +81,7 @@ in
   };
 
   systemd.services.restic-backups-home-assistant = {
-    unitConfig = {
-      RequiresMountsFor = [ "/srv/bulk" ];
-      ConditionPathExists = passwordFile;
-    };
+    unitConfig.ConditionPathExists = passwordFile;
     serviceConfig.UMask = "0077";
   };
 }
