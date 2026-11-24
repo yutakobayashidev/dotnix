@@ -134,7 +134,7 @@ runs:
           echo "Fetching commit from at least $MIN_AGE_DAYS days ago via GitHub API..."
 
           cutoff_date=$(date -u -d "$MIN_AGE_DAYS days ago" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || \
-                        date -u -v-${MIN_AGE_DAYS}d +%Y-%m-%dT%H:%M:%SZ)
+                        date -u -v-"${MIN_AGE_DAYS}"d +%Y-%m-%dT%H:%M:%SZ)
           echo "Cutoff date: $cutoff_date"
 
           api_url="repos/${INPUT_OWNER}/${INPUT_REPO}/commits?until=${cutoff_date}&per_page=1"
@@ -273,11 +273,13 @@ runs:
         fi
 
         echo "Update successful!"
-        echo "updated=true" >> "$GITHUB_OUTPUT"
-        echo "new_version=${new_rev:0:8}" >> "$GITHUB_OUTPUT"
-        echo "current_pkg_versions=${current_pkg_versions}" >> "$GITHUB_OUTPUT"
-        echo "new_pkg_versions=${new_pkg_versions}" >> "$GITHUB_OUTPUT"
-        echo "pkg_version_diff=${pkg_version_diff}" >> "$GITHUB_OUTPUT"
+        {
+          echo "updated=true"
+          echo "new_version=${new_rev:0:8}"
+          echo "current_pkg_versions=${current_pkg_versions}"
+          echo "new_pkg_versions=${new_pkg_versions}"
+          echo "pkg_version_diff=${pkg_version_diff}"
+        } >> "$GITHUB_OUTPUT"
 
     - name: Create pull request
       id: create-pr
@@ -378,11 +380,11 @@ runs:
           gh pr edit "$pr_number" --title "$pr_title" --body "$pr_body"
         else
           echo "Creating new PR"
-          label_args=""
+          label_args=()
           IFS=',' read -ra labels <<< "$PR_LABELS"
           for label in "${labels[@]}"; do
             label=$(echo "$label" | xargs)
-            label_args="$label_args --label $label"
+            if [ -n "$label" ]; then label_args+=(--label "$label"); fi
           done
 
           gh pr create \
@@ -390,7 +392,7 @@ runs:
             --body "$pr_body" \
             --base main \
             --head "$branch" \
-            $label_args
+            "${label_args[@]}"
 
           pr_number=$(gh pr list --head "$branch" --json number --jq '.[0].number')
         fi
