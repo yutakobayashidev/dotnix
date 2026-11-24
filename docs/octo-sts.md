@@ -27,13 +27,19 @@ tofu-configuration.
 
 Policies live in `.github/chainguard/<identity>.sts.yaml` of the target
 repository and are read from its default branch, so a pull request cannot
-grant itself access. GitHub issues the immutable subject, with numeric owner
-and repository IDs, so match it rather than the name-based form:
+grant itself access. The OIDC subject format depends on the repository:
+dotnix, created before GitHub's immutable subjects, presents
+`repo:yutakobayashidev/dotnix:ref:refs/heads/main`, while newer repositories
+present `repo:<owner>@<owner_id>/<repo>@<repo_id>:ref:...`. Check a run's
+claims before writing a policy, and pin the numeric IDs with `claim_pattern`
+when the subject is name-based:
 
 ```yaml
 issuer: https://token.actions.githubusercontent.com
-subject: repo:yutakobayashidev@91340399/dotnix@<repository_id>:ref:refs/heads/main
+subject: repo:yutakobayashidev/dotnix:ref:refs/heads/main
 claim_pattern:
+  repository_owner_id: '91340399'
+  repository_id: '1130276992'
   job_workflow_ref: yutakobayashidev/dotnix/\.github/workflows/<workflow>\.yml@refs/heads/main
 
 permissions:

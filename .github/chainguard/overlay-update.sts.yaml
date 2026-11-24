@@ -1,10 +1,13 @@
 # Opens and updates the overlay package update pull request.
-# Matched against GitHub's immutable OIDC subject (numeric owner and
-# repository IDs) on main, and the workflow file that runs the job.
+# dotnix predates GitHub's immutable OIDC subject, so its subject is
+# name-based. The numeric owner and repository IDs are matched as well, so a
+# renamed or recreated repository cannot reuse this policy.
 # See docs/octo-sts.md.
 issuer: https://token.actions.githubusercontent.com
-subject: repo:yutakobayashidev@91340399/dotnix@1130276992:ref:refs/heads/main
+subject: repo:yutakobayashidev/dotnix:ref:refs/heads/main
 claim_pattern:
+  repository_owner_id: '91340399'
+  repository_id: '1130276992'
   job_workflow_ref: yutakobayashidev/dotnix/\.github/workflows/update-overlays\.yaml@.+
 
 permissions:
