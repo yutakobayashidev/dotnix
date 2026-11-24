@@ -21,6 +21,7 @@
     ../services/grafana
     ../services/rsshub
     ../services/pocket-id
+    ../services/octo-sts
     ../services/noren
     ../services/simple-nostr-relay
     ../services/webhashtag-rust-server
