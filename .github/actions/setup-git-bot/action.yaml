@@ -1,41 +1,34 @@
 # Thanks: https://github.com/ryoppippi/dotfiles/blob/main/.github/actions/setup-git-bot/action.yaml
 name: Setup Git Bot
-description: Generate GitHub App token and configure git identity
+description: Get a yuta-octo-sts token from the self-hosted Octo STS and configure git identity
 
 inputs:
-  app-id:
-    description: GitHub App ID
-    required: true
-  app-private-key:
-    description: GitHub App private key
-    required: true
-  permission-contents:
-    description: contents permission for the generated token
-    required: true
-  permission-pull-requests:
-    description: pull-requests permission for the generated token
+  identity:
+    description: Trust policy in .github/chainguard/<identity>.sts.yaml that grants the token
     required: true
 
 outputs:
   token:
-    description: GitHub App installation token
+    description: Short-lived GitHub App installation token, revoked when the job ends
     value: ${{ steps.token.outputs.token }}
 
 runs:
   using: composite
   steps:
+    # Octo STS exchanges this job's OIDC token for a token with only the
+    # permissions the trust policy grants. The caller needs id-token: write.
+    # See docs/octo-sts.md.
     - id: token
-      uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+      uses: octo-sts/action@f603d3be9d8dd9871a265776e625a27b00effe05 # v1.1.1
       with:
-        app-id: ${{ inputs.app-id }}
-        private-key: ${{ inputs.app-private-key }}
-        permission-contents: ${{ inputs.permission-contents }}
-        permission-pull-requests: ${{ inputs.permission-pull-requests }}
+        domain: sts.yutakobayashi.com
+        scope: ${{ github.repository }}
+        identity: ${{ inputs.identity }}
 
     - shell: bash
       env:
         GH_TOKEN: ${{ steps.token.outputs.token }}
-        APP_SLUG: ${{ steps.token.outputs.app-slug }}
+        APP_SLUG: yuta-octo-sts
       run: |
         BOT_ID=$(gh api "users/${APP_SLUG}[bot]" --jq '.id')
         git config user.name "${APP_SLUG}[bot]"

@@ -6,17 +6,16 @@ on:
     - cron: '0 */3 * * *'
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pull-requests: write
+permissions: {}
 
 jobs:
   update:
     uses: $/.github/workflows/_update-flake-reusable.yaml
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
     with:
       inputs: 'llm-agents'
       skip-delay: true
       minimum-release-age-days: '0'
-    secrets:
-      app-id: ${{ secrets.FLAKE_UPDATER_APP_ID }}
-      private-key: ${{ secrets.FLAKE_UPDATER_APP_PRIVATE_KEY }}

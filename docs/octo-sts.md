@@ -49,6 +49,19 @@ Octo STS caches trust policies. After changing one, restart the service if
 the new policy must apply immediately:
 `systemctl restart podman-octo-sts.service`.
 
+## Policies in dotnix
+
+| Identity         | Workflow (job)                                                                                | Permissions                        |
+| ---------------- | --------------------------------------------------------------------------------------------- | ---------------------------------- |
+| `flake-update`   | `_update-flake-reusable.yaml`, called by `update-flake.yaml` and `update-flake-frequent.yaml` | Contents and Pull requests write   |
+| `overlay-update` | `update-overlays.yaml`                                                                        | Contents and Pull requests write   |
+| `auto-rebase`    | `auto-rebase.yaml`                                                                            | Contents write, Pull requests read |
+
+Each workflow gets its token through `.github/actions/setup-git-bot` with
+`identity: <identity>`, and needs `id-token: write` on the job. The token
+belongs to `yuta-octo-sts[bot]`, so the pull requests it opens and the pushes
+it makes still trigger CI, which `GITHUB_TOKEN` would not.
+
 ## Rotating the App key
 
 1. Generate a new private key in the App settings.

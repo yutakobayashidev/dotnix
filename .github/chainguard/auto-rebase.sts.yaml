@@ -1,0 +1,12 @@
+# Rebases open update-flake-* branches onto main.
+# Matched against GitHub's immutable OIDC subject (numeric owner and
+# repository IDs) on main, and the workflow file that runs the job.
+# See docs/octo-sts.md.
+issuer: https://token.actions.githubusercontent.com
+subject: repo:yutakobayashidev@91340399/dotnix@1130276992:ref:refs/heads/main
+claim_pattern:
+  job_workflow_ref: yutakobayashidev/dotnix/\.github/workflows/auto-rebase\.yaml@.+
+
+permissions:
+  contents: write
+  pull_requests: read
