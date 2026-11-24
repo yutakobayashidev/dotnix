@@ -6,16 +6,16 @@ runs:
   using: composite
   steps:
     - name: Install Nix
-      uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
+      uses: nixbuild/nix-quick-install-action@v35
       with:
         github_access_token: ${{ github.token }}
         nix_conf: |
           access-tokens = github.com=${{ github.token }}
-    - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
+    - uses: cachix/cachix-action@v17
       with:
         name: numtide
         skipPush: true
     - name: Setup niks3
-      uses: Mic92/niks3-action@a3da573cc4d21634990e5f21391abe55ed49ec46 # v1.0.2
+      uses: Mic92/niks3-action@v1.0.2
       with:
         server-url: https://niks3.yutakobayashi.com
