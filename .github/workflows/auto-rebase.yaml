@@ -20,7 +20,7 @@ jobs:
       id-token: write
     if: github.event_name == 'workflow_dispatch' || github.event.head_commit.committer.name == 'GitHub'
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@v7.0.0
         with:
           persist-credentials: false
 
@@ -29,7 +29,7 @@ jobs:
         with:
           identity: auto-rebase
 
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@v7.0.0
         with:
           token: ${{ steps.setup-bot.outputs.token }}
           fetch-depth: 0

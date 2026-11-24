@@ -5,9 +5,12 @@ description: Install Nix and configure caches
 runs:
   using: composite
   steps:
-    - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31.10.6
+    - name: Install Nix
+      uses: nixbuild/nix-quick-install-action@9f63be77f412a248c9d9a65a4c82cf066cdf8f0c # v35
       with:
         github_access_token: ${{ github.token }}
+        nix_conf: |
+          access-tokens = github.com=${{ github.token }}
     - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
       with:
         name: numtide

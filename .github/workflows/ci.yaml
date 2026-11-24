@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/**
+      - .github/actions/**
+
+permissions: {}
+
+jobs:
+  gha-lint:
+    permissions:
+      contents: read
+    uses: zunoser/reusable-workflows/.github/workflows/gha-lint.yml@8b4dca5028d0ed6a90006e1222cfea4223765254 # v1.2.0

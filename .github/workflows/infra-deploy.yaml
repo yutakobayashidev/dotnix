@@ -58,7 +58,7 @@ jobs:
       - name: Setup Nix
         uses: $/.github/actions/setup-nix
       - name: Checkout approved revision
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@v7.0.0
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
@@ -67,7 +67,7 @@ jobs:
           allow-unsafe-pr-checkout: true
       - name: Tailscale
         if: matrix.name != 'tailscale-b450-recovery'
-        uses: tailscale/github-action@306e68a486fd2350f2bfc3b19fcd143891a4a2d8 # v4.1.2
+        uses: tailscale/github-action@v4.1.2
         with:
           # Pre-signed, ephemeral, reusable auth key with tag:ci assigned to it.
           authkey: ${{ secrets.TS_AUTHKEY }}
@@ -133,7 +133,7 @@ jobs:
           fi
       - name: Upload encrypted CI enrollment keys
         if: ${{ github.event_name == 'workflow_dispatch' && contains(fromJSON('["tailscale", "tailscale-ci"]'), inputs.target) && inputs.mode == 'apply' && inputs.ci_key_recipient != '' }}
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: tailscale-ci-keys
           path: ${{ runner.temp }}/tailscale-ci-keys.age
