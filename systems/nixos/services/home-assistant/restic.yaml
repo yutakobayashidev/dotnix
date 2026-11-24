@@ -1,4 +1,5 @@
 restic-r2-credentials: ENC[AES256_GCM,data:cw4tN4lnXuNXRZ2tOUlvs8suUbkCkpjEg2PgLUg18CRYSeOxf1H1P6ifL2yxHAO2S4xjroVgBnbSiAytX7PGzR9JvCqow619vRelEtDI3ogn/7a36YsB13HOFGPBY24ErVocPs2MWw7p0EszlUzlmyXnwW44IMYGVSNUNS+bUPnyBsrUF7bomtXM,iv:Ssqyuj7s+KBHDA4LuZifoaN//Os+dVJkfWgvBUzT/7w=,tag:hSY6z5vJA5kL89grhcKA/A==,type:str]
+restic-password: ENC[AES256_GCM,data:0FoJ+NEc227NYdqu0n1Qa5FMOZm4VPeDfsV1+sbTtxopESV1RkpSQ5pfriE=,iv:TYMqbbeduvZEmhUyFYd6v/m7iV4yicLZDVIRtIgri0M=,tag:Mt4ZgQaQSz92SwvBR8qh1g==,type:str]
 sops:
   age:
     - enc: |
@@ -19,7 +20,7 @@ sops:
         VnEbaLShct4YSkVrOm446aQfMfe2FRCRaGNaGdIAoWFl7mctZBJoiw==
         -----END AGE ENCRYPTED FILE-----
       recipient: age18vhwvn7ra09rhdc3ex5scd6n96w3lvpv54sa2gvky7559exdhyus6gjmln
-  lastmodified: '2026-11-24T18:43:44Z'
-  mac: ENC[AES256_GCM,data:7ebLwIZ6+RKpfrTiX7XpuLLxVoh+g20MVf/3vle3x7bqayBCILlhGeL9do26dIMujSIIs3ZJFRY6JAt8NEZvtnzUwg1hUFWkeTUPdHQhOyrmGCJO9aDH5oVw9TZVzrruunzeQS5G0D2MWABbNm0cDq2/5wDLFXgW2EoWnLwYOv0=,iv:6E8Jfu5ybkUsLRkv09sG4KTB13refatlHK1hsssk+UA=,tag:PmAIAp1SjzPfPtyaJcCULQ==,type:str]
+  lastmodified: '2026-11-24T18:51:08Z'
+  mac: ENC[AES256_GCM,data:ybFB09cGybCKcij3sJQyRgqcaH703kuVlMe+oltVsIFViFPRUOmpoeRSiqI4dvVzcUe3CHaP1iBGlfgR5MWxPdwKc7/CBqmw9ydpPS3n+Tu6EwUVEIoQ5P5w4xqGCQxr0RM8uohopuxEBwTwEuOQnvyrEp8Mf6jvdRCBUuBxDDU=,iv:TxTXhx3P8CIXoa16vtvuc3a/19ZKnuQQarX35q9I7VE=,tag:1Xqfvbl9jQFuTUZg/W05fw==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.3

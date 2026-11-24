@@ -176,26 +176,26 @@ entity IDs if unrelated sensors are added later.
 Restic stores encrypted snapshots off-site in Cloudflare R2, at
 `restic-backup/B450M-Pro4/home-assistant`, daily at 03:00 with up to 45 minutes
 jitter. tofu-configuration owns the `restic-backup` bucket and a token scoped to
-it (`homelab-prod-restic-backup-r2`). Its access key ID and secret are in
-`systems/nixos/services/home-assistant/restic.yaml` (sops, readable by B450M-Pro4
-and `thinkpad-home`) and reach restic as `environmentFile`. To rotate them,
-replace the token in tofu-configuration and re-encrypt that file from
+it (`homelab-prod-restic-backup-r2`).
+
+`systems/nixos/services/home-assistant/restic.yaml` (sops, readable by
+B450M-Pro4 and `thinkpad-home`) holds the repository password
+(`restic-password`) and the R2 access key ID and secret
+(`restic-r2-credentials`, passed as `environmentFile`). Losing the password
+makes the repository unreadable; `thinkpad-home` decrypting the file is the
+recovery copy outside this machine. Never re-encrypt the password with a new
+value: the existing repository keeps the old one. To rotate the R2 token,
+replace it in tofu-configuration and update `restic-r2-credentials` from
 `tofu -chdir=infra/global output -raw restic_backup_access_key_id` and
 `restic_backup_secret_access_key`.
 
-Create the repository password once, directly at its persistent destination:
+The first run initializes the repository. To run one now and inspect it:
 
 ```sh
-sudo sh -c 'umask 077; test ! -e /var/lib/home-assistant-secrets/restic-password && openssl rand -base64 48 > /var/lib/home-assistant-secrets/restic-password'
 sudo systemctl start restic-backups-home-assistant
 sudo restic-home-assistant snapshots
 sudo restic-home-assistant check
 ```
-
-Keep a separate recovery copy of this password in a password manager. Losing it
-makes the repository unreadable. The timer skips backups until the password is
-present. Secrets remain outside Git and the Nix store. `/var/lib` is already
-persistent on this impermanent host.
 
 The prepare step uses SQLite's online `.backup` API as `hass`, excluding the
 live DB/WAL/SHM from Restic. Matter Server is briefly stopped while copying its
@@ -231,24 +231,6 @@ the existing Matter state directory. It uses systemd DynamicUser, so
 host's directory layout and ownership rather than replacing that symlink or
 blindly restoring an old numeric UID. Start the services and verify history and
 paired devices. Do not run two controllers with a copied fabric concurrently.
-
-### Copy the local snapshots to R2
-
-Backups before the move went to `/srv/bulk/backups/home-assistant`, a separate
-disk on the same machine. Both repositories use the same password, so `restic
-copy` reads the old one and writes into R2 without re-encrypting under a new key:
-
-```sh
-sudo restic-home-assistant snapshots   # R2; created by the first run
-sudo restic-home-assistant copy --from-repo /srv/bulk/backups/home-assistant \
-  --from-password-file /var/lib/home-assistant-secrets/restic-password
-sudo restic-home-assistant snapshots
-sudo restic-home-assistant check
-```
-
-Then restore the latest R2 snapshot into
-`/var/lib/home-assistant-restore` as above and compare it with the live
-configuration. Remove the local repository only after both pass.
 
 ## Diagnostics and sources
 
