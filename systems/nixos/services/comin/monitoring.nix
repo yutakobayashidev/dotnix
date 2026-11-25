@@ -33,11 +33,13 @@ in
             inherit (value.config.services.comin.exporter) listen_address port;
             listenAddress = if listen_address == "" then "localhost" else listen_address;
             host = if name == config.networking.hostName then listenAddress else name;
+            address = config.my.services.monitoring.scrapeHosts.${name} or host;
           in
           {
-            targets = [ "${host}:${toString port}" ];
+            targets = [ "${address}:${toString port}" ];
             labels = {
               host = name;
+              instance = "${host}:${toString port}";
               always_on = lib.boolToString (lib.elem name config.my.services.monitoring.alwaysOnHosts);
             };
           }

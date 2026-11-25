@@ -179,6 +179,7 @@
   };
 
   my.services.monitoring.enable = true;
+  my.services.monitoring.scrapeHosts.UM790-Pro = "um790-pro.tail29d068.ts.net";
   my.services.agentTelemetry = {
     enable = true;
     mode = "server";

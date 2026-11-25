@@ -10,29 +10,34 @@ _: {
     let
       cfg = config.my.services.monitoring;
       machines = inputs.self.nixosConfigurations // inputs.self.darwinConfigurations;
-      targets = lib.mapAttrsToList (name: machine: {
-        targets = [
-          "${
-            if name == config.networking.hostName then "127.0.0.1" else name
-          }:${toString machine.config.services.prometheus.exporters.node.port}"
-        ];
-        labels = {
-          host = name;
-          always_on = if builtins.elem name cfg.alwaysOnHosts then "true" else "false";
-          role =
-            if
-              builtins.elem name [
-                "UM790-Pro"
-                "M2-MacBook-Air"
-              ]
-            then
-              "builders"
-            else if builtins.elem name cfg.alwaysOnHosts then
-              "servers"
-            else
-              "clients";
-        };
-      }) (lib.filterAttrs (name: _: builtins.elem name cfg.nodeHosts) machines);
+      targets = lib.mapAttrsToList (
+        name: machine:
+        let
+          host = if name == config.networking.hostName then "127.0.0.1" else name;
+          address = cfg.scrapeHosts.${name} or host;
+          port = toString machine.config.services.prometheus.exporters.node.port;
+        in
+        {
+          targets = [ "${address}:${port}" ];
+          labels = {
+            host = name;
+            instance = "${host}:${port}";
+            always_on = if builtins.elem name cfg.alwaysOnHosts then "true" else "false";
+            role =
+              if
+                builtins.elem name [
+                  "UM790-Pro"
+                  "M2-MacBook-Air"
+                ]
+              then
+                "builders"
+              else if builtins.elem name cfg.alwaysOnHosts then
+                "servers"
+              else
+                "clients";
+          };
+        }
+      ) (lib.filterAttrs (name: _: builtins.elem name cfg.nodeHosts) machines);
       # APFS slices and Btrfs subvolumes share capacity; alert once per pool.
       filesystemFree =
         selector:
@@ -53,6 +58,11 @@ _: {
     in
     {
       options.my.services.monitoring = {
+        scrapeHosts = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          default = { };
+          description = "Override the address used to scrape a host while keeping its instance label.";
+        };
         enable = lib.mkEnableOption "central VictoriaMetrics monitoring and vmalert";
         alwaysOnHosts = lib.mkOption {
           type = lib.types.listOf lib.types.str;
