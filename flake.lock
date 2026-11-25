@@ -1317,11 +1317,11 @@
     "moonbit-overlay": {
       "flake": false,
       "locked": {
-        "lastModified": 1793434175,
-        "narHash": "sha256-woeeZ23rbo2NBw/hcZ6v+Rt5xNppKU21jfeGYEF7UX8=",
+        "lastModified": 1795339837,
+        "narHash": "sha256-427ra5N+NkkyinD0mspjSX+zoLNFFQjjEyliSWqdG6Y=",
         "owner": "moonbit-community",
         "repo": "moonbit-overlay",
-        "rev": "a0aeeb3a1d3524de62817ba1c6e8d10a228099ea",
+        "rev": "7a4caf8d3403cf38e09a5f49f5fbcddb8a3ab9f5",
         "type": "github"
       },
       "original": {
