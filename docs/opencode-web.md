@@ -11,10 +11,6 @@ Add models to `systems/nixos/services/llm/default.nix` before using inference;
 model synchronization removes models that are not declared there. Ollama's
 port remains closed on untrusted interfaces, with access through Tailscale.
 
-After applying the configuration on both hosts, open
-<https://opencode.home.yutakobayashi.com/> from the Tailnet and sign in as
-`opencode`.
-
 UM790-Pro runs the Home Manager `opencode-web.service` on its Tailscale address
 `100.91.91.87:4096`. B450M-Pro4 terminates HTTPS with Traefik and allows only
 Tailnet source addresses, as for [dsh Web](dsh-web.md). Existing wildcard DNS
@@ -23,10 +19,24 @@ provider credentials, and session storage as the user's CLI, with the home
 directory as its working directory. User lingering starts it without login;
 failed starts are retried after five seconds.
 
+## Browser sign-in
+
+On a Tailnet client, request a pairing link. Enter the OpenCode Web password
+when curl prompts, then open the printed URL in your browser. The link works
+once and expires after five minutes.
+
+```bash
+base=https://opencode.home.yutakobayashi.com
+curl -fsS --user opencode -X POST "$base/api/pair" |
+  jq -er --arg base "$base" '$base + "/auth/connect/" + .code'
+```
+
+This requests the link from UM790-Pro's systemd-managed server.
+
 ## Password
 
-The [V2 authentication mechanism](https://opencode.ai/docs/migrate-v1#server-authentication)
-still accepts `OPENCODE_SERVER_PASSWORD`; the username is always `opencode`.
+The [V2 server](https://opencode.ai/docs/migrate-v1#server-authentication)
+reads `OPENCODE_PASSWORD`. The HTTP Basic username is `opencode`.
 The generated password is encrypted in `secrets/opencode-web.yaml` for the
 UM790-Pro and ThinkPad Home Manager age keys. No plaintext password is stored
 in the repository or Nix store. sops-nix renders the runtime environment file
@@ -70,10 +80,11 @@ curl --user opencode https://opencode.home.yutakobayashi.com/api/info
 ```
 
 Expect `401` without credentials and server information as JSON after signing in.
-Also open the HTTPS URL in a browser and verify that the project/session UI loads.
+Redeem a pairing link and verify that the project/session UI loads.
 
-Configuration lives in `modules/features/super-intelligence/opencode/default.nix`,
-`homes/nixos/UM790-Pro/opencode.nix`, and
+The shared module sets `programs.opencode.settings` and selects the V2 package.
+The UM790-Pro home configuration sets `programs.opencode.web` and adds the
+SOPS dependency and password check. The B450M-Pro4 HTTPS route lives in
 `systems/nixos/services/opencode-web/default.nix`.
 
 ## Deployment
