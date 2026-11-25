@@ -37,6 +37,27 @@ _:
               }
             ];
           };
+          plan-restricted = {
+            mode = "primary";
+            description = "Research public web sources and answer in the session.";
+            permissions = [
+              {
+                action = "*";
+                resource = "*";
+                effect = "deny";
+              }
+              {
+                action = "websearch";
+                resource = "*";
+                effect = "allow";
+              }
+              {
+                action = "webfetch";
+                resource = "*";
+                effect = "allow";
+              }
+            ];
+          };
           build = {
             mode = "all";
             permissions = [
@@ -62,6 +83,47 @@ _:
               }
               {
                 action = "edit";
+                resource = "*";
+                effect = "allow";
+              }
+            ];
+          };
+          build-auto = {
+            mode = "all";
+            description = "Implement changes and run commands without per-command approval inside the workspace.";
+            permissions = [
+              {
+                action = "external_directory";
+                resource = "*";
+                effect = "ask";
+              }
+              {
+                action = "external_directory";
+                resource = "/tmp/**";
+                effect = "allow";
+              }
+              {
+                action = "read";
+                resource = "*.env";
+                effect = "allow";
+              }
+              {
+                action = "read";
+                resource = "*.env.*";
+                effect = "allow";
+              }
+              {
+                action = "subagent";
+                resource = "build-auto";
+                effect = "allow";
+              }
+              {
+                action = "edit";
+                resource = "*";
+                effect = "allow";
+              }
+              {
+                action = "shell";
                 resource = "*";
                 effect = "allow";
               }
