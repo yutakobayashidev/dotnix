@@ -13,18 +13,15 @@ _claude_sessions_chpwd() {
   # Encode current directory path to Claude project dir format (/ and . → -)
   local project_dir="${PWD//\//-}"
   project_dir="${project_dir//./-}"
-  local claude_path="$HOME/.claude/projects/$project_dir"
-
-  # Skip if no Claude project data exists
-  [[ ! -d "$claude_path" ]] && return
+  local claude_path="${CLAUDE_CONFIG_DIR:-$HOME/.claude}/projects/$project_dir"
 
   # Get 3 most recent session files
   local -a files
-  files=(${(f)"$(command ls -t "$claude_path"/*.jsonl 2>/dev/null | head -3)"})
+  files=("$claude_path"/*.jsonl(N.om[1,3]))
   [[ ${#files[@]} -eq 0 ]] && return
 
   local -a sids
-  local sid
+  local f sid s
   for f in "${files[@]}"; do
     sid=$(head -1 "$f" | command jq -r '.sessionId // empty' 2>/dev/null)
     [[ -n "$sid" ]] && sids+=("$sid")
