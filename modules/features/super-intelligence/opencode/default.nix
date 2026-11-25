@@ -429,6 +429,8 @@ _:
           settings = opencodeConfig;
         };
 
+        xdg.configFile."opencode/plugins/session-move.js".source = ./session-move.js;
+
         # Keep the usual command name while llm-agents packages V2 as opencode2.
         home.packages = lib.mkAfter [ opencode ];
       };
