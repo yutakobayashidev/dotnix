@@ -430,6 +430,9 @@ _:
         };
 
         xdg.configFile."opencode/plugins/session-move.js".source = ./session-move.js;
+        xdg.configFile."opencode/plugins/handoff.js".source = pkgs.replaceVars ./handoff.js {
+          opencode = lib.getExe pkgs.llm-agents.opencode2;
+        };
 
         # Keep the usual command name while llm-agents packages V2 as opencode2.
         home.packages = lib.mkAfter [ opencode ];
