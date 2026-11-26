@@ -602,16 +602,16 @@
 			},
 			"local": {
 				"branch": "main",
-				"hash": "sha256-yWbkgVfcG3wmGrdgNDNr/QxkNqMoYqNa8PjkmauuGPY=",
+				"hash": "sha256-BpYCbebTjviGizX+OrA6KSfrUNmkGm8ITyDStr0vrms=",
 				"repository": {
 					"owner": "yutakobayashidev",
 					"repo": "skills",
 					"type": "GitHub"
 				},
-				"revision": "5308609281e87d3228456ddf273ef08195839ad0",
+				"revision": "ed777028afc60e743a4eedaa835a185553964514",
 				"submodules": false,
 				"type": "Git",
-				"url": "https://github.com/yutakobayashidev/skills/archive/5308609281e87d3228456ddf273ef08195839ad0.tar.gz"
+				"url": "https://github.com/yutakobayashidev/skills/archive/ed777028afc60e743a4eedaa835a185553964514.tar.gz"
 			},
 			"mattpocock": {
 				"branch": "main",
