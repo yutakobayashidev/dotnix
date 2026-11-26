@@ -359,7 +359,7 @@
 				"type": "github",
 				"versionUpperBound": null
 			},
-			"subdir": "skills"
+			"subdir": "plugins/obsidian/skills"
 		},
 		"openclaw": {
 			"filter": {

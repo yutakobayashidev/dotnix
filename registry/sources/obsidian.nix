@@ -6,5 +6,5 @@
     branch = "main";
   };
 
-  subdir = "skills";
+  subdir = "plugins/obsidian/skills";
 }
