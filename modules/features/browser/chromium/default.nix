@@ -38,6 +38,7 @@ _:
             { id = "neebplgakaahbhdphmkckjjcegoiijjo"; } # Keepa
             { id = "kpffakljoffeckbckheiheogajnofdpc"; } # Amazonの個人情報を隠します
             { id = "pjginhohpenlemfdcjbahjbhnpinfnlm"; } # CRX GCal URL Opener
+            { id = "jijlppfhlfgamaofmpafjpibhdmmcbde"; } # K-ON! theme
           ];
         };
       };
