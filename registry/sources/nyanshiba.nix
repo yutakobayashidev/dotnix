@@ -8,4 +8,5 @@
   };
 
   subdir = ".agents/skills";
+  idPrefix = "nyanshiba";
 }
