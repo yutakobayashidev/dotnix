@@ -1998,11 +1998,11 @@
     },
     "nixtopsy": {
       "locked": {
-        "lastModified": 1793726513,
-        "narHash": "sha256-1N3XF7Uo/EFFPgcbfpfnIIcIBbjDebJPG2LI6/tHfdI=",
+        "lastModified": 1795426408,
+        "narHash": "sha256-RH4EUjl0wx+VIzRy6zamLsNzfh+73fCm68OuKf4cdsM=",
         "owner": "amaanq",
         "repo": "nixtopsy",
-        "rev": "f6a49b08caf9257f608200907d1a99823d8f7381",
+        "rev": "3517742d58366babf3aabd3a7688f6fd85e0c8a2",
         "type": "github"
       },
       "original": {
