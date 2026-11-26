@@ -1,4 +1,9 @@
-{ username, ... }:
+{
+  config,
+  lib,
+  username,
+  ...
+}:
 
 {
   imports = [ ../common.nix ];
@@ -13,6 +18,12 @@
       ./opencode.nix
       ./herdr-symphony
     ];
+    # Use the same directory as Symphony's Claude worker. Recursive Home
+    # Manager links coexist with its generated Claude plugin and local skills.
+    programs.agent-skills.targets.claude = {
+      dest = lib.mkForce "${config.home-manager.users.${username}.programs.claude-code.configDir}/skills";
+      structure = lib.mkForce "link";
+    };
     my.programs.course-cli.enable = true;
     my.programs.dsh.web = {
       enable = true;

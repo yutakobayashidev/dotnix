@@ -180,14 +180,7 @@ _:
 
           # Pi also discovers ~/.agents/skills; avoid duplicate skill loading.
           targets = builtins.mapAttrs (
-            name: target:
-            target
-            // { enable = name != "pi"; }
-            // lib.optionalAttrs (name == "claude" && config.programs.claude-code.enable) {
-              dest = "${config.programs.claude-code.configDir}/skills";
-              # Link each skill alongside the existing Home Manager plugin.
-              structure = "link";
-            }
+            name: target: target // { enable = name != "pi"; }
           ) agentLib.defaultTargets;
         };
       };
