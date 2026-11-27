@@ -429,6 +429,7 @@ _:
           settings = opencodeConfig;
         };
 
+        xdg.configFile."opencode/plugins/ask-once.js".source = ./ask-once.js;
         xdg.configFile."opencode/plugins/session-move.js".source = ./session-move.js;
         xdg.configFile."opencode/plugins/handoff.js".source = pkgs.replaceVars ./handoff.js {
           opencode = lib.getExe pkgs.llm-agents.opencode2;
