@@ -39,6 +39,11 @@ _:
               url = "https://mcp.deepwiki.com/mcp";
             };
 
+            # Obsidian vault "garden" served by yutakobayashidev/livesync-workers; clients sign in with OAuth.
+            garden = {
+              url = "https://livesync-workers.yutakobayashi.workers.dev/mcp";
+            };
+
             atuin = {
               command = lib.getExe pkgs.atuin;
               args = [ "mcp" ];
