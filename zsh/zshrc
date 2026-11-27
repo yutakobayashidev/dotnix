@@ -10,12 +10,6 @@ if [ -f "$HM_SESSION_VARS" ]; then
   . "$HM_SESSION_VARS"
 fi
 
-# Enable completion
-autoload -Uz compinit && compinit
-
-# git-wt
-eval "$(git wt --init zsh)"
-
 # ========================================
 # Load config files
 # ========================================
@@ -23,12 +17,17 @@ eval "$(git wt --init zsh)"
 # oh-my-zsh configuration (must be loaded first)
 source ~/.config/zsh/config/oh-my-zsh.zsh
 
+# Oh My Zsh initializes completion before git-wt registers its handlers.
+eval "$(git wt --init zsh)"
+
 # Prompt settings live in the dotfiles instead of the interactive p10k wizard.
 source ~/.config/zsh/config/p10k.zsh
 source ~/.zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
 
 # zsh plugins
 source ~/.zsh/plugins/zsh-abbr/zsh-abbr.plugin.zsh
+autoload -Uz _abbr
+compdef _abbr abbr
 source ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
@@ -78,9 +77,12 @@ direnv() {
 ZSH_HIGHLIGHT_HIGHLIGHTERS+=(regexp)
 typeset -gA ZSH_HIGHLIGHT_REGEXP
 () {
-  local keys=(${(k)ABBR_REGULAR_USER_ABBREVIATIONS})
+  local -a keys=(
+    ${(k)ABBR_REGULAR_USER_ABBREVIATIONS}
+    ${(k)ABBR_REGULAR_SESSION_ABBREVIATIONS}
+  )
   keys=(${keys//\"/})
-  ZSH_HIGHLIGHT_REGEXP+=('^[[:blank:][:space:]]*('${(j:|:)keys}')$' 'fg=blue')
+  (( ${#keys} )) && ZSH_HIGHLIGHT_REGEXP+=('^[[:blank:][:space:]]*('${(j:|:)keys}')$' 'fg=blue')
 }
 
 # atuin (must be before zoxide to override Ctrl+R)
