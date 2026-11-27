@@ -338,27 +338,6 @@ resource "uptimekuma_monitor_http" "voicevox" {
   ]
 }
 
-resource "uptimekuma_monitor_http" "couchdb" {
-  name                  = "CouchDB"
-  url                   = "https://sync.home.yutakobayashi.com"
-  accepted_status_codes = ["200-299", "401"]
-  interval              = 60
-  timeout               = 30
-  max_retries           = 0
-  retry_interval        = 60
-  resend_interval       = 300
-  active                = true
-  method                = "GET"
-  max_redirects         = 10
-  parent                = uptimekuma_monitor_group.internal.id
-  notification_ids      = local.default_notification_ids
-  tags = [
-    {
-      tag_id = uptimekuma_tag.service.id
-    },
-  ]
-}
-
 resource "uptimekuma_monitor_http" "nostr" {
   name             = "Nostr Relay"
   url              = "https://nostr.yutakobayashi.com"

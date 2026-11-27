@@ -76,10 +76,6 @@ resource "uptimekuma_status_page" "main" {
           send_url = true
         },
         {
-          id       = uptimekuma_monitor_http.couchdb.id
-          send_url = true
-        },
-        {
           id       = uptimekuma_monitor_http.nostr.id
           send_url = true
         },
