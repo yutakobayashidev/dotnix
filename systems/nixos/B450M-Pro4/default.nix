@@ -66,6 +66,14 @@
       development.enable = true;
       network.enable = true;
     };
+    services.tailscale.initrd = {
+      # Enable only after provisioning the auth key and validating Tailnet Lock.
+      enable = false;
+      kernelModules = [ "r8169" ];
+      authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIABdpbq18WuxHl3bigJsx7haTUvzufUa/9TKcuTBjn8g yuta-initrd-unlock"
+      ];
+    };
     services.cloudflared-tunnel = {
       enable = true;
       id = "3e1ff621-e8bf-47d1-b095-4b5c15eec63c";
