@@ -111,6 +111,8 @@
     man-pages-posix
   ];
 
+  my.programs.shutdownGuard.enable = lib.mkDefault true;
+
   virtualisation.docker.enable = true;
 
   virtualisation.docker.rootless = {

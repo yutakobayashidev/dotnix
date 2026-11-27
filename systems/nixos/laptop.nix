@@ -4,6 +4,8 @@
     ../shared/comin/laptop.nix
   ];
 
+  my.programs.shutdownGuard.enable = false;
+
   systemd.user.services.comin-desktop.serviceConfig = {
     Restart = "on-failure";
     RestartSec = 10;
