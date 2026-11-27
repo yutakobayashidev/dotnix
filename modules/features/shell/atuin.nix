@@ -42,10 +42,14 @@ _:
         flags = [ "--disable-up-arrow" ];
         daemon.enable = lib.mkDefault daemonSupported;
         settings = {
-          auto_sync = true;
           update_check = false;
+          auto_sync = true;
           sync_address = "http://B450M-Pro4:8890";
-          daemon.socket_path = lib.mkIf config.programs.atuin.daemon.enable daemonSocket;
+          sync_frequency = "1m";
+          daemon = lib.mkIf config.programs.atuin.daemon.enable {
+            socket_path = daemonSocket;
+            sync_frequency = 60;
+          };
           threads = lib.mkIf daemonSupported {
             capture = true;
             capture_tools = true;
