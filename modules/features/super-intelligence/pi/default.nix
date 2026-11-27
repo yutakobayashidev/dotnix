@@ -62,6 +62,8 @@ _:
             "npm:pi-petrroll@0.3.1"
             "npm:@pratikgajjar/pi-recall@0.9.0"
             "npm:pi-web-access@0.47.0"
+            "npm:pi-autoresearch@1.9.0"
+            "npm:@howaboua/pi-codex-conversion@5.1.0"
           ];
           appendSystem = ''
             The recall executable is at ${config.home.homeDirectory}/.pi/agent/npm/node_modules/@pratikgajjar/pi-recall/bin/recall-${
