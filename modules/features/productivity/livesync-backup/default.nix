@@ -12,10 +12,20 @@ _:
       cfg = config.my.services.livesync-backup;
       name = "livesync-backup";
       state = "/var/lib/${name}";
-      stage = "${state}/vault";
+      vault = "${state}/vault";
       database = "${state}/db";
+      find = lib.getExe' pkgs.findutils "find";
       cliImage = "ghcr.io/vrtmrz/livesync-cli:1.0.52-cli@sha256:cf9c28ca544e5e84e8825185a81032559c5503ad812c6cd66be4a714bca78a4f";
       docker = lib.getExe pkgs.docker;
+      systemctl = lib.getExe' pkgs.systemd "systemctl";
+      journalctl = lib.getExe' pkgs.systemd "journalctl";
+      cli = pkgs.writeShellScript "livesync-backup-cli" ''
+        exec ${docker} run --rm --cap-drop=ALL --security-opt=no-new-privileges \
+          --mount type=bind,src=${state},dst=/data \
+          --env LIVESYNC_DB_PATH=/data/db \
+          ${lib.escapeShellArg cliImage} \
+          --settings /data/settings.json --vault /data/vault "$@"
+      '';
     in
     {
       options.my.services.livesync-backup = {
@@ -50,14 +60,63 @@ _:
           }
         ];
 
+        systemd.services.${name} = {
+          description = "Self-hosted LiveSync backup client";
+          wantedBy = [ "multi-user.target" ];
+          wants = [ "network-online.target" ];
+          requires = [ "docker.service" ];
+          after = [
+            "network-online.target"
+            "docker.service"
+          ];
+          path = [ pkgs.coreutils ];
+          serviceConfig = {
+            Type = "exec";
+            ExecStart = "${cli} --verbose --interval 300 daemon";
+            Restart = "on-failure";
+            RestartSec = "30s";
+            StateDirectory = name;
+            StateDirectoryMode = "0700";
+            UMask = "0077";
+          };
+
+          preStart = ''
+            install -d -m 0700 ${database} ${vault}
+            settings=${state}/settings.json
+            sourceSettings=${lib.escapeShellArg (toString cfg.settingsFile)}
+            stamp=${state}/settings-source.sha256
+            initialised=${state}/daemon-initialised
+            recovery=${database}/.livesync/reconstruction.json
+
+            # Keep the CLI's saved settings and reconstruction state on restart.
+            if [ ! -e "$recovery" ]; then
+              checksum="$(sha256sum < "$sourceSettings")"
+              if [ ! -s "$settings" ] || [ ! -f "$stamp" ] || [ "$(cat "$stamp")" != "$checksum" ]; then
+                install -m 0600 "$sourceSettings" "$settings"
+                printf '%s\n' "$checksum" > "$stamp"
+              fi
+            fi
+            # The old Restic job removed its export after every run. Seed the
+            # filesystem before the daemon can interpret missing files as deletes.
+            if [ ! -e "$initialised" ] || [ -e "$recovery" ]; then
+              ${cli} fetch --force
+              touch "$initialised"
+            fi
+            if [ -z "$(${find} ${vault} -type f -print -quit)" ]; then
+              echo "Refusing to start LiveSync with an empty backup vault" >&2
+              exit 1
+            fi
+          '';
+        };
+
         services.restic.backups.${name} = {
           inherit (cfg) repository passwordFile environmentFile;
           extraOptions = [ "s3.region=auto" ];
           initialize = true;
-          paths = [ stage ];
+          paths = [ vault ];
           timerConfig = {
             OnCalendar = "*-*-* 04:00:00";
-            OnActiveSec = "1min";
+            OnActiveSec = "2min";
             Persistent = true;
           };
           pruneOpts = [
@@ -67,80 +126,25 @@ _:
           ];
           backupPrepareCommand = ''
             #!${pkgs.runtimeShell}
-            set -euo pipefail
-            export PATH=${
-              lib.makeBinPath [
-                pkgs.coreutils
-                pkgs.findutils
-              ]
-            }
-
-            install -d -m 0700 ${database}
-            settings=${state}/settings.json
-            sourceSettings=${lib.escapeShellArg (toString cfg.settingsFile)}
-            checksum="$(sha256sum < "$sourceSettings")"
-            stamp=${state}/settings-source.sha256
-
-            # Keep the CLI's saved database suffix and identity across runs.
-            # A new secret can be applied once any interrupted Fetch has finished.
-            if [ ! -e ${database}/.livesync/reconstruction.json ]; then
-              if [ ! -s "$settings" ] || [ ! -f "$stamp" ] || [ "$(cat "$stamp")" != "$checksum" ]; then
-                install -m 0600 "$sourceSettings" "$settings.new"
-                mv -f "$settings.new" "$settings"
-                printf '%s\n' "$checksum" > "$stamp"
-              fi
-              rm -rf -- ${stage}
-            fi
-            install -d -m 0700 ${stage}
-
-            cli() {
-              ${docker} run --rm --cap-drop=ALL --security-opt=no-new-privileges \
-                --mount type=bind,src=${state},dst=/data \
-                --env LIVESYNC_DB_PATH=/data/db \
-                ${lib.escapeShellArg cliImage} \
-                --settings /data/settings.json --vault /data/vault "$@"
-            }
-
-            # Fetch rebuilds the local DB and registers a new device. Keep the
-            # same DB for daily sync, then export into the empty staging path.
-            initialised=${state}/initialised
-            if [ ! -e "$initialised" ] || [ -e ${database}/.livesync/reconstruction.json ]; then
-              cli fetch --force
-            elif syncOutput="$(cli sync 2>&1)"; then
-              printf '%s\n' "$syncOutput"
-              cli mirror
-            else
-              printf '%s\n' "$syncOutput" >&2
-              case "$syncOutput" in
-                *"The remote database is locked and this device is not yet accepted."*)
-                  cli fetch --force
-                  ;;
-                *) exit 1 ;;
-              esac
-            fi
-
-            # An empty export cannot replace a successful backup of this vault.
-            test -n "$(find ${stage} -type f -print -quit)"
-            touch "$initialised"
-          '';
-          backupCleanupCommand = ''
-            #!${pkgs.runtimeShell}
             set -eu
-            # Retain files needed to resume an interrupted Fetch.
-            if [ ! -e ${database}/.livesync/reconstruction.json ]; then
-              ${pkgs.coreutils}/bin/rm -rf -- ${stage}
-            fi
+            ${systemctl} is-active --quiet ${name}.service
+            invocation="$(${systemctl} show --property=InvocationID --value ${name}.service)"
+            last="$(
+              ${journalctl} "_SYSTEMD_INVOCATION_ID=$invocation" --since="15 minutes ago" \
+                --grep='Replication completed|Initial replication (complete|failed)|Poll error' \
+                --lines=1 --output=cat --no-pager --quiet
+            )"
+            case "$last" in
+              "(Info) Replication completed" | "[Daemon] Initial replication complete") ;;
+              *) echo "LiveSync has no recent successful replication" >&2; exit 1 ;;
+            esac
+            test -n "$(${find} ${vault} -type f -print -quit)"
           '';
         };
 
         systemd.services."restic-backups-${name}" = {
-          requires = [ "docker.service" ];
-          after = [ "docker.service" ];
-          serviceConfig = {
-            StateDirectory = name;
-            StateDirectoryMode = "0700";
-            UMask = "0077";
-          };
+          after = [ "${name}.service" ];
+          serviceConfig.UMask = "0077";
         };
       };
     };
