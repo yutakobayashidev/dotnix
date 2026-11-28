@@ -54,6 +54,7 @@
     inputs.openai-secure-tunnel-nix.nixosModules.tunnel-client
     inputs.disko.nixosModules.disko
     ./disko.nix
+    ./livesync-backup-monitoring.nix
     inputs.nur-packages.nixosModules.px4_drv
   ];
 
