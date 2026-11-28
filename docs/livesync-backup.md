@@ -1,21 +1,21 @@
 # LiveSync vault backup
 
-UM790-Pro runs `restic-backups-livesync-backup.timer` daily at 04:00 local
-time and one minute after the timer starts. The job uses the pinned Self-hosted
-LiveSync CLI image to export the vault, then backs up the files to
-`livesync-backup/UM790-Pro` in the dedicated Cloudflare R2 bucket managed by
-tofu-configuration. It keeps 14 daily, 8
-weekly, and 12 monthly snapshots.
+UM790-Pro runs the upstream Self-hosted LiveSync CLI daemon as
+`livesync-backup.service`. It polls the remote every five minutes and keeps a
+persistent replica at `/var/lib/livesync-backup/vault`. Only the daemon should
+write there. Local changes are synchronised back to the remote.
 
-The CLI uses a dedicated database and settings under
-`/var/lib/livesync-backup`. The first run uses `fetch --force`. Daily runs
-sync that database and mirror into an empty staging directory. This keeps
-the same device ID and exports the current files, including attachments.
-If the remote locks the client out after a rebuild, the job fetches again.
-An interrupted fetch retains its staging directory and state for the next
-attempt. A failed or empty export fails the job before restic runs. The backup covers the
-notes and attachments available through LiveSync. It does not include
-the server's revision history or files excluded from synchronisation.
+`restic-backups-livesync-backup.timer` runs daily at 04:00 local time and two
+minutes after activation. Restic checks for a recent successful replication
+from the running daemon before reading the vault. It keeps 14 daily, 8 weekly,
+and 12 monthly encrypted snapshots at `livesync-backup/UM790-Pro` in the
+dedicated Cloudflare R2 bucket managed by tofu-configuration.
+
+The first start uses `fetch --force` to populate the replica before the daemon
+starts. The daemon refuses to start with an empty replica. An interrupted Fetch
+resumes with the same client state. The backup covers notes and attachments available through
+LiveSync. It omits server-side revision history and files excluded from
+synchronisation.
 
 The SOPS file `secrets/livesync-backup-UM790-Pro.yaml` holds the CLI
 settings, backup repository password, and R2 credentials. The ThinkPad
@@ -30,7 +30,7 @@ To run a backup and list snapshots:
 ```sh
 sudo systemctl start restic-backups-livesync-backup
 sudo restic-livesync-backup snapshots
-journalctl -u restic-backups-livesync-backup
+journalctl -u livesync-backup -u restic-backups-livesync-backup
 ```
 
 To restore to a separate directory:
@@ -43,3 +43,13 @@ sudo restic-livesync-backup restore latest --target /var/lib/livesync-restore
 The restored vault is under
 `/var/lib/livesync-restore/var/lib/livesync-backup/vault/`. Inspect it
 before syncing it to a fresh Worker.
+
+If the remote was deliberately rebuilt and locks this device out, stop the
+daemon, move the replica aside, and request a fresh Fetch:
+
+```sh
+sudo systemctl stop livesync-backup
+sudo mv /var/lib/livesync-backup/vault /var/lib/livesync-backup/vault.before-fetch
+sudo rm /var/lib/livesync-backup/daemon-initialised
+sudo systemctl start livesync-backup
+```
