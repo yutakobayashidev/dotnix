@@ -14,6 +14,7 @@ _:
           curl
           eza
           fzf
+          glib
           glow
           gum
           jq
