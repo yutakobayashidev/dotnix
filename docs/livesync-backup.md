@@ -36,6 +36,12 @@ sudo restic-livesync-backup snapshots
 journalctl -u livesync-backup -u restic-backups-livesync-backup
 ```
 
+`livesync-backup-snapshot.timer` checks R2 every 15 minutes for the latest
+snapshot from B450M-Pro4. If that snapshot is over 30 hours old or its metric
+is missing while the node exporter is reachable for five minutes, vmalert sends
+`LiveSyncBackupStale` to `infra-warning`. Inspect the check with
+`journalctl -u livesync-backup-snapshot`.
+
 To restore to a separate directory:
 
 ```sh
