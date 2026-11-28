@@ -14,13 +14,8 @@ let
   repository = "s3:https://8b50ea3379fb9efb39ecef76cfcaa04a.r2.cloudflarestorage.com/restic-backup/${config.networking.hostName}/home-assistant";
 in
 {
-  # The repository password, and AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
-  # for the restic-backup bucket. thinkpad-home can decrypt the file too, which
-  # keeps a recovery copy of the password outside this machine.
-  sops.secrets = {
-    restic-password.sopsFile = ./restic.yaml;
-    restic-r2-credentials.sopsFile = ./restic.yaml;
-  };
+  # thinkpad-home can decrypt the file, keeping a recovery copy off the host.
+  sops.secrets.restic-password.sopsFile = ../../../../secrets/restic-backup-B450M-Pro4.yaml;
 
   services.restic.backups.home-assistant = {
     # Off-site, so that losing this machine or its disks does not take the

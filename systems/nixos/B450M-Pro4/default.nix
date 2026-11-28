@@ -66,6 +66,13 @@
       development.enable = true;
       network.enable = true;
     };
+    services.livesync-backup = {
+      enable = true;
+      repository = "s3:https://8b50ea3379fb9efb39ecef76cfcaa04a.r2.cloudflarestorage.com/restic-backup/${config.networking.hostName}/livesync";
+      settingsFile = config.sops.secrets.livesync-backup-settings.path;
+      passwordFile = config.sops.secrets.livesync-backup-password.path;
+      environmentFile = config.sops.secrets.restic-r2-credentials.path;
+    };
     services.cloudflared-tunnel = {
       enable = true;
       id = "3e1ff621-e8bf-47d1-b095-4b5c15eec63c";
@@ -232,6 +239,13 @@
   };
 
   virtualisation.docker.enable = true;
+
+  # Keep imported snapshots until the new backup has been restored.
+  services.restic.backups.livesync-backup.pruneOpts = lib.mkForce [ ];
+
+  sops.secrets.restic-r2-credentials.sopsFile = ../../../secrets/restic-backup-B450M-Pro4.yaml;
+  sops.secrets.livesync-backup-settings.sopsFile = ../../../secrets/livesync-backup-B450M-Pro4.yaml;
+  sops.secrets.livesync-backup-password.sopsFile = ../../../secrets/livesync-backup-B450M-Pro4.yaml;
 
   sops.secrets.cloudflared-tunnel = {
     sopsFile = ./secrets.yaml;
