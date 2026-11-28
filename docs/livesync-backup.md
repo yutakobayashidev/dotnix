@@ -3,7 +3,8 @@
 UM790-Pro runs `restic-backups-livesync-backup.timer` daily at 04:00 local
 time and one minute after the timer starts. The job uses the pinned Self-hosted
 LiveSync CLI image to export the vault, then backs up the files to
-`restic-backup/UM790-Pro/livesync` in Cloudflare R2. It keeps 14 daily, 8
+`livesync-backup/UM790-Pro` in the dedicated Cloudflare R2 bucket managed by
+tofu-configuration. It keeps 14 daily, 8
 weekly, and 12 monthly snapshots.
 
 The CLI uses a dedicated database and settings under
@@ -19,7 +20,10 @@ the server's revision history or files excluded from synchronisation.
 The SOPS file `secrets/livesync-backup-UM790-Pro.yaml` holds the CLI
 settings, backup repository password, and R2 credentials. The ThinkPad
 can decrypt the file if UM790-Pro is lost. Keep the same repository
-password when rotating the R2 credentials.
+password when rotating the R2 credentials. The bucket-scoped key comes
+from the `livesync_backup_access_key_id` and
+`livesync_backup_secret_access_key` outputs in tofu-configuration's
+`infra/global` root.
 
 To run a backup and list snapshots:
 

@@ -46,7 +46,7 @@
     };
     services.livesync-backup = {
       enable = true;
-      repository = "s3:https://8b50ea3379fb9efb39ecef76cfcaa04a.r2.cloudflarestorage.com/restic-backup/UM790-Pro/livesync";
+      repository = "s3:https://8b50ea3379fb9efb39ecef76cfcaa04a.r2.cloudflarestorage.com/livesync-backup/UM790-Pro";
       settingsFile = config.sops.secrets.livesync-backup-settings.path;
       passwordFile = config.sops.secrets.livesync-backup-password.path;
       environmentFile = config.sops.secrets.livesync-backup-r2-credentials.path;
