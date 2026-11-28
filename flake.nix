@@ -314,6 +314,7 @@
         oci-a1 = {
           system = "aarch64-linux";
         };
+        vultr-fedi = { };
         M2-MacBook-Air = {
           system = "aarch64-darwin";
         };

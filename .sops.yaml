@@ -128,3 +128,8 @@ creation_rules:
     key_groups:
       - age:
           - *b450m
+  # TODO: add the vultr-fedi host key once infra/vultr/fedi generates it.
+  - path_regex: systems/nixos/vultr-fedi/secrets\.yaml$
+    key_groups:
+      - age:
+          - *thinkpad-home

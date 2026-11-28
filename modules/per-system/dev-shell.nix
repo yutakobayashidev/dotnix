@@ -38,6 +38,7 @@
             (pkgs.opentofu.withPlugins (pl: [
               pl.go-gitea_gitea
               pl.oracle_oci
+              pl.vultr_vultr
               pl.carlpett_sops
               pl.hashicorp_external
               pl.hashicorp_null
@@ -117,6 +118,7 @@
             (pkgs.opentofu.withPlugins (pl: [
               pl.go-gitea_gitea
               pl.oracle_oci
+              pl.vultr_vultr
               pl.carlpett_sops
               pl.hashicorp_external
               pl.hashicorp_null
