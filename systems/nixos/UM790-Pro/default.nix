@@ -21,12 +21,6 @@
     ../desktop.nix
   ];
 
-  sops.secrets = {
-    livesync-backup-settings.sopsFile = ../../../secrets/livesync-backup-UM790-Pro.yaml;
-    livesync-backup-password.sopsFile = ../../../secrets/livesync-backup-UM790-Pro.yaml;
-    livesync-backup-r2-credentials.sopsFile = ../../../secrets/livesync-backup-UM790-Pro.yaml;
-  };
-
   ext.security.secureboot.enable = true;
   nix.settings = {
     max-jobs = 4;
@@ -43,13 +37,6 @@
       network.enable = true;
       productivity.enable = true;
       security.enable = true;
-    };
-    services.livesync-backup = {
-      enable = true;
-      repository = "s3:https://8b50ea3379fb9efb39ecef76cfcaa04a.r2.cloudflarestorage.com/livesync-backup/UM790-Pro";
-      settingsFile = config.sops.secrets.livesync-backup-settings.path;
-      passwordFile = config.sops.secrets.livesync-backup-password.path;
-      environmentFile = config.sops.secrets.livesync-backup-r2-credentials.path;
     };
   };
 

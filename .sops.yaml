@@ -17,11 +17,6 @@ creation_rules:
       - age:
           - *b450m
           - *thinkpad-home
-  - path_regex: ^secrets/livesync-backup-UM790-Pro\.yaml$
-    key_groups:
-      - age:
-          - *um790
-          - *thinkpad-home
   - path_regex: ^secrets/(livesync-backup|restic-backup)-B450M-Pro4\.yaml$
     key_groups:
       - age:
