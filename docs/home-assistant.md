@@ -178,7 +178,7 @@ Restic stores encrypted snapshots off-site in Cloudflare R2, at
 jitter. tofu-configuration owns the `restic-backup` bucket and a token scoped to
 it (`homelab-prod-restic-backup-r2`).
 
-`systems/nixos/services/home-assistant/restic.yaml` (sops, readable by
+`secrets/restic-backup-B450M-Pro4.yaml` (sops, readable by
 B450M-Pro4 and `thinkpad-home`) holds the repository password
 (`restic-password`) and the R2 access key ID and secret
 (`restic-r2-credentials`, passed as `environmentFile`). Losing the password

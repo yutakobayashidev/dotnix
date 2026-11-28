@@ -22,6 +22,11 @@ creation_rules:
       - age:
           - *um790
           - *thinkpad-home
+  - path_regex: ^secrets/(livesync-backup|restic-backup)-B450M-Pro4\.yaml$
+    key_groups:
+      - age:
+          - *b450m
+          - *thinkpad-home
   - path_regex: ^secrets/opencode-web\.yaml$
     key_groups:
       - age:
@@ -69,11 +74,6 @@ creation_rules:
     key_groups:
       - age:
           - *b450m
-  - path_regex: systems/nixos/services/home-assistant/restic\.yaml$
-    key_groups:
-      - age:
-          - *b450m
-          - *thinkpad-home
   - path_regex: systems/nixos/services/litellm/auth\.json$
     key_groups:
       - age:
