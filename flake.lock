@@ -1409,11 +1409,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795490956,
-        "narHash": "sha256-ZExeqyTk0uCPbR7u2GGbNgjne+F3tanByxr/aS+8rdk=",
+        "lastModified": 1795570543,
+        "narHash": "sha256-fzTG9H+M/Ct2qyiFHZAYOHb8n2G4CSCHf3tv1fCRYfg=",
         "owner": "xddxdd",
         "repo": "nix-cachyos-kernel",
-        "rev": "920a3823872b21640181fe8065a5fb35fcb06e3f",
+        "rev": "7c2981ca35651aa3aae60531a9c605a3750cc889",
         "type": "github"
       },
       "original": {
