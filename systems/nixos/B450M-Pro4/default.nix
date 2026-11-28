@@ -240,9 +240,6 @@
 
   virtualisation.docker.enable = true;
 
-  # Keep imported snapshots until the new backup has been restored.
-  services.restic.backups.livesync-backup.pruneOpts = lib.mkForce [ ];
-
   sops.secrets.restic-r2-credentials.sopsFile = ../../../secrets/restic-backup-B450M-Pro4.yaml;
   sops.secrets.livesync-backup-settings.sopsFile = ../../../secrets/livesync-backup-B450M-Pro4.yaml;
   sops.secrets.livesync-backup-password.sopsFile = ../../../secrets/livesync-backup-B450M-Pro4.yaml;

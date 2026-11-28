@@ -1,15 +1,18 @@
 # LiveSync vault backup
 
-UM790-Pro runs the upstream Self-hosted LiveSync CLI daemon as
+B450M-Pro4 runs the upstream Self-hosted LiveSync CLI daemon as
 `livesync-backup.service`. It polls the remote every five minutes and keeps a
-persistent replica at `/var/lib/livesync-backup/vault`. Only the daemon should
-write there. Local changes are synchronised back to the remote.
+persistent replica at `/var/lib/livesync-backup/vault`. The vault, CLI database,
+and Fetch marker survive reboots through B450M-Pro4's `/var/lib` persistence.
+Only the daemon should write there. Local changes are synchronised back to the
+remote.
 
 `restic-backups-livesync-backup.timer` runs daily at 04:00 local time and two
 minutes after activation. Restic checks for a recent successful replication
 from the running daemon before reading the vault. It keeps 14 daily, 8 weekly,
-and 12 monthly encrypted snapshots at `livesync-backup/UM790-Pro` in the
-dedicated Cloudflare R2 bucket managed by tofu-configuration.
+and 12 monthly encrypted snapshots in `restic-backup/B450M-Pro4/livesync`.
+Home Assistant uses its own repository in the same Cloudflare R2 bucket.
+Snapshots copied from UM790-Pro still show their original host and dates.
 
 The first start uses `fetch --force` to populate the replica before the daemon
 starts. The daemon refuses to start with an empty replica. An interrupted Fetch
@@ -17,13 +20,13 @@ resumes with the same client state. The backup covers notes and attachments avai
 LiveSync. It omits server-side revision history and files excluded from
 synchronisation.
 
-The SOPS file `secrets/livesync-backup-UM790-Pro.yaml` holds the CLI
-settings, backup repository password, and R2 credentials. The ThinkPad
-can decrypt the file if UM790-Pro is lost. Keep the same repository
-password when rotating the R2 credentials. The bucket-scoped key comes
-from the `livesync_backup_access_key_id` and
-`livesync_backup_secret_access_key` outputs in tofu-configuration's
-`infra/global` root.
+The SOPS file `secrets/livesync-backup-B450M-Pro4.yaml` holds the CLI settings
+and repository password. `secrets/restic-backup-B450M-Pro4.yaml` holds the R2
+credentials shared with Home Assistant. The ThinkPad can decrypt both files
+for recovery if B450M-Pro4 is lost. Keep the LiveSync repository password when
+rotating the bucket credentials. The bucket-scoped key comes from the
+`restic_backup_access_key_id` and `restic_backup_secret_access_key` outputs
+in tofu-configuration's `infra/global` root.
 
 To run a backup and list snapshots:
 
