@@ -72,6 +72,12 @@ locals {
       ]
       pkce_enabled = true
     }
+    cloudflare-access = {
+      name          = "Cloudflare Access"
+      launch_url    = "https://one.dash.cloudflare.com"
+      callback_urls = ["https://<TEAM-NAME>.cloudflareaccess.com/cdn-cgi/access/callback"]
+      pkce_enabled  = true
+    }
   }
 }
 
