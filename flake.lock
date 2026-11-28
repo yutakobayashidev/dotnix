@@ -1966,17 +1966,17 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1793977579,
-        "narHash": "sha256-WrSODdZFVIs/Hh2NzC0bY+ROByi0bATg8WfePX8dPj8=",
+        "lastModified": 1795371335,
+        "narHash": "sha256-oa2P5WZer1A4wuhatl92JyHHEjrrOdIyuvTuI5LUi9Q=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4fe25e12eb9f4c744966dd3de5a05246cf098601",
+        "rev": "619c39f6eac5d1ed6b8f073a9414baf7034b2356",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
-        "rev": "4fe25e12eb9f4c744966dd3de5a05246cf098601",
         "type": "github"
       }
     },
@@ -2404,11 +2404,11 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1794303164,
-        "narHash": "sha256-UZMtOt43/HRVssXPSuPv8t11Toq9+CjyWUfYQ3tqGVE=",
+        "lastModified": 1795522582,
+        "narHash": "sha256-2UgrrjTeYt4UMmsjdcUjhxSnCGYOlzMuGuk7dRB5Kq4=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "89750a2ef1c6a44db9f4251b16c23deffdcfddff",
+        "rev": "639e209cc8eecd0c307fd95c8aabc011bf047c41",
         "type": "github"
       },
       "original": {
@@ -2462,11 +2462,11 @@
     "rustowl": {
       "flake": false,
       "locked": {
-        "lastModified": 1794128109,
-        "narHash": "sha256-1U9Jagwb0bBtS/tYDpNOrYo/IdjreCmj2BA8hYltRuE=",
+        "lastModified": 1795355520,
+        "narHash": "sha256-9UIlxFqHkceO9pN7b6J3pylHMreiWF8vIOLvUKPj/qM=",
         "owner": "cordx56",
         "repo": "rustowl",
-        "rev": "61a893c0e1b8c25389b17593bcfedcfecc5d44fc",
+        "rev": "cd9218decc365fa39cb8356151f20fa420e0cd44",
         "type": "github"
       },
       "original": {
@@ -2484,11 +2484,11 @@
         "rustowl": "rustowl"
       },
       "locked": {
-        "lastModified": 1794985618,
-        "narHash": "sha256-mJGzb7m0Cc1UVww08MnShFXdUFWOfh8jhS1hKhLxY2c=",
+        "lastModified": 1795589218,
+        "narHash": "sha256-pOhCDDjb69Z95buDi3w472pRiGFq+U/t5fjilpq8qbY=",
         "owner": "nix-community",
         "repo": "rustowl-flake",
-        "rev": "8e01a2a0e5b95363f4bf340226825575c180e93f",
+        "rev": "75f592e68be1cd63aad2123bcbdaad92f59fd8cb",
         "type": "github"
       },
       "original": {
